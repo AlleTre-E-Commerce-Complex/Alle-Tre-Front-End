@@ -8,14 +8,13 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path={routes.auth.default} component={AuthLayouts} />
-        {/* <Route path={routes.dashboard.default} component={AppLayout} /> */}
         <Route
           path={routes.auth.forgetpass.default}
           component={CredentialsuUpdateLayout}
         />
+        <Route path={routes.auth.default} component={AuthLayouts} />
 
-        <Redirect path={routes.auth.default} component={AuthLayouts} />
+        {/* <Redirect path={routes.auth.default} component={AuthLayouts} /> */}
       </Switch>
       <Toaster
         position="top-right"

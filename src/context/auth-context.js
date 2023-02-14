@@ -7,7 +7,7 @@ import useAxios from "../hooks/use-axios";
 
 const AuthContext = React.createContext();
 
-const WHITE_LIST = [routes.auth.forgetpass];
+const WHITE_LIST = [routes.auth.forgetpass.default];
 
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);

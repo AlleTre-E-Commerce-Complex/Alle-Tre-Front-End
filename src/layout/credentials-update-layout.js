@@ -8,7 +8,7 @@ const CredentialsuUpdateLayout = () => {
     <div className="">
       <Switch>
         <Route
-          path={routes.auth.forgetpass.default}
+          path={routes.auth.forgetpass.restpass}
           component={ResetPasswordPage}
         />
       </Switch>

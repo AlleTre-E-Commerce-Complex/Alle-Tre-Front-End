@@ -11,7 +11,7 @@ const ResetPasswordPage = () => {
   const panes = [
     {
       menuItem: "Reset Password",
-      routes: routes.auth.forgetpass.restpass,
+      // routes: routes.auth.forgetpass.restpass,
       render: () => (
         <div>
           <Tab.Pane className="border-none h-full  animate-in pt-2 flex justify-center ">
