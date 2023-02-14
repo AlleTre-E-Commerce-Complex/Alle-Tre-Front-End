@@ -18,31 +18,26 @@ import auth from "../../utils/auth";
 import { authentications } from "../../config/firebase-config";
 
 const OAuthSections = ({ isLogin }) => {
-  const [oAuthData, setOauthData] = useState({});
-
   const { run } = useAxios();
-
   const signInWithApple = () => {
     const provider = new OAuthProvider("apple.com");
     signInWithPopup(authentications, provider)
       .then((res) => {
-        setOauthData({
-          userName: res?._tokenResponse?.displayName || null,
-          email: res?._tokenResponse?.email || null,
-          idToken: res?._tokenResponse?.idToken || null,
-          phone: res?._tokenResponse?.phoneNumber || null,
-        });
-        run(axios.post(api.auth.aAuth, oAuthData))
+        run(
+          axios.post(api.auth.aAuth, {
+            userName: res?._tokenResponse?.displayName || null,
+            email: res?._tokenResponse?.email || null,
+            idToken: res?._tokenResponse?.idToken || null,
+            phone: res?._tokenResponse?.phoneNumber || null,
+          })
+        )
           .then((res) => {
-            console.log("====================================");
-            console.log(res);
-            console.log("====================================");
             const { accessToken, refreshToken } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            toast.error("done");
+            toast.success("done");
             // history.push(routes.Dashboard.containers.base);
           })
           .catch((err) => {
@@ -51,37 +46,6 @@ const OAuthSections = ({ isLogin }) => {
       })
       .catch((err) => {
         toast.error("Something is wrong try again later");
-        console.log({ apple: err });
-      });
-  };
-
-  const signInWithFacebook = () => {
-    const provider = new FacebookAuthProvider();
-    signInWithPopup(authentications, provider)
-      .then((res) => {
-        setOauthData({
-          userName: res?._tokenResponse?.displayName || null,
-          email: res?._tokenResponse?.email || null,
-          idToken: res?._tokenResponse?.idToken || null,
-          phone: res?._tokenResponse?.phoneNumber || null,
-        });
-        run(axios.post(api.auth.aAuth, oAuthData))
-          .then((res) => {
-            const { accessToken, refreshToken } = res.data.data;
-            auth.setToken({
-              newAccessToken: accessToken,
-              newRefreshToken: refreshToken,
-            });
-            // history.push(routes.Dashboard.containers.base);
-            toast.error("done");
-          })
-          .catch((err) => {
-            toast.error("Something is wrong try again later");
-          });
-      })
-      .catch((err) => {
-        toast.error("Something is wrong try again later");
-        console.log({ facebook: err });
       });
   };
 
@@ -89,20 +53,21 @@ const OAuthSections = ({ isLogin }) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(authentications, provider)
       .then((res) => {
-        setOauthData({
-          userName: res?._tokenResponse?.displayName || null,
-          email: res?._tokenResponse?.email || null,
-          idToken: res?._tokenResponse?.idToken || null,
-          phone: res?._tokenResponse?.phoneNumber || null,
-        });
-        run(axios.post(api.auth.aAuth, oAuthData))
+        run(
+          axios.post(api.auth.aAuth, {
+            userName: res?._tokenResponse?.displayName || null,
+            email: res?._tokenResponse?.email || null,
+            idToken: res?._tokenResponse?.idToken || null,
+            phone: res?._tokenResponse?.phoneNumber || null,
+          })
+        )
           .then((res) => {
             const { accessToken, refreshToken } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            toast.error("done");
+            toast.success("done");
             // history.push(routes.Dashboard.containers.base);
           })
           .catch((err) => {
@@ -111,7 +76,36 @@ const OAuthSections = ({ isLogin }) => {
       })
       .catch((err) => {
         toast.error("Something is wrong try again later");
-        console.log({ google: err });
+      });
+  };
+
+  const signInWithFacebook = () => {
+    const provider = new FacebookAuthProvider();
+    signInWithPopup(authentications, provider)
+      .then((res) => {
+        run(
+          axios.post(api.auth.aAuth, {
+            userName: res?._tokenResponse?.displayName || null,
+            email: res?._tokenResponse?.email || null,
+            idToken: res?._tokenResponse?.idToken || null,
+            phone: res?._tokenResponse?.phoneNumber || null,
+          })
+        )
+          .then((res) => {
+            const { accessToken, refreshToken } = res.data.data;
+            auth.setToken({
+              newAccessToken: accessToken,
+              newRefreshToken: refreshToken,
+            });
+            // history.push(routes.Dashboard.containers.base);
+            toast.success("done");
+          })
+          .catch((err) => {
+            toast.error("Something is wrong try again later");
+          });
+      })
+      .catch((err) => {
+        toast.error("Something is wrong try again later");
       });
   };
 

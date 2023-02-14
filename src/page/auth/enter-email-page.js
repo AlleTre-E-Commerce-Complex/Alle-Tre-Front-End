@@ -14,7 +14,6 @@ const EnterEmailPage = () => {
   const panes = [
     {
       menuItem: "Enter E-mail",
-      routes: routes.auth.enterEmail,
       render: () => (
         <div>
           <Tab.Pane className="border-none h-full  animate-in pt-2 flex justify-center ">
@@ -24,7 +23,6 @@ const EnterEmailPage = () => {
       ),
     },
   ];
-  const { activeIndex, onTabChange } = useTab({ panes });
   return (
     <div className="animate-in  h-screen">
       <div>
@@ -50,8 +48,6 @@ const EnterEmailPage = () => {
                 pointing: true,
                 className: "flex flex-wrap text-xl pl-40 m-0",
               }}
-              activeIndex={activeIndex}
-              onTabChange={onTabChange}
               panes={panes}
             />
           </div>

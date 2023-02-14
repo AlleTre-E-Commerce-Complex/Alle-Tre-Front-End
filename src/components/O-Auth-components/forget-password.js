@@ -1,7 +1,7 @@
 import React from "react";
 
 import routes from "../../routes";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -9,15 +9,44 @@ import FormikInput from "../shared/formik/formik-input";
 
 import { Button, Form } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
+import { useLanguage } from "../../context/language-context";
+import { content } from "../../localization/content";
+import { useQuery } from "../../hooks/use-query";
+import useLocalStorage from "../../hooks/use-localstorage";
+import useAxios from "../../hooks/use-axios";
+import axios from "axios";
+import api from "../../api";
 
 const ForgetPassword = () => {
+  const [lang, setLang] = useLanguage("");
+  const langContent = content[lang];
   const history = useHistory();
+  const query = useQuery();
+  const tokenEdit = query.get("token");
+  const [token] = useLocalStorage("tokenEdit", tokenEdit);
 
+  console.log("====================================");
+  console.log(token);
+  console.log("====================================");
+
+  const { run, isLoading } = useAxios();
   const resetPassword = (values) => {
-    // const body = {
-    //   email: values.phoneNumber,
-    //   password: values.password,
-    // };
+    const body = {
+      token: token,
+      newPassword: values.password,
+    };
+    run(axios.post(api.auth.resetCredentials, body))
+      .then((res) => {
+        history.push(routes.auth.logIn);
+        toast.success(
+          lang === "en" ? res?.data?.data?.en : res?.data?.data?.ar
+        );
+      })
+      .catch((err) => {
+        toast.success(
+          lang === "en" ? err?.data?.data?.en : err?.data?.data?.ar
+        );
+      });
   };
 
   const logInSchema = Yup.object({
@@ -61,19 +90,19 @@ const ForgetPassword = () => {
                   <div>
                     <label className="text-gray-med text-sm font-normal cursor-pointer">
                       <input
-                        id="authcheckbox"
-                        className="mt-1 mr-3 bg-primary"
+                        className="mt-1.5 mr-3 bg-primary authcheckbox"
                         type="checkbox"
                       />
                       Remember Password
                     </label>
                   </div>
-                  <button className="underline text-primary-dark text-sm font-normal pt-1">
+                  <Link className="underline text-primary-dark text-sm font-normal pt-1 cursor-pointer">
                     Forget Password
-                  </button>
+                  </Link>
                 </div>
                 <div className="flex justify-center ">
                   <Button
+                    loading={isLoading}
                     onClick={() => {
                       // history.push(routes.dashboard.app);
                     }}

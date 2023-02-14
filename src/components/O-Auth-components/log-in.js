@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import routes from "../../routes";
 import { Link, useHistory } from "react-router-dom";
@@ -20,8 +20,13 @@ const LogIn = () => {
   const history = useHistory();
   const [lang] = useLanguage("");
 
+  const [isHidden, setIsHidden] = useState(false);
+  const [email, setEmail] = useState("");
+
   const { run, isLoading } = useAxios();
+
   const logIn = (values) => {
+    setEmail(values.email);
     run(axios.post(api.auth.login, values))
       .then((res) => {
         const { accessToken, refreshToken } = res.data.data;
@@ -29,17 +34,68 @@ const LogIn = () => {
           newAccessToken: accessToken,
           newRefreshToken: refreshToken,
         });
-        toast.error("done");
+        toast.success("done");
         // history.push(routes.Dashboard.containers.base);
       })
       .catch((err) => {
-        toast.error(lang === "en" ? err.message.en : err.message.en);
+        if (err.message.en === "Verify your account") {
+          toast.error(
+            <p className="text-gray-dark text-sm py-2">
+              The email address for this account has not yet been verified.
+              Please check your inbox. If you cannot find this email, Check
+              <span
+                onClick={() =>
+                  runforgetPassword(
+                    axios.post(api.auth.resendVerification, { email: email })
+                  )
+                    .then((res) => {
+                      toast.loading(
+                        "A verification mail has been sent to your mail please check it...."
+                      );
+                      history.push(routes.auth.logIn);
+                    })
+                    .catch((err) => {
+                      toast.error(
+                        lang === "en"
+                          ? err.message.en
+                          : err.message.en || err.message
+                      );
+                    })
+                }
+                className="underline text-black cursor-pointer"
+              >
+                Resend mail again
+              </span>
+            </p>
+          );
+        } else toast.error(lang === "en" ? err.message.en : err.message.en);
       });
   };
 
   const logInSchema = Yup.object({
-    email: Yup.string().min(3).max(20, "").required("Required field"),
+    email: Yup.string().required("Required field"),
     password: Yup.string().min(3).max(20, "").required("Required field"),
+  });
+
+  const { run: runforgetPassword, isLoading: isLoadingorgetPassword } =
+    useAxios();
+  const forgetPassword = (values) => {
+    runforgetPassword(axios.post(api.auth.forgetPassword, values))
+      .then((res) => {
+        toast.loading(
+          "A verification mail has been sent to your mail please check it...."
+        );
+        history.push(routes.auth.logIn);
+      })
+      .catch((err) => {
+        toast.error(
+          lang === "en" ? err.message.en : err.message.en || err.message
+        );
+      });
+  };
+
+  const forgetPasswordSchema = Yup.object({
+    email: Yup.string().min(3).required("Required field"),
   });
 
   return (
@@ -55,7 +111,7 @@ const LogIn = () => {
         </p>
       </div>
       <div>
-        <div className="">
+        <div className={isHidden ? "animate-out h-0" : "animate-in"}>
           <Formik
             initialValues={{
               email: "",
@@ -93,7 +149,8 @@ const LogIn = () => {
                     </label>
                   </div>
                   <Link
-                    to={routes.auth.enterEmail}
+                    onClick={() => setIsHidden(true)}
+                    // to={routes.auth.enterEmail}
                     className="underline text-primary-dark text-sm font-normal pt-1"
                   >
                     Forget Password
@@ -113,23 +170,44 @@ const LogIn = () => {
               </Form>
             )}
           </Formik>
-          {/* <button onClick={() => toast.loading("Successfully toasted!")}>
-            test tost
-          </button>
-          <button
-            onClick={() =>
-              toast.error(
-                <button
-                  onClick={() => console.log("err")}
-                  className="underline "
-                >
-                  ksdcbkjdbscjhdsb
-                </button>
-              )
-            }
+        </div>
+        <div className={isHidden ? "animate-in" : "animate-out h-0 hidden"}>
+          <Formik
+            initialValues={{
+              email: "",
+            }}
+            onSubmit={forgetPassword}
+            validationSchema={forgetPasswordSchema}
           >
-            test tost
-          </button> */}
+            {(formik) => (
+              <Form onSubmit={formik.handleSubmit}>
+                <div className="mt-10 mx-auto">
+                  <FormikInput
+                    name="email"
+                    type={"email"}
+                    label={"E-mail"}
+                    placeholder={"E-mail"}
+                  />
+                </div>
+                <div className="flex justify-end mt-2 mx-1">
+                  <Link
+                    onClick={() => setIsHidden(false)}
+                    className="underline text-primary-dark text-sm font-normal pt-1"
+                  >
+                    Log in
+                  </Link>
+                </div>
+                <div className="flex justify-center ">
+                  <Button
+                    loading={isLoadingorgetPassword}
+                    className="bg-primary w-80 h-12 rounded-lg text-white mt-5 font-normal text-base "
+                  >
+                    Sent Verification
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>

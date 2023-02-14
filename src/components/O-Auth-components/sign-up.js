@@ -22,18 +22,22 @@ const SignUp = () => {
 
   const { run, isLoading } = useAxios();
   const signUp = (values) => {
-    run(axios.post(api.auth.login, values))
+    run(axios.post(api.auth.signup, values))
       .then((res) => {
-        toast.error("done");
+        toast.loading(
+          "A verification mail has been sent to your mail please check it...."
+        );
       })
       .catch((err) => {
-        toast.error(lang === "en" ? err.message.en : err.message.en);
+        toast.error(
+          lang === "en" ? err.message.en : err.message.en || err.message
+        );
       });
   };
 
   const signUpSchema = Yup.object({
     userName: Yup.string().min(3).max(20, "").required("Required field"),
-    email: Yup.string().min(3).max(20, "").required("Required field"),
+    email: Yup.string().min(3).required("Required field"),
     phone: Yup.string().min(3).max(20, "").required("Required field"),
     password: Yup.string().min(3).max(20, "").required("Required field"),
   });
@@ -83,7 +87,7 @@ const SignUp = () => {
                 <div className="mt-8">
                   <FormikInput
                     name="phone"
-                    type={"number"}
+                    type={"text"}
                     label={"Phone"}
                     placeholder={"Phone"}
                   />
@@ -102,7 +106,6 @@ const SignUp = () => {
                       <input
                         className="mt-1 mr-3 bg-primary authcheckbox "
                         type="checkbox"
-                        required
                       />
                       Remember Password
                     </label>

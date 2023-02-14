@@ -11,7 +11,6 @@ const ResetPasswordPage = () => {
   const panes = [
     {
       menuItem: "Reset Password",
-      // routes: routes.auth.forgetpass.restpass,
       render: () => (
         <div>
           <Tab.Pane className="border-none h-full  animate-in pt-2 flex justify-center ">
@@ -21,7 +20,6 @@ const ResetPasswordPage = () => {
       ),
     },
   ];
-  const { activeIndex, onTabChange } = useTab({ panes });
   return (
     <div className="animate-in  h-screen">
       <div>
@@ -47,8 +45,6 @@ const ResetPasswordPage = () => {
                 pointing: true,
                 className: "flex flex-wrap text-xl pl-40 m-0",
               }}
-              activeIndex={activeIndex}
-              onTabChange={onTabChange}
               panes={panes}
             />
           </div>

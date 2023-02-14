@@ -23,22 +23,22 @@ function App() {
         containerStyle={{}}
         toastOptions={{
           iconTheme: {
-            className: "hidden",
+            className: "hidden p-0",
           },
           loading: {
             duration: 5000,
             className:
-              "w-[400px] h-[79px] border-l-8 border-[#002189] bg-[#F7F9FF]",
+              "w-[430px] h-[85px] border-l-8 border-[#002189] bg-[#F7F9FF]",
           },
           success: {
             duration: 5000,
             className:
-              "w-[400px] h-[79px] border-l-8 border-[#002189] bg-[#F7F9FF]",
+              "w-[430px] h-[85px] border-l-8 border-[#002189] bg-[#F7F9FF]",
           },
           error: {
             duration: 5000,
             className:
-              "w-[400px] h-[79px] border-l-8 border-[#E53737] bg-[#FFFAFA]",
+              "w-[430px] h-[85px] border-l-8 border-[#E53737] bg-[#FFFAFA]",
           },
         }}
       />
