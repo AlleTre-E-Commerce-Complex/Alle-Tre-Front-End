@@ -1,3 +1,87 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@layer base {
+  *:lang(en) {
+    font-family: "Roboto", sans-serif;
+  }
+  *:lang(ar) {
+    font-family: "Cairo", sans-serif;
+  }
+
+  /* input number */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+ /* input checkbox */
+.authcheckbox {
+  accent-color: #821A4D;
+}
+
+html {
+  @apply bg-background-gray ;
+}
+a {
+  @apply hover:text-current;
+}
+
+/* ///////////////////animate//////////////////////////// */
+.animate-in {
+  animation: fade-in 350ms ease-in-out forwards;
+}
+
+.animate-out {
+  animation: fade-out 400ms ease-in-out forwards;
+}
+
+.scale-in {
+  animation: scale-in 250ms ease-in-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98) ;
+  }
+}
+/* ///////////////////////////////////////////////////////////////////// */
+/*----------------------- edit-For-order-tabs ---------------------------*/
+.edit-For-o-auth-tabs .ui.secondary.pointing.menu {
+@apply sm:border-primary border-primary   !important;
+}
+.edit-For-o-auth-tabs .ui.secondary.pointing.menu .active.item {
+  @apply gap-x-5 py-1.5 px-10 font-normal text-xl sm:rounded-t-xl rounded-xl sm:rounded-none bg-white text-gray sm:border-none !important;
+}
+.edit-For-o-auth-tabs .ui.secondary.pointing.menu .item {
+  @apply sm:border-none border-primary bg-primary  sm:rounded-t-xl rounded-xl sm:rounded-none font-normal text-xl py-1.5 px-10 text-white  !important;
+}
+/* ///////////////////////////////////////////////////////////////////// */
+/*----------------------- edit-For-order-tabs ---------------------------*/
+.edit-For-reset-password-page-tabs .ui.secondary.pointing.menu {
+@apply sm:border-primary border-primary   !important;
+}
+.edit-For-reset-password-page-tabs .ui.secondary.pointing.menu .item {
+  @apply gap-x-5 py-1.5 px-10 font-normal text-xl sm:rounded-t-xl rounded-xl sm:rounded-none bg-white text-gray sm:border-none !important;
+}
+.edit-For-reset-password-page-tabs .ui.secondary.pointing.menu .active.item {
+  @apply sm:border-none border-primary bg-primary  sm:rounded-t-xl rounded-xl sm:rounded-none font-normal text-xl py-1.5 px-10 text-white  !important;
+}
+/* ///////////////////////////////////////////////////////////////////// */
