@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import routes from "../../routes";
 import { Link, useHistory } from "react-router-dom";
@@ -25,9 +25,7 @@ const ForgetPassword = () => {
   const tokenEdit = query.get("token");
   const [token] = useLocalStorage("tokenEdit", tokenEdit);
 
-  console.log("====================================");
-  console.log(token);
-  console.log("====================================");
+  const [isHidden, setIsHidden] = useState(false);
 
   const { run, isLoading } = useAxios();
   const resetPassword = (values) => {
@@ -37,14 +35,19 @@ const ForgetPassword = () => {
     };
     run(axios.post(api.auth.resetCredentials, body))
       .then((res) => {
-        history.push(routes.auth.logIn);
+        // history.push(routes.auth.logIn);
+        setIsHidden(true);
         toast.success(
-          lang === "en" ? res?.data?.data?.en : res?.data?.data?.ar
+          lang === "en" ? (
+            <p>Your password has been changed successfully</p>
+          ) : (
+            <p> تم تغيير كلمة المرور الخاصة بك بنجاح</p>
+          )
         );
       })
       .catch((err) => {
-        toast.success(
-          lang === "en" ? err?.data?.data?.en : err?.data?.data?.ar
+        toast.error(
+          lang === "en" ? err.message.en : err.message.en || err.message
         );
       });
   };
@@ -59,7 +62,7 @@ const ForgetPassword = () => {
   return (
     <div className="flex mt-8 gap-x-3 animate-in z-50">
       <div>
-        <div className="">
+        <div className={isHidden ? "animate-out h-0" : "animate-in"}>
           <Formik
             initialValues={{
               password: "",
@@ -111,9 +114,35 @@ const ForgetPassword = () => {
                     Reset Password
                   </Button>
                 </div>
+                {/* <div className="bg-transparent-400 w-full h-14">
+                  <lottie-player
+                    src="./lottie-player.js"
+                    background="transparent"
+                    speed="1"
+                    autoplay
+                  ></lottie-player>
+                </div> */}
               </Form>
             )}
           </Formik>
+        </div>
+        <div
+          className={
+            isHidden ? "animate-in mx-auto" : "animate-out h-0 hidden mx-auto"
+          }
+        >
+          <p className="text-gray py-8">
+            The password has been successfully changed.
+          </p>
+          <button
+            loading={isLoading}
+            onClick={() => {
+              history.push(routes.auth.logIn);
+            }}
+            className="bg-white border-[1px] border-primary w-80 h-12 rounded-lg text-primary mt-5 font-normal text-base "
+          >
+            Back to Home
+          </button>
         </div>
       </div>
     </div>
