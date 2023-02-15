@@ -17,6 +17,8 @@ import useAxios from "../../hooks/use-axios";
 import axios from "axios";
 import api from "../../api";
 
+import { Player, Controls } from "@lottiefiles/react-lottie-player";
+
 const ForgetPassword = () => {
   const [lang, setLang] = useLanguage("");
   const langContent = content[lang];
@@ -106,22 +108,12 @@ const ForgetPassword = () => {
                 <div className="flex justify-center ">
                   <Button
                     loading={isLoading}
-                    onClick={() => {
-                      // history.push(routes.dashboard.app);
-                    }}
+                    onClick={() => {}}
                     className="bg-primary w-80 h-12 rounded-lg text-white mt-5 font-normal text-base "
                   >
                     Reset Password
                   </Button>
                 </div>
-                {/* <div className="bg-transparent-400 w-full h-14">
-                  <lottie-player
-                    src="./lottie-player.js"
-                    background="transparent"
-                    speed="1"
-                    autoplay
-                  ></lottie-player>
-                </div> */}
               </Form>
             )}
           </Formik>
@@ -131,6 +123,26 @@ const ForgetPassword = () => {
             isHidden ? "animate-in mx-auto" : "animate-out h-0 hidden mx-auto"
           }
         >
+          <div className="w-72">
+            <Player
+              autoplay
+              speed={1.5}
+              loop
+              src="https://assets9.lottiefiles.com/packages/lf20_afs4kbqm.json"
+            >
+              <Controls
+                visible={false}
+                buttons={[
+                  "play",
+                  "repeat",
+                  "frame",
+                  "debug",
+                  "snapshot",
+                  "background",
+                ]}
+              />
+            </Player>
+          </div>
           <p className="text-gray py-8">
             The password has been successfully changed.
           </p>
@@ -139,7 +151,7 @@ const ForgetPassword = () => {
             onClick={() => {
               history.push(routes.auth.logIn);
             }}
-            className="bg-white border-[1px] border-primary w-80 h-12 rounded-lg text-primary mt-5 font-normal text-base "
+            className="bg-white border-[1px] border-primary w-80 h-12 rounded-lg text-primary mt-2 font-normal text-base "
           >
             Back to Home
           </button>

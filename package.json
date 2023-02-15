@@ -5,6 +5,8 @@
   "homepage": "/",
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",
+    "@lottiefiles/lottie-player": "^1.7.1",
+    "@lottiefiles/react-lottie-player": "^3.5.2",
     "@reach/combobox": "0.16.1",
     "@react-google-maps/api": "^2.2.0",
     "axios": "^0.27.2",
@@ -20,6 +22,7 @@
     "react-geocode": "^0.2.3",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
+    "react-lottie-player": "^1.5.4",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.1",
