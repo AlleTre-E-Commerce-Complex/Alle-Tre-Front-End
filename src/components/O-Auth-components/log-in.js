@@ -147,8 +147,8 @@ const LogIn = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="mx-6 md:mx-0">
-                  <div className="mt-10 mx-auto flex md:block justify-center">
+                <div className="md:mx-6 mx-0">
+                  <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="email"
                       type={"email"}
@@ -156,7 +156,7 @@ const LogIn = () => {
                       placeholder={selectedContent[localizationKeys.email]}
                     />
                   </div>
-                  <div className="mt-12 mx-auto flex md:block justify-center">
+                  <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="password"
                       type={"password"}
@@ -182,13 +182,13 @@ const LogIn = () => {
                       {selectedContent[localizationKeys.forgetPassword]}
                     </Link>
                   </div>
-                  <div className="flex justify-center ">
+                  <div className="md:flex block justify-center ">
                     <Button
                       loading={isLoading}
                       onClick={() => {
                         // history.push(routes.dashboard.app);
                       }}
-                      className="bg-primary w-80 h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                      className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
                     >
                       {selectedContent[localizationKeys.login]}
                     </Button>
@@ -208,8 +208,8 @@ const LogIn = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="mx-6 md:mx-0">
-                  <div className="mt-10 mx-auto flex md:block justify-center">
+                <div className="md:mx-6 mx-0">
+                  <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="email"
                       type={"email"}
@@ -225,10 +225,10 @@ const LogIn = () => {
                       {selectedContent[localizationKeys.backToLogin]}
                     </Link>
                   </div>
-                  <div className="flex justify-center ">
+                  <div className="md:flex block justify-center ">
                     <Button
                       loading={isLoadingorgetPassword}
-                      className="bg-primary w-80 h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                      className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
                     >
                       {selectedContent[localizationKeys.sentVerification]}
                     </Button>

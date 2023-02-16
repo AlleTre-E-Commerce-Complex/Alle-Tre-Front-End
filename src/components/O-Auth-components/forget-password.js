@@ -63,7 +63,7 @@ const ForgetPassword = () => {
   });
 
   return (
-    <div className="flex mt-8 gap-x-3 animate-in z-50">
+    <div className="flex mt-8 gap-x-3 animate-in  z-50">
       <div>
         <div className={isHidden ? "animate-out h-0" : "animate-in"}>
           <Formik
@@ -76,30 +76,34 @@ const ForgetPassword = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="mt-10 mx-auto">
-                  <FormikInput
-                    name="password"
-                    type={"password"}
-                    label={selectedContent[localizationKeys.newPassword]}
-                    placeholder={selectedContent[localizationKeys.newPassword]}
-                  />
-                </div>
-                <div className="mt-12">
-                  <FormikInput
-                    name="confarmpassword"
-                    type={"password"}
-                    label={selectedContent[localizationKeys.reEnterPassword]}
-                    placeholder={
-                      selectedContent[localizationKeys.reEnterPassword]
-                    }
-                  />
+                <div className="mx-0">
+                  <div className="mt-10 mx-auto ">
+                    <FormikInput
+                      name="password"
+                      type={"password"}
+                      label={selectedContent[localizationKeys.newPassword]}
+                      placeholder={
+                        selectedContent[localizationKeys.newPassword]
+                      }
+                    />
+                  </div>
+                  <div className="mt-12  mx-auto">
+                    <FormikInput
+                      name="confarmpassword"
+                      type={"password"}
+                      label={selectedContent[localizationKeys.reEnterPassword]}
+                      placeholder={
+                        selectedContent[localizationKeys.reEnterPassword]
+                      }
+                    />
+                  </div>
                 </div>
 
                 <div className="flex justify-center ">
                   <Button
                     loading={isLoading}
                     onClick={() => {}}
-                    className="bg-primary w-80 h-12 rounded-lg text-white mt-8 font-normal text-base font-serifAR"
+                    className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-8 font-normal text-base font-serifAR"
                   >
                     {selectedContent[localizationKeys.resetPassword]}
                   </Button>

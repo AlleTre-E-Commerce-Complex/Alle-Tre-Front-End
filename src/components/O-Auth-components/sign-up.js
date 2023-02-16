@@ -79,8 +79,8 @@ const SignUp = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="mx-6 md:mx-0">
-                  <div className="mt-10 mx-auto flex md:block justify-center">
+                <div className="md:mx-6 mx-0">
+                  <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="userName"
                       type={"text"}
@@ -88,7 +88,7 @@ const SignUp = () => {
                       placeholder={selectedContent[localizationKeys.name]}
                     />
                   </div>
-                  <div className="mt-8 mx-auto flex md:block justify-center">
+                  <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="email"
                       type={"email"}
@@ -96,7 +96,7 @@ const SignUp = () => {
                       placeholder={selectedContent[localizationKeys.email]}
                     />
                   </div>
-                  <div className="mt-8 mx-auto flex md:block justify-center">
+                  <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="phone"
                       type={"text"}
@@ -104,7 +104,7 @@ const SignUp = () => {
                       placeholder={selectedContent[localizationKeys.phone]}
                     />
                   </div>
-                  <div className="mt-8 mx-auto flex md:block justify-center">
+                  <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="password"
                       type={"password"}
@@ -112,7 +112,7 @@ const SignUp = () => {
                       placeholder={selectedContent[localizationKeys.password]}
                     />
                   </div>
-                  <div className="mt-4 mx-1">
+                  <div className="mt-5 mx-1">
                     <div>
                       <label className="text-gray-med text-sm font-normal cursor-pointer">
                         <input
@@ -123,8 +123,8 @@ const SignUp = () => {
                         {selectedContent[localizationKeys.rememberPassword]}
                       </label>
                     </div>
-                    <div>
-                      <label className="text-gray-med text-sm font-normal cursor-pointer ">
+                    <div className="mt-2">
+                      <label className="text-gray-med text-sm font-normal cursor-pointer  ">
                         <input
                           className="mt-1 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
                           type="checkbox"
@@ -144,7 +144,7 @@ const SignUp = () => {
                       onClick={() => {
                         // history.push(routes.dashboard.app);
                       }}
-                      className="bg-primary w-80 h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                      className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
                     >
                       {selectedContent[localizationKeys.createAccount]}
                     </Button>
