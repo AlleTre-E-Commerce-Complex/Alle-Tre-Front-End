@@ -1,5 +1,9 @@
-export const content = {
-  en: {},
+import en from "./en";
+import ar from "./ar";
 
-  ar: {},
+const content = {
+  en,
+  ar,
 };
+
+export default content;

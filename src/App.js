@@ -1,20 +1,23 @@
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
+
 import { Redirect, Route, Switch } from "react-router-dom";
-import AuthLayouts from "./layout/auth-layout";
-import CredentialsuUpdateLayout from "./layout/credentials-update-layout";
 import routes from "./routes";
+
+import CredentialsuUpdateLayout from "./layout/credentials-update-layout";
+import AuthLayouts from "./layout/auth-layout";
 
 function App() {
   return (
     <div className="App">
       <Switch>
+        <Route path={routes.auth.default} component={AuthLayouts} />
+
         <Route
           path={routes.auth.forgetpass.default}
           component={CredentialsuUpdateLayout}
         />
-        <Route path={routes.auth.default} component={AuthLayouts} />
 
-        {/* <Redirect path={routes.auth.default} component={AuthLayouts} /> */}
+        <Redirect path={routes.auth.default} component={AuthLayouts} />
       </Switch>
       <Toaster
         position="top-right"

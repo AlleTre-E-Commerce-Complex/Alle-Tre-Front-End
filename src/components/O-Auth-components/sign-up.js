@@ -14,43 +14,54 @@ import { toast } from "react-hot-toast";
 import { useLanguage } from "../../context/language-context";
 import { axios } from "../../config/axios-config";
 import api from "../../api";
-import auth from "../../utils/auth";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const SignUp = () => {
   const history = useHistory();
   const [lang] = useLanguage("");
+  const selectedContent = content[lang];
 
   const { run, isLoading } = useAxios();
   const signUp = (values) => {
     run(axios.post(api.auth.signup, values))
       .then((res) => {
         toast.loading(
-          "A verification mail has been sent to your mail please check it...."
+          selectedContent[localizationKeys.aVerificationMailHasBeenSent]
         );
       })
       .catch((err) => {
         toast.error(
-          lang === "en" ? err.message.en : err.message.en || err.message
+          lang === "en"
+            ? err.message.en || err.message
+            : err.message.ar || err.message
         );
       });
   };
 
   const signUpSchema = Yup.object({
-    userName: Yup.string().min(3).max(20, "").required("Required field"),
+    userName: Yup.string().min(3).max(20).required("Required field"),
     email: Yup.string().min(3).required("Required field"),
-    phone: Yup.string().min(3).max(20, "").required("Required field"),
-    password: Yup.string().min(3).max(20, "").required("Required field"),
+    phone: Yup.string().min(3).max(20).required("Required field"),
+    password: Yup.string().min(3).max(20).required("Required field"),
   });
 
   return (
-    <div className="flex gap-x-3 animate-in bg-background">
-      <div className="mt-5">
+    <div className="flex flex-col md:flex-row  gap-x-3 animate-in bg-transparent">
+      <div className="mt-5 mx-auto md:mx-0">
         <OAuthSections isLogin={false} />
       </div>
-      <div className="mx-5">
-        <p className="border-l-[1px] border-gray-dark h-64 my-10 left-1.5 relative">
-          <p className="absolute -left-[30px] text-gray-dark rotate-90 top-1/2 bg-white px-6">
-            OR
+      <div className="mx-5 ">
+        <p className="border-l-[1px] mt-10 border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden left-0.5">
+          <p className="absolute -left-[30px] text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
+            {selectedContent[localizationKeys.or]}
+          </p>
+        </p>
+      </div>
+      <div className="mx-auto ">
+        <p className="border-t-[1px] border-gray-dark w-64  my-2 relative md:hidden left-0.5">
+          <p className="absolute text-gray-dark bg-white left-24 -top-3 px-6">
+            {selectedContent[localizationKeys.or]}
           </p>
         </p>
       </div>
@@ -68,69 +79,76 @@ const SignUp = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="mt-8 w-full mx-auto">
-                  <FormikInput
-                    name="userName"
-                    type={"text"}
-                    label={"Name"}
-                    placeholder={"Name"}
-                  />
-                </div>
-                <div className="mt-8">
-                  <FormikInput
-                    name="email"
-                    type={"email"}
-                    label={"E-mail"}
-                    placeholder={"E-mail"}
-                  />
-                </div>
-                <div className="mt-8">
-                  <FormikInput
-                    name="phone"
-                    type={"text"}
-                    label={"Phone"}
-                    placeholder={"Phone"}
-                  />
-                </div>
-                <div className="mt-8">
-                  <FormikInput
-                    name="password"
-                    type={"password"}
-                    label={"Password"}
-                    placeholder={"Password"}
-                  />
-                </div>
-                <div className="mt-4 mx-1">
-                  <div>
-                    <label className="text-gray-med text-sm font-normal cursor-pointer">
-                      <input
-                        className="mt-1 mr-3 bg-primary authcheckbox "
-                        type="checkbox"
-                      />
-                      Remember Password
-                    </label>
+                <div className="mx-6 md:mx-0">
+                  <div className="mt-10 mx-auto flex md:block justify-center">
+                    <FormikInput
+                      name="userName"
+                      type={"text"}
+                      label={selectedContent[localizationKeys.name]}
+                      placeholder={selectedContent[localizationKeys.name]}
+                    />
                   </div>
-                  <div>
-                    <label className="text-gray-med text-sm font-normal cursor-pointer ">
-                      <input
-                        className="mt-1 mr-3 bg-primary authcheckbox"
-                        type="checkbox"
-                        required
-                      />
-                      I agree to the Terms & Conditions
-                    </label>
+                  <div className="mt-8 mx-auto flex md:block justify-center">
+                    <FormikInput
+                      name="email"
+                      type={"email"}
+                      label={selectedContent[localizationKeys.email]}
+                      placeholder={selectedContent[localizationKeys.email]}
+                    />
                   </div>
-                </div>
-                <div className="flex justify-center">
-                  <Button
-                    loading={isLoading}
-                    onClick={() => {
-                      // history.push(routes.dashboard.app);
-                    }}
-                    className="bg-primary w-80 h-12 rounded-lg text-white mt-5 font-normal text-base "
-                  >
-                    Create Account
-                  </Button>
+                  <div className="mt-8 mx-auto flex md:block justify-center">
+                    <FormikInput
+                      name="phone"
+                      type={"text"}
+                      label={selectedContent[localizationKeys.phone]}
+                      placeholder={selectedContent[localizationKeys.phone]}
+                    />
+                  </div>
+                  <div className="mt-8 mx-auto flex md:block justify-center">
+                    <FormikInput
+                      name="password"
+                      type={"password"}
+                      label={selectedContent[localizationKeys.password]}
+                      placeholder={selectedContent[localizationKeys.password]}
+                    />
+                  </div>
+                  <div className="mt-4 mx-1">
+                    <div>
+                      <label className="text-gray-med text-sm font-normal cursor-pointer">
+                        <input
+                          className="mt-1 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox "
+                          type="checkbox"
+                        />
+
+                        {selectedContent[localizationKeys.rememberPassword]}
+                      </label>
+                    </div>
+                    <div>
+                      <label className="text-gray-med text-sm font-normal cursor-pointer ">
+                        <input
+                          className="mt-1 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
+                          type="checkbox"
+                          required
+                        />
+                        {
+                          selectedContent[
+                            localizationKeys.iAgreetotheTermsConditions
+                          ]
+                        }
+                      </label>
+                    </div>
+                  </div>
+                  <div className="flex justify-center">
+                    <Button
+                      loading={isLoading}
+                      onClick={() => {
+                        // history.push(routes.dashboard.app);
+                      }}
+                      className="bg-primary w-80 h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                    >
+                      {selectedContent[localizationKeys.createAccount]}
+                    </Button>
+                  </div>
                 </div>
               </Form>
             )}

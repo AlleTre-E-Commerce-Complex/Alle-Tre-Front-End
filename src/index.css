@@ -65,23 +65,23 @@ a {
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/
 .edit-For-o-auth-tabs .ui.secondary.pointing.menu {
-@apply sm:border-primary border-primary   !important;
+@apply border-primary !important;
 }
 .edit-For-o-auth-tabs .ui.secondary.pointing.menu .active.item {
-  @apply gap-x-5 py-1.5 px-10 font-normal text-xl sm:rounded-t-xl rounded-xl sm:rounded-none bg-white text-gray sm:border-none !important;
+  @apply gap-x-5 py-1.5 px-10 font-normal text-xl rounded-t-xl  bg-white text-gray  !important;
 }
 .edit-For-o-auth-tabs .ui.secondary.pointing.menu .item {
-  @apply sm:border-none border-primary bg-primary  sm:rounded-t-xl rounded-xl sm:rounded-none font-normal text-xl py-1.5 px-10 text-white  !important;
+  @apply  border-primary bg-primary rounded-t-xl  font-normal text-xl py-1.5 px-10 text-white  !important;
 }
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/
 .edit-For-reset-password-page-tabs .ui.secondary.pointing.menu {
-@apply sm:border-primary border-primary   !important;
+@apply border-primary !important;
 }
 .edit-For-reset-password-page-tabs .ui.secondary.pointing.menu .item {
-  @apply gap-x-5 py-1.5 px-10 font-normal text-xl sm:rounded-t-xl rounded-xl sm:rounded-none bg-white text-gray sm:border-none !important;
+  @apply gap-x-5 py-1.5 px-10 font-normal text-xl rounded-t-xl  bg-white text-gray  !important;
 }
 .edit-For-reset-password-page-tabs .ui.secondary.pointing.menu .active.item {
-  @apply sm:border-none border-primary bg-primary  sm:rounded-t-xl rounded-xl sm:rounded-none font-normal text-xl py-1.5 px-10 text-white  !important;
+  @apply  border-primary bg-primary rounded-t-xl  font-normal text-xl py-1.5 px-10 text-white  !important;
 }
 /* ///////////////////////////////////////////////////////////////////// */

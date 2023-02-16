@@ -15,14 +15,20 @@
     font: normal normal normal 16px/21px Roboto ;
   }
   
-  
   .label_Input_Form {
     font-size: 12px;
     position: absolute;
     bottom: 37px;
-    left: 18px;
     padding: 0 5px;
     background: white;
     font: normal normal normal 16px/21px Roboto ;
     color: #707070;
+  }
+
+  .label_Input_Form:lang(ar) {
+    right: 18px;
+  }
+
+  .label_Input_Form:lang(en) {
+    left: 18px;
   }

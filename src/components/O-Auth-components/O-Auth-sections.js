@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   signInWithPopup,
   FacebookAuthProvider,
@@ -10,14 +10,21 @@ import appleIcon from "../../../src/assets/icons/Apple-icon.svg";
 import googleIcon from "../../../src/assets/icons/Google-icon.svg";
 import facebookIcon from "../../../src/assets/icons/Fcaebook-icon.svg";
 import allatreLogoColor from "../../../src/assets/logo/allatre-logo-color.svg";
+
 import { toast } from "react-hot-toast";
 import useAxios from "../../hooks/use-axios";
 import axios from "axios";
 import api from "../../api";
 import auth from "../../utils/auth";
 import { authentications } from "../../config/firebase-config";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const OAuthSections = ({ isLogin }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
+
   const { run } = useAxios();
   const signInWithApple = () => {
     const provider = new OAuthProvider("apple.com");
@@ -41,11 +48,19 @@ const OAuthSections = ({ isLogin }) => {
             // history.push(routes.Dashboard.containers.base);
           })
           .catch((err) => {
-            toast.error("Something is wrong try again later");
+            toast.error(
+              selectedContent[
+                localizationKeys.somethingWentWrongPleaseTryAgainLater
+              ]
+            );
           });
       })
       .catch((err) => {
-        toast.error("Something is wrong try again later");
+        toast.error(
+          selectedContent[
+            localizationKeys.somethingWentWrongPleaseTryAgainLater
+          ]
+        );
       });
   };
 
@@ -71,11 +86,19 @@ const OAuthSections = ({ isLogin }) => {
             // history.push(routes.Dashboard.containers.base);
           })
           .catch((err) => {
-            toast.error("Something is wrong try again later");
+            toast.error(
+              selectedContent[
+                localizationKeys.somethingWentWrongPleaseTryAgainLater
+              ]
+            );
           });
       })
       .catch((err) => {
-        toast.error("Something is wrong try again later");
+        toast.error(
+          selectedContent[
+            localizationKeys.somethingWentWrongPleaseTryAgainLater
+          ]
+        );
       });
   };
 
@@ -101,11 +124,19 @@ const OAuthSections = ({ isLogin }) => {
             toast.success("done");
           })
           .catch((err) => {
-            toast.error("Something is wrong try again later");
+            toast.error(
+              selectedContent[
+                localizationKeys.somethingWentWrongPleaseTryAgainLater
+              ]
+            );
           });
       })
       .catch((err) => {
-        toast.error("Something is wrong try again later");
+        toast.error(
+          selectedContent[
+            localizationKeys.somethingWentWrongPleaseTryAgainLater
+          ]
+        );
       });
   };
 
@@ -114,19 +145,35 @@ const OAuthSections = ({ isLogin }) => {
       <Loginbutton
         logo={appleIcon}
         onClick={signInWithApple}
-        text={isLogin ? "Login with Apple" : "Sign Up with Apple"}
+        text={
+          isLogin
+            ? selectedContent[localizationKeys.loginWithApple]
+            : selectedContent[localizationKeys.signupwithApple]
+        }
       />
       <Loginbutton
         logo={googleIcon}
         onClick={signInWithGoogle}
-        text={isLogin ? "Login with Google" : "Sign Up with Google"}
+        text={
+          isLogin
+            ? selectedContent[localizationKeys.loginwithGoogle]
+            : selectedContent[localizationKeys.signupwithGoogle]
+        }
       />
       <Loginbutton
         logo={facebookIcon}
         onClick={signInWithFacebook}
-        text={isLogin ? "Login with Facebook" : "Sign Up with Facebook"}
+        text={
+          isLogin
+            ? selectedContent[localizationKeys.loginwithFacebook]
+            : selectedContent[localizationKeys.signupwithFacebook]
+        }
       />
-      <div className={`${isLogin ? "mt-20" : "mt-28"} flex justify-center`}>
+      <div
+        className={`${
+          isLogin ? "mt-20" : "mt-28"
+        } md:flex justify-center hidden`}
+      >
         <img src={allatreLogoColor} alt="allatreLogoColor" />
       </div>
     </div>
