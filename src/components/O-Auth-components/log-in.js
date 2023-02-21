@@ -92,7 +92,7 @@ const LogIn = () => {
 
   const logInSchema = Yup.object({
     email: Yup.string().required("Required field"),
-    password: Yup.string().min(3).max(20).required("Required field"),
+    password: Yup.string().min(8).max(20).required("Required field"),
   });
 
   const { run: runforgetPassword, isLoading: isLoadingorgetPassword } =
@@ -117,7 +117,7 @@ const LogIn = () => {
   });
 
   return (
-    <div className="flex flex-col md:flex-row  mt-8 gap-x-3 animate-in z-50">
+    <div className="flex flex-col md:flex-row  mt-8 gap-x-3 animate-in z-50 rtl:font-serifAR ltr:font-serifEN ">
       <div className="mx-auto md:mx-0">
         <OAuthSections isLogin={true} />
       </div>
@@ -147,7 +147,7 @@ const LogIn = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="md:mx-6 mx-0">
+                <div className="md:mx-6 mx-0 sm:w-[304px] w-full">
                   <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="email"
@@ -188,7 +188,7 @@ const LogIn = () => {
                       onClick={() => {
                         // history.push(routes.dashboard.app);
                       }}
-                      className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                      className="bg-primary sm:w-[304px] w-full h-12 rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
                     >
                       {selectedContent[localizationKeys.login]}
                     </Button>
@@ -208,7 +208,7 @@ const LogIn = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="md:mx-6 mx-0">
+                <div className="md:mx-6 mx-0  sm:w-[304px] w-full ">
                   <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="email"
@@ -225,10 +225,10 @@ const LogIn = () => {
                       {selectedContent[localizationKeys.backToLogin]}
                     </Link>
                   </div>
-                  <div className="md:flex block justify-center ">
+                  <div className="w-full">
                     <Button
                       loading={isLoadingorgetPassword}
-                      className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                      className="bg-primary sm:w-[304px] w-full h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
                     >
                       {selectedContent[localizationKeys.sentVerification]}
                     </Button>

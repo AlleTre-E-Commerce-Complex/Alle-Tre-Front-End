@@ -34,7 +34,7 @@ const en = {
   [localizationKeys.resendMailAgain]: "Resend mail again",
   [localizationKeys.or]: "OR",
   [localizationKeys.backToLogin]: "Back to Login",
-  [localizationKeys.sentVerification]: "Sent Verification",
+  [localizationKeys.sentVerification]: "send verification",
 };
 
 export default en;

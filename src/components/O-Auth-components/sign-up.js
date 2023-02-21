@@ -43,11 +43,11 @@ const SignUp = () => {
     userName: Yup.string().min(3).max(20).required("Required field"),
     email: Yup.string().min(3).required("Required field"),
     phone: Yup.string().min(3).max(20).required("Required field"),
-    password: Yup.string().min(3).max(20).required("Required field"),
+    password: Yup.string().min(8).max(8).required("Required field"),
   });
 
   return (
-    <div className="flex flex-col md:flex-row  gap-x-3 animate-in bg-transparent">
+    <div className="flex flex-col md:flex-row  gap-x-3 animate-in bg-transparent rtl:font-serifAR ltr:font-serifEN ">
       <div className="mt-5 mx-auto md:mx-0">
         <OAuthSections isLogin={false} />
       </div>
@@ -79,7 +79,7 @@ const SignUp = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="md:mx-6 mx-0">
+                <div className="md:mx-6 mx-0 sm:w-[304px] w-full">
                   <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="userName"
@@ -113,20 +113,10 @@ const SignUp = () => {
                     />
                   </div>
                   <div className="mt-5 mx-1">
-                    <div>
-                      <label className="text-gray-med text-sm font-normal cursor-pointer">
-                        <input
-                          className="mt-1 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox "
-                          type="checkbox"
-                        />
-
-                        {selectedContent[localizationKeys.rememberPassword]}
-                      </label>
-                    </div>
                     <div className="mt-2">
                       <label className="text-gray-med text-sm font-normal cursor-pointer  ">
                         <input
-                          className="mt-1 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
+                          className="mt-1.5 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
                           type="checkbox"
                           required
                         />
@@ -138,13 +128,13 @@ const SignUp = () => {
                       </label>
                     </div>
                   </div>
-                  <div className="flex justify-center">
+                  <div className="">
                     <Button
                       loading={isLoading}
                       onClick={() => {
                         // history.push(routes.dashboard.app);
                       }}
-                      className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                      className="bg-primary sm:w-[304px]  w-full h-12 rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN "
                     >
                       {selectedContent[localizationKeys.createAccount]}
                     </Button>

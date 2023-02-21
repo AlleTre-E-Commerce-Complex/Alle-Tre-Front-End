@@ -63,7 +63,7 @@ const ForgetPassword = () => {
   });
 
   return (
-    <div className="flex mt-8 gap-x-3 animate-in  z-50">
+    <div className="sm:w-[304px] w-full mt-8 gap-x-3 animate-in z-50 rtl:font-serifAR ltr:font-serifEN">
       <div>
         <div className={isHidden ? "animate-out h-0" : "animate-in"}>
           <Formik
@@ -76,7 +76,7 @@ const ForgetPassword = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="mx-0">
+                <div className="sm:mx-0 mx-auto sm:w-[304px] w-full">
                   <div className="mt-10 mx-auto ">
                     <FormikInput
                       name="password"
@@ -99,11 +99,11 @@ const ForgetPassword = () => {
                   </div>
                 </div>
 
-                <div className="flex justify-center ">
+                <div className="">
                   <Button
                     loading={isLoading}
                     onClick={() => {}}
-                    className="bg-primary md:w-80 w-full h-12 rounded-lg text-white mt-8 font-normal text-base font-serifAR"
+                    className="bg-primary  sm:w-[304px] w-full h-12 rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
                   >
                     {selectedContent[localizationKeys.resetPassword]}
                   </Button>
