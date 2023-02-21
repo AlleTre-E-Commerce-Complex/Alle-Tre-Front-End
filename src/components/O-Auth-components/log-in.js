@@ -122,7 +122,7 @@ const LogIn = () => {
         <OAuthSections isLogin={true} />
       </div>
       <div className="mx-5 ">
-        <p className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden left-0.5">
+        <p className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden left-4">
           <p className="absolute -left-[30px] text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
             {selectedContent[localizationKeys.or]}
           </p>
