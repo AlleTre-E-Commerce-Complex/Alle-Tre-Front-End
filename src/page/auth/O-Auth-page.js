@@ -84,7 +84,7 @@ const OAuthpage = () => {
             </div>
           </div>
           <div
-            className={` mx-auto h-auto w-full relative bottom-[95px] edit-For-o-auth-tabs m-0 `}
+            className={` mx-auto h-auto w-full relative bottom-[99px] edit-For-o-auth-tabs m-0 `}
           >
             <Tab
               menu={{
