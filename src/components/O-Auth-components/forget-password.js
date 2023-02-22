@@ -56,7 +56,12 @@ const ForgetPassword = () => {
   };
 
   const logInSchema = Yup.object({
-    password: Yup.string().min(8).max(20).required("Required field"),
+    password: Yup.string()
+      .min(8)
+      .max(20)
+      .trim()
+      .required("Required field")
+      .matches("/^[A-Za-z0-9]*$/"),
     confarmpassword: Yup.string()
       .oneOf([Yup.ref("password"), null], `not match`)
       .required("Required field"),

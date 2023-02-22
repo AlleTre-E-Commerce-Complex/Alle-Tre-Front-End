@@ -43,7 +43,12 @@ const SignUp = () => {
     userName: Yup.string().min(3).max(20).required("Required field"),
     email: Yup.string().min(3).required("Required field"),
     phone: Yup.string().min(3).max(20).required("Required field"),
-    password: Yup.string().min(8).max(8).required("Required field"),
+    password: Yup.string()
+      .min(8)
+      .max(20)
+      .trim()
+      .required("Required field")
+      .matches("/^[A-Za-z0-9]*$/"),
   });
 
   return (

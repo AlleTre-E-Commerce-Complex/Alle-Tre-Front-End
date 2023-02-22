@@ -92,7 +92,12 @@ const LogIn = () => {
 
   const logInSchema = Yup.object({
     email: Yup.string().required("Required field"),
-    password: Yup.string().min(8).max(20).required("Required field"),
+    password: Yup.string()
+      .min(8)
+      .max(20)
+      .required("Required field")
+      .trim()
+      .matches("/^[A-Za-z0-9]*$/"),
   });
 
   const { run: runforgetPassword, isLoading: isLoadingorgetPassword } =
