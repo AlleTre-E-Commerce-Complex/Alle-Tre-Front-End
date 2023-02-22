@@ -97,7 +97,10 @@ const LogIn = () => {
       .max(20)
       .required("Required field")
       .trim()
-      .matches("/^[A-Za-z0-9]*$/"),
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
   });
 
   const { run: runforgetPassword, isLoading: isLoadingorgetPassword } =

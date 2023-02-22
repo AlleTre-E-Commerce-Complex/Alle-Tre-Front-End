@@ -61,7 +61,10 @@ const ForgetPassword = () => {
       .max(20)
       .trim()
       .required("Required field")
-      .matches("/^[A-Za-z0-9]*$/"),
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
     confarmpassword: Yup.string()
       .oneOf([Yup.ref("password"), null], `not match`)
       .required("Required field"),
