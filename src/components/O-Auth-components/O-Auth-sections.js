@@ -184,7 +184,7 @@ export const Loginbutton = ({ logo, text, onClick }) => {
   return (
     <div>
       <button
-        className="flex justify-start w-[328px] h-12 border-[1px] rounded-lg border-primary text-primary my-6 py-2 ltr:pl-[68px] rtl:pr-5"
+        className="flex justify-start w-[328px] h-[48px] border-[1px] rounded-lg border-primary text-primary my-6 py-2 ltr:pl-[60px] rtl:pr-5"
         onClick={onClick}
       >
         <img className="mx-4" src={logo} alt="logo" />
