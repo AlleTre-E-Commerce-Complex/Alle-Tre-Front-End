@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import { Axios } from "axios";
+import Axios from "axios";
 import api from "../api";
 
 let accessToken = "";
@@ -36,12 +36,12 @@ class Auth {
 
     try {
       const res = await Axios.post(api.auth.RefrshToken, {
-        refresh_token: refreshToken,
+        refreshToken: refreshToken,
       });
       const data = res.data;
       this.setToken({
         newAccessToken: data?.data.accessToken,
-        newRefreshToken: data?.data.refreshToken,
+        newRefreshToken: refreshToken,
       });
       return data?.data?.accessToken;
     } catch (e) {

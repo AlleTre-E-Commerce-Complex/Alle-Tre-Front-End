@@ -5,12 +5,15 @@ import routes from "./routes";
 
 import CredentialsuUpdateLayout from "./layout/credentials-update-layout";
 import AuthLayouts from "./layout/auth-layout";
+import AppLayouts from "./layout/app-layout";
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route path={routes.auth.default} component={AuthLayouts} />
+
+        <Route path={routes.app.default} component={AppLayouts} />
 
         <Route
           path={routes.auth.forgetpass.default}
@@ -19,6 +22,7 @@ function App() {
 
         <Redirect path={routes.auth.default} component={AuthLayouts} />
       </Switch>
+
       <Toaster
         position="top-right"
         reverseOrder={true}

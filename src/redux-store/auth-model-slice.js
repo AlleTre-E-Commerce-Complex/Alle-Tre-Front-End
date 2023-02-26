@@ -4,7 +4,7 @@ const initialToggle = {
   enableOpenAuthModel: false,
 };
 
-const AuthModelTggle = createSlice({
+export const AuthModelTggle = createSlice({
   name: "toggleReducer",
   initialState: initialToggle,
   reducers: {

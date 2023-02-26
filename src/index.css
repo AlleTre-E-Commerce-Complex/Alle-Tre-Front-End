@@ -85,3 +85,14 @@ a {
   @apply  border-primary bg-primary rounded-t-xl  font-normal text-xl py-1.5 px-10 text-white  !important;
 }
 /* ///////////////////////////////////////////////////////////////////// */
+/*----------------------- Edit_Lang_Dropdown---------------------------*/
+.Edit_Lang_Dropdown.ui.inline.dropdown>.text{
+@apply font-normal
+}
+.Edit_Lang_Dropdown.ui.inline.dropdown .dropdown.icon{
+  @apply text-black mx-2
+}
+.Edit_Lang_Dropdown.ui.dropdown .menu>.item{
+  @apply font-normal text-base text-gray-dark 
+}
+/* ///////////////////////////////////////////////////////////////////// */

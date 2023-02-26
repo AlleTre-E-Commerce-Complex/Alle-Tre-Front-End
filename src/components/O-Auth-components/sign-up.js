@@ -60,7 +60,7 @@ const SignUp = () => {
         <OAuthSections isLogin={false} />
       </div>
       <div className="mx-5 ">
-        <p className="border-l-[1px] mt-10 border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden left-4">
+        <p className="border-l-[1px] mt-10 border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">
           <p className="absolute -left-[30px] text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
             {selectedContent[localizationKeys.or]}
           </p>
@@ -124,7 +124,7 @@ const SignUp = () => {
                     <div className="mt-2">
                       <label className="text-gray-med text-sm font-normal cursor-pointer  ">
                         <input
-                          className="mt-1.5 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
+                          className="mt-0.5 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
                           type="checkbox"
                           required
                         />

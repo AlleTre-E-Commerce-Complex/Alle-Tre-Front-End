@@ -36,9 +36,9 @@ function AuthProvider({ children }) {
   React.useEffect(() => {
     Auth.getUser().then((user) => {
       if (!user) {
-        if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
-          history.push(routes.auth.default);
-        }
+        // if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
+        //   history.push(routes.app.home);
+        // }
       }
       setUser(user);
       setIsLoading(false);

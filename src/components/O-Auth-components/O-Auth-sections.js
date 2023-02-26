@@ -20,10 +20,14 @@ import { authentications } from "../../config/firebase-config";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useHistory } from "react-router-dom";
+import routes from "../../routes";
 
 const OAuthSections = ({ isLogin }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+
+  const history = useHistory();
 
   const { run } = useAxios();
   const signInWithApple = () => {
@@ -39,13 +43,13 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken } = res.data.data;
+            const { accessToken, refreshToken, userName } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            toast.success("done");
-            // history.push(routes.Dashboard.containers.base);
+            toast.success("Welcome " + userName);
+            history.push(routes.app.home);
           })
           .catch((err) => {
             toast.error(
@@ -77,13 +81,13 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken } = res.data.data;
+            const { accessToken, refreshToken, userName } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            toast.success("done");
-            // history.push(routes.Dashboard.containers.base);
+            toast.success("Welcome " + userName);
+            history.push(routes.app.home);
           })
           .catch((err) => {
             toast.error(
@@ -115,13 +119,13 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken } = res.data.data;
+            const { accessToken, refreshToken, userName } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            // history.push(routes.Dashboard.containers.base);
-            toast.success("done");
+            toast.success("Welcome " + userName);
+            history.push(routes.app.home);
           })
           .catch((err) => {
             toast.error(

@@ -13,6 +13,11 @@ const routes = {
   app: {
     default: `/allatre`,
     home: `/allatre/home`,
+    myBides: `/allatre/my-bides`,
+    categories: `/allatre/categories`,
+    watchlist: `/allatre/watchlist`,
+    faqs: `/allatre/FAQs`,
+    support: `/allatre/support`,
   },
 };
 

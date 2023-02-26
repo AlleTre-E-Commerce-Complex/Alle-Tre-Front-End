@@ -35,13 +35,13 @@ const LogIn = () => {
     setEmail(values.email);
     run(axios.post(api.auth.login, values))
       .then((res) => {
-        const { accessToken, refreshToken } = res.data.data;
+        const { accessToken, refreshToken, userName } = res.data.data;
         auth.setToken({
           newAccessToken: accessToken,
           newRefreshToken: refreshToken,
         });
-        toast.success("done");
-        // history.push(routes.Dashboard.containers.base);
+        toast.success("Welcome " + userName);
+        history.push(routes.app.home);
       })
       .catch((err) => {
         if (err.message.en === "Verify your account") {
@@ -130,8 +130,8 @@ const LogIn = () => {
         <OAuthSections isLogin={true} />
       </div>
       <div className="mx-5 ">
-        <p className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden left-4">
-          <p className="absolute -left-[30px] text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
+        <p className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">
+          <p className="absolute -left-[30px]  text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
             {selectedContent[localizationKeys.or]}
           </p>
         </p>
@@ -176,7 +176,7 @@ const LogIn = () => {
                     <div>
                       <label className="text-gray-med text-sm font-normal cursor-pointer">
                         <input
-                          className="mt-1 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
+                          className="mt-0.5 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
                           type="checkbox"
                         />
                         {selectedContent[localizationKeys.rememberPassword]}
