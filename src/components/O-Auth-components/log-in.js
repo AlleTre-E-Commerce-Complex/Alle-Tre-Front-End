@@ -20,6 +20,9 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
+import { useDispatch } from "react-redux";
+import { Close } from "../../redux-store/auth-model-slice";
+
 const LogIn = () => {
   const history = useHistory();
 
@@ -31,17 +34,20 @@ const LogIn = () => {
 
   const { run, isLoading } = useAxios();
 
+  const dispatch = useDispatch();
+
   const logIn = (values) => {
     setEmail(values.email);
     run(axios.post(api.auth.login, values))
       .then((res) => {
-        const { accessToken, refreshToken, userName } = res.data.data;
+        const { accessToken, refreshToken } = res.data.data;
         auth.setToken({
           newAccessToken: accessToken,
           newRefreshToken: refreshToken,
         });
-        toast.success("Welcome " + userName);
         history.push(routes.app.home);
+        window.location.reload();
+        dispatch(Close());
       })
       .catch((err) => {
         if (err.message.en === "Verify your account") {

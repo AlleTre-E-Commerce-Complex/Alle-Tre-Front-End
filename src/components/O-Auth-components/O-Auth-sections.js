@@ -23,11 +23,16 @@ import localizationKeys from "../../localization/localization-keys";
 import { useHistory } from "react-router-dom";
 import routes from "../../routes";
 
+import { useDispatch } from "react-redux";
+import { Close } from "../../redux-store/auth-model-slice";
+
 const OAuthSections = ({ isLogin }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   const { run } = useAxios();
   const signInWithApple = () => {
@@ -43,13 +48,14 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken, userName } = res.data.data;
+            const { accessToken, refreshToken } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            toast.success("Welcome " + userName);
             history.push(routes.app.home);
+            window.location.reload();
+            dispatch(Close());
           })
           .catch((err) => {
             toast.error(
@@ -81,13 +87,14 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken, userName } = res.data.data;
+            const { accessToken, refreshToken } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            toast.success("Welcome " + userName);
             history.push(routes.app.home);
+            window.location.reload();
+            dispatch(Close());
           })
           .catch((err) => {
             toast.error(
@@ -119,13 +126,14 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken, userName } = res.data.data;
+            const { accessToken, refreshToken } = res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
-            toast.success("Welcome " + userName);
             history.push(routes.app.home);
+            window.location.reload();
+            dispatch(Close());
           })
           .catch((err) => {
             toast.error(
