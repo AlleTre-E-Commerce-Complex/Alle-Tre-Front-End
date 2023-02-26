@@ -10,8 +10,6 @@ const AuthLayouts = () => {
     <div className="h-screen">
       <Switch>
         <Route path={routes.auth.default} component={OAuthpage} />
-
-        <Redirect to={routes.auth.default} />
       </Switch>
     </div>
   );

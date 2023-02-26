@@ -24,8 +24,6 @@ const AppLayouts = () => {
         <Route path={routes.app.watchlist} component={Watshlist} />
         <Route path={routes.app.faqs} component={FAQs} />
         <Route path={routes.app.support} component={Support} />
-
-        <Redirect to={routes.app.home} />
       </Switch>
     </div>
   );

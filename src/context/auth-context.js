@@ -12,8 +12,6 @@ const WHITE_LIST = [routes.auth.forgetpass.default];
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
-  // const [accessToken, setAccessToken] = React.useState('')
-  // const [refreshToken, setRefreshToken] = useLocalStorage('token', '')
 
   const history = useHistory();
   const { pathname } = useLocation();
@@ -37,8 +35,8 @@ function AuthProvider({ children }) {
     Auth.getUser().then((user) => {
       if (!user) {
         // if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
-        //   history.push(routes.app.home);
         // }
+        history.push(routes.app.default);
       }
       setUser(user);
       setIsLoading(false);

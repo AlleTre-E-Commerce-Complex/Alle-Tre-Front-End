@@ -6,21 +6,19 @@ import routes from "./routes";
 import CredentialsuUpdateLayout from "./layout/credentials-update-layout";
 import AuthLayouts from "./layout/auth-layout";
 import AppLayouts from "./layout/app-layout";
+import Home from "./page/app/home/home";
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path={routes.auth.default} component={AuthLayouts} />
-
         <Route path={routes.app.default} component={AppLayouts} />
-
+        <Route path={routes.auth.default} component={AuthLayouts} />
         <Route
           path={routes.auth.forgetpass.default}
           component={CredentialsuUpdateLayout}
         />
-
-        <Redirect path={routes.auth.default} component={AuthLayouts} />
+        <Redirect path={routes.app.home} component={Home} />
       </Switch>
 
       <Toaster
