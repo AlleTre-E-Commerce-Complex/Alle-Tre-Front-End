@@ -18,12 +18,12 @@ const Header = () => {
 
   const handelOnSell = () => {
     if (user) {
-      history.push();
+      history.push(routes.createAuction.default);
     } else dispatch(Open());
   };
   return (
-    <div>
-      <div className="bg-white h-[72px] flex justify-between mx-16">
+    <div className="w-full fixed top-0 z-20  ">
+      <div className="backdrop-blur-md bg-white/30  h-[72px] flex justify-between px-16  ">
         <div className="my-auto">
           <AllatreLogo
             className="cursor-pointer"
@@ -31,7 +31,7 @@ const Header = () => {
           />
         </div>
         <div className="flex">
-          <div className="flex  gap-x-12 my-auto">
+          <div className="flex gap-x-12 my-auto">
             <NavLinkHeader
               title="My Bids"
               isActive={

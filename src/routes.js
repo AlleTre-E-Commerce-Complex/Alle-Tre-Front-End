@@ -19,6 +19,13 @@ const routes = {
     faqs: `/allatre/FAQs`,
     support: `/allatre/support`,
   },
+  createAuction: {
+    default: `/allatre/home/create-auction`,
+    productDetails: `/allatre/home/create-auction/product-details`,
+    auctionDetails: `/allatre/home/create-auction/product-details/auction-details`,
+    shippingDetails: `/allatre/home/create-auction/product-details/auction-details/shipping-details`,
+    paymentDetails: `/allatre/home/create-auction/product-details/auction-details/shipping-details/payment-details`,
+  },
 };
 
 export default routes;

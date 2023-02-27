@@ -23,9 +23,6 @@
   accent-color: #821A4D;
 }
 
-html {
-  @apply bg-background-gray ;
-}
 a {
   @apply hover:text-current;
 }

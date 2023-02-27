@@ -1,7 +1,7 @@
 import React from "react";
 
 const Watshlist = () => {
-  return <div>Watshlist</div>;
+  return <div className="mt-44">Watshlist</div>;
 };
 
 export default Watshlist;

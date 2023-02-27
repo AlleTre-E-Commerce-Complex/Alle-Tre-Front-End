@@ -11,13 +11,36 @@ import Watshlist from "../page/app/watshlist/watshlist";
 import FAQs from "../page/app/FAQs/FAQs";
 import Support from "../page/app/support/support";
 import AuthModel from "../components/shared/auth-model/auth-model";
+import CreateAuction from "../page/app/create-auction/create-auction";
+import ProductDetails from "../page/app/create-auction/product-details";
+import AuctionDetails from "../page/app/create-auction/auction-details";
+import ShippingDetails from "../page/app/create-auction/shipping-details";
+import PaymentDetails from "../page/app/create-auction/payment-details";
 
 const AppLayouts = () => {
   return (
-    <div className="h-screen">
+    <div className="">
       <AuthModel />
       <Header />
       <Switch>
+        <Route
+          path={routes.createAuction.paymentDetails}
+          component={PaymentDetails}
+        />
+        <Route
+          path={routes.createAuction.shippingDetails}
+          component={ShippingDetails}
+        />
+        <Route
+          path={routes.createAuction.auctionDetails}
+          component={AuctionDetails}
+        />
+        <Route
+          path={routes.createAuction.productDetails}
+          component={ProductDetails}
+        />
+        <Route path={routes.createAuction.default} component={CreateAuction} />
+
         <Route path={routes.app.home} component={Home} />
         <Route path={routes.app.myBides} component={MyBids} />
         <Route path={routes.app.categories} component={Categories} />
