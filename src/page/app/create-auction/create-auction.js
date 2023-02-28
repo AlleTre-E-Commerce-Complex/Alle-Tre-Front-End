@@ -41,7 +41,7 @@ const CreateAuction = () => {
       </div>
       <div className="mx-24 px-2">
         <h1 className="text-black py-5 text-base font-normal">Drafts</h1>
-        <div className="grid grid-cols-8">
+        <div className="grid grid-cols-9">
           <DraftsItem
             img={
               "https://www.transparentpng.com/download/laptop/9oRuDc-refreshed-pavilion-gaming-series-launching-next-month.png"
@@ -60,6 +60,7 @@ const CreateAuction = () => {
             }
             itemName="Test Name"
           />
+          <DraftsItem itemName="Test Name" />
           <DraftsItem itemName="Test Name" />
           <DraftsItem itemName="Test Name" />
           <DraftsItem itemName="Test Name" />
