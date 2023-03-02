@@ -30,6 +30,7 @@ a {
 /* ///////////////////animate//////////////////////////// */
 .animate-in {
   animation: fade-in 350ms ease-in-out forwards;
+  scroll-margin-block-start: 0;
 }
 
 .animate-out {
@@ -38,6 +39,7 @@ a {
 
 .scale-in {
   animation: scale-in 250ms ease-in-out forwards;
+  scroll-margin-block-start: 0;
 }
 
 @keyframes fade-in {
@@ -45,6 +47,7 @@ a {
     opacity: 0;
     transform: translateY(10px);
   }
+  
 }
 
 @keyframes fade-out {

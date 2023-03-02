@@ -20,7 +20,7 @@
 }
 
 .Edit_FormikMultiDropdown .ui.selection.active.dropdown{
-  @apply  h-[48px] border-primary  !important
+  @apply  h-[48px] border-primary  bg-transparent !important
 }
 
 .Edit_FormikMultiDropdown .ui.selection.active.dropdown .menu{

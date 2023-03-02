@@ -23,10 +23,10 @@ function AuthModel() {
       menuItem: `${selectedContent[localizationKeys.login]}`,
       render: () => (
         <div>
-          <Tab.Pane className="border-[2px] border-primary h-auto py-32 rounded-2xl animate-in  pt-10 flex justify-center ">
+          <Tab.Pane className="border-[2px] border-primary h-auto py-32 rounded-2xl animate-in  pt-10 flex justify-center z-30  ">
             <LogIn />
             <img
-              className="w-full object-cover h-28 fixed bottom-0 "
+              className="w-full object-cover h-28 fixed bottom-0  -z-10 "
               src={oAuthFooterImg}
               alt="oAuthFooterImg"
             />
@@ -39,10 +39,10 @@ function AuthModel() {
       menuItem: `${selectedContent[localizationKeys.signup]}`,
       render: () => (
         <div>
-          <Tab.Pane className="border-[2px] border-primary h-auto py-7 rounded-2xl animate-in md:pt-10 flex justify-center ">
+          <Tab.Pane className="border-[2px] border-primary h-auto py-7 rounded-2xl animate-in md:pt-10 flex justify-center z-30 ">
             <SignUp />
             <img
-              className="w-full object-cover h-28 fixed bottom-0 "
+              className="w-full object-cover h-28 fixed bottom-0 -z-10 "
               src={oAuthFooterImg}
               alt="oAuthFooterImg"
             />

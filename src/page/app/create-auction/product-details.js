@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
 import Stepper from "../../../components/shared/stepper/stepper-app";
@@ -8,25 +8,39 @@ import { Formik } from "formik";
 import { Button, Form } from "semantic-ui-react";
 import FormikInput from "../../../components/shared/formik/formik-input";
 import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
+import FormikTextArea from "../../../components/shared/formik/formik-text-area";
+import { useEffect } from "react";
+import AddImgMedia from "../../../components/create-auction-components/add-img-media";
+import { CheckboxRadioProductDetails } from "../../../components/create-auction-components/check-box-radio-group";
 
 const ProductDetails = () => {
   const history = useHistory();
 
+  const [valueRadio, setRadioValue] = useState("New");
+
   const ProductDetailsSchema = Yup.object({
-    itemName: Yup.string().max(20).trim(),
-    category: Yup.string().max(20).trim(),
-    subCategory: Yup.string().max(20).trim(),
+    itemName: Yup.string().max(20).trim().required("required"),
+    category: Yup.string().max(20).trim().required("required"),
+    subCategory: Yup.string().max(20).trim().required("required"),
   });
 
-  const handelProductDetailsdata = () => {};
+  const handelProductDetailsdata = (values) => {
+    console.log("====================================");
+    console.log(values);
+    console.log("====================================");
+  };
   const stateOptions = [
     { key: "test", text: "test", value: "test" },
     { key: "test", text: "test", value: "test" },
   ];
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   return (
-    <div className="mt-44 animate-in ">
-      <div className="mx-20 h-14 my-7 py-4 ">
+    <div className="mt-44 animate-in max-w-[1366px] mx-auto  ">
+      <div className=" h-14 my-7 py-4 ">
         {/* Breadcrumb  */}
         <CreateAuctionBreadcrumb />
       </div>
@@ -34,7 +48,7 @@ const ProductDetails = () => {
       <div className="flex justify-center">
         <Stepper />
       </div>
-      <div className="mx-16 ">
+      <div className="">
         <h1 className="text-black text-base font-bold mt-4">Item Details</h1>
         {/* formik */}
         <div>
@@ -74,6 +88,7 @@ const ProductDetails = () => {
                       type={"text"}
                       label={"Sub Category"}
                       placeholder="Sub Category"
+                      options={stateOptions}
                     />
                   </div>
                   <div className="w-full mt-1">
@@ -82,6 +97,7 @@ const ProductDetails = () => {
                       type={"text"}
                       label={"Brand"}
                       placeholder="Brand"
+                      options={stateOptions}
                     />
                   </div>
                   <div className="w-full mt-1">
@@ -90,6 +106,7 @@ const ProductDetails = () => {
                       type={"text"}
                       label={"Model"}
                       placeholder="Model"
+                      options={stateOptions}
                     />
                   </div>
                   <div className="w-full mt-1">
@@ -98,33 +115,64 @@ const ProductDetails = () => {
                       type={"text"}
                       label={"Color"}
                       placeholder="Color"
+                      options={stateOptions}
                     />
                   </div>
                   <div></div>
                   <div className="col-span-2 mt-2">
-                    <FormikInput
+                    <FormikTextArea
                       name="itemDescription"
                       type={"text"}
                       label={"Item Description"}
-                      placeholder="Item Description"
+                      placeholder="Write Item Description...."
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h1 className="font-bold text-base text-black pt-6">
+                    Add Media{" "}
+                    <span className="text-gray-med text-base font-normal">
+                      (from 3 up to 5 photos )
+                    </span>
+                  </h1>
+                  <div className="mt-6 w-full">
+                    <AddImgMedia />
+                  </div>
+                </div>
+
+                <div>
+                  <h1 className="font-bold text-base text-black pt-6">
+                    Item Condition
+                  </h1>
+                  <div className="mt-6 w-full">
+                    <CheckboxRadioProductDetails
+                      valueRadio={valueRadio}
+                      setRadioValue={setRadioValue}
                     />
                   </div>
                 </div>
 
-                <div className="">
+                <div className="flex gap-x-4 justify-end">
+                  <div className="mt-auto">
+                    <button className="bg-white border-primary-dark border-[1px] text-primary rounded-lg w-[136px] h-[48px] ">
+                      Save As Draft
+                    </button>
+                  </div>
                   <Button
                     onClick={() => {}}
-                    className="bg-primary  sm:w-[304px] w-full  h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
-                  ></Button>
+                    className="bg-primary  sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                  >
+                    next
+                  </Button>
                 </div>
               </Form>
             )}
           </Formik>
         </div>
       </div>
-      {/* <button onClick={() => history.push(routes.createAuction.auctionDetails)}>
+      <button onClick={() => history.push(routes.createAuction.auctionDetails)}>
         go to auctionDetails
-      </button> */}
+      </button>
     </div>
   );
 };

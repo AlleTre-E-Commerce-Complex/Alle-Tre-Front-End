@@ -71,7 +71,7 @@ const LogIn = () => {
                           localizationKeys.aVerificationMailHasBeenSent
                         ]
                       );
-                      history.push(routes.auth.logIn);
+                      // history.push(routes.auth.logIn);
                     })
                     .catch((err) => {
                       toast.error(

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
 import Trash from "../../../components/shared/lotties-file/trash-lotifile";
@@ -16,9 +16,12 @@ import routes from "../../../routes";
 
 const CreateAuction = () => {
   const history = useHistory();
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
   return (
     <div className="mt-44 animate-in ">
-      <div className="mx-20 h-14 my-7 py-4 ">
+      <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 ">
         <CreateAuctionBreadcrumb />
       </div>
       <div className="relative">
@@ -39,9 +42,9 @@ const CreateAuction = () => {
           alt="CreaAuctionText"
         />
       </div>
-      <div className="mx-24 px-2">
+      <div className="max-w-[1366px] mx-auto  px-2">
         <h1 className="text-black py-5 text-base font-normal">Drafts</h1>
-        <div className="grid grid-cols-9">
+        <div className="grid grid-cols-8">
           <DraftsItem
             img={
               "https://www.transparentpng.com/download/laptop/9oRuDc-refreshed-pavilion-gaming-series-launching-next-month.png"
