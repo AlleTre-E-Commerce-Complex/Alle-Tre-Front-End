@@ -48,14 +48,19 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken } = res.data.data;
+            const { accessToken, refreshToken, hasCompletedProfile } =
+              res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
+            window.localStorage.setItem(
+              "hasCompletedProfile",
+              hasCompletedProfile
+            );
             history.push(routes.app.home);
-            window.location.reload();
             dispatch(Close());
+            window.location.reload();
           })
           .catch((err) => {
             toast.error(
@@ -87,14 +92,19 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken } = res.data.data;
+            const { accessToken, refreshToken, hasCompletedProfile } =
+              res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
+            window.localStorage.setItem(
+              "hasCompletedProfile",
+              hasCompletedProfile
+            );
             history.push(routes.app.home);
-            window.location.reload();
             dispatch(Close());
+            window.location.reload();
           })
           .catch((err) => {
             toast.error(
@@ -126,14 +136,19 @@ const OAuthSections = ({ isLogin }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken } = res.data.data;
+            const { accessToken, refreshToken, hasCompletedProfile } =
+              res.data.data;
             auth.setToken({
               newAccessToken: accessToken,
               newRefreshToken: refreshToken,
             });
+            window.localStorage.setItem(
+              "hasCompletedProfile",
+              hasCompletedProfile
+            );
             history.push(routes.app.home);
-            window.location.reload();
             dispatch(Close());
+            window.location.reload();
           })
           .catch((err) => {
             toast.error(

@@ -6,6 +6,7 @@ import { Button, Modal } from "semantic-ui-react";
 import moment from "moment";
 
 import createAuctionimgBGfrom from "../../../../src/assets/img/create_auction_img_BG.png";
+import createAuctionimgSm from "../../../../src/assets/img/create_auction_img_SM.png";
 import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
 import emtyPhotos from "../../../../src/assets/icons/emty-photos-icon.svg";
 import TrashIcon from "../../../../src/assets/icons/trash-Icon.png";
@@ -13,12 +14,25 @@ import PenIcon from "../../../../src/assets/icons/pen-icon.png";
 
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
+import { Form, Formik } from "formik";
+import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
+import { hoursOptions } from "../../../utils/hours-options";
+import FormikInput from "../../../components/shared/formik/formik-input";
+import useLocalStorage from "../../../hooks/use-localstorage";
 
 const CreateAuction = () => {
   const history = useHistory();
+  const [open, setOpen] = useState(false);
+  const [hasCompletedProfile] = useLocalStorage("hasCompletedProfile", "");
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
+  const handelCreatOuction = () => {
+    hasCompletedProfile
+      ? setOpen(true)
+      : history.push(routes.createAuction.productDetails);
+  };
   return (
     <div className="mt-44 animate-in ">
       <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 ">
@@ -26,25 +40,36 @@ const CreateAuction = () => {
       </div>
       <div className="relative">
         <img
-          className="w-full h-auto object-cover"
+          className="w-full h-auto object-cover md:block hidden "
           src={createAuctionimgBGfrom}
           alt="createAuctionimgBGfrom"
         />
+        <img
+          className="w-full h-auto object-cover  block md:hidden "
+          src={createAuctionimgSm}
+          alt="createAuctionimgSm"
+        />
         <button
-          onClick={() => history.push(routes.createAuction.productDetails)}
-          className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[68px] right-[90px]"
+          onClick={() => handelCreatOuction()}
+          className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[68px] right-[90px] hidden md:block"
         >
           Create Auction Now
         </button>
+        <button
+          onClick={() => handelCreatOuction()}
+          className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[41px] right-[25px] md:hidden block"
+        >
+          Create Auction
+        </button>
         <img
-          className="w-[700px] absolute bottom-[68px] left-[90px]"
+          className="lg:w-[700px] w-[500px] absolute bottom-[68px] left-[90px] hidden md:block"
           src={CreaAuctionText}
           alt="CreaAuctionText"
         />
       </div>
-      <div className="max-w-[1366px] mx-auto  px-2">
+      <div className="max-w-[1366px] mx-auto px-2">
         <h1 className="text-black py-5 text-base font-normal">Drafts</h1>
-        <div className="grid grid-cols-8">
+        <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
           <DraftsItem
             img={
               "https://www.transparentpng.com/download/laptop/9oRuDc-refreshed-pavilion-gaming-series-launching-next-month.png"
@@ -72,6 +97,7 @@ const CreateAuction = () => {
           <DraftsItem itemName="Test Name" />
         </div>
       </div>
+      <AddLocationModel open={open} setOpen={setOpen} />
     </div>
   );
 };
@@ -80,7 +106,7 @@ export const DraftsItem = ({ img, itemName, date }) => {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <div className="w-[154px] h-[139px] rounded-lg border-[1px] border-solid mb-14 relative">
+      <div className="w-[154px] h-[139px] rounded-lg border-[1px] border-solid mb-14 relative mx-auto">
         {img ? (
           <img
             className="w-full h-full rounded-lg object-cover "
@@ -138,6 +164,82 @@ export const DraftsItem = ({ img, itemName, date }) => {
         </div>
       </Modal>
     </>
+  );
+};
+
+export const AddLocationModel = ({ open, setOpen }) => {
+  return (
+    <Modal
+      className="w-[471px] h-auto bg-transparent "
+      onClose={() => setOpen(false)}
+      open={open}
+    >
+      <div className="w-[471px] h-auto border-2 border-primary rounded-2xl bg-background p-6">
+        <div>
+          <h1 className="text-base font-bold">
+            Location is required <span className="text-red-500">*</span>
+          </h1>
+          <p className="text-gray-med text-xs font-normal pt-1 pb-2 ">
+            In order to finish the procedure, we have to get access to<br></br>{" "}
+            your location. you can manage them later .
+            <span className="text-primary underline cursor-pointer ">
+              Manage you addresses
+            </span>
+          </p>
+        </div>
+        <div>
+          <Formik
+            initialValues={{
+              City: "",
+              Country: "",
+              Address: "",
+            }}
+            // onSubmit={handelProductDetailsdata}
+            // validationSchema={ProductDetailsSchema}
+          >
+            {(formik) => (
+              <Form onSubmit={formik.handleSubmit}>
+                <div className="w-full py-6">
+                  <FormikMultiDropdown
+                    name={"City"}
+                    label={"City"}
+                    placeholder="Select City"
+                    options={hoursOptions}
+                  />
+                </div>
+                <div className="w-full py-6">
+                  <FormikMultiDropdown
+                    name={"Country"}
+                    label={"Country"}
+                    placeholder="Select Country"
+                    options={hoursOptions}
+                  />
+                </div>
+                <div className="w-full py-6">
+                  <FormikInput
+                    name="Address"
+                    type="text"
+                    label="Address"
+                    placeholder="Address"
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <Button
+                    // loading={isLoading}
+                    onClick={() => {
+                      // history.push(routes.dashboard.app);
+                    }}
+                    className="bg-primary w-[163px] h-[48px] rounded-lg text-white  mb-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                  >
+                    Proceed
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+    </Modal>
   );
 };
 

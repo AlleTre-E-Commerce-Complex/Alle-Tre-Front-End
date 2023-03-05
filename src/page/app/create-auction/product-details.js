@@ -39,7 +39,7 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <div className="mt-44 animate-in max-w-[1366px] mx-auto  ">
+    <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
       <div className=" h-14 my-7 py-4 ">
         {/* Breadcrumb  */}
         <CreateAuctionBreadcrumb />
@@ -63,7 +63,7 @@ const ProductDetails = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                <div className="grid gap-x-4 gap-y-10 grid-cols-4 mt-10">
+                <div className="grid gap-x-4 gap-y-10 md:grid-cols-4 grid-cols-2 mt-10 ">
                   <div className="col-span-2">
                     <FormikInput
                       name="itemName"
@@ -72,8 +72,8 @@ const ProductDetails = () => {
                       placeholder="Item Name"
                     />
                   </div>
-                  <div className="col-span-2"></div>
-                  <div className="col-span-2">
+                  <div className="col-span-2 hidden md:block"></div>
+                  <div className="col-span-2 hidden md:block">
                     <FormikMultiDropdown
                       name="category"
                       type={"text"}
@@ -152,15 +152,15 @@ const ProductDetails = () => {
                   </div>
                 </div>
 
-                <div className="flex gap-x-4 justify-end">
-                  <div className="mt-auto">
-                    <button className="bg-white border-primary-dark border-[1px] text-primary rounded-lg w-[136px] h-[48px] ">
+                <div className="flex gap-x-4 sm:justify-end justify-center">
+                  <div className="mt-auto w-full sm:w-auto ">
+                    <button className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] ">
                       Save As Draft
                     </button>
                   </div>
                   <Button
                     onClick={() => {}}
-                    className="bg-primary  sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                    className="bg-primary sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
                   >
                     next
                   </Button>

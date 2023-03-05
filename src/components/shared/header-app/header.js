@@ -8,6 +8,8 @@ import NavLinkHeader from "./nav-link-header";
 import { useDispatch } from "react-redux";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
+import { BiMenu } from "react-icons/bi";
+import { RxMagnifyingGlass } from "react-icons/rx";
 
 const Header = () => {
   const history = useHistory();
@@ -23,15 +25,24 @@ const Header = () => {
   };
   return (
     <div className="w-full fixed top-0 z-20  ">
-      <div className="backdrop-blur-md bg-white/30  h-[72px] flex justify-between px-16  ">
-        <div className="my-auto">
+      <div className="backdrop-blur-md bg-white/30  md:h-[72px] h-[60px] flex justify-between lg:px-16 px-5  ">
+        <div className="my-auto hidden md:block">
           <AllatreLogo
-            className="cursor-pointer"
+            className="cursor-pointer hidden md:block"
             onClick={() => history.push(routes.app.home)}
           />
         </div>
+        <div className="my-auto md:hidden block">
+          <BiMenu className="text-primary cursor-pointer" size={30} />
+        </div>
         <div className="flex">
-          <div className="flex gap-x-12 my-auto">
+          <div className="my-auto ">
+            <AllatreLogo
+              className="cursor-pointer w-[100px] block md:hidden"
+              onClick={() => history.push(routes.app.home)}
+            />
+          </div>
+          <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto">
             <NavLinkHeader
               title="My Bids"
               isActive={
@@ -71,7 +82,7 @@ const Header = () => {
             />
             <DropdownLang />
           </div>
-          <div className="my-auto ltr:ml-16 rtl:mr-16">
+          <div className="my-auto ltr:ml-16 rtl:mr-16 md:block hidden">
             <button
               onClick={handelOnSell}
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px]"
@@ -79,6 +90,12 @@ const Header = () => {
               Sell Now
             </button>
           </div>
+        </div>
+        <div className="my-auto md:hidden block">
+          <RxMagnifyingGlass
+            className="text-primary cursor-pointer"
+            size={30}
+          />
         </div>
       </div>
       <div className="bg-secondary h-[60px]"></div>

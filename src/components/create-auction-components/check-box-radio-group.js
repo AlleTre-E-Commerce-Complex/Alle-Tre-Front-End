@@ -4,7 +4,7 @@ import "../../../src/assets/style/checkbox-radio-group.css";
 
 export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
   return (
-    <Form className="flex gap-x-72">
+    <Form className="flex md:flex-row flex-col gap-x-72">
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"

@@ -11,7 +11,7 @@ const StepperApp = () => {
       {/* step 1 */}
       {pathname.length === 1 ||
         (pathname.endsWith(routes.createAuction.productDetails) && (
-          <div className="flex mb-8">
+          <div className="flex mb-8 ">
             <div className="text-center relative">
               <button
                 onClick={() =>
@@ -30,16 +30,16 @@ const StepperApp = () => {
                 Product Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] md:w-[200px] w-[57px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
-              <button className="bg-gray-med  w-8 h-8 rounded-full text-white text-center mx-2">
+              <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 2
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
                 Auction Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] md:w-[200px] w-[57px] md:w-[200px] w-[57px]  my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med  w-8 h-8 rounded-full text-white text-center mx-2">
                 3
@@ -48,7 +48,7 @@ const StepperApp = () => {
                 Shipping Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] md:w-[200px] w-[57px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
@@ -77,7 +77,7 @@ const StepperApp = () => {
                 Product Details
               </p>
             </div>
-            <div className="border-primary border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="text-center relative">
               <button
                 onClick={() =>
@@ -91,7 +91,7 @@ const StepperApp = () => {
                 Auction Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med  w-8 h-8 rounded-full text-white text-center mx-2">
                 3
@@ -100,7 +100,7 @@ const StepperApp = () => {
                 Shipping Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
@@ -134,7 +134,7 @@ const StepperApp = () => {
                 Product Details
               </p>
             </div>
-            <div className="border-primary border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="text-center relative">
               <button
                 onClick={() =>
@@ -154,7 +154,7 @@ const StepperApp = () => {
               </p>
             </div>
 
-            <div className="border-primary border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="text-center relative">
               <button
                 onClick={() =>
@@ -169,7 +169,7 @@ const StepperApp = () => {
               </p>
             </div>
 
-            <div className="border-gray-med border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="text-center relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
@@ -204,7 +204,7 @@ const StepperApp = () => {
               </p>
             </div>
 
-            <div className="border-primary border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
 
             <div className="text-center relative">
               <button
@@ -225,7 +225,7 @@ const StepperApp = () => {
               </p>
             </div>
 
-            <div className="border-primary border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
 
             <div className="text-center relative">
               <button
@@ -246,7 +246,7 @@ const StepperApp = () => {
               </p>
             </div>
 
-            <div className="border-primary border-dashed border-b-2 w-[332px] my-auto"></div>
+            <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
 
             <div className="text-center relative">
               <button
