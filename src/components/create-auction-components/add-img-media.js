@@ -27,15 +27,15 @@ const AddImgMedia = () => {
     setFileFour(fileFour);
   };
   const handleChangeFive = (fileFive) => {
-    setFileFive(fileFour);
+    setFileFive(fileFive);
   };
 
   console.log("====================================");
-  console.log(fileOne);
-  console.log(fileTwo);
-  console.log(fileThree);
-  console.log(fileFour);
-  console.log(fileFive);
+  // console.log(fileOne);
+  // console.log(fileTwo);
+  // console.log(fileThree);
+  // console.log(fileFour);
+  // console.log(fileFive);
   console.log("====================================");
   return (
     <div className="">

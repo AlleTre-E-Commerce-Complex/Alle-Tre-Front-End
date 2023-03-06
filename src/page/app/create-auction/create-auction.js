@@ -19,6 +19,7 @@ import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdo
 import { hoursOptions } from "../../../utils/hours-options";
 import FormikInput from "../../../components/shared/formik/formik-input";
 import useLocalStorage from "../../../hooks/use-localstorage";
+import AddLocationModel from "../../../components/create-auction-components/add-location-model";
 
 const CreateAuction = () => {
   const history = useHistory();
@@ -97,7 +98,7 @@ const CreateAuction = () => {
           <DraftsItem itemName="Test Name" />
         </div>
       </div>
-      <AddLocationModel open={open} setOpen={setOpen} />
+      <AddLocationModel open={open} setOpen={setOpen} TextButton={"Proceed"} />
     </div>
   );
 };
@@ -164,82 +165,6 @@ export const DraftsItem = ({ img, itemName, date }) => {
         </div>
       </Modal>
     </>
-  );
-};
-
-export const AddLocationModel = ({ open, setOpen }) => {
-  return (
-    <Modal
-      className="w-[471px] h-auto bg-transparent "
-      onClose={() => setOpen(false)}
-      open={open}
-    >
-      <div className="w-[471px] h-auto border-2 border-primary rounded-2xl bg-background p-6">
-        <div>
-          <h1 className="text-base font-bold">
-            Location is required <span className="text-red-500">*</span>
-          </h1>
-          <p className="text-gray-med text-xs font-normal pt-1 pb-2 ">
-            In order to finish the procedure, we have to get access to<br></br>{" "}
-            your location. you can manage them later .
-            <span className="text-primary underline cursor-pointer ">
-              Manage you addresses
-            </span>
-          </p>
-        </div>
-        <div>
-          <Formik
-            initialValues={{
-              City: "",
-              Country: "",
-              Address: "",
-            }}
-            // onSubmit={handelProductDetailsdata}
-            // validationSchema={ProductDetailsSchema}
-          >
-            {(formik) => (
-              <Form onSubmit={formik.handleSubmit}>
-                <div className="w-full py-6">
-                  <FormikMultiDropdown
-                    name={"City"}
-                    label={"City"}
-                    placeholder="Select City"
-                    options={hoursOptions}
-                  />
-                </div>
-                <div className="w-full py-6">
-                  <FormikMultiDropdown
-                    name={"Country"}
-                    label={"Country"}
-                    placeholder="Select Country"
-                    options={hoursOptions}
-                  />
-                </div>
-                <div className="w-full py-6">
-                  <FormikInput
-                    name="Address"
-                    type="text"
-                    label="Address"
-                    placeholder="Address"
-                  />
-                </div>
-                <div className="flex justify-end">
-                  <Button
-                    // loading={isLoading}
-                    onClick={() => {
-                      // history.push(routes.dashboard.app);
-                    }}
-                    className="bg-primary w-[163px] h-[48px] rounded-lg text-white  mb-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
-                  >
-                    Proceed
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </div>
-    </Modal>
   );
 };
 

@@ -15,9 +15,6 @@
   @apply  h-[48px]  text-primary
 }
 
-.Edit_FormikMultiDropdown .ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text{
-  @apply  h-[48px] pt-2
-}
 
 .Edit_FormikMultiDropdown .ui.selection.active.dropdown{
   @apply  h-[48px] border-primary  bg-transparent !important

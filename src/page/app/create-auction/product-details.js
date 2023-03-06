@@ -5,18 +5,64 @@ import Stepper from "../../../components/shared/stepper/stepper-app";
 import routes from "../../../routes";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Dimmer, Form, Loader } from "semantic-ui-react";
 import FormikInput from "../../../components/shared/formik/formik-input";
 import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
 import FormikTextArea from "../../../components/shared/formik/formik-text-area";
 import { useEffect } from "react";
 import AddImgMedia from "../../../components/create-auction-components/add-img-media";
 import { CheckboxRadioProductDetails } from "../../../components/create-auction-components/check-box-radio-group";
+import useGetGatogry from "../../../hooks/use-get-category";
+import useGetSubGatogry from "../../../hooks/use-get-sub-category";
+import { authAxios } from "../../../config/axios-config";
+import api from "../../../api";
+import useAxios from "../../../hooks/use-axios";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
 
 const ProductDetails = () => {
+  const [lang, setLang] = useLanguage("");
+  const selectedContent = content[lang];
+
   const history = useHistory();
 
   const [valueRadio, setRadioValue] = useState("New");
+  const [categoryId, setCategoryId] = useState();
+  const [subCategoryId, setSubCategoryId] = useState();
+
+  const [hasUsageCondition, setHasUsageCondition] = useState();
+
+  const [customFromData, setCustomFromData] = useState();
+
+  const { GatogryOptions, loadingGatogry } = useGetGatogry();
+  const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
+
+  console.log("====================================");
+  console.log(hasUsageCondition);
+  console.log(categoryId);
+  console.log(subCategoryId);
+  console.log("====================================");
+
+  const { run, isLoading } = useAxios([]);
+  useEffect(() => {
+    if (categoryId || subCategoryId)
+      if (SubGatogryOptions.length === 0) {
+        run(
+          authAxios
+            .get(api.app.customField.ByCategoryId(categoryId))
+            .then((res) => {
+              setCustomFromData(res?.data?.data);
+            })
+        );
+      } else
+        run(
+          authAxios
+            .get(api.app.customField.BySubCategoryId(subCategoryId))
+            .then((res) => {
+              setCustomFromData(res?.data?.data);
+            })
+        );
+  }, [SubGatogryOptions.length, categoryId, run, subCategoryId]);
 
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string().max(20).trim().required("required"),
@@ -37,9 +83,14 @@ const ProductDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-
+  console.log("====================================");
+  console.log(customFromData);
+  console.log("====================================");
   return (
     <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
+      {/* <Dimmer className="animate-pulse" active={isLoading} inverted>
+        <Loader active />
+      </Dimmer> */}
       <div className=" h-14 my-7 py-4 ">
         {/* Breadcrumb  */}
         <CreateAuctionBreadcrumb />
@@ -76,50 +127,77 @@ const ProductDetails = () => {
                   <div className="col-span-2 hidden md:block">
                     <FormikMultiDropdown
                       name="category"
-                      type={"text"}
                       label={"Category"}
                       placeholder="Category"
-                      options={stateOptions}
+                      options={GatogryOptions}
+                      loading={loadingGatogry}
+                      onChange={(value) => {
+                        setCategoryId(value);
+                        const fieldOption = GatogryOptions.find(
+                          (go) => go.value === value
+                        );
+                        setHasUsageCondition(fieldOption?.hasUsageCondition);
+                      }}
                     />
                   </div>
-                  <div className="col-span-2">
+                  <div
+                    className={
+                      SubGatogryOptions?.length === 0 ? "hidden" : "col-span-2"
+                    }
+                  >
                     <FormikMultiDropdown
                       name="subCategory"
-                      type={"text"}
                       label={"Sub Category"}
                       placeholder="Sub Category"
-                      options={stateOptions}
+                      loading={loadingSubGatogry}
+                      options={SubGatogryOptions}
+                      onChange={(e) => setSubCategoryId(e)}
                     />
                   </div>
-                  <div className="w-full mt-1">
-                    <FormikMultiDropdown
-                      name="brand"
-                      type={"text"}
-                      label={"Brand"}
-                      placeholder="Brand"
-                      options={stateOptions}
+                  {customFromData?.arrayCustomFields?.map((e) => (
+                    <div className="w-full">
+                      <FormikMultiDropdown
+                        name={e?.key}
+                        label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
+                        placeholder={`${
+                          lang === "en" ? e?.labelEn : e?.labelAr
+                        }`}
+                      />
+                    </div>
+                  ))}
+                  {console.log(customFromData?.model)}
+                  <div
+                    className={
+                      customFromData?.model?.key ? "w-full mt-1.5" : "hidden"
+                    }
+                  >
+                    <FormikInput
+                      name={`${customFromData?.model?.key}`}
+                      label={`${
+                        lang === "en"
+                          ? customFromData?.model?.labelEn
+                          : customFromData?.model?.labelAr
+                      }`}
+                      placeholder={`${
+                        lang === "en"
+                          ? customFromData?.model?.labelEn
+                          : customFromData?.model?.labelAr
+                      }`}
                     />
                   </div>
-                  <div className="w-full mt-1">
-                    <FormikMultiDropdown
-                      name="model"
-                      type={"text"}
-                      label={"Model"}
-                      placeholder="Model"
-                      options={stateOptions}
-                    />
-                  </div>
-                  <div className="w-full mt-1">
-                    <FormikMultiDropdown
-                      name="color"
-                      type={"text"}
-                      label={"Color"}
-                      placeholder="Color"
-                      options={stateOptions}
-                    />
-                  </div>
-                  <div></div>
-                  <div className="col-span-2 mt-2">
+                  {customFromData?.regularCustomFields?.map((e) => (
+                    <div className="w-full mt-1.5">
+                      <FormikInput
+                        name={e?.key}
+                        type={e?.type}
+                        label={lang === "en" ? e?.labelEn : e?.labelAr}
+                        placeholder={`${
+                          lang === "en" ? e?.labelEn : e?.labelAr
+                        }`}
+                      />
+                    </div>
+                  ))}
+                  <div className="col-span-2 col-start-1 mt-1">
                     <FormikTextArea
                       name="itemDescription"
                       type={"text"}
@@ -144,7 +222,7 @@ const ProductDetails = () => {
                   <h1 className="font-bold text-base text-black pt-6">
                     Item Condition
                   </h1>
-                  <div className="mt-6 w-full">
+                  <div className={hasUsageCondition ? "mt-6 w-full" : "hidden"}>
                     <CheckboxRadioProductDetails
                       valueRadio={valueRadio}
                       setRadioValue={setRadioValue}
