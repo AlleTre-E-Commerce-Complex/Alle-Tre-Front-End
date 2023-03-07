@@ -24,7 +24,7 @@ const api = {
     },
     brand: {
       default: (categoryId = ":categoryId") =>
-        `/categories/brands?categoryId${categoryId}`,
+        `/categories/brands?categoryId=${categoryId}`,
     },
     location: {
       post: "/users/locations",
