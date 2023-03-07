@@ -5,7 +5,7 @@ import Stepper from "../../../components/shared/stepper/stepper-app";
 import routes from "../../../routes";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Button, Dimmer, Form, Loader } from "semantic-ui-react";
+import { Button, Dimmer, Loader, Form } from "semantic-ui-react";
 import FormikInput from "../../../components/shared/formik/formik-input";
 import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
 import FormikTextArea from "../../../components/shared/formik/formik-text-area";
@@ -19,37 +19,63 @@ import api from "../../../api";
 import useAxios from "../../../hooks/use-axios";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
+import { useDispatch, useSelector } from "react-redux";
+import { productDetails } from "../../../redux-store/product-details-Slice";
+import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
+import useGetBrand from "../../../hooks/use-get-brand";
 
 const ProductDetails = () => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
 
+  const productDetailsint = useSelector(
+    (state) => state.productDetails.productDetails
+  );
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
-  const [valueRadio, setRadioValue] = useState("New");
+  const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
+  const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
+  const [fileThree, setFileThree] = useState(
+    productDetailsint.fileThree || null
+  );
+  const [fileFour, setFileFour] = useState(productDetailsint.fileFour || null);
+  const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
+
+  const [valueRadio, setRadioValue] = useState(productDetailsint.valueRadio);
   const [categoryId, setCategoryId] = useState();
   const [subCategoryId, setSubCategoryId] = useState();
 
-  const [hasUsageCondition, setHasUsageCondition] = useState();
-
+  const [hasUsageCondition, setHasUsageCondition] = useState(
+    false || productDetailsint.hasUsageCondition
+  );
   const [customFromData, setCustomFromData] = useState();
 
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
-  const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
-
-  console.log("====================================");
-  console.log(hasUsageCondition);
-  console.log(categoryId);
-  console.log(subCategoryId);
-  console.log("====================================");
+  const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
+    categoryId || productDetailsint.category
+  );
+  const { AllBranOptions, loadingAllBranOptions } = useGetBrand(
+    categoryId || productDetailsint.category
+  );
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    if (categoryId || subCategoryId)
+    if (
+      categoryId ||
+      subCategoryId ||
+      productDetailsint.category ||
+      productDetailsint.subCategory
+    )
       if (SubGatogryOptions.length === 0) {
         run(
           authAxios
-            .get(api.app.customField.ByCategoryId(categoryId))
+            .get(
+              api.app.customField.ByCategoryId(
+                categoryId || productDetailsint.category
+              )
+            )
             .then((res) => {
               setCustomFromData(res?.data?.data);
             })
@@ -57,40 +83,58 @@ const ProductDetails = () => {
       } else
         run(
           authAxios
-            .get(api.app.customField.BySubCategoryId(subCategoryId))
+            .get(
+              api.app.customField.BySubCategoryId(
+                subCategoryId || productDetailsint.subCategory
+              )
+            )
             .then((res) => {
               setCustomFromData(res?.data?.data);
             })
         );
-  }, [SubGatogryOptions.length, categoryId, run, subCategoryId]);
+  }, [
+    SubGatogryOptions.length,
+    categoryId,
+    productDetailsint.category,
+    productDetailsint.subCategory,
+    run,
+    subCategoryId,
+  ]);
 
   const ProductDetailsSchema = Yup.object({
-    itemName: Yup.string().max(20).trim().required("required"),
-    category: Yup.string().max(20).trim().required("required"),
-    subCategory: Yup.string().max(20).trim().required("required"),
+    itemName: Yup.string().trim().required("required"),
+    category: Yup.string().trim().required("required"),
+    itemDescription: Yup.string().trim().required("required"),
   });
 
   const handelProductDetailsdata = (values) => {
-    console.log("====================================");
-    console.log(values);
-    console.log("====================================");
+    dispatch(
+      productDetails({
+        ...values,
+        hasUsageCondition: hasUsageCondition,
+        valueRadio: valueRadio,
+        fileOne: fileOne,
+        fileTwo: fileTwo,
+        fileThree: fileThree,
+        fileFour: fileFour,
+        fileFive: fileFive,
+      })
+    );
+    history.push(routes.createAuction.auctionDetails);
   };
-  const stateOptions = [
-    { key: "test", text: "test", value: "test" },
-    { key: "test", text: "test", value: "test" },
-  ];
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-  console.log("====================================");
-  console.log(customFromData);
-  console.log("====================================");
   return (
     <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
-      {/* <Dimmer className="animate-pulse" active={isLoading} inverted>
+      <Dimmer
+        className="animate-pulse"
+        active={isLoading || loadingSubGatogry}
+        inverted
+      >
         <Loader active />
-      </Dimmer> */}
+      </Dimmer>
       <div className=" h-14 my-7 py-4 ">
         {/* Breadcrumb  */}
         <CreateAuctionBreadcrumb />
@@ -105,9 +149,29 @@ const ProductDetails = () => {
         <div>
           <Formik
             initialValues={{
-              itemName: "",
-              category: "",
-              subCategory: "",
+              itemName: productDetailsint.itemName || "",
+              category: productDetailsint.category || "",
+              subCategory: productDetailsint.subCategory || "",
+              operatingSystem: productDetailsint.operatingSystem || "",
+              releaseYear: productDetailsint.releaseYear || "",
+              regionOfManufacture: productDetailsint.regionOfManufacture || "",
+              ramSize: productDetailsint.ramSize || "",
+              processor: productDetailsint.processor || "",
+              screenSize: productDetailsint.screenSize || "",
+              model: productDetailsint.model || "",
+              color: productDetailsint.color || "",
+              brandId: productDetailsint.brandId || "",
+              cameraType: productDetailsint.cameraType || "",
+              material: productDetailsint.material || "",
+              age: productDetailsint.age || "",
+              totalArea: productDetailsint.totalArea || "",
+              numberOfRooms: productDetailsint.numberOfRooms || "",
+              numberOfFloors: productDetailsint.numberOfFloors || "",
+              landType: productDetailsint.landType || "",
+              countryId: productDetailsint.countryId || "",
+              cityId: productDetailsint.cityId || "",
+              carType: productDetailsint.carType || "",
+              itemDescription: productDetailsint.itemDescription || "",
             }}
             onSubmit={handelProductDetailsdata}
             validationSchema={ProductDetailsSchema}
@@ -162,10 +226,15 @@ const ProductDetails = () => {
                         placeholder={`${
                           lang === "en" ? e?.labelEn : e?.labelAr
                         }`}
+                        options={
+                          e?.key === "brandId"
+                            ? AllBranOptions
+                            : allCustomFileOptions[e?.key]
+                        }
+                        loading={loadingAllBranOptions}
                       />
                     </div>
                   ))}
-                  {console.log(customFromData?.model)}
                   <div
                     className={
                       customFromData?.model?.key ? "w-full mt-1.5" : "hidden"
@@ -188,6 +257,7 @@ const ProductDetails = () => {
                   {customFromData?.regularCustomFields?.map((e) => (
                     <div className="w-full mt-1.5">
                       <FormikInput
+                        required
                         name={e?.key}
                         type={e?.type}
                         label={lang === "en" ? e?.labelEn : e?.labelAr}
@@ -214,7 +284,18 @@ const ProductDetails = () => {
                     </span>
                   </h1>
                   <div className="mt-6 w-full">
-                    <AddImgMedia />
+                    <AddImgMedia
+                      fileOne={fileOne}
+                      setFileOne={setFileOne}
+                      fileTwo={fileTwo}
+                      setFileTwo={setFileTwo}
+                      fileThree={fileThree}
+                      setFileThree={setFileThree}
+                      fileFour={fileFour}
+                      setFileFour={setFileFour}
+                      fileFive={fileFive}
+                      setFileFive={setFileFive}
+                    />
                   </div>
                 </div>
 
@@ -232,14 +313,11 @@ const ProductDetails = () => {
 
                 <div className="flex gap-x-4 sm:justify-end justify-center">
                   <div className="mt-auto w-full sm:w-auto ">
-                    <button className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] ">
+                    <div className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer">
                       Save As Draft
-                    </button>
+                    </div>
                   </div>
-                  <Button
-                    onClick={() => {}}
-                    className="bg-primary sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
-                  >
+                  <Button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
                     next
                   </Button>
                 </div>
@@ -248,9 +326,7 @@ const ProductDetails = () => {
           </Formik>
         </div>
       </div>
-      <button onClick={() => history.push(routes.createAuction.auctionDetails)}>
-        go to auctionDetails
-      </button>
+      <button>go to auctionDetails</button>
     </div>
   );
 };

@@ -1,10 +1,50 @@
 import { Form, Formik } from "formik";
+import { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
-import { hoursOptions } from "../../utils/hours-options";
+import useGetAllCities from "../../hooks/use-get-all-cities";
+import useGetAllCountries from "../../hooks/use-get-all-countries";
 import FormikMultiDropdown from "../shared/formik/formik-dropdown";
 import FormikInput from "../shared/formik/formik-input";
+import * as Yup from "yup";
+import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+import api from "../../api";
+import routes from "../../routes";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
-const AddLocationModel = ({ open, setOpen, TextButton }) => {
+const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
+  const history = useHistory();
+  const [countriesId, setCountriesId] = useState();
+  const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
+  const { AllCitiesOptions, loadingCitiesOptions } =
+    useGetAllCities(countriesId);
+
+  const AddLocationSchema = Yup.object({
+    countryId: Yup.string().required("required"),
+    cityId: Yup.string().required("required"),
+    address: Yup.string().required("required"),
+    addressLabel: Yup.string().required("required"),
+    zipCode: Yup.string().trim().required("required"),
+  });
+  // if (TextButton) {
+  const { run, isLoading, error, isError } = useAxios();
+
+  const handleAddLocation = (values) => {
+    run(authAxios.post(api.app.location.post, values))
+      .then(({ data }) => {
+        if (TextButton === "Proceed") {
+          history.push(routes.createAuction.productDetails);
+          toast.success("locaton add success");
+        } else {
+          setOpen(false);
+          onReload();
+        }
+      })
+      .catch((err) => {
+        toast.error(err?.message.map((e) => e));
+      });
+  };
   return (
     <Modal
       className="w-[471px] h-auto bg-transparent scale-in "
@@ -27,34 +67,39 @@ const AddLocationModel = ({ open, setOpen, TextButton }) => {
         <div>
           <Formik
             initialValues={{
-              City: "",
-              Country: "",
-              Address: "",
+              countryId: "",
+              cityId: "",
+              address: "",
+              addressLabel: "",
+              zipCode: "",
             }}
-            // onSubmit={handelProductDetailsdata}
-            // validationSchema={ProductDetailsSchema}
+            onSubmit={handleAddLocation}
+            validationSchema={AddLocationSchema}
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
                 <div className="w-full py-6">
                   <FormikMultiDropdown
-                    name={"City"}
-                    label={"City"}
-                    placeholder="Select City"
-                    options={hoursOptions}
+                    name="countryId"
+                    label={"Country"}
+                    placeholder="Select Country"
+                    options={AllCountriesOptions}
+                    loading={loadingAllCountries}
+                    onChange={(e) => setCountriesId(e)}
                   />
                 </div>
                 <div className="w-full py-6">
                   <FormikMultiDropdown
-                    name={"Country"}
-                    label={"Country"}
-                    placeholder="Select Country"
-                    options={hoursOptions}
+                    name="cityId"
+                    label={"City"}
+                    placeholder="Select City"
+                    options={AllCitiesOptions}
+                    loading={loadingCitiesOptions}
                   />
                 </div>
                 <div className="w-full py-6">
                   <FormikInput
-                    name="Address"
+                    name="address"
                     type="text"
                     label="Address"
                     placeholder="wirte your address"
@@ -62,7 +107,7 @@ const AddLocationModel = ({ open, setOpen, TextButton }) => {
                 </div>
                 <div className="w-full py-6">
                   <FormikInput
-                    name="AddressLabel"
+                    name="addressLabel"
                     type="text"
                     label="Address label"
                     placeholder="ex: Home"
@@ -70,7 +115,7 @@ const AddLocationModel = ({ open, setOpen, TextButton }) => {
                 </div>
                 <div className="w-full py-6">
                   <FormikInput
-                    name="Postalcode"
+                    name="zipCode"
                     type="text"
                     label="Postal code"
                     placeholder="Enter postal/Zip code"
@@ -78,10 +123,7 @@ const AddLocationModel = ({ open, setOpen, TextButton }) => {
                 </div>
                 <div className="flex justify-end">
                   <Button
-                    // loading={isLoading}
-                    onClick={() => {
-                      // history.push(routes.dashboard.app);
-                    }}
+                    loading={isLoading}
                     className="bg-primary w-[163px] h-[48px] rounded-lg text-white  mb-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
                   >
                     {TextButton}

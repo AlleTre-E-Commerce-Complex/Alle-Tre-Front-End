@@ -22,6 +22,21 @@ const api = {
       BySubCategoryId: (subCategoryId = ":subCategoryId") =>
         `/categories/custom-fields?subCategoryId=${subCategoryId}`,
     },
+    brand: {
+      default: (categoryId = ":categoryId") =>
+        `/categories/brands?categoryId${categoryId}`,
+    },
+    location: {
+      post: "/users/locations",
+      get: "/users/my-locations",
+    },
+    countries: {
+      default: "/regions/countries",
+    },
+    cities: {
+      default: (countryId = ":countryId") =>
+        `/regions/cities?countryId=${countryId}`,
+    },
   },
 };
 

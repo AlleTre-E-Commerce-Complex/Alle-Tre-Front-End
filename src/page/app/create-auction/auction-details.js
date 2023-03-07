@@ -13,6 +13,7 @@ import { daysOptions } from "../../../utils/days-options";
 import FormikDate from "../../../components/shared/formik/formik-date";
 import FormikTimePicker from "../../../components/shared/formik/formik-time-picker";
 import FormikInput from "../../../components/shared/formik/formik-input";
+import { useSelector } from "react-redux";
 
 const AuctionDetails = () => {
   const history = useHistory();
@@ -24,6 +25,13 @@ const AuctionDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
+  const productDetailsInt = useSelector(
+    (state) => state.productDetails.productDetails
+  );
+  console.log("====================================");
+  console.log({ stor: productDetailsInt });
+  console.log("====================================");
 
   return (
     <div className="mt-44 animate-in ">

@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 
 import addImage from "../../../src/assets/icons/add-image.svg";
@@ -7,13 +6,18 @@ import TrashIcon from "../../../src/assets/icons/trash-Icon.png";
 
 const fileTypes = ["JPEG", "PNG", "GIF"];
 
-const AddImgMedia = () => {
-  const [fileOne, setFileOne] = useState(null);
-  const [fileTwo, setFileTwo] = useState(null);
-  const [fileThree, setFileThree] = useState(null);
-  const [fileFour, setFileFour] = useState(null);
-  const [fileFive, setFileFive] = useState(null);
-
+const AddImgMedia = ({
+  fileOne,
+  setFileOne,
+  fileTwo,
+  setFileTwo,
+  fileThree,
+  setFileThree,
+  fileFour,
+  setFileFour,
+  fileFive,
+  setFileFive,
+}) => {
   const handleChangeOne = (fileOne) => {
     setFileOne(fileOne);
   };
@@ -30,13 +34,6 @@ const AddImgMedia = () => {
     setFileFive(fileFive);
   };
 
-  console.log("====================================");
-  // console.log(fileOne);
-  // console.log(fileTwo);
-  // console.log(fileThree);
-  // console.log(fileFour);
-  // console.log(fileFive);
-  console.log("====================================");
   return (
     <div className="">
       <div className={fileOne && "flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4"}>

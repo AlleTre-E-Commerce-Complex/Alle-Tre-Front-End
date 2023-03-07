@@ -11,8 +11,8 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           radio
           label="New"
           name="checkboxRadioGroup"
-          value="New"
-          checked={valueRadio === "New"}
+          value="NEW"
+          checked={valueRadio === "NEW"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
@@ -26,8 +26,8 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           radio
           label="Used"
           name="checkboxRadioGroup"
-          value="Used"
-          checked={valueRadio === "Used"}
+          value="USED"
+          checked={valueRadio === "USED"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
@@ -41,8 +41,8 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           radio
           label="Open Box"
           name="checkboxRadioGroup"
-          value="Open Box"
-          checked={valueRadio === "Open Box"}
+          value="OPEN_BOX"
+          checked={valueRadio === "OPEN_BOX"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">

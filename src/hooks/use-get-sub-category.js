@@ -11,20 +11,23 @@ const useGetSubGatogry = (categoryId) => {
   const { run, isLoading, error, isError } = useAxios();
 
   useEffect(() => {
-    run(axios.get(api.app.subCategory.default(categoryId))).then(({ data }) => {
-      const SubGatogryOptions = data.data;
-      const options = [];
+    if (categoryId)
+      run(axios.get(api.app.subCategory.default(categoryId))).then(
+        ({ data }) => {
+          const SubGatogryOptions = data.data;
+          const options = [];
 
-      SubGatogryOptions.forEach((d) =>
-        options.push({
-          text: lang === "en" ? d?.nameEn : d?.nameAr,
-          key: d?.id,
-          value: d.id,
-        })
+          SubGatogryOptions.forEach((d) =>
+            options.push({
+              text: lang === "en" ? d?.nameEn : d?.nameAr,
+              key: d?.id,
+              value: d.id,
+            })
+          );
+
+          setSubGatogryOptions(options);
+        }
       );
-
-      setSubGatogryOptions(options);
-    });
   }, [categoryId, lang, run]);
 
   return {
