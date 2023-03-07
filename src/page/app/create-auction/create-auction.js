@@ -29,10 +29,14 @@ const CreateAuction = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  console.log("====================================");
+  console.log(hasCompletedProfile);
+  console.log("====================================");
+
   const handelCreatOuction = () => {
-    hasCompletedProfile
-      ? setOpen(true)
-      : history.push(routes.createAuction.productDetails);
+    if (hasCompletedProfile) {
+      history.push(routes.createAuction.productDetails);
+    } else setOpen(true);
   };
   return (
     <div className="mt-44 animate-in ">
