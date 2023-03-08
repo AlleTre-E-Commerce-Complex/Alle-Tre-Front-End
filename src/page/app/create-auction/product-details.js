@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
 import useGetBrand from "../../../hooks/use-get-brand";
+import { toast } from "react-hot-toast";
 
 const ProductDetails = () => {
   const [lang, setLang] = useLanguage("");
@@ -108,19 +109,114 @@ const ProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
-    dispatch(
-      productDetails({
-        ...values,
-        hasUsageCondition: hasUsageCondition,
-        valueRadio: valueRadio,
-        fileOne: fileOne,
-        fileTwo: fileTwo,
-        fileThree: fileThree,
-        fileFour: fileFour,
-        fileFive: fileFive,
-      })
+    if (fileThree) {
+      dispatch(
+        productDetails({
+          ...values,
+          hasUsageCondition: hasUsageCondition,
+          valueRadio: valueRadio,
+          fileOne: fileOne,
+          fileTwo: fileTwo,
+          fileThree: fileThree,
+          fileFour: fileFour,
+          fileFive: fileFive,
+        })
+      );
+      history.push(routes.createAuction.auctionDetails);
+    }
+  };
+
+  const {
+    run: runSaveAuctionAsDraft,
+    isLoading: isLoadingCSaveAuctionAsDraft,
+  } = useAxios([]);
+  const SaveAuctionAsDraft = () => {
+    const formData = new FormData();
+    formData.append("title", productDetailsint.itemName);
+    formData.append("categoryId", productDetailsint.category);
+    if (productDetailsint.subCategory) {
+      formData.append("subCategoryId", productDetailsint.subCategory);
+    }
+    if (productDetailsint.brandId) {
+      formData.append("brandI]", productDetailsint.brandId);
+    }
+    if (productDetailsint.valueRadio) {
+      formData.append("usageStatus", productDetailsint.valueRadio);
+    }
+    if (productDetailsint.color) {
+      formData.append("colo]", productDetailsint.color);
+    }
+    if (productDetailsint.age) {
+      formData.append("age", productDetailsint.age);
+    }
+    if (productDetailsint.landType) {
+      formData.append("landType", productDetailsint.landType);
+    }
+    if (productDetailsint.cameraType) {
+      formData.append("cameraType", productDetailsint.cameraType);
+    }
+    if (productDetailsint.carType) {
+      formData.append("carType", productDetailsint.carType);
+    }
+    if (productDetailsint.material) {
+      formData.append("material", productDetailsint.material);
+    }
+    if (productDetailsint.model) {
+      formData.append("model", productDetailsint.model);
+    }
+    if (productDetailsint.processor) {
+      formData.append("processor", productDetailsint.processor);
+    }
+    if (productDetailsint.ramSize) {
+      formData.append("ramSize", productDetailsint.ramSize);
+    }
+    if (productDetailsint.releaseYear) {
+      formData.append("releaseYear", productDetailsint.releaseYear);
+    }
+    if (productDetailsint.screenSize) {
+      formData.append("screenSize", productDetailsint.screenSize);
+    }
+    if (productDetailsint.totalArea) {
+      formData.append("totalArea", productDetailsint.totalArea);
+    }
+    if (productDetailsint.operatingSystem) {
+      formData.append("operatingSystem", productDetailsint.operatingSystem);
+    }
+    if (productDetailsint.regionOfManufacture) {
+      formData.append(
+        "regionOfManufacture",
+        productDetailsint.regionOfManufacture
+      );
+    }
+    if (productDetailsint.numberOfFloors) {
+      formData.append("numberOfFloors", productDetailsint.numberOfFloors);
+    }
+    if (productDetailsint.numberOfRooms) {
+      formData.append("numberOfRooms", productDetailsint.numberOfRooms);
+    }
+    if (productDetailsint.itemDescription) {
+      formData.append("description", productDetailsint.itemDescription);
+    }
+    formData.append("images", productDetailsint.fileOne);
+    formData.append("images", productDetailsint.fileTwo);
+    formData.append("images", productDetailsint.fileThree);
+    if (productDetailsint.fileFour) {
+      formData.append("images", productDetailsint.fileFour);
+    }
+    if (productDetailsint.fileFive) {
+      formData.append("images", productDetailsint.fileFive);
+    }
+
+    runSaveAuctionAsDraft(
+      authAxios
+        .post(api.app.auctions.draft, formData)
+        .then((res) => {
+          toast.success("your Auction Save As Drafted success");
+          history.push(routes.createAuction.default);
+          dispatch(productDetails({}));
+        })
+        .catch((err) => {})
     );
-    history.push(routes.createAuction.auctionDetails);
   };
 
   useEffect(() => {
@@ -130,7 +226,7 @@ const ProductDetails = () => {
     <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
       <Dimmer
         className="animate-pulse"
-        active={isLoading || loadingSubGatogry}
+        active={isLoading || loadingSubGatogry || isLoadingCSaveAuctionAsDraft}
         inverted
       >
         <Loader active />
@@ -168,8 +264,6 @@ const ProductDetails = () => {
               numberOfRooms: productDetailsint.numberOfRooms || "",
               numberOfFloors: productDetailsint.numberOfFloors || "",
               landType: productDetailsint.landType || "",
-              countryId: productDetailsint.countryId || "",
-              cityId: productDetailsint.cityId || "",
               carType: productDetailsint.carType || "",
               itemDescription: productDetailsint.itemDescription || "",
             }}
@@ -313,7 +407,10 @@ const ProductDetails = () => {
 
                 <div className="flex gap-x-4 sm:justify-end justify-center">
                   <div className="mt-auto w-full sm:w-auto ">
-                    <div className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer">
+                    <div
+                      onClick={() => SaveAuctionAsDraft()}
+                      className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                    >
                       Save As Draft
                     </div>
                   </div>
@@ -326,7 +423,6 @@ const ProductDetails = () => {
           </Formik>
         </div>
       </div>
-      <button>go to auctionDetails</button>
     </div>
   );
 };

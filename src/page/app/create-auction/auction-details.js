@@ -1,37 +1,128 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+
 import { Button, Form, Radio } from "semantic-ui-react";
-import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
 import Stepper from "../../../components/shared/stepper/stepper-app";
+import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
+
+import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
-import "../../../../src/assets/style/radio-toggle.css";
-import { CheckboxRadioAuctionDetails } from "../../../components/create-auction-components/check-box-radio-group";
+
+import * as Yup from "yup";
 import { Formik } from "formik";
+import FormikDate from "../../../components/shared/formik/formik-date";
+import FormikInput from "../../../components/shared/formik/formik-input";
+import FormikTimePicker from "../../../components/shared/formik/formik-time-picker";
 import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
+import { CheckboxRadioAuctionDetails } from "../../../components/create-auction-components/check-box-radio-group";
+
 import { hoursOptions } from "../../../utils/hours-options";
 import { daysOptions } from "../../../utils/days-options";
-import FormikDate from "../../../components/shared/formik/formik-date";
-import FormikTimePicker from "../../../components/shared/formik/formik-time-picker";
-import FormikInput from "../../../components/shared/formik/formik-input";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+import {
+  duration,
+  type,
+  auctionDetails,
+  isBuyNow,
+} from "../../../redux-store/auction-details-slice";
+
+import "../../../../src/assets/style/radio-toggle.css";
 
 const AuctionDetails = () => {
   const history = useHistory();
 
-  const [valueRadio, setRadioValue] = useState("Quick Auction");
-  const [IsSchedule, setIsSchedule] = useState(true);
-  const [IsBuyNow, setIsBuyNow] = useState(true);
+  const productDetailsInt = useSelector(
+    (state) => state.productDetails.productDetails
+  );
+  const auctionDetailsInt = useSelector(
+    (state) => state.auctionDetails.auctionDetails
+  );
+  const durationInt = useSelector((state) => state.auctionDetails.duration);
+  const isByNowInt = useSelector((state) => state.auctionDetails.isBuyNow);
+  const typeInt = useSelector((state) => state.auctionDetails.type);
+
+  const [valueRadio, setRadioValue] = useState(
+    auctionDetailsInt.valueRadio || "Quick Auction"
+  );
+  const [IsSchedule, setIsSchedule] = useState(auctionDetailsInt.IsSchedule);
+  const [IsBuyNow, setIsBuyNow] = useState(auctionDetailsInt.IsBuyNow);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  const productDetailsInt = useSelector(
-    (state) => state.productDetails.productDetails
-  );
-  console.log("====================================");
-  console.log({ stor: productDetailsInt });
-  console.log("====================================");
+  const AuctionDetailsDataSchema = Yup.object({
+    Hrs: Yup.string().when([], {
+      is: () => valueRadio === "Quick Auction",
+      then: Yup.string().required("required"),
+      otherwise: Yup.string().notRequired(),
+    }),
+    AuctionDuration: Yup.string().when([], {
+      is: () => valueRadio === "Long Auction",
+      then: Yup.string().required("required"),
+      otherwise: Yup.string().notRequired(),
+    }),
+    date: Yup.string().when([], {
+      is: () => IsSchedule,
+      then: Yup.string().required("required"),
+      otherwise: Yup.string().notRequired(),
+    }),
+    from: Yup.string().when([], {
+      is: () => IsSchedule,
+      then: Yup.string().required("required"),
+      otherwise: Yup.string().notRequired(),
+    }),
+    MinimumPrice: Yup.string().trim().required("required"),
+    PurchasingPrice: Yup.string().when([], {
+      is: () => IsBuyNow,
+      then: Yup.string().required("required"),
+      otherwise: Yup.string().notRequired(),
+    }),
+  });
+
+  const dispatch = useDispatch();
+
+  const handelAuctionDetailsData = (values) => {
+    const durationHours = {
+      durationUnit: "HOURS",
+      durationInHours: values.Hrs,
+    };
+    const durationDAYS = {
+      durationUnit: "DAYS",
+      durationInDays: values.AuctionDuration,
+    };
+    if (valueRadio === "Quick Auction") {
+      dispatch(duration(durationHours));
+    } else {
+      dispatch(duration(durationDAYS));
+    }
+    const typeONTIME = { type: "ON_TIME" };
+    const typeSCHEDULED = {
+      type: "SCHEDULED",
+      date: values.date,
+      from: values.from,
+    };
+    if (IsSchedule) {
+      dispatch(type(typeSCHEDULED));
+    } else dispatch(type(typeONTIME));
+
+    const BuyNow = {
+      isBuyNowAllowed: "YES",
+      acceptedAmount: values.PurchasingPrice,
+    };
+    if (IsBuyNow) {
+      dispatch(isBuyNow(BuyNow));
+    }
+    dispatch(
+      auctionDetails({
+        ...values,
+        valueRadio: valueRadio,
+        IsSchedule: IsSchedule,
+        IsBuyNow: IsBuyNow,
+      })
+    );
+    history.push(routes.createAuction.shippingDetails);
+  };
 
   return (
     <div className="mt-44 animate-in ">
@@ -49,17 +140,19 @@ const AuctionDetails = () => {
           />
           <Formik
             initialValues={{
-              Hrs: "",
-              AuctionDuration: "",
-              date: "",
-              dateTwo: "",
-              from: "",
+              Hrs: auctionDetailsInt.Hrs || "",
+              AuctionDuration: auctionDetailsInt.AuctionDuration || "",
+              date: auctionDetailsInt.date || "",
+              from: auctionDetailsInt.from || "",
+              MinimumPrice: auctionDetailsInt.MinimumPrice || "",
+              PurchasingPrice: auctionDetailsInt.PurchasingPrice || "",
             }}
-            // onSubmit={handelProductDetailsdata}
-            // validationSchema={ProductDetailsSchema}
+            onSubmit={handelAuctionDetailsData}
+            validationSchema={AuctionDetailsDataSchema}
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
+                {console.log(formik)}
                 <div className="grid grid-cols-2">
                   <div>
                     <div className="w-[330px] mt-10">
@@ -182,10 +275,7 @@ const AuctionDetails = () => {
                   </div>
                   {/* buttons */}
                   <div className="mt-auto flex justify-end  mb-6">
-                    <Button
-                      onClick={() => {}}
-                      className="bg-primary sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
-                    >
+                    <Button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
                       next
                     </Button>
                   </div>
@@ -194,12 +284,6 @@ const AuctionDetails = () => {
             )}
           </Formik>
         </div>
-
-        <button
-          onClick={() => history.push(routes.createAuction.shippingDetails)}
-        >
-          go to shippingDetails
-        </button>
       </div>
     </div>
   );

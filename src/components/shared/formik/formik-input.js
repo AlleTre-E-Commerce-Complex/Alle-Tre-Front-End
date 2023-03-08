@@ -17,6 +17,7 @@ function FormikInput({ label, name, className, placeholder, value, ...props }) {
                 value={value}
                 {...field}
                 {...props}
+                error={Boolean(touched[name] && errors[name])}
               />
               {touched[name] && errors[name] && (
                 <ErrorMessage message={errors[name]} />

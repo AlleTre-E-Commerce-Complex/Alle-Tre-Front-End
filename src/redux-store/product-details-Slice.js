@@ -4,7 +4,6 @@ export const productDetailsSlice = createSlice({
   name: "productDetails",
   initialState: {
     productDetails: {},
-    addMedia: {},
   },
   reducers: {
     productDetails: (state, action) => {

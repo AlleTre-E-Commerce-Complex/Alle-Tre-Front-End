@@ -1,5 +1,6 @@
 import { Field } from "formik";
 import { TimeInput } from "semantic-ui-calendar-react";
+import { get } from "wild-wild-path";
 
 import "../../../../src/assets/style/formik-time-picker.css";
 
@@ -32,8 +33,8 @@ function FormikTimePicker({ label, name, ...props }) {
               error={Boolean(touched[name] && errors[name])}
             />
 
-            {touched[name] && errors[name] && (
-              <ErrorMessage error={errors[name]} />
+            {get(touched, name) && get(errors, name) && (
+              <ErrorMessage message={get(errors, name)} />
             )}
           </div>
         );

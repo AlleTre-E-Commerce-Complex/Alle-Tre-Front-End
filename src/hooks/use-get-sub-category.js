@@ -11,7 +11,7 @@ const useGetSubGatogry = (categoryId) => {
   const { run, isLoading, error, isError } = useAxios();
 
   useEffect(() => {
-    if (categoryId)
+    if (categoryId) {
       run(axios.get(api.app.subCategory.default(categoryId))).then(
         ({ data }) => {
           const SubGatogryOptions = data.data;
@@ -28,6 +28,7 @@ const useGetSubGatogry = (categoryId) => {
           setSubGatogryOptions(options);
         }
       );
+    }
   }, [categoryId, lang, run]);
 
   return {

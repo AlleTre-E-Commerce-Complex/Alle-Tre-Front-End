@@ -13,18 +13,22 @@ const api = {
       default: "/categories/all",
     },
     subCategory: {
-      default: (categoryId = ":categoryId") =>
+      default: (categoryId) =>
         `/categories/sub-categories?categoryId=${categoryId}`,
     },
+    auctions: {
+      default: "/auctions",
+      setAssdraft: "/auctions/save-draft",
+      getAlldraft: "auctions/user/ownes?status=DRAFTED",
+    },
     customField: {
-      ByCategoryId: (categoryId = ":categoryId") =>
+      ByCategoryId: (categoryId) =>
         `/categories/custom-fields?categoryId=${categoryId}`,
-      BySubCategoryId: (subCategoryId = ":subCategoryId") =>
+      BySubCategoryId: (subCategoryId) =>
         `/categories/custom-fields?subCategoryId=${subCategoryId}`,
     },
     brand: {
-      default: (categoryId = ":categoryId") =>
-        `/categories/brands?categoryId=${categoryId}`,
+      default: (categoryId) => `/categories/brands?categoryId=${categoryId}`,
     },
     location: {
       post: "/users/locations",
@@ -34,8 +38,7 @@ const api = {
       default: "/regions/countries",
     },
     cities: {
-      default: (countryId = ":countryId") =>
-        `/regions/cities?countryId=${countryId}`,
+      default: (countryId) => `/regions/cities?countryId=${countryId}`,
     },
   },
 };

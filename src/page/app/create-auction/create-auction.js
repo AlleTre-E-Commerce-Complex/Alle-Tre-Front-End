@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
 import Trash from "../../../components/shared/lotties-file/trash-lotifile";
-import { Button, Modal } from "semantic-ui-react";
+import { Button, Dimmer, Loader, Modal } from "semantic-ui-react";
 import moment from "moment";
 
 import createAuctionimgBGfrom from "../../../../src/assets/img/create_auction_img_BG.png";
@@ -14,32 +14,52 @@ import PenIcon from "../../../../src/assets/icons/pen-icon.png";
 
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
-import { Form, Formik } from "formik";
-import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
-import { hoursOptions } from "../../../utils/hours-options";
-import FormikInput from "../../../components/shared/formik/formik-input";
+
 import useLocalStorage from "../../../hooks/use-localstorage";
 import AddLocationModel from "../../../components/create-auction-components/add-location-model";
+import useAxios from "../../../hooks/use-axios";
+import { authAxios } from "../../../config/axios-config";
+import api from "../../../api";
 
 const CreateAuction = () => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
+  const [draftAuctionData, setDraftAuctionData] = useState();
+
   const [hasCompletedProfile] = useLocalStorage("hasCompletedProfile", "");
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-
-  console.log("====================================");
-  console.log(hasCompletedProfile);
-  console.log("====================================");
 
   const handelCreatOuction = () => {
     if (hasCompletedProfile) {
       history.push(routes.createAuction.productDetails);
     } else setOpen(true);
   };
+
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+
+  const { run, isLoading } = useAxios([]);
+
+  useEffect(() => {
+    run(
+      authAxios.get(api.app.auctions.getAlldraft).then((res) => {
+        setDraftAuctionData(res?.data?.data);
+      })
+    );
+  }, [run, forceReload]);
+
+  console.log("====================================");
+  console.log(draftAuctionData);
+  console.log("====================================");
+
   return (
-    <div className="mt-44 animate-in ">
+    <div className="mt-44 animate-in  ">
+      <Dimmer className="animate-pulse" active={isLoading} inverted>
+        <Loader active />
+      </Dimmer>
       <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 ">
         <CreateAuctionBreadcrumb />
       </div>
@@ -75,31 +95,13 @@ const CreateAuction = () => {
       <div className="max-w-[1366px] mx-auto px-2">
         <h1 className="text-black py-5 text-base font-normal">Drafts</h1>
         <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
-          <DraftsItem
-            img={
-              "https://www.transparentpng.com/download/laptop/9oRuDc-refreshed-pavilion-gaming-series-launching-next-month.png"
-            }
-            itemName="Test Name"
-          />
-          <DraftsItem
-            img={
-              "https://sm.pcmag.com/t/pcmag_uk/review/m/microsoft-/microsoft-surface-laptop-go-2_w2a1.1920.jpg"
-            }
-            itemName="Test Name"
-          />
-          <DraftsItem
-            img={
-              "https://es.digitaltrends.com/wp-content/uploads/2022/06/surface-laptop-go-2-feat.jpg?resize=625%2C417&p=1"
-            }
-            itemName="Test Name"
-          />
-          <DraftsItem itemName="Test Name" />
-          <DraftsItem itemName="Test Name" />
-          <DraftsItem itemName="Test Name" />
-          <DraftsItem itemName="Test Name" />
-          <DraftsItem itemName="Test Name" />
-          <DraftsItem itemName="Test Name" />
-          <DraftsItem itemName="Test Name" />
+          {draftAuctionData?.map((e) => (
+            <DraftsItem
+              img={e && e?.product?.images[0]?.imageLink}
+              itemName={e?.product?.title}
+              date={e?.createdAt}
+            />
+          ))}
         </div>
       </div>
       <AddLocationModel open={open} setOpen={setOpen} TextButton={"Proceed"} />

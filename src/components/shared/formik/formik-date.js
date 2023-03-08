@@ -1,7 +1,9 @@
 import { Field } from "formik";
 import { DateInput } from "semantic-ui-calendar-react";
+import { get } from "wild-wild-path";
 
 import "../../../../src/assets/style/formik-date.css";
+import ErrorMessage from "./error-message";
 
 function FormikDate({ label, name, error, ...props }) {
   return (
@@ -26,7 +28,12 @@ function FormikDate({ label, name, error, ...props }) {
               {...props}
               onBlur={() => setFieldTouched(name, true)}
               onChange={(e, { value }) => setFieldValue(name, value)}
-              error={(touched[name] && errors[name]) || error}
+              error={
+                get(touched, name) &&
+                get(errors, name) && (
+                  <ErrorMessage message={get(errors, name)} />
+                )
+              }
             />
           );
         }}
