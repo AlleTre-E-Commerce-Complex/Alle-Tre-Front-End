@@ -162,11 +162,11 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
         </p>
       </div>
       <Modal
-        className="w-[392px] h-auto bg-transparent "
+        className="sm:w-[392px] w-full h-auto bg-transparent "
         onClose={() => setOpen(false)}
         open={open}
       >
-        <div className="w-[392px] h-auto border-2 border-primary rounded-2xl bg-background">
+        <div className="sm:w-[392px] w-full  h-auto border-2 border-primary rounded-2xl bg-background">
           <div className="mt-24">
             <Trash />
           </div>

@@ -47,11 +47,11 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   };
   return (
     <Modal
-      className="w-[471px] h-auto bg-transparent scale-in "
+      className="sm:w-[471px] w-full h-auto bg-transparent scale-in "
       onClose={() => setOpen(false)}
       open={open}
     >
-      <div className="w-[471px] h-auto border-2 border-primary rounded-2xl bg-background p-6">
+      <div className="sm:w-[471px] w-full  h-auto border-2 border-primary rounded-2xl bg-background p-6">
         <div>
           <h1 className="text-base font-bold">
             Location is required <span className="text-red-500">*</span>
