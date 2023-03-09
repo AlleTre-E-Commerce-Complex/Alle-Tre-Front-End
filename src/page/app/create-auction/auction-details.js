@@ -27,6 +27,7 @@ import {
 } from "../../../redux-store/auction-details-slice";
 
 import "../../../../src/assets/style/radio-toggle.css";
+import { ScrollToFieldError } from "../../../components/shared/formik/formik-scroll-to-field-error";
 
 const AuctionDetails = () => {
   const history = useHistory();
@@ -112,7 +113,7 @@ const AuctionDetails = () => {
     };
     if (IsBuyNow) {
       dispatch(isBuyNow(BuyNow));
-    }
+    } else dispatch(isBuyNow({}));
     dispatch(
       auctionDetails({
         ...values,
@@ -152,7 +153,7 @@ const AuctionDetails = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                {console.log(formik)}
+                <ScrollToFieldError />
                 <div className="grid grid-cols-2">
                   <div>
                     <div className="w-[330px] mt-10">

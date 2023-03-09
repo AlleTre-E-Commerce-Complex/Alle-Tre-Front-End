@@ -87,7 +87,6 @@ const SignUp = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                {console.log(formik)}
                 <div className="md:mx-6 mx-0 sm:w-[304px] w-full">
                   <div className="mt-10 mx-auto ">
                     <FormikInput

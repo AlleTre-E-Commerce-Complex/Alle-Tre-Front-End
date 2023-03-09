@@ -202,6 +202,10 @@ const ShippingDetails = () => {
             toast.error(err?.message.map((e) => e));
           })
       );
+    } else {
+      toast.error(
+        "Make sure that you choose the auction location or create another one"
+      );
     }
   };
 

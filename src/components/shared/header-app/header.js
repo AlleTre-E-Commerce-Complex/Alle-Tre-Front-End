@@ -11,7 +11,7 @@ import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
 import { RxMagnifyingGlass } from "react-icons/rx";
 
-const Header = () => {
+const Header = ({ SetSid }) => {
   const history = useHistory();
   const { pathname } = useLocation();
 
@@ -32,7 +32,7 @@ const Header = () => {
             onClick={() => history.push(routes.app.home)}
           />
         </div>
-        <div className="my-auto md:hidden block">
+        <div onClick={() => SetSid(true)} className="my-auto md:hidden block">
           <BiMenu className="text-primary cursor-pointer" size={30} />
         </div>
         <div className="flex">

@@ -20,6 +20,7 @@ const api = {
       default: "/auctions",
       setAssdraft: "/auctions/save-draft",
       getAlldraft: "auctions/user/ownes?status=DRAFTED",
+      delete: (auctionsId) => `/auctions/user/${auctionsId}`,
     },
     customField: {
       ByCategoryId: (categoryId) =>

@@ -1,6 +1,5 @@
 import { useHistory, useLocation } from "react-router-dom";
 import routes from "../../../routes";
-import "./stepper-app.css";
 
 const StepperApp = () => {
   const { pathname } = useLocation();
@@ -30,7 +29,7 @@ const StepperApp = () => {
                 Product Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] md:w-[200px] w-[57px] md:w-[200px] w-[57px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 2
@@ -39,7 +38,7 @@ const StepperApp = () => {
                 Auction Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] md:w-[200px] w-[57px] md:w-[200px] w-[57px]  my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med  w-8 h-8 rounded-full text-white text-center mx-2">
                 3
@@ -48,7 +47,7 @@ const StepperApp = () => {
                 Shipping Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] md:w-[200px] w-[57px] md:w-[200px] w-[57px] my-auto"></div>
+            {/* <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
@@ -56,7 +55,7 @@ const StepperApp = () => {
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
                 Payment Details
               </p>
-            </div>
+            </div> */}
           </div>
         ))}
 
@@ -100,7 +99,7 @@ const StepperApp = () => {
                 Shipping Details
               </p>
             </div>
-            <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
+            {/* <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
@@ -108,7 +107,7 @@ const StepperApp = () => {
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
                 Payment Details
               </p>
-            </div>
+            </div> */}
           </div>
         ))}
 
@@ -169,7 +168,7 @@ const StepperApp = () => {
               </p>
             </div>
 
-            <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
+            {/* <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="text-center relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
@@ -177,7 +176,7 @@ const StepperApp = () => {
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2  text-gray-med  cursor-pointer">
                 Payment Details
               </p>
-            </div>
+            </div> */}
           </div>
         ))}
 
@@ -248,7 +247,7 @@ const StepperApp = () => {
 
             <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
 
-            <div className="text-center relative">
+            {/* <div className="text-center relative">
               <button
                 onClick={() =>
                   history.push(routes.createAuction.paymentDetails)
@@ -265,7 +264,7 @@ const StepperApp = () => {
               >
                 Payment Details
               </p>
-            </div>
+            </div> */}
           </div>
         ))}
     </>

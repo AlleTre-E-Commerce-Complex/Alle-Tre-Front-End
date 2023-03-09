@@ -20,6 +20,7 @@ import AddLocationModel from "../../../components/create-auction-components/add-
 import useAxios from "../../../hooks/use-axios";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
+import { toast } from "react-hot-toast";
 
 const CreateAuction = () => {
   const history = useHistory();
@@ -50,10 +51,6 @@ const CreateAuction = () => {
       })
     );
   }, [run, forceReload]);
-
-  console.log("====================================");
-  console.log(draftAuctionData);
-  console.log("====================================");
 
   return (
     <div className="mt-44 animate-in  ">
@@ -97,9 +94,11 @@ const CreateAuction = () => {
         <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
           {draftAuctionData?.map((e) => (
             <DraftsItem
+              auctionId={e?.id}
               img={e && e?.product?.images[0]?.imageLink}
               itemName={e?.product?.title}
               date={e?.createdAt}
+              onReload={onReload}
             />
           ))}
         </div>
@@ -109,8 +108,25 @@ const CreateAuction = () => {
   );
 };
 
-export const DraftsItem = ({ img, itemName, date }) => {
+export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
   const [open, setOpen] = useState(false);
+
+  const { run, isLoading } = useAxios();
+  const deleteAuction = () => {
+    run(authAxios.delete(api.app.auctions.delete(auctionId)))
+      .then((res) => {
+        setOpen(false);
+        toast.success(
+          "Your auction has been deleted for you from drafting successfully"
+        );
+        onReload();
+      })
+      .catch((err) => {
+        toast.error(
+          "oops, sorry something with wrong please make sure everything is correct and try again"
+        );
+      });
+  };
   return (
     <>
       <div className="w-[154px] h-[139px] rounded-lg border-[1px] border-solid mb-14 relative mx-auto">
@@ -164,7 +180,11 @@ export const DraftsItem = ({ img, itemName, date }) => {
             >
               Cancel
             </button>
-            <Button className="w-[136px] h-[48px] bg-primary text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR">
+            <Button
+              loading={isLoading}
+              onClick={() => deleteAuction()}
+              className="w-[136px] h-[48px] bg-primary text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR"
+            >
               Yes,delete
             </Button>
           </div>

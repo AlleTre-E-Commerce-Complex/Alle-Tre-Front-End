@@ -24,6 +24,7 @@ import { productDetails } from "../../../redux-store/product-details-Slice";
 import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
 import useGetBrand from "../../../hooks/use-get-brand";
 import { toast } from "react-hot-toast";
+import { ScrollToFieldError } from "../../../components/shared/formik/formik-scroll-to-field-error";
 
 const ProductDetails = () => {
   const [lang, setLang] = useLanguage("");
@@ -36,6 +37,7 @@ const ProductDetails = () => {
 
   const history = useHistory();
 
+  const [draftValue, setDraftValue] = useState();
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
@@ -101,28 +103,52 @@ const ProductDetails = () => {
     run,
     subCategoryId,
   ]);
+  const regularCustomFieldsvalidations =
+    customFromData?.regularCustomFields?.reduce((acc, curr) => {
+      acc[curr.key] = Yup.string().required("Required");
+      return acc;
+    }, {});
+  const arrayCustomFieldsvalidations =
+    customFromData?.arrayCustomFields?.reduce((acc, curr) => {
+      acc[curr.key] = Yup.string().required("Required");
+      return acc;
+    }, {});
 
+  const model = customFromData?.model?.key;
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string().trim().required("required"),
     category: Yup.string().trim().required("required"),
     itemDescription: Yup.string().trim().required("required"),
+    ...regularCustomFieldsvalidations,
+    ...arrayCustomFieldsvalidations,
+    model: Yup.string().when([], {
+      is: () => model,
+      then: Yup.string().required("required"),
+      otherwise: Yup.string().notRequired(),
+    }),
   });
 
   const handelProductDetailsdata = (values) => {
     if (fileThree) {
-      dispatch(
-        productDetails({
-          ...values,
-          hasUsageCondition: hasUsageCondition,
-          valueRadio: valueRadio,
-          fileOne: fileOne,
-          fileTwo: fileTwo,
-          fileThree: fileThree,
-          fileFour: fileFour,
-          fileFive: fileFive,
-        })
-      );
-      history.push(routes.createAuction.auctionDetails);
+      if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
+        dispatch(
+          productDetails({
+            ...values,
+            hasUsageCondition: hasUsageCondition,
+            valueRadio: valueRadio,
+            fileOne: fileOne,
+            fileTwo: fileTwo,
+            fileThree: fileThree,
+            fileFour: fileFour,
+            fileFive: fileFive,
+          })
+        );
+        history.push(routes.createAuction.auctionDetails);
+      } else {
+        toast.error("Make sure that you choose Item Condition value");
+      }
+    } else {
+      toast.error("Make sure that you choose at least three or more photos");
     }
   };
 
@@ -132,90 +158,155 @@ const ProductDetails = () => {
   } = useAxios([]);
   const SaveAuctionAsDraft = () => {
     const formData = new FormData();
-    formData.append("title", productDetailsint.itemName);
-    formData.append("categoryId", productDetailsint.category);
-    if (productDetailsint.subCategory) {
-      formData.append("subCategoryId", productDetailsint.subCategory);
-    }
-    if (productDetailsint.brandId) {
-      formData.append("brandI]", productDetailsint.brandId);
-    }
-    if (productDetailsint.valueRadio) {
-      formData.append("usageStatus", productDetailsint.valueRadio);
-    }
-    if (productDetailsint.color) {
-      formData.append("colo]", productDetailsint.color);
-    }
-    if (productDetailsint.age) {
-      formData.append("age", productDetailsint.age);
-    }
-    if (productDetailsint.landType) {
-      formData.append("landType", productDetailsint.landType);
-    }
-    if (productDetailsint.cameraType) {
-      formData.append("cameraType", productDetailsint.cameraType);
-    }
-    if (productDetailsint.carType) {
-      formData.append("carType", productDetailsint.carType);
-    }
-    if (productDetailsint.material) {
-      formData.append("material", productDetailsint.material);
-    }
-    if (productDetailsint.model) {
-      formData.append("model", productDetailsint.model);
-    }
-    if (productDetailsint.processor) {
-      formData.append("processor", productDetailsint.processor);
-    }
-    if (productDetailsint.ramSize) {
-      formData.append("ramSize", productDetailsint.ramSize);
-    }
-    if (productDetailsint.releaseYear) {
-      formData.append("releaseYear", productDetailsint.releaseYear);
-    }
-    if (productDetailsint.screenSize) {
-      formData.append("screenSize", productDetailsint.screenSize);
-    }
-    if (productDetailsint.totalArea) {
-      formData.append("totalArea", productDetailsint.totalArea);
-    }
-    if (productDetailsint.operatingSystem) {
-      formData.append("operatingSystem", productDetailsint.operatingSystem);
-    }
-    if (productDetailsint.regionOfManufacture) {
+    formData.append("title", draftValue.itemName || productDetailsint.itemName);
+    formData.append(
+      "categoryId",
+      draftValue.category || productDetailsint.category
+    );
+    if (draftValue.subCategory || productDetailsint.subCategory) {
       formData.append(
-        "regionOfManufacture",
-        productDetailsint.regionOfManufacture
+        "subCategoryId",
+        draftValue.subCategory || productDetailsint.subCategory
       );
     }
-    if (productDetailsint.numberOfFloors) {
-      formData.append("numberOfFloors", productDetailsint.numberOfFloors);
+    if (draftValue.brandId || productDetailsint.brandId) {
+      formData.append(
+        "brandI",
+        draftValue.brandId || productDetailsint.brandId
+      );
     }
-    if (productDetailsint.numberOfRooms) {
-      formData.append("numberOfRooms", productDetailsint.numberOfRooms);
+    if (draftValue.valueRadio || productDetailsint.valueRadio) {
+      formData.append(
+        "usageStatus",
+        draftValue.valueRadio || productDetailsint.valueRadio
+      );
     }
-    if (productDetailsint.itemDescription) {
-      formData.append("description", productDetailsint.itemDescription);
+    if (draftValue.color || productDetailsint.color) {
+      formData.append("color", draftValue.color || productDetailsint.color);
     }
-    formData.append("images", productDetailsint.fileOne);
-    formData.append("images", productDetailsint.fileTwo);
-    formData.append("images", productDetailsint.fileThree);
-    if (productDetailsint.fileFour) {
-      formData.append("images", productDetailsint.fileFour);
+    if (draftValue.age || productDetailsint.age) {
+      formData.append("age", draftValue.age || productDetailsint.age);
     }
-    if (productDetailsint.fileFive) {
-      formData.append("images", productDetailsint.fileFive);
+    if (draftValue.landType || productDetailsint.landType) {
+      formData.append(
+        "landType",
+        draftValue.landType || productDetailsint.landType
+      );
+    }
+    if (draftValue.cameraType || productDetailsint.cameraType) {
+      formData.append(
+        "cameraType",
+        draftValue.cameraType || productDetailsint.cameraType
+      );
+    }
+    if (draftValue.carType || productDetailsint.carType) {
+      formData.append(
+        "carType",
+        draftValue.carType || productDetailsint.carType
+      );
+    }
+    if (draftValue.material || productDetailsint.material) {
+      formData.append(
+        "material",
+        draftValue.material || productDetailsint.material
+      );
+    }
+    if (draftValue.model || productDetailsint.model) {
+      formData.append("model", draftValue.model || productDetailsint.model);
+    }
+    if (draftValue.processor || productDetailsint.processor) {
+      formData.append(
+        "processor",
+        draftValue.processor || productDetailsint.processor
+      );
+    }
+    if (draftValue.ramSize || productDetailsint.ramSize) {
+      formData.append(
+        "ramSize",
+        draftValue.ramSize || productDetailsint.ramSize
+      );
+    }
+    if (draftValue.releaseYear || productDetailsint.releaseYear) {
+      formData.append(
+        "releaseYear",
+        draftValue.releaseYear || productDetailsint.releaseYear
+      );
+    }
+    if (draftValue.screenSize || productDetailsint.screenSize) {
+      formData.append(
+        "screenSize",
+        draftValue.screenSize || productDetailsint.screenSize
+      );
+    }
+    if (draftValue.totalArea || productDetailsint.totalArea) {
+      formData.append(
+        "totalArea",
+        draftValue.totalArea || productDetailsint.totalArea
+      );
+    }
+    if (draftValue.operatingSystem || productDetailsint.operatingSystem) {
+      formData.append(
+        "operatingSystem",
+        draftValue.operatingSystem || productDetailsint.operatingSystem
+      );
+    }
+    if (
+      draftValue.regionOfManufacture ||
+      productDetailsint.regionOfManufacture
+    ) {
+      formData.append(
+        "regionOfManufacture",
+        draftValue.regionOfManufacture || productDetailsint.regionOfManufacture
+      );
+    }
+    if (draftValue.numberOfFloors || productDetailsint.numberOfFloors) {
+      formData.append(
+        "numberOfFloors",
+        draftValue.numberOfFloors || productDetailsint.numberOfFloors
+      );
+    }
+    if (draftValue.numberOfRooms || productDetailsint.numberOfRooms) {
+      formData.append(
+        "numberOfRooms",
+        draftValue.numberOfRooms || productDetailsint.numberOfRooms
+      );
+    }
+    if (draftValue.itemDescription || productDetailsint.itemDescription) {
+      formData.append(
+        "description",
+        draftValue.itemDescription || productDetailsint.itemDescription
+      );
+    }
+    if (fileFive) {
+      formData.append("images", fileOne || productDetailsint.fileOne);
+    }
+    if (fileTwo) {
+      formData.append("images", fileTwo || productDetailsint.fileTwo);
+    }
+    if (fileThree) {
+      formData.append("images", fileThree || productDetailsint.fileThree);
+    }
+    if (fileThree || productDetailsint.fileFour) {
+      formData.append("images", fileThree || productDetailsint.fileFour);
+    }
+    if (fileFive || productDetailsint.fileFive) {
+      formData.append("images", fileFive || productDetailsint.fileFive);
     }
 
     runSaveAuctionAsDraft(
       authAxios
-        .post(api.app.auctions.draft, formData)
+        .post(api.app.auctions.setAssdraft, formData)
         .then((res) => {
           toast.success("your Auction Save As Drafted success");
           history.push(routes.createAuction.default);
           dispatch(productDetails({}));
         })
-        .catch((err) => {})
+        .catch((err) => {
+          toast.error(
+            err?.message.map((e) => e) ||
+              "oops, sorry something with wrong please make sure everything is correct and try again"
+          );
+        })
     );
   };
 
@@ -272,6 +363,8 @@ const ProductDetails = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
+                <ScrollToFieldError />
+                {setDraftValue(formik?.values)}
                 <div className="grid gap-x-4 gap-y-10 md:grid-cols-4 grid-cols-2 mt-10 ">
                   <div className="col-span-2">
                     <FormikInput
@@ -351,7 +444,6 @@ const ProductDetails = () => {
                   {customFromData?.regularCustomFields?.map((e) => (
                     <div className="w-full mt-1.5">
                       <FormikInput
-                        required
                         name={e?.key}
                         type={e?.type}
                         label={lang === "en" ? e?.labelEn : e?.labelAr}
@@ -392,8 +484,7 @@ const ProductDetails = () => {
                     />
                   </div>
                 </div>
-
-                <div>
+                <div className={hasUsageCondition ? "w-full" : "hidden"}>
                   <h1 className="font-bold text-base text-black pt-6">
                     Item Condition
                   </h1>
@@ -404,8 +495,7 @@ const ProductDetails = () => {
                     />
                   </div>
                 </div>
-
-                <div className="flex gap-x-4 sm:justify-end justify-center">
+                <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
                   <div className="mt-auto w-full sm:w-auto ">
                     <div
                       onClick={() => SaveAuctionAsDraft()}

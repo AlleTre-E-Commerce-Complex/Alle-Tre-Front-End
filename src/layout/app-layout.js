@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import routes from "../routes";
 
 import Home from "../page/app/home/home";
@@ -16,38 +16,148 @@ import ProductDetails from "../page/app/create-auction/product-details";
 import AuctionDetails from "../page/app/create-auction/auction-details";
 import ShippingDetails from "../page/app/create-auction/shipping-details";
 import PaymentDetails from "../page/app/create-auction/payment-details";
+import { Menu, Sidebar } from "semantic-ui-react";
+import { ReactComponent as CloseIcon } from "../../src/assets/icons/x_icon.svg";
+import { ReactComponent as Allatre } from "../../src/assets/logo/allatre-logo-color.svg";
+import NavLinkHeader from "../components/shared/header-app/nav-link-header";
+import DropdownLang from "../components/shared/header-app/dropdown-lang";
 
 const AppLayouts = () => {
-  return (
-    <div className="">
-      <AuthModel />
-      <Header />
-      <Switch>
-        <Route
-          path={routes.createAuction.paymentDetails}
-          component={PaymentDetails}
-        />
-        <Route
-          path={routes.createAuction.shippingDetails}
-          component={ShippingDetails}
-        />
-        <Route
-          path={routes.createAuction.auctionDetails}
-          component={AuctionDetails}
-        />
-        <Route
-          path={routes.createAuction.productDetails}
-          component={ProductDetails}
-        />
-        <Route path={routes.createAuction.default} component={CreateAuction} />
+  const history = useHistory();
+  const { pathname } = useLocation();
+  const [sid, SetSid] = React.useState(false);
 
-        <Route path={routes.app.home} component={Home} />
-        <Route path={routes.app.myBides} component={MyBids} />
-        <Route path={routes.app.categories} component={Categories} />
-        <Route path={routes.app.watchlist} component={Watshlist} />
-        <Route path={routes.app.faqs} component={FAQs} />
-        <Route path={routes.app.support} component={Support} />
-      </Switch>
+  return (
+    <div className="h-screen p-0 m-0 border-none border-0 scrollbar-hide ">
+      <Sidebar.Pushable className="p-0 m-0 border-none scrollbar-hide">
+        <Sidebar
+          className="p-0 m-0 border-none bg-secondary  overflow-hidden"
+          as={Menu}
+          animation="overlay"
+          inverted
+          onHide={() => SetSid(false)}
+          vertical
+          direction="left"
+          visible={sid}
+        >
+          <div className="w-full mx-auto ">
+            <>
+              <div>
+                <div className="flex justify-between pt-5">
+                  <CloseIcon
+                    onClick={() => SetSid(false)}
+                    className="mx-4 mt-2"
+                  />
+                  <Allatre
+                    onClick={() => {
+                      history.push(routes.app.home);
+                      SetSid(false);
+                    }}
+                    className="w-28 mx-8"
+                  />
+                </div>
+                <div className="flex flex-col gap-y-8 mx-6">
+                  <NavLinkHeader
+                    title="My Bids"
+                    isActive={
+                      pathname.length === 1 ||
+                      pathname.startsWith(routes.app.myBides)
+                    }
+                    onClick={() => {
+                      history.push(routes.app.myBides);
+                      SetSid(false);
+                    }}
+                  />
+                  <NavLinkHeader
+                    title="Sell Now"
+                    isActive={
+                      pathname.length === 1 ||
+                      pathname.startsWith(routes.createAuction.default)
+                    }
+                    onClick={() => {
+                      history.push(routes.createAuction.default);
+                      SetSid(false);
+                    }}
+                  />
+                  <NavLinkHeader
+                    title="Watchlist"
+                    isActive={
+                      pathname.length === 1 ||
+                      pathname.startsWith(routes.app.watchlist)
+                    }
+                    onClick={() => {
+                      history.push(routes.app.watchlist);
+                      SetSid(false);
+                    }}
+                  />
+                  <NavLinkHeader
+                    title="FAQS"
+                    isActive={
+                      pathname.length === 1 ||
+                      pathname.startsWith(routes.app.faqs)
+                    }
+                    onClick={() => {
+                      history.push(routes.app.faqs);
+                      SetSid(false);
+                    }}
+                  />
+                  <NavLinkHeader
+                    title="Support"
+                    isActive={
+                      pathname.length === 1 ||
+                      pathname.startsWith(routes.app.support)
+                    }
+                    onClick={() => {
+                      history.push(routes.app.support);
+                      SetSid(false);
+                    }}
+                  />
+                </div>
+                <div>
+                  <DropdownLang />
+                </div>
+              </div>
+            </>
+          </div>
+        </Sidebar>
+        <Sidebar.Pusher
+          className=" p-0 m-0 border-none  border-0 "
+          dimmed={sid}
+        >
+          <div className="p-0 m-0 border-none ">
+            <AuthModel />
+            <Header SetSid={SetSid} sid={sid} />
+            <Switch>
+              <Route
+                path={routes.createAuction.paymentDetails}
+                component={PaymentDetails}
+              />
+              <Route
+                path={routes.createAuction.shippingDetails}
+                component={ShippingDetails}
+              />
+              <Route
+                path={routes.createAuction.auctionDetails}
+                component={AuctionDetails}
+              />
+              <Route
+                path={routes.createAuction.productDetails}
+                component={ProductDetails}
+              />
+              <Route
+                path={routes.createAuction.default}
+                component={CreateAuction}
+              />
+              <Route path={routes.app.home} component={Home} />
+              <Route path={routes.app.myBides} component={MyBids} />
+              <Route path={routes.app.categories} component={Categories} />
+              <Route path={routes.app.watchlist} component={Watshlist} />
+              <Route path={routes.app.faqs} component={FAQs} />
+              <Route path={routes.app.support} component={Support} />
+            </Switch>
+          </div>
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
     </div>
   );
 };
