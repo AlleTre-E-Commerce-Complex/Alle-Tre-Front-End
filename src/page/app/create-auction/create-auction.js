@@ -57,7 +57,7 @@ const CreateAuction = () => {
       <Dimmer className="animate-pulse" active={isLoading} inverted>
         <Loader active />
       </Dimmer>
-      <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 ">
+      <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
         <CreateAuctionBreadcrumb />
       </div>
       <div className="relative">

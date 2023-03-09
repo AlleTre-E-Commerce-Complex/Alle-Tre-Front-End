@@ -322,7 +322,7 @@ const ProductDetails = () => {
       >
         <Loader active />
       </Dimmer>
-      <div className=" h-14 my-7 py-4 ">
+      <div className=" h-14 my-7 py-4 sm:block hidden">
         {/* Breadcrumb  */}
         <CreateAuctionBreadcrumb />
       </div>
@@ -375,7 +375,7 @@ const ProductDetails = () => {
                     />
                   </div>
                   <div className="col-span-2 hidden md:block"></div>
-                  <div className="col-span-2 hidden md:block">
+                  <div className="col-span-2 ">
                     <FormikMultiDropdown
                       name="category"
                       label={"Category"}
@@ -406,7 +406,7 @@ const ProductDetails = () => {
                     />
                   </div>
                   {customFromData?.arrayCustomFields?.map((e) => (
-                    <div className="w-full">
+                    <div className="w-full col-span-2 ">
                       <FormikMultiDropdown
                         name={e?.key}
                         label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
@@ -424,7 +424,9 @@ const ProductDetails = () => {
                   ))}
                   <div
                     className={
-                      customFromData?.model?.key ? "w-full mt-1.5" : "hidden"
+                      customFromData?.model?.key
+                        ? "w-full mt-1.5 col-span-2"
+                        : "hidden"
                     }
                   >
                     <FormikInput
@@ -442,7 +444,7 @@ const ProductDetails = () => {
                     />
                   </div>
                   {customFromData?.regularCustomFields?.map((e) => (
-                    <div className="w-full mt-1.5">
+                    <div className="w-full mt-1.5 col-span-2">
                       <FormikInput
                         name={e?.key}
                         type={e?.type}

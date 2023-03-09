@@ -126,8 +126,8 @@ const AuctionDetails = () => {
   };
 
   return (
-    <div className="mt-44 animate-in ">
-      <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 ">
+    <div className="mt-44 animate-in mx-5 ">
+      <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
         <CreateAuctionBreadcrumb />
       </div>
       <div className="flex justify-center">
@@ -154,7 +154,7 @@ const AuctionDetails = () => {
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
                 <ScrollToFieldError />
-                <div className="grid grid-cols-2">
+                <div className="grid sm:grid-cols-2 grid-cols-1">
                   <div>
                     <div className="w-[330px] mt-10">
                       {valueRadio === "Quick Auction" ? (
@@ -201,7 +201,7 @@ const AuctionDetails = () => {
                       <div
                         className={
                           IsSchedule
-                            ? "mt-9 flex justify-between gap-x-4 "
+                            ? "mt-9 flex sm:flex-row flex-col justify-between gap-x-4 gap-y-10 sm:gap-y-0 "
                             : "hidden"
                         }
                       >

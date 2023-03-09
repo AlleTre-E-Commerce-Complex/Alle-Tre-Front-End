@@ -210,8 +210,8 @@ const ShippingDetails = () => {
   };
 
   return (
-    <div className="mt-44 animate-in ">
-      <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 ">
+    <div className="mt-44 animate-in mx-5 ">
+      <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
         <CreateAuctionBreadcrumb />
       </div>
       <div className="flex justify-center">
@@ -254,7 +254,7 @@ const ShippingDetails = () => {
           <Button
             onClick={creatAuction}
             loading={isLoadingCreatAuction}
-            className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+            className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white sm:mt-8 mt-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN mb-5"
           >
             next
           </Button>

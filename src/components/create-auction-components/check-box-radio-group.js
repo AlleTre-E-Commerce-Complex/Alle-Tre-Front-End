@@ -56,7 +56,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
 
 export const CheckboxRadioAuctionDetails = ({ valueRadio, setRadioValue }) => {
   return (
-    <Form className="flex gap-x-64">
+    <Form className="flex md:flex-row flex-col gap-x-64">
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"

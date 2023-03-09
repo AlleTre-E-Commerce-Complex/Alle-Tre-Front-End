@@ -4,7 +4,7 @@ import Ar from "../../../../src/assets/icons/Ar_icon.png";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 
-const DropdownLang = () => {
+const DropdownLang = ({ className }) => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
   const langOptions = [
@@ -25,7 +25,7 @@ const DropdownLang = () => {
   return (
     <div dir="ltr">
       <Dropdown
-        className="text-gray-dark Edit_Lang_Dropdown "
+        className={`${className} text-gray-dark Edit_Lang_Dropdown`}
         inline
         options={langOptions}
         defaultValue={
