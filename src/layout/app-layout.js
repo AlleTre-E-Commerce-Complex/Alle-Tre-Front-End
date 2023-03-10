@@ -22,11 +22,19 @@ import { ReactComponent as Allatre } from "../../src/assets/logo/allatre-logo-co
 import DropdownLang from "../components/shared/header-app/dropdown-lang";
 import "../../src/components/shared/header-app/nav-link-header.css";
 import AccordionMenu from "../components/shared/accordion-menu/accordion-menu";
+import { useAuthState } from "../context/auth-context";
 
 const AppLayouts = () => {
   const history = useHistory();
   const { pathname } = useLocation();
   const [sid, SetSid] = React.useState(false);
+
+  const { user } = useAuthState();
+  const handelOnSell = () => {
+    if (user) {
+      history.push(routes.createAuction.default);
+    } else history.push(routes.auth.logIn);
+  };
 
   return (
     <div className="h-screen  p-0 m-0 border-none border-0 scrollbar-hide ">
@@ -71,7 +79,7 @@ const AppLayouts = () => {
                   pathname.startsWith(routes.createAuction.default)
                 }
                 onClick={() => {
-                  history.push(routes.createAuction.default);
+                  handelOnSell();
                   SetSid(false);
                 }}
               />
