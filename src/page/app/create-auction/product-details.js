@@ -406,7 +406,7 @@ const ProductDetails = () => {
                     />
                   </div>
                   {customFromData?.arrayCustomFields?.map((e) => (
-                    <div className="w-full col-span-2 ">
+                    <div className="w-full col-span-2 sm:col-span-1 ">
                       <FormikMultiDropdown
                         name={e?.key}
                         label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
@@ -425,7 +425,7 @@ const ProductDetails = () => {
                   <div
                     className={
                       customFromData?.model?.key
-                        ? "w-full mt-1.5 col-span-2"
+                        ? "w-full mt-1.5 col-span-2 sm:col-span-1"
                         : "hidden"
                     }
                   >
@@ -444,7 +444,7 @@ const ProductDetails = () => {
                     />
                   </div>
                   {customFromData?.regularCustomFields?.map((e) => (
-                    <div className="w-full mt-1.5 col-span-2">
+                    <div className="w-full mt-1.5 col-span-2 sm:col-span-1">
                       <FormikInput
                         name={e?.key}
                         type={e?.type}
