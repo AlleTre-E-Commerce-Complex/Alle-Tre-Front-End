@@ -28,6 +28,9 @@ module.exports = {
       body: ["Almarai"],
     },
     extend: {
+      dropShadow: {
+        "home-img": "0px 3px 16px #E9E9E980",
+      },
       colors: {
         background: {
           DEFAULT: "#FEFEFE",
@@ -46,6 +49,10 @@ module.exports = {
           dark: "#707070",
           med: "#ACACAC",
           veryLight: "#E5E5E5",
+        },
+        red: {
+          DEFAULT: "#E40909",
+          dark: "#731C1C",
         },
       },
     },

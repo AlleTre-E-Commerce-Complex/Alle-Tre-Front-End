@@ -24,7 +24,7 @@ const Header = ({ SetSid }) => {
     } else dispatch(Open());
   };
   return (
-    <div className="w-full fixed top-0 z-20  ">
+    <div className="w-full fixed top-0 z-50  ">
       <div className="backdrop-blur-md bg-white/30  md:h-[72px] h-[60px] flex justify-between lg:px-16 px-5  ">
         <div className="my-auto hidden md:block">
           <AllatreLogo
