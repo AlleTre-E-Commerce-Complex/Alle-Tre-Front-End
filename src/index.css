@@ -112,3 +112,6 @@ a {
 }
 /* ///////////////////////////////////////////////////////////////////// */
 
+.ui.primary.button, .ui.primary.buttons .button{
+  @apply bg-primary hover:bg-primary-dark !important
+}

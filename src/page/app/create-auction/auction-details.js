@@ -276,9 +276,9 @@ const AuctionDetails = () => {
                   </div>
                   {/* buttons */}
                   <div className="mt-auto flex justify-end  mb-6">
-                    <Button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                      next
-                    </Button>
+                    <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                      Next
+                    </button>
                   </div>
                 </div>
               </Form>

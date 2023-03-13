@@ -199,10 +199,11 @@ const ShippingDetails = () => {
             dispatch(isBuyNow({}));
           })
           .catch((err) => {
-            toast.error(err?.message.map((e) => e)) ||
-              toast.error(
+            toast.error(
+              err?.message ||
+                err?.message.map((e) => e) ||
                 "oops, something with wrong please make sure everything is in the right place and try again "
-              );
+            );
           })
       );
     } else {
@@ -225,7 +226,11 @@ const ShippingDetails = () => {
           Location Details
         </h1>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mx-auto pt-6">
-          <Dimmer className="animate-pulse" active={isLoading} inverted>
+          <Dimmer
+            className="animate-pulse"
+            active={isLoading || isLoadingCreatAuction}
+            inverted
+          >
             <Loader active />
           </Dimmer>
           {locatonData?.map((e) => (
@@ -254,13 +259,13 @@ const ShippingDetails = () => {
         </button> */}
         {/* buttons */}
         <div className=" flex justify-end  mt-28">
-          <Button
+          <button
+            className="bg-primary hover:bg-primary-dark text-white sm:w-[304px] w-full h-[48px] rounded-lg  sm:mt-8 mt-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN mb-5"
             onClick={creatAuction}
             loading={isLoadingCreatAuction}
-            className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white sm:mt-8 mt-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN mb-5"
           >
-            next
-          </Button>
+            Creat Auction
+          </button>
         </div>
       </div>
       <AddLocationModel
