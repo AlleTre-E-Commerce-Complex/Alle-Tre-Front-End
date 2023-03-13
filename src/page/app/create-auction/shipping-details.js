@@ -199,7 +199,10 @@ const ShippingDetails = () => {
             dispatch(isBuyNow({}));
           })
           .catch((err) => {
-            toast.error(err?.message.map((e) => e));
+            toast.error(err?.message.map((e) => e)) ||
+              toast.error(
+                "oops, something with wrong please make sure everything is in the right place and try again "
+              );
           })
       );
     } else {

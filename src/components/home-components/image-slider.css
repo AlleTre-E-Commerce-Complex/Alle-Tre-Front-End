@@ -28,15 +28,24 @@
 }
 
 
-.slide {
-  opacity: 0;
+.slideRight {
+  /* opacity: 0; */
   transition-duration: 0.2s;
+  transform: translatex(9%)
+}
+
+.slideleft {
+  /* opacity: 0; */
+  transition-duration: 0.2s;
+  transform: translatex(-9%)
 }
 
 .slide.active {
-  opacity: 1;
-  transition-duration: 0.2s;
-  transform: scale(1.08);
+  /* opacity: 1; */
+  scale: 1.08;
+  transition-duration: 0.3s;
+  transform: translatex(0)
+
 }
 
 

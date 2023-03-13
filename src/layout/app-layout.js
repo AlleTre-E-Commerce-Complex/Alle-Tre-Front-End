@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Route, Switch } from "react-router-dom";
 import routes from "../routes";
@@ -19,7 +19,7 @@ import PaymentDetails from "../page/app/create-auction/payment-details";
 import Sidebar from "../components/shared/side-bare/sibe-bare";
 
 const AppLayouts = () => {
-  const [sid, SetSid] = React.useState(false);
+  const [sid, SetSid] = useState(false);
 
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">

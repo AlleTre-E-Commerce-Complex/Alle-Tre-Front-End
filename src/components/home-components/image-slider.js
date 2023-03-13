@@ -5,47 +5,48 @@ import anglesRightIcon from "../../../src/assets/icons/angles-right-icon.png";
 import anglesLeftIcon from "../../../src/assets/icons/angles-left-icon.png";
 
 const ImageSlider = ({ slides }) => {
+  const [translate, setTranslate] = useState("");
   const [current, setCurrent] = useState(0);
   const length = slides.length;
 
   const nextSlide = () => {
+    setTranslate("slideRight");
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
 
   const prevSlide = () => {
+    setTranslate("slideleft");
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
 
   if (!Array.isArray(slides) || slides.length <= 0) {
     return null;
   }
-  console.log("====================================");
-  console.log(current === 1);
-  console.log(length);
-  console.log("====================================");
+  const nextindex = current + 1 === 5 ? current - 1 : current + 1;
+  const previndex = current + 1 && current - 1 < 0 ? 0 : current - 1;
 
   return (
     <section className="mt-7 ">
-      <div className="relative flex justify-between mx-28 ">
+      <div className="relative mx-28">
         <img
-          className="object-cover absolute w-full h-[561px] rounded-[32px] drop-shadow-home-img blur-[1px] opacity-20"
-          src={SliderData[current === length - 1 ? 0 : current + 1].image}
+          className="object-cover absolute right-0 -top-6 w-1/2 h-[561px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
+          src={SliderData[nextindex]?.image}
           alt="travel"
         />
         <img
-          className="object-cover absolute  w-full h-[561px] rounded-[32px] drop-shadow-home-img blur-[1px] opacity-20 "
-          src={SliderData[current === 0 ? length - 1 : current - 1].image}
+          className="object-cover absolute left-0 -top-6 w-1/2 h-[561px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
+          src={SliderData[previndex]?.image}
           alt="travel"
         />
       </div>
       {SliderData.map((slide, index) => {
         return (
           <div
-            className={index === current ? "slide active" : "slide "}
+            className={index === current ? "slide active " : translate}
             key={index}
           >
             {index === current && (
-              <div className="h-[561px] mx-52 relative rounded-[32px]   ">
+              <div className="h-[561px] mx-56 relative rounded-[32px]   ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img
@@ -69,7 +70,7 @@ const ImageSlider = ({ slides }) => {
                   </div>
                 </div>
                 <img
-                  className="object-cover w-full h-[561px] rounded-[32px] drop-shadow "
+                  className="object-cover w-full h-[561px] rounded-[32px] drop-shadow-home-img"
                   src={slide.image}
                   alt="travel"
                 />
