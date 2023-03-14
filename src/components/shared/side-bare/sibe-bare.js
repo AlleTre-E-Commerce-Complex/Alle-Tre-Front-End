@@ -10,18 +10,24 @@ import { Open } from "../../../redux-store/auth-model-slice";
 import { useDispatch } from "react-redux";
 import "../../../../src/components/shared/header-app/nav-link-header.css";
 import { motion } from "framer-motion";
+import { useLanguage } from "../../../context/language-context";
 
 const Sidebar = ({ SetSid, sid }) => {
   const history = useHistory();
   const { pathname } = useLocation();
+  const [lang] = useLanguage();
 
   const sidebarVariants = {
     open: {
       x: 0,
       transition: { ease: "easeInOut", duration: 0.3 },
     },
-    closed: {
+    closedEn: {
       x: "-100%",
+      transition: { ease: "easeInOut", duration: 0.3 },
+    },
+    closedAr: {
+      x: "100%",
       transition: { ease: "easeInOut", duration: 0.3 },
     },
   };
@@ -58,15 +64,18 @@ const Sidebar = ({ SetSid, sid }) => {
       />
       {/* Sidebar */}
       <motion.div
-        className={`fixed top-0  w-60 h-full bg-secondary z-50 shadow-lg`}
+        className={`fixed top-0 w-60 h-full bg-secondary z-50 shadow-lg`}
         variants={sidebarVariants}
-        initial="closed"
-        animate={sid ? "open" : "closed"}
+        initial={lang === "en" ? "closedEn" : "closedAr"}
+        animate={sid ? "open" : lang === "en" ? "closedEn" : "closedAr"}
       >
         {/* Sidebar content */}
         <div className="w-full mx-auto h-screen flex flex-col justify-between ">
           <div className="flex justify-between pt-5">
-            <CloseIcon onClick={() => SetSid(false)} className="mx-4 mt-2" />
+            <CloseIcon
+              onClick={() => SetSid(false)}
+              className="mx-4 mt-2 cursor-pointer"
+            />
             <Allatre
               onClick={() => {
                 history.push(routes.app.home);

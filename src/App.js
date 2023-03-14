@@ -33,17 +33,17 @@ function App() {
           loading: {
             duration: 5000,
             className:
-              "w-[430px] h-[85px] border-l-8 border-[#002189] bg-[#F7F9FF]",
+              "w-[430px] h-auto border-l-8 border-[#002189] bg-[#F7F9FF] py-3",
           },
           success: {
             duration: 5000,
             className:
-              "w-[430px] h-[85px] border-l-8 border-[#002189] bg-[#F7F9FF]",
+              "w-[430px] h-auto border-l-8 border-[#002189] bg-[#F7F9FF] py-3",
           },
           error: {
             duration: 5000,
             className:
-              "w-[430px] h-[85px] border-l-8 border-[#E53737] bg-[#FFFAFA]",
+              "w-[430px] h-auto border-l-8 border-[#E53737] bg-[#FFFAFA] py-3",
           },
         }}
       />

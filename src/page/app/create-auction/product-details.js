@@ -5,7 +5,7 @@ import Stepper from "../../../components/shared/stepper/stepper-app";
 import routes from "../../../routes";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Button, Dimmer, Loader, Form } from "semantic-ui-react";
+import { Dimmer, Loader, Form } from "semantic-ui-react";
 import FormikInput from "../../../components/shared/formik/formik-input";
 import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
 import FormikTextArea from "../../../components/shared/formik/formik-text-area";
@@ -125,6 +125,11 @@ const ProductDetails = () => {
       is: () => model,
       then: Yup.string().required("required"),
       otherwise: Yup.string().notRequired(),
+    }),
+    subCategory: Yup.string().when([], {
+      is: () => SubGatogryOptions?.length === 0,
+      then: Yup.string().notRequired(),
+      otherwise: Yup.string().required("required"),
     }),
   });
 

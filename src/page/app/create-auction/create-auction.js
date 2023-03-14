@@ -183,7 +183,7 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
             <Button
               loading={isLoading}
               onClick={() => deleteAuction()}
-              className="w-[136px] h-[48px] bg-primary text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR"
+              className="w-[136px] h-[48px] bg-primary text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR opacity-100"
             >
               Yes,delete
             </Button>

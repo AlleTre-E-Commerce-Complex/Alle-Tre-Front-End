@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Button, Form, Radio } from "semantic-ui-react";
+import { Form, Radio } from "semantic-ui-react";
 import Stepper from "../../../components/shared/stepper/stepper-app";
 import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
 
@@ -227,6 +227,7 @@ const AuctionDetails = () => {
                       </h1>
                       <div className="pt-6">
                         <FormikInput
+                          type="number"
                           name="MinimumPrice"
                           label="Minimum Price"
                           placeholder="AEDXXX"
@@ -263,6 +264,7 @@ const AuctionDetails = () => {
                       >
                         <div className="w-full">
                           <FormikInput
+                            type="number"
                             name="PurchasingPrice"
                             label="Purchasing Price"
                             placeholder="AEDXXX"

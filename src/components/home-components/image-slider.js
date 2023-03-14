@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { SliderData } from "./imge-data";
-import "./image-slider.css";
 import anglesRightIcon from "../../../src/assets/icons/angles-right-icon.png";
 import anglesLeftIcon from "../../../src/assets/icons/angles-left-icon.png";
+import "./image-slider.css";
 
 const ImageSlider = ({ slides }) => {
   const [translate, setTranslate] = useState("");
@@ -27,7 +27,7 @@ const ImageSlider = ({ slides }) => {
 
   return (
     <section className="mt-7 ">
-      <div className="relative mx-28">
+      <div className="relative mx-6">
         <img
           className="object-cover absolute right-0 -top-6 w-1/2 h-[561px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
           src={SliderData[nextindex]?.image}
@@ -42,17 +42,17 @@ const ImageSlider = ({ slides }) => {
       {SliderData.map((slide, index) => {
         return (
           <div
-            className={index === current ? "slide active " : translate}
+            className={index === current ? "slide active" : translate}
             key={index}
           >
             {index === current && (
-              <div className="h-[561px] mx-56 relative rounded-[32px]   ">
+              <div className="h-[561px] mx-32 relative rounded-[32px]   ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img
                     src={anglesRightIcon}
                     alt="anglesRightIcon"
-                    className="absolute z-20 right-1 top-1/2 w-20 h-20 cursor-pointer right-arrow-parent"
+                    className="absolute z-20 right-5 top-1/2 w-16 h-16 cursor-pointer right-arrow-parent"
                   />
                   <div className="overflow-hidden absolute inset-0">
                     <div className="right-arrow w-[541px] -rotate-90 right-2.5 top-0"></div>
@@ -63,7 +63,7 @@ const ImageSlider = ({ slides }) => {
                   <img
                     src={anglesLeftIcon}
                     alt="anglesLeftIcon"
-                    className="absolute z-20 left-1 top-1/2 w-20 h-20 cursor-pointer left-arrow-parent "
+                    className="absolute z-20 left-5 top-1/2 w-16 h-16 cursor-pointer left-arrow-parent "
                   />
                   <div className="overflow-hidden absolute inset-0">
                     <div className="left-arrow w-[541px] rotate-90 left-2.5 top-0"></div>

@@ -8,7 +8,7 @@ import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/
 import Stepper from "../../../components/shared/stepper/stepper-app";
 
 import { GoPlus } from "react-icons/go";
-import { Button, Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
 
 import api from "../../../api";
 import useAxios from "../../../hooks/use-axios";
@@ -67,9 +67,12 @@ const ShippingDetails = () => {
     );
   }, [run, forceReload]);
 
-  const { run: runCreatAuction, isLoading: isLoadingCreatAuction } = useAxios(
-    []
-  );
+  const {
+    run: runCreatAuction,
+    isLoading: isLoadingCreatAuction,
+    error: errorCreatAuction,
+    isError: isErrorCreatAuction,
+  } = useAxios([]);
   const creatAuction = () => {
     if (locationId) {
       const formData = new FormData();
@@ -199,10 +202,11 @@ const ShippingDetails = () => {
             dispatch(isBuyNow({}));
           })
           .catch((err) => {
+            console.log({ errorCreatAuction }, { isErrorCreatAuction });
             toast.error(
-              err?.message ||
-                err?.message.map((e) => e) ||
-                "oops, something with wrong please make sure everything is in the right place and try again "
+              // err?.response?.data?.message.map((e) => e) ||
+              //   err?.message.map((e) => e) ||
+              "oops, something with wrong please make sure everything is in the right place and try again "
             );
           })
       );
