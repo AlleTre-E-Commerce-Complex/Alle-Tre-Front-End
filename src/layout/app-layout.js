@@ -17,6 +17,8 @@ import AuctionDetails from "../page/app/create-auction/auction-details";
 import ShippingDetails from "../page/app/create-auction/shipping-details";
 import PaymentDetails from "../page/app/create-auction/payment-details";
 import Sidebar from "../components/shared/side-bare/sibe-bare";
+import ProfileLayouts from "../page/app/profile/profile-layouts";
+import ProfileSettings from "../components/profile-components/profile-settings";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -28,6 +30,7 @@ const AppLayouts = () => {
       <div className="p-0 m-0 border-none min-h-screen ">
         <AuthModel />
         <Switch>
+          <Route path={routes.profile.default} component={ProfileLayouts} />
           <Route
             path={routes.createAuction.paymentDetails}
             component={PaymentDetails}

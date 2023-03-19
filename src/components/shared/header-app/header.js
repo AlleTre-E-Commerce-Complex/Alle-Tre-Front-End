@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/allatre-logo-color.svg";
@@ -10,10 +10,23 @@ import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
 import { RxMagnifyingGlass } from "react-icons/rx";
+import { RiUser3Fill, RiArrowDownSFill } from "react-icons/ri";
+import PopupCategoriesModel from "./popup-categories-model";
+import { Input } from "semantic-ui-react";
 
 const Header = ({ SetSid }) => {
   const history = useHistory();
   const { pathname } = useLocation();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   const { user } = useAuthState();
   const dispatch = useDispatch();
@@ -21,6 +34,12 @@ const Header = ({ SetSid }) => {
   const handelOnSell = () => {
     if (user) {
       history.push(routes.createAuction.default);
+    } else dispatch(Open());
+  };
+
+  const handelRegister = () => {
+    if (user) {
+      history.push(routes.profile.default);
     } else dispatch(Open());
   };
   return (
@@ -98,7 +117,40 @@ const Header = ({ SetSid }) => {
           />
         </div>
       </div>
-      <div className="bg-secondary h-[60px]"></div>
+      <div className="bg-secondary h-[60px] ">
+        <div className="py-[6px] flex gap-x-4 lg:px-16 px-5 ">
+          <Input
+            className="w-full edit-search-Input "
+            icon="search"
+            placeholder="Search..."
+          />
+          <div>
+            <button
+              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[304px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
+              onClick={handleOpen}
+            >
+              Categories
+              <RiArrowDownSFill size={20} />
+            </button>
+          </div>
+          <PopupCategoriesModel isOpen={isOpen} onClose={handleClose}>
+            <h2 className="text-lg font-bold mb-4">Popup title</h2>
+            <p className="mb-4">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+              ullamcorper leo. Fusce laoreet dolor et fermentum lobortis.
+            </p>
+          </PopupCategoriesModel>
+          <div>
+            <button
+              onClick={handelRegister}
+              className="w-[136px] h-[48px] border-[1px] border-white text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
+            >
+              <RiUser3Fill size={20} />
+              <p className="pt-1">{user ? "Profile" : "Register Now"}</p>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

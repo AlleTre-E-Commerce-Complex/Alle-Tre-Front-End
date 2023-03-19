@@ -34,12 +34,19 @@ const api = {
     location: {
       post: "/users/locations",
       get: "/users/my-locations",
+      edit: (locationsId) => `/users/locations/${locationsId}/set-main`,
+      delete: (locationsId) => `/users/locations/${locationsId}`,
     },
     countries: {
       default: "/regions/countries",
     },
     cities: {
       default: (countryId) => `/regions/cities?countryId=${countryId}`,
+    },
+    profile: {
+      default: "users/my-profile",
+      editPersonalInfo: "/users/personal-info",
+      editCredentialsInfo: "/users/credentials-info",
     },
   },
 };

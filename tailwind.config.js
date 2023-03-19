@@ -32,14 +32,16 @@ module.exports = {
         background: {
           DEFAULT: "#FEFEFE",
           gray: "#ACACAC1A",
+          profile: "#E5E5E51A",
         },
         primary: {
           DEFAULT: "#821A4D",
           dark: "#62143A",
-          // light: "#67C6B980",
+          light: "#A2547A",
         },
         secondary: {
           DEFAULT: "#00134F",
+          veryLight: "#00134F1A",
         },
         gray: {
           DEFAULT: "#6F6F6F",
@@ -54,6 +56,7 @@ module.exports = {
       },
       dropShadow: {
         "home-img": "0px 3px 16px #E9E9E980",
+        "complete-profile": "0px 1px 4px #E9E9E9B3;",
       },
     },
   },

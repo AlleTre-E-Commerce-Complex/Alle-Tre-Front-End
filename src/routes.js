@@ -26,6 +26,11 @@ const routes = {
     shippingDetails: `/allatre/home/create-auction/product-details/auction-details/shipping-details`,
     paymentDetails: `/allatre/home/create-auction/product-details/auction-details/shipping-details/payment-details`,
   },
+  profile: {
+    default: `/allatre/profile`,
+    profileSettings: `/allatre/profile/settings`,
+    myAuctions: `/allatre/profile/my-auctions`,
+  },
 };
 
 export default routes;

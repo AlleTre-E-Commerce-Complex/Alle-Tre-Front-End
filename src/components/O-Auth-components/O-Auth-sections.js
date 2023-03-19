@@ -45,6 +45,7 @@ const OAuthSections = ({ isLogin }) => {
             email: res?._tokenResponse?.email || null,
             idToken: res?._tokenResponse?.idToken || null,
             phone: res?._tokenResponse?.phoneNumber || null,
+            oAuthType: "APPLE",
           })
         )
           .then((res) => {
@@ -89,6 +90,7 @@ const OAuthSections = ({ isLogin }) => {
             email: res?._tokenResponse?.email || null,
             idToken: res?._tokenResponse?.idToken || null,
             phone: res?._tokenResponse?.phoneNumber || null,
+            oAuthType: "GOOGLE",
           })
         )
           .then((res) => {
@@ -133,6 +135,7 @@ const OAuthSections = ({ isLogin }) => {
             email: res?._tokenResponse?.email || null,
             idToken: res?._tokenResponse?.idToken || null,
             phone: res?._tokenResponse?.phoneNumber || null,
+            oAuthType: "FACEBOOK",
           })
         )
           .then((res) => {
