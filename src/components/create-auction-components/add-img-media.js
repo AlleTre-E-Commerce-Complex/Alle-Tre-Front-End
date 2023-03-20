@@ -1,4 +1,5 @@
 import React from "react";
+
 import { FileUploader } from "react-drag-drop-files";
 
 import addImage from "../../../src/assets/icons/add-image.svg";

@@ -15,11 +15,12 @@ import PenIcon from "../../../../src/assets/icons/pen-icon.png";
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
 
-import useLocalStorage from "../../../hooks/use-localstorage";
 import AddLocationModel from "../../../components/create-auction-components/add-location-model";
-import useAxios from "../../../hooks/use-axios";
+import useLocalStorage from "../../../hooks/use-localstorage";
 import { authAxios } from "../../../config/axios-config";
+import useAxios from "../../../hooks/use-axios";
 import api from "../../../api";
+
 import { toast } from "react-hot-toast";
 
 const CreateAuction = () => {
@@ -38,7 +39,6 @@ const CreateAuction = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  console.log(hasCompletedProfile);
   const handelCreatOuction = () => {
     if (hasCompletedProfile) {
       history.push(routes.createAuction.productDetails);

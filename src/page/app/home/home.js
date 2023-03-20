@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import ImageSlider from "../../../components/home-components/image-slider";
 import { SliderData } from "../../../components/home-components/imge-data";
 

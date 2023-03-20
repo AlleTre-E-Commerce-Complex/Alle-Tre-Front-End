@@ -1,30 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
 import { useHistory } from "react-router-dom";
-import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
-import Stepper from "../../../components/shared/stepper/stepper-app";
 import routes from "../../../routes";
-import * as Yup from "yup";
-import { Formik } from "formik";
+
+import { CheckboxRadioProductDetails } from "../../../components/create-auction-components/check-box-radio-group";
+import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
+import AddImgMedia from "../../../components/create-auction-components/add-img-media";
+import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
+import Stepper from "../../../components/shared/stepper/stepper-app";
 import { Dimmer, Loader, Form } from "semantic-ui-react";
-import FormikInput from "../../../components/shared/formik/formik-input";
+import { toast } from "react-hot-toast";
+
+import { ScrollToFieldError } from "../../../components/shared/formik/formik-scroll-to-field-error";
 import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
 import FormikTextArea from "../../../components/shared/formik/formik-text-area";
-import { useEffect } from "react";
-import AddImgMedia from "../../../components/create-auction-components/add-img-media";
-import { CheckboxRadioProductDetails } from "../../../components/create-auction-components/check-box-radio-group";
-import useGetGatogry from "../../../hooks/use-get-category";
-import useGetSubGatogry from "../../../hooks/use-get-sub-category";
-import { authAxios } from "../../../config/axios-config";
+import FormikInput from "../../../components/shared/formik/formik-input";
+import { Formik } from "formik";
+import * as Yup from "yup";
+
 import api from "../../../api";
 import useAxios from "../../../hooks/use-axios";
-import { useLanguage } from "../../../context/language-context";
-import content from "../../../localization/content";
-import { useDispatch, useSelector } from "react-redux";
-import { productDetails } from "../../../redux-store/product-details-Slice";
-import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
 import useGetBrand from "../../../hooks/use-get-brand";
-import { toast } from "react-hot-toast";
-import { ScrollToFieldError } from "../../../components/shared/formik/formik-scroll-to-field-error";
+import { authAxios } from "../../../config/axios-config";
+import useGetGatogry from "../../../hooks/use-get-category";
+import useGetSubGatogry from "../../../hooks/use-get-sub-category";
+
+import content from "../../../localization/content";
+import { useLanguage } from "../../../context/language-context";
+
+import { productDetails } from "../../../redux-store/product-details-Slice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProductDetails = () => {
   const [lang, setLang] = useLanguage("");

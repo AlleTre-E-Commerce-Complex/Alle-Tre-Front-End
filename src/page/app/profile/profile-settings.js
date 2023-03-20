@@ -1,30 +1,35 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
+
+import { MdMail } from "react-icons/md";
+import { GoPlus } from "react-icons/go";
 import { RiUser3Fill } from "react-icons/ri";
 import { HiLockClosed } from "react-icons/hi";
-import { BsFillTelephoneFill, BsThreeDots } from "react-icons/bs";
-import { MdMail } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
-import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
-import UploadeImgModel from "./uploade-img-model";
-import EditUserNameModel from "./edit-user-name-model";
-import EditPasswordModel from "./edit-password-model";
-import EditPhoneNumberModel from "./edit-phone-number-model";
-import appleIcon from "../../../src/assets/icons/Apple-icon.svg";
-import googleIcon from "../../../src/assets/icons/Google-icon.svg";
-import facebookIcon from "../../../src/assets/icons/Fcaebook-icon.svg";
-import useFilter from "../../hooks/use-filter";
-import AddLocationModel from "../create-auction-components/add-location-model";
-import { useState } from "react";
-import useAxios from "../../hooks/use-axios";
-import { authAxios } from "../../config/axios-config";
-import { Button, Dimmer, Loader, Popup } from "semantic-ui-react";
-import api from "../../api";
-import { useLanguage } from "../../context/language-context";
-import { GoPlus } from "react-icons/go";
-import { PofileData } from "../../redux-store/pofile-data-slice";
-import { useDispatch } from "react-redux";
+import { BsFillTelephoneFill, BsThreeDots } from "react-icons/bs";
+
+import appleIcon from "../../../../src/assets/icons/Apple-icon.svg";
+import googleIcon from "../../../../src/assets/icons/Google-icon.svg";
+import facebookIcon from "../../../../src/assets/icons/Fcaebook-icon.svg";
+import userProfileicon from "../../../../src/assets/icons/user-Profile-icon.png";
+
+import UploadeImgModel from "../../../components/profile-components/uploade-img-model";
+import EditPasswordModel from "../../../components/profile-components/edit-password-model";
+import EditUserNameModel from "../../../components/profile-components/edit-user-name-model";
+import AddLocationModel from "../../../components/create-auction-components/add-location-model";
+import EditPhoneNumberModel from "../../../components/profile-components/edit-phone-number-model";
+
+import useFilter from "../../../hooks/use-filter";
+import useAxios from "../../../hooks/use-axios";
+
+import { Dimmer, Loader, Popup } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
-import { boolean } from "yup";
+
+import api from "../../../api";
+import { authAxios } from "../../../config/axios-config";
+import { useLanguage } from "../../../context/language-context";
+
+import { PofileData } from "../../../redux-store/pofile-data-slice";
+import { useDispatch } from "react-redux";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage();
@@ -68,7 +73,6 @@ const ProfileSettings = () => {
     if (window.location.hash.slice(1) === "AddressBook") {
     } else window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-  console.log(locationData);
 
   return (
     <div className="mx-4 relative">

@@ -2,14 +2,21 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
+import logOut from "../../../src/assets/icons/log_out_icon.png";
 import routes from "../../routes";
+import auth from "../../utils/auth";
 
 const ProfileSideBare = () => {
   const history = useHistory();
   const { pathname } = useLocation();
 
+  const onLogout = () => {
+    window.location.reload();
+    history.push(routes.app.home);
+    auth.logout();
+  };
+
   const ProfileData = useSelector((state) => state.profileData.PofileData);
-  console.log(ProfileData);
   return (
     <div className=" h-screen fixed w-[255px] ">
       {/* img */}
@@ -44,6 +51,13 @@ const ProfileSideBare = () => {
           }
           onClick={() => history.push(routes.profile.myAuctions)}
         />
+      </div>
+      <div
+        onClick={onLogout}
+        className="flex justify-center gap-x-2 mt-12  cursor-pointer"
+      >
+        <img className="w-4 h-4 mt-0.5" src={logOut} alt="logOut" />
+        <p className="text-gray-med text-sm font-normal underline">Logout</p>
       </div>
     </div>
   );

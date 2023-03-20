@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Form, Checkbox } from "semantic-ui-react";
+
 import "../../../src/assets/style/checkbox-radio-group.css";
 
 export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {

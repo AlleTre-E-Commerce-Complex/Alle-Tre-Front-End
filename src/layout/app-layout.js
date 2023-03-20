@@ -10,13 +10,17 @@ import Categories from "../page/app/categories/categories";
 import Watshlist from "../page/app/watshlist/watshlist";
 import FAQs from "../page/app/FAQs/FAQs";
 import Support from "../page/app/support/support";
-import AuthModel from "../components/shared/auth-model/auth-model";
+
 import CreateAuction from "../page/app/create-auction/create-auction";
 import ProductDetails from "../page/app/create-auction/product-details";
 import AuctionDetails from "../page/app/create-auction/auction-details";
 import ShippingDetails from "../page/app/create-auction/shipping-details";
 import PaymentDetails from "../page/app/create-auction/payment-details";
+
 import Sidebar from "../components/shared/side-bare/sibe-bare";
+
+import AuthModel from "../components/shared/auth-model/auth-model";
+
 import ProfileLayouts from "../page/app/profile/profile-layouts";
 
 const AppLayouts = () => {

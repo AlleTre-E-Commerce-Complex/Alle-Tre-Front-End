@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   signInWithPopup,
   FacebookAuthProvider,
@@ -11,15 +12,17 @@ import googleIcon from "../../../src/assets/icons/Google-icon.svg";
 import facebookIcon from "../../../src/assets/icons/Fcaebook-icon.svg";
 import allatreLogoColor from "../../../src/assets/logo/allatre-logo-color.svg";
 
-import { toast } from "react-hot-toast";
-import useAxios from "../../hooks/use-axios";
-import axios from "axios";
-import api from "../../api";
-import auth from "../../utils/auth";
 import { authentications } from "../../config/firebase-config";
-import { useLanguage } from "../../context/language-context";
+import useAxios from "../../hooks/use-axios";
+import { toast } from "react-hot-toast";
+import auth from "../../utils/auth";
+import api from "../../api";
+import axios from "axios";
+
 import content from "../../localization/content";
+import { useLanguage } from "../../context/language-context";
 import localizationKeys from "../../localization/localization-keys";
+
 import { useHistory } from "react-router-dom";
 import routes from "../../routes";
 

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { SliderData } from "./imge-data";
+
 import anglesRightIcon from "../../../src/assets/icons/angles-right-icon.png";
 import anglesLeftIcon from "../../../src/assets/icons/angles-left-icon.png";
+
 import "./image-slider.css";
 
 const ImageSlider = ({ slides }) => {

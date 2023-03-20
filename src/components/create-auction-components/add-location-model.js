@@ -1,17 +1,23 @@
-import { Form, Formik } from "formik";
 import { useState } from "react";
+
+import * as Yup from "yup";
+import { Form, Formik } from "formik";
+import FormikInput from "../shared/formik/formik-input";
+import FormikMultiDropdown from "../shared/formik/formik-dropdown";
+
 import { Button, Modal } from "semantic-ui-react";
+
 import useGetAllCities from "../../hooks/use-get-all-cities";
 import useGetAllCountries from "../../hooks/use-get-all-countries";
-import FormikMultiDropdown from "../shared/formik/formik-dropdown";
-import FormikInput from "../shared/formik/formik-input";
-import * as Yup from "yup";
-import useAxios from "../../hooks/use-axios";
+
 import { authAxios } from "../../config/axios-config";
+
 import api from "../../api";
 import routes from "../../routes";
-import { Link, useHistory } from "react-router-dom";
+import useAxios from "../../hooks/use-axios";
+import { useHistory } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+
 import { toast } from "react-hot-toast";
 
 const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {

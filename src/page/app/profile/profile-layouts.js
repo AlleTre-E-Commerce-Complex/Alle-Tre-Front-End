@@ -1,8 +1,11 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import ProfileSettings from "../../../components/profile-components/profile-settings";
+
+import ProfileSettings from "./profile-settings";
 import ProfileSideBare from "../../../components/profile-components/profile-side-bare";
+
+import { Route, Switch } from "react-router-dom";
 import routes from "../../../routes";
+import MyAuctions from "./my-auctions";
 
 const ProfileLayouts = () => {
   return (
@@ -14,6 +17,7 @@ const ProfileLayouts = () => {
             path={routes.profile.profileSettings}
             component={ProfileSettings}
           />
+          <Route path={routes.profile.myAuctions} component={MyAuctions} />
         </Switch>
       </div>
     </div>

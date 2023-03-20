@@ -32,15 +32,9 @@ import { ScrollToFieldError } from "../../../components/shared/formik/formik-scr
 const AuctionDetails = () => {
   const history = useHistory();
 
-  const productDetailsInt = useSelector(
-    (state) => state.productDetails.productDetails
-  );
   const auctionDetailsInt = useSelector(
     (state) => state.auctionDetails.auctionDetails
   );
-  const durationInt = useSelector((state) => state.auctionDetails.duration);
-  const isByNowInt = useSelector((state) => state.auctionDetails.isBuyNow);
-  const typeInt = useSelector((state) => state.auctionDetails.type);
 
   const [valueRadio, setRadioValue] = useState(
     auctionDetailsInt.valueRadio || "Quick Auction"
