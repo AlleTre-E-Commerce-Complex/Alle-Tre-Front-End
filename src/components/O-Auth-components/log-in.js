@@ -203,7 +203,7 @@ const LogIn = () => {
                       onClick={() => {
                         // history.push(routes.dashboard.app);
                       }}
-                      className="bg-primary sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                      className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
                     >
                       {selectedContent[localizationKeys.login]}
                     </Button>
@@ -243,7 +243,7 @@ const LogIn = () => {
                   <div className="w-full">
                     <Button
                       loading={isLoadingorgetPassword}
-                      className="bg-primary sm:w-[304px] h-[48px] w-full  rounded-lg text-white mt-5 font-normal text-base font-serifAR "
+                      className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px] h-[48px] w-full  rounded-lg text-white mt-5 font-normal text-base font-serifAR "
                     >
                       {selectedContent[localizationKeys.sentVerification]}
                     </Button>

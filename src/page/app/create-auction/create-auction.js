@@ -27,12 +27,18 @@ const CreateAuction = () => {
   const [open, setOpen] = useState(false);
   const [draftAuctionData, setDraftAuctionData] = useState();
 
-  const [hasCompletedProfile] = useLocalStorage("hasCompletedProfile", "");
+  const [hasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    "",
+    undefined,
+    (val) => JSON.parse(val)
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  console.log(hasCompletedProfile);
   const handelCreatOuction = () => {
     if (hasCompletedProfile) {
       history.push(routes.createAuction.productDetails);
@@ -183,7 +189,7 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
             <Button
               loading={isLoading}
               onClick={() => deleteAuction()}
-              className="w-[136px] h-[48px] bg-primary text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR opacity-100"
+              className="w-[136px] h-[48px] bg-primary hover:bg-primary-dark opacity-100 text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR "
             >
               Yes,delete
             </Button>

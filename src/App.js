@@ -38,7 +38,7 @@ function App() {
           success: {
             duration: 5000,
             className:
-              "w-[430px] h-auto border-l-8 border-[#002189] bg-[#F7F9FF] py-3",
+              "w-[430px] h-auto border-l-8 border-[#45BF55] bg-[#F7F9FF] py-3",
           },
           error: {
             duration: 5000,

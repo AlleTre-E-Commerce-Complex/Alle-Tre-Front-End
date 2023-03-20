@@ -2,12 +2,37 @@ import { useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
 import { Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
+import { authAxios } from "../../config/axios-config";
+import api from "../../api";
+import { toast } from "react-hot-toast";
+import useAxios from "../../hooks/use-axios";
+import { useLanguage } from "../../context/language-context";
 
-const EditUserNameModel = ({ onReload }) => {
+const EditUserNameModel = ({ onReload, oldName }) => {
+  const [lang] = useLanguage();
+
   const [open, setOpen] = useState(false);
 
-  const handleSave = ({ values }) => {
-    console.log(values);
+  const { run, isLoading } = useAxios([]);
+  const handleSave = (values) => {
+    const formData = new FormData();
+    formData.append("userName", values.userName);
+    run(
+      authAxios
+        .put(api.app.profile.editPersonalInfo, formData)
+        .then((res) => {
+          toast.success("Name has been edit successfully");
+          setOpen(false);
+          onReload();
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message?.[lang] ||
+              err?.response?.data?.message?.[0] ||
+              "oops, something with wrong please make sure everything is in the right place and try again "
+          );
+        })
+    );
   };
 
   return (
@@ -30,7 +55,7 @@ const EditUserNameModel = ({ onReload }) => {
         </h1>
         <Formik
           initialValues={{
-            name: "",
+            userName: oldName || "",
           }}
           onSubmit={handleSave}
           enableReinitialize
@@ -40,32 +65,32 @@ const EditUserNameModel = ({ onReload }) => {
               <div className=" w-full ">
                 <div className="mt-10 mx-auto ">
                   <FormikInput
-                    name="name"
+                    name="userName"
                     type="text"
                     label="Name"
                     placeholder="Name"
                   />
                 </div>
               </div>
+              <div className="flex justify-center gap-x-4 my-8">
+                <button
+                  className="border-primary border-[1px] text-primary w-[136px] h-[48px] rounded-lg "
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
+                <Button
+                  loading={isLoading}
+                  className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-[136px] h-[48px] rounded-lg"
+                >
+                  Save
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>
-        <div className="flex justify-center gap-x-4 my-8">
-          <button
-            className="border-primary border-[1px] text-primary w-[136px] h-[48px] rounded-lg "
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            Cancel
-          </button>
-          <button
-            className="bg-primary hover:bg-primary-dark text-white w-[136px] h-[48px] rounded-lg"
-            onClick={() => handleSave()}
-          >
-            Save
-          </button>
-        </div>
       </div>
     </Modal>
   );

@@ -2,14 +2,38 @@ import { useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
 import { Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
+import { useLanguage } from "../../context/language-context";
+import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+import api from "../../api";
+import { toast } from "react-hot-toast";
 
-const EditPhoneNumberModel = ({ onReload }) => {
+const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
+  const [lang] = useLanguage();
+
   const [open, setOpen] = useState(false);
 
-  const handleSave = ({ values }) => {
-    console.log(values);
+  const { run, isLoading } = useAxios([]);
+  const handleSave = (values) => {
+    const formData = new FormData();
+    formData.append("phone", values.phoneNumber);
+    run(
+      authAxios
+        .put(api.app.profile.editPersonalInfo, formData)
+        .then((res) => {
+          toast.success("The Phone number has been edit successfully");
+          setOpen(false);
+          onReload();
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message?.[lang] ||
+              err?.response?.data?.message?.[0] ||
+              "oops, something with wrong please make sure everything is in the right place and try again "
+          );
+        })
+    );
   };
-
   return (
     <Modal
       className="sm:w-[368px] w-full h-auto bg-transparent scale-in shadow-none "
@@ -19,7 +43,7 @@ const EditPhoneNumberModel = ({ onReload }) => {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[73px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2">
+        <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[73px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2 ">
           Edit
         </Button>
       }
@@ -30,7 +54,7 @@ const EditPhoneNumberModel = ({ onReload }) => {
         </h1>
         <Formik
           initialValues={{
-            phoneNumber: "",
+            phoneNumber: oldPhoneNumber || "",
           }}
           onSubmit={handleSave}
           enableReinitialize
@@ -47,25 +71,25 @@ const EditPhoneNumberModel = ({ onReload }) => {
                   />
                 </div>
               </div>
+              <div className="flex justify-center gap-x-4 my-8">
+                <button
+                  className="border-primary border-[1px] text-primary w-[136px] h-[48px] rounded-lg "
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
+                <Button
+                  loading={isLoading}
+                  className="bg-primary hover:bg-primary-dark opacity-100 text-base font-normal ltr:font-serifEN rtl:font-serifAR text-white w-[136px] h-[48px] rounded-lg"
+                >
+                  Save
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>
-        <div className="flex justify-center gap-x-4 my-8">
-          <button
-            className="border-primary border-[1px] text-primary w-[136px] h-[48px] rounded-lg "
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            Cancel
-          </button>
-          <button
-            className="bg-primary hover:bg-primary-dark text-white w-[136px] h-[48px] rounded-lg"
-            onClick={() => handleSave()}
-          >
-            Save
-          </button>
-        </div>
       </div>
     </Modal>
   );

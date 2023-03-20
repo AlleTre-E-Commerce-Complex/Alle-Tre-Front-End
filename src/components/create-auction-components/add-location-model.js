@@ -10,7 +10,8 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import routes from "../../routes";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import { toast } from "react-hot-toast";
 
 const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
@@ -27,8 +28,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
     addressLabel: Yup.string().required("required"),
     zipCode: Yup.string().trim().required("required"),
   });
-  // if (TextButton) {
-  const { run, isLoading, error, isError } = useAxios();
+  const { run, isLoading } = useAxios();
 
   const handleAddLocation = (values) => {
     run(authAxios.post(api.app.location.post, values))
@@ -36,6 +36,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
         if (TextButton === "Proceed") {
           history.push(routes.createAuction.productDetails);
           toast.success("locaton add success");
+          window.localStorage.setItem("hasCompletedProfile", true);
         } else {
           setOpen(false);
           onReload();
@@ -45,6 +46,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
         toast.error(err?.message.map((e) => e));
       });
   };
+
   return (
     <Modal
       className="sm:w-[471px] w-full h-auto bg-transparent scale-in "
@@ -59,8 +61,14 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
           <p className="text-gray-med text-xs font-normal pt-1 pb-2 ">
             In order to finish the procedure, we have to get access to<br></br>{" "}
             your location. you can manage them later .
-            <span className="text-primary underline cursor-pointer ">
-              Manage you addresses
+            <span>
+              <HashLink
+                smooth
+                to={`${routes.profile.profileSettings}#AddressBook`}
+                className="text-primary underline cursor-pointer "
+              >
+                Manage you addresses
+              </HashLink>
             </span>
           </p>
         </div>
@@ -124,7 +132,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                 <div className="flex justify-end">
                   <Button
                     loading={isLoading}
-                    className="bg-primary w-[163px] h-[48px] rounded-lg text-white  mb-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                    className="bg-primary w-[163px] h-[48px] rounded-lg text-white  mb-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN opacity-100"
                   >
                     {TextButton}
                   </Button>

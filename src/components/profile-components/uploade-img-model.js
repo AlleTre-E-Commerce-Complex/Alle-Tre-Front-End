@@ -3,8 +3,14 @@ import { Button, Divider, Modal } from "semantic-ui-react";
 import Dropzone from "react-dropzone";
 import AvatarEditor from "react-avatar-editor";
 import addImageIcon from "../../../src/assets/icons/add-image-icon.png";
+import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+import { toast } from "react-hot-toast";
+import api from "../../api";
+import { useLanguage } from "../../context/language-context";
 
 const UploadeImgModel = ({ onReload }) => {
+  const [lang] = useLanguage();
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [editor, setEditor] = useState(null);
@@ -15,9 +21,28 @@ const UploadeImgModel = ({ onReload }) => {
     setDropzoneActive(false);
   };
 
+  const { run, isLoading } = useAxios([]);
   const handleSave = () => {
+    const formData = new FormData();
+    formData.append("image", file);
     if (editor && file) {
-      console.log(file);
+      run(
+        authAxios
+          .put(api.app.profile.editPersonalInfo, formData)
+          .then((res) => {
+            toast.success("Upload image has been successfully");
+            setDropzoneActive(true);
+            setOpen(false);
+            setFile(null);
+            onReload();
+          })
+          .catch((err) => {
+            toast.error(
+              err?.response?.data?.message?.[lang] ||
+                "oops, something with wrong please make sure everything is in the right place and try again "
+            );
+          })
+      );
     }
   };
 
@@ -56,7 +81,7 @@ const UploadeImgModel = ({ onReload }) => {
                 {file ? (
                   <>
                     <AvatarEditor
-                      className="relative -top-14 object-cover"
+                      className="relative -top-14 "
                       ref={setEditor}
                       image={URL.createObjectURL(file)}
                       border={50}
@@ -80,12 +105,13 @@ const UploadeImgModel = ({ onReload }) => {
               <Divider className="text-gray-dark text-base mx-10" horizontal>
                 <div className="text-gray-dark text-base font-normal">OR</div>
               </Divider>
-              <button
-                className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg"
+              <Button
+                loading={isLoading}
+                className="bg-primary hover:bg-primary-dark text-white text-base font-normal w-[304px] h-[48px] rounded-lg opacity-100 ltr:font-serifEN rtl:font-serifAR"
                 onClick={file ? () => handleSave() : () => open()}
               >
                 {file ? "Save" : " Select a file"}
-              </button>
+              </Button>
               <button
                 className="border-primary border-[1px] text-primary w-[304px] h-[48px] rounded-lg mt-4"
                 onClick={() => {

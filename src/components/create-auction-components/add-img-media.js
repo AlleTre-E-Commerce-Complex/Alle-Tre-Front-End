@@ -4,7 +4,7 @@ import { FileUploader } from "react-drag-drop-files";
 import addImage from "../../../src/assets/icons/add-image.svg";
 import TrashIcon from "../../../src/assets/icons/trash-Icon.png";
 
-const fileTypes = ["JPEG", "PNG", "GIF", "JPG"];
+const fileTypes = ["JPEG", "PNG", "GIF", "JPG", "MOV", "mp4"];
 
 const AddImgMedia = ({
   fileOne,

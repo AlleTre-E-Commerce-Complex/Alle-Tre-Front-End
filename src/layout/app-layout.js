@@ -18,7 +18,6 @@ import ShippingDetails from "../page/app/create-auction/shipping-details";
 import PaymentDetails from "../page/app/create-auction/payment-details";
 import Sidebar from "../components/shared/side-bare/sibe-bare";
 import ProfileLayouts from "../page/app/profile/profile-layouts";
-import ProfileSettings from "../components/profile-components/profile-settings";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);

@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { RiUser3Fill } from "react-icons/ri";
 import { HiLockClosed } from "react-icons/hi";
-import { BsFillTelephoneFill } from "react-icons/bs";
+import { BsFillTelephoneFill, BsThreeDots } from "react-icons/bs";
 import { MdMail } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
@@ -17,9 +17,14 @@ import AddLocationModel from "../create-auction-components/add-location-model";
 import { useState } from "react";
 import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Button, Dimmer, Loader, Popup } from "semantic-ui-react";
 import api from "../../api";
 import { useLanguage } from "../../context/language-context";
+import { GoPlus } from "react-icons/go";
+import { PofileData } from "../../redux-store/pofile-data-slice";
+import { useDispatch } from "react-redux";
+import { toast } from "react-hot-toast";
+import { boolean } from "yup";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage();
@@ -27,14 +32,21 @@ const ProfileSettings = () => {
   const [pofileData, setPofileData] = useState();
   const [locationData, setLocationData] = useState();
 
+  const dispatch = useDispatch();
+
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
   useEffect(() => {
     runPofile(
       authAxios.get(api.app.profile.default).then((res) => {
         setPofileData(res?.data?.data);
+        dispatch(
+          PofileData({
+            name: res?.data?.data?.userName,
+            img: res?.data?.data?.imageLink,
+          })
+        );
       })
     );
   }, [runPofile, forceReload]);
@@ -45,21 +57,21 @@ const ProfileSettings = () => {
   useEffect(() => {
     runLocationData(
       authAxios.get(api.app.location.get).then((res) => {
-        console.log(res);
-        setLocationData(res?.data?.data);
+        setLocationData(
+          res?.data?.data?.sort((a, b) => (a.isMain ? -1 : b.isMain ? 1 : 0))
+        );
       })
     );
   }, [runLocationData, forceReload]);
 
+  useEffect(() => {
+    if (window.location.hash.slice(1) === "AddressBook") {
+    } else window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
   console.log(locationData);
 
-  console.log(pofileData);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  }, []);
   return (
-    <div className="mx-4">
+    <div className="mx-4 relative">
       <Dimmer
         className="animate-pulse"
         active={isLoadingPofile || isLoadingLocationData}
@@ -86,15 +98,17 @@ const ProfileSettings = () => {
       <div className="bg-background-profile rounded-2xl px-20 pt-16 mt-5 ">
         <div className="flex gap-x-5 pb-8 border-b-[1px] border-gray-veryLight mx-2">
           <img
-            className="w-28 h-28"
-            src={userProfileicon}
+            className="w-28 h-28 rounded-full object-cover"
+            src={
+              pofileData?.imageLink ? pofileData?.imageLink : userProfileicon
+            }
             alt="userProfileicon"
           />
           <div>
             <h1 className="text-gray-dark text-4xl font-medium pt-3">
               {pofileData?.userName}
             </h1>
-            <UploadeImgModel />
+            <UploadeImgModel onReload={onReload} />
           </div>
         </div>
         {/*  Personal Details */}
@@ -117,11 +131,14 @@ const ProfileSettings = () => {
               </p>
             </div>
             <div>
-              <EditUserNameModel />
+              <EditUserNameModel
+                onReload={onReload}
+                oldName={pofileData?.userName}
+              />
             </div>
           </div>
           <div className="flex justify-between pt-9">
-            <div>
+            <div className={pofileData?.isOAuth && "hidden"}>
               <div className="flex ">
                 <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
                   <HiLockClosed size={16} />
@@ -135,7 +152,7 @@ const ProfileSettings = () => {
               </p>
             </div>
             <div>
-              <EditPasswordModel />
+              <EditPasswordModel onReload={onReload} />
             </div>
           </div>
         </div>
@@ -156,7 +173,13 @@ const ProfileSettings = () => {
                 {pofileData?.email}
               </p>
             </div>
-            <div className="flex gap-x-1 text-green-500 ml-[210px]">
+            <div
+              className={`${
+                pofileData?.isVerified
+                  ? "text-green-500"
+                  : "text-gray-veryLight"
+              } flex gap-x-1  ml-[210px] `}
+            >
               <IoMdCheckmarkCircle size={16} className="mt-0.5" />
               <p className="text-base font-normal">Verified</p>
             </div>
@@ -176,7 +199,10 @@ const ProfileSettings = () => {
               </p>
             </div>
             <div>
-              <EditPhoneNumberModel />
+              <EditPhoneNumberModel
+                onReload={onReload}
+                oldPhoneNumber={pofileData?.phone}
+              />
             </div>
           </div>
         </div>
@@ -191,22 +217,52 @@ const ProfileSettings = () => {
           </p>
           <div>
             <div className="flex mt-8">
-              <Loginbutton logo={appleIcon} text="Connected with Apple" />
-              <div className="flex gap-x-1 text-green-500 ml-[71px] my-auto">
+              <Loginbutton
+                isActive={pofileData?.oAuthType === "APPLE" ? true : false}
+                logo={appleIcon}
+                text="Connected with Apple"
+              />
+              <div
+                className={`${
+                  pofileData?.oAuthType === "APPLE"
+                    ? "text-green-500"
+                    : "text-gray-veryLight"
+                } flex gap-x-1 ml-[71px] my-auto `}
+              >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
               </div>
             </div>
             <div className="flex ">
-              <Loginbutton logo={googleIcon} text="Connect with Google" />
-              <div className="flex gap-x-1 text-green-500 ml-[71px] my-auto">
+              <Loginbutton
+                isActive={pofileData?.oAuthType === "GOOGLE" ? true : false}
+                logo={googleIcon}
+                text="Connect with Google"
+              />
+              <div
+                className={`${
+                  pofileData?.oAuthType === "GOOGLE"
+                    ? "text-green-500"
+                    : "text-gray-veryLight"
+                } flex gap-x-1 ml-[71px] my-auto `}
+              >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
               </div>
             </div>
             <div className="flex ">
-              <Loginbutton logo={facebookIcon} text="Connect with Facebook" />
-              <div className="flex gap-x-1 text-green-500 ml-[71px] my-auto">
+              <Loginbutton
+                isActive={pofileData?.oAuthType === "FACEBOOK" ? true : false}
+                logo={facebookIcon}
+                text="Connect with Facebook"
+              />
+              <div
+                className={`${
+                  pofileData?.oAuthType === "FACEBOOK"
+                    ? "text-green-500"
+                    : "text-gray-veryLight"
+                } flex gap-x-1 ml-[71px] my-auto `}
+              >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
               </div>
@@ -215,7 +271,7 @@ const ProfileSettings = () => {
         </div>
 
         {/* Address Book */}
-        <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8 ">
+        <div id="AddressBook" className="pt-3  pb-20 mb-10 ">
           <h1 className="text-gray-dark text-base font-semibold">
             Address Book
           </h1>
@@ -223,24 +279,38 @@ const ProfileSettings = () => {
             Manage your addresses for a quick and easy checkout experience
           </p>
           <div className="grid grid-cols-2 gap-4 mt-6">
-            {locationData?.map((e) => (
-              <LocationDetailsCard
-                key={e?.id}
-                Id={e?.id}
-                AddressLable={e?.addressLabel}
-                Address={e?.address}
-                Country={lang === "en" ? e?.country?.nameEn : e?.country.nameAn}
-                City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
-                PostalCode={e?.zipCode}
-              />
-            ))}
+            {locationData?.map((e) => {
+              return (
+                <LocationDetailsCard
+                  key={e?.id}
+                  Id={e?.id}
+                  AddressLable={e?.addressLabel}
+                  Address={e?.address}
+                  Country={
+                    lang === "en" ? e?.country?.nameEn : e?.country.nameAn
+                  }
+                  City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
+                  PostalCode={e?.zipCode}
+                  isMain={e?.isMain}
+                  data={e}
+                  onReload={onReload}
+                />
+              );
+            })}
+            <button
+              onClick={() => setOpen(true)}
+              className="border-gray-med border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex justify-center gap-x-2 "
+            >
+              <GoPlus className="my-auto" size={16} />
+              <p className="my-auto">Add Address</p>
+            </button>
+            <AddLocationModel
+              open={open}
+              setOpen={setOpen}
+              TextButton={"Add"}
+              onReload={onReload}
+            />
           </div>
-          <AddLocationModel
-            open={open}
-            setOpen={setOpen}
-            TextButton={"Add"}
-            // onReload={onReload}
-          />
         </div>
       </div>
     </div>
@@ -252,7 +322,7 @@ export const Loginbutton = ({ logo, text, isActive }) => {
     <div>
       <button
         className={`${
-          isActive ? "" : ""
+          isActive ? "bg-primary/5" : ""
         } flex justify-start w-[298px] h-[48px] border-[1px] rounded-lg border-primary text-primary my-2 py-2 ltr:pl-[45px] rtl:pr-5`}
       >
         <img className="mx-4 mt-0.5" src={logo} alt="logo" />
@@ -270,8 +340,54 @@ export const LocationDetailsCard = ({
   PostalCode,
   Id,
   key,
+  isMain,
+  onReload,
+  data,
 }) => {
+  const [lang] = useLanguage();
   const [locationId, setLocationId] = useFilter("locationId", "");
+  const { run: runDelete, isLoading: isLoadingDelete } = useAxios([]);
+  const handelDelete = (id) => {
+    runDelete(
+      authAxios
+        .delete(api.app.location.delete(id))
+        .then((res) => {
+          toast.success(
+            "The " + AddressLable + " has been delete successfully"
+          );
+          onReload();
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message?.[lang] ||
+              err?.response?.data?.message?.[0] ||
+              "oops, something with wrong please make sure everything is in the right place and try again "
+          );
+        })
+    );
+  };
+
+  const { run: runMakeDefault, isLoading: isLoadingMakeDefault } = useAxios([]);
+  const handelMakeDefault = (id) => {
+    runMakeDefault(
+      authAxios
+        .patch(api.app.location.edit(id))
+        .then((res) => {
+          toast.success(
+            "The " + AddressLable + " has been Make Default successfully"
+          );
+          onReload();
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message?.[lang] ||
+              err?.response?.data?.message?.[0] ||
+              "oops, something with wrong please make sure everything is in the right place and try again "
+          );
+        })
+    );
+  };
+
   return (
     <div
       key={key}
@@ -279,15 +395,61 @@ export const LocationDetailsCard = ({
         setLocationId(Id);
       }}
       className={`${
-        locationId === `${Id}` ? "border-primary" : "border-gray-med"
+        locationId === `${Id}` || isMain
+          ? "border-primary-dark"
+          : "border-gray-med"
       } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer`}
     >
-      <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
+      <div className="flex justify-between">
+        <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
+        <Popup
+          className="bg-white w-auto h-auto  rounded-lg border-none  relative"
+          trigger={<BsThreeDots size={20} className="text-gray-med mb-auto" />}
+          on="click"
+          pinned
+          basic
+          position="bottom right"
+          content={
+            isMain ? (
+              <p
+                onClick={() => handelDelete(Id)}
+                className="text-red-500 text-center py-2 cursor-pointer  text-base font-normal ltr:font-serifEN rtl:font-serifAR px-2"
+              >
+                Delete
+              </p>
+            ) : (
+              <div>
+                <p
+                  onClick={() => handelMakeDefault(Id)}
+                  className="text-gray-med text-center py-2 cursor-pointer  border-b-[1px] text-base font-normal ltr:font-serifEN rtl:font-serifAR"
+                >
+                  Make Default
+                </p>
+                <p
+                  onClick={() => handelDelete(Id)}
+                  className="text-red-500 text-center py-2 cursor-pointer  text-base font-normal ltr:font-serifEN rtl:font-serifAR"
+                >
+                  Delete
+                </p>
+              </div>
+            )
+          }
+        />
+      </div>
       <p className="text-gray-med text-sm pt-2">{Address}</p>
       <p className="text-gray-med text-sm pt-1">
         {City}, {Country}
       </p>
-      <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
+      <div className="flex justify-between">
+        <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
+        <p
+          className={
+            isMain ? "text-primary-dark underline text-sm pt-1" : "hidden"
+          }
+        >
+          Default
+        </p>
+      </div>
     </div>
   );
 };

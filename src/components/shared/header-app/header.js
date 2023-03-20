@@ -39,7 +39,7 @@ const Header = ({ SetSid }) => {
 
   const handelRegister = () => {
     if (user) {
-      history.push(routes.profile.default);
+      history.push(routes.profile.profileSettings);
     } else dispatch(Open());
   };
   return (
@@ -101,7 +101,7 @@ const Header = ({ SetSid }) => {
             />
             <DropdownLang />
           </div>
-          <div className="my-auto ltr:ml-16 rtl:mr-16 md:block hidden">
+          <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
             <button
               onClick={handelOnSell}
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px]"

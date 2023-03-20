@@ -142,7 +142,7 @@ const SignUp = () => {
                       onClick={() => {
                         // history.push(routes.dashboard.app);
                       }}
-                      className="bg-primary sm:w-[304px]  w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN  opacity-100 "
+                      className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px]  w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN "
                     >
                       {selectedContent[localizationKeys.createAccount]}
                     </Button>
