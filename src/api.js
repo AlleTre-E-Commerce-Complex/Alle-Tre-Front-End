@@ -47,6 +47,7 @@ const api = {
       default: "users/my-profile",
       editPersonalInfo: "/users/personal-info",
       editCredentialsInfo: "/users/credentials-info",
+      analytics: "/auctions/user/ownes/analytics",
     },
   },
 };
