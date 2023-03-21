@@ -77,6 +77,10 @@ a {
     transform: scale(0.98) ;
   }
 }
+
+.state-button{
+border-radius: 7px 1px 8px 1px;
+}
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/
 .edit-For-o-auth-tabs .ui.secondary.pointing.menu {
@@ -114,5 +118,16 @@ a {
 /*----------------------- edit-search-Input---------------------------*/
 .edit-search-Input.ui.input>input{
   @apply rounded-lg border-none focus:outline-none
+}
+/* ///////////////////////////////////////////////////////////////////// */
+/*----------------------- edit-For-order-tabs ---------------------------*/
+.edit-For-my-auctions-tabs  .ui.secondary.pointing.menu {
+  @apply sm:border-primary  border-primary !important;
+}
+.edit-For-my-auctions-tabs  .ui.secondary.pointing.menu .item {
+  @apply gap-x-5 py-2 px-12 font-normal text-base text-gray-dark !important;
+}
+.edit-For-my-auctions-tabs  .ui.secondary.pointing.menu .active.item {
+  @apply sm:border-none border-primary  bg-primary  sm:rounded-t-xl rounded-xl sm:rounded-none  font-normal text-sm py-2 px-12 text-white !important;
 }
 /* ///////////////////////////////////////////////////////////////////// */

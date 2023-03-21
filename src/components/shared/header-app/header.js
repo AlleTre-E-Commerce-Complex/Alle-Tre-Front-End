@@ -33,13 +33,13 @@ const Header = ({ SetSid }) => {
 
   const handelOnSell = () => {
     if (user) {
-      history.push(routes.createAuction.default);
+      history.push(routes.app.createAuction.default);
     } else dispatch(Open());
   };
 
   const handelRegister = () => {
     if (user) {
-      history.push(routes.profile.profileSettings);
+      history.push(routes.app.profile.profileSettings);
     } else dispatch(Open());
   };
   return (

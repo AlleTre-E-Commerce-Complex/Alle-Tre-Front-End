@@ -1,11 +1,15 @@
 import { useState } from "react";
+
 import { Button, Form, Modal } from "semantic-ui-react";
+
 import { Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
-import { authAxios } from "../../config/axios-config";
+
 import api from "../../api";
-import { toast } from "react-hot-toast";
 import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+
+import { toast } from "react-hot-toast";
 import { useLanguage } from "../../context/language-context";
 
 const EditUserNameModel = ({ onReload, oldName }) => {

@@ -33,25 +33,25 @@ const AppLayouts = () => {
       <div className="p-0 m-0 border-none min-h-screen ">
         <AuthModel />
         <Switch>
-          <Route path={routes.profile.default} component={ProfileLayouts} />
+          <Route path={routes.app.profile.default} component={ProfileLayouts} />
           <Route
-            path={routes.createAuction.paymentDetails}
+            path={routes.app.createAuction.paymentDetails}
             component={PaymentDetails}
           />
           <Route
-            path={routes.createAuction.shippingDetails}
+            path={routes.app.createAuction.shippingDetails}
             component={ShippingDetails}
           />
           <Route
-            path={routes.createAuction.auctionDetails}
+            path={routes.app.createAuction.auctionDetails}
             component={AuctionDetails}
           />
           <Route
-            path={routes.createAuction.productDetails}
+            path={routes.app.createAuction.productDetails}
             component={ProductDetails}
           />
           <Route
-            path={routes.createAuction.default}
+            path={routes.app.createAuction.default}
             component={CreateAuction}
           />
           <Route path={routes.app.home} component={Home} />

@@ -20,6 +20,11 @@ const api = {
       default: "/auctions",
       setAssdraft: "/auctions/save-draft",
       getAlldraft: "auctions/user/ownes?status=DRAFTED",
+      getAllactive: "auctions/user/ownes?status=ACTIVE",
+      getAllscheduled: "auctions/user/ownes?status=IN_SCHEDULED",
+      getAllsold: "auctions/user/ownes?status=SOLD",
+      getAllpending: "auctions/user/ownes?status=PENDING_OWNER_DEPOIST",
+      getAllexpired: "auctions/user/ownes?status=EXPIRED",
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
     },
     customField: {

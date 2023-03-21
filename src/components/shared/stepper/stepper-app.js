@@ -9,12 +9,12 @@ const StepperApp = () => {
     <>
       {/* step 1 */}
       {pathname.length === 1 ||
-        (pathname.endsWith(routes.createAuction.productDetails) && (
+        (pathname.endsWith(routes.app.createAuction.productDetails) && (
           <div className="flex mb-8 ">
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.productDetails)
+                  history.push(routes.app.createAuction.productDetails)
                 }
                 className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -22,7 +22,7 @@ const StepperApp = () => {
               </button>
               <p
                 onClick={() =>
-                  history.push(routes.createAuction.productDetails)
+                  history.push(routes.app.createAuction.productDetails)
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
@@ -61,12 +61,12 @@ const StepperApp = () => {
 
       {/* step 2 */}
       {pathname.length === 1 ||
-        (pathname.endsWith(routes.createAuction.auctionDetails) && (
+        (pathname.endsWith(routes.app.createAuction.auctionDetails) && (
           <div className="flex mb-8">
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.productDetails)
+                  history.push(routes.app.createAuction.productDetails)
                 }
                 className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -80,7 +80,7 @@ const StepperApp = () => {
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.auctionDetails)
+                  history.push(routes.app.createAuction.auctionDetails)
                 }
                 className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -113,12 +113,12 @@ const StepperApp = () => {
 
       {/* step 3 */}
       {pathname.length === 1 ||
-        (pathname.endsWith(routes.createAuction.shippingDetails) && (
+        (pathname.endsWith(routes.app.createAuction.shippingDetails) && (
           <div className="flex mb-8">
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.productDetails)
+                  history.push(routes.app.createAuction.productDetails)
                 }
                 className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -126,7 +126,7 @@ const StepperApp = () => {
               </button>
               <p
                 onClick={() =>
-                  history.push(routes.createAuction.productDetails)
+                  history.push(routes.app.createAuction.productDetails)
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
@@ -137,7 +137,7 @@ const StepperApp = () => {
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.auctionDetails)
+                  history.push(routes.app.createAuction.auctionDetails)
                 }
                 className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -145,7 +145,7 @@ const StepperApp = () => {
               </button>
               <p
                 onClick={() =>
-                  history.push(routes.createAuction.auctionDetails)
+                  history.push(routes.app.createAuction.auctionDetails)
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
@@ -157,7 +157,7 @@ const StepperApp = () => {
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.shippingDetails)
+                  history.push(routes.app.createAuction.shippingDetails)
                 }
                 className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -182,12 +182,12 @@ const StepperApp = () => {
 
       {/* step 4 */}
       {pathname.length === 1 ||
-        (pathname.endsWith(routes.createAuction.paymentDetails) && (
+        (pathname.endsWith(routes.app.createAuction.paymentDetails) && (
           <div className="flex">
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.productDetails)
+                  history.push(routes.app.createAuction.productDetails)
                 }
                 className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -195,7 +195,7 @@ const StepperApp = () => {
               </button>
               <p
                 onClick={() =>
-                  history.push(routes.createAuction.productDetails)
+                  history.push(routes.app.createAuction.productDetails)
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
@@ -208,7 +208,7 @@ const StepperApp = () => {
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.auctionDetails)
+                  history.push(routes.app.createAuction.auctionDetails)
                 }
                 className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -216,7 +216,7 @@ const StepperApp = () => {
               </button>
               <p
                 onClick={() =>
-                  history.push(routes.createAuction.auctionDetails)
+                  history.push(routes.app.createAuction.auctionDetails)
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
@@ -229,7 +229,7 @@ const StepperApp = () => {
             <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.shippingDetails)
+                  history.push(routes.app.createAuction.shippingDetails)
                 }
                 className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
               >
@@ -237,7 +237,7 @@ const StepperApp = () => {
               </button>
               <p
                 onClick={() =>
-                  history.push(routes.createAuction.shippingDetails)
+                  history.push(routes.app.createAuction.shippingDetails)
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
@@ -250,7 +250,7 @@ const StepperApp = () => {
             {/* <div className="text-center relative">
               <button
                 onClick={() =>
-                  history.push(routes.createAuction.paymentDetails)
+                  history.push(routes.app.createAuction.paymentDetails)
                 }
                 className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
               >

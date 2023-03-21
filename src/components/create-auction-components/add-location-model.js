@@ -40,7 +40,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
     run(authAxios.post(api.app.location.post, values))
       .then(({ data }) => {
         if (TextButton === "Proceed") {
-          history.push(routes.createAuction.productDetails);
+          history.push(routes.app.createAuction.productDetails);
           toast.success("locaton add success");
           window.localStorage.setItem("hasCompletedProfile", true);
         } else {
@@ -70,7 +70,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
             <span>
               <HashLink
                 smooth
-                to={`${routes.profile.profileSettings}#AddressBook`}
+                to={`${routes.app.profile.profileSettings}#AddressBook`}
                 className="text-primary underline cursor-pointer "
               >
                 Manage you addresses

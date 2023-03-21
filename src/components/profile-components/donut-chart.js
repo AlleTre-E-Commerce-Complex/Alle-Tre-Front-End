@@ -1,14 +1,22 @@
 import React from "react";
 import { VictoryPie } from "victory";
 
-const DonutChart = ({}) => {
+const DonutChart = ({
+  active,
+  drafted,
+  sold,
+  scheduled,
+  expired,
+  pending,
+  totalcount,
+}) => {
   const data = [
-    { x: "Active Auctions", y: 1 },
-    { x: "Drafts", y: 2 },
-    { x: "Sold", y: 3 },
-    { x: "Scheduled", y: 4 },
-    { x: "Expired", y: 5 },
-    { x: "Pending", y: 6 },
+    { x: "Active Auctions", y: active },
+    { x: "Drafts", y: drafted },
+    { x: "Sold", y: sold },
+    { x: "Scheduled", y: scheduled },
+    { x: "Expired", y: expired },
+    { x: "Pending", y: pending },
   ];
 
   const options = {
@@ -24,7 +32,7 @@ const DonutChart = ({}) => {
     <div className=" w-32 h-40 px-1 py-6">
       <svg className="w-fit flex justify-center">
         <text x={50} y={49} textAnchor="middle" fontSize={14} fill="#ACACAC">
-          233.3
+          {totalcount}
         </text>
         <text x={50} y={64} textAnchor="middle" fontSize={14} fill="#ACACAC">
           Total

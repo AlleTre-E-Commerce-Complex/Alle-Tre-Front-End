@@ -23,16 +23,16 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
         ),
       },
       ...[
-        pathname.startsWith(routes.createAuction.default) && {
+        pathname.startsWith(routes.app.createAuction.default) && {
           key: "Create Auction",
           content: (
             <Link
               className={`${
-                pathname.startsWith(routes.createAuction.productDetails)
+                pathname.startsWith(routes.app.createAuction.productDetails)
                   ? "text-gray-med"
                   : "text-primary"
               } mx-2 text-base font-normal `}
-              to={routes.createAuction.default}
+              to={routes.app.createAuction.default}
             >
               Create Auction
             </Link>
@@ -40,16 +40,16 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
         },
       ],
       ...[
-        pathname.startsWith(routes.createAuction.productDetails) && {
+        pathname.startsWith(routes.app.createAuction.productDetails) && {
           key: "Product Details",
           content: (
             <Link
               className={`${
-                pathname.startsWith(routes.createAuction.auctionDetails)
+                pathname.startsWith(routes.app.createAuction.auctionDetails)
                   ? "text-gray-med"
                   : "text-primary"
               } mx-2 text-base font-normal `}
-              to={routes.createAuction.productDetails}
+              to={routes.app.createAuction.productDetails}
             >
               Product Details
             </Link>
@@ -57,16 +57,16 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
         },
       ],
       ...[
-        pathname.startsWith(routes.createAuction.auctionDetails) && {
+        pathname.startsWith(routes.app.createAuction.auctionDetails) && {
           key: "Shipping Details",
           content: (
             <Link
               className={`${
-                pathname.startsWith(routes.createAuction.shippingDetails)
+                pathname.startsWith(routes.app.createAuction.shippingDetails)
                   ? "text-gray-med"
                   : "text-primary"
               } mx-2 text-base font-normal `}
-              to={routes.createAuction.auctionDetails}
+              to={routes.app.createAuction.auctionDetails}
             >
               Auction Details
             </Link>
@@ -74,16 +74,16 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
         },
       ],
       ...[
-        pathname.startsWith(routes.createAuction.shippingDetails) && {
+        pathname.startsWith(routes.app.createAuction.shippingDetails) && {
           key: "Shipping Details",
           content: (
             <Link
               className={`${
-                pathname.startsWith(routes.createAuction.paymentDetails)
+                pathname.startsWith(routes.app.createAuction.paymentDetails)
                   ? "text-gray-med"
                   : "text-primary"
               } mx-2 text-base font-normal `}
-              to={routes.createAuction.shippingDetails}
+              to={routes.app.createAuction.shippingDetails}
             >
               Shipping Details
             </Link>
@@ -91,12 +91,12 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
         },
       ],
       ...[
-        pathname.startsWith(routes.createAuction.paymentDetails) && {
+        pathname.startsWith(routes.app.createAuction.paymentDetails) && {
           key: "Payment Details",
           content: (
             <Link
               className="text-primary mx-2 text-base font-normal"
-              to={routes.createAuction.paymentDetails}
+              to={routes.app.createAuction.paymentDetails}
             >
               Payment Details
             </Link>

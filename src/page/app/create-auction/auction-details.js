@@ -116,7 +116,7 @@ const AuctionDetails = () => {
         IsBuyNow: IsBuyNow,
       })
     );
-    history.push(routes.createAuction.shippingDetails);
+    history.push(routes.app.createAuction.shippingDetails);
   };
 
   return (

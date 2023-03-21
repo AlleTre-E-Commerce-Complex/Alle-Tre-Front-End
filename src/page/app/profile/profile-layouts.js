@@ -14,10 +14,13 @@ const ProfileLayouts = () => {
       <div className="ml-[250px]">
         <Switch>
           <Route
-            path={routes.profile.profileSettings}
+            path={routes.app.profile.profileSettings}
             component={ProfileSettings}
           />
-          <Route path={routes.profile.myAuctions} component={MyAuctions} />
+          <Route
+            path={routes.app.profile.myAuctions.default}
+            component={MyAuctions}
+          />
         </Switch>
       </div>
     </div>

@@ -41,7 +41,7 @@ const CreateAuction = () => {
 
   const handelCreatOuction = () => {
     if (hasCompletedProfile) {
-      history.push(routes.createAuction.productDetails);
+      history.push(routes.app.createAuction.productDetails);
     } else setOpen(true);
   };
 

@@ -153,7 +153,7 @@ const ProductDetails = () => {
             fileFive: fileFive,
           })
         );
-        history.push(routes.createAuction.auctionDetails);
+        history.push(routes.app.createAuction.auctionDetails);
       } else {
         toast.error("Make sure that you choose Item Condition value");
       }
@@ -308,7 +308,7 @@ const ProductDetails = () => {
         .post(api.app.auctions.setAssdraft, formData)
         .then((res) => {
           toast.success("your Auction Save As Drafted success");
-          history.push(routes.createAuction.default);
+          history.push(routes.app.createAuction.default);
           dispatch(productDetails({}));
         })
         .catch((err) => {

@@ -1,10 +1,13 @@
 import React from "react";
+
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
 import logOut from "../../../src/assets/icons/log_out_icon.png";
-import routes from "../../routes";
+
 import auth from "../../utils/auth";
+import routes from "../../routes";
 
 const ProfileSideBare = () => {
   const history = useHistory();
@@ -39,17 +42,17 @@ const ProfileSideBare = () => {
           title="Profile Settings"
           isActive={
             pathname.length === 1 ||
-            pathname.startsWith(routes.profile.profileSettings)
+            pathname.startsWith(routes.app.profile.profileSettings)
           }
-          onClick={() => history.push(routes.profile.profileSettings)}
+          onClick={() => history.push(routes.app.profile.profileSettings)}
         />
         <NavLink
           title="My Auctions"
           isActive={
             pathname.length === 1 ||
-            pathname.startsWith(routes.profile.myAuctions)
+            pathname.startsWith(routes.app.profile.myAuctions.default)
           }
-          onClick={() => history.push(routes.profile.myAuctions)}
+          onClick={() => history.push(routes.app.profile.myAuctions.default)}
         />
       </div>
       <div

@@ -38,9 +38,11 @@ module.exports = {
           DEFAULT: "#821A4D",
           dark: "#62143A",
           light: "#A2547A",
+          veryLight: "#EAE2E6",
         },
         secondary: {
           DEFAULT: "#00134F",
+          light: "#B9BDCD",
           veryLight: "#00134F1A",
         },
         gray: {
@@ -52,6 +54,17 @@ module.exports = {
         red: {
           DEFAULT: "#E40909",
           dark: "#731C1C",
+        },
+        green: {
+          DEFAULT: "#45BF55",
+          light: "#D9F1DC",
+        },
+        cyan: {
+          DEFAULT: "#67C6B9",
+        },
+        yellow: {
+          DEFAULT: "#FBAE4C",
+          light: "#FFEDD6",
         },
       },
       dropShadow: {

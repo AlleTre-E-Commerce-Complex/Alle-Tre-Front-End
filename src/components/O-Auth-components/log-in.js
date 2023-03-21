@@ -99,15 +99,11 @@ const LogIn = () => {
 
   const logInSchema = Yup.object({
     email: Yup.string().required("Required field"),
-    password: Yup.string()
-      .min(8)
-      .max(20)
-      .required("Required field")
-      .trim()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-      ),
+    password: Yup.string().min(8).max(20).required("Required field").trim(),
+    // .matches(
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+    //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+    // ),
   });
 
   const { run: runforgetPassword, isLoading: isLoadingorgetPassword } =

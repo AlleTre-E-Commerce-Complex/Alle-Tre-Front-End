@@ -46,7 +46,7 @@ const Sidebar = ({ SetSid, sid }) => {
   const dispatch = useDispatch();
   const handelOnSell = () => {
     if (user) {
-      history.push(routes.createAuction.default);
+      history.push(routes.app.createAuction.default);
     } else dispatch(Open());
   };
   return (
@@ -99,7 +99,7 @@ const Sidebar = ({ SetSid, sid }) => {
               title="Sell Now"
               isActive={
                 pathname.length === 1 ||
-                pathname.startsWith(routes.createAuction.default)
+                pathname.startsWith(routes.app.createAuction.default)
               }
               onClick={() => {
                 handelOnSell();

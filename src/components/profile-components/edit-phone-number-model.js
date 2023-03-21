@@ -1,11 +1,15 @@
 import { useState } from "react";
+
 import { Button, Form, Modal } from "semantic-ui-react";
-import { Formik } from "formik";
-import FormikInput from "../shared/formik/formik-input";
 import { useLanguage } from "../../context/language-context";
+
+import { Formik } from "formik";
 import useAxios from "../../hooks/use-axios";
-import { authAxios } from "../../config/axios-config";
+import FormikInput from "../shared/formik/formik-input";
+
 import api from "../../api";
+import { authAxios } from "../../config/axios-config";
+
 import { toast } from "react-hot-toast";
 
 const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {

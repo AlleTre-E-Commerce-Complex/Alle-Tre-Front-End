@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { Button, Form, Modal } from "semantic-ui-react";
+
+import * as Yup from "yup";
 import { Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
-import * as Yup from "yup";
-import { authAxios } from "../../config/axios-config";
-import useAxios from "../../hooks/use-axios";
+
 import api from "../../api";
+import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+
 import { toast } from "react-hot-toast";
+import { Button, Form, Modal } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 
 const EditPasswordModel = ({ onReload }) => {
