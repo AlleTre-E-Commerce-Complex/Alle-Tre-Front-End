@@ -65,6 +65,7 @@ const PendingAuctions = () => {
             totalBids={""}
             lastPrice={""}
             endingTime={""}
+            goToDetails={routes.app.profile.myAuctions.pendingDetails(e?.id)}
           />
         ))
       )}

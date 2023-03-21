@@ -38,6 +38,17 @@ const routes = {
         sold: `/allatre/profile/my-auctions/sold`,
         pending: `/allatre/profile/my-auctions/pending`,
         expired: `/allatre/profile/my-auctions/expired`,
+
+        activeDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-auctions/active/${auctionId}/details`,
+        scheduledDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-auctions/scheduled/${auctionId}/details`,
+        soldDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-auctions/sold/${auctionId}/details`,
+        pendingDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-auctions/pending/${auctionId}/details`,
+        expiredDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-auctions/expired/${auctionId}/details`,
       },
     },
   },

@@ -66,6 +66,7 @@ const ExpiredAuctions = () => {
             totalBids={""}
             lastPrice={""}
             endingTime={""}
+            goToDetails={routes.app.profile.myAuctions.expiredDetails(e?.id)}
           />
         ))
       )}

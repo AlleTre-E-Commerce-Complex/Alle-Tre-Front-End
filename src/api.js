@@ -25,6 +25,7 @@ const api = {
       getAllsold: "auctions/user/ownes?status=SOLD",
       getAllpending: "auctions/user/ownes?status=PENDING_OWNER_DEPOIST",
       getAllexpired: "auctions/user/ownes?status=EXPIRED",
+      getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
     },
     customField: {

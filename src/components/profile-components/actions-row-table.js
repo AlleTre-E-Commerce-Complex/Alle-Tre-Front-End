@@ -3,6 +3,7 @@ import React from "react";
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
+import { useHistory } from "react-router-dom";
 
 const ActionsRowTable = ({
   status,
@@ -12,12 +13,15 @@ const ActionsRowTable = ({
   totalBids,
   lastPrice,
   endingTime,
+  goToDetails,
 }) => {
+  const history = useHistory();
+
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
       <div className="flex justify-between ">
         <div className="flex gap-x-4">
-          <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9]  ">
+          <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9]   ">
             {img ? (
               <img
                 className="w-28 h-20 object-cover rounded-lg "
@@ -67,7 +71,10 @@ const ActionsRowTable = ({
             </div>
           </div>
         </div>
-        <button className="bg-primary-dark text-white text-sm font-normal w-32 h-8 rounded-lg mt-14">
+        <button
+          onClick={() => history.push(goToDetails)}
+          className="bg-primary-dark text-white text-sm font-normal w-32 h-8 rounded-lg mt-14"
+        >
           View details
         </button>
       </div>

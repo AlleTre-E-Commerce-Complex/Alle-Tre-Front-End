@@ -22,6 +22,7 @@ import Sidebar from "../components/shared/side-bare/sibe-bare";
 import AuthModel from "../components/shared/auth-model/auth-model";
 
 import ProfileLayouts from "../page/app/profile/profile-layouts";
+import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -33,6 +34,26 @@ const AppLayouts = () => {
       <div className="p-0 m-0 border-none min-h-screen ">
         <AuthModel />
         <Switch>
+          <Route
+            path={routes.app.profile.myAuctions.activeDetails()}
+            component={ProfileAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myAuctions.scheduledDetails()}
+            component={ProfileAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myAuctions.soldDetails()}
+            component={ProfileAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myAuctions.pendingDetails()}
+            component={ProfileAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myAuctions.expiredDetails()}
+            component={ProfileAuctionDetails}
+          />
           <Route path={routes.app.profile.default} component={ProfileLayouts} />
           <Route
             path={routes.app.createAuction.paymentDetails}

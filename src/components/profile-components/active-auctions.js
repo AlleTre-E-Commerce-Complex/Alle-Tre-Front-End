@@ -56,13 +56,15 @@ const ActiveAuctions = () => {
       ) : (
         activeAuctionData?.map((e) => (
           <ActionsRowTable
-            key={""}
-            status={""}
-            title={""}
-            description={""}
+            key={e?.id}
+            status={e?.status}
+            title={e?.product?.title}
+            description={e?.product?.description}
+            img={e?.product?.images[0]?.imageLink}
             totalBids={""}
             lastPrice={""}
             endingTime={""}
+            goToDetails={routes.app.profile.myAuctions.activeDetails}
           />
         ))
       )}
