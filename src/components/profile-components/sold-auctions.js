@@ -35,7 +35,7 @@ const SoldAuctions = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {soldAuctionsData.length} Total Sold Auctions..
+          {soldAuctionsData?.length} Total Sold Auctions..
         </p>
       </div>
       {soldAuctionsData?.length === 0 ? (
