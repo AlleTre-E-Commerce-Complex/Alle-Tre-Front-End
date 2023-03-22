@@ -6,14 +6,14 @@ import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
 
 const ItemDetails = ({ itemDetailsData }) => {
-  console.log(itemDetailsData);
-
   const [lang, setLang] = useLanguage("");
   const [sysField, setSysField] = useState([]);
   const itemDetailsDataObject = Object.keys(itemDetailsData || {});
   const itemDetailsArray = sysField
     .map((field) => {
-      const matchedKey = itemDetailsDataObject.find((key) => key === field.key);
+      const matchedKey = itemDetailsDataObject.find(
+        (key) => key === field.resKey
+      );
       if (!matchedKey) return null;
       return {
         label: {
@@ -25,19 +25,14 @@ const ItemDetails = ({ itemDetailsData }) => {
     })
     .filter((item) => item !== null);
 
-  console.log("====================================");
-  console.log();
-  console.log("====================================");
-
   const { run: runSysField, isLoading: isLoadingysField } = useAxios([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios.get(api.app.customField.systemField);
-      setSysField(res?.data?.data?.filter((field) => !!field) || []);
-    };
-
-    runSysField(fetchData());
+    runSysField(
+      axios.get(api.app.customField.systemField).then((res) => {
+        setSysField(res?.data?.data?.filter((field) => !!field) || []);
+      })
+    );
   }, [runSysField]);
 
   return (
@@ -60,7 +55,7 @@ const ItemDetails = ({ itemDetailsData }) => {
           return (
             <div
               className={`flex ${bgColor} drop-shadow my-2 py-3 rounded ${
-                itemDetailsArray.length > 3 ? "w-auto" : "w-1/2"
+                itemDetailsArray.length > 4 ? "w-auto" : "w-1/2"
               }`}
               key={index}
             >
@@ -68,7 +63,7 @@ const ItemDetails = ({ itemDetailsData }) => {
                 {field?.label[lang]} :
               </p>
               <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
-                {field?.value}
+                {field.value}
               </p>
             </div>
           );

@@ -34,7 +34,7 @@ const TotalAuctions = ({
               Active Auctions
             </p>
           </div>
-          <p className="text-[#515151]">
+          <p className="text-gray-verydark">
             {active} <span className="px-1"> Auction</span>{" "}
           </p>
         </div>
@@ -43,7 +43,7 @@ const TotalAuctions = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-cyan"></p>
             <p className="text-base font-normal text-gray-med">Drafts</p>
           </div>
-          <p className="text-[#515151]">
+          <p className="text-gray-verydark">
             {drafted} <span className="px-1"> Auction</span>{" "}
           </p>
         </div>
@@ -52,7 +52,7 @@ const TotalAuctions = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-primary-light"></p>
             <p className="text-base font-normal text-gray-med">sold</p>
           </div>
-          <p className="text-[#515151]">
+          <p className="text-gray-verydark">
             {sold} <span className="px-1"> Auction</span>{" "}
           </p>
         </div>
@@ -63,7 +63,7 @@ const TotalAuctions = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-yellow"></p>
             <p className="text-base font-normal text-gray-med">Scheduled</p>
           </div>
-          <p className="text-[#515151]">
+          <p className="text-gray-verydark">
             {scheduled} <span className="px-1"> Auction</span>{" "}
           </p>
         </div>
@@ -72,7 +72,7 @@ const TotalAuctions = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-gray-med"></p>
             <p className="text-base font-normal text-gray-med">Expired</p>
           </div>
-          <p className="text-[#515151]">
+          <p className="text-gray-verydark">
             {expired} <span className="px-1"> Auction</span>{" "}
           </p>
         </div>
@@ -81,7 +81,7 @@ const TotalAuctions = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-secondary"></p>
             <p className="text-base font-normal text-gray-med">Pending</p>
           </div>
-          <p className="text-[#515151]">
+          <p className="text-gray-verydark">
             {pending} <span className="px-1"> Auction</span>{" "}
           </p>
         </div>

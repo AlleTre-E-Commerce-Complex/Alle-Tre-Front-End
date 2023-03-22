@@ -28,15 +28,16 @@ const ScheduledAuctions = () => {
     );
   }, [run, forceReload]);
 
-  console.log("====================================");
-  console.log(scheduledAuctionData);
-  console.log("====================================");
-
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
         <Loader active />
       </Dimmer>
+      <div>
+        <p className="pb-5 text-gray-med text-xs font-normal">
+          {scheduledAuctionData?.length} Total Scheduled Auctions..
+        </p>
+      </div>
       {scheduledAuctionData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>
@@ -63,9 +64,9 @@ const ScheduledAuctions = () => {
             title={e?.product?.title}
             description={e?.product?.description}
             img={e?.product?.images[0]?.imageLink}
-            totalBids={""}
-            lastPrice={""}
-            endingTime={""}
+            startingPrice={""}
+            purchasePrice={""}
+            startingDate={""}
             goToDetails={routes.app.profile.myAuctions.scheduledDetails(e?.id)}
           />
         ))

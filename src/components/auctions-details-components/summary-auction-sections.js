@@ -38,8 +38,8 @@ const SummaryAuctionSections = ({
       {/* Description */}
       <div className="pt-8">
         <h3 className="text-gray-dark text-base font-normal">Description</h3>
-        <p className="text-gray-dark text-2xl font-normal pt-4">
-          {truncateString(description, 300)}
+        <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
+          {truncateString(description, 250)}
         </p>
         <HashLink
           className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"

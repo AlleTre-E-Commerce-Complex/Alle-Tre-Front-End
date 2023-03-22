@@ -4,6 +4,7 @@ import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
 import { useHistory } from "react-router-dom";
+import { formatCurrency } from "../../utils/format-currency";
 
 const ActionsRowTable = ({
   status,
@@ -11,8 +12,13 @@ const ActionsRowTable = ({
   description,
   img,
   totalBids,
+  startingPrice,
+  startingDate,
   lastPrice,
+  purchasePrice,
+  price,
   endingTime,
+  endingDate,
   goToDetails,
 }) => {
   const history = useHistory();
@@ -42,7 +48,120 @@ const ActionsRowTable = ({
             <p className="text-gray-med text-xs font-normal pt-1">
               {truncateString(description, 80)}
             </p>
-            <div className="pt-2 flex gap-x-10">
+            {status === "ACTIVE" && (
+              <div className="pt-2 flex gap-x-10">
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Total Bids
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {totalBids}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Last Price
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {lastPrice}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Ending Time
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* 02 days.05 hrs.02 min */}
+                    {endingTime}
+                  </p>
+                </div>
+              </div>
+            )}
+            {status === "PENDING_OWNER_DEPOIST" && (
+              <div className="pt-2 flex gap-x-10">
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Starting Price
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {formatCurrency(startingPrice)}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Starting Date
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* March,23 2023 */}
+                    {startingDate}
+                  </p>
+                </div>
+                <div className="bg-secondary-light text-white py-1 px-2 rounded">
+                  Pending Deposit
+                </div>
+              </div>
+            )}
+            {status === "IN_SCHEDULED" && (
+              <div className="pt-2 flex gap-x-10">
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Starting Price
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {startingPrice}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Purchase Price
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {formatCurrency(purchasePrice)}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Starting Date
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* 02 days.05 hrs.02 min */}
+                    {startingDate}
+                  </p>
+                </div>
+              </div>
+            )}
+            {status === "SOLD" ||
+              (status === "EXPIRED" && (
+                <div className="pt-2 flex gap-x-10">
+                  <div>
+                    <h1 className="text-gray-veryLight text-[10px] font-normal">
+                      Total Bids
+                    </h1>
+                    <p className="text-gray-dark text-[10px] font-normal">
+                      {totalBids}
+                    </p>
+                  </div>
+                  <div>
+                    <h1 className="text-gray-veryLight text-[10px] font-normal">
+                      Price
+                    </h1>
+                    <p className="text-gray-dark text-[10px] font-normal">
+                      {formatCurrency(price)}
+                    </p>
+                  </div>
+                  <div>
+                    <h1 className="text-gray-veryLight text-[10px] font-normal">
+                      Ending Date
+                    </h1>
+                    <p className="text-gray-dark text-[10px] font-normal">
+                      {/* March,23 2023 */}
+                      {endingDate}
+                    </p>
+                  </div>
+                </div>
+              ))}
+
+            <div className="pt-2  gap-x-10 hidden">
               <div>
                 <h1 className="text-gray-veryLight text-[10px] font-normal">
                   Total Bids

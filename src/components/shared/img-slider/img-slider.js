@@ -16,7 +16,7 @@ const ImgSlider = ({ images }) => {
   return (
     <div className=" shadow rounded-2xl group ">
       <div
-        className={`w-full h-[465px] relative rounded-2xl ${
+        className={`w-full h-[480px] relative rounded-2xl ${
           isClicked ? "animate-in" : ""
         }`}
         onClick={() => setIsClicked(false)}

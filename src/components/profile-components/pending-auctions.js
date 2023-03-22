@@ -10,6 +10,7 @@ import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction
 import ActionsRowTable from "./actions-row-table";
 
 import { Dimmer, Loader } from "semantic-ui-react";
+import { formatCurrency } from "../../utils/format-currency";
 
 const PendingAuctions = () => {
   const [forceReload, setForceReload] = useState(false);
@@ -28,15 +29,16 @@ const PendingAuctions = () => {
     );
   }, [run, forceReload]);
 
-  console.log("====================================");
-  console.log(pendingAuctionsData);
-  console.log("====================================");
-
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
         <Loader active />
       </Dimmer>
+      <div>
+        <p className="pb-5 text-gray-med text-xs font-normal">
+          {pendingAuctionsData?.length} Total Pending Auctions..
+        </p>
+      </div>
       {pendingAuctionsData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>
@@ -62,9 +64,8 @@ const PendingAuctions = () => {
             title={e?.product?.title}
             description={e?.product?.description}
             img={e?.product?.images[0]?.imageLink}
-            totalBids={""}
-            lastPrice={""}
-            endingTime={""}
+            startingPrice={e?.startBidAmount}
+            startingDate={e?.startDate}
             goToDetails={routes.app.profile.myAuctions.pendingDetails(e?.id)}
           />
         ))

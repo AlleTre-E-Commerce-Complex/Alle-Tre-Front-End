@@ -16,7 +16,7 @@ import AuctionDetailsTabs from "../../../components/auctions-details-components/
 const ProfileAuctionDetails = () => {
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
-  const [auctionsDetailsData, setAuctionsDetailsData] = useState();
+  const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
@@ -29,9 +29,9 @@ const ProfileAuctionDetails = () => {
     );
   }, [auctionId, run]);
 
-  console.log("====================================");
-  console.log(auctionsDetailsData);
-  console.log("====================================");
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className="mt-44 animate-in mx-5 ">

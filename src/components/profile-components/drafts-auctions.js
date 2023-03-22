@@ -28,14 +28,16 @@ const DraftsAuctions = () => {
     );
   }, [run, forceReload]);
 
-  console.log("====================================");
-  console.log(draftAuctionData);
-  console.log("====================================");
   return (
     <div className="relative ">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
         <Loader active />
       </Dimmer>
+      <div>
+        <p className="pb-5 text-gray-med text-xs font-normal">
+          {draftAuctionData?.length} Total Draft Auctions..
+        </p>
+      </div>
       {draftAuctionData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>

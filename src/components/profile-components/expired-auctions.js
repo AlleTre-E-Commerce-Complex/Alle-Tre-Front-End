@@ -28,15 +28,16 @@ const ExpiredAuctions = () => {
     );
   }, [run, forceReload]);
 
-  console.log("====================================");
-  console.log(expiredAuctionsData);
-  console.log("====================================");
-
   return (
     <div className="relative ">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
         <Loader active />
       </Dimmer>
+      <div>
+        <p className="pb-5 text-gray-med text-xs font-normal">
+          {expiredAuctionsData?.length} Total Expired Auctions..
+        </p>
+      </div>
       {expiredAuctionsData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>
@@ -64,8 +65,8 @@ const ExpiredAuctions = () => {
             description={e?.product?.description}
             img={e?.product?.images[0]?.imageLink}
             totalBids={""}
-            lastPrice={""}
             endingTime={""}
+            price={""}
             goToDetails={routes.app.profile.myAuctions.expiredDetails(e?.id)}
           />
         ))

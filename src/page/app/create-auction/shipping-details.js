@@ -66,9 +66,6 @@ const ShippingDetails = () => {
       })
     );
   }, [run, forceReload]);
-  console.log("====================================");
-  console.log(productDetailsInt);
-  console.log("====================================");
 
   const {
     run: runCreatAuction,
