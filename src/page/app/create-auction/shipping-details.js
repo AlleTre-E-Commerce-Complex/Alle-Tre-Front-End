@@ -66,6 +66,9 @@ const ShippingDetails = () => {
       })
     );
   }, [run, forceReload]);
+  console.log("====================================");
+  console.log(productDetailsInt);
+  console.log("====================================");
 
   const {
     run: runCreatAuction,
@@ -155,6 +158,12 @@ const ShippingDetails = () => {
           "product[description]",
           productDetailsInt.itemDescription
         );
+      }
+      if (productDetailsInt.countryId) {
+        formData.append("product[countryId]", productDetailsInt.countryId);
+      }
+      if (productDetailsInt.cityId) {
+        formData.append("product[cityId]", productDetailsInt.cityId);
       }
       formData.append("images", productDetailsInt.fileOne);
       formData.append("images", productDetailsInt.fileTwo);

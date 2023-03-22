@@ -33,6 +33,7 @@ const api = {
         `/categories/custom-fields?categoryId=${categoryId}`,
       BySubCategoryId: (subCategoryId) =>
         `/categories/custom-fields?subCategoryId=${subCategoryId}`,
+      systemField: `categories/system-fields`,
     },
     brand: {
       default: (categoryId) => `/categories/brands?categoryId=${categoryId}`,

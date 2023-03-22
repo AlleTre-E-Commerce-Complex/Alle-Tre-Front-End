@@ -30,6 +30,8 @@ import { useLanguage } from "../../../context/language-context";
 
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import { useDispatch, useSelector } from "react-redux";
+import useGetAllCountries from "../../../hooks/use-get-all-countries";
+import useGetAllCities from "../../../hooks/use-get-all-cities";
 
 const ProductDetails = () => {
   const [lang, setLang] = useLanguage("");
@@ -51,7 +53,10 @@ const ProductDetails = () => {
   const [fileFour, setFileFour] = useState(productDetailsint.fileFour || null);
   const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
 
-  const [valueRadio, setRadioValue] = useState(productDetailsint.valueRadio);
+  const [valueRadio, setRadioValue] = useState(
+    productDetailsint.valueRadio || null
+  );
+  const [countriesId, setCountriesId] = useState();
   const [categoryId, setCategoryId] = useState();
   const [subCategoryId, setSubCategoryId] = useState();
 
@@ -64,6 +69,11 @@ const ProductDetails = () => {
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || productDetailsint.category
   );
+  const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
+  const { AllCitiesOptions, loadingCitiesOptions } = useGetAllCities(
+    countriesId || productDetailsint.countriesId
+  );
+
   const { AllBranOptions, loadingAllBranOptions } = useGetBrand(
     categoryId || productDetailsint.category
   );
@@ -155,7 +165,24 @@ const ProductDetails = () => {
         );
         history.push(routes.app.createAuction.auctionDetails);
       } else {
-        toast.error("Make sure that you choose Item Condition value");
+        if (hasUsageCondition) {
+          toast.error("Make sure that you choose Item Condition value");
+        }
+      }
+      if (!hasUsageCondition) {
+        dispatch(
+          productDetails({
+            ...values,
+            hasUsageCondition: hasUsageCondition,
+            valueRadio: valueRadio,
+            fileOne: fileOne,
+            fileTwo: fileTwo,
+            fileThree: fileThree,
+            fileFour: fileFour,
+            fileFive: fileFive,
+          })
+        );
+        history.push(routes.app.createAuction.auctionDetails);
       }
     } else {
       toast.error("Make sure that you choose at least three or more photos");
@@ -287,6 +314,18 @@ const ProductDetails = () => {
         draftValue.itemDescription || productDetailsint.itemDescription
       );
     }
+    if (draftValue.countryId || productDetailsint.countryId) {
+      formData.append(
+        "countryId",
+        draftValue.countryId || productDetailsint.countryId
+      );
+    }
+    if (draftValue.cityId || productDetailsint.cityId) {
+      formData.append(
+        "cityId",
+        draftValue.cityId || productDetailsint.countryId
+      );
+    }
     if (fileFive) {
       formData.append("images", fileOne || productDetailsint.fileOne);
     }
@@ -366,6 +405,8 @@ const ProductDetails = () => {
               numberOfFloors: productDetailsint.numberOfFloors || "",
               landType: productDetailsint.landType || "",
               carType: productDetailsint.carType || "",
+              cityId: productDetailsint.cityId || "",
+              countryId: productDetailsint.countryId || "",
               itemDescription: productDetailsint.itemDescription || "",
             }}
             onSubmit={handelProductDetailsdata}
@@ -426,9 +467,18 @@ const ProductDetails = () => {
                         options={
                           e?.key === "brandId"
                             ? AllBranOptions
+                            : e?.key === "countryId"
+                            ? AllCountriesOptions
+                            : e?.key === "cityId"
+                            ? AllCitiesOptions
                             : allCustomFileOptions[e?.key]
                         }
-                        loading={loadingAllBranOptions}
+                        onChange={(e) => setCountriesId(e)}
+                        loading={
+                          loadingAllBranOptions ||
+                          loadingAllCountries ||
+                          loadingCitiesOptions
+                        }
                       />
                     </div>
                   ))}

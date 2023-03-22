@@ -296,7 +296,6 @@ const ProfileSettings = () => {
                   City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
                   PostalCode={e?.zipCode}
                   isMain={e?.isMain}
-                  data={e}
                   onReload={onReload}
                 />
               );
@@ -346,9 +345,9 @@ export const LocationDetailsCard = ({
   key,
   isMain,
   onReload,
-  data,
 }) => {
   const [lang] = useLanguage();
+  const [open, setOpen] = useState(false);
   const [locationId, setLocationId] = useFilter("locationId", "");
   const { run: runDelete, isLoading: isLoadingDelete } = useAxios([]);
   const handelDelete = (id) => {
@@ -359,6 +358,7 @@ export const LocationDetailsCard = ({
           toast.success(
             "The " + AddressLable + " has been delete successfully"
           );
+          setOpen(false);
           onReload();
         })
         .catch((err) => {
@@ -380,6 +380,7 @@ export const LocationDetailsCard = ({
           toast.success(
             "The " + AddressLable + " has been Make Default successfully"
           );
+          setOpen(false);
           onReload();
         })
         .catch((err) => {
@@ -407,6 +408,9 @@ export const LocationDetailsCard = ({
       <div className="flex justify-between">
         <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
         <Popup
+          onOpen={() => setOpen(true)}
+          onClose={() => setOpen(false)}
+          open={open}
           className="bg-white w-auto h-auto  rounded-lg border-none  relative"
           trigger={<BsThreeDots size={20} className="text-gray-med mb-auto" />}
           on="click"
