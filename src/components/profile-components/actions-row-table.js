@@ -97,7 +97,7 @@ const ActionsRowTable = ({
                     {moment.utc(startingDate).format("MMMM, DD YYYY")}
                   </p>
                 </div>
-                <div className="bg-secondary-light text-white py-1 px-2 rounded">
+                <div className="bg-secondary-light text-white text-xs py-1 px-2 rounded">
                   Pending Deposit
                 </div>
               </div>
