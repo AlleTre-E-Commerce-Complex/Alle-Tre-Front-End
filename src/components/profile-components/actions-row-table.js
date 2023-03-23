@@ -5,6 +5,7 @@ import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
 import { useHistory } from "react-router-dom";
 import { formatCurrency } from "../../utils/format-currency";
+import moment from "moment";
 
 const ActionsRowTable = ({
   status,
@@ -93,7 +94,7 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* March,23 2023 */}
-                    {startingDate}
+                    {moment.utc(startingDate).format("MMMM, DD YYYY")}
                   </p>
                 </div>
                 <div className="bg-secondary-light text-white py-1 px-2 rounded">
@@ -155,7 +156,7 @@ const ActionsRowTable = ({
                     </h1>
                     <p className="text-gray-dark text-[10px] font-normal">
                       {/* March,23 2023 */}
-                      {endingDate}
+                      {moment.utc(endingDate).format("MMMM, DD YYYY")}
                     </p>
                   </div>
                 </div>
