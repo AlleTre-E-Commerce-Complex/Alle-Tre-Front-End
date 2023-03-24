@@ -14,7 +14,7 @@ const ImgSlider = ({ images }) => {
   };
 
   return (
-    <div className=" shadow rounded-2xl group ">
+    <div className=" shadow rounded-2xl group overflow-hidden ">
       <div
         className={`w-full h-[480px] relative rounded-2xl ${
           isClicked ? "animate-in" : ""
@@ -33,15 +33,15 @@ const ImgSlider = ({ images }) => {
           </div>
         )}
         <div className="w-full h-full absolute top-0 left-0 hover:bg-gradient-to-t group-hover:from-[#25252562] rounded-2xl z-10 cursor-pointer ">
-          <div className="flex absolute bottom-7 left-4 z-20">
+          <div className="flex absolute bottom-7 md:left-4 left-0 z-20">
             {images?.map((image, index) => (
               <div
-                className="w-full md:w-[89px] h-[89px] rounded-2xl mx-2.5 object-contain cursor-pointer bg-background  "
+                className="w-full md:w-[89px] sm:h-[89px] h-[60px] rounded-2xl sm:mx-2.5 mx-1 object-contain cursor-pointer bg-background  "
                 key={index}
                 onClick={() => onImageClick(image)}
               >
                 <img
-                  className="w-[89px] h-[89px] object-contain rounded-2xl"
+                  className="w-full md:w-[89px] sm:h-[89px] h-[60px] object-contain rounded-2xl"
                   src={image.imageLink}
                   alt=""
                 />

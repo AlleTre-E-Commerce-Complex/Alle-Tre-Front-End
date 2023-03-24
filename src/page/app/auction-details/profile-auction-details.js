@@ -47,11 +47,11 @@ const ProfileAuctionDetails = () => {
           <h1 className="text-black font-medium text-2xl py-4">
             {auctionsDetailsData?.product?.title}
           </h1>
-          <div className="grid grid-cols-2">
+          <div className="grid md:grid-cols-2 grid-cols-1">
             <div className="">
               <ImgSlider images={auctionsDetailsData?.product?.images} />
             </div>
-            <div className=" ml-12">
+            <div className="sm:ml-12 ml-4 mt-10 md:mt-0">
               <SummaryAuctionSections
                 numberStare={3}
                 totalReviews={20}

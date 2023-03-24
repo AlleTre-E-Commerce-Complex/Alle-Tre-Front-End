@@ -110,7 +110,7 @@ const Sidebar = ({ SetSid, sid }) => {
               title="My Profile"
               isActive={
                 pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.profileSettings)
+                pathname.startsWith(routes.app.profile.default)
               }
               onClick={() => {
                 history.push(routes.app.profile.profileSettings);

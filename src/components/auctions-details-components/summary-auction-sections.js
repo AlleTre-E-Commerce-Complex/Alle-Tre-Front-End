@@ -28,7 +28,7 @@ const SummaryAuctionSections = ({
   return (
     <div>
       {/* rating */}
-      <div className="flex gap-x-5">
+      <div className="flex  gap-x-5">
         <AuctionsStatus status={status} big />
         <RatingStare max={numberStare} size="huge" />
         <p className="text-gray-dark text-base font-normal">
@@ -51,7 +51,7 @@ const SummaryAuctionSections = ({
         </HashLink>
       </div>
       {/* Category sections */}
-      <div className="pt-6 flex gap-x-3">
+      <div className="pt-6 flex flex-wrap gap-x-3">
         {/* Category left */}
         <div>
           <p className="text-gray-med text-base font-normal pb-2">Category</p>
@@ -59,7 +59,7 @@ const SummaryAuctionSections = ({
             {category}
           </button>
         </div>
-        <div className={subCategory ? "block" : "hidden"}>
+        <div className={subCategory ? "block " : "hidden"}>
           <p className="text-gray-med text-base font-normal pb-2">
             Sub-Category
           </p>
@@ -69,7 +69,7 @@ const SummaryAuctionSections = ({
         </div>
       </div>
       {/* Prices  sections */}
-      <div className="pt-6 flex gap-x-48">
+      <div className="pt-6 flex flex-wrap gap-x-48">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             Starting Price
@@ -88,7 +88,7 @@ const SummaryAuctionSections = ({
         </div>
       </div>
       {/* Bids  sections */}
-      <div className="pt-6 flex gap-x-40">
+      <div className="pt-6 flex flex-wrap gap-x-40">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">Total Bids</p>
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">

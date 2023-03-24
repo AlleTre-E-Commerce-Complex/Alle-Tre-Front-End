@@ -6,7 +6,7 @@ const Feedback = () => {
   return (
     <div className="animate-in">
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
-        <div className="flex my-6 ">
+        <div className="flex flex-wrap sm:flex-nowrap my-6 ">
           <div className="flex gap-x-2 pl-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
@@ -21,7 +21,7 @@ const Feedback = () => {
             </div>
           </div>
 
-          <div className="mr-11 pb-4">
+          <div className="mr-11 ml-11 sm:ml-0 mt-2 pb-4">
             <RatingStare max={3} size="small" />
             <p className="text-gray-med text-sm font-normal pt-2">
               Great phone. Very impressive features. You can have 2 audio
@@ -35,7 +35,7 @@ const Feedback = () => {
       </div>
 
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
-        <div className="flex my-6 ">
+        <div className="flex flex-wrap sm:flex-nowrap my-6 ">
           <div className="flex gap-x-2 pl-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
@@ -50,7 +50,7 @@ const Feedback = () => {
             </div>
           </div>
 
-          <div className="mr-11 pb-4">
+          <div className="mr-11 ml-11 sm:ml-0 mt-2 pb-4">
             <RatingStare max={3} size="small" />
             <p className="text-gray-med text-sm font-normal pt-2">
               Great phone. Very impressive features. You can have 2 audio
@@ -64,7 +64,7 @@ const Feedback = () => {
       </div>
 
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
-        <div className="flex my-6">
+        <div className="flex flex-wrap sm:flex-nowrap my-6 ">
           <div className="flex gap-x-2 pl-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
@@ -79,7 +79,7 @@ const Feedback = () => {
             </div>
           </div>
 
-          <div className="mr-11 pb-4">
+          <div className="mr-11 ml-11 sm:ml-0 mt-2 pb-4">
             <RatingStare max={3} size="small" />
             <p className="text-gray-med text-sm font-normal pt-2">
               Great phone. Very impressive features. You can have 2 audio
@@ -93,7 +93,7 @@ const Feedback = () => {
       </div>
 
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
-        <div className="flex my-6 ">
+        <div className="flex flex-wrap sm:flex-nowrap my-6 ">
           <div className="flex gap-x-2 pl-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
@@ -108,7 +108,7 @@ const Feedback = () => {
             </div>
           </div>
 
-          <div className="mr-11 pb-4">
+          <div className="mr-11 ml-11 sm:ml-0 mt-2 pb-4">
             <RatingStare max={3} size="small" />
             <p className="text-gray-med text-sm font-normal pt-2">
               Great phone. Very impressive features. You can have 2 audio
