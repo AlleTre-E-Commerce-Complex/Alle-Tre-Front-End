@@ -56,7 +56,7 @@ const ImageSlider = ({ slides }) => {
                     alt="anglesRightIcon"
                     className="absolute z-20 lg:right-5 md:right-0 right-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer right-arrow-parent"
                   />
-                  <div className="overflow-hidden absolute inset-0">
+                  <div className="overflow-hidden absolute inset-0 hidden sm:block">
                     <div className="right-arrow lg:w-[541px] md:w-[490px] w-[300px] -rotate-90 lg:right-2.5 md:-right-20 -right-14 top-0"></div>
                   </div>
                 </div>
@@ -67,8 +67,8 @@ const ImageSlider = ({ slides }) => {
                     alt="anglesLeftIcon"
                     className="absolute z-20 lg:left-5 md:left-1 left-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer left-arrow-parent "
                   />
-                  <div className="overflow-hidden absolute inset-0">
-                    <div className="left-arrow lg:w-[541px] md:w-[490px]  w-[299px] rotate-90 lg:left-2.5 md:-left-20 -left-14 top-0"></div>
+                  <div className="overflow-hidden absolute inset-0 hidden sm:block">
+                    <div className="left-arrow lg:w-[541px] md:w-[490px] w-[299px] rotate-90 lg:left-2.5 md:-left-20 -left-14 top-0"></div>
                   </div>
                 </div>
                 <img
