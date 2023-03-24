@@ -55,7 +55,7 @@ const ItemDetails = ({ itemDetailsData }) => {
           return (
             <div
               className={`flex ${bgColor} drop-shadow my-2 py-3 rounded ${
-                itemDetailsArray.length > 4 ? "w-auto" : "w-1/2"
+                itemDetailsArray.length > 4 ? "w-auto" : "sm:w-1/2 w-auto "
               }`}
               key={index}
             >
