@@ -8,7 +8,7 @@ const Home = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   return (
-    <div className="mt-36 py-6 home ">
+    <div className="lg:mt-36 md:mt-32 mt-24 py-6 home  ">
       <div className="z-20 ">
         <ImageSlider slides={SliderData} />
       </div>

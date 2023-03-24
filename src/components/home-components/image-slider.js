@@ -28,15 +28,15 @@ const ImageSlider = ({ slides }) => {
   const previndex = current + 1 && current - 1 < 0 ? 0 : current - 1;
 
   return (
-    <section className="mt-7 ">
-      <div className="relative mx-6">
+    <section className="mt-7 relative ">
+      <div className="relative md:mx-6 mx-4">
         <img
-          className="object-cover absolute right-0 -top-6 w-1/2 h-[561px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
+          className="object-cover absolute right-0 lg:-top-6 md:-top-2 w-1/2  lg:h-[561px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
           src={SliderData[nextindex]?.image}
           alt="travel"
         />
         <img
-          className="object-cover absolute left-0 -top-6 w-1/2 h-[561px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
+          className="object-cover absolute left-0 lg:-top-6 md:-top-2  w-1/2 lg:h-[561px] md:h-[350px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
           src={SliderData[previndex]?.image}
           alt="travel"
         />
@@ -44,20 +44,20 @@ const ImageSlider = ({ slides }) => {
       {SliderData.map((slide, index) => {
         return (
           <div
-            className={index === current ? "slide active" : translate}
+            className={index === current ? "slide active " : translate}
             key={index}
           >
             {index === current && (
-              <div className="h-[561px] mx-32 relative rounded-[32px]   ">
+              <div className="lg:h-[561px] md:h-[350px] h-[200px] md:mx-32 mx-8 relative rounded-[32px] overflow-hidden ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img
                     src={anglesRightIcon}
                     alt="anglesRightIcon"
-                    className="absolute z-20 right-5 top-1/2 w-16 h-16 cursor-pointer right-arrow-parent"
+                    className="absolute z-20 lg:right-5 md:right-0 right-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer right-arrow-parent"
                   />
                   <div className="overflow-hidden absolute inset-0">
-                    <div className="right-arrow w-[541px] -rotate-90 right-2.5 top-0"></div>
+                    <div className="right-arrow lg:w-[541px] md:w-[490px] w-[300px] -rotate-90 lg:right-2.5 md:-right-20 -right-14 top-0"></div>
                   </div>
                 </div>
                 <div onClick={prevSlide} className="overflow-hidden">
@@ -65,38 +65,40 @@ const ImageSlider = ({ slides }) => {
                   <img
                     src={anglesLeftIcon}
                     alt="anglesLeftIcon"
-                    className="absolute z-20 left-5 top-1/2 w-16 h-16 cursor-pointer left-arrow-parent "
+                    className="absolute z-20 lg:left-5 md:left-1 left-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer left-arrow-parent "
                   />
                   <div className="overflow-hidden absolute inset-0">
-                    <div className="left-arrow w-[541px] rotate-90 left-2.5 top-0"></div>
+                    <div className="left-arrow lg:w-[541px] md:w-[490px]  w-[299px] rotate-90 lg:left-2.5 md:-left-20 -left-14 top-0"></div>
                   </div>
                 </div>
                 <img
-                  className="object-cover w-full h-[561px] rounded-[32px] drop-shadow-home-img"
+                  className="object-cover w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-home-img"
                   src={slide.image}
                   alt="travel"
                 />
-                <div className="w-full h-[561px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white pt-24 pl-24">
+                <div className="w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 sm:pl-24 pl-10 pt-5 ">
                   <div>
                     {/* title */}
-                    <h1 className="text-4xl font-normal">
+                    <h1 className="lg:text-4xl md:text-2xl text-base font-normal">
                       The 2023 Range Rover Evoque
                     </h1>
                     {/* pragraf */}
-                    <p className="text-gray-veryLight text-base pt-4 font-normal ">
+                    <p className="text-gray-veryLight lg:text-base md:text-sm text-xs pt-4 font-normal ">
                       elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                       <br></br>
                       dolore magna aliquyam erat, sed diam voluptua. At vero
                     </p>
                     {/* timer */}
-                    <button className="bg-gradient-to-br from-red to-red-dark w-56 h-11 rounded-xl mt-16">
+                    <button className="bg-gradient-to-br from-red to-red-dark lg:w-56 md:w-44 w-36 lg:h-11 md:h-9 h-8 rounded-xl lg:mt-16 md:mt-8 mt-5 lg:text-base md:text-sm text-xs ">
                       2 days : 13 hrs : 30 min
                     </button>
                     {/* button pagination */}
-                    <div className="mt-12 ">
+                    <div className="lg:mt-12 md:mt-8 hidden md:block ">
                       <div id="navigation">
                         <div
-                          className={current === 0 ? "active button" : "button"}
+                          className={
+                            current === 0 ? "active button " : "button"
+                          }
                         ></div>
                         <div
                           className={current === 1 ? "active button" : "button"}
@@ -113,11 +115,11 @@ const ImageSlider = ({ slides }) => {
                       </div>
                     </div>
                     {/* button */}
-                    <div className="mt-12 flex gap-x-8">
-                      <button className="w-32 h-12 rounded-lg bg-primary hover:bg-primary-dark text-base font-normal ltr:font-serifEN rtl:font-serifAR">
+                    <div className="md:mt-12 mt-5 flex gap-x-8">
+                      <button className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-primary hover:bg-primary-dark sm:text-base text-xs font-normal ltr:font-serifEN rtl:font-serifAR">
                         Bid Now
                       </button>
-                      <button className="w-32 h-12 rounded-lg bg-transparent border-white border-[1px] text-white text-base font-normal ltr:font-serifEN rtl:font-serifAR">
+                      <button className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-transparent border-white border-[1px] text-white sm:text-base text-xs py-1  md:py-0 font-normal ltr:font-serifEN rtl:font-serifAR">
                         View Details
                       </button>
                     </div>

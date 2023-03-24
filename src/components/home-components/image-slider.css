@@ -31,21 +31,29 @@
 .slideRight {
   /* opacity: 0; */
   transition-duration: 0.2s;
-  transform: translatex(9%)
+  /* transform: translatex(9%) */
 }
 
 .slideleft {
   /* opacity: 0; */
   transition-duration: 0.2s;
-  transform: translatex(-9%)
+  /* transform: translatex(-9%) */
 }
 
+
+@media screen and (max-width: 300px) {
 .slide.active {
-  /* opacity: 1; */
+  scale: 1.08;
+  width: 100%;
+  transition-duration: 0.3s;
+}
+}
+@media screen and (min-width: 1024px) {
+.slide.active {
+  width: 100%;
   scale: 1.08;
   transition-duration: 0.3s;
-  transform: translatex(0)
-
+}
 }
 
 
