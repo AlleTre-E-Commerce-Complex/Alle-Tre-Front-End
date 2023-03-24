@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import ProfileSettings from "./profile-settings";
 import ProfileSideBare from "../../../components/profile-components/profile-side-bare";
@@ -6,12 +6,21 @@ import ProfileSideBare from "../../../components/profile-components/profile-side
 import { Route, Switch } from "react-router-dom";
 import routes from "../../../routes";
 import MyAuctions from "./my-auctions";
+import { BiMenuAltLeft } from "react-icons/bi";
 
 const ProfileLayouts = () => {
+  const [sid, SetSid] = useState(false);
+
   return (
     <div className="mt-44 ">
-      <ProfileSideBare />
-      <div className="ml-[250px]">
+      <ProfileSideBare SetSid={SetSid} sid={sid} />
+      <button
+        className="border-[1px] border-gray-dark text-gray-dark rounded-full md:hidden block mx-4 mb-4"
+        onClick={() => SetSid(true)}
+      >
+        <BiMenuAltLeft size={25} className="m-1" />
+      </button>
+      <div className="md:ltr:ml-[250px]  md:rtl:mr-[250px]rtl:mr-0 ltr:ml-0">
         <Switch>
           <Route
             path={routes.app.profile.profileSettings}

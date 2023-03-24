@@ -117,7 +117,7 @@ border-radius: 7px 1px 8px 1px;
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-search-Input---------------------------*/
 .edit-search-Input.ui.input>input{
-  @apply rounded-lg border-none focus:outline-none
+  @apply rounded-lg border-none focus:outline-none 
 }
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/

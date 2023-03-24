@@ -84,7 +84,7 @@ const ProfileSettings = () => {
         <Loader active />
       </Dimmer>
       {/* complete profile */}
-      <div className="rounded-lg drop-shadow-complete-profile shadow h-52 ">
+      <div className="rounded-lg drop-shadow-complete-profile shadow  ">
         <h1 className="text-black text-base font-medium pt-12 pl-6">
           Complete your profile to make your actions easier
         </h1>
@@ -93,13 +93,13 @@ const ProfileSettings = () => {
           details, and other features. To bid, buy and sell with Alle-tre,
           kindly take a moment to fill out your profile information."
         </p>
-        <div className="flex justify-end pr-14 pt-8">
+        <div className="flex justify-end pr-14 pt-8 pb-8">
           <button className="bg-primary hover:bg-primary-dark text-white rounded-lg w-32 h-8 text-sm font-normal">
             Complete Now
           </button>
         </div>
       </div>
-      <div className="bg-background-profile rounded-2xl px-20 pt-16 mt-5 ">
+      <div className="bg-background-profile rounded-2xl md:px-20 px-10 pt-16 mt-5 ">
         <div className="flex gap-x-5 pb-8 border-b-[1px] border-gray-veryLight mx-2">
           <img
             className="w-28 h-28 rounded-full object-cover"
@@ -109,7 +109,7 @@ const ProfileSettings = () => {
             alt="userProfileicon"
           />
           <div>
-            <h1 className="text-gray-dark text-4xl font-medium pt-3">
+            <h1 className="text-gray-dark md:text-4xl text-2xl font-medium pt-3">
               {pofileData?.userName}
             </h1>
             <UploadeImgModel onReload={onReload} />
@@ -165,7 +165,7 @@ const ProfileSettings = () => {
           <h1 className="text-gray-dark text-base font-semibold">
             Contact info
           </h1>
-          <div className="flex  pt-9">
+          <div className="flex pt-9">
             <div>
               <div className="flex ">
                 <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
@@ -173,7 +173,7 @@ const ProfileSettings = () => {
                 </p>
                 <p className="text-gray-dark text-base font-medium">E-mail</p>
               </div>
-              <p className="text-gray-dark text-base pl-[64px] ">
+              <p className="text-gray-dark text-base pl-[64px]  ">
                 {pofileData?.email}
               </p>
             </div>
@@ -182,7 +182,7 @@ const ProfileSettings = () => {
                 pofileData?.isVerified
                   ? "text-green-500"
                   : "text-gray-veryLight"
-              } flex gap-x-1  ml-[210px] `}
+              } flex gap-x-1 md:ml-[210px] ml-auto`}
             >
               <IoMdCheckmarkCircle size={16} className="mt-0.5" />
               <p className="text-base font-normal">Verified</p>
@@ -194,11 +194,11 @@ const ProfileSettings = () => {
                 <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
                   <BsFillTelephoneFill size={16} />
                 </p>
-                <p className="text-gray-dark text-base font-medium  ">
+                <p className="text-gray-dark text-base font-medium">
                   Phone Number
                 </p>
               </div>
-              <p className="text-gray-dark text-base pl-[64px] ">
+              <p className="text-gray-dark text-base pl-[64px]">
                 {pofileData?.phone}
               </p>
             </div>
@@ -211,7 +211,7 @@ const ProfileSettings = () => {
           </div>
         </div>
         {/* O Auth */}
-        <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8 ">
+        <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8">
           <h1 className="text-gray-dark text-base font-semibold">
             Login service
           </h1>
@@ -220,7 +220,7 @@ const ProfileSettings = () => {
             Connect accounts now for quick & secure access.
           </p>
           <div>
-            <div className="flex mt-8">
+            <div className="md:flex block mt-8">
               <Loginbutton
                 isActive={pofileData?.oAuthType === "APPLE" ? true : false}
                 logo={appleIcon}
@@ -231,13 +231,13 @@ const ProfileSettings = () => {
                   pofileData?.oAuthType === "APPLE"
                     ? "text-green-500"
                     : "text-gray-veryLight"
-                } flex gap-x-1 ml-[71px] my-auto `}
+                } md:flex hidden gap-x-1 ml-[71px] my-auto `}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
               </div>
             </div>
-            <div className="flex ">
+            <div className="md:flex block ">
               <Loginbutton
                 isActive={pofileData?.oAuthType === "GOOGLE" ? true : false}
                 logo={googleIcon}
@@ -248,13 +248,13 @@ const ProfileSettings = () => {
                   pofileData?.oAuthType === "GOOGLE"
                     ? "text-green-500"
                     : "text-gray-veryLight"
-                } flex gap-x-1 ml-[71px] my-auto `}
+                } md:flex hidden  gap-x-1 ml-[71px] my-auto`}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
               </div>
             </div>
-            <div className="flex ">
+            <div className="md:flex block ">
               <Loginbutton
                 isActive={pofileData?.oAuthType === "FACEBOOK" ? true : false}
                 logo={facebookIcon}
@@ -265,7 +265,7 @@ const ProfileSettings = () => {
                   pofileData?.oAuthType === "FACEBOOK"
                     ? "text-green-500"
                     : "text-gray-veryLight"
-                } flex gap-x-1 ml-[71px] my-auto `}
+                } md:flex hidden gap-x-1 ml-[71px] my-auto`}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
@@ -282,7 +282,7 @@ const ProfileSettings = () => {
           <p className="text-gray-dark text-base font-normal pt-2">
             Manage your addresses for a quick and easy checkout experience
           </p>
-          <div className="grid grid-cols-2 gap-4 mt-6">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-6">
             {locationData?.map((e) => {
               return (
                 <LocationDetailsCard
@@ -326,9 +326,9 @@ export const Loginbutton = ({ logo, text, isActive }) => {
       <button
         className={`${
           isActive ? "bg-primary/5" : ""
-        } flex justify-start w-[298px] h-[48px] border-[1px] rounded-lg border-primary text-primary my-2 py-2 ltr:pl-[45px] rtl:pr-5`}
+        } flex justify-start sm:w-[298px] w-full h-[48px] border-[1px] rounded-lg border-primary text-primary my-2 py-2 ltr:pl-[45px] rtl:pr-5`}
       >
-        <img className="mx-4 mt-0.5" src={logo} alt="logo" />
+        <img className="mx-4 mt-0.5 " src={logo} alt="logo" />
         <p className="text-lg font-medium pt-0.5 ">{text}</p>
       </button>
     </div>
@@ -403,7 +403,7 @@ export const LocationDetailsCard = ({
         locationId === `${Id}` || isMain
           ? "border-primary-dark"
           : "border-gray-med"
-      } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer`}
+      } border-[1px] rounded-lg  w-full p-5 cursor-pointer`}
     >
       <div className="flex justify-between">
         <h1 className="text-gray-dark text-sm">{AddressLable}</h1>

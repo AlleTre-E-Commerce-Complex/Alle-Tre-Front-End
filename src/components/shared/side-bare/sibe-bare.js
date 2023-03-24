@@ -106,6 +106,17 @@ const Sidebar = ({ SetSid, sid }) => {
                 SetSid(false);
               }}
             />
+            <NavLink
+              title="My Profile"
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.profileSettings)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.profileSettings);
+                SetSid(false);
+              }}
+            />
             <AccordionMenu />
             <NavLink
               title="Watchlist"

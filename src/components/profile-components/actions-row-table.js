@@ -26,9 +26,9 @@ const ActionsRowTable = ({
 
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
-      <div className="flex justify-between ">
+      <div className="flex flex-wrap justify-between">
         <div className="flex gap-x-4">
-          <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9]   ">
+          <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9] cursor-default  ">
             {img ? (
               <img
                 className="w-28 h-20 object-cover rounded-lg "
@@ -50,7 +50,7 @@ const ActionsRowTable = ({
               {truncateString(description, 80)}
             </p>
             {status === "ACTIVE" && (
-              <div className="pt-2 flex gap-x-10">
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
                     Total Bids
@@ -79,7 +79,7 @@ const ActionsRowTable = ({
               </div>
             )}
             {status === "PENDING_OWNER_DEPOIST" && (
-              <div className="pt-2 flex gap-x-10">
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
                     Starting Price
@@ -97,13 +97,13 @@ const ActionsRowTable = ({
                     {moment.utc(startingDate).format("MMMM, DD YYYY")}
                   </p>
                 </div>
-                <button className="bg-secondary-light text-white text-xs px-2 rounded h-6 my-auto">
+                <button className="bg-secondary-light text-white text-xs px-2 rounded h-6 my-auto cursor-default w-1/2 sm:w-auto">
                   Pending Deposit
                 </button>
               </div>
             )}
             {status === "IN_SCHEDULED" && (
-              <div className="pt-2 flex gap-x-10">
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
                     Starting Price
@@ -133,7 +133,7 @@ const ActionsRowTable = ({
             )}
             {status === "SOLD" ||
               (status === "EXPIRED" && (
-                <div className="pt-2 flex gap-x-10">
+                <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                   <div>
                     <h1 className="text-gray-veryLight text-[10px] font-normal">
                       Total Bids
@@ -193,7 +193,7 @@ const ActionsRowTable = ({
         </div>
         <button
           onClick={() => history.push(goToDetails)}
-          className="bg-primary-dark text-white text-sm font-normal w-32 h-8 rounded-lg mt-14"
+          className="bg-primary-dark text-white text-sm font-normal sm:w-32 w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
         >
           View details
         </button>

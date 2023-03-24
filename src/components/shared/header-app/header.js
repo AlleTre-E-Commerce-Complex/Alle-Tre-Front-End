@@ -20,6 +20,8 @@ const Header = ({ SetSid }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const [serchShow, setSerchShow] = useState(false);
+
   const handleOpen = () => {
     setIsOpen(true);
   };
@@ -110,21 +112,24 @@ const Header = ({ SetSid }) => {
             </button>
           </div>
         </div>
-        <div className="my-auto md:hidden block">
+        <div
+          onClick={() => setSerchShow((p) => !p)}
+          className="my-auto md:hidden block"
+        >
           <RxMagnifyingGlass
             className="text-primary cursor-pointer"
             size={30}
           />
         </div>
       </div>
-      <div className="bg-secondary h-[60px] ">
+      <div className={` ${serchShow ? " h-[60px]" : ""}  bg-secondary `}>
         <div className="py-[6px] flex gap-x-4 lg:px-16 px-5 ">
           <Input
-            className="w-full edit-search-Input "
+            className="w-full h-[48px] edit-search-Input "
             icon="search"
             placeholder="Search..."
           />
-          <div>
+          <div className="sm:block hidden">
             <button
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[304px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
               onClick={handleOpen}
@@ -140,7 +145,7 @@ const Header = ({ SetSid }) => {
               ullamcorper leo. Fusce laoreet dolor et fermentum lobortis.
             </p>
           </PopupCategoriesModel>
-          <div>
+          <div className="sm:block hidden">
             <button
               onClick={handelRegister}
               className="w-[136px] h-[48px] border-[1px] border-white text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
