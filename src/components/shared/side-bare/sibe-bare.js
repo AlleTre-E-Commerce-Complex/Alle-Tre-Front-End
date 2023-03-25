@@ -49,6 +49,12 @@ const Sidebar = ({ SetSid, sid }) => {
       history.push(routes.app.createAuction.default);
     } else dispatch(Open());
   };
+
+  const handelMyPfofile = () => {
+    if (user) {
+      history.push(routes.app.profile.profileSettings);
+    } else dispatch(Open());
+  };
   return (
     <>
       {/* Overlay */}
@@ -113,7 +119,7 @@ const Sidebar = ({ SetSid, sid }) => {
                 pathname.startsWith(routes.app.profile.default)
               }
               onClick={() => {
-                history.push(routes.app.profile.profileSettings);
+                handelMyPfofile();
                 SetSid(false);
               }}
             />

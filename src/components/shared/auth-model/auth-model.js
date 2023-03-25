@@ -53,7 +53,7 @@ function AuthModel() {
   ];
   return (
     <Modal
-      className="m-0 p-0 md:w-[824px] w-auto h-[493px] bg-transparent shadow-none scale-in "
+      className="m-0 p-0 md:w-[824px] w-auto h-[493px] sm:h-auto bg-transparent shadow-none rounded-2xl scale-in overflow-y-scroll scrollbar-hide "
       onClose={() => dispatch(Close())}
       onOpen={() => dispatch(Open())}
       open={AuthModelTggle}
