@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import "../../../../src/components/shared/header-app/nav-link-header.css";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../../context/language-context";
+import { toast } from "react-hot-toast";
 
 const Sidebar = ({ SetSid, sid }) => {
   const history = useHistory();
@@ -48,12 +49,14 @@ const Sidebar = ({ SetSid, sid }) => {
     if (user) {
       history.push(routes.app.createAuction.default);
     } else dispatch(Open());
+    toast.error("You must log in first to add new ads");
   };
 
   const handelMyPfofile = () => {
     if (user) {
       history.push(routes.app.profile.profileSettings);
     } else dispatch(Open());
+    toast.error("You must log in first to show your profile");
   };
   return (
     <>
