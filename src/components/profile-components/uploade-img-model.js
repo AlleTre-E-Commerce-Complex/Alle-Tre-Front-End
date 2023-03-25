@@ -105,23 +105,27 @@ const UploadeImgModel = ({ onReload }) => {
               <Divider className="text-gray-dark text-base mx-10" horizontal>
                 <div className="text-gray-dark text-base font-normal">OR</div>
               </Divider>
-              <Button
-                loading={isLoading}
-                className="bg-primary hover:bg-primary-dark text-white text-base font-normal w-[304px] h-[48px] rounded-lg opacity-100 ltr:font-serifEN rtl:font-serifAR"
-                onClick={file ? () => handleSave() : () => open()}
-              >
-                {file ? "Save" : " Select a file"}
-              </Button>
-              <button
-                className="border-primary border-[1px] text-primary w-[304px] h-[48px] rounded-lg mt-4"
-                onClick={() => {
-                  setOpen(false);
-                  setFile(null);
-                  setDropzoneActive(true);
-                }}
-              >
-                Cancel
-              </button>
+              <div className="flex justify-center mx-6 sm:mx-0 ">
+                <div className="">
+                  <Button
+                    loading={isLoading}
+                    className="bg-primary hover:bg-primary-dark text-white text-base font-normal w-[304px] h-[48px] rounded-lg opacity-100 ltr:font-serifEN rtl:font-serifAR mx-auto"
+                    onClick={file ? () => handleSave() : () => open()}
+                  >
+                    {file ? "Save" : " Select a file"}
+                  </Button>
+                  <button
+                    className="border-primary border-[1px] text-primary w-[304px] h-[48px] rounded-lg mt-4"
+                    onClick={() => {
+                      setOpen(false);
+                      setFile(null);
+                      setDropzoneActive(true);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </Dropzone>
