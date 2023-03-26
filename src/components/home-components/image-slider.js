@@ -44,11 +44,11 @@ const ImageSlider = ({ slides }) => {
       {SliderData.map((slide, index) => {
         return (
           <div
-            className={index === current ? "slide active " : translate}
+            className={index === current ? "slide active" : translate}
             key={index}
           >
             {index === current && (
-              <div className="lg:h-[561px] md:h-[350px] h-[200px] md:mx-32 mx-8 relative rounded-[32px] overflow-hidden ">
+              <div className="lg:h-[561px] md:h-[350px] h-[200px] md:mx-32 mx-8 relative rounded-[32px]  overflow-hidden ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img
@@ -71,11 +71,13 @@ const ImageSlider = ({ slides }) => {
                     <div className="left-arrow lg:w-[541px] md:w-[490px] w-[299px] rotate-90 lg:left-2.5 md:-left-20 -left-14 top-0"></div>
                   </div>
                 </div>
-                <img
-                  className="object-cover w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-home-img"
-                  src={slide.image}
-                  alt="travel"
-                />
+                <div className="drop-shadow-[0px 3px 16px #E9E9E980] shadow-img ">
+                  <img
+                    className="object-cover w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]  "
+                    src={slide.image}
+                    alt="travel"
+                  />
+                </div>
                 <div className="w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 sm:pl-24 pl-10 pt-5 ">
                   <div>
                     {/* title */}
