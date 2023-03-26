@@ -29,12 +29,17 @@ const ForgetPassword = () => {
   const tokenEdit = query.get("token");
   const [token] = useLocalStorage("tokenEdit", tokenEdit);
 
+  console.log("====================================");
+  console.log(tokenEdit);
+  console.log(token);
+  console.log("====================================");
+
   const [isHidden, setIsHidden] = useState(false);
 
   const { run, isLoading } = useAxios();
   const resetPassword = (values) => {
     const body = {
-      token: token,
+      token: tokenEdit || token,
       newPassword: values.password,
     };
     run(axios.post(api.auth.resetCredentials, body))
@@ -122,7 +127,9 @@ const ForgetPassword = () => {
         </div>
         <div
           className={
-            isHidden ? "animate-in mx-auto" : "animate-out h-0 hidden mx-auto"
+            isHidden
+              ? "animate-in text-center mx-auto "
+              : "animate-out h-0 hidden mx-auto"
           }
         >
           <div className="w-72">

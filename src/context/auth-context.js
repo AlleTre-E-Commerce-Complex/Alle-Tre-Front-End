@@ -36,7 +36,7 @@ function AuthProvider({ children }) {
       if (!user) {
         // if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
         // }
-        history.push(routes.app.home);
+        // history.push(routes.app.home);
       }
       setUser(user);
       setIsLoading(false);

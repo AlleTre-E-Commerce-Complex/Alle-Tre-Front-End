@@ -48,15 +48,19 @@ const Sidebar = ({ SetSid, sid }) => {
   const handelOnSell = () => {
     if (user) {
       history.push(routes.app.createAuction.default);
-    } else dispatch(Open());
-    toast.error("You must log in first to add new ads");
+    } else {
+      dispatch(Open());
+      toast.error("You must log in first to add new ads");
+    }
   };
 
   const handelMyPfofile = () => {
     if (user) {
       history.push(routes.app.profile.profileSettings);
-    } else dispatch(Open());
-    toast.error("You must log in first to show your profile");
+    } else {
+      dispatch(Open());
+      toast.error("You must log in first to show your profile");
+    }
   };
   return (
     <>
