@@ -1,8 +1,8 @@
 {
-  "name": "the-wather-admin",
+  "name": "allatre-front",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/app",
+  "homepage": "/",
   "dependencies": {
     "@deskpro/react-datepicker-hijri": "^1.5.1",
     "@googlemaps/react-wrapper": "^1.1.35",
