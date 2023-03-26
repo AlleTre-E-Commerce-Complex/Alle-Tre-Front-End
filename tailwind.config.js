@@ -72,9 +72,6 @@ module.exports = {
         "home-img": "0px 3px 16px #E9E9E980",
         "3xl": "0px 1px 4px #E9E9E9B3",
       },
-      boxShadow: {
-        img: "0px 3px 16px #E9E9E980;",
-      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

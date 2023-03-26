@@ -3,7 +3,7 @@ import { Field } from "formik";
 import { Form } from "semantic-ui-react";
 import ErrorMessage from "./error-message";
 import { get } from "wild-wild-path";
-// import "../../../../src/assets/style/formik-dropdown.css";
+import "../../../../src/assets/style/formik-dropdown.css";
 
 function FormikMultiDropdown({
   label,
