@@ -138,13 +138,7 @@ const Header = ({ SetSid }) => {
               <RiArrowDownSFill size={20} />
             </button>
           </div>
-          <PopupCategoriesModel isOpen={isOpen} onClose={handleClose}>
-            <h2 className="text-lg font-bold mb-4">Popup title</h2>
-            <p className="mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-              ullamcorper leo. Fusce laoreet dolor et fermentum lobortis.
-            </p>
-          </PopupCategoriesModel>
+          <PopupCategoriesModel isOpen={isOpen} onClose={handleClose} />
           <div className="sm:block hidden">
             <button
               onClick={handelRegister}
