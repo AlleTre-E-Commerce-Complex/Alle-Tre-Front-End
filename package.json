@@ -2,7 +2,7 @@
   "name": "the-wather-admin",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/",
+  "homepage": "/app",
   "dependencies": {
     "@deskpro/react-datepicker-hijri": "^1.5.1",
     "@googlemaps/react-wrapper": "^1.1.35",
