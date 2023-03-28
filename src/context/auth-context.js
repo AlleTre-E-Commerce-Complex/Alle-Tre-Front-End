@@ -7,7 +7,7 @@ import useAxios from "../hooks/use-axios";
 
 const AuthContext = React.createContext();
 
-const WHITE_LIST = [routes.auth.forgetpass.default];
+const WHITE_LIST = [routes.auth.forgetpass.default, routes.auth.default];
 
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -28,15 +28,15 @@ function AuthProvider({ children }) {
 
   const logout = () => {
     Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
-    history.push(routes.auth.logIn);
+    history.push(routes.app.home);
   };
 
   React.useEffect(() => {
     Auth.getUser().then((user) => {
       if (!user) {
-        // if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
-        // }
-        // history.push(routes.app.home);
+        if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
+          history.push(routes.app.home);
+        }
       }
       setUser(user);
       setIsLoading(false);
