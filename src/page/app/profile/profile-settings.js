@@ -141,8 +141,12 @@ const ProfileSettings = () => {
               />
             </div>
           </div>
-          <div className="flex justify-between pt-9">
-            <div className={pofileData?.isOAuth && "hidden"}>
+          <div
+            className={
+              pofileData?.isOAuth ? "hidden" : "flex justify-between pt-9"
+            }
+          >
+            <div>
               <div className="flex ">
                 <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
                   <HiLockClosed size={16} />
