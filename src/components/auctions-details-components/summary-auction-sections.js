@@ -69,7 +69,7 @@ const SummaryAuctionSections = ({
         </div>
       </div>
       {/* Prices  sections */}
-      <div className="pt-6 flex flex-wrap gap-x-48">
+      <div className="pt-6 grid grid-cols-2 ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             Starting Price
@@ -88,7 +88,7 @@ const SummaryAuctionSections = ({
         </div>
       </div>
       {/* Bids  sections */}
-      <div className="pt-6 flex flex-wrap gap-x-40">
+      <div className="pt-6 grid grid-cols-2 ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">Total Bids</p>
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">

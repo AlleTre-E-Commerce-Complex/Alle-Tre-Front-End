@@ -65,7 +65,7 @@ const ActiveAuctions = () => {
             totalBids={""}
             lastPrice={""}
             endingTime={""}
-            goToDetails={routes.app.profile.myAuctions.activeDetails}
+            goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
           />
         ))
       )}

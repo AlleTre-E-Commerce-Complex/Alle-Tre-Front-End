@@ -7,8 +7,10 @@ const NavLinkHeader = ({ title, onClick, isActive, className }) => {
       <p
         onClick={onClick}
         className={`${
-          isActive ? "active-underline-animation" : "hover-underline-animation"
-        } lg:text-base text-xs font-normal ${className} `}
+          isActive
+            ? "active-underline-animation text-primary "
+            : "hover-underline-animation"
+        } lg:text-base text-xs font-normal hover:text-primary ${className} `}
       >
         {title}
       </p>

@@ -13,9 +13,9 @@ const Home = () => {
       <div className="z-20 ">
         <ImageSlider slides={SliderData} />
       </div>
-      <div className=" mt-32">
+      {/* <div className=" mt-32">
         <SliderRow />
-      </div>
+      </div> */}
       {/* <div className="bg-gray-100 h-36 "></div> */}
     </div>
   );
