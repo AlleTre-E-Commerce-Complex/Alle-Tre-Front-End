@@ -10,7 +10,8 @@ import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
 import { RxMagnifyingGlass } from "react-icons/rx";
-import { RiUser3Fill, RiArrowDownSFill } from "react-icons/ri";
+import { RiArrowDownSFill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
 
@@ -144,7 +145,7 @@ const Header = ({ SetSid }) => {
               onClick={handelRegister}
               className="w-[136px] h-[48px] border-[1px] border-white text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
             >
-              <RiUser3Fill size={20} />
+              <FaUser size={15} className="mt-1" />
               <p className="pt-1">{user ? "Profile" : "Register Now"}</p>
             </button>
           </div>

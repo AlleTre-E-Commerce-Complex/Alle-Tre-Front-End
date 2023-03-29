@@ -9,22 +9,21 @@ const ImgSlider = ({ images }) => {
 
   const onImageClick = (image) => {
     setSelectedImg(image?.imageLink);
-    setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 500);
+    setTimeout(() => setIsClicked(false), 300);
   };
 
   return (
     <div className=" shadow rounded-2xl group overflow-hidden ">
       <div
         className={`w-full h-[480px] relative rounded-2xl ${
-          isClicked ? "animate-in" : ""
+          isClicked ? "" : ""
         }`}
-        onClick={() => setIsClicked(false)}
+        onClick={() => setIsClicked(true)}
       >
         {selectedImg && (
           <div className="bg-[#F8F8F8] w-full h-full absolute rounded-2xl z-10">
             <img
-              className={`absolute -z-10 w-full h-full object-contain p-2 ${
+              className={`absolute -z-10 w-full h-full object-contain p-2  ${
                 isClicked ? "animate-in" : ""
               }`}
               src={selectedImg}

@@ -136,7 +136,7 @@ export const NavLink = ({
           activeSidebar === title
             ? " text-primary  border-b-gray-veryLight border-b-[1px] "
             : " border-b-gray-veryLight border-b-[1px] "
-        } text-base text-gray-dark font-normal py-5 cursor-pointer flex`}
+        } text-base text-black font-medium py-5 cursor-pointer flex`}
       >
         <p
           className={`${
