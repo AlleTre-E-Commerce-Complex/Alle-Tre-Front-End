@@ -4,6 +4,7 @@ import { React, useState, useEffect } from "react";
 import { sliderData } from "./slider-data";
 import AnglesRight from "../../../../src/assets/icons/angles-right-icon.png";
 import AnglesLeft from "../../../../src/assets/icons/angles-left-icon.png";
+import Category from "./Category";
 
 const SliderRow = ({ title, fetchURL, rowID }) => {
   const sliderLeft = () => {
@@ -30,20 +31,37 @@ const SliderRow = ({ title, fetchURL, rowID }) => {
             id={"slider" + rowID}
             className="w-full h-full overflow-x-scroll scrollbar-hide whitespace-nowrap scroll-smooth relative px-24 "
           >
-            {sliderData.map((item, id) => (
-              <div className="w-24 h-24 rounded-full inline-block  bg-primary-light mx-24">
-                <img
-                  className="w-full h-auto block"
-                  src={item.img}
-                  alt={item?.title}
-                />
-                <div className="absolute top-0 left-0 w-full h-full text-black">
-                  <p className="whitespace-normal text-xs md:text-sm font-bold flex justify-center items-center h-full text-center cursor-default">
-                    {item?.title}
-                  </p>
-                </div>
-              </div>
-            ))}
+            {/* slider */}
+            <Category
+              img={
+                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
+              }
+              title="test"
+            />
+            <Category
+              img={
+                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
+              }
+              title="test"
+            />
+            <Category
+              img={
+                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
+              }
+              title="test"
+            />
+            <Category
+              img={
+                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
+              }
+              title="test"
+            />
+            <Category
+              img={
+                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
+              }
+              title="test"
+            />
           </div>
           <img
             onClick={sliderRight}
