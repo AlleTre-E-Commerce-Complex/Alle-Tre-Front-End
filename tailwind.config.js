@@ -67,6 +67,9 @@ module.exports = {
           DEFAULT: "#FBAE4C",
           light: "#FFEDD6",
         },
+        orang: {
+          DEFAULT: "#EB8400",
+        },
       },
       dropShadow: {
         "home-img": "0px 3px 16px #E9E9E980",

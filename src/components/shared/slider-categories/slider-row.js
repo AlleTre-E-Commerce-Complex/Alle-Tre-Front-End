@@ -1,71 +1,89 @@
-import axios from "axios";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-import { React, useState, useEffect } from "react";
-import { sliderData } from "./slider-data";
+import { React, useState } from "react";
 import AnglesRight from "../../../../src/assets/icons/angles-right-icon.png";
 import AnglesLeft from "../../../../src/assets/icons/angles-left-icon.png";
 import Category from "./Category";
 
-const SliderRow = ({ title, fetchURL, rowID }) => {
+const testData = [
+  {
+    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
+    title: "Electronic Devices",
+  },
+  {
+    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
+    title: "ewelry",
+  },
+  {
+    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
+    title: "Properties",
+  },
+  {
+    img: "https://pngimg.com/d/acura_PNG129.png",
+    title: "Cars",
+  },
+];
+
+const SliderRow = () => {
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   const sliderLeft = () => {
-    var slider = document.getElementById("slider" + rowID);
-    slider.scrollLeft = slider.scrollLeft - 200;
+    var slider = document.getElementById("slider");
+    if (selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+      slider.scrollLeft = (selectedIndex - 1) * slider.offsetWidth;
+    }
   };
+
   const sliderRight = () => {
-    var slider = document.getElementById("slider" + rowID);
-    slider.scrollLeft = slider.scrollLeft + 200;
+    var slider = document.getElementById("slider");
+    if (selectedIndex < testData.length - 1) {
+      setSelectedIndex(selectedIndex + 1);
+      slider.scrollLeft = (selectedIndex + 1) * slider.offsetWidth;
+    } else setSelectedIndex(selectedIndex);
+  };
+
+  const handleMouseDown = () => {
+    setIsMouseDown(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsMouseDown(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (isMouseDown) {
+      var slider = document.getElementById("slider");
+      slider.scrollLeft = slider.scrollLeft - e.movementX;
+    }
   };
 
   return (
     <div className="">
       <div className="">
-        <h2 className="text-white font-bold md:text-xl p-4">{title}</h2>
-        <div className="relative flex gap-x-4 items-center ">
+        <div
+          className="relative flex gap-x-4 items-center "
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+        >
           <img
             onClick={sliderLeft}
-            className=" rounded-full left-14 absolute cursor-pointer z-20 w-14 h-14 "
+            className="rounded-full left-14 absolute cursor-pointer z-20 w-14 h-14 "
             src={AnglesLeft}
             alt="AnglesLeft"
           />
           <div
-            id={"slider" + rowID}
-            className="w-full h-full overflow-x-scroll scrollbar-hide whitespace-nowrap scroll-smooth relative px-24 "
+            id={"slider"}
+            className="w-full h-full overflow-x-scroll scrollbar-hide whitespace-nowrap scroll-smooth relative sm:px-24 px-14"
           >
             {/* slider */}
-            <Category
-              img={
-                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
-              }
-              title="test"
-            />
-            <Category
-              img={
-                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
-              }
-              title="test"
-            />
-            <Category
-              img={
-                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
-              }
-              title="test"
-            />
-            <Category
-              img={
-                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
-              }
-              title="test"
-            />
-            <Category
-              img={
-                "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
-              }
-              title="test"
-            />
+            {testData.map((e, index) => (
+              <Category key={index} img={e?.img} title={e?.title} />
+            ))}
           </div>
           <img
             onClick={sliderRight}
-            className="rounded-full right-14 absolute cursor-pointer z-10 w-14 h-14 "
+            className="rounded-full right-14 absolute cursor-pointer z-20 w-14 h-14 "
             src={AnglesRight}
             alt="AnglesRight"
           />

@@ -27,6 +27,7 @@ const api = {
       getAllexpired: "auctions/user/ownes?status=EXPIRED",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
+      getMain: "/auctions/user/main",
     },
     customField: {
       ByCategoryId: (categoryId) =>
@@ -37,6 +38,7 @@ const api = {
     },
     brand: {
       default: (categoryId) => `/categories/brands?categoryId=${categoryId}`,
+      all: "/categories/brands",
     },
     location: {
       post: "/users/locations",

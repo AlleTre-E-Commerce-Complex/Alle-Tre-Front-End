@@ -42,7 +42,7 @@ const ActionsRowTable = ({
                 alt="img"
               />
             )}
-            <AuctionsStatus status={status} small />
+            <AuctionsStatus status={status} small absolute />
           </div>
           <div>
             <h1 className="text-gray-dark text-sm font-medium">{title}</h1>
