@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 import AuctionsStatus from "../../components/shared/status/auctions-status";
+import { useAuthState } from "../../context/auth-context";
 import { formatCurrency } from "../../utils/format-currency";
+import { Open } from "../../redux-store/auth-model-slice";
+import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+import { toast } from "react-hot-toast";
+import api from "../../api";
 
 const AuctionCard = ({
   price,
@@ -12,8 +19,42 @@ const AuctionCard = ({
   endingTime,
   bidNow,
   WatshlistState,
+  auctionId,
 }) => {
+  const { user } = useAuthState();
+  const dispatch = useDispatch();
+  const { run, isLoading } = useAxios([]);
   const [isWatshlist, setWatshlist] = useState(false);
+
+  useEffect(() => {
+    setWatshlist(WatshlistState);
+  }, [WatshlistState]);
+  const handelAddNewWatshlist = (auctionId) => {
+    if (user) {
+      const body = {
+        auctionId: auctionId,
+      };
+      if (!isWatshlist) {
+        run(
+          authAxios.post(api.app.WatchList.add, body).then((res) => {
+            toast.success("This auction add to WatchList been successfully");
+            setWatshlist(true);
+          })
+        );
+      } else {
+        run(
+          authAxios.delete(api.app.WatchList.delete(auctionId)).then((res) => {
+            toast.success(
+              "This auction delete from WatchList been successfully"
+            );
+            setWatshlist(false);
+          })
+        );
+      }
+    } else {
+      dispatch(Open());
+    }
+  };
 
   return (
     <div>
@@ -29,18 +70,20 @@ const AuctionCard = ({
           </div>
           <div className="bg-white rounded-lg w-[38px] h-[44px] absolute top-2 right-2">
             <div
-              onClick={() => setWatshlist((p) => !p)}
+              onClick={() => handelAddNewWatshlist(auctionId)}
               className="flex justify-center items-center mt-2.5 cursor-pointer "
             >
               {isWatshlist ? (
-                <BsBookmark className="text-gray-med" size={25} />
-              ) : (
                 <BsBookmarkFill className="text-primary" size={25} />
+              ) : (
+                <BsBookmark className="text-gray-med" size={25} />
               )}
             </div>
           </div>
         </div>
-        <h1 className="text-gray-dark font-medium text-sm pt-3">{title}</h1>
+        <h1 className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10">
+          {title}
+        </h1>
         <div>
           <AuctionsStatus status={status} small />
           <div className="flex justify-between mt-2">

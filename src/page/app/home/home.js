@@ -11,6 +11,8 @@ import AuctionFilterCard from "../../../components/home-components/auction-filte
 import ImageSlider from "../../../components/home-components/image-slider";
 import { SliderData } from "../../../components/home-components/imge-data";
 import SliderRow from "../../../components/shared/slider-categories/slider-row";
+import { authAxios } from "../../../config/axios-config";
+import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
 import useGetALLBrand from "../../../hooks/use-get-all-brands";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
@@ -20,6 +22,7 @@ import routes from "../../../routes";
 const Home = () => {
   const { search } = useLocation();
   const history = useHistory();
+  const { user } = useAuthState();
   const myRef = useRef();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { AllBranOptions, loadingAllBranOptions } = useGetALLBrand();
@@ -27,16 +30,27 @@ const Home = () => {
 
   const [mainAuctions, setMainAuctions] = useState();
 
+  console.log("====================================");
+  console.log(mainAuctions);
+  console.log("====================================");
+
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
   );
   useEffect(() => {
+    if (!user) {
+      runMainAuctions(
+        axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+        })
+      );
+    }
     runMainAuctions(
-      axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+      authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
         setMainAuctions(res?.data?.data);
       })
     );
-  }, [runMainAuctions, search]);
+  }, [runMainAuctions, search, user]);
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home">
@@ -116,11 +130,13 @@ const Home = () => {
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5 h-fit mx-auto">
           {mainAuctions?.map((e) => (
             <AuctionCard
+              auctionId={e?.id}
               price={e?.acceptedAmount}
               title={e?.product?.title}
               status={e?.status}
               adsImg={e?.product?.images[0].imageLink}
               totalBods={15}
+              WatshlistState={e?.isSaved}
               endingTime={"02 days.05 hrs.02 min"}
             />
           ))}

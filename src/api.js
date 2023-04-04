@@ -58,6 +58,11 @@ const api = {
       editCredentialsInfo: "/users/credentials-info",
       analytics: "/auctions/user/ownes/analytics",
     },
+    WatchList: {
+      default: "",
+      add: "/watch-lists/save",
+      delete: (auctionsId) => `/watch-lists/un-save?auctionId=${auctionsId}`,
+    },
   },
 };
 
