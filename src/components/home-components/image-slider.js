@@ -32,12 +32,12 @@ const ImageSlider = ({ myRef, slides }) => {
     <section className="mt-7 relative max-w-[1440px] mx-auto">
       <div className="relative  ">
         <img
-          className="object-cover absolute -right-10 lg:-top-6 md:-top-2 w-1/2 lg:h-[561px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
+          className="object-cover absolute -right-8 lg:-top-6 md:-top-2 w-1/2 lg:h-[541px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
           src={SliderData[nextindex]?.image}
           alt="travel"
         />
         <img
-          className="object-cover absolute -left-10 lg:-top-6 md:-top-2  w-1/2 lg:h-[561px] md:h-[350px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
+          className="object-cover absolute -left-8 lg:-top-6 md:-top-2  w-1/2 lg:h-[541px] md:h-[350px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
           src={SliderData[previndex]?.image}
           alt="travel"
         />
@@ -74,12 +74,12 @@ const ImageSlider = ({ myRef, slides }) => {
                 </div>
                 <div className="drop-shadow-[0px 3px 16px #E9E9E980] lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
                   <img
-                    className="object-cover w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]  "
+                    className="object-cover w-full lg:h-[541px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]  "
                     src={slide.image}
                     alt="travel"
                   />
                 </div>
-                <div className="w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 sm:pl-24 pl-10 pt-5 ">
+                <div className="w-full lg:h-[541px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 sm:pl-24 pl-10 pt-5 ">
                   <ScrollingIcon
                     onClick={() =>
                       window.scrollTo({
