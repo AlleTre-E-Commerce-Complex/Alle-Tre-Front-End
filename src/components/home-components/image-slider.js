@@ -30,14 +30,14 @@ const ImageSlider = ({ myRef, slides }) => {
 
   return (
     <section className="mt-7 relative max-w-[1440px] mx-auto">
-      <div className="relative lg:mx-6 md:mx-10 mx-4">
+      <div className="relative  ">
         <img
-          className="object-cover absolute right-0 lg:-top-6 md:-top-2 w-1/2 lg:h-[561px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
+          className="object-cover absolute -right-10 lg:-top-6 md:-top-2 w-1/2 lg:h-[561px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
           src={SliderData[nextindex]?.image}
           alt="travel"
         />
         <img
-          className="object-cover absolute left-0 lg:-top-6 md:-top-2  w-1/2 lg:h-[561px] md:h-[350px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
+          className="object-cover absolute -left-10 lg:-top-6 md:-top-2  w-1/2 lg:h-[561px] md:h-[350px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
           src={SliderData[previndex]?.image}
           alt="travel"
         />
@@ -49,7 +49,7 @@ const ImageSlider = ({ myRef, slides }) => {
             key={index}
           >
             {index === current && (
-              <div className="lg:h-[561px] md:h-[350px] h-[200px] md:mx-32 mx-8 relative rounded-[32px]  ">
+              <div className="lg:h-[561px] md:h-[350px] h-[200px] mx-16 relative rounded-[32px]  ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img

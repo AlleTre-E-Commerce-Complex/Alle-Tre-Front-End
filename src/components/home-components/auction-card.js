@@ -17,10 +17,10 @@ const AuctionCard = ({
 
   return (
     <div>
-      <div className="group w-[260px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
-        <div className="w-[230px] h-[170px] rounded-2xl mx-auto round bg-[#F9F9F9] relative ">
+      <div className="group w-[268px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
+        <div className="w-[235px] h-[170px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
           <img
-            className="w-[204px] h-[149px] mx-auto pt-6 object-contain group-hover:scale-110 duration-300 ease-in-out transform  "
+            className="w-full h-full mx-auto  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
             src={adsImg}
             alt="adsImd"
           />

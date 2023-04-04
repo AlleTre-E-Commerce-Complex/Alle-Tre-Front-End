@@ -58,7 +58,7 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <div className="flex flex-wrap gap-5 max-w-[1440px] mx-auto">
+      <div className="flex gap-5 max-w-[1440px] mx-auto">
         {/* left filter sections */}
         <div className="flex flex-col gap-y-8">
           <AuctionFilterCard
