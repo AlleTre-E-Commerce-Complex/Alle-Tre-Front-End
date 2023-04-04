@@ -31,86 +31,84 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
         >
           <motion.div
             onClick={onClose}
-            className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-40"
+            className="fixed top-0 left-0 w-full h-screen bg-black opacity-50 z-50"
           />
           <motion.div
-            className="fixed top-40 right-48 z-50"
+            className="fixed w-[1000px] top-40 left-1/2 transform -translate-x-1/2 z-50"
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
           >
-            <div className="max-w-6xl">
-              <motion.div
-                className="bg-white rounded-2xl shadow-lg p-6 fixed md:w-auto w-4/5 top-40 right-[440px]  h-auto"
-                style={{ zIndex: 50 }}
-              >
-                <>
-                  <div className="flex ">
-                    {/* sidebare-catigory */}
-                    <div className="w-48">
-                      {GatogryOptions?.map((e) => (
-                        <NavLink
-                          id={e?.value}
-                          title={e?.text}
-                          activeSidebar={activeSidebar}
-                          setActiveSidebar={setActiveSidebar}
-                          setCategoryId={setCategoryId}
-                        />
-                      ))}
-                    </div>
-                    {/* sub-catigory */}
-                    <div className="pt-4 w-60">
-                      {SubGatogryOptions.map((e) => (
-                        <p className="mx-6 text-gray-med text-base font-normal py-1 cursor-pointer">
-                          {e?.text}
-                        </p>
-                      ))}
-                    </div>
-                    {/* imges */}
-                    <div>
-                      {activeSidebar === "Electronic Devices" && (
-                        <img
-                          className="object-cover w-[613px] md:h-[600px] rounded-2xl animate-in"
-                          src={ElectronicsImg}
-                          alt=""
-                        />
-                      )}
-                      {activeSidebar === "Properties" && (
-                        <img
-                          className="object-cover w-[613px] h-[600px] rounded-2xl animate-in"
-                          src={PropertiesImg}
-                          alt=""
-                        />
-                      )}
-                      {activeSidebar === "Cars" && (
-                        <img
-                          className="object-cover w-[613px] h-[600px] rounded-2xl animate-in"
-                          src={VehiclesImg}
-                          alt=""
-                        />
-                      )}
-                      {activeSidebar === "Jewelry" && (
-                        <img
-                          className="object-cover w-[613px] h-[600px] rounded-2xl animate-in"
-                          src={JewerlyImg}
-                          alt=""
-                        />
-                      )}
-                    </div>
+            <motion.div
+              className="bg-white rounded-2xl shadow-lg p-6 h-auto"
+              style={{ zIndex: 60 }}
+            >
+              <>
+                <div className="flex ">
+                  {/* sidebare-catigory */}
+                  <div className="w-48">
+                    {GatogryOptions?.map((e) => (
+                      <NavLink
+                        id={e?.value}
+                        title={e?.text}
+                        activeSidebar={activeSidebar}
+                        setActiveSidebar={setActiveSidebar}
+                        setCategoryId={setCategoryId}
+                      />
+                    ))}
                   </div>
-                </>
+                  {/* sub-catigory */}
+                  <div className="pt-4 w-60">
+                    {SubGatogryOptions.map((e) => (
+                      <p className="mx-6 text-gray-med text-base font-normal py-1 cursor-pointer">
+                        {e?.text}
+                      </p>
+                    ))}
+                  </div>
+                  {/* imges */}
+                  <div>
+                    {activeSidebar === "Electronic Devices" && (
+                      <img
+                        className="object-cover w-[613px] md:h-[500px] rounded-2xl animate-in"
+                        src={ElectronicsImg}
+                        alt=""
+                      />
+                    )}
+                    {activeSidebar === "Properties" && (
+                      <img
+                        className="object-cover w-[613px] h-[500px] rounded-2xl animate-in"
+                        src={PropertiesImg}
+                        alt=""
+                      />
+                    )}
+                    {activeSidebar === "Cars" && (
+                      <img
+                        className="object-cover w-[613px] h-[500px] rounded-2xl animate-in"
+                        src={VehiclesImg}
+                        alt=""
+                      />
+                    )}
+                    {activeSidebar === "Jewelry" && (
+                      <img
+                        className="object-cover w-[613px] h-[500px] rounded-2xl animate-in"
+                        src={JewerlyImg}
+                        alt=""
+                      />
+                    )}
+                  </div>
+                </div>
+              </>
 
-                <span
-                  className="absolute bg-white border-b border-r border-l rounded-md transform -rotate-45 -top-3.5 md:right-10 right-28"
-                  style={{
-                    width: arrowSize * 2,
-                    height: arrowSize * 2,
-                    top: -arrowSize,
-                    borderColor: "transparent",
-                    borderTopColor: "white",
-                  }}
-                />
-              </motion.div>
-            </div>
+              <span
+                className="absolute bg-white border-b border-r border-l rounded-md transform -rotate-45 -top-3.5 md:right-10 right-28 z-10"
+                style={{
+                  width: arrowSize * 2,
+                  height: arrowSize * 2,
+                  top: -arrowSize,
+                  borderColor: "transparent",
+                  borderTopColor: "white",
+                }}
+              />
+            </motion.div>
           </motion.div>
         </motion.div>
       )}

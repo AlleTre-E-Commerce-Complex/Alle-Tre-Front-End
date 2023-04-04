@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
 import { Dimmer, Loader } from "semantic-ui-react";
 import api from "../../../api";
 import AuctionCard from "../../../components/home-components/auction-card";
@@ -17,7 +16,6 @@ import useAxios from "../../../hooks/use-axios";
 import useGetALLBrand from "../../../hooks/use-get-all-brands";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetGatogry from "../../../hooks/use-get-category";
-import routes from "../../../routes";
 
 const Home = () => {
   const { search } = useLocation();

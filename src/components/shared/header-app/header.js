@@ -123,7 +123,7 @@ const Header = ({ SetSid }) => {
           />
         </div>
       </div>
-      <div className={` ${serchShow ? " h-[60px]" : ""}  bg-secondary   `}>
+      <div className={` ${serchShow ? "h-[60px]" : ""} bg-secondary`}>
         <div className="py-[6px] flex gap-x-4  max-w-[1440px] mx-auto ">
           <Input
             className="w-full h-[48px] edit-search-Input "
