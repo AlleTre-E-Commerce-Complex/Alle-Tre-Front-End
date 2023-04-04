@@ -17,7 +17,7 @@ const AuctionCard = ({
 
   return (
     <div>
-      <div className="group w-[299px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
+      <div className="group w-[299px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
         <div className="w-[267px] h-[170px] rounded-2xl mx-auto round bg-[#F9F9F9] relative ">
           <img
             className="w-[204px] h-[149px] mx-auto pt-6 object-contain group-hover:scale-110 duration-300 ease-in-out transform  "

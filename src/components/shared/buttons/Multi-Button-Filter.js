@@ -4,7 +4,7 @@ import useFilter from "../../../hooks/use-filter";
 
 const removeFromArray = (arr, v) => arr.filter((a) => a !== v);
 
-const MultiButtonFilter = ({ name, values, history }) => {
+const MultiButtonFilter = ({ name, values, history, myRef }) => {
   const [filter, setFilter] = useFilter(name, []);
 
   return (
@@ -17,13 +17,17 @@ const MultiButtonFilter = ({ name, values, history }) => {
                 ? "bg-primary text-white border-primary "
                 : "bg-white  border-[1px] border-[#E5E5E5] "
             }  w-[14px] h-[14px] rounded-sm flex justify-center items-center mt-1`}
-            onClick={() =>
+            onClick={() => {
               setFilter(
                 filter.includes(v?.value)
                   ? removeFromArray(filter, v?.value)
                   : [...filter, v?.value]
-              )
-            }
+              );
+              window.scrollTo({
+                behavior: "smooth",
+                top: myRef?.current?.offsetTop,
+              });
+            }}
           >
             {filter.includes(v?.value) ? <BiCheck size={20} /> : ""}
           </button>

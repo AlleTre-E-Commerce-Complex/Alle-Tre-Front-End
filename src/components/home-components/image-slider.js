@@ -28,7 +28,7 @@ const ImageSlider = ({ slides }) => {
   const previndex = current + 1 && current - 1 < 0 ? 0 : current - 1;
 
   return (
-    <section className="mt-7 relative ">
+    <section className="mt-7 relative  ">
       <div className="relative md:mx-6 mx-4">
         <img
           className="object-cover absolute right-0 lg:-top-6 md:-top-2 w-1/2  lg:h-[561px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
