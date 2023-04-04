@@ -58,7 +58,7 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <div className="flex justify-between max-w-[1366px] mx-auto">
+      <div className="flex flex-wrap gap-5 max-w-[1440px] mx-auto">
         {/* left filter sections */}
         <div className="flex flex-col gap-y-8">
           <AuctionFilterCard
@@ -113,7 +113,7 @@ const Home = () => {
           />
         </div>
         {/* right card sections */}
-        <div className="grid grid-cols-3 gap-5 h-fit">
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5 h-fit">
           {mainAuctions?.map((e) => (
             <AuctionCard
               price={e?.acceptedAmount}

@@ -46,8 +46,8 @@ const Header = ({ SetSid }) => {
     } else dispatch(Open());
   };
   return (
-    <div className="w-full fixed top-0 z-50  ">
-      <div className="backdrop-blur-md bg-white/30  md:h-[72px] h-[60px] flex justify-between lg:px-16 px-5  ">
+    <div className=" w-full fixed top-0 z-50 bg-white/30  backdrop-blur-md ">
+      <div className="md:h-[72px] h-[60px] flex justify-between lg:px-16 px-5 max-w-[1440px] mx-auto ">
         <div className="my-auto hidden md:block">
           <AllatreLogo
             className="cursor-pointer hidden md:block"
@@ -123,8 +123,8 @@ const Header = ({ SetSid }) => {
           />
         </div>
       </div>
-      <div className={` ${serchShow ? " h-[60px]" : ""}  bg-secondary `}>
-        <div className="py-[6px] flex gap-x-4 lg:px-16 px-5 ">
+      <div className={` ${serchShow ? " h-[60px]" : ""}  bg-secondary   `}>
+        <div className="py-[6px] flex gap-x-4 lg:px-16 px-5 max-w-[1440px] mx-auto ">
           <Input
             className="w-full h-[48px] edit-search-Input "
             icon="search"

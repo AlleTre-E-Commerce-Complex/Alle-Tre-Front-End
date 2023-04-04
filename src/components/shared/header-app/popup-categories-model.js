@@ -40,7 +40,7 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
           >
             <div className="max-w-6xl">
               <motion.div
-                className="bg-white rounded-2xl shadow-lg p-6 fixed md:w-auto w-4/5 top-40 right-28 md:right-60 h-auto"
+                className="bg-white rounded-2xl shadow-lg p-6 fixed md:w-auto w-4/5 top-40 right-[440px]  h-auto"
                 style={{ zIndex: 50 }}
               >
                 <>

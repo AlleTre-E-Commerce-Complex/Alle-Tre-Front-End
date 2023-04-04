@@ -58,7 +58,7 @@ const SliderRow = () => {
   };
 
   return (
-    <div className="max-w-[1366px] mx-auto">
+    <div className="max-w-[1440px] mx-auto">
       <div className="">
         <div
           className="relative flex gap-x-4 items-center "
