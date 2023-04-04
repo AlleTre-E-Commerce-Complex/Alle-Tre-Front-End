@@ -1,7 +1,7 @@
 import React from "react";
 import MultiButtonFilter from "../shared/buttons/Multi-Button-Filter";
 
-const AuctionFilterCard = ({ title, seeAll, name, values, myRef }) => {
+const AuctionFilterCardList = ({ title, seeAll, name, values, myRef }) => {
   return (
     <div>
       <div className="group w-[299px] h-fit rounded-2xl shadow p-4">
@@ -17,4 +17,4 @@ const AuctionFilterCard = ({ title, seeAll, name, values, myRef }) => {
   );
 };
 
-export default AuctionFilterCard;
+export default AuctionFilterCardList;

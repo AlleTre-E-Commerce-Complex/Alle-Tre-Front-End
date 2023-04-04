@@ -40,7 +40,7 @@ const AuctionCard = ({
             </div>
           </div>
         </div>
-        <h1 className="text-gray-dark font-medium text-sm pt-2">{title}</h1>
+        <h1 className="text-gray-dark font-medium text-sm pt-3">{title}</h1>
         <div>
           <AuctionsStatus status={status} small />
           <div className="flex justify-between mt-2">

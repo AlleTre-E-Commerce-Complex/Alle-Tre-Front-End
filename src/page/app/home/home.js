@@ -5,7 +5,8 @@ import { HashLink } from "react-router-hash-link";
 import { Dimmer, Loader } from "semantic-ui-react";
 import api from "../../../api";
 import AuctionCard from "../../../components/home-components/auction-card";
-import AuctionFilterCard from "../../../components/home-components/auction-filter-card";
+import AuctionFilterCardList from "../../../components/home-components/auction-filter-card-list";
+import AuctionFilterCard from "../../../components/home-components/auction-filter-card-list";
 
 import ImageSlider from "../../../components/home-components/image-slider";
 import { SliderData } from "../../../components/home-components/imge-data";
@@ -43,10 +44,10 @@ const Home = () => {
         <Loader active />
       </Dimmer>
       <div className="z-20">
-        <ImageSlider slides={SliderData} />
+        <ImageSlider myRef={myRef} slides={SliderData} />
       </div>
-      <div className="mt-32 text-center">
-        <h1 className="text-gray-dark text-base font-bold">
+      <div className="pt-32 text-center">
+        <h1 ref={myRef} className="text-gray-dark text-base font-bold">
           Popular Categories
         </h1>
         <p className="text-gray-med text-base font-normal">
@@ -54,7 +55,7 @@ const Home = () => {
           diam nonumy eirmod
         </p>
       </div>
-      <div ref={myRef} id="#SliderRow" className="mt-11 mb-20">
+      <div className="mt-11 mb-20">
         <SliderRow />
       </div>
       <div className="flex justify-between max-w-[1366px] mx-auto">
@@ -70,7 +71,7 @@ const Home = () => {
             })).filter(Boolean)}
             myRef={myRef}
           />
-          <AuctionFilterCard
+          <AuctionFilterCardList
             title={"Brand"}
             seeAll={AllBranOptions?.length}
             name="brands"
@@ -80,7 +81,7 @@ const Home = () => {
             })).filter(Boolean)}
             myRef={myRef}
           />
-          <AuctionFilterCard
+          <AuctionFilterCardList
             title={"Location"}
             seeAll={AllCountriesOptions?.length}
             name="countries"
@@ -90,7 +91,7 @@ const Home = () => {
             })).filter(Boolean)}
             myRef={myRef}
           />
-          <AuctionFilterCard
+          <AuctionFilterCardList
             title={"Condition"}
             seeAll={3}
             name="usageStatus"
@@ -101,7 +102,7 @@ const Home = () => {
             ].filter(Boolean)}
             myRef={myRef}
           />
-          <AuctionFilterCard
+          <AuctionFilterCardList
             title={"Selling Type"}
             seeAll={2}
             name="sellingType"

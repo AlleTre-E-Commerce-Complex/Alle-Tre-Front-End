@@ -3,10 +3,10 @@ import React from "react";
 const Category = ({ img, title, onClick }) => {
   return (
     <div className="inline-block md:mx-24 mx-16">
-      <div>
+      <div className="group">
         <div
           onClick={onClick}
-          className="group w-[119px] h-[119px] bg-white hover:bg-primary/10 duration-300 ease-in-out transform rounded-full pt-2.5 cursor-pointer"
+          className=" w-[119px] h-[119px] bg-white hover:bg-primary/10 duration-300 ease-in-out transform rounded-full pt-2.5 cursor-pointer"
         >
           <div className="w-[98px] h-[98px] rounded-full bg-primary-light group-hover:bg-primary duration-300 ease-in-out transform  mx-auto my-auto p-2">
             <img
@@ -16,7 +16,7 @@ const Category = ({ img, title, onClick }) => {
             />
           </div>
         </div>
-        <p className="text-gray-dark font-normal text-base text-center">
+        <p className="text-gray-dark font-normal text-base text-center group-hover:text-primary group-hover:font-bold">
           {title}
         </p>
       </div>

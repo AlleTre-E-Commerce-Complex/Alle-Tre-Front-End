@@ -3,10 +3,11 @@ import { SliderData } from "./imge-data";
 
 import anglesRightIcon from "../../../src/assets/icons/angles-right-icon.png";
 import anglesLeftIcon from "../../../src/assets/icons/angles-left-icon.png";
+import { ReactComponent as ScrollingIcon } from "../../../src/assets/icons/scrolling-icon.svg";
 
 import "./image-slider.css";
 
-const ImageSlider = ({ slides }) => {
+const ImageSlider = ({ myRef, slides }) => {
   const [translate, setTranslate] = useState("");
   const [current, setCurrent] = useState(0);
   const length = slides.length;
@@ -48,7 +49,7 @@ const ImageSlider = ({ slides }) => {
             key={index}
           >
             {index === current && (
-              <div className="lg:h-[561px] md:h-[350px] h-[200px] md:mx-32 mx-8 relative rounded-[32px]  overflow-hidden ">
+              <div className="lg:h-[561px] md:h-[350px] h-[200px] md:mx-32 mx-8 relative rounded-[32px]  ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img
@@ -71,7 +72,7 @@ const ImageSlider = ({ slides }) => {
                     <div className="left-arrow lg:w-[541px] md:w-[490px] w-[299px] rotate-90 lg:left-2.5 md:-left-20 -left-14 top-0"></div>
                   </div>
                 </div>
-                <div className="drop-shadow-[0px 3px 16px #E9E9E980] shadow-img ">
+                <div className="drop-shadow-[0px 3px 16px #E9E9E980] lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
                   <img
                     className="object-cover w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]  "
                     src={slide.image}
@@ -79,6 +80,15 @@ const ImageSlider = ({ slides }) => {
                   />
                 </div>
                 <div className="w-full lg:h-[561px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 sm:pl-24 pl-10 pt-5 ">
+                  <ScrollingIcon
+                    onClick={() =>
+                      window.scrollTo({
+                        behavior: "smooth",
+                        top: myRef?.current?.offsetTop,
+                      })
+                    }
+                    className="absolute -bottom-9 z-50 left-1/2 transform -translate-x-1/2 cursor-pointer"
+                  />
                   <div>
                     {/* title */}
                     <h1 className="lg:text-4xl md:text-2xl text-base font-normal">
