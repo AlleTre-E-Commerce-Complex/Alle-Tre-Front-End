@@ -14,6 +14,8 @@ import { RiArrowDownSFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
+import useFilter from "../../../hooks/use-filter";
+import { useDebouncedCallback } from "use-debounce";
 
 const Header = ({ SetSid }) => {
   const history = useHistory();
@@ -22,6 +24,9 @@ const Header = ({ SetSid }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [serchShow, setSerchShow] = useState(false);
+
+  const [name, setTitle] = useFilter("title", "");
+  const debounced = useDebouncedCallback((value) => setTitle(value), 850);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -129,6 +134,9 @@ const Header = ({ SetSid }) => {
             className="w-full h-[48px] edit-search-Input "
             icon="search"
             placeholder="Search..."
+            onChange={(e, { value }) => {
+              debounced(value);
+            }}
           />
           <div className="sm:block hidden">
             <button

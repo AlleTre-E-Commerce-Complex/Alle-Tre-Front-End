@@ -1,7 +1,7 @@
 import React from "react";
-import MultiButtonFilter from "../shared/buttons/multi-button-filter";
+import { RadioButtonsFilter } from "../shared/buttons/radio-buttons-filter";
 
-const AuctionFilterCardList = ({ title, seeAll, name, values, myRef }) => {
+const AuctionFilterCard = ({ title, seeAll, name, values, myRef }) => {
   return (
     <div>
       <div className="group lg:w-[272px] md:w-[299px] h-fit rounded-2xl shadow p-4">
@@ -11,10 +11,10 @@ const AuctionFilterCardList = ({ title, seeAll, name, values, myRef }) => {
             See all ({seeAll})
           </p>
         </div>
-        <MultiButtonFilter name={name} values={values} myRef={myRef} />
+        <RadioButtonsFilter valueRadio={values} name={name} myRef={myRef} />
       </div>
     </div>
   );
 };
 
-export default AuctionFilterCardList;
+export default AuctionFilterCard;

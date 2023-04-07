@@ -4,8 +4,8 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import api from "../../../api";
 import AuctionCard from "../../../components/home-components/auction-card";
+import AuctionFilterCard from "../../../components/home-components/auction-filter-card";
 import AuctionFilterCardList from "../../../components/home-components/auction-filter-card-list";
-import AuctionFilterCard from "../../../components/home-components/auction-filter-card-list";
 
 import ImageSlider from "../../../components/home-components/image-slider";
 import SliderRow from "../../../components/shared/slider-categories/slider-row";
@@ -87,7 +87,7 @@ const Home = () => {
       <div className="flex gap-5 max-w-[1440px] lg:mx-auto md:mx-12">
         {/* left filter sections */}
         <div className="flex flex-col gap-y-5">
-          <AuctionFilterCard
+          <AuctionFilterCardList
             title={"Categories"}
             seeAll={GatogryOptions?.length}
             name="categories"
@@ -105,6 +105,26 @@ const Home = () => {
               name: brandName?.text,
               value: `${brandName?.value}`,
             })).filter(Boolean)}
+            myRef={myRef}
+          />
+          <AuctionFilterCard
+            title={"Selling Type"}
+            seeAll={2}
+            name="sellingType"
+            values={[
+              { name: "Auction", value: "Auction" },
+              { name: "Buy Now", value: "Buy_Now" },
+            ].filter(Boolean)}
+            myRef={myRef}
+          />
+          <AuctionFilterCard
+            title={"Auction state"}
+            seeAll={2}
+            name="auctionStatus"
+            values={[
+              { name: "Coming soon", value: "IN_SCHEDULES" },
+              { name: "Live Auction", value: "ACTIVE" },
+            ].filter(Boolean)}
             myRef={myRef}
           />
           <AuctionFilterCardList
@@ -127,15 +147,6 @@ const Home = () => {
               { name: "Open Box", value: "OPEN_BOX" },
             ].filter(Boolean)}
             myRef={myRef}
-          />
-          <AuctionFilterCardList
-            title={"Selling Type"}
-            seeAll={2}
-            name="sellingType"
-            values={[
-              { name: "Auction", value: "Auction" },
-              { name: "Buy Now", value: "Buy Now" },
-            ].filter(Boolean)}
           />
         </div>
         {/* right card sections */}

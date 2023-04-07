@@ -102,7 +102,11 @@ const AuctionCard = ({
               <h6 className="text-gray-veryLight font-normal text-[10px]">
                 Ending Time
               </h6>
-              <p className="text-gray-dark font-medium text-[10px]">
+              <p
+                className={`${
+                  timeLeft.days === 0 ? "text-red" : "text-gray-dark"
+                } font-medium text-[10px] `}
+              >
                 {formattedTimeLeft}
               </p>
             </div>
