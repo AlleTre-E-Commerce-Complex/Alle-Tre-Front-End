@@ -9,6 +9,7 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import { toast } from "react-hot-toast";
 import api from "../../api";
+import useCountdown from "../../hooks/use-countdown";
 
 const AuctionCard = ({
   price,
@@ -25,6 +26,8 @@ const AuctionCard = ({
   const dispatch = useDispatch();
   const { run, isLoading } = useAxios([]);
   const [isWatshlist, setWatshlist] = useState(false);
+  const timeLeft = useCountdown(endingTime);
+  const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
 
   useEffect(() => {
     setWatshlist(WatshlistState);
@@ -58,8 +61,8 @@ const AuctionCard = ({
 
   return (
     <div>
-      <div className="group w-[268px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
-        <div className="w-[235px] h-[165px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
+      <div className="group lg:w-[272px] md:w-[299px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
+        <div className="lg:w-[240px] md:w-[267px] h-[165px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
           <img
             className="w-full h-full mx-auto  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
             src={adsImg}
@@ -100,7 +103,7 @@ const AuctionCard = ({
                 Ending Time
               </h6>
               <p className="text-gray-dark font-medium text-[10px]">
-                {endingTime}
+                {formattedTimeLeft}
               </p>
             </div>
           </div>

@@ -1,48 +1,48 @@
 import React, { useState } from "react";
-import { SliderData } from "./imge-data";
 
 import anglesRightIcon from "../../../src/assets/icons/angles-right-icon.png";
 import anglesLeftIcon from "../../../src/assets/icons/angles-left-icon.png";
 import { ReactComponent as ScrollingIcon } from "../../../src/assets/icons/scrolling-icon.svg";
 
 import "./image-slider.css";
+import { truncateString } from "../../utils/truncate-string";
+import CountdownTimer from "../shared/timers/countdown-timer";
 
-const ImageSlider = ({ myRef, slides }) => {
+const ImageSlider = ({ myRef, images, slidesData }) => {
   const [translate, setTranslate] = useState("");
   const [current, setCurrent] = useState(0);
-  const length = slides.length;
 
   const nextSlide = () => {
     setTranslate("slideRight");
-    setCurrent(current === length - 1 ? 0 : current + 1);
+    setCurrent(current === images[0]?.length - 1 ? 0 : current + 1);
   };
-
   const prevSlide = () => {
     setTranslate("slideleft");
-    setCurrent(current === 0 ? length - 1 : current - 1);
+    setCurrent(current === 0 ? images[0]?.length - 1 : current - 1);
   };
 
-  if (!Array.isArray(slides) || slides.length <= 0) {
+  if (!Array.isArray(images) || images.length <= 0) {
     return null;
   }
-  const nextindex = current + 1 === 5 ? current - 1 : current + 1;
+  const nextindex =
+    current + 1 === images[0]?.length ? current - 1 : current + 1;
   const previndex = current + 1 && current - 1 < 0 ? 0 : current - 1;
 
   return (
-    <section className="mt-7 relative max-w-[1440px] mx-auto">
-      <div className="relative  ">
+    <section className="mt-7 relative max-w-[1440px] lg:h-[561px] md:h-[350px] h-[200px] mx-auto">
+      <div className="relative ">
         <img
           className="object-cover absolute -right-8 lg:-top-6 md:-top-2 w-1/2 lg:h-[541px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
-          src={SliderData[nextindex]?.image}
+          src={images[0]?.[nextindex]?.imageLink}
           alt="travel"
         />
         <img
           className="object-cover absolute -left-8 lg:-top-6 md:-top-2  w-1/2 lg:h-[541px] md:h-[350px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
-          src={SliderData[previndex]?.image}
+          src={images[0]?.[previndex]?.imageLink}
           alt="travel"
         />
       </div>
-      {SliderData.map((slide, index) => {
+      {slidesData?.map((slide, index) => {
         return (
           <div
             className={index === current ? "slide active" : translate}
@@ -75,7 +75,7 @@ const ImageSlider = ({ myRef, slides }) => {
                 <div className="drop-shadow-[0px 3px 16px #E9E9E980] lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
                   <img
                     className="object-cover w-full lg:h-[541px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]  "
-                    src={slide.image}
+                    src={slide?.product?.images[0]?.imageLink}
                     alt="travel"
                   />
                 </div>
@@ -92,38 +92,27 @@ const ImageSlider = ({ myRef, slides }) => {
                   <div>
                     {/* title */}
                     <h1 className="lg:text-4xl md:text-2xl text-base font-normal">
-                      The 2023 Range Rover Evoque
+                      {/* The 2023 Range Rover Evoque */}
+                      {slide?.product?.title}
                     </h1>
                     {/* pragraf */}
-                    <p className="text-gray-veryLight lg:text-base md:text-sm text-xs pt-4 font-normal ">
-                      elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                      <br></br>
-                      dolore magna aliquyam erat, sed diam voluptua. At vero
+                    <p className="text-gray-veryLight lg:text-base md:text-sm text-xs pt-4 font-normal max-w-xl h-16 ">
+                      {truncateString(slide?.product?.description, 200)}
                     </p>
                     {/* timer */}
                     <button className="bg-gradient-to-br from-red to-red-dark lg:w-56 md:w-44 w-36 lg:h-11 md:h-9 h-8 rounded-xl lg:mt-16 md:mt-8 mt-5 lg:text-base md:text-sm text-xs ">
-                      2 days : 13 hrs : 30 min
+                      <CountdownTimer date={slide?.expiryDate} />
                     </button>
                     {/* button pagination */}
                     <div className="lg:mt-12 md:mt-8 hidden md:block ">
                       <div id="navigation">
-                        <div
-                          className={
-                            current === 0 ? "active button " : "button"
-                          }
-                        ></div>
-                        <div
-                          className={current === 1 ? "active button" : "button"}
-                        ></div>
-                        <div
-                          className={current === 2 ? "active button" : "button"}
-                        ></div>
-                        <div
-                          className={current === 3 ? "active button" : "button"}
-                        ></div>
-                        <div
-                          className={current === 4 ? "active button" : "button"}
-                        ></div>
+                        {slidesData?.map((_, index) => (
+                          <div
+                            className={
+                              index === current ? "active button " : "button"
+                            }
+                          ></div>
+                        ))}
                       </div>
                     </div>
                     {/* button */}

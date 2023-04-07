@@ -29,11 +29,6 @@ const ForgetPassword = () => {
   const tokenEdit = query.get("token");
   const [token] = useLocalStorage("tokenEdit", tokenEdit);
 
-  console.log("====================================");
-  console.log(tokenEdit);
-  console.log(token);
-  console.log("====================================");
-
   const [isHidden, setIsHidden] = useState(false);
 
   const { run, isLoading } = useAxios();

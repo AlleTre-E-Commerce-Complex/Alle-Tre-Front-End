@@ -8,7 +8,6 @@ import AuctionFilterCardList from "../../../components/home-components/auction-f
 import AuctionFilterCard from "../../../components/home-components/auction-filter-card-list";
 
 import ImageSlider from "../../../components/home-components/image-slider";
-import { SliderData } from "../../../components/home-components/imge-data";
 import SliderRow from "../../../components/shared/slider-categories/slider-row";
 import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
@@ -27,19 +26,25 @@ const Home = () => {
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
 
   const [mainAuctions, setMainAuctions] = useState();
-
-  console.log("====================================");
-  console.log(mainAuctions);
-  console.log("====================================");
+  const [sponsoredAuctions, SetSponsoredAuctions] = useState();
 
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
   );
+  const {
+    run: runSponsoredAuctions,
+    isLoading: isLoadingrunSponsoredAuctions,
+  } = useAxios([]);
   useEffect(() => {
     if (!user) {
       runMainAuctions(
         axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
           setMainAuctions(res?.data?.data);
+        })
+      );
+      runSponsoredAuctions(
+        axios.get(`${api.app.auctions.sponsored}`).then((res) => {
+          SetSponsoredAuctions(res?.data?.data);
         })
       );
     }
@@ -48,15 +53,24 @@ const Home = () => {
         setMainAuctions(res?.data?.data);
       })
     );
-  }, [runMainAuctions, search, user]);
+    runSponsoredAuctions(
+      authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
+        SetSponsoredAuctions(res?.data?.data);
+      })
+    );
+  }, [runMainAuctions, runSponsoredAuctions, search, user]);
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home">
       <Dimmer className="animate-pulse" active={isLoadingMainAuctions} inverted>
         <Loader active />
       </Dimmer>
-      <div className="z-20">
-        <ImageSlider myRef={myRef} slides={SliderData} />
+      <div className="z-20 lg:h-[561px] md:h-[350px] h-[200px]">
+        <ImageSlider
+          myRef={myRef}
+          images={sponsoredAuctions?.map((img) => img?.product?.images)}
+          slidesData={sponsoredAuctions}
+        />
       </div>
       <div className="pt-32 text-center">
         <h1 ref={myRef} className="text-gray-dark text-base font-bold">
@@ -70,7 +84,7 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <div className="flex gap-5 max-w-[1440px] mx-auto">
+      <div className="flex gap-5 max-w-[1440px] lg:mx-auto md:mx-12">
         {/* left filter sections */}
         <div className="flex flex-col gap-y-5">
           <AuctionFilterCard
@@ -125,7 +139,7 @@ const Home = () => {
           />
         </div>
         {/* right card sections */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5 h-fit mx-auto">
+        <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto">
           {mainAuctions?.map((e) => (
             <AuctionCard
               auctionId={e?.id}
@@ -135,7 +149,7 @@ const Home = () => {
               adsImg={e?.product?.images[0].imageLink}
               totalBods={15}
               WatshlistState={e?.isSaved}
-              endingTime={"02 days.05 hrs.02 min"}
+              endingTime={e?.expiryDate}
             />
           ))}
         </div>

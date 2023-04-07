@@ -45,7 +45,6 @@ class Auth {
       });
       return data?.data?.accessToken;
     } catch (e) {
-      console.error(e);
       return false;
     }
   }

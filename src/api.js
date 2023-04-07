@@ -28,6 +28,7 @@ const api = {
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
       getMain: "/auctions/user/main",
+      sponsored: "/auctions/user/sponsored",
     },
     customField: {
       ByCategoryId: (categoryId) =>
