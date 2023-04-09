@@ -37,6 +37,7 @@ const ActiveAuctions = () => {
           {activeAuctionData?.length} Total Active Auctions..
         </p>
       </div>
+      {console.log(activeAuctionData)}
       {activeAuctionData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>

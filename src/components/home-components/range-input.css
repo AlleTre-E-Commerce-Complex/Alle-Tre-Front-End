@@ -1,0 +1,21 @@
+#range-slider-edit .range-slider__range {
+  background: #821A4D;
+  transition: height 0.3s;
+}
+
+#range-slider-edit .range-slider__thumb {
+  border: 1px solid #fff;
+  box-sizing: border-box;
+}
+
+#range-slider-edit .range-slider__thumb[data-lower] {
+  background: white;
+  border-style: solid;
+  border-color: #CCCCCC;
+}
+
+#range-slider-edit .range-slider__thumb[data-upper] {
+  background: white;
+  border-style: solid;
+  border-color: #CCCCCC;
+}
