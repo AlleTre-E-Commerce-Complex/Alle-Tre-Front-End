@@ -24,11 +24,11 @@ const Watshlist = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   return (
-    <div className="mx-4 relative animate-in ">
+    <div className="ml-8 relative animate-in ">
       <Dimmer className="animate-pulse" active={isLoadingWatshlist} inverted>
         <Loader active />
       </Dimmer>
-      <div className="flex flex-wrap gap-5">
+      <div className="grid grid-cols-4 gap-5">
         {watshlist?.map((e) => (
           <AuctionCard
             auctionId={e?.auction?.id}
