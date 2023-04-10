@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import api from "../api";
-import { authAxios } from "../config/axios-config";
+import { authAxios, axios } from "../config/axios-config";
 import { useLanguage } from "../context/language-context";
 import useAxios from "./use-axios";
 
@@ -11,7 +11,7 @@ const useGetAllCountries = () => {
   const { run, isLoading, error, isError } = useAxios();
 
   useEffect(() => {
-    run(authAxios.get(api.app.countries.default)).then(({ data }) => {
+    run(axios.get(api.app.countries.default)).then(({ data }) => {
       const AllCountriesOptions = data.data;
       const options = [];
 
