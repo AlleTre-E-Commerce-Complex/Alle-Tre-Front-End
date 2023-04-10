@@ -4,20 +4,32 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import api from "../../../api";
 import AuctionCard from "../../../components/home-components/auction-card";
+import BuyNowAuctionsSlider from "../../../components/home-components/buy-now-auctions-slider";
 import FilterSections from "../../../components/home-components/filter-sections";
 
 import ImageSlider from "../../../components/home-components/image-slider";
+import LiveAuctionsSlider from "../../../components/home-components/live-auctions-slider";
 import SliderRow from "../../../components/shared/slider-categories/slider-row";
 import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
+import createAuctionimgBGfrom from "../../../../src/assets/img/create_auction_img_BG.png";
+import createAuctionimgSm from "../../../../src/assets/img/create_auction_img_SM.png";
+import routes from "../../../routes";
+import AddLocationModel from "../../../components/create-auction-components/add-location-model";
+import useLocalStorage from "../../../hooks/use-localstorage";
+import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
+import { Open } from "../../../redux-store/auth-model-slice";
+import { useDispatch } from "react-redux";
 
 const Home = () => {
   const { search } = useLocation();
   const history = useHistory();
   const { user } = useAuthState();
   const myRef = useRef();
+  const dispatch = useDispatch();
 
+  const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
 
@@ -52,6 +64,21 @@ const Home = () => {
       })
     );
   }, [runMainAuctions, runSponsoredAuctions, search, user]);
+
+  const [hasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    "",
+    undefined,
+    (val) => JSON.parse(val)
+  );
+
+  const handelCreatOuction = () => {
+    if (user) {
+      if (hasCompletedProfile) {
+        history.push(routes.app.createAuction.productDetails);
+      } else setOpen(true);
+    } else dispatch(Open());
+  };
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home">
@@ -100,6 +127,43 @@ const Home = () => {
           ))}
         </div>
       </div>
+      <div className="max-w-[1440px] mx-auto">
+        <LiveAuctionsSlider />
+      </div>
+      <div className="relative py-12">
+        <img
+          className="w-full h-[257px] object-cover md:block hidden "
+          src={createAuctionimgBGfrom}
+          alt="createAuctionimgBGfrom"
+        />
+        <img
+          className="w-full h-auto object-cover  block md:hidden "
+          src={createAuctionimgSm}
+          alt="createAuctionimgSm"
+        />
+        <button
+          onClick={() => handelCreatOuction()}
+          className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[90px] right-[90px] hidden md:block"
+        >
+          Create Auction Now
+        </button>
+        <button
+          onClick={() => handelCreatOuction()}
+          className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[60px] right-[25px] md:hidden block"
+        >
+          Create Auction
+        </button>
+        <img
+          className="lg:w-[700px] w-[500px] absolute bottom-[90px] left-[90px] hidden md:block"
+          src={CreaAuctionText}
+          alt="CreaAuctionText"
+        />
+      </div>
+      <div className="max-w-[1440px] mx-auto">
+        <BuyNowAuctionsSlider />
+      </div>
+
+      <AddLocationModel open={open} setOpen={setOpen} TextButton={"Proceed"} />
     </div>
   );
 };

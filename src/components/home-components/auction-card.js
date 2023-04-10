@@ -21,6 +21,7 @@ const AuctionCard = ({
   bidNow,
   WatshlistState,
   auctionId,
+  className,
 }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const AuctionCard = ({
   };
 
   return (
-    <div>
+    <div className={className}>
       <div className="group lg:w-[272px] md:w-[299px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
         <div className="lg:w-[240px] md:w-[267px] h-[165px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
           <img

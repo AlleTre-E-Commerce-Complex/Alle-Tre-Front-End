@@ -10,7 +10,7 @@ const testData = [
   },
   {
     img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
-    title: "ewelry",
+    title: "Jewelry",
   },
   {
     img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",

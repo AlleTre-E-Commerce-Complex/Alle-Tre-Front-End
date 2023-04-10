@@ -8,7 +8,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 const RangeInput = ({ title, myRef }) => {
   const [minValue, setMinValue] = useState(0);
-  const [maxValue, setMaxValue] = useState(50000);
+  const [maxValue, setMaxValue] = useState(1000000);
   const [PriceFrom, setPriceFrom] = useFilter("priceFrom", "");
   const [PriceTo, seTpriceTo] = useFilter("priceTo", "");
   const debouncedFrom = useDebouncedCallback((value) => {
@@ -52,7 +52,7 @@ const RangeInput = ({ title, myRef }) => {
       <div className="mt-6">
         <RangeSlider
           id="range-slider-edit"
-          max={50000}
+          max={1000000}
           step={100}
           value={[minValue, maxValue]}
           onInput={handleSliderChange}
