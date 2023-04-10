@@ -84,6 +84,14 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             }
             onClick={() => history.push(routes.app.profile.myAuctions.default)}
           />
+          <NavLink
+            title="Watchlist"
+            isActive={
+              pathname.length === 1 ||
+              pathname.startsWith(routes.app.profile.watchlist)
+            }
+            onClick={() => history.push(routes.app.profile.watchlist)}
+          />
         </div>
         <div
           onClick={onLogout}

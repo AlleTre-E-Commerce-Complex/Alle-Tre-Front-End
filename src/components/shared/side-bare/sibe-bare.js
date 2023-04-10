@@ -135,10 +135,10 @@ const Sidebar = ({ SetSid, sid }) => {
               title="Watchlist"
               isActive={
                 pathname.length === 1 ||
-                pathname.startsWith(routes.app.watchlist)
+                pathname.startsWith(routes.app.profile.watchlist)
               }
               onClick={() => {
-                history.push(routes.app.watchlist);
+                history.push(routes.app.profile.watchlist);
                 SetSid(false);
               }}
             />

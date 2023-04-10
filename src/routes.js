@@ -15,7 +15,6 @@ const routes = {
     home: `/allatre/home`,
     myBides: `/allatre/my-bides`,
     categories: `/allatre/categories`,
-    watchlist: `/allatre/watchlist`,
     faqs: `/allatre/FAQs`,
     support: `/allatre/support`,
 
@@ -50,6 +49,7 @@ const routes = {
         expiredDetails: (auctionId = ":auctionId") =>
           `/allatre/profile/my-auctions/expired/${auctionId}/details`,
       },
+      watchlist: `/allatre/profile/watchlist`,
     },
   },
 };

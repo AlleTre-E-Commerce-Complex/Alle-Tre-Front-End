@@ -13,7 +13,7 @@ import axios from "axios";
 import api from "../../api";
 import { Dimmer, Loader } from "semantic-ui-react";
 
-const BuyNowAuctionsSlider = () => {
+const UpComingAuctionsSlider = () => {
   const { search } = useLocation();
   const { user } = useAuthState();
 
@@ -26,7 +26,7 @@ const BuyNowAuctionsSlider = () => {
   useEffect(() => {
     runAuctions(
       axios
-        .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
+        .get(`${api.app.auctions.getUpComming}?page=1&perPage=${page}`)
         .then((res) => {
           setAuctions(res?.data?.data);
           setpagination(res?.data?.pagination);
@@ -46,29 +46,35 @@ const BuyNowAuctionsSlider = () => {
     keyboard: true,
   };
 
-  const swiperRef2 = useRef(null);
-  const swiper2 = new Swiper(swiperRef2?.current, { ...swiperOptions });
+  const swiperRef3 = useRef(null);
+  const swiper3 = new Swiper(swiperRef3?.current, { ...swiperOptions });
 
   useEffect(() => {
     return () => {
-      swiper2?.destroy();
+      swiper3?.destroy();
     };
   }, []);
 
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
-      swiper2?.slideNext();
+      swiper3?.slideNext();
       setPage(page + 5);
-    } else swiper2?.slideNext();
+    } else swiper3?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiper2?.slidePrev();
+    swiper3?.slidePrev();
   };
+
+  console.log("====================================");
+  console.log(auctions);
+  console.log("====================================");
   return (
     <div className={auctions?.length === 0 ? "hidden" : "ezd-content relative"}>
       <div className="text-center">
-        <h1 className="text-gray-dark text-base font-bold">Buy Now</h1>
+        <h1 className="text-gray-dark text-base font-bold">
+          Up-coming Auctions
+        </h1>
         <p className="text-gray-med text-base font-normal">
           Lorem ipsum dolor sit amet, consetetur
         </p>
@@ -78,7 +84,7 @@ const BuyNowAuctionsSlider = () => {
       </Dimmer>
       <div className="ezd-snapslider pt-10">
         <div className="snapslider-wrapper">
-          <div ref={swiperRef2} className={`snapslider-overflow`}>
+          <div ref={swiperRef3} className={`snapslider-overflow`}>
             <div className={`snapslider-scroll swiper-wrapper py-2`}>
               {auctions?.map((e) => (
                 <div class="snapslider-card swiper-slide">
@@ -124,4 +130,4 @@ const BuyNowAuctionsSlider = () => {
   );
 };
 
-export default BuyNowAuctionsSlider;
+export default UpComingAuctionsSlider;

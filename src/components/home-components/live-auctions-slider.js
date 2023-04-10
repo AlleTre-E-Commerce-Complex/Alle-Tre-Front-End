@@ -67,7 +67,7 @@ const LiveAuctionsSlider = ({ type }) => {
   };
 
   return (
-    <div className="ezd-content relative">
+    <div className={auctions?.length === 0 ? "hidden" : "ezd-content relative"}>
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">Live Auctions</h1>
         <p className="text-gray-med text-base font-normal">
@@ -92,6 +92,8 @@ const LiveAuctionsSlider = ({ type }) => {
                     totalBods={15}
                     WatshlistState={e?.isSaved}
                     endingTime={e?.expiryDate}
+                    isBuyNowAllowed={e?.isBuyNowAllowed}
+                    isMyAuction={e?.isMyAuction}
                   />
                 </div>
               ))}

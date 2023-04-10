@@ -13,7 +13,7 @@ const testData = [
     title: "Jewelry",
   },
   {
-    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
+    img: "https://pngimg.com/d/acura_PNG129.png",
     title: "Properties",
   },
   {

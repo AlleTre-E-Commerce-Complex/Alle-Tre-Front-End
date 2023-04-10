@@ -21,6 +21,7 @@ import useLocalStorage from "../../../hooks/use-localstorage";
 import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useDispatch } from "react-redux";
+import UpComingAuctionsSlider from "../../../components/home-components/up-coming-auctions";
 
 const Home = () => {
   const { search } = useLocation();
@@ -108,6 +109,9 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
+      <h6 className="max-w-[1440px] mx-24 pb-4 text-gray-med text-base font-normal">
+        {mainAuctions?.length} Results
+      </h6>
       <div className="flex gap-3 max-w-[1440px] lg:mx-auto md:mx-12">
         {/* left filter sections */}
         <FilterSections myRef={myRef} />
@@ -116,13 +120,15 @@ const Home = () => {
           {mainAuctions?.map((e) => (
             <AuctionCard
               auctionId={e?.id}
-              price={e?.acceptedAmount}
+              price={e?.acceptedAmount || e?.startBidAmount}
               title={e?.product?.title}
               status={e?.status}
               adsImg={e?.product?.images[0].imageLink}
               totalBods={15}
               WatshlistState={e?.isSaved}
               endingTime={e?.expiryDate}
+              isBuyNowAllowed={e?.isBuyNowAllowed}
+              isMyAuction={e?.isMyAuction}
             />
           ))}
         </div>
@@ -158,6 +164,9 @@ const Home = () => {
           src={CreaAuctionText}
           alt="CreaAuctionText"
         />
+      </div>
+      <div className="max-w-[1440px] mx-auto">
+        <UpComingAuctionsSlider />
       </div>
       <div className="max-w-[1440px] mx-auto">
         <BuyNowAuctionsSlider />

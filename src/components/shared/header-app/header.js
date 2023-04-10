@@ -50,6 +50,12 @@ const Header = ({ SetSid }) => {
       history.push(routes.app.profile.profileSettings);
     } else dispatch(Open());
   };
+
+  const handelWatchlist = () => {
+    if (user) {
+      history.push(routes.app.profile.watchlist);
+    } else dispatch(Open());
+  };
   return (
     <div className=" w-full fixed top-0 z-50 bg-white/30 backdrop-blur-md ">
       <div className="md:h-[72px] h-[60px] flex justify-between max-w-[1440px]  lg:mx-auto md:mx-12 ">
@@ -89,9 +95,9 @@ const Header = ({ SetSid }) => {
               title="Watchlist"
               isActive={
                 pathname.length === 1 ||
-                pathname.startsWith(routes.app.watchlist)
+                pathname.startsWith(routes.app.profile.watchlist)
               }
-              onClick={() => history.push(routes.app.watchlist)}
+              onClick={() => handelWatchlist()}
             />
             <NavLinkHeader
               title="FAQs"

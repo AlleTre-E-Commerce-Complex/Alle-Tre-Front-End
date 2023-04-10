@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
+import MyAuctions from "./my-auctions";
 import ProfileSettings from "./profile-settings";
+import Watshlist from "../../../components/profile-components/watshlist";
 import ProfileSideBare from "../../../components/profile-components/profile-side-bare";
 
-import { Route, Switch } from "react-router-dom";
 import routes from "../../../routes";
-import MyAuctions from "./my-auctions";
 import { BiMenuAltLeft } from "react-icons/bi";
+import { Route, Switch } from "react-router-dom";
 
 const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -30,6 +31,7 @@ const ProfileLayouts = () => {
             path={routes.app.profile.myAuctions.default}
             component={MyAuctions}
           />
+          <Route path={routes.app.profile.watchlist} component={Watshlist} />
         </Switch>
       </div>
     </div>

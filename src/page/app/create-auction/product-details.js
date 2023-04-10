@@ -37,6 +37,9 @@ const ProductDetails = () => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
 
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
   );
@@ -117,6 +120,7 @@ const ProductDetails = () => {
     productDetailsint.subCategory,
     run,
     subCategoryId,
+    forceReload,
   ]);
   const regularCustomFieldsvalidations =
     customFromData?.regularCustomFields?.reduce((acc, curr) => {
@@ -439,6 +443,8 @@ const ProductDetails = () => {
                           (go) => go.value === value
                         );
                         setHasUsageCondition(fieldOption?.hasUsageCondition);
+                        onReload();
+                        setCustomFromData([]);
                       }}
                     />
                   </div>

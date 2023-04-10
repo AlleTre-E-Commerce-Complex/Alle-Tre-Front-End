@@ -22,6 +22,8 @@ const AuctionCard = ({
   WatshlistState,
   auctionId,
   className,
+  isBuyNowAllowed,
+  isMyAuction,
 }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
@@ -112,11 +114,28 @@ const AuctionCard = ({
               </p>
             </div>
           </div>
-          <div className="mt-4 flex justify-end">
-            <button className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg">
-              Bid Now
-            </button>
-          </div>
+          {isMyAuction ? (
+            <div className="mt-4 flex gap-x-3 justify-end">
+              <button className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg">
+                view details
+              </button>
+            </div>
+          ) : (
+            <div
+              className={`${
+                isBuyNowAllowed ? "justify-between" : "justify-end"
+              } mt-4 flex gap-x-3`}
+            >
+              {isBuyNowAllowed && (
+                <button className="border-primary border-[1px] text-primary w-[128px] h-[32px] rounded-lg">
+                  Buy Now
+                </button>
+              )}
+              <button className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg">
+                Bid Now
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
