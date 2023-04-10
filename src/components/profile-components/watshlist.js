@@ -7,6 +7,8 @@ import AuctionCard from "../home-components/auction-card";
 
 const Watshlist = () => {
   const [watshlist, setWatshlist] = useState();
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const { run: runWatshlist, isLoading: isLoadingWatshlist } = useAxios([]);
   useEffect(() => {
     runWatshlist(
@@ -14,7 +16,7 @@ const Watshlist = () => {
         setWatshlist(res?.data?.data);
       })
     );
-  }, [runWatshlist]);
+  }, [runWatshlist, forceReload]);
   console.log("====================================");
   console.log(watshlist);
   console.log("====================================");
@@ -26,19 +28,20 @@ const Watshlist = () => {
       <Dimmer className="animate-pulse" active={isLoadingWatshlist} inverted>
         <Loader active />
       </Dimmer>
-      <div className="flex  flex-wrap gap-5">
+      <div className="flex flex-wrap gap-5">
         {watshlist?.map((e) => (
           <AuctionCard
-            auctionId={e?.id}
-            price={e?.acceptedAmount || e?.startBidAmount}
-            title={e?.product?.title}
-            status={e?.status}
-            adsImg={e?.product?.images[0].imageLink}
+            auctionId={e?.auction?.id}
+            price={e?.auction?.acceptedAmount || e?.auction?.startBidAmount}
+            title={e?.auction?.product?.title}
+            status={e?.auction?.status}
+            adsImg={e?.auction?.product?.images[0].imageLink}
             totalBods={15}
-            WatshlistState={e?.isSaved}
-            endingTime={e?.expiryDate}
-            isBuyNowAllowed={e?.isBuyNowAllowed}
-            isMyAuction={e?.isMyAuction}
+            WatshlistState={true}
+            endingTime={e?.auction?.expiryDate}
+            isBuyNowAllowed={e?.auction?.isBuyNowAllowed}
+            isMyAuction={e?.auction?.isMyAuction}
+            onReload={onReload}
           />
         ))}
       </div>

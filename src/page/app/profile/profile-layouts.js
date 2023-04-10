@@ -13,7 +13,7 @@ const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
 
   return (
-    <div className="mt-44 ">
+    <div className="mt-44 max-w-[1440px] mx-auto ">
       <ProfileSideBare SetSid={SetSid} sid={sid} />
       <button
         className="border-[1px] border-gray-dark text-gray-dark rounded-full md:hidden block mx-4 mb-4"
@@ -21,7 +21,7 @@ const ProfileLayouts = () => {
       >
         <BiMenuAltLeft size={25} className="m-1" />
       </button>
-      <div className="md:ltr:ml-[250px]  md:rtl:mr-[250px]rtl:mr-0 ltr:ml-0">
+      <div className="md:ltr:ml-[250px]  md:rtl:mr-[250px]rtl:mr-0 ltr:ml-0 ">
         <Switch>
           <Route
             path={routes.app.profile.profileSettings}

@@ -24,6 +24,7 @@ const AuctionCard = ({
   className,
   isBuyNowAllowed,
   isMyAuction,
+  onReload,
 }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const AuctionCard = ({
           authAxios.post(api.app.WatchList.add, body).then((res) => {
             toast.success("This auction add to WatchList been successfully");
             setWatshlist(true);
+            onReload();
           })
         );
       } else {
@@ -54,6 +56,7 @@ const AuctionCard = ({
               "This auction delete from WatchList been successfully"
             );
             setWatshlist(false);
+            onReload();
           })
         );
       }
