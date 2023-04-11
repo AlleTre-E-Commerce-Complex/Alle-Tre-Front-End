@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import MyAuctions from "./my-auctions";
 import ProfileSettings from "./profile-settings";
-import Watshlist from "../../../components/profile-components/watshlist";
+import Watshlist from "./watshlist";
 import ProfileSideBare from "../../../components/profile-components/profile-side-bare";
 
 import routes from "../../../routes";

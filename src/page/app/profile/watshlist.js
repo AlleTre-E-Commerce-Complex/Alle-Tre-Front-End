@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Dimmer, Loader } from "semantic-ui-react";
-import api from "../../api";
-import { authAxios } from "../../config/axios-config";
-import useAxios from "../../hooks/use-axios";
-import AuctionCard from "../home-components/auction-card";
+import api from "../../../api";
+import { authAxios } from "../../../config/axios-config";
+import useAxios from "../../../hooks/use-axios";
+import AuctionCard from "../../../components/home-components/auction-card";
 
 const Watshlist = () => {
   const [watshlist, setWatshlist] = useState();

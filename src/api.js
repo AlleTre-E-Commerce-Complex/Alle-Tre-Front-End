@@ -26,6 +26,8 @@ const api = {
       getAllpending: "auctions/user/ownes?status=PENDING_OWNER_DEPOIST",
       getAllexpired: "auctions/user/ownes?status=EXPIRED",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
+      getUserAuctionsDetails: (auctionsId) =>
+        `/auctions/user/${auctionsId}/details/`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
       getMain: "/auctions/user/main",
       getLiveAuctions: "auctions/user/live",

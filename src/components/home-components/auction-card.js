@@ -10,6 +10,8 @@ import { authAxios } from "../../config/axios-config";
 import { toast } from "react-hot-toast";
 import api from "../../api";
 import useCountdown from "../../hooks/use-countdown";
+import routes from "../../routes";
+import { useHistory } from "react-router-dom";
 
 const AuctionCard = ({
   price,
@@ -28,6 +30,7 @@ const AuctionCard = ({
 }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { run, isLoading } = useAxios([]);
   const [isWatshlist, setWatshlist] = useState(false);
   const timeLeft = useCountdown(endingTime);
@@ -64,10 +67,29 @@ const AuctionCard = ({
       dispatch(Open());
     }
   };
+  const handelGoDetails = (id) => {
+    if (isMyAuction) {
+      if (status === "ACTIVE") {
+        history.push(routes.app.profile.myAuctions.activeDetails(id));
+      }
+      if (status === "IN_SCHEDULED") {
+        history.push(routes.app.profile.myAuctions.scheduledDetails(id));
+      }
+      if (status === "SOLD") {
+        history.push(routes.app.profile.myAuctions.soldDetails(id));
+      }
+      if (status === "PENDING_OWNER_DEPOIST") {
+        history.push(routes.app.profile.myAuctions.pendingDetails(id));
+      }
+      if (status === "EXPIRED") {
+        history.push(routes.app.profile.myAuctions.activeDetails(id));
+      }
+    } else history.push(routes.app.homeDetails(id));
+  };
 
   return (
     <div className={className}>
-      <div className="group lg:w-[272px] md:w-[299px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4">
+      <div className="group lg:w-[272px] md:w-[299px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
         <div className="lg:w-[240px] md:w-[267px] h-[165px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
           <img
             className="w-full h-full mx-auto  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
@@ -77,7 +99,13 @@ const AuctionCard = ({
           <div className="price-button absolute bg-orang text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center">
             {formatCurrency(price)}
           </div>
-          <div className="bg-white rounded-lg w-[38px] h-[44px] absolute top-2 right-2">
+          <div
+            className={
+              isMyAuction
+                ? "hidden"
+                : "bg-white rounded-lg w-[38px] h-[44px] absolute top-2 right-2"
+            }
+          >
             <div
               onClick={() => handelAddNewWatshlist(auctionId)}
               className="flex justify-center items-center mt-2.5 cursor-pointer "
@@ -119,7 +147,10 @@ const AuctionCard = ({
           </div>
           {isMyAuction ? (
             <div className="mt-4 flex gap-x-3 justify-end">
-              <button className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg">
+              <button
+                onClick={() => handelGoDetails(auctionId)}
+                className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg"
+              >
                 view details
               </button>
             </div>
@@ -130,11 +161,17 @@ const AuctionCard = ({
               } mt-4 flex gap-x-3`}
             >
               {isBuyNowAllowed && (
-                <button className="border-primary border-[1px] text-primary w-[128px] h-[32px] rounded-lg">
+                <button
+                  onClick={() => handelGoDetails(auctionId)}
+                  className="border-primary border-[1px] text-primary w-[128px] h-[32px] rounded-lg"
+                >
                   Buy Now
                 </button>
               )}
-              <button className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg">
+              <button
+                onClick={() => handelGoDetails(auctionId)}
+                className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg"
+              >
                 Bid Now
               </button>
             </div>

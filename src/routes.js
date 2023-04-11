@@ -13,6 +13,8 @@ const routes = {
   app: {
     default: `/allatre`,
     home: `/allatre/home`,
+    homeDetails: (auctionId = ":auctionId") =>
+      `/allatre/home/${auctionId}/details`,
     myBides: `/allatre/my-bides`,
     categories: `/allatre/categories`,
     faqs: `/allatre/FAQs`,
@@ -50,6 +52,8 @@ const routes = {
           `/allatre/profile/my-auctions/expired/${auctionId}/details`,
       },
       watchlist: `/allatre/profile/watchlist`,
+      watchlistDetails: (auctionId = ":auctionId") =>
+        `/allatre/profile/watchlist/${auctionId}/details`,
     },
   },
 };

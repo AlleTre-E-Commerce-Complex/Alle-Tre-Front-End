@@ -23,7 +23,8 @@ import AuthModel from "../components/shared/auth-model/auth-model";
 import ProfileLayouts from "../page/app/profile/profile-layouts";
 import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
 import Footer from "../components/shared/footer/footer";
-import Watshlist from "../components/profile-components/watshlist";
+import Watshlist from "../page/app/profile/watshlist";
+import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -75,6 +76,10 @@ const AppLayouts = () => {
           <Route
             path={routes.app.createAuction.default}
             component={CreateAuction}
+          />
+          <Route
+            path={routes.app.homeDetails()}
+            component={HomeAuctionDetails}
           />
           <Route path={routes.app.home} component={Home} />
           <Route path={routes.app.myBides} component={MyBids} />

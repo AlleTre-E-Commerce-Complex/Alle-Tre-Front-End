@@ -364,3 +364,48 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
     />
   );
 };
+
+export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
+  const { pathname } = useLocation();
+  const [lang, setLang] = useLanguage("");
+  // const langContent = content[lang];
+
+  const AuctionHomeDetailsSections = (pathname, details) =>
+    [
+      {
+        key: "Home",
+        content: (
+          <Link
+            className="text-gray-med mx-2 text-base font-normal"
+            to={routes.app.home}
+          >
+            Home
+          </Link>
+        ),
+      },
+      ...[
+        pathname.startsWith(routes.app.homeDetails(details)) && {
+          key: "Auction Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.homeDetails(details))
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.homeDetails(details)}
+            >
+              Auction Details
+            </Link>
+          ),
+        },
+      ],
+    ].filter(Boolean);
+
+  return (
+    <Breadcrumb
+      className="Edit_Breadcrumb"
+      sections={AuctionHomeDetailsSections(pathname, details)}
+    />
+  );
+};

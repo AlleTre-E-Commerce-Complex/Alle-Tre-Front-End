@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
@@ -11,11 +11,30 @@ import routes from "../../routes";
 
 import { motion } from "framer-motion";
 import { useLanguage } from "../../context/language-context";
+import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+import api from "../../api";
 
 const ProfileSideBare = ({ SetSid, sid }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const [lang] = useLanguage();
+  const [pofileData, setPofileData] = useState();
+
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
+  useEffect(() => {
+    runPofile(
+      authAxios.get(api.app.profile.default).then((res) => {
+        setPofileData(res?.data?.data);
+      })
+    );
+  }, [runPofile, forceReload]);
+
+  console.log("====================================");
+  console.log(pofileData);
+  console.log("====================================");
 
   const sidebarVariants = {
     open: {
@@ -56,12 +75,16 @@ const ProfileSideBare = ({ SetSid, sid }) => {
         <div className="flex gap-x-4 mx-14 pb-8 pt-3">
           <img
             className="w-12 h-12 rounded-full object-cover"
-            src={ProfileData?.img ? ProfileData?.img : userProfileicon}
+            src={
+              ProfileData?.img || pofileData?.imageLink
+                ? ProfileData?.img || pofileData?.imageLink
+                : userProfileicon
+            }
             alt="userProfileicon"
           />
           <div className="pt-1">
             <h1 className="text-base text-gray-dark font-medium">
-              {ProfileData?.name}
+              {ProfileData?.name || pofileData?.userName}
             </h1>
             <p className="text-xs text-gray-med font-normal">Online</p>
           </div>

@@ -3,12 +3,19 @@ import footerImg from "../../../../src/assets/img/footer-img.png";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
 import useGetGatogry from "../../../hooks/use-get-category";
 import { FaInstagram, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+import routes from "../../../routes";
 
 const Footer = () => {
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
+  const { pathname } = useLocation();
 
   return (
-    <div className="">
+    <div
+      className={
+        pathname.startsWith(routes.app.profile.default) ? "hidden" : ""
+      }
+    >
       <div className="relative ">
         <img
           className="w-full h-[209px] object-cover"

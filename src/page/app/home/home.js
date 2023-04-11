@@ -109,7 +109,7 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <h6 className="max-w-[1440px] mx-24 pb-4 text-gray-med text-base font-normal">
+      <h6 className="max-w-[1440px] mx-auto pb-4 text-gray-med text-base font-normal">
         {mainAuctions?.length} Results
       </h6>
       <div className="flex gap-3 max-w-[1440px] lg:mx-auto md:mx-12">

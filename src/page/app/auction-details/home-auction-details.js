@@ -9,11 +9,13 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 
 import ImgSlider from "../../../components/shared/img-slider/img-slider";
-import { AuctionDetailsBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
-import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
-import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
+import { AuctionHomeDetailsBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
 
-const ProfileAuctionDetails = () => {
+import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
+import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
+import SummaryHomeAuctionSections from "../../../components/auctions-details-components/summary-home-auction-sections";
+
+const HomeAuctionDetails = () => {
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
@@ -22,12 +24,15 @@ const ProfileAuctionDetails = () => {
   useEffect(() => {
     run(
       authAxios
-        .get(api.app.auctions.getAuctionsDetails(auctionId))
+        .get(api.app.auctions.getUserAuctionsDetails(auctionId))
         .then((res) => {
           setAuctionsDetailsData(res?.data?.data);
         })
     );
   }, [auctionId, run]);
+  console.log("====================================");
+  console.log(auctionsDetailsData);
+  console.log("====================================");
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -40,7 +45,7 @@ const ProfileAuctionDetails = () => {
       </Dimmer>
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
-          <AuctionDetailsBreadcrumb details={auctionId} />
+          <AuctionHomeDetailsBreadcrumb details={auctionId} />
         </div>
         {/* up sections */}
         <div>
@@ -52,7 +57,7 @@ const ProfileAuctionDetails = () => {
               <ImgSlider images={auctionsDetailsData?.product?.images} />
             </div>
             <div className="sm:ml-12 ml-4 mt-10 md:mt-0">
-              <SummaryAuctionSections
+              <SummaryHomeAuctionSections
                 numberStare={3}
                 totalReviews={20}
                 description={auctionsDetailsData?.product?.description}
@@ -66,8 +71,9 @@ const ProfileAuctionDetails = () => {
                     ? auctionsDetailsData?.product?.subCategory?.nameEn
                     : auctionsDetailsData?.product?.subCategory?.nameAr
                 }
-                startingPrice={auctionsDetailsData?.startBidAmount}
+                TimeLeft={auctionsDetailsData?.endDate}
                 endingPrice={"42900"}
+                CurrentBid={"42900"}
                 totalBids={60}
                 endingTime={"06:47pm 07 Feb 2023"}
                 setActiveIndexTab={setActiveIndexTab}
@@ -89,4 +95,4 @@ const ProfileAuctionDetails = () => {
   );
 };
 
-export default ProfileAuctionDetails;
+export default HomeAuctionDetails;

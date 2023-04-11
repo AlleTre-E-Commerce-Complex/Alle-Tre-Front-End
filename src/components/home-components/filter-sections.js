@@ -6,7 +6,7 @@ import AuctionFilterCard from "./auction-filter-card";
 import AuctionFilterCardList from "./auction-filter-card-list";
 import RangeInput from "./range-input";
 
-const FilterSections = ({ myRef }) => {
+const FilterSections = ({ myRef, Results }) => {
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { AllBranOptions, loadingAllBranOptions } = useGetALLBrand();
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
