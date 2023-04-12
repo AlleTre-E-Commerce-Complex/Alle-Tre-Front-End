@@ -24,14 +24,20 @@ const HomeAuctionDetails = () => {
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
+    if (user)
+      run(
+        authAxios
+          .get(api.app.auctions.getUserAuctionsDetails(auctionId))
+          .then((res) => {
+            setAuctionsDetailsData(res?.data?.data);
+          })
+      );
     run(
-      user
-        ? authAxios
-        : axios
-            .get(api.app.auctions.getUserAuctionsDetails(auctionId))
-            .then((res) => {
-              setAuctionsDetailsData(res?.data?.data);
-            })
+      axios
+        .get(api.app.auctions.getUserAuctionsDetails(auctionId))
+        .then((res) => {
+          setAuctionsDetailsData(res?.data?.data);
+        })
     );
   }, [auctionId, run, user]);
   console.log("====================================");
