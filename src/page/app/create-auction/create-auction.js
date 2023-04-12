@@ -26,7 +26,7 @@ import { toast } from "react-hot-toast";
 const CreateAuction = () => {
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
-    false, // set the default value to false if no data is stored
+    "", // set the default value to false if no data is stored
     (val) => {
       try {
         return JSON.parse(val);
