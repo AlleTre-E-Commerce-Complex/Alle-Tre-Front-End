@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 
@@ -7,10 +7,11 @@ import RatingStare from "../shared/rating-star/rating-star";
 import AnglesRight from "../../../src/assets/icons/angles-right-wihte.png";
 
 import { HashLink } from "react-router-hash-link";
-import routes from "../../routes";
 import { useLocation, useParams } from "react-router-dom";
 import AuctionsStatus from "../shared/status/auctions-status";
 import useCountdown from "../../hooks/use-countdown";
+import { Modal } from "semantic-ui-react";
+import SubmitBidModel from "./submit-bid-model";
 
 const SummaryHomeAuctionSections = ({
   numberStare,
@@ -27,6 +28,7 @@ const SummaryHomeAuctionSections = ({
   status,
 }) => {
   const { pathname } = useLocation();
+  const [openSubmitBid, setSubmitBidOpen] = useState(false);
   const timeLeft = useCountdown(TimeLeft);
   const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
   return (
@@ -118,7 +120,7 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Submit Bid sections */}
-      <div className="pt-6 grid grid-cols-2  ">
+      <div className="pt-6 grid grid-cols-2">
         <div>
           <input
             className="border-[1px] border-veryLight h-[48px] w-[310px] rounded-lg px-4 outline-none"
@@ -126,11 +128,15 @@ const SummaryHomeAuctionSections = ({
           />
         </div>
         <div>
-          <button className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg">
+          <button
+            onClick={() => setSubmitBidOpen(true)}
+            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg"
+          >
             Submit Bid
           </button>
         </div>
       </div>
+      <SubmitBidModel setOpen={setSubmitBidOpen} open={openSubmitBid} />
     </div>
   );
 };

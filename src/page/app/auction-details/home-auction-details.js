@@ -14,8 +14,11 @@ import { AuctionHomeDetailsBreadcrumb } from "../../../components/shared/bread-c
 import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
 import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
 import SummaryHomeAuctionSections from "../../../components/auctions-details-components/summary-home-auction-sections";
+import { useAuthState } from "../../../context/auth-context";
+import axios from "axios";
 
 const HomeAuctionDetails = () => {
+  const { user } = useAuthState();
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
@@ -23,13 +26,15 @@ const HomeAuctionDetails = () => {
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
     run(
-      authAxios
-        .get(api.app.auctions.getUserAuctionsDetails(auctionId))
-        .then((res) => {
-          setAuctionsDetailsData(res?.data?.data);
-        })
+      user
+        ? authAxios
+        : axios
+            .get(api.app.auctions.getUserAuctionsDetails(auctionId))
+            .then((res) => {
+              setAuctionsDetailsData(res?.data?.data);
+            })
     );
-  }, [auctionId, run]);
+  }, [auctionId, run, user]);
   console.log("====================================");
   console.log(auctionsDetailsData);
   console.log("====================================");
@@ -54,7 +59,12 @@ const HomeAuctionDetails = () => {
           </h1>
           <div className="grid md:grid-cols-2 grid-cols-1">
             <div className="">
-              <ImgSlider images={auctionsDetailsData?.product?.images} />
+              <ImgSlider
+                images={auctionsDetailsData?.product?.images}
+                auctionId={auctionsDetailsData?.id}
+                WatshlistState={auctionsDetailsData?.isSaved}
+                isMyAuction={auctionsDetailsData?.isMyAuction}
+              />
             </div>
             <div className="sm:ml-12 ml-4 mt-10 md:mt-0">
               <SummaryHomeAuctionSections

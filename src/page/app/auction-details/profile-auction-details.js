@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../../api";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/use-axios";
-import { authAxios } from "../../../config/axios-config";
+import { authAxios, axios } from "../../../config/axios-config";
 
 import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
@@ -12,8 +12,10 @@ import ImgSlider from "../../../components/shared/img-slider/img-slider";
 import { AuctionDetailsBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
 import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
 import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
+import { useAuthState } from "../../../context/auth-context";
 
 const ProfileAuctionDetails = () => {
+  const { user } = useAuthState();
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
@@ -21,13 +23,15 @@ const ProfileAuctionDetails = () => {
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
     run(
-      authAxios
-        .get(api.app.auctions.getAuctionsDetails(auctionId))
-        .then((res) => {
-          setAuctionsDetailsData(res?.data?.data);
-        })
+      user
+        ? authAxios
+        : axios
+            .get(api.app.auctions.getAuctionsDetails(auctionId))
+            .then((res) => {
+              setAuctionsDetailsData(res?.data?.data);
+            })
     );
-  }, [auctionId, run]);
+  }, [auctionId, run, user]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -49,7 +53,12 @@ const ProfileAuctionDetails = () => {
           </h1>
           <div className="grid md:grid-cols-2 grid-cols-1">
             <div className="">
-              <ImgSlider images={auctionsDetailsData?.product?.images} />
+              <ImgSlider
+                images={auctionsDetailsData?.product?.images}
+                auctionId={auctionsDetailsData?.id}
+                WatshlistState={auctionsDetailsData?.isSaved}
+                isMyAuction={auctionsDetailsData?.isMyAuction}
+              />
             </div>
             <div className="sm:ml-12 ml-4 mt-10 md:mt-0">
               <SummaryAuctionSections
