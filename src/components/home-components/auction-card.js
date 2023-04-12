@@ -91,19 +91,11 @@ const AuctionCard = ({
     <div className={className}>
       <div className="group lg:w-[272px] md:w-[299px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
         <div className="lg:w-[240px] md:w-[267px] h-[165px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
-          <img
-            className="w-full h-full mx-auto  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
-            src={adsImg}
-            alt="adsImd"
-          />
-          <div className="price-button absolute bg-orang text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center">
-            {formatCurrency(price)}
-          </div>
           <div
             className={
               isMyAuction
                 ? "hidden"
-                : "bg-white rounded-lg w-[38px] h-[44px] absolute top-2 right-2"
+                : "bg-white rounded-lg w-[38px] h-[44px] absolute z-20 top-2 right-2  "
             }
           >
             <div
@@ -117,11 +109,26 @@ const AuctionCard = ({
               )}
             </div>
           </div>
+          <img
+            onClick={() => handelGoDetails(auctionId)}
+            className="w-full h-full mx-auto  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
+            src={adsImg}
+            alt="adsImd"
+          />
+          <div
+            onClick={() => handelGoDetails(auctionId)}
+            className="price-button absolute bg-orang text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
+          >
+            {formatCurrency(price)}
+          </div>
         </div>
-        <h1 className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10">
+        <h1
+          onClick={() => handelGoDetails(auctionId)}
+          className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10"
+        >
           {title}
         </h1>
-        <div>
+        <div onClick={() => handelGoDetails(auctionId)}>
           <AuctionsStatus status={status} small />
           <div className="flex justify-between mt-2">
             <div>
