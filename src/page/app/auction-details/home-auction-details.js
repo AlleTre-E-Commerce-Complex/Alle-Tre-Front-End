@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import api from "../../../api";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/use-axios";
-import { authAxios } from "../../../config/axios-config";
 
 import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
@@ -15,7 +14,7 @@ import AuctionDetailsTabs from "../../../components/auctions-details-components/
 import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
 import SummaryHomeAuctionSections from "../../../components/auctions-details-components/summary-home-auction-sections";
 import { useAuthState } from "../../../context/auth-context";
-import axios from "axios";
+import { authAxios, axios } from "../../../config/axios-config";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
