@@ -12,7 +12,7 @@ AuthAxios.interceptors.request.use(async (config) => {
   let accessToken = await auth.getToken();
   config.headers = {
     Authorization: `Bearer ${accessToken}`,
-    "Accept-Language": window.localStorage.getItem("language"),
+    // "Accept-Language": window.localStorage.getItem("language"),
   };
   return config;
 });

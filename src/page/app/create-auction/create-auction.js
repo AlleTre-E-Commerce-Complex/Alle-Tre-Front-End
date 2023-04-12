@@ -24,16 +24,22 @@ import api from "../../../api";
 import { toast } from "react-hot-toast";
 
 const CreateAuction = () => {
+  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    false, // set the default value to false if no data is stored
+    (val) => {
+      try {
+        return JSON.parse(val);
+      } catch (e) {
+        console.error("Error parsing stored data", e);
+        return false; // return false if there is an error parsing the stored data
+      }
+    }
+  );
+
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [draftAuctionData, setDraftAuctionData] = useState();
-
-  const [hasCompletedProfile] = useLocalStorage(
-    "hasCompletedProfile",
-    "",
-    undefined,
-    (val) => JSON.parse(val)
-  );
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });

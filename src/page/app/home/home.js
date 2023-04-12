@@ -66,11 +66,17 @@ const Home = () => {
     );
   }, [runMainAuctions, runSponsoredAuctions, search, user]);
 
-  const [hasCompletedProfile] = useLocalStorage(
+  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
-    "",
-    undefined,
-    (val) => JSON.parse(val)
+    false, // set the default value to false if no data is stored
+    (val) => {
+      try {
+        return JSON.parse(val);
+      } catch (e) {
+        console.error("Error parsing stored data", e);
+        return false; // return false if there is an error parsing the stored data
+      }
+    }
   );
 
   const handelCreatOuction = () => {
