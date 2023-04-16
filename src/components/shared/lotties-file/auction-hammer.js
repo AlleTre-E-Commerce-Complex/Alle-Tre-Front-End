@@ -1,7 +1,7 @@
 import Lottie from "react-lottie";
-import animationData from "./trash-lotifile.json";
+import animationData from "./auction-hammer.json";
 
-const Trash = () => {
+const AuctionHammer = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -12,10 +12,10 @@ const Trash = () => {
   };
 
   return (
-    <div>
-      <Lottie options={defaultOptions} height={70} width={70} />
+    <div className="mt-6">
+      <Lottie options={defaultOptions} height={110} width={130} />
     </div>
   );
 };
 
-export default Trash;
+export default AuctionHammer;

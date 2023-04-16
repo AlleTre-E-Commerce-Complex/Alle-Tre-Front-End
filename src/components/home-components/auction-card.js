@@ -22,6 +22,7 @@ const AuctionCard = ({
   endingTime,
   bidNow,
   WatshlistState,
+  watshlistForceState,
   auctionId,
   className,
   isBuyNowAllowed,
@@ -32,39 +33,51 @@ const AuctionCard = ({
   const dispatch = useDispatch();
   const history = useHistory();
   const { run, isLoading } = useAxios([]);
-  const [isWatshlist, setWatshlist] = useState(false);
+  const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const timeLeft = useCountdown(endingTime);
   const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
 
   useEffect(() => {
-    setWatshlist(WatshlistState);
+    if (WatshlistState) setWatshlist(WatshlistState);
   }, [WatshlistState]);
+
   const handelAddNewWatshlist = (auctionId) => {
     if (user) {
       const body = {
         auctionId: auctionId,
       };
-      if (!isWatshlist) {
+      if (watshlistForceState || isWatshlist) {
         run(
-          authAxios.post(api.app.WatchList.add, body).then((res) => {
-            toast.success("This auction add to WatchList been successfully");
-            setWatshlist(true);
-            onReload();
-          })
+          authAxios
+            .delete(api.app.WatchList.delete(auctionId))
+            .then((res) => {
+              setWatshlist(false);
+              toast.success(
+                "This auction delete from WatchList been successfully"
+              );
+              onReload();
+            })
+            .catch((err) => {
+              onReload();
+            })
         );
       } else {
         run(
-          authAxios.delete(api.app.WatchList.delete(auctionId)).then((res) => {
-            toast.success(
-              "This auction delete from WatchList been successfully"
-            );
-            setWatshlist(false);
-            onReload();
-          })
+          authAxios
+            .post(api.app.WatchList.add, body)
+            .then((res) => {
+              setWatshlist(true);
+              toast.success("This auction add to WatchList been successfully");
+              onReload();
+            })
+            .catch((err) => {
+              onReload();
+            })
         );
       }
     } else {
       dispatch(Open());
+      onReload();
     }
   };
   const handelGoDetails = (id) => {
@@ -102,7 +115,7 @@ const AuctionCard = ({
               onClick={() => handelAddNewWatshlist(auctionId)}
               className="flex justify-center items-center mt-2.5 cursor-pointer "
             >
-              {isWatshlist ? (
+              {watshlistForceState || isWatshlist ? (
                 <BsBookmarkFill className="text-primary" size={25} />
               ) : (
                 <BsBookmark className="text-gray-med" size={25} />

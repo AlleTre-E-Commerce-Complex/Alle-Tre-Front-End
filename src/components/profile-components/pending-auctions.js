@@ -44,7 +44,7 @@ const PendingAuctions = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-primary-light text-center mt-8 ">
-              Ops, there are no sold auctions yet.<br></br> You can create one
+              Ops, there are no sold pending yet.<br></br> You can create one
             </p>
             <div className="flex justify-center mt-4">
               <button

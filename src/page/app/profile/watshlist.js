@@ -4,6 +4,7 @@ import api from "../../../api";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "../../../hooks/use-axios";
 import AuctionCard from "../../../components/home-components/auction-card";
+import EmtyWatchlist from "../../../../src/assets/icons/emty-watchlist.png";
 
 const Watshlist = () => {
   const [watshlist, setWatshlist] = useState();
@@ -17,9 +18,6 @@ const Watshlist = () => {
       })
     );
   }, [runWatshlist, forceReload]);
-  console.log("====================================");
-  console.log(watshlist);
-  console.log("====================================");
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -28,6 +26,22 @@ const Watshlist = () => {
       <Dimmer className="animate-pulse" active={isLoadingWatshlist} inverted>
         <Loader active />
       </Dimmer>
+      {watshlist?.length === 0 ? (
+        <div className="flex justify-center items-center pt-56 ">
+          <div>
+            <img
+              className="w-28 mx-auto"
+              src={EmtyWatchlist}
+              alt="EmtyWatchlist"
+            />
+            <h1 className="text-gray-dark pt-10">
+              There are no Watchlist yet.
+            </h1>
+          </div>
+        </div>
+      ) : (
+        <h1 className="text-gray-dark pb-14 pt-4 font-bold">Your Watchlist</h1>
+      )}
       <div className="grid grid-cols-4 gap-5">
         {watshlist?.map((e) => (
           <AuctionCard
@@ -38,6 +52,7 @@ const Watshlist = () => {
             adsImg={e?.auction?.product?.images[0].imageLink}
             totalBods={15}
             WatshlistState={true}
+            watshlistForceState={true}
             endingTime={e?.auction?.expiryDate}
             isBuyNowAllowed={e?.auction?.isBuyNowAllowed}
             isMyAuction={e?.auction?.isMyAuction}

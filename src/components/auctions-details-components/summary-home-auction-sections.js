@@ -12,6 +12,7 @@ import AuctionsStatus from "../shared/status/auctions-status";
 import useCountdown from "../../hooks/use-countdown";
 import { Modal } from "semantic-ui-react";
 import SubmitBidModel from "./submit-bid-model";
+import TotalBidsTableModel from "./total-bids-table-model";
 
 const SummaryHomeAuctionSections = ({
   numberStare,
@@ -29,6 +30,7 @@ const SummaryHomeAuctionSections = ({
 }) => {
   const { pathname } = useLocation();
   const [openSubmitBid, setSubmitBidOpen] = useState(false);
+  const [openTotaltBid, setTotalBidOpen] = useState(false);
   const timeLeft = useCountdown(TimeLeft);
   const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
   return (
@@ -88,7 +90,10 @@ const SummaryHomeAuctionSections = ({
         </div>
         <div>
           <p className="text-gray-med text-base font-normal pb-2">Total Bids</p>
-          <p className="text-gray-dark cursor-default text-base font-normal underline ">
+          <p
+            onClick={() => setTotalBidOpen(true)}
+            className="text-gray-dark text-base font-normal underline cursor-pointer "
+          >
             {totalBids}
           </p>
         </div>
@@ -136,6 +141,7 @@ const SummaryHomeAuctionSections = ({
           </button>
         </div>
       </div>
+      <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
       <SubmitBidModel setOpen={setSubmitBidOpen} open={openSubmitBid} />
     </div>
   );

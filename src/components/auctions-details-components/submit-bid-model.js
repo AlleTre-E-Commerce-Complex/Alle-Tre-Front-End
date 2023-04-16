@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal } from "semantic-ui-react";
+import AuctionHammer from "../shared/lotties-file/auction-hammer";
 
 const SubmitBidModel = ({ open, setOpen }) => {
   return (
@@ -10,7 +11,8 @@ const SubmitBidModel = ({ open, setOpen }) => {
       open={open}
     >
       <div className="w-[680px] h-[326px] rounded-2xl bg-white border-[1px] border-primary px-16">
-        <h1 className="text-center font-bold text-black pt-2">
+        <AuctionHammer />
+        <h1 className="text-center font-bold text-black ">
           Congratulations on your first Bid
         </h1>
         <p className="text-center text-gray-dark pt-5">
