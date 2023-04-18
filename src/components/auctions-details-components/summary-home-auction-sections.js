@@ -61,7 +61,7 @@ const SummaryHomeAuctionSections = ({
 
   const handelSumbitBid = () => {
     if (user) {
-      if (!submitBidValue || submitBidValue < CurrentBid) {
+      if (submitBidValue < CurrentBid || submitBidValue?.length === 0) {
         toast.error(
           "submit value must be required and this value must be bigger than current bid "
         );
