@@ -40,9 +40,6 @@ const HomeAuctionDetails = () => {
         })
     );
   }, [auctionId, run, user]);
-  console.log("====================================");
-  console.log(auctionsDetailsData);
-  console.log("====================================");
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -93,6 +90,7 @@ const HomeAuctionDetails = () => {
                 endingTime={"06:47pm 07 Feb 2023"}
                 setActiveIndexTab={setActiveIndexTab}
                 status={auctionsDetailsData?.status}
+                auctionsID={auctionsDetailsData?.id}
               />
             </div>
           </div>

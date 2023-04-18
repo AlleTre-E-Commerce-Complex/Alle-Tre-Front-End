@@ -32,10 +32,6 @@ const ProfileSideBare = ({ SetSid, sid }) => {
     );
   }, [runPofile, forceReload]);
 
-  console.log("====================================");
-  console.log(pofileData);
-  console.log("====================================");
-
   const sidebarVariants = {
     open: {
       x: 0,

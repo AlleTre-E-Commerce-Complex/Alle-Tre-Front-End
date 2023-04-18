@@ -34,6 +34,8 @@ const api = {
       getUpComming: "/auctions/user/up-comming",
       getBuyNow: "/auctions/user/buy-now",
       sponsored: "/auctions/user/sponsored",
+      totalBids: (auctionsId) => `/auctions/user/${auctionsId}/total-bids`,
+      submitBid: (auctionsId) => `/auctions/user/${auctionsId}/submit-bid`,
     },
     customField: {
       ByCategoryId: (categoryId) =>

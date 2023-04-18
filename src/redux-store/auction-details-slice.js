@@ -7,6 +7,7 @@ export const auctionDetailsSlice = createSlice({
     type: {},
     duration: {},
     isBuyNow: {},
+    auctionsId: {},
   },
   reducers: {
     auctionDetails: (state, action) => {
@@ -21,9 +22,12 @@ export const auctionDetailsSlice = createSlice({
     isBuyNow: (state, action) => {
       state.isBuyNow = action.payload;
     },
+    auctionsId: (state, action) => {
+      state.auctionsId = action.payload;
+    },
   },
 });
 
-export const { auctionDetails, type, duration, isBuyNow } =
+export const { auctionDetails, type, duration, isBuyNow, auctionsId } =
   auctionDetailsSlice.actions;
 export default auctionDetailsSlice.reducer;

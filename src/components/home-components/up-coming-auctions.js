@@ -66,9 +66,6 @@ const UpComingAuctionsSlider = () => {
     swiper3?.slidePrev();
   };
 
-  console.log("====================================");
-  console.log(auctions);
-  console.log("====================================");
   return (
     <div className={auctions?.length === 0 ? "hidden" : "ezd-content relative"}>
       <div className="text-center">

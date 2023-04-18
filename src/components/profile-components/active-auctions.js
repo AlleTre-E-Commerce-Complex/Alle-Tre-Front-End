@@ -27,6 +27,10 @@ const ActiveAuctions = () => {
     );
   }, [run, forceReload]);
 
+  console.log("====================================");
+  console.log(activeAuctionData);
+  console.log("====================================");
+
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
@@ -37,7 +41,6 @@ const ActiveAuctions = () => {
           {activeAuctionData?.length} Total Active Auctions..
         </p>
       </div>
-      {console.log(activeAuctionData)}
       {activeAuctionData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>
@@ -64,8 +67,8 @@ const ActiveAuctions = () => {
             description={e?.product?.description}
             img={e?.product?.images[0]?.imageLink}
             totalBids={""}
-            lastPrice={""}
-            endingTime={""}
+            lastPrice={e?.startBidAmount}
+            endingTime={e?.expiryDate}
             goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
           />
         ))

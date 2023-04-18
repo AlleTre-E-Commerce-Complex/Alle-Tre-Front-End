@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 
@@ -10,6 +10,7 @@ import { HashLink } from "react-router-hash-link";
 import routes from "../../routes";
 import { useLocation, useParams } from "react-router-dom";
 import AuctionsStatus from "../shared/status/auctions-status";
+import TotalBidsTableModel from "./total-bids-table-model";
 
 const SummaryAuctionSections = ({
   numberStare,
@@ -25,6 +26,8 @@ const SummaryAuctionSections = ({
   status,
 }) => {
   const { pathname } = useLocation();
+  const [openTotaltBid, setTotalBidOpen] = useState(false);
+
   return (
     <div>
       {/* rating */}
@@ -94,10 +97,13 @@ const SummaryAuctionSections = ({
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
             <p>{totalBids}</p>
             <div className="my-auto">
-              <button className="w-20 h-6 text-xs font-normal bg-primary rounded text-white flex justify-center gap-x-2 pt-1.5 ">
+              <button
+                onClick={() => setTotalBidOpen(true)}
+                className="w-20 h-6 text-xs font-normal bg-primary rounded text-white flex justify-center gap-x-2 pt-1 "
+              >
                 <p>View All</p>
                 <img
-                  className="w-2.5 h-2.5 mt-[1px]"
+                  className="w-2.5 h-2.5 mt-[2px]"
                   src={AnglesRight}
                   alt="AnglesRight"
                 />
@@ -114,6 +120,7 @@ const SummaryAuctionSections = ({
           </p>
         </div>
       </div>
+      <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
     </div>
   );
 };

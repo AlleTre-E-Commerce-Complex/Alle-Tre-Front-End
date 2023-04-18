@@ -23,11 +23,13 @@ import AuthModel from "../components/shared/auth-model/auth-model";
 import ProfileLayouts from "../page/app/profile/profile-layouts";
 import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
 import Footer from "../components/shared/footer/footer";
-import Watshlist from "../page/app/profile/watshlist";
 import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
+import { SocketProvider } from "../context/socket-context";
+import { useSelector } from "react-redux";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
+  const auctionID = useSelector((state) => state.auctionDetails.auctionsId);
 
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
@@ -35,6 +37,7 @@ const AppLayouts = () => {
       <Sidebar SetSid={SetSid} sid={sid} />
       <div className="p-0 m-0 border-none min-h-screen ">
         <AuthModel />
+        {/* <SocketProvider> */}
         <Switch>
           <Route
             path={routes.app.profile.myAuctions.activeDetails()}
@@ -87,6 +90,7 @@ const AppLayouts = () => {
           <Route path={routes.app.faqs} component={FAQs} />
           <Route path={routes.app.support} component={Support} />
         </Switch>
+        {/* </SocketProvider> */}
       </div>
       <Footer />
     </div>

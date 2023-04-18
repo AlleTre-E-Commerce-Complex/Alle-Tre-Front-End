@@ -6,6 +6,7 @@ import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
 import { useHistory } from "react-router-dom";
 import { formatCurrency } from "../../utils/format-currency";
 import moment from "moment";
+import useCountdown from "../../hooks/use-countdown";
 
 const ActionsRowTable = ({
   status,
@@ -23,7 +24,10 @@ const ActionsRowTable = ({
   goToDetails,
 }) => {
   const history = useHistory();
-
+  const ending_Time = useCountdown(endingTime);
+  const starting_Date = useCountdown(startingDate);
+  const startingDateLeft = `${starting_Date.days} days : ${starting_Date.hours} hrs : ${starting_Date.minutes} min`;
+  const endingTimeLeft = `${ending_Time.days} days : ${ending_Time.hours} hrs : ${ending_Time.minutes} min`;
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
       <div className="flex flex-wrap justify-between">
@@ -64,7 +68,7 @@ const ActionsRowTable = ({
                     Last Price
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
-                    {lastPrice}
+                    {formatCurrency(lastPrice)}
                   </p>
                 </div>
                 <div>
@@ -73,7 +77,7 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
-                    {endingTime}
+                    {endingTimeLeft}
                   </p>
                 </div>
               </div>
@@ -126,7 +130,7 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
-                    {startingDate}
+                    {startingDateLeft}
                   </p>
                 </div>
               </div>
@@ -185,7 +189,7 @@ const ActionsRowTable = ({
                 </h1>
                 <p className="text-gray-dark text-[10px] font-normal">
                   {/* 02 days.05 hrs.02 min */}
-                  {endingTime}
+                  {endingTimeLeft}
                 </p>
               </div>
             </div>

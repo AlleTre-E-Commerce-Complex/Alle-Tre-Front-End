@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 
@@ -13,6 +13,13 @@ import useCountdown from "../../hooks/use-countdown";
 import { Modal } from "semantic-ui-react";
 import SubmitBidModel from "./submit-bid-model";
 import TotalBidsTableModel from "./total-bids-table-model";
+import { useDispatch } from "react-redux";
+
+import { useSocket } from "../../context/socket-context";
+import { auctionsId } from "../../redux-store/auction-details-slice";
+import { useAuthState } from "../../context/auth-context";
+import { Open } from "../../redux-store/auth-model-slice";
+import { toast } from "react-hot-toast";
 
 const SummaryHomeAuctionSections = ({
   numberStare,
@@ -27,12 +34,41 @@ const SummaryHomeAuctionSections = ({
   endingTime,
   setActiveIndexTab,
   status,
+  auctionsID,
 }) => {
+  const { user } = useAuthState();
   const { pathname } = useLocation();
   const [openSubmitBid, setSubmitBidOpen] = useState(false);
+  const [submitBidValue, setSubmitBidValue] = useState();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
+
+  const socket = useSocket();
+  const dispatch = useDispatch();
+  dispatch(auctionsId(auctionsID));
+
+  // useEffect(() => {
+  //   socket.on("bid:submitted", (data) => {
+  //     console.log("Received data:", data);
+  //   });
+
+  //   return () => {
+  //     socket.off("bid:submitted");
+  //   };
+  // }, [socket]);
+
   const timeLeft = useCountdown(TimeLeft);
   const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
+
+  const handelSumbitBid = () => {
+    if (user) {
+      if (!submitBidValue || submitBidValue < CurrentBid) {
+        toast.error(
+          "submit value must be required and this value must be bigger than current bid "
+        );
+      } else setSubmitBidOpen(true);
+    } else dispatch(Open());
+  };
+
   return (
     <div>
       {/* rating */}
@@ -129,12 +165,15 @@ const SummaryHomeAuctionSections = ({
         <div>
           <input
             className="border-[1px] border-veryLight h-[48px] w-[310px] rounded-lg px-4 outline-none"
-            placeholder="min. AED 40000"
+            type="number"
+            value={submitBidValue}
+            onChange={(e) => setSubmitBidValue(e?.target?.value)}
+            placeholder={`min. ${formatCurrency(CurrentBid)}`}
           />
         </div>
         <div>
           <button
-            onClick={() => setSubmitBidOpen(true)}
+            onClick={() => handelSumbitBid()}
             className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg"
           >
             Submit Bid
@@ -142,7 +181,11 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
-      <SubmitBidModel setOpen={setSubmitBidOpen} open={openSubmitBid} />
+      <SubmitBidModel
+        setOpen={setSubmitBidOpen}
+        open={openSubmitBid}
+        submitBidValue={submitBidValue}
+      />
     </div>
   );
 };
