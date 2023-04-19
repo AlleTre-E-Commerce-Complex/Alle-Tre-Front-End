@@ -8,20 +8,26 @@ import AuctionHammer from "../shared/lotties-file/auction-hammer";
 import { useParams } from "react-router-dom";
 import { authAxios } from "../../config/axios-config";
 
-const SubmitBidModel = ({ open, setOpen, submitBidValue }) => {
+const SubmitBidModel = ({
+  open,
+  setOpen,
+  submitBidValue,
+  setSubmitBidValue,
+}) => {
   const [lang] = useLanguage("");
-  const { auctionsId } = useParams();
+  const { auctionId } = useParams();
   const { run, isLoading } = useAxios();
   const handelSubmitBid = () => {
     const body = {
       bidAmount: parseInt(submitBidValue),
     };
-    run(authAxios.post(api.app.auctions.submitBid(auctionsId), body))
+    run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
       .then((res) => {
         toast.success(
           lang === "en" ? "Your add new submit value successfully" : ""
         );
         setOpen(false);
+        setSubmitBidValue("");
       })
       .catch((err) => {
         toast.error(
@@ -51,7 +57,10 @@ const SubmitBidModel = ({ open, setOpen, submitBidValue }) => {
         </p>
         <div className="flex justify-end gap-x-4 pt-8">
           <button
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              setSubmitBidValue("");
+            }}
             className="underline text-primary w-[136px] h-[48px] "
           >
             Edit Bid

@@ -27,7 +27,7 @@ const api = {
       getAllexpired: "auctions/user/ownes?status=EXPIRED",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       getUserAuctionsDetails: (auctionsId) =>
-        `/auctions/user/${auctionsId}/details/`,
+        `/auctions/user/${auctionsId}/details`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
       getMain: "/auctions/user/main",
       getLiveAuctions: "auctions/user/live",

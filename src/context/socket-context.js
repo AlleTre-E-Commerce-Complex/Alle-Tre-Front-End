@@ -6,32 +6,35 @@ import auth from "../utils/auth";
 import { useAuthState } from "./auth-context";
 
 const SocketContext = React.createContext();
-let Token = localStorage.getItem("token") || "";
 export function useSocket() {
   return React.useContext(SocketContext);
 }
 
 export function SocketProvider({ children }) {
-  // const auctionID = useSelector((state) => state.auctionDetails.auctionsId);
+  const auctionID = useSelector((state) => state.auctionDetails.auctionsId);
   const { auctionId } = useParams();
   const [socket, setSocket] = React.useState();
   const { user, logout } = useAuthState();
   useEffect(() => {
-    const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
-    const newSocket = io(URL, {
-      query: { auctionId: auctionId },
-      extraHeaders: {
-        Authorization: "Bearer" + Token,
-      },
-      path: "/socket.io",
-    });
-    setSocket(newSocket);
+    auth.getToken().then((accessToken) => {
+      const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+      const newSocket = io(URL, {
+        // query: { auctionId: auctionID || auctionId },
+        extraHeaders: {
+          Authorization: "Bearer " + accessToken,
+        },
+        path: "/socket.io",
+      });
+      if (auctionID || auctionId) {
+        setSocket(newSocket);
+      }
 
-    return () => {
-      newSocket.close();
-      logout();
-    };
-  }, [auctionId]);
+      return () => {
+        newSocket.close();
+        logout();
+      };
+    });
+  }, []);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

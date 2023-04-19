@@ -24,7 +24,7 @@ const HomeAuctionDetails = () => {
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    if (user)
+    if (user) {
       run(
         authAxios
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
@@ -32,18 +32,23 @@ const HomeAuctionDetails = () => {
             setAuctionsDetailsData(res?.data?.data);
           })
       );
-    run(
-      axios
-        .get(api.app.auctions.getUserAuctionsDetails(auctionId))
-        .then((res) => {
-          setAuctionsDetailsData(res?.data?.data);
-        })
-    );
+    } else {
+      run(
+        axios
+          .get(api.app.auctions.getUserAuctionsDetails(auctionId))
+          .then((res) => {
+            setAuctionsDetailsData(res?.data?.data);
+          })
+      );
+    }
   }, [auctionId, run, user]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+  console.log("====================================");
+  console.log(auctionsDetailsData);
+  console.log("====================================");
 
   return (
     <div className="mt-44 animate-in mx-5 ">
@@ -84,13 +89,14 @@ const HomeAuctionDetails = () => {
                     : auctionsDetailsData?.product?.subCategory?.nameAr
                 }
                 TimeLeft={auctionsDetailsData?.endDate}
-                endingPrice={"42900"}
-                CurrentBid={"42900"}
+                startBidAmount={auctionsDetailsData?.startBidAmount}
+                CurrentBid={auctionsDetailsData?.latestBidAmount}
                 totalBids={60}
-                endingTime={"06:47pm 07 Feb 2023"}
                 setActiveIndexTab={setActiveIndexTab}
                 status={auctionsDetailsData?.status}
                 auctionsID={auctionsDetailsData?.id}
+                isBuyNowAllowed={auctionsDetailsData?.isBuyNowAllowed}
+                acceptedAmount={auctionsDetailsData?.acceptedAmount}
               />
             </div>
           </div>

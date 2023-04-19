@@ -13,13 +13,15 @@ import useCountdown from "../../hooks/use-countdown";
 import { Modal } from "semantic-ui-react";
 import SubmitBidModel from "./submit-bid-model";
 import TotalBidsTableModel from "./total-bids-table-model";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useSocket } from "../../context/socket-context";
 import { auctionsId } from "../../redux-store/auction-details-slice";
 import { useAuthState } from "../../context/auth-context";
 import { Open } from "../../redux-store/auth-model-slice";
 import { toast } from "react-hot-toast";
+import { useSocket } from "../../context/socket-context";
+import auth from "../../utils/auth";
+import { io } from "socket.io-client";
 
 const SummaryHomeAuctionSections = ({
   numberStare,
@@ -35,35 +37,58 @@ const SummaryHomeAuctionSections = ({
   setActiveIndexTab,
   status,
   auctionsID,
+  startBidAmount,
+  isBuyNowAllowed,
+  acceptedAmount,
 }) => {
-  const { user } = useAuthState();
+  // const { user } = useAuthState();
   const { pathname } = useLocation();
   const [openSubmitBid, setSubmitBidOpen] = useState(false);
   const [submitBidValue, setSubmitBidValue] = useState();
+  const [lastestBid, setLastestBid] = useState();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
 
-  const socket = useSocket();
   const dispatch = useDispatch();
   dispatch(auctionsId(auctionsID));
 
-  // useEffect(() => {
-  //   socket.on("bid:submitted", (data) => {
-  //     console.log("Received data:", data);
-  //   });
+  const { auctionId } = useParams();
+  const { user, logout } = useAuthState();
+  useEffect(() => {
+    auth.getToken().then((accessToken) => {
+      const headers = {
+        Authorization: accessToken ? "Bearer " + accessToken : undefined,
+      };
+      const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+      const newSocket = io(URL, {
+        query: { auctionId: auctionId },
+        extraHeaders: Object.entries(headers).reduce(
+          (acc, [key, value]) =>
+            value !== undefined ? { ...acc, [key]: value } : acc,
+          {}
+        ),
+        path: "/socket.io",
+      });
+      newSocket?.on("bid:submitted", (data) => {
+        console.log("Received data:", data);
+        setLastestBid(data.bidAmount);
+      });
 
-  //   return () => {
-  //     socket.off("bid:submitted");
-  //   };
-  // }, [socket]);
+      return () => {
+        newSocket.close();
+        logout();
+      };
+    });
+  }, []);
 
   const timeLeft = useCountdown(TimeLeft);
   const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
 
   const handelSumbitBid = () => {
+    const newValue = Number(submitBidValue);
     if (user) {
-      if (submitBidValue < CurrentBid || submitBidValue?.length === 0) {
+      if (newValue <= Math.max(lastestBid, CurrentBid)) {
         toast.error(
-          "submit value must be required and this value must be bigger than current bid "
+          "Submit value is required and must be bigger than current bid "
         );
       } else setSubmitBidOpen(true);
     } else dispatch(Open());
@@ -138,25 +163,17 @@ const SummaryHomeAuctionSections = ({
       <div className="pt-6 grid grid-cols-2 ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
-            Current Bid
+            {!CurrentBid ? "Starting Bid Amount" : "Current Bid"}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
-            <p>{formatCurrency(CurrentBid)}</p>
-            <div className="my-auto">
-              {/* <button className="w-20 h-6 text-xs font-normal bg-primary rounded text-white flex justify-center gap-x-2 pt-1.5 ">
-                <p>View All</p>
-                <img
-                  className="w-2.5 h-2.5 mt-[1px]"
-                  src={AnglesRight}
-                  alt="AnglesRight"
-                />
-              </button> */}
-            </div>
+            <p>{formatCurrency(lastestBid || CurrentBid || startBidAmount)}</p>
+            <div className="my-auto"></div>
           </p>
         </div>
-        <div>
+        <div className={isBuyNowAllowed ? "block" : "hidden"}>
           <button className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg">
-            Buy Now <span className="font-bold">FOR 20000 AED</span>
+            Buy Now{" "}
+            <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
           </button>
         </div>
       </div>
@@ -168,7 +185,9 @@ const SummaryHomeAuctionSections = ({
             type="number"
             value={submitBidValue}
             onChange={(e) => setSubmitBidValue(e?.target?.value)}
-            placeholder={`min. ${formatCurrency(CurrentBid)}`}
+            placeholder={`min. ${formatCurrency(
+              lastestBid || CurrentBid || startBidAmount
+            )}`}
           />
         </div>
         <div>
@@ -185,6 +204,7 @@ const SummaryHomeAuctionSections = ({
         setOpen={setSubmitBidOpen}
         open={openSubmitBid}
         submitBidValue={submitBidValue}
+        setSubmitBidValue={setSubmitBidValue}
       />
     </div>
   );

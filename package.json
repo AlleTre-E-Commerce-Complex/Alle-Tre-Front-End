@@ -16,6 +16,7 @@
     "firebase": "^9.17.1",
     "formik": "^2.2.9",
     "framer-motion": "6.2.4",
+    "gsap": "^3.11.5",
     "javascript-time-ago": "^2.5.9",
     "jwt-decode": "^3.1.2",
     "lottie-react": "^2.4.0",
