@@ -63,7 +63,7 @@ const SoldAuctions = () => {
             title={e?.product?.title}
             description={e?.product?.description}
             img={e?.product?.images[0]?.imageLink}
-            totalBids={""}
+            totalBids={e?._count?.bids}
             endingTime={""}
             price={""}
             goToDetails={routes.app.profile.myAuctions.soldDetails(e?.id)}

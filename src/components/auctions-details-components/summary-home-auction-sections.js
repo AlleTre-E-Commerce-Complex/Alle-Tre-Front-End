@@ -70,7 +70,7 @@ const SummaryHomeAuctionSections = ({
       });
       newSocket?.on("bid:submitted", (data) => {
         console.log("Received data:", data);
-        setLastestBid(data.bidAmount);
+        setLastestBid(data);
       });
 
       return () => {
@@ -86,7 +86,7 @@ const SummaryHomeAuctionSections = ({
   const handelSumbitBid = () => {
     const newValue = Number(submitBidValue);
     if (user) {
-      if (newValue <= Math.max(lastestBid, CurrentBid)) {
+      if (newValue <= Math.max(lastestBid?.bidAmount, CurrentBid)) {
         toast.error(
           "Submit value is required and must be bigger than current bid "
         );
@@ -155,7 +155,7 @@ const SummaryHomeAuctionSections = ({
             onClick={() => setTotalBidOpen(true)}
             className="text-gray-dark text-base font-normal underline cursor-pointer "
           >
-            {totalBids}
+            {lastestBid?.totalBids || totalBids}
           </p>
         </div>
       </div>
@@ -166,7 +166,11 @@ const SummaryHomeAuctionSections = ({
             {!CurrentBid ? "Starting Bid Amount" : "Current Bid"}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
-            <p>{formatCurrency(lastestBid || CurrentBid || startBidAmount)}</p>
+            <p>
+              {formatCurrency(
+                lastestBid?.bidAmount || CurrentBid || startBidAmount
+              )}
+            </p>
             <div className="my-auto"></div>
           </p>
         </div>
@@ -186,7 +190,7 @@ const SummaryHomeAuctionSections = ({
             value={submitBidValue}
             onChange={(e) => setSubmitBidValue(e?.target?.value)}
             placeholder={`min. ${formatCurrency(
-              lastestBid || CurrentBid || startBidAmount
+              lastestBid?.bidAmount || CurrentBid || startBidAmount
             )}`}
           />
         </div>

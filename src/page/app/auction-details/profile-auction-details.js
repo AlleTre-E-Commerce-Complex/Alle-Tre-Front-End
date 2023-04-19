@@ -80,9 +80,9 @@ const ProfileAuctionDetails = () => {
                     : auctionsDetailsData?.product?.subCategory?.nameAr
                 }
                 startingPrice={auctionsDetailsData?.startBidAmount}
-                endingPrice={"42900"}
-                totalBids={60}
-                endingTime={"06:47pm 07 Feb 2023"}
+                endingPrice={auctionsDetailsData?.latestBidAmount}
+                totalBids={auctionsDetailsData?._count?.bids}
+                endingTime={auctionsDetailsData?.expiryDate}
                 setActiveIndexTab={setActiveIndexTab}
                 status={auctionsDetailsData?.status}
               />

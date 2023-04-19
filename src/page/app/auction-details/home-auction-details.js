@@ -91,7 +91,7 @@ const HomeAuctionDetails = () => {
                 TimeLeft={auctionsDetailsData?.endDate}
                 startBidAmount={auctionsDetailsData?.startBidAmount}
                 CurrentBid={auctionsDetailsData?.latestBidAmount}
-                totalBids={60}
+                totalBids={auctionsDetailsData?._count?.bids}
                 setActiveIndexTab={setActiveIndexTab}
                 status={auctionsDetailsData?.status}
                 auctionsID={auctionsDetailsData?.id}

@@ -11,6 +11,7 @@ import routes from "../../routes";
 import { useLocation, useParams } from "react-router-dom";
 import AuctionsStatus from "../shared/status/auctions-status";
 import TotalBidsTableModel from "./total-bids-table-model";
+import moment from "moment";
 
 const SummaryAuctionSections = ({
   numberStare,
@@ -116,7 +117,7 @@ const SummaryAuctionSections = ({
             Ending Time
           </p>
           <p className="text-gray-verydark cursor-default text-2xl">
-            {endingTime}
+            {moment(endingTime).format("hh:mmA DD MMM YYYY")}
           </p>
         </div>
       </div>
