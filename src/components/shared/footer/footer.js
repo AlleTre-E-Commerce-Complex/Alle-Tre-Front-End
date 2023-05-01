@@ -11,11 +11,7 @@ const Footer = () => {
   const { pathname } = useLocation();
 
   return (
-    <div
-      className={
-        pathname.startsWith(routes.app.profile.default) ? "hidden" : ""
-      }
-    >
+    <div className={pathname.startsWith(routes.app.home) ? "" : "hidden"}>
       <div className="relative ">
         <img
           className="w-full h-[209px] object-cover"

@@ -1,7 +1,90 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import useAxios from "../../../hooks/use-axios";
+import { authAxios, axios } from "../../../config/axios-config";
+import api from "../../../api";
+import { useAuthState } from "../../../context/auth-context";
+import { useLocation, useParams } from "react-router-dom";
+import FilterSections from "../../../components/home-components/filter-sections";
+import AuctionCard from "../../../components/home-components/auction-card";
+import Category from "../../../components/shared/slider-categories/Category";
+import useGetSubGatogry from "../../../hooks/use-get-sub-category";
+import SubCategorySlider from "../../../components/shared/slider-categories/sub-category-slider";
 
 const Categories = () => {
-  return <div className="mt-44">Categories</div>;
+  const myRef = useRef();
+  const { user } = useAuthState();
+  const { search } = useLocation();
+  const { categoryId } = useParams();
+
+  const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
+
+  const [mainAuctions, setMainAuctions] = useState();
+  const { run: runCategories, isLoading: isLoadingCategories } = useAxios([]);
+
+  useEffect(() => {
+    if (!user) {
+      runCategories(
+        axios
+          .get(`${api.app.auctions.getCategory(categoryId)}${search}`)
+          .then((res) => {
+            setMainAuctions(res?.data?.data);
+          })
+      );
+    }
+    runCategories(
+      authAxios
+        .get(`${api.app.auctions.getCategory(categoryId)}${search}`)
+        .then((res) => {
+          setMainAuctions(res?.data?.data);
+        })
+    );
+  }, [categoryId, runCategories, search, user]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
+  console.log("====================================");
+  console.log(SubGatogryOptions);
+  console.log("====================================");
+  return (
+    <div className="max-w-[1440px] mx-auto mt-36">
+      <div>
+        <img
+          className="w-full h-[317px] object-cover pb-4"
+          src="https://d26oc3sg82pgk3.cloudfront.net/files/media/edit/image/45527/article_full%401x.jpg"
+          alt=""
+        />
+      </div>
+      <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
+        <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
+      </div>
+      <h6 className="max-w-[1440px] mx-auto pb-4 pt-2 text-gray-med text-base font-normal">
+        {mainAuctions?.length} Results
+      </h6>
+      <div className="flex gap-3 max-w-[1440px] lg:mx-auto md:mx-12">
+        {/* left filter sections */}
+        <FilterSections myRef={myRef} categoryId={categoryId} hiddenGatogry />
+        {/* right card sections */}
+        <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto">
+          {mainAuctions?.map((e) => (
+            <AuctionCard
+              auctionId={e?.id}
+              price={e?.acceptedAmount || e?.startBidAmount}
+              title={e?.product?.title}
+              status={e?.status}
+              adsImg={e?.product?.images[0].imageLink}
+              totalBods={15}
+              WatshlistState={e?.isSaved}
+              endingTime={e?.expiryDate}
+              isBuyNowAllowed={e?.isBuyNowAllowed}
+              isMyAuction={e?.isMyAuction}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Categories;

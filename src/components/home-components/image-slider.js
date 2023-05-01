@@ -7,8 +7,12 @@ import { ReactComponent as ScrollingIcon } from "../../../src/assets/icons/scrol
 import "./image-slider.css";
 import { truncateString } from "../../utils/truncate-string";
 import CountdownTimer from "../shared/timers/countdown-timer";
+import routes from "../../routes";
+import { useHistory } from "react-router-dom";
 
 const ImageSlider = ({ myRef, images, slidesData }) => {
+  const history = useHistory();
+
   const [translate, setTranslate] = useState("");
   const [current, setCurrent] = useState(0);
 
@@ -27,6 +31,26 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
   const nextindex =
     current + 1 === images[0]?.length ? current - 1 : current + 1;
   const previndex = current + 1 && current - 1 < 0 ? 0 : current - 1;
+
+  const handelGoDetails = (id, isMyAuction, status) => {
+    if (isMyAuction) {
+      if (status === "ACTIVE") {
+        history.push(routes.app.profile.myAuctions.activeDetails(id));
+      }
+      if (status === "IN_SCHEDULED") {
+        history.push(routes.app.profile.myAuctions.scheduledDetails(id));
+      }
+      if (status === "SOLD") {
+        history.push(routes.app.profile.myAuctions.soldDetails(id));
+      }
+      if (status === "PENDING_OWNER_DEPOIST") {
+        history.push(routes.app.profile.myAuctions.pendingDetails(id));
+      }
+      if (status === "EXPIRED") {
+        history.push(routes.app.profile.myAuctions.activeDetails(id));
+      }
+    } else history.push(routes.app.homeDetails(id));
+  };
 
   return (
     <section className="mt-7 relative max-w-[1440px] lg:h-[561px] md:h-[350px] h-[200px] mx-auto">
@@ -117,10 +141,28 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                     </div>
                     {/* button */}
                     <div className="md:mt-12 mt-5 flex gap-x-8">
-                      <button className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-primary hover:bg-primary-dark sm:text-base text-xs font-normal ltr:font-serifEN rtl:font-serifAR">
+                      <button
+                        onClick={() =>
+                          handelGoDetails(
+                            slide?.id,
+                            slide?.isMyAuction,
+                            slide?.status
+                          )
+                        }
+                        className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-primary hover:bg-primary-dark sm:text-base text-xs font-normal ltr:font-serifEN rtl:font-serifAR"
+                      >
                         Bid Now
                       </button>
-                      <button className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-transparent border-white border-[1px] text-white sm:text-base text-xs py-1  md:py-0 font-normal ltr:font-serifEN rtl:font-serifAR">
+                      <button
+                        onClick={() =>
+                          handelGoDetails(
+                            slide?.id,
+                            slide?.isMyAuction,
+                            slide?.status
+                          )
+                        }
+                        className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-transparent border-white border-[1px] text-white sm:text-base text-xs py-1  md:py-0 font-normal ltr:font-serifEN rtl:font-serifAR"
+                      >
                         View Details
                       </button>
                     </div>

@@ -77,7 +77,7 @@ const ProductDetails = () => {
     countriesId || productDetailsint.countriesId
   );
 
-  const { AllBranOptions, loadingAllBranOptions } = useGetBrand(
+  const { notAllBranOptions, loadingAllBranOptions } = useGetBrand(
     categoryId || productDetailsint.category
   );
 
@@ -472,7 +472,7 @@ const ProductDetails = () => {
                         }`}
                         options={
                           e?.key === "brandId"
-                            ? AllBranOptions
+                            ? notAllBranOptions
                             : e?.key === "countryId"
                             ? AllCountriesOptions
                             : e?.key === "cityId"

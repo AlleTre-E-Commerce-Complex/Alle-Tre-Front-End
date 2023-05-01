@@ -5,34 +5,55 @@ import useGetGatogry from "../../hooks/use-get-category";
 import AuctionFilterCard from "./auction-filter-card";
 import AuctionFilterCardList from "./auction-filter-card-list";
 import RangeInput from "./range-input";
+import useGetBrand from "../../hooks/use-get-brand";
 
-const FilterSections = ({ myRef, Results }) => {
+const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
+  const { NotAllBranOptions } = useGetBrand(categoryId);
   const { AllBranOptions, loadingAllBranOptions } = useGetALLBrand();
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
 
   return (
     <div className="flex flex-col gap-y-5">
-      <AuctionFilterCardList
-        title={"Categories"}
-        seeAll={GatogryOptions?.length}
-        name="categories"
-        values={GatogryOptions?.map((CategoryName) => ({
-          name: CategoryName?.text,
-          value: `${CategoryName?.value}`,
-        })).filter(Boolean)}
-        myRef={myRef}
-      />
-      <AuctionFilterCardList
-        title={"Brand"}
-        seeAll={AllBranOptions?.length}
-        name="brands"
-        values={AllBranOptions?.map((brandName) => ({
-          name: brandName?.text,
-          value: `${brandName?.value}`,
-        })).filter(Boolean)}
-        myRef={myRef}
-      />
+      <div className={hiddenGatogry && "hidden"}>
+        <AuctionFilterCardList
+          title={"Categories"}
+          seeAll={GatogryOptions?.length}
+          name="categories"
+          values={GatogryOptions?.map((CategoryName) => ({
+            name: CategoryName?.text,
+            value: `${CategoryName?.value}`,
+          })).filter(Boolean)}
+          myRef={myRef}
+        />
+      </div>
+      <div>
+        {categoryId ? (
+          <div className={NotAllBranOptions?.length === 0 && "hidden"}>
+            <AuctionFilterCardList
+              title={"Brand"}
+              seeAll={NotAllBranOptions?.length}
+              name="brands"
+              values={NotAllBranOptions?.map((brandName) => ({
+                name: brandName?.text,
+                value: `${brandName?.value}`,
+              })).filter(Boolean)}
+              myRef={myRef}
+            />
+          </div>
+        ) : (
+          <AuctionFilterCardList
+            title={"Brand"}
+            seeAll={AllBranOptions?.length}
+            name="brands"
+            values={AllBranOptions?.map((brandName) => ({
+              name: brandName?.text,
+              value: `${brandName?.value}`,
+            })).filter(Boolean)}
+            myRef={myRef}
+          />
+        )}
+      </div>
       <AuctionFilterCard
         title={"Selling Type"}
         seeAll={2}

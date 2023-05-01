@@ -30,6 +30,8 @@ const api = {
         `/auctions/user/${auctionsId}/details`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
       getMain: "/auctions/user/main",
+      getCategory: (categoryId) =>
+        `/auctions/user/main?categories[]=${categoryId}`,
       getLiveAuctions: "auctions/user/live",
       getUpComming: "/auctions/user/up-comming",
       getBuyNow: "/auctions/user/buy-now",

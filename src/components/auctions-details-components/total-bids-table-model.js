@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Modal, Table } from "semantic-ui-react";
+import { Dimmer, Loader, Modal, Table } from "semantic-ui-react";
 import api from "../../api";
 import { authAxios, axios } from "../../config/axios-config";
 import { useAuthState } from "../../context/auth-context";
@@ -27,7 +27,7 @@ const TotalBidsTableModel = ({ open, setOpen }) => {
         setTotalBidse(res?.data?.data);
       })
     );
-  }, [auctionId, run, user]);
+  }, [auctionId, run, user, open]);
 
   return (
     <Modal
@@ -36,11 +36,18 @@ const TotalBidsTableModel = ({ open, setOpen }) => {
       onOpen={() => setOpen(true)}
       open={open}
     >
-      <div className="w-[1070px] h-[523px] rounded-2xl bg-white border-2 border-primary">
-        <Table className="bg-transparent border-none px-2 pt-8 ">
+      <div className="w-[1070px] h-[523px] rounded-2xl bg-white border-2 border-primary  ">
+        <Dimmer
+          className="animate-pulse fixed w-full h-full top-0"
+          active={isLoading}
+          inverted
+        >
+          <Loader active />
+        </Dimmer>
+        <Table className="bg-transparent border-none px-5 pt-8 ">
           <Table.Header>
-            <Table.Row className="rounded-2xl shadow bg-[#F8F8F8]">
-              <Table.HeaderCell className="rounded-l-2xl font-medium text-sm text-gray-dark text-center">
+            <Table.Row className="rounded-xl shadow bg-[#F8F8F8]">
+              <Table.HeaderCell className="rounded-l-xl font-medium text-sm text-gray-dark text-center">
                 Series
               </Table.HeaderCell>
               <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
@@ -52,7 +59,7 @@ const TotalBidsTableModel = ({ open, setOpen }) => {
               <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
                 Total Bids
               </Table.HeaderCell>
-              <Table.HeaderCell className="rounded-r-2xl font-medium text-sm text-gray-dark text-center ">
+              <Table.HeaderCell className="rounded-r-xl font-medium text-sm text-gray-dark text-center ">
                 Last Bid Amount
               </Table.HeaderCell>
             </Table.Row>

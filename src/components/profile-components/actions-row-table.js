@@ -135,36 +135,37 @@ const ActionsRowTable = ({
                 </div>
               </div>
             )}
-            {status === "SOLD" ||
-              (status === "EXPIRED" && (
-                <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
-                  <div>
-                    <h1 className="text-gray-veryLight text-[10px] font-normal">
-                      Total Bids
-                    </h1>
-                    <p className="text-gray-dark text-[10px] font-normal">
-                      {totalBids}
-                    </p>
-                  </div>
-                  <div>
-                    <h1 className="text-gray-veryLight text-[10px] font-normal">
-                      Price
-                    </h1>
-                    <p className="text-gray-dark text-[10px] font-normal">
-                      {formatCurrency(price)}
-                    </p>
-                  </div>
-                  <div>
-                    <h1 className="text-gray-veryLight text-[10px] font-normal">
-                      Ending Date
-                    </h1>
-                    <p className="text-gray-dark text-[10px] font-normal">
-                      {/* March,23 2023 */}
-                      {moment.utc(endingDate).format("MMMM, DD YYYY")}
-                    </p>
-                  </div>
+            {status === "EXPIRED" || status === "SOLD" ? (
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Total Bids
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {totalBids}
+                  </p>
                 </div>
-              ))}
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Price
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {formatCurrency(price)}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    Ending Date
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* March,23 2023 */}
+                    {moment.utc(endingDate).format("MMMM, DD YYYY")}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
 
             <div className="pt-2  gap-x-10 hidden">
               <div>

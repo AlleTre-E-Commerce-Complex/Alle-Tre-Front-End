@@ -6,7 +6,7 @@ import useAxios from "./use-axios";
 
 const useGetBrand = (categoryId) => {
   const [lang] = useLanguage();
-  const [AllBranOptions, setAllAllBranOptions] = React.useState([]);
+  const [NotAllBranOptions, setAllAllBranOptions] = React.useState([]);
 
   const { run, isLoading, error, isError } = useAxios();
 
@@ -29,7 +29,7 @@ const useGetBrand = (categoryId) => {
   }, [categoryId, lang, run]);
 
   return {
-    AllBranOptions,
+    NotAllBranOptions,
     loadingAllBranOptions: isLoading,
     errorAllBranOptions: error,
     isErrorAllBranOptions: isError,

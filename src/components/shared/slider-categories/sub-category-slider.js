@@ -4,30 +4,7 @@ import AnglesLeft from "../../../../src/assets/icons/angles-left-icon.png";
 import Category from "./Category";
 import Swiper from "swiper";
 
-const testData = [
-  {
-    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
-    title: "Electronic Devices",
-    id: "25",
-  },
-  {
-    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
-    title: "Jewelry",
-    id: "26",
-  },
-  {
-    img: "https://pngimg.com/d/acura_PNG129.png",
-    title: "Properties",
-    id: "27",
-  },
-  {
-    img: "https://pngimg.com/d/acura_PNG129.png",
-    title: "Cars",
-    id: "28",
-  },
-];
-
-const SliderRow = () => {
+const SubCategorySlider = ({ SubGatogryOptions }) => {
   const swiperOptions = {
     cssMode: true,
     speed: 1000,
@@ -40,38 +17,38 @@ const SliderRow = () => {
     keyboard: true,
   };
 
-  const swiperRef4 = useRef(null);
-  const swiper4 = new Swiper(swiperRef4?.current, { ...swiperOptions });
+  const swiperRef = useRef(null);
+  const swiper = new Swiper(swiperRef?.current, { ...swiperOptions });
 
   useEffect(() => {
     return () => {
-      swiper4?.destroy();
+      swiper?.destroy();
     };
   }, []);
 
   const handleNextClick = () => {
-    if (testData?.length) {
-      swiper4?.slideNext();
-    } else swiper4?.slideNext();
+    if (SubGatogryOptions?.length) {
+      swiper?.slideNext();
+    } else swiper?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiper4?.slidePrev();
+    swiper?.slidePrev();
   };
   return (
     <div className="max-w-[1440px] mx-auto">
       <div className="ezd-content relative">
         <div className="ezd-snapslider pt-10">
           <div className="snapslider-wrapper">
-            <div ref={swiperRef4} className={`snapslider-overflow`}>
+            <div ref={swiperRef} className={`snapslider-overflow`}>
               <div className={`snapslider-scroll swiper-wrapper py-2`}>
                 <div className="snapslider-card swiper-slide">
                   {/* slider */}
-                  {testData.map((e, index) => (
+                  {SubGatogryOptions.map((e, index) => (
                     <Category
                       key={index}
                       img={e?.img}
-                      title={e?.title}
+                      title={e?.text}
                       id={e?.id}
                     />
                   ))}
@@ -81,7 +58,7 @@ const SliderRow = () => {
                   className={`swiper-button-next absolute top-1/2 -right-3`}
                 >
                   <img
-                    className="rounded-full  cursor-pointer z-20 w-14 h-14 "
+                    className="rounded-full cursor-pointer z-20 w-14 h-14 "
                     src={AnglesRight}
                     alt="AnglesRight"
                   />
@@ -105,4 +82,4 @@ const SliderRow = () => {
   );
 };
 
-export default SliderRow;
+export default SubCategorySlider;

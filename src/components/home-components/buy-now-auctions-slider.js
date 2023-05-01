@@ -24,14 +24,25 @@ const BuyNowAuctionsSlider = () => {
   const [page, setPage] = useState(6);
 
   useEffect(() => {
-    runAuctions(
-      axios
-        .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
-        .then((res) => {
-          setAuctions(res?.data?.data);
-          setpagination(res?.data?.pagination);
-        })
-    );
+    if (user) {
+      runAuctions(
+        authAxios
+          .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
+          .then((res) => {
+            setAuctions(res?.data?.data);
+            setpagination(res?.data?.pagination);
+          })
+      );
+    } else {
+      runAuctions(
+        axios
+          .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
+          .then((res) => {
+            setAuctions(res?.data?.data);
+            setpagination(res?.data?.pagination);
+          })
+      );
+    }
   }, [page, runAuctions, search, user]);
 
   const swiperOptions = {
@@ -81,7 +92,7 @@ const BuyNowAuctionsSlider = () => {
           <div ref={swiperRef2} className={`snapslider-overflow`}>
             <div className={`snapslider-scroll swiper-wrapper py-2`}>
               {auctions?.map((e) => (
-                <div class="snapslider-card swiper-slide">
+                <div className="snapslider-card swiper-slide">
                   <AuctionCard
                     auctionId={e?.id}
                     price={e?.acceptedAmount}

@@ -36,14 +36,25 @@ const LiveAuctionsSlider = ({ type }) => {
   };
 
   useEffect(() => {
-    runAuctions(
-      axios
-        .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)
-        .then((res) => {
-          setAuctions(res?.data?.data);
-          setPagination(res?.data?.pagination);
-        })
-    );
+    if (user) {
+      runAuctions(
+        authAxios
+          .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)
+          .then((res) => {
+            setAuctions(res?.data?.data);
+            setPagination(res?.data?.pagination);
+          })
+      );
+    } else {
+      runAuctions(
+        axios
+          .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)
+          .then((res) => {
+            setAuctions(res?.data?.data);
+            setPagination(res?.data?.pagination);
+          })
+      );
+    }
   }, [page, runAuctions, search, type, user]);
 
   const swiperRef1 = useRef(null);

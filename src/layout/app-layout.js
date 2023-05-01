@@ -6,9 +6,9 @@ import routes from "../routes";
 import Home from "../page/app/home/home";
 import Header from "../components/shared/header-app/header";
 import MyBids from "../page/app/my-bids/my-bids";
-import Categories from "../page/app/categories/categories";
 import FAQs from "../page/app/FAQs/FAQs";
 import Support from "../page/app/support/support";
+import Categories from "../page/app/categories/categories";
 
 import CreateAuction from "../page/app/create-auction/create-auction";
 import ProductDetails from "../page/app/create-auction/product-details";
@@ -24,12 +24,9 @@ import ProfileLayouts from "../page/app/profile/profile-layouts";
 import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
 import Footer from "../components/shared/footer/footer";
 import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
-import { SocketProvider } from "../context/socket-context";
-import { useSelector } from "react-redux";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
-  const auctionID = useSelector((state) => state.auctionDetails.auctionsId);
 
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
@@ -86,7 +83,7 @@ const AppLayouts = () => {
           />
           <Route path={routes.app.home} component={Home} />
           <Route path={routes.app.myBides} component={MyBids} />
-          <Route path={routes.app.categories} component={Categories} />
+          <Route path={routes.app.categories()} component={Categories} />
           <Route path={routes.app.faqs} component={FAQs} />
           <Route path={routes.app.support} component={Support} />
         </Switch>
