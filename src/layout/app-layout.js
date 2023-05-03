@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import routes from "../routes";
 
 import Home from "../page/app/home/home";
@@ -27,13 +27,19 @@ import HomeAuctionDetails from "../page/app/auction-details/home-auction-details
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  console.log("====================================");
+  console.log(currentPath);
+  console.log("====================================");
 
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <Header SetSid={SetSid} sid={sid} />
       <Sidebar SetSid={SetSid} sid={sid} />
       <div className="p-0 m-0 border-none min-h-screen ">
-        <AuthModel />
+        <AuthModel currentPAth={currentPath} />
         {/* <SocketProvider> */}
         <Switch>
           <Route

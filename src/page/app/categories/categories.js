@@ -24,19 +24,15 @@ const Categories = () => {
   useEffect(() => {
     if (!user) {
       runCategories(
-        axios
-          .get(`${api.app.auctions.getCategory(categoryId)}${search}`)
-          .then((res) => {
-            setMainAuctions(res?.data?.data);
-          })
+        axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+        })
       );
     }
     runCategories(
-      authAxios
-        .get(`${api.app.auctions.getCategory(categoryId)}${search}`)
-        .then((res) => {
-          setMainAuctions(res?.data?.data);
-        })
+      authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+        setMainAuctions(res?.data?.data);
+      })
     );
   }, [categoryId, runCategories, search, user]);
 

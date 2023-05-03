@@ -9,7 +9,7 @@ import LogIn from "../../O-Auth-components/log-in";
 import SignUp from "../../O-Auth-components/sign-up";
 import oAuthFooterImg from "../../../../src/assets/img/o-auth-path-footer.svg";
 
-function AuthModel() {
+function AuthModel({ currentPAth }) {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -24,7 +24,7 @@ function AuthModel() {
       render: () => (
         <div>
           <Tab.Pane className="border-[2px] border-primary h-auto py-32 rounded-2xl animate-in  pt-10 flex justify-center z-30  ">
-            <LogIn />
+            <LogIn currentPAth={currentPAth} isAuthModel />
             <img
               className="w-full object-cover h-28 fixed bottom-0  -z-10 "
               src={oAuthFooterImg}
@@ -40,7 +40,7 @@ function AuthModel() {
       render: () => (
         <div>
           <Tab.Pane className="border-[2px] border-primary h-auto py-7 rounded-2xl animate-in md:pt-10 flex justify-center z-30 ">
-            <SignUp />
+            <SignUp currentPAth={currentPAth} isAuthModel />
             <img
               className="w-full object-cover h-28 fixed bottom-0 -z-10 "
               src={oAuthFooterImg}

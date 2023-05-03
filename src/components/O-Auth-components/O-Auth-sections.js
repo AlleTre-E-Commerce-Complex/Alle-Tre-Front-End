@@ -29,7 +29,7 @@ import routes from "../../routes";
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
 
-const OAuthSections = ({ isLogin }) => {
+const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -62,7 +62,9 @@ const OAuthSections = ({ isLogin }) => {
               "hasCompletedProfile",
               hasCompletedProfile
             );
-            history.push(routes.app.home);
+            isAuthModel
+              ? history.push(currentPAth)
+              : history.push(routes.app.home);
             dispatch(Close());
             window.location.reload();
           })
@@ -107,7 +109,9 @@ const OAuthSections = ({ isLogin }) => {
               "hasCompletedProfile",
               hasCompletedProfile
             );
-            history.push(routes.app.home);
+            isAuthModel
+              ? history.push(currentPAth)
+              : history.push(routes.app.home);
             dispatch(Close());
             window.location.reload();
           })
@@ -152,7 +156,9 @@ const OAuthSections = ({ isLogin }) => {
               "hasCompletedProfile",
               hasCompletedProfile
             );
-            history.push(routes.app.home);
+            isAuthModel
+              ? history.push(currentPAth)
+              : history.push(routes.app.home);
             dispatch(Close());
             window.location.reload();
           })

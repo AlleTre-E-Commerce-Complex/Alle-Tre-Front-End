@@ -23,7 +23,7 @@ import localizationKeys from "../../localization/localization-keys";
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
 
-const LogIn = () => {
+const LogIn = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
 
   const [lang] = useLanguage("");
@@ -47,7 +47,7 @@ const LogIn = () => {
           newRefreshToken: refreshToken,
         });
         window.localStorage.setItem("hasCompletedProfile", hasCompletedProfile);
-        history.push(routes.app.home);
+        isAuthModel ? history.push(currentPAth) : history.push(routes.app.home);
         dispatch(Close());
         window.location.reload();
       })
@@ -130,7 +130,7 @@ const LogIn = () => {
   return (
     <div className="flex flex-col md:flex-row  mt-8 gap-x-3 animate-in z-50 rtl:font-serifAR ltr:font-serifEN ">
       <div className="mx-auto md:mx-0">
-        <OAuthSections isLogin={true} />
+        <OAuthSections isLogin={true} currentPAth={currentPAth} isAuthModel />
       </div>
       <div className="mx-5 ">
         <p className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">

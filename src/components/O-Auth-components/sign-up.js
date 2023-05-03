@@ -17,7 +17,7 @@ import api from "../../api";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
-const SignUp = () => {
+const SignUp = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
