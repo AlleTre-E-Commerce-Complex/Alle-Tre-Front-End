@@ -8,6 +8,10 @@ const useGetBrand = (categoryId) => {
   const [lang] = useLanguage();
   const [NotAllBranOptions, setAllAllBranOptions] = React.useState([]);
 
+  console.log("====================================");
+  console.log(NotAllBranOptions);
+  console.log("====================================");
+
   const { run, isLoading, error, isError } = useAxios();
 
   useEffect(() => {
