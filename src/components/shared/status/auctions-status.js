@@ -9,7 +9,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
       {status === "ACTIVE" && (
         <button
           className={`state-button
-          ${small && "w-14 h-4 text-[8px]"}
+          ${small && "w-14 h-4 text-[0.5rem]"}
           ${big && "w-24 h-7"}
           ${absolute && "absolute"}
           font-normal text-green bg-green-light top-0`}
@@ -20,8 +20,8 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
       {status === "IN_SCHEDULED" && (
         <button
           className={`state-button
-          ${small && "w-14 h-4 text-[8px]"}
-          ${big && "w-24 h-7"}
+          ${small && "w-14 h-4 text-[0.5rem]"}
+          ${big && "w-24 h-7 text-base"}
           ${absolute && "absolute"}
           font-normal text-yellow bg-yellow-light top-0`}
         >
@@ -31,8 +31,8 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
       {status === "SOLD" && (
         <button
           className={`state-button  
-          ${small && "w-14 h-4 text-[8px]"}
-          ${big && "w-24 h-7"}
+          ${small && "w-14 h-4 text-[0.5rem]"}
+          ${big && "w-24 h-7 text-base"}
           ${absolute && "absolute"}
           font-normal text-primary-dark bg-primary-veryLight top-0`}
         >
@@ -42,8 +42,8 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
       {status === "PENDING_OWNER_DEPOIST" && (
         <button
           className={`state-button 
-          ${small && "w-14 h-4 text-[8px]"}
-          ${big && "w-24 h-7"}
+          ${small && "w-14 h-4 text-[0.5rem]"}
+          ${big && "w-24 h-7 text-base"}
           ${absolute && "absolute"}
             font-normal text-secondary bg-secondary-light top-0`}
         >
@@ -53,8 +53,8 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
       {status === "EXPIRED" && (
         <button
           className={`state-button 
-          ${small && "w-14 h-4 text-[8px]"}
-          ${big && "w-24 h-7"}
+          ${small && "w-14 h-4 text-[0.5rem]"}
+          ${big && "w-24 h-7 text-base"}
           ${absolute && "absolute"}
           font-normal text-gray-dark bg-gray-veryLight top-0`}
         >

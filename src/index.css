@@ -96,10 +96,11 @@ height: 280px;
 
 .state-button{
 border-radius: 7px 1px 8px 1px !important;
+font-size: 0.5rem;
 }
 .price-button{
 border-radius: 16px 1px 16px 1px !important;
-font-size: 8px;
+
 
 }
 /* ///////////////////////////////////////////////////////////////////// */
