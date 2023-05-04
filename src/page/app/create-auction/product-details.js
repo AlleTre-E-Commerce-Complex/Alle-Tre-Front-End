@@ -442,8 +442,9 @@ const ProductDetails = () => {
                         const fieldOption = GatogryOptions.find(
                           (go) => go.value === value
                         );
-                        setHasUsageCondition(fieldOption?.hasUsageCondition);
                         onReload();
+                        setSubCategoryId(undefined);
+                        setHasUsageCondition(fieldOption?.hasUsageCondition);
                         setCustomFromData([]);
                       }}
                     />
