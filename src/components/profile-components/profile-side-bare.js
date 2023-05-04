@@ -200,16 +200,18 @@ export const NavLink = ({ title, onClick, isActive }) => {
         onClick={onClick}
         className={`${
           isActive
-            ? "bg-primary-light/10 text-primary mx-0 px-10  "
+            ? "bg-primary-light/10 text-primary mx-0 px-10 font-bold "
             : "mx-10 px-4 border-b-gray-veryLight border-b-[1px] "
         } text-base text-gray-dark font-normal py-5 cursor-pointer flex`}
       >
         <p
           className={`${
-            isActive ? "bg-primary w-2 h-2 rounded-full mt-1.5 mx-4" : ""
+            isActive
+              ? "bg-primary font-bold w-2 h-2 rounded-full mt-1.5 mx-4"
+              : ""
           } translate delay-150 duration-150 `}
         ></p>
-        <p>{title}</p>
+        <p className={`${isActive ? " font-bold " : ""}`}>{title}</p>
       </p>
     </div>
   );
