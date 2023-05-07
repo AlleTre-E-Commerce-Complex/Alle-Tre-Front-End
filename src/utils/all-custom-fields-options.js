@@ -42,11 +42,10 @@ export const allCustomFileOptions = {
   cameraType: [
     { key: "digital", text: "digital ", value: "digital" },
     { key: "compact", text: "compact ", value: "compact" },
-    { key: "mirrorless", text: "mirror less ", value: "mirrorless" },
     {
-      key: "interchangeable lens",
-      text: "interchangeable lens ",
-      value: "interchangeable lens",
+      key: "mirrorless interchangeable lens",
+      text: "mirrorless interchangeable lens ",
+      value: "mirrorless interchangeable lens",
     },
   ],
   material: [

@@ -21,7 +21,11 @@ import { authAxios } from "../../../config/axios-config";
 import useAxios from "../../../hooks/use-axios";
 import api from "../../../api";
 
+import { productDetails } from "../../../redux-store/product-details-Slice";
+import { useDispatch } from "react-redux";
+
 import { toast } from "react-hot-toast";
+import { truncateString } from "../../../utils/truncate-string";
 
 const CreateAuction = () => {
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
@@ -45,9 +49,11 @@ const CreateAuction = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const dispatch = useDispatch();
   const handelCreatOuction = () => {
     if (hasCompletedProfile) {
       history.push(routes.app.createAuction.productDetails);
+      dispatch(productDetails({}));
     } else setOpen(true);
   };
 
@@ -121,6 +127,7 @@ const CreateAuction = () => {
 };
 
 export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
+  const history = useHistory();
   const [open, setOpen] = useState(false);
 
   const { run, isLoading } = useAxios();
@@ -155,7 +162,14 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
         )}
         <div className="group w-[154px] h-[139px] rounded-lg border-[1px] hover:bg-gradient-to-t hover:from-[#25252562] absolute bottom-0 z-10 ">
           <div className="group-hover:flex justify-center gap-x-9 hidden h-full ">
-            <button className="w-9 h-9 rounded-full backdrop-blur-md bg-white/50 mt-auto mb-5">
+            <button
+              onClick={() =>
+                history.push(routes.app.createAuction.productDetails, {
+                  auctionId: auctionId,
+                })
+              }
+              className="w-9 h-9 rounded-full backdrop-blur-md bg-white/50 mt-auto mb-5"
+            >
               <img className="p-2.5" src={PenIcon} alt="PenIcon" />
             </button>
             <button
@@ -167,7 +181,7 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
           </div>
         </div>
         <p className="text-gray-dark text-sm font-normal text-center pt-2">
-          {itemName}
+          {truncateString(itemName, 15)}
         </p>
         <p className="text-gray-med text-sm font-normal text-center pt-1">
           {moment(date).format("D. MMM. YYYY")}

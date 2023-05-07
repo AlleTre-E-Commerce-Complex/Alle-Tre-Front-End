@@ -30,10 +30,6 @@ const AppLayouts = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  console.log("====================================");
-  console.log(currentPath);
-  console.log("====================================");
-
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <Header SetSid={SetSid} sid={sid} />

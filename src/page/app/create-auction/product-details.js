@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import routes from "../../../routes";
 
 import { CheckboxRadioProductDetails } from "../../../components/create-auction-components/check-box-radio-group";
@@ -32,10 +32,58 @@ import { productDetails } from "../../../redux-store/product-details-Slice";
 import { useDispatch, useSelector } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
+import EditImgeMedia from "../../../components/create-auction-components/edit-imge-media";
 
 const ProductDetails = () => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
+  const { state } = useLocation();
+
+  const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
+  useEffect(() => {
+    runAuctionById(
+      authAxios
+        .get(api.app.auctions.getAuctionsDetails(state?.auctionId))
+        .then((res) => {
+          const completeDraftValue = res?.data?.data;
+          console.log("====================================");
+          console.log(completeDraftValue?.product?.images);
+          console.log("====================================");
+          setimgtest(completeDraftValue?.product?.images);
+          dispatch(
+            productDetails({
+              itemName: completeDraftValue?.product?.title,
+              category: completeDraftValue?.product.categoryId,
+              subCategory: completeDraftValue?.product?.subCategoryId,
+              operatingSystem: completeDraftValue?.product?.operatingSystem,
+              releaseYear: completeDraftValue?.product?.releaseYear,
+              regionOfManufacture:
+                completeDraftValue?.product?.regionOfManufacture,
+              ramSize: completeDraftValue?.product?.ramSize,
+              processor: completeDraftValue?.product?.processor,
+              screenSize: completeDraftValue?.product?.screenSize,
+              model: completeDraftValue?.product?.model,
+              color: completeDraftValue?.product?.color,
+              brandId: completeDraftValue?.product?.brandId,
+              cameraType: completeDraftValue?.product?.cameraType,
+              material: completeDraftValue?.product?.material,
+              age: completeDraftValue?.product?.age,
+              totalArea: completeDraftValue?.product?.totalArea,
+              numberOfRooms: completeDraftValue?.product?.numberOfRooms,
+              numberOfFloors: completeDraftValue?.product?.numberOfFloors,
+              landType: completeDraftValue?.product?.landType,
+              carType: completeDraftValue?.product?.carType,
+              cityId: completeDraftValue?.product?.cityId,
+              countryId: completeDraftValue?.product?.countryId,
+              itemDescription: completeDraftValue?.product?.description,
+              hasUsageCondition:
+                completeDraftValue?.product?.category?.hasUsageCondition,
+              valueRadio: completeDraftValue?.product?.usageStatus,
+            })
+          );
+        })
+    );
+  }, [runAuctionById, state?.auctionId]);
 
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
@@ -48,6 +96,7 @@ const ProductDetails = () => {
   const history = useHistory();
 
   const [draftValue, setDraftValue] = useState();
+  const [imgtest, setimgtest] = useState();
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
@@ -64,7 +113,7 @@ const ProductDetails = () => {
   const [subCategoryId, setSubCategoryId] = useState();
 
   const [hasUsageCondition, setHasUsageCondition] = useState(
-    false || productDetailsint.hasUsageCondition
+    productDetailsint.hasUsageCondition || false
   );
   const [customFromData, setCustomFromData] = useState();
 
@@ -88,7 +137,7 @@ const ProductDetails = () => {
       subCategoryId ||
       productDetailsint.category ||
       productDetailsint.subCategory
-    )
+    ) {
       if (SubGatogryOptions.length === 0) {
         run(
           authAxios
@@ -113,13 +162,14 @@ const ProductDetails = () => {
               setCustomFromData(res?.data?.data);
             })
         );
+    }
   }, [
-    SubGatogryOptions.length,
+    run,
     categoryId,
+    subCategoryId,
+    SubGatogryOptions.length,
     productDetailsint.category,
     productDetailsint.subCategory,
-    run,
-    subCategoryId,
     forceReload,
   ]);
   const regularCustomFieldsvalidations =
@@ -212,15 +262,17 @@ const ProductDetails = () => {
     }
     if (draftValue.brandId || productDetailsint.brandId) {
       formData.append(
-        "brandI",
+        "brandId",
         draftValue.brandId || productDetailsint.brandId
       );
     }
-    if (draftValue.valueRadio || productDetailsint.valueRadio) {
-      formData.append(
-        "usageStatus",
-        draftValue.valueRadio || productDetailsint.valueRadio
-      );
+    if (hasUsageCondition) {
+      if (valueRadio || productDetailsint.valueRadio) {
+        formData.append(
+          "usageStatus",
+          valueRadio || productDetailsint.valueRadio
+        );
+      }
     }
     if (draftValue.color || productDetailsint.color) {
       formData.append("color", draftValue.color || productDetailsint.color);
@@ -362,7 +414,6 @@ const ProductDetails = () => {
         })
     );
   };
-
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -370,7 +421,12 @@ const ProductDetails = () => {
     <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
       <Dimmer
         className="animate-pulse"
-        active={isLoading || loadingSubGatogry || isLoadingCSaveAuctionAsDraft}
+        active={
+          isLoading ||
+          loadingSubGatogry ||
+          isLoadingCSaveAuctionAsDraft ||
+          isLoadingAuctionById
+        }
         inverted
       >
         <Loader active />
@@ -415,6 +471,7 @@ const ProductDetails = () => {
             }}
             onSubmit={handelProductDetailsdata}
             validationSchema={ProductDetailsSchema}
+            enableReinitialize
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
@@ -539,18 +596,39 @@ const ProductDetails = () => {
                     </span>
                   </h1>
                   <div className="mt-6 w-full">
-                    <AddImgMedia
-                      fileOne={fileOne}
-                      setFileOne={setFileOne}
-                      fileTwo={fileTwo}
-                      setFileTwo={setFileTwo}
-                      fileThree={fileThree}
-                      setFileThree={setFileThree}
-                      fileFour={fileFour}
-                      setFileFour={setFileFour}
-                      fileFive={fileFive}
-                      setFileFive={setFileFive}
-                    />
+                    {state?.auctionId ? (
+                      <EditImgeMedia
+                        imgOne={imgtest && imgtest[0]?.imageLink}
+                        fileOne={fileOne}
+                        setFileOne={setFileOne}
+                        imgTwo={imgtest && imgtest[1]?.imageLink}
+                        fileTwo={fileTwo}
+                        setFileTwo={setFileTwo}
+                        imgThree={imgtest && imgtest[2]?.imageLink}
+                        fileThree={fileThree}
+                        setFileThree={setFileThree}
+                        imgFour={imgtest && imgtest[3]?.imageLink}
+                        fileFour={fileFour}
+                        setFileFour={setFileFour}
+                        imgFive={imgtest && imgtest[4]?.imageLink}
+                        fileFive={fileFive}
+                        setFileFive={setFileFive}
+                      />
+                    ) : (
+                      <AddImgMedia
+                        imgOne={imgtest && imgtest[0]?.imageLink}
+                        fileOne={fileOne}
+                        setFileOne={setFileOne}
+                        fileTwo={fileTwo}
+                        setFileTwo={setFileTwo}
+                        fileThree={fileThree}
+                        setFileThree={setFileThree}
+                        fileFour={fileFour}
+                        setFileFour={setFileFour}
+                        fileFive={fileFive}
+                        setFileFive={setFileFive}
+                      />
+                    )}
                   </div>
                 </div>
                 <div className={hasUsageCondition ? "w-full" : "hidden"}>
