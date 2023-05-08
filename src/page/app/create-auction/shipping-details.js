@@ -207,7 +207,7 @@ const ShippingDetails = () => {
             )
             .then((res) => {
               toast.success("your Auction is Created success");
-              history.push(routes.app.home);
+              history.push(routes.app.profile.myAuctions.pending);
               dispatch(productDetails({}));
               dispatch(auctionDetails({}));
               dispatch(type({}));
@@ -228,7 +228,7 @@ const ShippingDetails = () => {
             .post(api.app.auctions.default, formData)
             .then((res) => {
               toast.success("your Auction is Created success");
-              history.push(routes.app.home);
+              history.push(routes.app.profile.myAuctions.pending);
               dispatch(productDetails({}));
               dispatch(auctionDetails({}));
               dispatch(type({}));
