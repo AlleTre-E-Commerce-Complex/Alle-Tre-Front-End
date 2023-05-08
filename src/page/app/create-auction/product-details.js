@@ -417,7 +417,10 @@ const ProductDetails = () => {
     if (auctionState === "DRAFTED") {
       runSaveAuctionAsDraft(
         authAxios
-          .put(api.app.auctions.setUpdatedraft(completeDraftVal?.id), formData)
+          .put(
+            api.app.auctions.completeUpdatedraft(completeDraftVal?.id),
+            formData
+          )
           .then((res) => {
             toast.success("your Auction Save As Drafted success");
             history.push(routes.app.createAuction.default);

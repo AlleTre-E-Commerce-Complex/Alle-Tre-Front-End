@@ -20,6 +20,8 @@ const api = {
       default: "/auctions",
       setAssdraft: "/auctions/save-draft",
       setUpdatedraft: (auctionsId) => `auctions/user/${auctionsId}/details`,
+      completeUpdatedraft: (auctionsId) =>
+        `auctions/user/${auctionsId}/draft-details`,
       getAlldraft: "auctions/user/ownes?status=DRAFTED",
       getAllactive: "auctions/user/ownes?status=ACTIVE",
       getAllscheduled: "auctions/user/ownes?status=IN_SCHEDULED",
