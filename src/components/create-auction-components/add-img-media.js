@@ -4,11 +4,11 @@ import { FileUploader } from "react-drag-drop-files";
 
 import addImage from "../../../src/assets/icons/add-image.svg";
 import TrashIcon from "../../../src/assets/icons/trash-Icon.png";
+import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
 const fileTypes = ["JPEG", "PNG", "GIF", "JPG", "MOV", "mp4"];
 
 const AddImgMedia = ({
-  imgOne,
   fileOne,
   setFileOne,
   fileTwo,
@@ -38,14 +38,10 @@ const AddImgMedia = ({
 
   return (
     <div className="">
-      <div
-        className={
-          fileOne && imgOne && "flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4"
-        }
-      >
+      <div className={fileOne && "flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4"}>
         <div className={fileTwo && " gap-x-4 flex"}>
           <div className="flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4 ">
-            {fileOne && imgOne ? (
+            {fileOne ? (
               <div className="relative">
                 <div className="sm:w-[299px] w-full h-[189px] hover:bg-gradient-to-t hover:from-[#25252562] absolute z-30 group">
                   <div className="flex justify-center mt-36 ">
@@ -66,7 +62,7 @@ const AddImgMedia = ({
                 </FileUploader>
               </div>
             ) : (
-              <div className={fileOne && imgOne && "hidden"}>
+              <div className={fileOne && "hidden"}>
                 <div className="cursor-pointer ">
                   <FileUploader
                     handleChange={handleChangeOne}

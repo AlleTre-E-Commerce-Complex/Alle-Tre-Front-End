@@ -162,14 +162,17 @@ const ShippingDetails = () => {
       if (productDetailsInt.cityId) {
         formData.append("product[cityId]", productDetailsInt.cityId);
       }
-      formData.append("images", productDetailsInt.fileOne);
-      formData.append("images", productDetailsInt.fileTwo);
-      formData.append("images", productDetailsInt.fileThree);
-      if (productDetailsInt.fileFour) {
-        formData.append("images", productDetailsInt.fileFour);
-      }
-      if (productDetailsInt.fileFive) {
-        formData.append("images", productDetailsInt.fileFive);
+      if (productDetailsInt?.auctionState === "DRAFTED") {
+      } else {
+        formData.append("images", productDetailsInt.fileOne);
+        formData.append("images", productDetailsInt.fileTwo);
+        formData.append("images", productDetailsInt.fileThree);
+        if (productDetailsInt.fileFour) {
+          formData.append("images", productDetailsInt.fileFour);
+        }
+        if (productDetailsInt.fileFive) {
+          formData.append("images", productDetailsInt.fileFive);
+        }
       }
       formData.append("startBidAmount", auctionDetailsInt.MinimumPrice);
       if (isBuyNowInt.isBuyNowAllowed) {
@@ -195,26 +198,52 @@ const ShippingDetails = () => {
       }
       formData.append("locationId", locationId);
 
-      runCreatAuction(
-        authAxios
-          .post(api.app.auctions.default, formData)
-          .then((res) => {
-            toast.success("your Auction is Created success");
-            history.push(routes.app.home);
-            dispatch(productDetails({}));
-            dispatch(auctionDetails({}));
-            dispatch(type({}));
-            dispatch(duration({}));
-            dispatch(isBuyNow({}));
-          })
-          .catch((err) => {
-            toast.error(
-              // err?.response?.data?.message.map((e) => e) ||
-              //   err?.message.map((e) => e) ||
-              "oops, something with wrong please make sure everything is in the right place and try again "
-            );
-          })
-      );
+      if (productDetailsInt?.auctionState === "DRAFTED") {
+        runCreatAuction(
+          authAxios
+            .put(
+              api.app.auctions.setUpdatedraft(productDetailsInt?.auctionId),
+              formData
+            )
+            .then((res) => {
+              toast.success("your Auction is Created success");
+              history.push(routes.app.home);
+              dispatch(productDetails({}));
+              dispatch(auctionDetails({}));
+              dispatch(type({}));
+              dispatch(duration({}));
+              dispatch(isBuyNow({}));
+            })
+            .catch((err) => {
+              toast.error(
+                // err?.response?.data?.message.map((e) => e) ||
+                //   err?.message.map((e) => e) ||
+                "oops, something with wrong please make sure everything is in the right place and try again "
+              );
+            })
+        );
+      } else {
+        runCreatAuction(
+          authAxios
+            .post(api.app.auctions.default, formData)
+            .then((res) => {
+              toast.success("your Auction is Created success");
+              history.push(routes.app.home);
+              dispatch(productDetails({}));
+              dispatch(auctionDetails({}));
+              dispatch(type({}));
+              dispatch(duration({}));
+              dispatch(isBuyNow({}));
+            })
+            .catch((err) => {
+              toast.error(
+                // err?.response?.data?.message.map((e) => e) ||
+                //   err?.message.map((e) => e) ||
+                "oops, something with wrong please make sure everything is in the right place and try again "
+              );
+            })
+        );
+      }
     } else {
       toast.error(
         "Make sure that you choose the auction location or create another one"

@@ -39,6 +39,16 @@ const ProductDetails = () => {
   const selectedContent = content[lang];
   const { state } = useLocation();
 
+  const [auctionState, setAuctionState] = useState();
+  const [completeDraftVal, setCompleteDraftValue] = useState();
+  const [loadingImg, setLoadingImg] = useState();
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  console.log("====================================");
+  console.log(state);
+  console.log(completeDraftVal?.id);
+  console.log("====================================");
+
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
   useEffect(() => {
     runAuctionById(
@@ -47,9 +57,11 @@ const ProductDetails = () => {
         .then((res) => {
           const completeDraftValue = res?.data?.data;
           console.log("====================================");
-          console.log(completeDraftValue?.product?.images);
+          console.log(completeDraftValue);
           console.log("====================================");
+          setAuctionState(res?.data?.data?.status);
           setimgtest(completeDraftValue?.product?.images);
+          setCompleteDraftValue(res?.data?.data);
           dispatch(
             productDetails({
               itemName: completeDraftValue?.product?.title,
@@ -83,10 +95,7 @@ const ProductDetails = () => {
           );
         })
     );
-  }, [runAuctionById, state?.auctionId]);
-
-  const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  }, [runAuctionById, state?.auctionId, forceReload]);
 
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
@@ -106,7 +115,9 @@ const ProductDetails = () => {
   const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
 
   const [valueRadio, setRadioValue] = useState(
-    productDetailsint.valueRadio || null
+    productDetailsint.valueRadio ||
+      completeDraftVal?.product?.usageStatus ||
+      null
   );
   const [countriesId, setCountriesId] = useState();
   const [categoryId, setCategoryId] = useState();
@@ -136,7 +147,8 @@ const ProductDetails = () => {
       categoryId ||
       subCategoryId ||
       productDetailsint.category ||
-      productDetailsint.subCategory
+      productDetailsint.subCategory ||
+      loadingImg
     ) {
       if (SubGatogryOptions.length === 0) {
         run(
@@ -171,6 +183,7 @@ const ProductDetails = () => {
     productDetailsint.category,
     productDetailsint.subCategory,
     forceReload,
+    loadingImg,
   ]);
   const regularCustomFieldsvalidations =
     customFromData?.regularCustomFields?.reduce((acc, curr) => {
@@ -203,7 +216,7 @@ const ProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
-    if (fileThree) {
+    if (fileThree || (imgtest && imgtest[2])) {
       if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
         dispatch(
           productDetails({
@@ -215,6 +228,8 @@ const ProductDetails = () => {
             fileThree: fileThree,
             fileFour: fileFour,
             fileFive: fileFive,
+            auctionState: auctionState,
+            auctionId: completeDraftVal?.id,
           })
         );
         history.push(routes.app.createAuction.auctionDetails);
@@ -234,6 +249,8 @@ const ProductDetails = () => {
             fileThree: fileThree,
             fileFour: fileFour,
             fileFive: fileFive,
+            auctionState: auctionState,
+            auctionId: completeDraftVal?.id,
           })
         );
         history.push(routes.app.createAuction.auctionDetails);
@@ -266,13 +283,13 @@ const ProductDetails = () => {
         draftValue.brandId || productDetailsint.brandId
       );
     }
-    if (hasUsageCondition) {
-      if (valueRadio || productDetailsint.valueRadio) {
-        formData.append(
-          "usageStatus",
-          valueRadio || productDetailsint.valueRadio
-        );
-      }
+    // if (hasUsageCondition) {
+    if (valueRadio || productDetailsint.valueRadio) {
+      formData.append(
+        "usageStatus",
+        valueRadio || productDetailsint.valueRadio
+      );
+      // }
     }
     if (draftValue.color || productDetailsint.color) {
       formData.append("color", draftValue.color || productDetailsint.color);
@@ -397,26 +414,44 @@ const ProductDetails = () => {
     if (fileFive || productDetailsint.fileFive) {
       formData.append("images", fileFive || productDetailsint.fileFive);
     }
-
-    runSaveAuctionAsDraft(
-      authAxios
-        .post(api.app.auctions.setAssdraft, formData)
-        .then((res) => {
-          toast.success("your Auction Save As Drafted success");
-          history.push(routes.app.createAuction.default);
-          dispatch(productDetails({}));
-        })
-        .catch((err) => {
-          toast.error(
-            err?.message.map((e) => e) ||
-              "oops, sorry something with wrong please make sure everything is correct and try again"
-          );
-        })
-    );
+    if (auctionState === "DRAFTED") {
+      runSaveAuctionAsDraft(
+        authAxios
+          .put(api.app.auctions.setUpdatedraft(completeDraftVal?.id), formData)
+          .then((res) => {
+            toast.success("your Auction Save As Drafted success");
+            history.push(routes.app.createAuction.default);
+            dispatch(productDetails({}));
+          })
+          .catch((err) => {
+            toast.error(
+              err?.message.map((e) => e) ||
+                "oops, sorry something with wrong please make sure everything is correct and try again"
+            );
+          })
+      );
+    } else {
+      runSaveAuctionAsDraft(
+        authAxios
+          .post(api.app.auctions.setAssdraft, formData)
+          .then((res) => {
+            toast.success("your Auction Save As Drafted success");
+            history.push(routes.app.createAuction.default);
+            dispatch(productDetails({}));
+          })
+          .catch((err) => {
+            toast.error(
+              err?.message.map((e) => e) ||
+                "oops, sorry something with wrong please make sure everything is correct and try again"
+            );
+          })
+      );
+    }
   };
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
   return (
     <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
       <Dimmer
@@ -598,21 +633,24 @@ const ProductDetails = () => {
                   <div className="mt-6 w-full">
                     {state?.auctionId ? (
                       <EditImgeMedia
-                        imgOne={imgtest && imgtest[0]?.imageLink}
+                        auctionId={state?.auctionId}
+                        imgOne={imgtest && imgtest[0]}
                         fileOne={fileOne}
                         setFileOne={setFileOne}
-                        imgTwo={imgtest && imgtest[1]?.imageLink}
+                        imgTwo={imgtest && imgtest[1]}
                         fileTwo={fileTwo}
                         setFileTwo={setFileTwo}
-                        imgThree={imgtest && imgtest[2]?.imageLink}
+                        imgThree={imgtest && imgtest[2]}
                         fileThree={fileThree}
                         setFileThree={setFileThree}
-                        imgFour={imgtest && imgtest[3]?.imageLink}
+                        imgFour={imgtest && imgtest[3]}
                         fileFour={fileFour}
                         setFileFour={setFileFour}
-                        imgFive={imgtest && imgtest[4]?.imageLink}
+                        imgFive={imgtest && imgtest[4]}
                         fileFive={fileFive}
                         setFileFive={setFileFive}
+                        onReload={onReload}
+                        setLoadingImg={setLoadingImg}
                       />
                     ) : (
                       <AddImgMedia
@@ -631,11 +669,25 @@ const ProductDetails = () => {
                     )}
                   </div>
                 </div>
-                <div className={hasUsageCondition ? "w-full" : "hidden"}>
+                <div
+                  className={
+                    hasUsageCondition ||
+                    completeDraftVal?.product?.category?.hasUsageCondition
+                      ? "w-full"
+                      : "hidden"
+                  }
+                >
                   <h1 className="font-bold text-base text-black pt-6">
                     Item Condition
                   </h1>
-                  <div className={hasUsageCondition ? "mt-6 w-full" : "hidden"}>
+                  <div
+                    className={
+                      hasUsageCondition ||
+                      completeDraftVal?.product?.category?.hasUsageCondition
+                        ? "mt-6 w-full"
+                        : "hidden"
+                    }
+                  >
                     <CheckboxRadioProductDetails
                       valueRadio={valueRadio}
                       setRadioValue={setRadioValue}

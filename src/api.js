@@ -19,6 +19,7 @@ const api = {
     auctions: {
       default: "/auctions",
       setAssdraft: "/auctions/save-draft",
+      setUpdatedraft: (auctionsId) => `auctions/user/${auctionsId}/details`,
       getAlldraft: "auctions/user/ownes?status=DRAFTED",
       getAllactive: "auctions/user/ownes?status=ACTIVE",
       getAllscheduled: "auctions/user/ownes?status=IN_SCHEDULED",
@@ -38,6 +39,11 @@ const api = {
       totalBidsDetails: (auctionsId, userId) =>
         `/auctions/user/${auctionsId}/bids-history?userId=${userId}`,
       submitBid: (auctionsId) => `/auctions/user/${auctionsId}/submit-bid`,
+    },
+    Imagees: {
+      upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
+      delete: (auctionsId, imageId) =>
+        `/auctions/user/${auctionsId}/remove-image?imageId=${imageId}`,
     },
     customField: {
       ByCategoryId: (categoryId) =>
