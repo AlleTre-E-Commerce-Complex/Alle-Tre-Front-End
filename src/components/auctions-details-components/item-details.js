@@ -48,7 +48,7 @@ const ItemDetails = ({ itemDetailsData }) => {
         <h1 className="pb-8">About The Brand:</h1>
         <p>{itemDetailsData?.description}</p>
       </div>
-      <div className="grid sm:grid-rows-4 sm:grid-flow-col gap-x-4 mt-4 mb-40">
+      <div className="grid sm:grid-rows-5 sm:grid-flow-col gap-x-4 mt-4 mb-40">
         {itemDetailsArray.map((field, index) => {
           const colors = ["bg-[#F2F2F2]", "bg-[#FEFEFE]"];
           const bgColor = colors[index % colors.length];

@@ -160,7 +160,7 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Current Bid and Buy Now sections */}
-      <div className="pt-6 grid grid-cols-2 ">
+      <div className="pt-6 grid grid-cols-2  ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             {!CurrentBid ? "Starting Bid Amount" : "Current Bid"}
@@ -174,9 +174,9 @@ const SummaryHomeAuctionSections = ({
             <div className="my-auto"></div>
           </p>
         </div>
-        <div className={isBuyNowAllowed ? "block" : "hidden"}>
+        <div className={isBuyNowAllowed ? "block my-auto" : "hidden"}>
           <button className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg">
-            Buy Now{" "}
+            Buy Now
             <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
           </button>
         </div>
