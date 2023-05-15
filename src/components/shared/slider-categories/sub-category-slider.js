@@ -47,7 +47,7 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
                   {SubGatogryOptions.map((e, index) => (
                     <Category
                       key={index}
-                      img={e?.img}
+                      img="https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
                       title={e?.text}
                       id={e?.id}
                     />
