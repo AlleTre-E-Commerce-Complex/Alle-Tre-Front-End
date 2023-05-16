@@ -113,7 +113,7 @@ const ActionsRowTable = ({
                     Starting Price
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
-                    {startingPrice}
+                    {formatCurrency(startingPrice)}
                   </p>
                 </div>
                 <div>

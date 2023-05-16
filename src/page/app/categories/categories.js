@@ -9,16 +9,19 @@ import AuctionCard from "../../../components/home-components/auction-card";
 import Category from "../../../components/shared/slider-categories/Category";
 import useGetSubGatogry from "../../../hooks/use-get-sub-category";
 import SubCategorySlider from "../../../components/shared/slider-categories/sub-category-slider";
+import PaginationApp from "../../../components/shared/pagination/pagination-app";
+import { Dimmer, Loader } from "semantic-ui-react";
 
 const Categories = () => {
-  const myRef = useRef();
   const { user } = useAuthState();
   const { search } = useLocation();
   const { categoryId } = useParams();
+  const myRef = useRef();
 
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
 
   const [mainAuctions, setMainAuctions] = useState();
+  const [totalPages, setTotalPages] = useState();
   const { run: runCategories, isLoading: isLoadingCategories } = useAxios([]);
 
   useEffect(() => {
@@ -26,12 +29,16 @@ const Categories = () => {
       runCategories(
         axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
           setMainAuctions(res?.data?.data);
+          setTotalPages(res?.data?.pagination?.totalPages);
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         })
       );
     }
     runCategories(
       authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
         setMainAuctions(res?.data?.data);
+        setTotalPages(res?.data?.pagination?.totalPages);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       })
     );
   }, [categoryId, runCategories, search, user]);
@@ -40,11 +47,15 @@ const Categories = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  console.log("====================================");
-  console.log(SubGatogryOptions);
-  console.log("====================================");
   return (
     <div className="max-w-[1440px] mx-auto mt-36">
+      <Dimmer
+        className="animate-pulse fixed w-full h-full top-0"
+        active={loadingSubGatogry || isLoadingCategories}
+        inverted
+      >
+        <Loader active />
+      </Dimmer>
       <div>
         <img
           className="w-full h-[317px] object-cover pb-4"
@@ -78,6 +89,9 @@ const Categories = () => {
             />
           ))}
         </div>
+      </div>
+      <div className="flex justify-end mt-7 pb-12 max-w-[1440px] mx-auto">
+        <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div>
     </div>
   );

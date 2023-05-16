@@ -10,23 +10,34 @@ import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction
 import ActionsRowTable from "./actions-row-table";
 
 import { Dimmer, Loader } from "semantic-ui-react";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import PaginationApp from "../shared/pagination/pagination-app";
 
 const ScheduledAuctions = () => {
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [scheduledAuctionData, setScheduledAuctionData] = useState();
+  const [totalPages, setTotalPages] = useState();
 
   const history = useHistory();
+  const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    run(
-      authAxios.get(api.app.auctions.getAllscheduled).then((res) => {
-        setScheduledAuctionData(res?.data?.data);
-      })
-    );
-  }, [run, forceReload]);
+    if (search) {
+      run(
+        authAxios
+          .get(
+            `${api.app.auctions.getAllOwnesAuctions}${search}&status=IN_SCHEDULED`
+          )
+          .then((res) => {
+            setScheduledAuctionData(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+      );
+    }
+  }, [run, forceReload, search]);
 
   return (
     <div className="relative">
@@ -57,19 +68,26 @@ const ScheduledAuctions = () => {
           </div>
         </div>
       ) : (
-        scheduledAuctionData?.map((e) => (
-          <ActionsRowTable
-            key={e?.id}
-            status={e?.status}
-            title={e?.product?.title}
-            description={e?.product?.description}
-            img={e?.product?.images[0]?.imageLink}
-            startingPrice={""}
-            purchasePrice={""}
-            startingDate={""}
-            goToDetails={routes.app.profile.myAuctions.scheduledDetails(e?.id)}
-          />
-        ))
+        <div>
+          {scheduledAuctionData?.map((e) => (
+            <ActionsRowTable
+              key={e?.id}
+              status={e?.status}
+              title={e?.product?.title}
+              description={e?.product?.description}
+              img={e?.product?.images[0]?.imageLink}
+              startingPrice={e?.startBidAmount}
+              purchasePrice={""}
+              startingDate={e?.startDate}
+              goToDetails={routes.app.profile.myAuctions.scheduledDetails(
+                e?.id
+              )}
+            />
+          ))}
+          <div className="flex justify-end mt-7">
+            <PaginationApp totalPages={totalPages} perPage={5} />
+          </div>
+        </div>
       )}
     </div>
   );

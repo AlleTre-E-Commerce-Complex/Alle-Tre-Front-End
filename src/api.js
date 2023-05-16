@@ -22,12 +22,8 @@ const api = {
       setUpdatedraft: (auctionsId) => `auctions/user/${auctionsId}/details`,
       completeUpdatedraft: (auctionsId) =>
         `auctions/user/${auctionsId}/draft-details`,
+      getAllOwnesAuctions: "auctions/user/ownes",
       getAlldraft: "auctions/user/ownes?status=DRAFTED",
-      getAllactive: "auctions/user/ownes?status=ACTIVE",
-      getAllscheduled: "auctions/user/ownes?status=IN_SCHEDULED",
-      getAllsold: "auctions/user/ownes?status=SOLD",
-      getAllpending: "auctions/user/ownes?status=PENDING_OWNER_DEPOIST",
-      getAllexpired: "auctions/user/ownes?status=EXPIRED",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       getUserAuctionsDetails: (auctionsId) =>
         `/auctions/user/${auctionsId}/details`,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api";
 import routes from "../../routes";
 import useAxios from "../../hooks/use-axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { authAxios } from "../../config/axios-config";
 
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
@@ -11,23 +11,37 @@ import ActionsRowTable from "./actions-row-table";
 
 import { Dimmer, Loader } from "semantic-ui-react";
 import { formatCurrency } from "../../utils/format-currency";
+import PaginationApp from "../shared/pagination/pagination-app";
 
 const PendingAuctions = () => {
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [pendingAuctionsData, setPendingAuctionsData] = useState();
+  const [totalPages, setTotalPages] = useState();
 
   const history = useHistory();
+  const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    run(
-      authAxios.get(api.app.auctions.getAllpending).then((res) => {
-        setPendingAuctionsData(res?.data?.data);
-      })
-    );
-  }, [run, forceReload]);
+    if (search) {
+      run(
+        authAxios
+          .get(
+            `${api.app.auctions.getAllOwnesAuctions}${search}&status=PENDING_OWNER_DEPOIST`
+          )
+          .then((res) => {
+            setPendingAuctionsData(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+      );
+    }
+  }, [run, forceReload, search]);
+
+  console.log("====================================");
+  console.log(pendingAuctionsData);
+  console.log("====================================");
 
   return (
     <div className="relative">
@@ -57,18 +71,23 @@ const PendingAuctions = () => {
           </div>
         </div>
       ) : (
-        pendingAuctionsData?.map((e) => (
-          <ActionsRowTable
-            key={e?.id}
-            status={e?.status}
-            title={e?.product?.title}
-            description={e?.product?.description}
-            img={e?.product?.images[0]?.imageLink}
-            startingPrice={e?.startBidAmount}
-            startingDate={e?.startDate}
-            goToDetails={routes.app.profile.myAuctions.pendingDetails(e?.id)}
-          />
-        ))
+        <div>
+          {pendingAuctionsData?.map((e) => (
+            <ActionsRowTable
+              key={e?.id}
+              status={e?.status}
+              title={e?.product?.title}
+              description={e?.product?.description}
+              img={e?.product?.images[0]?.imageLink}
+              startingPrice={e?.startBidAmount}
+              startingDate={e?.startDate}
+              goToDetails={routes.app.profile.myAuctions.pendingDetails(e?.id)}
+            />
+          ))}
+          <div className="flex justify-end mt-7">
+            <PaginationApp totalPages={totalPages} perPage={5} />
+          </div>
+        </div>
       )}
     </div>
   );

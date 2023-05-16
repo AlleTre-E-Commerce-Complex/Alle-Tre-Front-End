@@ -9,27 +9,30 @@ import { authAxios } from "../../config/axios-config";
 import ActionsRowTable from "./actions-row-table";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
+import PaginationApp from "../shared/pagination/pagination-app";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const ActiveAuctions = () => {
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [activeAuctionData, setActiveAuctionData] = useState();
+  const [totalPages, setTotalPages] = useState();
 
   const history = useHistory();
+  const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
     run(
-      authAxios.get(api.app.auctions.getAllactive).then((res) => {
-        setActiveAuctionData(res?.data?.data);
-      })
+      authAxios
+        .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=ACTIVE`)
+        .then((res) => {
+          setActiveAuctionData(res?.data?.data);
+          setTotalPages(res?.data?.pagination?.totalPages);
+        })
     );
-  }, [run, forceReload]);
-
-  console.log("====================================");
-  console.log(activeAuctionData);
-  console.log("====================================");
+  }, [run, forceReload, search]);
 
   return (
     <div className="relative">
@@ -59,19 +62,24 @@ const ActiveAuctions = () => {
           </div>
         </div>
       ) : (
-        activeAuctionData?.map((e) => (
-          <ActionsRowTable
-            key={e?.id}
-            status={e?.status}
-            title={e?.product?.title}
-            description={e?.product?.description}
-            img={e?.product?.images[0]?.imageLink}
-            totalBids={e?._count?.bids}
-            lastPrice={e?.startBidAmount}
-            endingTime={e?.expiryDate}
-            goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
-          />
-        ))
+        <div>
+          {activeAuctionData?.map((e) => (
+            <ActionsRowTable
+              key={e?.id}
+              status={e?.status}
+              title={e?.product?.title}
+              description={e?.product?.description}
+              img={e?.product?.images[0]?.imageLink}
+              totalBids={e?._count?.bids}
+              lastPrice={e?.startBidAmount}
+              endingTime={e?.expiryDate}
+              goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
+            />
+          ))}
+          <div className="flex justify-end mt-7">
+            <PaginationApp totalPages={totalPages} perPage={5} />
+          </div>
+        </div>
       )}
     </div>
   );

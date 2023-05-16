@@ -22,6 +22,7 @@ import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useDispatch } from "react-redux";
 import UpComingAuctionsSlider from "../../../components/home-components/up-coming-auctions";
+import PaginationApp from "../../../components/shared/pagination/pagination-app";
 
 const Home = () => {
   const { search } = useLocation();
@@ -32,6 +33,7 @@ const Home = () => {
 
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState();
+  const [totalPages, setTotalPages] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
 
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
@@ -46,6 +48,7 @@ const Home = () => {
       runMainAuctions(
         axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
           setMainAuctions(res?.data?.data);
+          setTotalPages(res?.data?.pagination?.totalPages);
         })
       );
       runSponsoredAuctions(
@@ -57,6 +60,7 @@ const Home = () => {
     runMainAuctions(
       authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
         setMainAuctions(res?.data?.data);
+        setTotalPages(res?.data?.pagination?.totalPages);
       })
     );
     runSponsoredAuctions(
@@ -138,6 +142,9 @@ const Home = () => {
             />
           ))}
         </div>
+      </div>
+      <div className="flex justify-end mt-7 mb-12 max-w-[1440px] mx-auto">
+        <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div>
       <div className="max-w-[1440px] mx-auto">
         <LiveAuctionsSlider />
