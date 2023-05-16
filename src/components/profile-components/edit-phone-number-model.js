@@ -48,7 +48,7 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
       open={open}
       trigger={
         <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[73px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2 ">
-          Edit
+          {oldPhoneNumber ? "Edit" : "Add"}
         </Button>
       }
     >

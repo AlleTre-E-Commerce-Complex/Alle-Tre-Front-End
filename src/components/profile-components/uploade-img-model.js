@@ -9,7 +9,12 @@ import { toast } from "react-hot-toast";
 import api from "../../api";
 import { useLanguage } from "../../context/language-context";
 
-const UploadeImgModel = ({ onReload }) => {
+const UploadeImgModel = ({
+  onReload,
+  oldimg,
+  IsImgModelOpen,
+  setImgModelOpen,
+}) => {
   const [lang] = useLanguage();
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
@@ -53,12 +58,13 @@ const UploadeImgModel = ({ onReload }) => {
         setFile(null);
         setDropzoneActive(true);
         setOpen(false);
+        setImgModelOpen(false);
       }}
       onOpen={() => setOpen(true)}
-      open={open}
+      open={IsImgModelOpen || open}
       trigger={
         <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[132px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2">
-          Upload Photo
+          {oldimg ? "Edit Photo" : "Upload Photo"}
         </Button>
       }
     >

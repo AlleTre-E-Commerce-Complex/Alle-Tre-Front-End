@@ -37,6 +37,9 @@ const ProfileSettings = () => {
   const [pofileData, setPofileData] = useState();
   const [locationData, setLocationData] = useState();
 
+  const [IsImgModelOpen, setImgModelOpen] = useState(false);
+  // const [IsLocationModelOpen, setLocationModelOpen] = useState(false);
+
   const dispatch = useDispatch();
 
   const [forceReload, setForceReload] = useState(false);
@@ -69,6 +72,13 @@ const ProfileSettings = () => {
     );
   }, [runLocationData, forceReload]);
 
+  const handelCompleteProfle = () => {
+    if (locationData.length <= 0) {
+      setImgModelOpen(true);
+      setOpen(true);
+    }
+  };
+
   useEffect(() => {
     if (window.location.hash.slice(1) === "AddressBook") {
     } else window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -84,7 +94,14 @@ const ProfileSettings = () => {
         <Loader active />
       </Dimmer>
       {/* complete profile */}
-      <div className="rounded-lg drop-shadow-complete-profile shadow  ">
+
+      <div
+        className={`${
+          locationData?.length > 0
+            ? "hidden"
+            : "rounded-lg drop-shadow-complete-profile shadow"
+        }`}
+      >
         <h1 className="text-black text-base font-medium pt-12 pl-6">
           Complete your profile to make your actions easier
         </h1>
@@ -94,7 +111,10 @@ const ProfileSettings = () => {
           kindly take a moment to fill out your profile information."
         </p>
         <div className="flex justify-end pr-14 pt-8 pb-8">
-          <button className="bg-primary hover:bg-primary-dark text-white rounded-lg w-32 h-8 text-sm font-normal">
+          <button
+            onClick={() => handelCompleteProfle()}
+            className="bg-primary hover:bg-primary-dark text-white rounded-lg w-32 h-8 text-sm font-normal"
+          >
             Complete Now
           </button>
         </div>
@@ -112,7 +132,12 @@ const ProfileSettings = () => {
             <h1 className="text-gray-dark md:text-4xl text-2xl font-medium pt-3">
               {pofileData?.userName}
             </h1>
-            <UploadeImgModel onReload={onReload} />
+            <UploadeImgModel
+              onReload={onReload}
+              oldimg={pofileData?.imageLink}
+              IsImgModelOpen={IsImgModelOpen}
+              setImgModelOpen={setImgModelOpen}
+            />
           </div>
         </div>
         {/*  Personal Details */}

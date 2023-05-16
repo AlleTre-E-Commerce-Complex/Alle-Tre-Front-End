@@ -56,7 +56,9 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   return (
     <Modal
       className="sm:w-[471px] w-full h-auto bg-transparent scale-in "
-      onClose={() => setOpen(false)}
+      onClose={() => {
+        setOpen(false);
+      }}
       open={open}
     >
       <div className="sm:w-[471px] w-full  h-auto border-2 border-primary rounded-2xl bg-background p-6">
