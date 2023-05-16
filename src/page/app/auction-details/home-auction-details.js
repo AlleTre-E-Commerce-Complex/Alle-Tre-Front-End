@@ -73,7 +73,7 @@ const HomeAuctionDetails = () => {
                 isMyAuction={auctionsDetailsData?.isMyAuction}
               />
             </div>
-            <div className="sm:ml-12 ml-4 mt-10 md:mt-0">
+            <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
               <SummaryHomeAuctionSections
                 numberStare={3}
                 totalReviews={20}

@@ -19,7 +19,7 @@ const Footer = () => {
           alt="footerImg"
         />
         <div className="">
-          <div className="absolute bottom-9 left-24  ">
+          <div className="absolute bottom-9 ltr:left-24 rtl:right-24 ">
             <h1 className="text-2xl text-white font-medium ">
               We're Always Here To Help You...
             </h1>
@@ -29,7 +29,7 @@ const Footer = () => {
               nonumy eirmod tempor
             </p>
           </div>
-          <div className="flex gap-5 absolute right-24 bottom-20">
+          <div className="flex gap-5 absolute ltr:right-24 rtl:left-24 bottom-20">
             <input
               className="w-[400px] h-[48px] rounded-lg px-4 outline-none"
               placeholder="Write your mail..."
@@ -89,7 +89,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="relative -right-[685px]">
+        <div className="relative ltr:-right-[685px] rtl:-left-[685px]">
           <div className="relative -rotate-90 ">
             <hr className="border-white" />
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-90 ">

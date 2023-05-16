@@ -66,7 +66,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   const ProfileData = useSelector((state) => state.profileData.PofileData);
   return (
     <>
-      <div className="h-screen fixed md:block hidden w-[255px] ">
+      <div className="h-screen fixed md:block hidden w-[250px] ">
         {/* img */}
         <div className="flex gap-x-4 mx-14 pb-8 pt-3">
           <img
@@ -211,7 +211,7 @@ export const NavLink = ({ title, onClick, isActive }) => {
               : ""
           } translate delay-150 duration-150 `}
         ></p>
-        <p className={`${isActive ? " font-bold " : ""}`}>{title}</p>
+        <p className={`${isActive ? "font-bold " : ""}`}>{title}</p>
       </p>
     </div>
   );

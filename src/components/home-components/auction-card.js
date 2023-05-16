@@ -108,7 +108,7 @@ const AuctionCard = ({
             className={
               isMyAuction
                 ? "hidden"
-                : "bg-white rounded-lg w-[38px] h-[44px] absolute z-20 top-2 right-2  "
+                : "bg-white rounded-lg w-[38px] h-[44px] absolute z-20 top-2 ltr:right-2 rtl:left-2 "
             }
           >
             <div

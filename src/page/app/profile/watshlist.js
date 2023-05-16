@@ -22,7 +22,7 @@ const Watshlist = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   return (
-    <div className="ml-8 relative animate-in ">
+    <div className="ltr:ml-8 rtl:mr-8 relative animate-in ">
       <Dimmer className="animate-pulse" active={isLoadingWatshlist} inverted>
         <Loader active />
       </Dimmer>

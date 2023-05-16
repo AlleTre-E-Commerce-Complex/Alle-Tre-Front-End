@@ -85,7 +85,7 @@ const ProfileSettings = () => {
   }, []);
 
   return (
-    <div className="ml-4 relative animate-in ">
+    <div className="ltr:ml-4 rtl:mr-4 relative animate-in ">
       <Dimmer
         className="animate-pulse"
         active={isLoadingPofile || isLoadingLocationData}
@@ -102,15 +102,15 @@ const ProfileSettings = () => {
             : "rounded-lg drop-shadow-complete-profile shadow"
         }`}
       >
-        <h1 className="text-black text-base font-medium pt-12 pl-6">
+        <h1 className="text-black text-base font-medium pt-12 ltr:pl-6 rtl:pr-6">
           Complete your profile to make your actions easier
         </h1>
-        <p className="pt-4 text-gray-dark pl-6 pr-14">
+        <p className="pt-4 text-gray-dark ltr:pl-6 rtl:pr-6  ltr:pr-14 rtl:pl-16">
           "Your account currently offers access to updates, saved items, sale
           details, and other features. To bid, buy and sell with Alle-tre,
           kindly take a moment to fill out your profile information."
         </p>
-        <div className="flex justify-end pr-14 pt-8 pb-8">
+        <div className="flex justify-end ltr:pr-14 rtl:pl-14 pt-8 pb-8">
           <button
             onClick={() => handelCompleteProfle()}
             className="bg-primary hover:bg-primary-dark text-white rounded-lg w-32 h-8 text-sm font-normal"
@@ -148,14 +148,14 @@ const ProfileSettings = () => {
           <div className="flex justify-between pt-9">
             <div>
               <div className="flex ">
-                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
+                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5 ">
                   <RiUser3Fill size={16} />
                 </p>
                 <p className="text-gray-dark text-base font-medium  ">
                   User Name
                 </p>
               </div>
-              <p className="text-gray-dark text-base pl-[64px] ">
+              <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px] ">
                 {pofileData?.userName}
               </p>
             </div>
@@ -173,14 +173,14 @@ const ProfileSettings = () => {
           >
             <div>
               <div className="flex ">
-                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
+                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
                   <HiLockClosed size={16} />
                 </p>
                 <p className="text-gray-dark text-base font-medium  ">
                   Password
                 </p>
               </div>
-              <p className="text-gray-dark text-base pl-[64px] ">
+              <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px] ">
                 *************
               </p>
             </div>
@@ -197,12 +197,12 @@ const ProfileSettings = () => {
           <div className="flex pt-9">
             <div>
               <div className="flex ">
-                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
+                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
                   <MdMail size={16} />
                 </p>
                 <p className="text-gray-dark text-base font-medium">E-mail</p>
               </div>
-              <p className="text-gray-dark text-base pl-[64px]  ">
+              <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px]  ">
                 {pofileData?.email}
               </p>
             </div>
@@ -211,7 +211,7 @@ const ProfileSettings = () => {
                 pofileData?.isVerified
                   ? "text-green-500"
                   : "text-gray-veryLight"
-              } flex gap-x-1 md:ml-[210px] ml-auto`}
+              } flex gap-x-1 ltr:md:ml-[210px] rtl:md:mr-[210px] ltr:ml-auto rtl:mr-auto`}
             >
               <IoMdCheckmarkCircle size={16} className="mt-0.5" />
               <p className="text-base font-normal">Verified</p>
@@ -220,14 +220,14 @@ const ProfileSettings = () => {
           <div className="flex justify-between pt-9">
             <div>
               <div className="flex ">
-                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 mr-5">
+                <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
                   <BsFillTelephoneFill size={16} />
                 </p>
                 <p className="text-gray-dark text-base font-medium">
                   Phone Number
                 </p>
               </div>
-              <p className="text-gray-dark text-base pl-[64px]">
+              <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px]">
                 {pofileData?.phone}
               </p>
             </div>
@@ -260,7 +260,7 @@ const ProfileSettings = () => {
                   pofileData?.oAuthType === "APPLE"
                     ? "text-green-500"
                     : "text-gray-veryLight"
-                } md:flex hidden gap-x-1 ml-[71px] my-auto `}
+                } md:flex hidden gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto `}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
@@ -277,7 +277,7 @@ const ProfileSettings = () => {
                   pofileData?.oAuthType === "GOOGLE"
                     ? "text-green-500"
                     : "text-gray-veryLight"
-                } md:flex hidden  gap-x-1 ml-[71px] my-auto`}
+                } md:flex hidden  gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto`}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>
@@ -294,7 +294,7 @@ const ProfileSettings = () => {
                   pofileData?.oAuthType === "FACEBOOK"
                     ? "text-green-500"
                     : "text-gray-veryLight"
-                } md:flex hidden gap-x-1 ml-[71px] my-auto`}
+                } md:flex hidden gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto`}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">Connected</p>

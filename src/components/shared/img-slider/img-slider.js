@@ -100,7 +100,7 @@ const ImgSlider = ({
               )}
             </div>
           </div>
-          <div className="flex absolute bottom-7 md:left-4 left-0 z-20">
+          <div className="flex absolute bottom-7 ltr:md:left-4 rtl:md:right-4 ltr:left-0 rtl:right-0 z-20">
             {images?.map((image, index) => (
               <div
                 className="w-full md:w-[89px] sm:h-[89px] h-[60px] rounded-2xl sm:mx-2.5 mx-1 object-contain cursor-pointer bg-background  "

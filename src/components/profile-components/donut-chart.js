@@ -29,8 +29,8 @@ const DonutChart = ({
     labels: [], // Set the labels prop to an empty array to remove the labels
   };
   return (
-    <div className=" w-32 h-40 px-1 py-6">
-      <svg className="w-fit flex justify-center">
+    <div dir="ltr" className="w-32 h-40 px-1 py-6">
+      <svg className="w-fit flex justify-center ">
         <text x={50} y={49} textAnchor="middle" fontSize={14} fill="#ACACAC">
           {totalcount}
         </text>

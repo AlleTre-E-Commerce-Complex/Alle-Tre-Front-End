@@ -94,14 +94,19 @@ height: 280px;
   }
 }
 
-.state-button{
+.state-button:lang(en){
 border-radius: 7px 1px 8px 1px !important;
 font-size: 0.5rem;
 }
-.price-button{
+.state-button:lang(ar){
+border-radius: 1px 7px 1px 8px !important;
+font-size: 0.5rem;
+}
+.price-button:lang(en){
 border-radius: 16px 1px 16px 1px !important;
-
-
+}
+.price-button:lang(ar){
+border-radius: 1px 16px 1px 16px !important;
 }
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/

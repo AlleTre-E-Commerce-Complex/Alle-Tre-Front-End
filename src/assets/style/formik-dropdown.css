@@ -8,11 +8,11 @@
 }
 
 .Edit_FormikMultiDropdown .field>label{
-  @apply absolute -top-[18px] bg-white z-[9] left-5 text-gray-dark text-lg font-normal px-1.5 !important
+  @apply absolute -top-[18px] bg-white z-[9] ltr:left-5 rtl:right-5 text-gray-dark text-lg font-normal px-1.5 !important
 }
 
 .Edit_FormikMultiDropdown .ui.search.dropdown.active>input.search, .ui.search.dropdown.visible>input.search{
-  @apply  h-[48px]  text-primary
+  @apply  h-[48px]
 }
 
 

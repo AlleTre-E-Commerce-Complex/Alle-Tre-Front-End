@@ -99,7 +99,7 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
               </>
 
               <span
-                className="absolute bg-white border-b border-r border-l rounded-md transform -rotate-45 -top-3.5 md:right-10 right-28 z-10"
+                className="absolute bg-white border-b border-r border-l rounded-md transform -rotate-45 -top-3.5 ltr:md:right-10 rtl:md:left-10 ltr:right-28 rtl:left-28 z-10"
                 style={{
                   width: arrowSize * 2,
                   height: arrowSize * 2,

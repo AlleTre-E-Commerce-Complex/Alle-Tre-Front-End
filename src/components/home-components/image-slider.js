@@ -103,7 +103,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                     alt="travel"
                   />
                 </div>
-                <div className="w-full lg:h-[541px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 sm:pl-24 pl-10 pt-5 ">
+                <div className="w-full lg:h-[541px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 ltr:sm:pl-24 rtl:sm:pr-24 ltr:pl-10 rtl:pr-10 pt-5 ">
                   <ScrollingIcon
                     onClick={() =>
                       window.scrollTo({

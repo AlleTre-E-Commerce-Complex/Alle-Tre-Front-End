@@ -10,7 +10,6 @@
   @apply bg-[#A2547A0D] text-primary !important
 }
 .Edit_Pagination_App.ui.menu>.item:first-child{
-  background-image: url("../icons/angles-left-icon.png") !important;
   text-indent: -9999px !important;
   display: inline-block !important;
   background-size: cover !important ;
@@ -19,11 +18,22 @@
   height: 35px !important;
 }
 .Edit_Pagination_App.ui.menu>.item:last-child{
-  background-image: url("../icons/angles-right-icon.png") !important;
   text-indent: -9999px !important;
   display: inline-block !important;
   background-size: cover !important ;
   background-position: center !important;
   width: 35px !important;
   height: 35px !important;
+}
+.Edit_Pagination_App.ui.menu>.item:first-child:lang(en){
+  background-image: url("../icons/angles-left-icon.png") !important;
+}
+.Edit_Pagination_App.ui.menu>.item:first-child:lang(ar){
+  background-image: url("../icons/angles-right-icon.png") !important;
+}
+.Edit_Pagination_App.ui.menu>.item:last-child:lang(en){
+  background-image: url("../icons/angles-right-icon.png") !important;
+}
+.Edit_Pagination_App.ui.menu>.item:last-child:lang(ar){
+  background-image: url("../icons/angles-left-icon.png") !important;
 }
