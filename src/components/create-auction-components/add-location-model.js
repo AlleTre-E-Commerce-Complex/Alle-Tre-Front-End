@@ -19,8 +19,13 @@ import { useHistory } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 
 import { toast } from "react-hot-toast";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
+  const [lang, setLang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
   const [countriesId, setCountriesId] = useState();
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
@@ -39,9 +44,9 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   const handleAddLocation = (values) => {
     run(authAxios.post(api.app.location.post, values))
       .then(({ data }) => {
-        if (TextButton === "Proceed") {
+        if (TextButton === "Proceed" || "متابعة") {
           history.push(routes.app.createAuction.productDetails);
-          toast.success("locaton add success");
+          toast.success(selectedContent[localizationKeys.successAddLocatons]);
           window.localStorage.setItem("hasCompletedProfile", true);
         } else {
           setOpen(false);
@@ -62,20 +67,30 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
       open={open}
     >
       <div className="sm:w-[471px] w-full  h-auto border-2 border-primary rounded-2xl bg-background p-6">
-        <div>
+        <div className="ltr:text-left rtl:text-right">
           <h1 className="text-base font-bold">
-            Location is required <span className="text-red-500">*</span>
+            {selectedContent[localizationKeys.locationIsRequired]}{" "}
+            <span className="text-red-500">*</span>
           </h1>
           <p className="text-gray-med text-xs font-normal pt-1 pb-2 ">
-            In order to finish the procedure, we have to get access to<br></br>{" "}
-            your location. you can manage them later .
+            {
+              selectedContent[
+                localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo
+              ]
+            }
+            <br></br>
+            {
+              selectedContent[
+                localizationKeys.yourLocationYouCanManageThemLater
+              ]
+            }
             <span>
               <HashLink
                 smooth
                 to={`${routes.app.profile.profileSettings}#AddressBook`}
                 className="text-primary underline cursor-pointer "
               >
-                Manage you addresses
+                {selectedContent[localizationKeys.manageYouAddresses]}
               </HashLink>
             </span>
           </p>
@@ -97,8 +112,10 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                 <div className="w-full py-6">
                   <FormikMultiDropdown
                     name="countryId"
-                    label={"Country"}
-                    placeholder="Select Country"
+                    label={selectedContent[localizationKeys.country]}
+                    placeholder={
+                      selectedContent[localizationKeys.selectCountry]
+                    }
                     options={AllCountriesOptions}
                     loading={loadingAllCountries}
                     onChange={(e) => setCountriesId(e)}
@@ -107,8 +124,8 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                 <div className="w-full py-6">
                   <FormikMultiDropdown
                     name="cityId"
-                    label={"City"}
-                    placeholder="Select City"
+                    label={selectedContent[localizationKeys.city]}
+                    placeholder={selectedContent[localizationKeys.city]}
                     options={AllCitiesOptions}
                     loading={loadingCitiesOptions}
                   />
@@ -117,24 +134,28 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                   <FormikInput
                     name="address"
                     type="text"
-                    label="Address"
-                    placeholder="wirte your address"
+                    label={selectedContent[localizationKeys.address]}
+                    placeholder={
+                      selectedContent[localizationKeys.wirteYourAddress]
+                    }
                   />
                 </div>
                 <div className="w-full py-6">
                   <FormikInput
                     name="addressLabel"
                     type="text"
-                    label="Address label"
-                    placeholder="ex: Home"
+                    label={selectedContent[localizationKeys.addressLabel]}
+                    placeholder={selectedContent[localizationKeys.exHome]}
                   />
                 </div>
                 <div className="w-full py-6">
                   <FormikInput
                     name="zipCode"
                     type="text"
-                    label="Postal code"
-                    placeholder="Enter postal/Zip code"
+                    label={selectedContent[localizationKeys.zipCode]}
+                    placeholder={
+                      selectedContent[localizationKeys.enterPostalZipCode]
+                    }
                   />
                 </div>
                 <div className="flex justify-end">

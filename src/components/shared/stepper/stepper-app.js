@@ -1,7 +1,12 @@
 import { useHistory, useLocation } from "react-router-dom";
 import routes from "../../../routes";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const StepperApp = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -26,7 +31,7 @@ const StepperApp = () => {
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
-                Product Details
+                {selectedContent[localizationKeys.productDetails]}
               </p>
             </div>
             <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
@@ -35,7 +40,7 @@ const StepperApp = () => {
                 2
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
-                Auction Details
+                {selectedContent[localizationKeys.auctionDetails]}
               </p>
             </div>
             <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
@@ -44,7 +49,7 @@ const StepperApp = () => {
                 3
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
-                Shipping Details
+                {selectedContent[localizationKeys.shippingDetails]}
               </p>
             </div>
             {/* <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
@@ -73,7 +78,7 @@ const StepperApp = () => {
                 1
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer">
-                Product Details
+                {selectedContent[localizationKeys.productDetails]}
               </p>
             </div>
             <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
@@ -87,7 +92,7 @@ const StepperApp = () => {
                 2
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer">
-                Auction Details
+                {selectedContent[localizationKeys.auctionDetails]}
               </p>
             </div>
             <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
@@ -96,7 +101,7 @@ const StepperApp = () => {
                 3
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
-                Shipping Details
+                {selectedContent[localizationKeys.shippingDetails]}
               </p>
             </div>
             {/* <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
@@ -130,7 +135,7 @@ const StepperApp = () => {
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
-                Product Details
+                {selectedContent[localizationKeys.productDetails]}
               </p>
             </div>
             <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
@@ -149,7 +154,7 @@ const StepperApp = () => {
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
-                Auction Details
+                {selectedContent[localizationKeys.auctionDetails]}
               </p>
             </div>
 
@@ -164,7 +169,7 @@ const StepperApp = () => {
                 3
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer">
-                Shipping Details
+                {selectedContent[localizationKeys.shippingDetails]}
               </p>
             </div>
 
@@ -199,7 +204,7 @@ const StepperApp = () => {
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
-                Product Details
+                {selectedContent[localizationKeys.productDetails]}
               </p>
             </div>
 
@@ -220,7 +225,7 @@ const StepperApp = () => {
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
-                Auction Details
+                {selectedContent[localizationKeys.auctionDetails]}
               </p>
             </div>
 
@@ -241,7 +246,7 @@ const StepperApp = () => {
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
-                Shipping Details
+                {selectedContent[localizationKeys.shippingDetails]}
               </p>
             </div>
 

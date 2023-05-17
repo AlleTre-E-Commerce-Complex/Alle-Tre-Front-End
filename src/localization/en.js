@@ -96,6 +96,59 @@ const en = {
   [localizationKeys.sold]: "Sold",
   [localizationKeys.pending]: "Pending",
   [localizationKeys.expired]: "Expired",
+  // Breadcrumb
+  [localizationKeys.home]: "Home",
+  [localizationKeys.productDetails]: "`product Details",
+  [localizationKeys.auctionDetails]: "Auction Details",
+  [localizationKeys.shippingDetails]: "Shipping Details",
+  [localizationKeys.paymentDetails]: "Payment Details",
+  [localizationKeys.myAuctions]: "My Auctions",
+  [localizationKeys.activeAuctions]: "Active Auctions",
+  [localizationKeys.scheduledAuctions]: "Scheduled Auctions",
+  [localizationKeys.soldAuctions]: "Sold Auctions",
+  [localizationKeys.pendingAuctions]: "Pending Auctions",
+  [localizationKeys.expiredAuctions]: "Expired Auctions",
+  // create auctions
+  [localizationKeys.drafts]: "Drafts",
+  [localizationKeys.proceed]: "Proceed",
+  [localizationKeys.successDelete]:
+    "Your auction has been deleted for you from drafting successfully",
+  [localizationKeys.errorDelete]:
+    "oops, sorry something with wrong please make sure everything is correct and try again",
+  [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
+    "Are you sure you want to delete this draft",
+  [localizationKeys.cancel]: "Cancel",
+  [localizationKeys.yesDelete]: "Yes,delete",
+  [localizationKeys.locationIsRequired]: "Location is required",
+  [localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo]:
+    "In order to finish the procedure, we have to get access to",
+  [localizationKeys.yourLocationYouCanManageThemLater]:
+    "your location. you can manage them later .",
+  [localizationKeys.manageYouAddresses]: "Manage you addresses",
+  [localizationKeys.country]: "Country",
+  [localizationKeys.city]: "City",
+  [localizationKeys.address]: "Address",
+  [localizationKeys.addressLabel]: "Address Label",
+  [localizationKeys.zipCode]: "Postal code",
+  [localizationKeys.successAddLocatons]: "locaton add success",
+  [localizationKeys.add]: "Add",
+  [localizationKeys.selectCountry]: "Select Country",
+  [localizationKeys.selectCity]: "Select City",
+  [localizationKeys.wirteYourAddress]: "Wirte your address",
+  [localizationKeys.exHome]: "ex: Home",
+  [localizationKeys.enterPostalZipCode]: "Enter postal/Zip code",
+  // product details
+  [localizationKeys.itemDetails]: "Item Details",
+  [localizationKeys.itemName]: "Item Name",
+  [localizationKeys.category]: "Category",
+  [localizationKeys.subCategory]: "Sub Category",
+  [localizationKeys.itemDescription]: "Item Description",
+  [localizationKeys.writeItemDescription]: "Write Item Description....",
+  [localizationKeys.addMedia]: "Add Media",
+  [localizationKeys.from3upto5photos]: "( from 3 up to 5 photos )",
+  [localizationKeys.itemCondition]: "Item Condition",
+  [localizationKeys.saveAsDraft]: "Save As Draft",
+  [localizationKeys.next]: "Next",
 };
 
 export default en;

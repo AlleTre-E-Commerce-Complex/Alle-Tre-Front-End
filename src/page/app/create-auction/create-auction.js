@@ -26,8 +26,13 @@ import { useDispatch } from "react-redux";
 
 import { toast } from "react-hot-toast";
 import { truncateString } from "../../../utils/truncate-string";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const CreateAuction = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
     "", // set the default value to false if no data is stored
@@ -93,13 +98,13 @@ const CreateAuction = () => {
           onClick={() => handelCreatOuction()}
           className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[68px] right-[90px] hidden md:block"
         >
-          Create Auction Now
+          {selectedContent[localizationKeys.createAuctionNow]}
         </button>
         <button
           onClick={() => handelCreatOuction()}
           className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[41px] right-[25px] md:hidden block"
         >
-          Create Auction
+          {selectedContent[localizationKeys.createAuction]}
         </button>
         <img
           className="lg:w-[700px] w-[500px] absolute bottom-[68px] left-[90px] hidden md:block"
@@ -108,7 +113,9 @@ const CreateAuction = () => {
         />
       </div>
       <div className="max-w-[1366px] mx-auto px-2">
-        <h1 className="text-black py-5 text-base font-normal">Drafts</h1>
+        <h1 className="text-black py-5 text-base font-normal">
+          {selectedContent[localizationKeys.drafts]}
+        </h1>
         <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
           {draftAuctionData?.map((e) => (
             <DraftsItem
@@ -121,12 +128,18 @@ const CreateAuction = () => {
           ))}
         </div>
       </div>
-      <AddLocationModel open={open} setOpen={setOpen} TextButton={"Proceed"} />
+      <AddLocationModel
+        open={open}
+        setOpen={setOpen}
+        TextButton={selectedContent[localizationKeys.proceed]}
+      />
     </div>
   );
 };
 
 export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
   const [open, setOpen] = useState(false);
 
@@ -135,15 +148,11 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
     run(authAxios.delete(api.app.auctions.delete(auctionId)))
       .then((res) => {
         setOpen(false);
-        toast.success(
-          "Your auction has been deleted for you from drafting successfully"
-        );
+        toast.success(selectedContent[localizationKeys.successDelete]);
         onReload();
       })
       .catch((err) => {
-        toast.error(
-          "oops, sorry something with wrong please make sure everything is correct and try again"
-        );
+        toast.error(selectedContent[localizationKeys.errorDelete]);
       });
   };
   return (
@@ -183,7 +192,10 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
         <p className="text-gray-dark text-sm font-normal text-center pt-2">
           {truncateString(itemName, 15)}
         </p>
-        <p className="text-gray-med text-sm font-normal text-center pt-1">
+        <p
+          dir="ltr"
+          className="text-gray-med text-sm font-normal text-center pt-1"
+        >
           {moment(date).format("D. MMM. YYYY")}
         </p>
       </div>
@@ -197,21 +209,25 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
             <Trash />
           </div>
           <p className="text-gray-dark text-center text-base font-normal pt-8">
-            Are you sure you want to delete this draft
+            {
+              selectedContent[
+                localizationKeys.areYouSureYouWantToDeleteThisDraft
+              ]
+            }
           </p>
           <div className="flex justify-center gap-x-10 mt-10 mb-12">
             <button
               onClick={() => setOpen(false)}
               className="w-[136px] h-[48px] bg-white border-[1px] border-primary text-primary rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR"
             >
-              Cancel
+              {selectedContent[localizationKeys.cancel]}
             </button>
             <Button
               loading={isLoading}
               onClick={() => deleteAuction()}
               className="w-[136px] h-[48px] bg-primary hover:bg-primary-dark opacity-100 text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR "
             >
-              Yes,delete
+              {selectedContent[localizationKeys.yesDelete]}
             </Button>
           </div>
         </div>

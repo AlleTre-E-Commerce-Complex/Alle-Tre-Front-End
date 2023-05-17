@@ -3,11 +3,13 @@ import { Link, useLocation, u } from "react-router-dom";
 import { Breadcrumb } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 import routes from "../../../routes";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 export const CreateAuctionBreadcrumb = ({ edit }) => {
   const { pathname } = useLocation();
   const [lang, setLang] = useLanguage("");
-  // const langContent = content[lang];
+  const selectedContent = content[lang];
 
   const CreateAuctionSections = (pathname, edit) =>
     [
@@ -18,7 +20,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
             className="text-gray-med mx-2 text-base font-normal"
             to={routes.app.home}
           >
-            Home
+            {selectedContent[localizationKeys.home]}
           </Link>
         ),
       },
@@ -34,7 +36,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.createAuction.default}
             >
-              Create Auction
+              {selectedContent[localizationKeys.createAuction]}
             </Link>
           ),
         },
@@ -51,7 +53,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.createAuction.productDetails}
             >
-              Product Details
+              {selectedContent[localizationKeys.productDetails]}
             </Link>
           ),
         },
@@ -68,7 +70,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.createAuction.auctionDetails}
             >
-              Auction Details
+              {selectedContent[localizationKeys.auctionDetails]}
             </Link>
           ),
         },
@@ -85,7 +87,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.createAuction.shippingDetails}
             >
-              Shipping Details
+              {selectedContent[localizationKeys.shippingDetails]}
             </Link>
           ),
         },
@@ -98,7 +100,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
               className="text-primary mx-2 text-base font-normal"
               to={routes.app.createAuction.paymentDetails}
             >
-              Payment Details
+              {selectedContent[localizationKeys.paymentDetails]}
             </Link>
           ),
         },
@@ -116,7 +118,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
 export const AuctionDetailsBreadcrumb = ({ details }) => {
   const { pathname } = useLocation();
   const [lang, setLang] = useLanguage("");
-  // const langContent = content[lang];
+  const selectedContent = content[lang];
 
   const AuctionDetailsSections = (pathname, details) =>
     [
@@ -127,7 +129,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
             className="text-gray-med mx-2 text-base font-normal"
             to={routes.app.home}
           >
-            Home
+            {selectedContent[localizationKeys.home]}
           </Link>
         ),
       },
@@ -143,7 +145,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.default}
             >
-              Profile
+              {selectedContent[localizationKeys.profile]}
             </Link>
           ),
         },
@@ -160,7 +162,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.default}
             >
-              My Auctions
+              {selectedContent[localizationKeys.myAuctions]}
             </Link>
           ),
         },
@@ -177,7 +179,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.active}
             >
-              Active Auctions
+              {selectedContent[localizationKeys.activeAuctions]}
             </Link>
           ),
         },
@@ -194,7 +196,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.scheduled}
             >
-              Scheduled Auctions
+              {selectedContent[localizationKeys.scheduledAuctions]}
             </Link>
           ),
         },
@@ -211,7 +213,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.sold}
             >
-              Sold Auctions
+              {selectedContent[localizationKeys.soldAuctions]}
             </Link>
           ),
         },
@@ -228,7 +230,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.pending}
             >
-              Pending Auctions
+              {selectedContent[localizationKeys.pendingAuctions]}
             </Link>
           ),
         },
@@ -245,7 +247,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.expired}
             >
-              Expired Auctions
+              {selectedContent[localizationKeys.expiredAuctions]}
             </Link>
           ),
         },
@@ -266,7 +268,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.activeDetails(details)}
             >
-              View Details
+              {selectedContent[localizationKeys.viewDetails]}
             </Link>
           ),
         },
@@ -287,7 +289,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.scheduledDetails(details)}
             >
-              View Details
+              {selectedContent[localizationKeys.viewDetails]}
             </Link>
           ),
         },
@@ -308,7 +310,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.soldDetails(details)}
             >
-              View Details
+              {selectedContent[localizationKeys.viewDetails]}
             </Link>
           ),
         },
@@ -329,7 +331,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.pendingDetails(details)}
             >
-              View Details
+              {selectedContent[localizationKeys.viewDetails]}
             </Link>
           ),
         },
@@ -350,7 +352,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.expiredDetails(details)}
             >
-              View Details
+              {selectedContent[localizationKeys.viewDetails]}
             </Link>
           ),
         },
@@ -368,7 +370,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
 export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
   const { pathname } = useLocation();
   const [lang, setLang] = useLanguage("");
-  // const langContent = content[lang];
+  const selectedContent = content[lang];
 
   const AuctionHomeDetailsSections = (pathname, details) =>
     [
@@ -379,7 +381,7 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
             className="text-gray-med mx-2 text-base font-normal"
             to={routes.app.home}
           >
-            Home
+            {selectedContent[localizationKeys.home]}
           </Link>
         ),
       },
@@ -395,7 +397,7 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.homeDetails(details)}
             >
-              Auction Details
+              {selectedContent[localizationKeys.auctionDetails]}
             </Link>
           ),
         },

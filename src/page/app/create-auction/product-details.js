@@ -33,9 +33,10 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 import EditImgeMedia from "../../../components/create-auction-components/edit-imge-media";
+import localizationKeys from "../../../localization/localization-keys";
 
 const ProductDetails = () => {
-  const [lang, setLang] = useLanguage("");
+  const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { state } = useLocation();
 
@@ -486,7 +487,9 @@ const ProductDetails = () => {
         <Stepper />
       </div>
       <div className="">
-        <h1 className="text-black text-base font-bold mt-4">Item Details</h1>
+        <h1 className="text-black text-base font-bold mt-4">
+          {selectedContent[localizationKeys.itemDetails]}
+        </h1>
         {/* formik */}
         <div>
           <Formik
@@ -528,16 +531,16 @@ const ProductDetails = () => {
                     <FormikInput
                       name="itemName"
                       type={"text"}
-                      label={"Item Name"}
-                      placeholder="Item Name"
+                      label={selectedContent[localizationKeys.itemName]}
+                      placeholder={selectedContent[localizationKeys.itemName]}
                     />
                   </div>
                   <div className="col-span-2 hidden md:block"></div>
                   <div className="col-span-2 ">
                     <FormikMultiDropdown
                       name="category"
-                      label={"Category"}
-                      placeholder="Category"
+                      label={selectedContent[localizationKeys.category]}
+                      placeholder={selectedContent[localizationKeys.category]}
                       options={GatogryOptions}
                       loading={loadingGatogry}
                       onChange={(value) => {
@@ -559,8 +562,10 @@ const ProductDetails = () => {
                   >
                     <FormikMultiDropdown
                       name="subCategory"
-                      label={"Sub Category"}
-                      placeholder="Sub Category"
+                      label={selectedContent[localizationKeys.subCategory]}
+                      placeholder={
+                        selectedContent[localizationKeys.subCategory]
+                      }
                       loading={loadingSubGatogry}
                       options={SubGatogryOptions}
                       onChange={(e) => setSubCategoryId(e)}
@@ -629,16 +634,18 @@ const ProductDetails = () => {
                     <FormikTextArea
                       name="itemDescription"
                       type={"text"}
-                      label={"Item Description"}
-                      placeholder="Write Item Description...."
+                      label={selectedContent[localizationKeys.itemDescription]}
+                      placeholder={
+                        selectedContent[localizationKeys.writeItemDescription]
+                      }
                     />
                   </div>
                 </div>
                 <div>
                   <h1 className="font-bold text-base text-black pt-6">
-                    Add Media{" "}
-                    <span className="text-gray-med text-base font-normal">
-                      (from 3 up to 5 photos )
+                    {selectedContent[localizationKeys.addMedia]}{" "}
+                    <span className="text-gray-med text-base font-normal px-1">
+                      {selectedContent[localizationKeys.from3upto5photos]}
                     </span>
                   </h1>
                   <div className="mt-6 w-full">
@@ -690,7 +697,7 @@ const ProductDetails = () => {
                   }
                 >
                   <h1 className="font-bold text-base text-black pt-6">
-                    Item Condition
+                    {selectedContent[localizationKeys.itemCondition]}
                   </h1>
                   <div
                     className={
@@ -713,11 +720,11 @@ const ProductDetails = () => {
                       onClick={() => SaveAuctionAsDraft()}
                       className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
                     >
-                      Save As Draft
+                      {selectedContent[localizationKeys.saveAsDraft]}
                     </div>
                   </div>
                   <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                    Next
+                    {selectedContent[localizationKeys.next]}
                   </button>
                 </div>
               </Form>

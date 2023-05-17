@@ -94,6 +94,58 @@ const ar = {
   [localizationKeys.sold]: "مباع",
   [localizationKeys.pending]: "معلق",
   [localizationKeys.expired]: "منتهي",
+  // Breadcrumb
+  [localizationKeys.home]: "الصفحة الرئيسية",
+  [localizationKeys.productDetails]: "تفاصيل المنتج",
+  [localizationKeys.auctionDetails]: "تفاصيل المزاد",
+  [localizationKeys.shippingDetails]: "تفاصيل الشحن",
+  [localizationKeys.paymentDetails]: "تفاصيل الدفع",
+  [localizationKeys.myAuctions]: "مزاداتي",
+  [localizationKeys.activeAuctions]: "المزادات النشطة",
+  [localizationKeys.scheduledAuctions]: "المزادات المجدولة",
+  [localizationKeys.soldAuctions]: "المزادات المباعة",
+  [localizationKeys.pendingAuctions]: "المزادات المعلقة",
+  [localizationKeys.expiredAuctions]: "المزادات المنتهية",
+  // create auctions
+  [localizationKeys.drafts]: "المسودات",
+  [localizationKeys.proceed]: "متابعة",
+  [localizationKeys.successDelete]: "تم حذف مزادك من صياغتك بنجاح",
+  [localizationKeys.errorDelete]:
+    "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
+  [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
+    "هل أنت متأكد أنك تريد حذف هذه المسودة",
+  [localizationKeys.cancel]: "إلغاء",
+  [localizationKeys.yesDelete]: "نعم ، احذف",
+  [localizationKeys.locationIsRequired]: "الموقع مطلوب",
+  [localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo]:
+    "من أجل إنهاء الإجراء ، علينا الوصول إلى",
+  [localizationKeys.yourLocationYouCanManageThemLater]:
+    "موقعك. يمكنك إدارتها لاحقًا.",
+  [localizationKeys.manageYouAddresses]: "إدارة عناوينك",
+  [localizationKeys.country]: "دولة",
+  [localizationKeys.city]: "المدينة",
+  [localizationKeys.address]: "العنوان",
+  [localizationKeys.addressLabel]: "علامة للعنوان",
+  [localizationKeys.zipCode]: "الرمز البريدي",
+  [localizationKeys.successAddLocatons]: "إضافة موقع النجاح",
+  [localizationKeys.add]: "إضافة",
+  [localizationKeys.selectCountry]: "تحديد البلد",
+  [localizationKeys.selectCity]: "اختر المدينة",
+  [localizationKeys.wirteYourAddress]: "Wirte your address",
+  [localizationKeys.exHome]: "مثال:  المنزل",
+  [localizationKeys.enterPostalZipCode]: "أدخل الرمز البريدي",
+  // product details
+  [localizationKeys.itemDetails]: "تفاصيل العنصر",
+  [localizationKeys.itemName]: "اسم العنصر",
+  [localizationKeys.category]: "الفئة",
+  [localizationKeys.subCategory]: "فئة فرعية",
+  [localizationKeys.itemDescription]: "وصف العنصر",
+  [localizationKeys.writeItemDescription]: "اكتب وصف العنصر ....",
+  [localizationKeys.addMedia]: "إضافة وسائط",
+  [localizationKeys.from3upto5photos]: "( من 3 إلى 5 صور )",
+  [localizationKeys.itemCondition]: "حالة العنصر",
+  [localizationKeys.saveAsDraft]: "حفظ كمسودة",
+  [localizationKeys.next]: "التالي",
 };
 
 export default ar;

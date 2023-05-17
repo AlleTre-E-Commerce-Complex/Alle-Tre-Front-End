@@ -3,15 +3,20 @@ import React from "react";
 import { Form, Checkbox } from "semantic-ui-react";
 
 import "../../../src/assets/style/checkbox-radio-group.css";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   return (
     <Form className="flex md:flex-row flex-col gap-x-72">
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label="New"
+          label={selectedContent[localizationKeys.new]}
           name="checkboxRadioGroup"
           value="NEW"
           checked={valueRadio === "NEW"}
@@ -26,7 +31,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label="Used"
+          label={selectedContent[localizationKeys.used]}
           name="checkboxRadioGroup"
           value="USED"
           checked={valueRadio === "USED"}
@@ -41,7 +46,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label="Open Box"
+          label={selectedContent[localizationKeys.openBox]}
           name="checkboxRadioGroup"
           value="OPEN_BOX"
           checked={valueRadio === "OPEN_BOX"}
