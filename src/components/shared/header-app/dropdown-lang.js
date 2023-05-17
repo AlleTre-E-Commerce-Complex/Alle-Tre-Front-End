@@ -3,6 +3,7 @@ import En from "../../../../src/assets/icons/En_icon.png";
 import Ar from "../../../../src/assets/icons/Ar_icon.png";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
+import localizationKeys from "../../../localization/localization-keys";
 
 const DropdownLang = ({ className }) => {
   const [lang, setLang] = useLanguage("");
@@ -10,13 +11,13 @@ const DropdownLang = ({ className }) => {
   const langOptions = [
     {
       key: "English",
-      text: "English",
+      text: selectedContent[localizationKeys.english],
       value: "en",
       image: <img className="w-6 h-6 mt-[.5px] " src={En} alt="en" />,
     },
     {
       key: "Arabic",
-      text: "Arabic",
+      text: selectedContent[localizationKeys.arabic],
       value: "ar",
       image: <img className="w-6 h-6 mt-[.5px] " src={Ar} alt="en" />,
     },

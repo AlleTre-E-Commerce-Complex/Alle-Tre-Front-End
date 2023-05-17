@@ -6,8 +6,13 @@ import AuctionFilterCard from "./auction-filter-card";
 import AuctionFilterCardList from "./auction-filter-card-list";
 import RangeInput from "./range-input";
 import useGetBrand from "../../hooks/use-get-brand";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { NotAllBranOptions } = useGetBrand(categoryId);
   const { AllBranOptions, loadingAllBranOptions } = useGetALLBrand();
@@ -17,7 +22,7 @@ const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
     <div className="flex flex-col gap-y-5">
       <div className={hiddenGatogry && "hidden"}>
         <AuctionFilterCardList
-          title={"Categories"}
+          title={selectedContent[localizationKeys.categories]}
           seeAll={GatogryOptions?.length}
           name="categories"
           values={GatogryOptions?.map((CategoryName) => ({
@@ -31,7 +36,7 @@ const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
         {categoryId ? (
           <div className={NotAllBranOptions?.length === 0 && "hidden"}>
             <AuctionFilterCardList
-              title={"Brand"}
+              title={selectedContent[localizationKeys.brand]}
               seeAll={NotAllBranOptions?.length}
               name="brands"
               values={NotAllBranOptions?.map((brandName) => ({
@@ -43,7 +48,7 @@ const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
           </div>
         ) : (
           <AuctionFilterCardList
-            title={"Brand"}
+            title={selectedContent[localizationKeys.brand]}
             seeAll={AllBranOptions?.length}
             name="brands"
             values={AllBranOptions?.map((brandName) => ({
@@ -55,27 +60,33 @@ const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
         )}
       </div>
       <AuctionFilterCard
-        title={"Selling Type"}
+        title={selectedContent[localizationKeys.sellingType]}
         seeAll={2}
         name="sellingType"
         values={[
-          { name: "Auction", value: "Auction" },
-          { name: "Buy Now", value: "Buy_Now" },
+          { name: selectedContent[localizationKeys.auction], value: "Auction" },
+          { name: selectedContent[localizationKeys.buyNow], value: "Buy_Now" },
         ].filter(Boolean)}
         myRef={myRef}
       />
       <AuctionFilterCard
-        title={"Auction state"}
+        title={selectedContent[localizationKeys.auctionState]}
         seeAll={2}
         name="auctionStatus"
         values={[
-          { name: "Coming soon", value: "IN_SCHEDULED" },
-          { name: "Live Auction", value: "ACTIVE" },
+          {
+            name: selectedContent[localizationKeys.comingSoon],
+            value: "IN_SCHEDULED",
+          },
+          {
+            name: selectedContent[localizationKeys.liveAuction],
+            value: "ACTIVE",
+          },
         ].filter(Boolean)}
         myRef={myRef}
       />
       <AuctionFilterCardList
-        title={"Location"}
+        title={selectedContent[localizationKeys.location]}
         seeAll={AllCountriesOptions?.length}
         name="countries"
         values={AllCountriesOptions?.map((countryName) => ({
@@ -84,18 +95,25 @@ const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
         })).filter(Boolean)}
         myRef={myRef}
       />
+
       <AuctionFilterCardList
-        title={"Condition"}
+        title={selectedContent[localizationKeys.condition]}
         seeAll={3}
         name="usageStatus"
         values={[
-          { name: "New", value: "NEW" },
-          { name: "Used", value: "USED" },
-          { name: "Open Box", value: "OPEN_BOX" },
+          { name: selectedContent[localizationKeys.new], value: "NEW" },
+          { name: selectedContent[localizationKeys.used], value: "USED" },
+          {
+            name: selectedContent[localizationKeys.openBox],
+            value: "OPEN_BOX",
+          },
         ].filter(Boolean)}
         myRef={myRef}
       />
-      <RangeInput title={"Price"} myRef={myRef} />
+      <RangeInput
+        title={selectedContent[localizationKeys.price]}
+        myRef={myRef}
+      />
     </div>
   );
 };

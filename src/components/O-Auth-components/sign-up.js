@@ -120,7 +120,7 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
                       placeholder={selectedContent[localizationKeys.password]}
                     />
                   </div>
-                  <div className="mt-5 mx-1">
+                  <div className="mt-4 mx-1 flex justify-start">
                     <div className="mt-2">
                       <label className="text-gray-med text-sm font-normal cursor-pointer  ">
                         <input

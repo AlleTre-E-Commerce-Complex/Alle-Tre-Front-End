@@ -12,6 +12,9 @@ import api from "../../api";
 import useCountdown from "../../hooks/use-countdown";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const AuctionCard = ({
   price,
@@ -29,13 +32,19 @@ const AuctionCard = ({
   isMyAuction,
   onReload,
 }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { user } = useAuthState();
   const dispatch = useDispatch();
   const history = useHistory();
   const { run, isLoading } = useAxios([]);
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const timeLeft = useCountdown(endingTime);
-  const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
+  const formattedTimeLeft = `${timeLeft.days} ${
+    selectedContent[localizationKeys.days]
+  } :
+  ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+  ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
@@ -146,15 +155,15 @@ const AuctionCard = ({
           <div className="flex justify-between mt-2">
             <div>
               <h6 className="text-gray-veryLight font-normal text-[10px]">
-                Total Bids
+                {selectedContent[localizationKeys.totalBids]}
               </h6>
               <p className="text-gray-dark font-medium text-[10px]">
-                {totalBods} Bid
+                {totalBods} {selectedContent[localizationKeys.bid]}
               </p>
             </div>
             <div>
               <h6 className="text-gray-veryLight font-normal text-[10px]">
-                Ending Time
+                {selectedContent[localizationKeys.endingTime]}
               </h6>
               <p
                 className={`${
@@ -171,7 +180,7 @@ const AuctionCard = ({
                 onClick={() => handelGoDetails(auctionId)}
                 className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg"
               >
-                view details
+                {selectedContent[localizationKeys.viewDetails]}
               </button>
             </div>
           ) : (
@@ -185,14 +194,14 @@ const AuctionCard = ({
                   onClick={() => handelGoDetails(auctionId)}
                   className="border-primary border-[1px] text-primary w-[128px] h-[32px] rounded-lg"
                 >
-                  Buy Now
+                  {selectedContent[localizationKeys.buyNow]}
                 </button>
               )}
               <button
                 onClick={() => handelGoDetails(auctionId)}
                 className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg"
               >
-                Bid Now
+                {selectedContent[localizationKeys.bidNow]}
               </button>
             </div>
           )}

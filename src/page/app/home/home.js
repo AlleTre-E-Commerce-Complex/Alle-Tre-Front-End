@@ -23,8 +23,13 @@ import { Open } from "../../../redux-store/auth-model-slice";
 import { useDispatch } from "react-redux";
 import UpComingAuctionsSlider from "../../../components/home-components/up-coming-auctions";
 import PaginationApp from "../../../components/shared/pagination/pagination-app";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const Home = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { search } = useLocation();
   const history = useHistory();
   const { user } = useAuthState();
@@ -108,8 +113,8 @@ const Home = () => {
         />
       </div>
       <div className="pt-32 text-center">
-        <h1 ref={myRef} className="text-gray-dark text-base font-bold">
-          Popular Categories
+        <h1 ref={myRef} className="text-gray-dark text-base font-bold ">
+          {selectedContent[localizationKeys.popularCategories]}
         </h1>
         <p className="text-gray-med text-base font-normal">
           Lorem ipsum dolor sit amet, consetetur<br></br> sadipscing elitr, sed
@@ -120,7 +125,7 @@ const Home = () => {
         <SliderRow />
       </div>
       <h6 className="max-w-[1440px] mx-auto pb-4 text-gray-med text-base font-normal">
-        {mainAuctions?.length} Results
+        {mainAuctions?.length} {selectedContent[localizationKeys.results]}
       </h6>
       <div className="flex gap-3 max-w-[1440px] lg:mx-auto md:mx-12">
         {/* left filter sections */}
@@ -164,13 +169,13 @@ const Home = () => {
           onClick={() => handelCreatOuction()}
           className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[90px] right-[90px] hidden md:block"
         >
-          Create Auction Now
+          {selectedContent[localizationKeys.createAuctionNow]}
         </button>
         <button
           onClick={() => handelCreatOuction()}
           className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[60px] right-[25px] md:hidden block"
         >
-          Create Auction
+          {selectedContent[localizationKeys.createAuction]}
         </button>
         <img
           className="lg:w-[700px] w-[500px] absolute bottom-[90px] left-[90px] hidden md:block"

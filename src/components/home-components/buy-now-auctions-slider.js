@@ -12,8 +12,13 @@ import { authAxios } from "../../config/axios-config";
 import axios from "axios";
 import api from "../../api";
 import { Dimmer, Loader } from "semantic-ui-react";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const BuyNowAuctionsSlider = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { search } = useLocation();
   const { user } = useAuthState();
 
@@ -79,7 +84,9 @@ const BuyNowAuctionsSlider = () => {
   return (
     <div className={auctions?.length === 0 ? "hidden" : "ezd-content relative"}>
       <div className="text-center">
-        <h1 className="text-gray-dark text-base font-bold">Buy Now</h1>
+        <h1 className="text-gray-dark text-base font-bold">
+          {selectedContent[localizationKeys.buyNow]}
+        </h1>
         <p className="text-gray-med text-base font-normal">
           Lorem ipsum dolor sit amet, consetetur
         </p>

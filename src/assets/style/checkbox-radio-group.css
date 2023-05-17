@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 .Edit_checkboxRadioGroup input.hidden+label{
-@apply text-gray-dark font-normal text-base 
+@apply text-gray-dark font-normal text-base rtl:pr-8 ltr:pl-8
+}
+.Edit_checkboxRadioGroup .ui.radio.checkbox .box::after, .ui.radio.checkbox label::before{
+@apply rtl:right-0 ltr:left-0
 }
 
 .Edit_checkboxRadioGroup .ui.radio.checkbox .box:after, .ui.radio.checkbox label:after{

@@ -16,8 +16,13 @@ import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
 import useFilter from "../../../hooks/use-filter";
 import { useDebouncedCallback } from "use-debounce";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const Header = ({ SetSid }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
 
@@ -77,22 +82,22 @@ const Header = ({ SetSid }) => {
           </div>
           <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto">
             <NavLinkHeader
-              title="My Bids"
+              title={selectedContent[localizationKeys.myBids]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.myBides)
               }
               onClick={() => history.push(routes.app.myBides)}
             />
-            <NavLinkHeader
-              title="Categories"
+            {/* <NavLinkHeader
+              title={selectedContent[localizationKeys.categories]}
               isActive={
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.categories)
               }
               onClick={() => history.push(routes.app.categories)}
-            />
+            /> */}
             <NavLinkHeader
-              title="Watchlist"
+              title={selectedContent[localizationKeys.watchlist]}
               isActive={
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.watchlist)
@@ -100,14 +105,14 @@ const Header = ({ SetSid }) => {
               onClick={() => handelWatchlist()}
             />
             <NavLinkHeader
-              title="FAQs"
+              title={selectedContent[localizationKeys.faqs]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.faqs)
               }
               onClick={() => history.push(routes.app.faqs)}
             />
             <NavLinkHeader
-              title="Support"
+              title={selectedContent[localizationKeys.support]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.support)
               }
@@ -118,9 +123,9 @@ const Header = ({ SetSid }) => {
           <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
             <button
               onClick={handelOnSell}
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px]"
+              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] ltr:font-serifEN rtl:font-serifAR"
             >
-              Sell Now
+              {selectedContent[localizationKeys.sellNow]}
             </button>
           </div>
         </div>
@@ -137,9 +142,9 @@ const Header = ({ SetSid }) => {
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-secondary`}>
         <div className="py-[6px] flex gap-x-4  max-w-[1440px] lg:mx-auto md:mx-12 ">
           <Input
-            className="w-full h-[48px] edit-search-Input "
+            className="w-full h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR "
             icon="search"
-            placeholder="Search..."
+            placeholder={selectedContent[localizationKeys.search]}
             onChange={(e, { value }) => {
               debounced(value);
             }}
@@ -149,7 +154,7 @@ const Header = ({ SetSid }) => {
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[304px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
               onClick={handleOpen}
             >
-              Categories
+              {selectedContent[localizationKeys.categories]}
               <RiArrowDownSFill size={20} />
             </button>
           </div>
@@ -160,7 +165,11 @@ const Header = ({ SetSid }) => {
               className="w-[136px] h-[48px] border-[1px] border-white text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
             >
               <FaUser size={15} className="mt-1" />
-              <p className="pt-1">{user ? "Profile" : "Register Now"}</p>
+              <p className="pt-1">
+                {user
+                  ? selectedContent[localizationKeys.profile]
+                  : selectedContent[localizationKeys.registerNow]}
+              </p>
             </button>
           </div>
         </div>

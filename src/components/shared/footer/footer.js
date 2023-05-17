@@ -5,8 +5,13 @@ import useGetGatogry from "../../../hooks/use-get-category";
 import { FaInstagram, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import routes from "../../../routes";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const Footer = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { pathname } = useLocation();
 
@@ -21,21 +26,26 @@ const Footer = () => {
         <div className="">
           <div className="absolute bottom-9 ltr:left-24 rtl:right-24 ">
             <h1 className="text-2xl text-white font-medium ">
-              We're Always Here To Help You...
+              {selectedContent[localizationKeys.weAreAlwaysHereToHelpYou]}
             </h1>
             <p className="text-base text-white font-normal pt-4 ">
-              Subscribe Now to Get new offers and updates <br></br>Lorem ipsum
-              dolor sit amet, consetetur sadipscing elitr, sed diam<br></br>
+              {
+                selectedContent[
+                  localizationKeys.subscribeNowToGetNewOffersAndUpdates
+                ]
+              }{" "}
+              <br></br>Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+              sed diam<br></br>
               nonumy eirmod tempor
             </p>
           </div>
           <div className="flex gap-5 absolute ltr:right-24 rtl:left-24 bottom-20">
             <input
               className="w-[400px] h-[48px] rounded-lg px-4 outline-none"
-              placeholder="Write your mail..."
+              placeholder={selectedContent[localizationKeys.writeYourMail]}
             />
             <button className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] h-[48px] text-white ">
-              Subscribe
+              {selectedContent[localizationKeys.subscribe]}
             </button>
           </div>
         </div>
@@ -45,7 +55,9 @@ const Footer = () => {
           <AllatreLogoWhite />
           <div className="flex gap-x-14">
             <div>
-              <h1 className="text-white font-bold text-base">Categories</h1>
+              <h1 className="text-white font-bold text-base">
+                {selectedContent[localizationKeys.categories]}
+              </h1>
               {GatogryOptions.map((CategoryName) => (
                 <p
                   key={CategoryName?.text}
@@ -57,34 +69,36 @@ const Footer = () => {
             </div>
             <div>
               <h1 className="text-white font-bold text-base">
-                Selling on Allatre
+                {selectedContent[localizationKeys.sellingOnAllatre]}
               </h1>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                Seller Center
+                {selectedContent[localizationKeys.sellerCenter]}
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                Sell for charity
+                {selectedContent[localizationKeys.sellForCharity]}
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                Business tools
+                {selectedContent[localizationKeys.businessTools]}
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                Create Auction
+                {selectedContent[localizationKeys.createAuction]}
               </p>
             </div>
             <div>
-              <h1 className="text-white font-bold text-base">My Account</h1>
+              <h1 className="text-white font-bold text-base">
+                {selectedContent[localizationKeys.myAccount]}
+              </h1>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                I'm Bidding On
+                {selectedContent[localizationKeys.iamBiddingOn]}
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                I've Bought
+                {selectedContent[localizationKeys.iHaveBought]}
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                Bids I've Received
+                {selectedContent[localizationKeys.bidsIHaveReceived]}
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                I've Sold
+                {selectedContent[localizationKeys.iHaveSold]}
               </p>
             </div>
           </div>
@@ -112,7 +126,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="bg-secondary h-[28px] text-gray-med/50 flex justify-center items-center ">
-        All rights reserved.
+        {selectedContent[localizationKeys.allRightsReserved]}
       </div>
     </div>
   );

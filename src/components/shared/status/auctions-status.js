@@ -1,9 +1,14 @@
 import React from "react";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 // DRAFTED - PENDING_OWNER_DEPOIST-PUBLISHED-ARCHIVED-SOLD-EXPIRED
 // ON_TIME - SCHEDULED
 
 const AuctionsStatus = ({ status, small, big, absolute }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   return (
     <div>
       {status === "ACTIVE" && (
@@ -14,7 +19,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           ${absolute && "absolute"}
           font-normal text-green bg-green-light top-0`}
         >
-          Active Now
+          {selectedContent[localizationKeys.activeNow]}
         </button>
       )}
       {status === "IN_SCHEDULED" && (
@@ -25,7 +30,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           ${absolute && "absolute"}
           font-normal text-yellow bg-yellow-light top-0`}
         >
-          Scheduled
+          {selectedContent[localizationKeys.Scheduled]}
         </button>
       )}
       {status === "SOLD" && (
@@ -36,7 +41,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           ${absolute && "absolute"}
           font-normal text-primary-dark bg-primary-veryLight top-0`}
         >
-          Sold
+          {selectedContent[localizationKeys.sold]}
         </button>
       )}
       {status === "PENDING_OWNER_DEPOIST" && (
@@ -47,7 +52,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           ${absolute && "absolute"}
             font-normal text-secondary bg-secondary-light top-0`}
         >
-          Pending
+          {selectedContent[localizationKeys.pending]}
         </button>
       )}
       {status === "EXPIRED" && (
@@ -58,7 +63,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           ${absolute && "absolute"}
           font-normal text-gray-dark bg-gray-veryLight top-0`}
         >
-          Expired
+          {selectedContent[localizationKeys.expired]}
         </button>
       )}
     </div>

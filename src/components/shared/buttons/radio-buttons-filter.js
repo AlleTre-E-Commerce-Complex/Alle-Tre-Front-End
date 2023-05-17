@@ -8,9 +8,9 @@ export const RadioButtonsFilter = ({ valueRadio, name, myRef }) => {
   return (
     <Form className="pt-5">
       {valueRadio?.map((e) => (
-        <Form.Field>
+        <Form.Field className="">
           <Checkbox
-            className="Edit_checkboxRadioGroup"
+            className="Edit_checkboxRadioGroup "
             radio
             label={e?.name}
             name="checkboxRadioGroup"

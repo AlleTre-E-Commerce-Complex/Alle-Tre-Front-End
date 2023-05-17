@@ -9,8 +9,13 @@ import { truncateString } from "../../utils/truncate-string";
 import CountdownTimer from "../shared/timers/countdown-timer";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const ImageSlider = ({ myRef, images, slidesData }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
 
   const [translate, setTranslate] = useState("");
@@ -151,7 +156,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                         }
                         className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-primary hover:bg-primary-dark sm:text-base text-xs font-normal ltr:font-serifEN rtl:font-serifAR"
                       >
-                        Bid Now
+                        {selectedContent[localizationKeys.bidNow]}
                       </button>
                       <button
                         onClick={() =>
@@ -163,7 +168,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                         }
                         className="lg:w-32 md:w-28 w-24 lg:h-12 md:h-10 rounded-lg bg-transparent border-white border-[1px] text-white sm:text-base text-xs py-1  md:py-0 font-normal ltr:font-serifEN rtl:font-serifAR"
                       >
-                        View Details
+                        {selectedContent[localizationKeys.viewDetails]}
                       </button>
                     </div>
                   </div>
