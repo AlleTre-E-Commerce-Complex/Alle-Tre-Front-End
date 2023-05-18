@@ -98,7 +98,7 @@ const en = {
   [localizationKeys.expired]: "Expired",
   // Breadcrumb
   [localizationKeys.home]: "Home",
-  [localizationKeys.productDetails]: "`product Details",
+  [localizationKeys.productDetails]: "product Details",
   [localizationKeys.auctionDetails]: "Auction Details",
   [localizationKeys.shippingDetails]: "Shipping Details",
   [localizationKeys.paymentDetails]: "Payment Details",
@@ -149,6 +149,47 @@ const en = {
   [localizationKeys.itemCondition]: "Item Condition",
   [localizationKeys.saveAsDraft]: "Save As Draft",
   [localizationKeys.next]: "Next",
+  // auction details
+  [localizationKeys.quickAuction]: "Quick Auction",
+  [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",
+  [localizationKeys.longAuction]: "Long Auction",
+  [localizationKeys.durationMoreThanOneDayFromStartingDate]:
+    "Duration more than one day from starting date",
+  [localizationKeys.longAuction]: "Long Auction",
+  [localizationKeys.Hrs]: "Hrs.",
+  [localizationKeys.Hrs]: "Hrs.",
+  [localizationKeys.auctionDuration]: "Auction Duration",
+  [localizationKeys.scheduleBid]: "Schedule Bid",
+  [localizationKeys.optional]: "(Optional)",
+  [localizationKeys.unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately]:
+    "Unless a start time and date are chosen, your listing becomes active immediately.",
+  [localizationKeys.startDate]: "Start Date",
+  [localizationKeys.time]: "Time",
+  [localizationKeys.pricing]: "Pricing",
+  [localizationKeys.minimumPrice]: "Minimum Price",
+  [localizationKeys.purchasingPrice]: "Purchasing Price",
+  [localizationKeys.minimum30MoreThanStartingBid]:
+    "Minimum: 30% more than starting bid",
+  [localizationKeys.purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice]:
+    "Purchasing price must be more than or equal 30% of minimum price",
+  // shiping details
+  [localizationKeys.locationDetails]: "Location Details",
+  [localizationKeys.addAddress]: "Add Address",
+  // err
+  [localizationKeys.required]: "Required",
+  [localizationKeys.makeSureThatYouChooseItemConditionValue]:
+    "Make sure that you choose Item Condition value",
+  [localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos]:
+    "Make sure that you choose at least three or more photos",
+  [localizationKeys.oops]:
+    "oops, sorry something with wrong please make sure everything is correct and try again",
+  // success
+  [localizationKeys.yourAuctionSaveAsDraftedSuccess]:
+    "Your Auction Save As Draft Success",
+  [localizationKeys.yourAuctionIsCreatedSuccess]:
+    "your Auction is Created success",
+  [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
+    "Make sure that you choose the auction location or create another one",
 };
 
 export default en;

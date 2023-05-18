@@ -62,34 +62,40 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
 };
 
 export const CheckboxRadioAuctionDetails = ({ valueRadio, setRadioValue }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   return (
     <Form className="flex md:flex-row flex-col gap-x-64">
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label="Quick Auction"
+          label={selectedContent[localizationKeys.quickAuction]}
           name="checkboxRadioGroup"
           value="Quick Auction"
           checked={valueRadio === "Quick Auction"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-2">
-          Maximum duration must be day
+          {selectedContent[localizationKeys.maximumDurationMustBeDay]}
         </p>
       </Form.Field>
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label="Long Auction"
+          label={selectedContent[localizationKeys.longAuction]}
           name="checkboxRadioGroup"
           value="Long Auction"
           checked={valueRadio === "Long Auction"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-2">
-          Duration more than one day from starting date
+          {
+            selectedContent[
+              localizationKeys.durationMoreThanOneDayFromStartingDate
+            ]
+          }
         </p>
       </Form.Field>
     </Form>

@@ -28,8 +28,14 @@ import {
 
 import "../../../../src/assets/style/radio-toggle.css";
 import { ScrollToFieldError } from "../../../components/shared/formik/formik-scroll-to-field-error";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
+import { pureFinalPropsSelectorFactory } from "react-redux/es/connect/selectorFactory";
 
 const AuctionDetails = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
 
   const auctionDetailsInt = useSelector(
@@ -49,29 +55,47 @@ const AuctionDetails = () => {
   const AuctionDetailsDataSchema = Yup.object({
     Hrs: Yup.string().when([], {
       is: () => valueRadio === "Quick Auction",
-      then: Yup.string().required("required"),
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
     AuctionDuration: Yup.string().when([], {
       is: () => valueRadio === "Long Auction",
-      then: Yup.string().required("required"),
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
     date: Yup.string().when([], {
       is: () => IsSchedule,
-      then: Yup.string().required("required"),
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
     from: Yup.string().when([], {
       is: () => IsSchedule,
-      then: Yup.string().required("required"),
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
-    MinimumPrice: Yup.string().trim().required("required"),
-    PurchasingPrice: Yup.string().when([], {
+    MinimumPrice: Yup.number().required(
+      selectedContent[localizationKeys.required]
+    ),
+    PurchasingPrice: Yup.number().when([], {
       is: () => IsBuyNow,
-      then: Yup.string().required("required"),
-      otherwise: Yup.string().notRequired(),
+      then: Yup.number()
+        .required(selectedContent[localizationKeys.required])
+        .test({
+          message:
+            selectedContent[
+              localizationKeys
+                .purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice
+            ],
+          test(value) {
+            return (
+              value >=
+              parseFloat(
+                this.parent.MinimumPrice + this.parent.MinimumPrice * 0.3
+              )
+            );
+          },
+        }),
+      otherwise: Yup.number().notRequired(),
     }),
   });
 
@@ -147,6 +171,7 @@ const AuctionDetails = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
+                {console.log(formik.values)}
                 <ScrollToFieldError />
                 <div className="grid sm:grid-cols-2 grid-cols-1">
                   <div>
@@ -155,7 +180,7 @@ const AuctionDetails = () => {
                         <div>
                           <FormikMultiDropdown
                             name={"Hrs"}
-                            label={"Hrs."}
+                            label={selectedContent[localizationKeys.Hrs]}
                             placeholder="23 hrs"
                             options={hoursOptions}
                           />
@@ -164,7 +189,9 @@ const AuctionDetails = () => {
                         <div>
                           <FormikMultiDropdown
                             name={"AuctionDuration"}
-                            label={"Auction Duration"}
+                            label={
+                              selectedContent[localizationKeys.auctionDuration]
+                            }
                             placeholder="7 days"
                             options={daysOptions}
                           />
@@ -173,10 +200,10 @@ const AuctionDetails = () => {
                     </div>
                     <div>
                       <div className="flex mt-7">
-                        <h1 className="font-bold text-base text-black mb-1 mr-16">
-                          Schedule Bid
+                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                          {selectedContent[localizationKeys.scheduleBid]}
                           <span className="text-gray-med text-base font-normal mx-2">
-                            (Optional)
+                            {selectedContent[localizationKeys.optional]}
                           </span>
                         </h1>
                         <div className="mt-auto">
@@ -189,8 +216,12 @@ const AuctionDetails = () => {
                         </div>
                       </div>
                       <p className="text-gray-med text-xs font-normal pt-1">
-                        Unless a start time and date are chosen, your listing
-                        becomes active immediately.
+                        {
+                          selectedContent[
+                            localizationKeys
+                              .unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately
+                          ]
+                        }
                       </p>
                       <div
                         className={
@@ -202,14 +233,14 @@ const AuctionDetails = () => {
                         <div className="w-full">
                           <FormikDate
                             name="date"
-                            label={"Start Date"}
+                            label={selectedContent[localizationKeys.startDate]}
                             placeholder="DD/MM/YYYY"
                           />
                         </div>
                         <div className="w-full">
                           <FormikTimePicker
                             name="from"
-                            label={"Time"}
+                            label={selectedContent[localizationKeys.time]}
                             placeholder="DD/MM/YYYY"
                           />
                         </div>
@@ -217,23 +248,23 @@ const AuctionDetails = () => {
                     </div>
                     <div>
                       <h1 className="font-bold text-base text-black py-6">
-                        Pricing
+                        {selectedContent[localizationKeys.pricing]}
                       </h1>
                       <div className="pt-6">
                         <FormikInput
                           type="number"
                           name="MinimumPrice"
-                          label="Minimum Price"
+                          label={selectedContent[localizationKeys.minimumPrice]}
                           placeholder="AEDXXX"
                         />
                       </div>
                     </div>
                     <div>
                       <div className="flex mt-7">
-                        <h1 className="font-bold text-base text-black mb-1 mr-16">
-                          Buy Now
+                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                          {selectedContent[localizationKeys.buyNow]}
                           <span className="text-gray-med text-base font-normal mx-2">
-                            (Optional)
+                            {selectedContent[localizationKeys.optional]}
                           </span>
                         </h1>
                         <div className="mt-auto">
@@ -246,8 +277,12 @@ const AuctionDetails = () => {
                         </div>
                       </div>
                       <p className="text-gray-med text-xs font-normal pt-1">
-                        Unless a start time and date are chosen, your listing
-                        becomes active immediately.
+                        {
+                          selectedContent[
+                            localizationKeys
+                              .unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately
+                          ]
+                        }
                       </p>
                       <div
                         className={
@@ -260,11 +295,17 @@ const AuctionDetails = () => {
                           <FormikInput
                             type="number"
                             name="PurchasingPrice"
-                            label="Purchasing Price"
+                            label={
+                              selectedContent[localizationKeys.purchasingPrice]
+                            }
                             placeholder="AEDXXX"
                           />
                           <p className="text-gray-dark text-xs font-normal px-2">
-                            Minimum: 30% more than starting bid
+                            {
+                              selectedContent[
+                                localizationKeys.minimum30MoreThanStartingBid
+                              ]
+                            }
                           </p>
                         </div>
                       </div>
@@ -273,7 +314,7 @@ const AuctionDetails = () => {
                   {/* buttons */}
                   <div className="mt-auto flex justify-end  mb-6">
                     <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                      Next
+                      {selectedContent[localizationKeys.next]}
                     </button>
                   </div>
                 </div>

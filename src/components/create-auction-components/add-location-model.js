@@ -33,11 +33,17 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
     useGetAllCities(countriesId);
 
   const AddLocationSchema = Yup.object({
-    countryId: Yup.string().required("required"),
-    cityId: Yup.string().required("required"),
-    address: Yup.string().required("required"),
-    addressLabel: Yup.string().required("required"),
-    zipCode: Yup.string().trim().required("required"),
+    countryId: Yup.string().required(
+      selectedContent[localizationKeys.required]
+    ),
+    cityId: Yup.string().required(selectedContent[localizationKeys.required]),
+    address: Yup.string().required(selectedContent[localizationKeys.required]),
+    addressLabel: Yup.string().required(
+      selectedContent[localizationKeys.required]
+    ),
+    zipCode: Yup.string()
+      .trim()
+      .required(selectedContent[localizationKeys.required]),
   });
   const { run, isLoading } = useAxios();
 

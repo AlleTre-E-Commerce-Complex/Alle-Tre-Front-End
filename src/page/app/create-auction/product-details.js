@@ -193,31 +193,43 @@ const ProductDetails = () => {
   ]);
   const regularCustomFieldsvalidations =
     customFromData?.regularCustomFields?.reduce((acc, curr) => {
-      acc[curr.key] = Yup.string().required("Required");
+      acc[curr.key] = Yup.string().required(
+        selectedContent[localizationKeys.required]
+      );
       return acc;
     }, {});
   const arrayCustomFieldsvalidations =
     customFromData?.arrayCustomFields?.reduce((acc, curr) => {
-      acc[curr.key] = Yup.string().required("Required");
+      acc[curr.key] = Yup.string().required(
+        selectedContent[localizationKeys.required]
+      );
       return acc;
     }, {});
 
   const model = customFromData?.model?.key;
   const ProductDetailsSchema = Yup.object({
-    itemName: Yup.string().trim().required("required"),
-    category: Yup.string().trim().required("required"),
-    itemDescription: Yup.string().trim().required("required"),
+    itemName: Yup.string()
+      .trim()
+      .required(selectedContent[localizationKeys.required]),
+    category: Yup.string()
+      .trim()
+      .required(selectedContent[localizationKeys.required]),
+    itemDescription: Yup.string()
+      .trim()
+      .required(selectedContent[localizationKeys.required]),
     ...regularCustomFieldsvalidations,
     ...arrayCustomFieldsvalidations,
     model: Yup.string().when([], {
       is: () => model,
-      then: Yup.string().required("required"),
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
     subCategory: Yup.string().when([], {
       is: () => SubGatogryOptions?.length === 0,
       then: Yup.string().notRequired(),
-      otherwise: Yup.string().required("required"),
+      otherwise: Yup.string().required(
+        selectedContent[localizationKeys.required]
+      ),
     }),
   });
 
@@ -241,7 +253,11 @@ const ProductDetails = () => {
         history.push(routes.app.createAuction.auctionDetails);
       } else {
         if (hasUsageCondition) {
-          toast.error("Make sure that you choose Item Condition value");
+          toast.error(
+            selectedContent[
+              localizationKeys.makeSureThatYouChooseItemConditionValue
+            ]
+          );
         }
       }
       if (!hasUsageCondition) {
@@ -262,7 +278,11 @@ const ProductDetails = () => {
         history.push(routes.app.createAuction.auctionDetails);
       }
     } else {
-      toast.error("Make sure that you choose at least three or more photos");
+      toast.error(
+        selectedContent[
+          localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+        ]
+      );
     }
   };
 
@@ -431,14 +451,16 @@ const ProductDetails = () => {
             formData
           )
           .then((res) => {
-            toast.success("your Auction Save As Drafted success");
+            toast.success(
+              selectedContent[localizationKeys.yourAuctionSaveAsDraftedSuccess]
+            );
             history.push(routes.app.createAuction.default);
             dispatch(productDetails({}));
           })
           .catch((err) => {
             toast.error(
               err?.message.map((e) => e) ||
-                "oops, sorry something with wrong please make sure everything is correct and try again"
+                selectedContent[localizationKeys.oops]
             );
           })
       );
@@ -447,14 +469,16 @@ const ProductDetails = () => {
         authAxios
           .post(api.app.auctions.setAssdraft, formData)
           .then((res) => {
-            toast.success("your Auction Save As Drafted success");
+            toast.success(
+              selectedContent[localizationKeys.yourAuctionSaveAsDraftedSuccess]
+            );
             history.push(routes.app.createAuction.default);
             dispatch(productDetails({}));
           })
           .catch((err) => {
             toast.error(
               err?.message.map((e) => e) ||
-                "oops, sorry something with wrong please make sure everything is correct and try again"
+                selectedContent[localizationKeys.oops]
             );
           })
       );

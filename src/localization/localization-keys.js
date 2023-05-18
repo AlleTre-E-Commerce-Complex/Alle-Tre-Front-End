@@ -139,6 +139,41 @@ const localizationKeys = {
   itemCondition: "itemCondition",
   saveAsDraft: "saveAsDraft",
   next: "next",
+  // auction details
+  quickAuction: "quickAuction",
+  maximumDurationMustBeDay: "maximumDurationMustBeDay",
+  durationMoreThanOneDayFromStartingDate:
+    "durationMoreThanOneDayFromStartingDate",
+  longAuction: "longAuction",
+  Hrs: "Hrs",
+  auctionDuration: "auctionDuration",
+  scheduleBid: "scheduleBid",
+  optional: "optional",
+  unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately:
+    "unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately",
+  startDate: "startDate",
+  time: "time",
+  pricing: "pricing",
+  minimumPrice: "minimumPrice",
+  purchasingPrice: "purchasingPrice",
+  minimum30MoreThanStartingBid: "minimum30MoreThanStartingBid",
+  purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice:
+    "purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice",
+  // shiping details
+  locationDetails: "locationDetails",
+  addAddress: "addAddress",
+  // err
+  required: "required",
+  makeSureThatYouChooseItemConditionValue:
+    "makeSureThatYouChooseItemConditionValue",
+  makeSureThatYouChooseAtLeastThreeOrMorePhotos:
+    "makeSureThatYouChooseAtLeastThreeOrMorePhotos",
+  oops: "oops",
+  // sucsess
+  yourAuctionSaveAsDraftedSuccess: "yourAuctionSaveAsDraftedSuccess",
+  yourAuctionIsCreatedSuccess: "yourAuctionIsCreatedSuccess",
+  makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne:
+    "makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne",
 };
 
 export default localizationKeys;

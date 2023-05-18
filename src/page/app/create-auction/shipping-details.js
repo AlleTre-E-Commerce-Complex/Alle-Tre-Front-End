@@ -30,8 +30,12 @@ import {
   duration,
   isBuyNow,
 } from "../../../redux-store/auction-details-slice";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const ShippingDetails = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const dispatch = useDispatch();
 
   const productDetailsInt = useSelector(
@@ -47,7 +51,6 @@ const ShippingDetails = () => {
   const [locationId, setLocationId] = useFilter("locationId", "");
 
   const history = useHistory();
-  const [lang] = useLanguage();
   const [open, setOpen] = useState(false);
   const [locatonData, setLocationData] = useState();
 
@@ -206,7 +209,9 @@ const ShippingDetails = () => {
               formData
             )
             .then((res) => {
-              toast.success("your Auction is Created success");
+              toast.success(
+                selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
+              );
               history.push(routes.app.profile.myAuctions.pending);
               dispatch(productDetails({}));
               dispatch(auctionDetails({}));
@@ -218,7 +223,7 @@ const ShippingDetails = () => {
               toast.error(
                 // err?.response?.data?.message.map((e) => e) ||
                 //   err?.message.map((e) => e) ||
-                "oops, something with wrong please make sure everything is in the right place and try again "
+                selectedContent[localizationKeys.oops]
               );
             })
         );
@@ -227,7 +232,9 @@ const ShippingDetails = () => {
           authAxios
             .post(api.app.auctions.default, formData)
             .then((res) => {
-              toast.success("your Auction is Created success");
+              toast.success(
+                selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
+              );
               history.push(routes.app.profile.myAuctions.pending);
               dispatch(productDetails({}));
               dispatch(auctionDetails({}));
@@ -239,14 +246,17 @@ const ShippingDetails = () => {
               toast.error(
                 // err?.response?.data?.message.map((e) => e) ||
                 //   err?.message.map((e) => e) ||
-                "oops, something with wrong please make sure everything is in the right place and try again "
+                selectedContent[localizationKeys.oops]
               );
             })
         );
       }
     } else {
       toast.error(
-        "Make sure that you choose the auction location or create another one"
+        selectedContent[
+          localizationKeys
+            .makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne
+        ]
       );
     }
   };
@@ -261,7 +271,7 @@ const ShippingDetails = () => {
       </div>
       <div className=" max-w-[1366px] mx-auto ">
         <h1 className="font-bold text-base text-black pt-6">
-          Location Details
+          {selectedContent[localizationKeys.locationDetails]}
         </h1>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mx-auto pt-6">
           <Dimmer
@@ -287,7 +297,9 @@ const ShippingDetails = () => {
             className="border-gray-med border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex justify-center gap-x-2 "
           >
             <GoPlus className="my-auto" size={16} />
-            <p className="my-auto">Add Address</p>
+            <p className="my-auto">
+              {selectedContent[localizationKeys.addAddress]}
+            </p>
           </button>
         </div>
         {/* <button
@@ -302,14 +314,14 @@ const ShippingDetails = () => {
             onClick={creatAuction}
             loading={isLoadingCreatAuction}
           >
-            Creat Auction
+            {selectedContent[localizationKeys.createAuction]}
           </button>
         </div>
       </div>
       <AddLocationModel
         open={open}
         setOpen={setOpen}
-        TextButton={"Add"}
+        TextButton={selectedContent[localizationKeys.add]}
         onReload={onReload}
       />
     </div>

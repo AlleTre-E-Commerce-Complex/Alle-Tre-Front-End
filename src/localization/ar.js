@@ -131,7 +131,7 @@ const ar = {
   [localizationKeys.add]: "إضافة",
   [localizationKeys.selectCountry]: "تحديد البلد",
   [localizationKeys.selectCity]: "اختر المدينة",
-  [localizationKeys.wirteYourAddress]: "Wirte your address",
+  [localizationKeys.wirteYourAddress]: "اكتب عنوانك",
   [localizationKeys.exHome]: "مثال:  المنزل",
   [localizationKeys.enterPostalZipCode]: "أدخل الرمز البريدي",
   // product details
@@ -146,6 +146,45 @@ const ar = {
   [localizationKeys.itemCondition]: "حالة العنصر",
   [localizationKeys.saveAsDraft]: "حفظ كمسودة",
   [localizationKeys.next]: "التالي",
+  // auction details
+  [localizationKeys.quickAuction]: "المزاد السريع",
+  [localizationKeys.maximumDurationMustBeDay]:
+    "يجب أن تكون المدة القصوى باليوم",
+  [localizationKeys.longAuction]: "المزاد الطويل",
+  [localizationKeys.durationMoreThanOneDayFromStartingDate]:
+    "المدة أكثر من يوم واحد من تاريخ البدء",
+  [localizationKeys.longAuction]: "المزاد الطويل",
+  [localizationKeys.Hrs]: "ساعات.",
+  [localizationKeys.auctionDuration]: "مدة المزاد",
+  [localizationKeys.scheduleBid]: "مزاد مجدول",
+  [localizationKeys.optional]: "(اختياري)",
+  [localizationKeys.unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately]:
+    "ما لم يتم اختيار وقت وتاريخ البدء ، تصبح قائمتك نشطة على الفور.",
+  [localizationKeys.startDate]: "تاريخ البدء",
+  [localizationKeys.time]: "الوقت",
+  [localizationKeys.pricing]: "التسعير",
+  [localizationKeys.minimumPrice]: "سعر الحد الأدنى",
+  [localizationKeys.purchasingPrice]: "سعر الشراء",
+  [localizationKeys.minimum30MoreThanStartingBid]:
+    "الحد الأدنى: 30٪ أكثر من عرض السعر المبدئي",
+  [localizationKeys.purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice]:
+    "يجب أن يكون سعر الشراء أكبر من أو يساوي 30٪ من الحد الأدنى للسعر",
+  // shiping details
+  [localizationKeys.locationDetails]: "تفاصيل الشحن",
+  [localizationKeys.addAddress]: "إضافة عنوان",
+  // err
+  [localizationKeys.required]: "مطلوب",
+  [localizationKeys.makeSureThatYouChooseItemConditionValue]:
+    "تأكد من اختيار قيمة حالة العنصر",
+  [localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos]:
+    "تأكد من اختيار ثلاث صور على الأقل أو أكثر",
+  [localizationKeys.oops]:
+    "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
+  // sucsess
+  [localizationKeys.yourAuctionSaveAsDraftedSuccess]: "مزادك حفظ كمسودة نجاح",
+  [localizationKeys.yourAuctionIsCreatedSuccess]: "تم إنشاء مزادك بنجاح",
+  [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
+    "تأكد من اختيار موقع المزاد أو إنشاء موقع آخر",
 };
 
 export default ar;
