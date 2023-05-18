@@ -30,9 +30,12 @@ import { useLanguage } from "../../../context/language-context";
 
 import { PofileData } from "../../../redux-store/pofile-data-slice";
 import { useDispatch } from "react-redux";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const ProfileSettings = () => {
-  const [lang] = useLanguage();
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [open, setOpen] = useState(false);
   const [pofileData, setPofileData] = useState();
   const [locationData, setLocationData] = useState();
@@ -103,19 +106,21 @@ const ProfileSettings = () => {
         }`}
       >
         <h1 className="text-black text-base font-medium pt-12 ltr:pl-6 rtl:pr-6">
-          Complete your profile to make your actions easier
+          {
+            selectedContent[
+              localizationKeys.completeYourProfileToMakeYourActionsEasier
+            ]
+          }
         </h1>
         <p className="pt-4 text-gray-dark ltr:pl-6 rtl:pr-6  ltr:pr-14 rtl:pl-16">
-          "Your account currently offers access to updates, saved items, sale
-          details, and other features. To bid, buy and sell with Alle-tre,
-          kindly take a moment to fill out your profile information."
+          "{selectedContent[localizationKeys.completeNowMasg]}"
         </p>
         <div className="flex justify-end ltr:pr-14 rtl:pl-14 pt-8 pb-8">
           <button
             onClick={() => handelCompleteProfle()}
             className="bg-primary hover:bg-primary-dark text-white rounded-lg w-32 h-8 text-sm font-normal"
           >
-            Complete Now
+            {selectedContent[localizationKeys.completeNow]}
           </button>
         </div>
       </div>
@@ -143,7 +148,7 @@ const ProfileSettings = () => {
         {/*  Personal Details */}
         <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8 ">
           <h1 className="text-gray-dark text-base font-semibold">
-            Personal Details
+            {selectedContent[localizationKeys.personalDetails]}
           </h1>
           <div className="flex justify-between pt-9">
             <div>
@@ -152,7 +157,7 @@ const ProfileSettings = () => {
                   <RiUser3Fill size={16} />
                 </p>
                 <p className="text-gray-dark text-base font-medium  ">
-                  User Name
+                  {selectedContent[localizationKeys.userName]}
                 </p>
               </div>
               <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px] ">
@@ -177,7 +182,7 @@ const ProfileSettings = () => {
                   <HiLockClosed size={16} />
                 </p>
                 <p className="text-gray-dark text-base font-medium  ">
-                  Password
+                  {selectedContent[localizationKeys.password]}
                 </p>
               </div>
               <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px] ">
@@ -192,7 +197,7 @@ const ProfileSettings = () => {
         {/* Contact info */}
         <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8 ">
           <h1 className="text-gray-dark text-base font-semibold">
-            Contact info
+            {selectedContent[localizationKeys.contactInfo]}
           </h1>
           <div className="flex pt-9">
             <div>
@@ -200,7 +205,9 @@ const ProfileSettings = () => {
                 <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
                   <MdMail size={16} />
                 </p>
-                <p className="text-gray-dark text-base font-medium">E-mail</p>
+                <p className="text-gray-dark text-base font-medium">
+                  {selectedContent[localizationKeys.eMail]}
+                </p>
               </div>
               <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px]  ">
                 {pofileData?.email}
@@ -214,7 +221,9 @@ const ProfileSettings = () => {
               } flex gap-x-1 ltr:md:ml-[210px] rtl:md:mr-[210px] ltr:ml-auto rtl:mr-auto`}
             >
               <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-              <p className="text-base font-normal">Verified</p>
+              <p className="text-base font-normal">
+                {selectedContent[localizationKeys.verified]}
+              </p>
             </div>
           </div>
           <div className="flex justify-between pt-9">
@@ -224,7 +233,7 @@ const ProfileSettings = () => {
                   <BsFillTelephoneFill size={16} />
                 </p>
                 <p className="text-gray-dark text-base font-medium">
-                  Phone Number
+                  {selectedContent[localizationKeys.phoneNumber]}
                 </p>
               </div>
               <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px]">
@@ -242,18 +251,17 @@ const ProfileSettings = () => {
         {/* O Auth */}
         <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8">
           <h1 className="text-gray-dark text-base font-semibold">
-            Login service
+            {selectedContent[localizationKeys.loginService]}
           </h1>
           <p className="text-gray-dark text-base font-normal pt-2">
-            Your Alla-tre account does not have an external login service.
-            Connect accounts now for quick & secure access.
+            {selectedContent[localizationKeys.loginServiceMaseg]}
           </p>
           <div>
             <div className="md:flex block mt-8">
               <Loginbutton
                 isActive={pofileData?.oAuthType === "APPLE" ? true : false}
                 logo={appleIcon}
-                text="Connected with Apple"
+                text={selectedContent[localizationKeys.connectedWithApple]}
               />
               <div
                 className={`${
@@ -263,14 +271,16 @@ const ProfileSettings = () => {
                 } md:flex hidden gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto `}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-                <p className="text-base font-normal">Connected</p>
+                <p className="text-base font-normal">
+                  {selectedContent[localizationKeys.connected]}
+                </p>
               </div>
             </div>
             <div className="md:flex block ">
               <Loginbutton
                 isActive={pofileData?.oAuthType === "GOOGLE" ? true : false}
                 logo={googleIcon}
-                text="Connect with Google"
+                text={selectedContent[localizationKeys.connectWithGoogle]}
               />
               <div
                 className={`${
@@ -280,14 +290,16 @@ const ProfileSettings = () => {
                 } md:flex hidden  gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto`}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-                <p className="text-base font-normal">Connected</p>
+                <p className="text-base font-normal">
+                  {selectedContent[localizationKeys.connected]}
+                </p>
               </div>
             </div>
             <div className="md:flex block ">
               <Loginbutton
                 isActive={pofileData?.oAuthType === "FACEBOOK" ? true : false}
                 logo={facebookIcon}
-                text="Connect with Facebook"
+                text={selectedContent[localizationKeys.connectWithFacebook]}
               />
               <div
                 className={`${
@@ -297,7 +309,9 @@ const ProfileSettings = () => {
                 } md:flex hidden gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto`}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-                <p className="text-base font-normal">Connected</p>
+                <p className="text-base font-normal">
+                  {selectedContent[localizationKeys.connected]}
+                </p>
               </div>
             </div>
           </div>
@@ -306,10 +320,10 @@ const ProfileSettings = () => {
         {/* Address Book */}
         <div id="AddressBook" className="pt-3  pb-20 mb-10 ">
           <h1 className="text-gray-dark text-base font-semibold">
-            Address Book
+            {selectedContent[localizationKeys.addAddress]}
           </h1>
           <p className="text-gray-dark text-base font-normal pt-2">
-            Manage your addresses for a quick and easy checkout experience
+            {selectedContent[localizationKeys.addressBookmasg]}
           </p>
           <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-6">
             {locationData?.map((e) => {
@@ -334,12 +348,14 @@ const ProfileSettings = () => {
               className="border-gray-med border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex justify-center gap-x-2 "
             >
               <GoPlus className="my-auto" size={16} />
-              <p className="my-auto">Add Address</p>
+              <p className="my-auto">
+                {selectedContent[localizationKeys.addAddress]}
+              </p>
             </button>
             <AddLocationModel
               open={open}
               setOpen={setOpen}
-              TextButton={"Add"}
+              TextButton={selectedContent[localizationKeys.add]}
               onReload={onReload}
             />
           </div>
@@ -376,6 +392,8 @@ export const LocationDetailsCard = ({
   onReload,
 }) => {
   const [lang] = useLanguage();
+  const selectedContent = content[lang];
+
   const [open, setOpen] = useState(false);
   const [locationId, setLocationId] = useFilter("locationId", "");
   const { run: runDelete, isLoading: isLoadingDelete } = useAxios([]);
@@ -385,7 +403,9 @@ export const LocationDetailsCard = ({
         .delete(api.app.location.delete(id))
         .then((res) => {
           toast.success(
-            "The " + AddressLable + " has been delete successfully"
+            `${selectedContent[localizationKeys.the]} ` +
+              AddressLable +
+              ` ${selectedContent[localizationKeys.hasBeenDeleteSuccessfully]}`
           );
           setOpen(false);
           onReload();
@@ -394,7 +414,7 @@ export const LocationDetailsCard = ({
           toast.error(
             err?.response?.data?.message?.[lang] ||
               err?.response?.data?.message?.[0] ||
-              "oops, something with wrong please make sure everything is in the right place and try again "
+              selectedContent[localizationKeys.oops]
           );
         })
     );
@@ -407,7 +427,11 @@ export const LocationDetailsCard = ({
         .patch(api.app.location.edit(id))
         .then((res) => {
           toast.success(
-            "The " + AddressLable + " has been Make Default successfully"
+            `${selectedContent[localizationKeys.the]} ` +
+              AddressLable +
+              ` ${
+                selectedContent[localizationKeys.hasBeenMakeDefaultSuccessfully]
+              }`
           );
           setOpen(false);
           onReload();
@@ -416,7 +440,7 @@ export const LocationDetailsCard = ({
           toast.error(
             err?.response?.data?.message?.[lang] ||
               err?.response?.data?.message?.[0] ||
-              "oops, something with wrong please make sure everything is in the right place and try again "
+              selectedContent[localizationKeys.oops]
           );
         })
     );
@@ -452,7 +476,7 @@ export const LocationDetailsCard = ({
                 onClick={() => handelDelete(Id)}
                 className="text-red-500 text-center py-2 cursor-pointer  text-base font-normal ltr:font-serifEN rtl:font-serifAR px-2"
               >
-                Delete
+                {selectedContent[localizationKeys.delete]}
               </p>
             ) : (
               <div>
@@ -460,13 +484,13 @@ export const LocationDetailsCard = ({
                   onClick={() => handelMakeDefault(Id)}
                   className="text-gray-med text-center py-2 cursor-pointer  border-b-[1px] text-base font-normal ltr:font-serifEN rtl:font-serifAR"
                 >
-                  Make Default
+                  {selectedContent[localizationKeys.makeDefault]}
                 </p>
                 <p
                   onClick={() => handelDelete(Id)}
                   className="text-red-500 text-center py-2 cursor-pointer  text-base font-normal ltr:font-serifEN rtl:font-serifAR"
                 >
-                  Delete
+                  {selectedContent[localizationKeys.delete]}
                 </p>
               </div>
             )
@@ -484,7 +508,7 @@ export const LocationDetailsCard = ({
             isMain ? "text-primary-dark underline text-sm pt-1" : "hidden"
           }
         >
-          Default
+          {selectedContent[localizationKeys.default]}
         </p>
       </div>
     </div>

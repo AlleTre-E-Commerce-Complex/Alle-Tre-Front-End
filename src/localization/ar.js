@@ -172,6 +172,47 @@ const ar = {
   // shiping details
   [localizationKeys.locationDetails]: "تفاصيل الشحن",
   [localizationKeys.addAddress]: "إضافة عنوان",
+  // profile
+  [localizationKeys.online]: "متصل",
+  [localizationKeys.logout]: "تسجيل الخروج",
+  [localizationKeys.profileSettings]: "إعدادات الملف الشخصي",
+  [localizationKeys.completeYourProfileToMakeYourActionsEasier]:
+    "أكمل ملفك الشخصي لتسهيل إجراءاتك",
+  [localizationKeys.completeNowMasg]:
+    "يوفر حسابك حاليًا إمكانية الوصول إلى التحديثات والعناصر المحفوظة وتفاصيل البيع والميزات الأخرى. للمزايدة والشراء والبيع باستخدام Alle-tre ، يرجى قضاء بعض الوقت لملء معلومات ملفك الشخصي.",
+  [localizationKeys.completeNow]: "أكمل الآن",
+  [localizationKeys.editPhoto]: "تحرير الصورة",
+  [localizationKeys.uploadPhoto]: "تحميل الصورة",
+  [localizationKeys.dropYourPhotoHereToInstantlyUploadIt]:
+    "أفلت صورتك هنا لتحميلها على الفور",
+  [localizationKeys.save]: "حفظ",
+  [localizationKeys.selectAfile]: "حدد ملفًا",
+  [localizationKeys.edit]: "تحرير",
+  [localizationKeys.editUserName]: "تحرير اسم المستخدم",
+  [localizationKeys.personalDetails]: "التفاصيل الشخصية",
+  [localizationKeys.userName]: "اسم المستخدم",
+  [localizationKeys.changePassword]: "تغيير كلمة المرور",
+  [localizationKeys.editPassword]: "تحرير كلمة المرور",
+  [localizationKeys.oldPassword]: "كلمة المرور القديمة",
+  [localizationKeys.newPassword]: "كلمة المرور الجديدة",
+  [localizationKeys.verified]: "تم التحقق منه",
+  [localizationKeys.eMail]: "البريد الإلكتروني",
+  [localizationKeys.phoneNumber]: "رقم الهاتف",
+  [localizationKeys.editPhoneNumber]: "تحرير رقم الهاتف",
+  [localizationKeys.loginService]: "خدمة تسجيل الدخول",
+  [localizationKeys.loginServiceMaseg]:
+    "حساب Alla-tre الخاص بك ليس لديه خدمة تسجيل دخول خارجية. قم بتوصيل الحسابات الآن للوصول السريع والآمن",
+  [localizationKeys.connected]: "متصل",
+  [localizationKeys.connectedWithApple]: "متصل مع Apple",
+  [localizationKeys.connectWithGoogle]: "متصل مع Google",
+  [localizationKeys.connectWithFacebook]: "متصل مع Facebook",
+  [localizationKeys.addressBook]: "دفتر العناوين",
+  [localizationKeys.addressBookmasg]:
+    "إدارة عناوينك للحصول على تجربة دفع سريعة وسهلة",
+  [localizationKeys.default]: "افتراضي",
+  [localizationKeys.delete]: "حذف",
+  [localizationKeys.makeDefault]: "جعله افتراضيًا",
+  [localizationKeys.the]: " ال",
   // err
   [localizationKeys.required]: "مطلوب",
   [localizationKeys.makeSureThatYouChooseItemConditionValue]:
@@ -181,6 +222,12 @@ const ar = {
   [localizationKeys.oops]:
     "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
   // sucsess
+  [localizationKeys.thePasswordHasBeenEditSuccessfully]:
+    "تم تعديل كلمة المرور بنجاح",
+  [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",
+  [localizationKeys.hasBeenMakeDefaultSuccessfully]: "تم جعله افتراضيًا بنجاح",
+  [localizationKeys.uploadImageHasbeenSuccessfully]: "تم تحميل الصورة بنجاح",
+  [localizationKeys.nameHasBeenEditSuccessfully]: "تم تحرير الاسم بنجاح",
   [localizationKeys.yourAuctionSaveAsDraftedSuccess]: "مزادك حفظ كمسودة نجاح",
   [localizationKeys.yourAuctionIsCreatedSuccess]: "تم إنشاء مزادك بنجاح",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:

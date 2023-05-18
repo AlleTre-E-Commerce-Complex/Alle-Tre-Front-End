@@ -162,6 +162,43 @@ const localizationKeys = {
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",
+  // profile
+  online: "online",
+  profileSettings: "profileSettings",
+  logout: "logout",
+  completeYourProfileToMakeYourActionsEasier:
+    "completeYourProfileToMakeYourActionsEasier",
+  completeNowMasg: " completeNowMasg",
+  completeNow: " completeNow",
+  personalDetails: "personalDetails",
+  editPhoto: "editPhoto",
+  uploadPhoto: "uploadPhoto",
+  dropYourPhotoHereToInstantlyUploadIt: "dropYourPhotoHereToInstantlyUploadIt",
+  save: "save",
+  selectAfile: "selectAfile",
+  userName: "userName",
+  changePassword: "changePassword",
+  editPassword: "editPassword",
+  oldPassword: "oldPassword",
+  edit: "edit",
+  editUserName: "editUserName",
+  contactInfo: "contactInfo",
+  eMail: "eMail",
+  verified: "verified",
+  phoneNumber: "phoneNumber",
+  editPhoneNumber: "editPhoneNumber",
+  loginService: "loginService",
+  loginServiceMaseg: "loginServiceMaseg",
+  connected: "connected",
+  connectedWithApple: "connectedWithApple",
+  connectWithGoogle: "connectWithGoogle",
+  connectWithFacebook: "connectWithFacebook",
+  addressBook: "addressBook",
+  addressBookmasg: "addressBookmasg",
+  the: "the",
+  delete: "delete",
+  makeDefault: "makeDefault",
+  default: "default",
   // err
   required: "required",
   makeSureThatYouChooseItemConditionValue:
@@ -169,7 +206,17 @@ const localizationKeys = {
   makeSureThatYouChooseAtLeastThreeOrMorePhotos:
     "makeSureThatYouChooseAtLeastThreeOrMorePhotos",
   oops: "oops",
+  mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter:
+    "mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter",
+  notMatch: "notMatch",
   // sucsess
+  thePasswordHasBeenEditSuccessfully: "thePasswordHasBeenEditSuccessfully",
+  hasBeenDeleteSuccessfully: "hasBeenDeleteSuccessfully",
+  hasBeenMakeDefaultSuccessfully: "hasBeenMakeDefaultSuccessfully",
+  thePhoneNumberHasBeenEditSuccessfully:
+    "thePhoneNumberHasBeenEditSuccessfully",
+  nameHasBeenEditSuccessfully: "nameHasBeenEditSuccessfully",
+  uploadImageHasbeenSuccessfully: "uploadImageHasbeenSuccessfully",
   yourAuctionSaveAsDraftedSuccess: "yourAuctionSaveAsDraftedSuccess",
   yourAuctionIsCreatedSuccess: "yourAuctionIsCreatedSuccess",
   makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne:

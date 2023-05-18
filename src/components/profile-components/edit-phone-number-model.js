@@ -11,9 +11,12 @@ import api from "../../api";
 import { authAxios } from "../../config/axios-config";
 
 import { toast } from "react-hot-toast";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
   const [lang] = useLanguage();
+  const selectedContent = content[lang];
 
   const [open, setOpen] = useState(false);
 
@@ -25,7 +28,11 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
       authAxios
         .put(api.app.profile.editPersonalInfo, formData)
         .then((res) => {
-          toast.success("The Phone number has been edit successfully");
+          toast.success(
+            selectedContent[
+              localizationKeys.thePhoneNumberHasBeenEditSuccessfully
+            ]
+          );
           setOpen(false);
           onReload();
         })
@@ -33,7 +40,7 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
           toast.error(
             err?.response?.data?.message?.[lang] ||
               err?.response?.data?.message?.[0] ||
-              "oops, something with wrong please make sure everything is in the right place and try again "
+              selectedContent[localizationKeys.oops]
           );
         })
     );
@@ -47,14 +54,16 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[73px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2 ">
-          {oldPhoneNumber ? "Edit" : "Add"}
+        <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[73px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2 ltr:font-serifEN rtl:font-serifAR ">
+          {oldPhoneNumber
+            ? selectedContent[localizationKeys.edit]
+            : selectedContent[localizationKeys.add]}
         </Button>
       }
     >
       <div className="sm:w-[368px] w-full h-auto border-2 border-primary rounded-2xl bg-background px-8">
-        <h1 className="text-gray-dark font-semibold text-base pt-10 ">
-          Edit Phone Number
+        <h1 className="text-start text-gray-dark font-semibold text-base pt-10 ">
+          {selectedContent[localizationKeys.editPhoneNumber]}
         </h1>
         <Formik
           initialValues={{
@@ -70,8 +79,8 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
                   <FormikInput
                     name="phoneNumber"
                     type="text"
-                    label="Phone Number"
-                    placeholder="Phone Number"
+                    label={selectedContent[localizationKeys.phoneNumber]}
+                    placeholder={selectedContent[localizationKeys.phoneNumber]}
                   />
                 </div>
               </div>
@@ -82,13 +91,13 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
                     setOpen(false);
                   }}
                 >
-                  Cancel
+                  {selectedContent[localizationKeys.cancel]}
                 </button>
                 <Button
                   loading={isLoading}
                   className="bg-primary hover:bg-primary-dark opacity-100 text-base font-normal ltr:font-serifEN rtl:font-serifAR text-white w-[136px] h-[48px] rounded-lg"
                 >
-                  Save
+                  {selectedContent[localizationKeys.save]}
                 </Button>
               </div>
             </Form>

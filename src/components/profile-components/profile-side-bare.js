@@ -14,11 +14,14 @@ import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const ProfileSideBare = ({ SetSid, sid }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
-  const [lang] = useLanguage();
   const [pofileData, setPofileData] = useState();
 
   const [forceReload, setForceReload] = useState(false);
@@ -82,13 +85,15 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             <h1 className="text-base text-gray-dark font-medium">
               {ProfileData?.name || pofileData?.userName}
             </h1>
-            <p className="text-xs text-gray-med font-normal">Online</p>
+            <p className="text-xs text-gray-med font-normal">
+              {selectedContent[localizationKeys.online]}
+            </p>
           </div>
         </div>
         {/* content */}
         <div>
           <NavLink
-            title="Profile Settings"
+            title={selectedContent[localizationKeys.profileSettings]}
             isActive={
               pathname.length === 1 ||
               pathname.startsWith(routes.app.profile.profileSettings)
@@ -96,7 +101,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             onClick={() => history.push(routes.app.profile.profileSettings)}
           />
           <NavLink
-            title="My Auctions"
+            title={selectedContent[localizationKeys.myAuctions]}
             isActive={
               pathname.length === 1 ||
               pathname.startsWith(routes.app.profile.myAuctions.default)
@@ -104,7 +109,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             onClick={() => history.push(routes.app.profile.myAuctions.default)}
           />
           <NavLink
-            title="Watchlist"
+            title={selectedContent[localizationKeys.watchlist]}
             isActive={
               pathname.length === 1 ||
               pathname.startsWith(routes.app.profile.watchlist)
@@ -117,7 +122,9 @@ const ProfileSideBare = ({ SetSid, sid }) => {
           className="flex justify-center gap-x-2 mt-12  cursor-pointer"
         >
           <img className="w-4 h-4 mt-0.5" src={logOut} alt="logOut" />
-          <p className="text-gray-med text-sm font-normal underline">Logout</p>
+          <p className="text-gray-med text-sm font-normal underline">
+            {selectedContent[localizationKeys.logout]}
+          </p>
         </div>
       </div>
       <div className="block md:hidden">
@@ -149,13 +156,15 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                 <h1 className="text-base text-gray-dark font-medium">
                   {ProfileData?.name}
                 </h1>
-                <p className="text-xs text-gray-med font-normal">Online</p>
+                <p className="text-xs text-gray-med font-normal">
+                  {selectedContent[localizationKeys.online]}
+                </p>
               </div>
             </div>
             {/* content */}
             <div>
               <NavLink
-                title="Profile Settings"
+                title={selectedContent[localizationKeys.profileSettings]}
                 isActive={
                   pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.profileSettings)
@@ -166,7 +175,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                 }}
               />
               <NavLink
-                title="My Auctions"
+                title={selectedContent[localizationKeys.myAuctions]}
                 isActive={
                   pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.myAuctions.default)
@@ -176,6 +185,14 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
+              <NavLink
+                title={selectedContent[localizationKeys.watchlist]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.watchlist)
+                }
+                onClick={() => history.push(routes.app.profile.watchlist)}
+              />
             </div>
             <div
               onClick={onLogout}
@@ -183,7 +200,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             >
               <img className="w-4 h-4 mt-0.5" src={logOut} alt="logOut" />
               <p className="text-gray-med text-sm font-normal underline">
-                Logout
+                {selectedContent[localizationKeys.logout]}
               </p>
             </div>
           </div>

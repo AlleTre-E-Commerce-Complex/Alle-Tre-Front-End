@@ -11,9 +11,12 @@ import { authAxios } from "../../config/axios-config";
 import { toast } from "react-hot-toast";
 import { Button, Form, Modal } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const EditPasswordModel = ({ onReload }) => {
   const [lang] = useLanguage();
+  const selectedContent = content[lang];
 
   const [open, setOpen] = useState(false);
 
@@ -23,7 +26,9 @@ const EditPasswordModel = ({ onReload }) => {
       authAxios
         .put(api.app.profile.editCredentialsInfo, values)
         .then((res) => {
-          toast.success("The password has been edit successfully");
+          toast.success(
+            selectedContent[localizationKeys.thePasswordHasBeenEditSuccessfully]
+          );
           setOpen(false);
           onReload();
         })
@@ -31,7 +36,7 @@ const EditPasswordModel = ({ onReload }) => {
           toast.error(
             err?.response?.data?.message?.[lang] ||
               err?.response?.data?.message?.[0] ||
-              "oops, something with wrong please make sure everything is in the right place and try again "
+              selectedContent[localizationKeys.oops]
           );
         })
     );
@@ -42,23 +47,29 @@ const EditPasswordModel = ({ onReload }) => {
       .min(8)
       .max(20)
       .trim()
-      .required("Required field")
+      .required(selectedContent[localizationKeys.required])
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must One Uppercase, One Lowercase, One Number and One Special Case Character"
+        selectedContent[
+          localizationKeys
+            .mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter
+        ]
       ),
     newPassword: Yup.string()
       .min(8)
       .max(20)
       .trim()
-      .required("Required field")
+      .required(selectedContent[localizationKeys.required])
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must One Uppercase, One Lowercase, One Number and One Special Case Character"
+        selectedContent[
+          localizationKeys
+            .mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter
+        ]
       ),
     confarmpassword: Yup.string()
       .oneOf([Yup.ref("newPassword"), null], `not match`)
-      .required("Required field"),
+      .required(selectedContent[localizationKeys.required]),
   });
 
   return (
@@ -70,14 +81,14 @@ const EditPasswordModel = ({ onReload }) => {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[161px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2 ">
-          Change Password
+        <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[161px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2 ltr:font-serifEN rtl:font-serifAR ">
+          {selectedContent[localizationKeys.changePassword]}
         </Button>
       }
     >
       <div className="sm:w-[368px] w-full h-auto border-2 border-primary rounded-2xl bg-background px-8">
-        <h1 className="text-gray-dark font-semibold text-base pt-10 ">
-          Edit Password
+        <h1 className="text-start text-gray-dark font-semibold text-base pt-10 ">
+          {selectedContent[localizationKeys.editPassword]}
         </h1>
         <Formik
           initialValues={{
@@ -95,24 +106,26 @@ const EditPasswordModel = ({ onReload }) => {
                   <FormikInput
                     name="oldPassword"
                     type="password"
-                    label="Old Password"
-                    placeholder="Old Password"
+                    label={selectedContent[localizationKeys.oldPassword]}
+                    placeholder={selectedContent[localizationKeys.oldPassword]}
                   />
                 </div>
                 <div className="mt-10 mx-auto ">
                   <FormikInput
-                    name="newPassword"
+                    name="oldPassword"
                     type="password"
-                    label="New Password"
-                    placeholder="New Password"
+                    label={selectedContent[localizationKeys.newPassword]}
+                    placeholder={selectedContent[localizationKeys.newPassword]}
                   />
                 </div>
                 <div className="mt-10 mx-auto ">
                   <FormikInput
                     name="confarmpassword"
                     type="password"
-                    label="Re-Enter Password"
-                    placeholder="Re-Enter Password"
+                    label={selectedContent[localizationKeys.reEnterPassword]}
+                    placeholder={
+                      selectedContent[localizationKeys.reEnterPassword]
+                    }
                   />
                 </div>
               </div>
@@ -123,13 +136,13 @@ const EditPasswordModel = ({ onReload }) => {
                     setOpen(false);
                   }}
                 >
-                  Cancel
+                  {selectedContent[localizationKeys.cancel]}
                 </button>
                 <Button
                   loading={isLoading}
                   className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-[136px] h-[48px] rounded-lg"
                 >
-                  Save
+                  {selectedContent[localizationKeys.save]}
                 </Button>
               </div>
             </Form>

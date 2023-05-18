@@ -175,6 +175,48 @@ const en = {
   // shiping details
   [localizationKeys.locationDetails]: "Location Details",
   [localizationKeys.addAddress]: "Add Address",
+  // profile
+  [localizationKeys.online]: "Online",
+  [localizationKeys.logout]: "Logout",
+  [localizationKeys.profileSettings]: "Profile Settings",
+  [localizationKeys.completeYourProfileToMakeYourActionsEasier]:
+    "Complete your profile to make your actions easier",
+  [localizationKeys.completeNowMasg]:
+    "Your account currently offers access to updates, saved items, sale  details, and other features. To bid, buy and sell with Alle-tre,   kindly take a moment to fill out your profile information.",
+  [localizationKeys.completeNow]: " Complete Now",
+  [localizationKeys.editPhoto]: "Edit Photo",
+  [localizationKeys.uploadPhoto]: "Upload Photo",
+  [localizationKeys.dropYourPhotoHereToInstantlyUploadIt]:
+    " Drop your photo here to instantly upload it",
+  [localizationKeys.save]: "Save",
+  [localizationKeys.selectAfile]: "Select a file",
+  [localizationKeys.edit]: "Edit",
+  [localizationKeys.editUserName]: "Edit User name",
+  [localizationKeys.personalDetails]: "Personal Details",
+  [localizationKeys.userName]: "User Name",
+  [localizationKeys.changePassword]: "Change Password",
+  [localizationKeys.editPassword]: "Edit Password",
+  [localizationKeys.oldPassword]: "Old Password",
+  [localizationKeys.newPassword]: "new Password",
+  [localizationKeys.verified]: "Verified",
+  [localizationKeys.eMail]: "E-Mail",
+  [localizationKeys.phoneNumber]: "Phone Number",
+  [localizationKeys.editPhoneNumber]: "Edit Phone Number",
+  [localizationKeys.loginService]: "Login Service",
+  [localizationKeys.loginServiceMaseg]:
+    "Your Alla-tre account does not have an external login service. Connect accounts now for quick & secure access.",
+  [localizationKeys.connected]: "Connected",
+  [localizationKeys.connectedWithApple]: "Connected with Apple",
+  [localizationKeys.connectWithGoogle]: "Connect with Google",
+  [localizationKeys.connectWithFacebook]: "Connect with Facebook",
+  [localizationKeys.addressBook]: "Address Book",
+  [localizationKeys.addressBookmasg]:
+    "Manage your addresses for a quick and easy checkout experience",
+  [localizationKeys.default]: "Default",
+  [localizationKeys.delete]: "Delete",
+  [localizationKeys.makeDefault]: " Make Default",
+  [localizationKeys.the]: " The",
+
   // err
   [localizationKeys.required]: "Required",
   [localizationKeys.makeSureThatYouChooseItemConditionValue]:
@@ -184,6 +226,15 @@ const en = {
   [localizationKeys.oops]:
     "oops, sorry something with wrong please make sure everything is correct and try again",
   // success
+  [localizationKeys.thePasswordHasBeenEditSuccessfully]:
+    "ُhe Password Has Been Edit Successfully",
+  [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
+  [localizationKeys.hasBeenMakeDefaultSuccessfully]:
+    "has been Make Default successfully",
+  [localizationKeys.uploadImageHasbeenSuccessfully]:
+    "Upload image has been successfully",
+  [localizationKeys.nameHasBeenEditSuccessfully]:
+    "Name has been edit successfully",
   [localizationKeys.yourAuctionSaveAsDraftedSuccess]:
     "Your Auction Save As Draft Success",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
