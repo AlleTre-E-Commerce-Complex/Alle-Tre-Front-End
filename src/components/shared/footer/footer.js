@@ -24,7 +24,7 @@ const Footer = () => {
           alt="footerImg"
         />
         <div className="">
-          <div className="absolute bottom-9 ltr:left-24 rtl:right-24 ">
+          <div className="absolute lg:bottom-9 bottom-20 lg:ltr:left-24 ltr:left-2 lg:rtl:right-24 rtl:right-2">
             <h1 className="text-2xl text-white font-medium ">
               {selectedContent[localizationKeys.weAreAlwaysHereToHelpYou]}
             </h1>
@@ -39,9 +39,9 @@ const Footer = () => {
               nonumy eirmod tempor
             </p>
           </div>
-          <div className="flex gap-5 absolute ltr:right-24 rtl:left-24 bottom-20">
+          <div className="flex gap-5 absolute lg:ltr:right-24 ltr:right-2 lg:rtl:left-24 rtl:left-2 lg:bottom-20 bottom-2 ">
             <input
-              className="w-[400px] h-[48px] rounded-lg px-4 outline-none"
+              className="sm:w-[400px] w-full h-[48px] rounded-lg px-4 outline-none"
               placeholder={selectedContent[localizationKeys.writeYourMail]}
             />
             <button className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] h-[48px] text-white ">
@@ -51,9 +51,9 @@ const Footer = () => {
         </div>
       </div>
       <div className="bg-gradient-to-t from-secondary to-[#001248] opacity-95 h-[376px] overflow-hidden">
-        <div className="flex gap-x-24 mx-24 pt-[82px]">
+        <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[82px]">
           <AllatreLogoWhite />
-          <div className="flex gap-x-14">
+          <div className="flex gap-x-14 mt-5 md:mt-0">
             <div>
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.categories]}

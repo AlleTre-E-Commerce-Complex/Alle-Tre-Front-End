@@ -96,7 +96,7 @@ const MyAuctionsTabs = () => {
           menu={{
             secondary: true,
             pointing: true,
-            className: "flex flex-wrap",
+            className: "flex overflow-x-scroll scrollbar-hide",
           }}
           activeIndex={activeIndex}
           onTabChange={onTabChange}

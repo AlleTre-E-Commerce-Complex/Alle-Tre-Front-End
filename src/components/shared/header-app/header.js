@@ -140,7 +140,7 @@ const Header = ({ SetSid }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-secondary`}>
-        <div className="py-[6px] flex gap-x-4  max-w-[1440px] lg:mx-auto md:mx-12 ">
+        <div className="py-[6px] flex gap-x-4  max-w-[1440px] lg:mx-auto md:mx-12 px-2 md:px-0 ">
           <Input
             className="w-full h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR "
             icon="search"
@@ -149,7 +149,7 @@ const Header = ({ SetSid }) => {
               debounced(value);
             }}
           />
-          <div className="sm:block hidden">
+          <div className="md:block hidden">
             <button
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[304px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
               onClick={handleOpen}
@@ -159,7 +159,7 @@ const Header = ({ SetSid }) => {
             </button>
           </div>
           <PopupCategoriesModel isOpen={isOpen} onClose={handleClose} />
-          <div className="sm:block hidden">
+          <div className="md:block hidden">
             <button
               onClick={handelRegister}
               className="w-[136px] h-[48px] border-[1px] border-white text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"

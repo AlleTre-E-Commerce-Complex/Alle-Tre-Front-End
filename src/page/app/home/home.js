@@ -124,14 +124,14 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <h6 className="max-w-[1440px] mx-auto pb-4 text-gray-med text-base font-normal">
+      <h6 className="max-w-[1440px] lg:mx-auto mx-12 pb-4 text-gray-med text-base font-normal">
         {mainAuctions?.length} {selectedContent[localizationKeys.results]}
       </h6>
-      <div className="flex gap-3 max-w-[1440px] lg:mx-auto md:mx-12">
+      <div className="flex gap-3 max-w-[1440px] lg:mx-auto mx-12">
         {/* left filter sections */}
         <FilterSections myRef={myRef} />
         {/* right card sections */}
-        <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto">
+        <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto ">
           {mainAuctions?.map((e) => (
             <AuctionCard
               auctionId={e?.id}

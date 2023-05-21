@@ -82,7 +82,7 @@ const SummaryAuctionSections = ({
         </div>
       </div>
       {/* Prices  sections */}
-      <div className="pt-6 grid grid-cols-2 ">
+      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1  ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             {selectedContent[localizationKeys.startingPrice]}
@@ -101,7 +101,7 @@ const SummaryAuctionSections = ({
         </div>
       </div>
       {/* Bids  sections */}
-      <div className="pt-6 grid grid-cols-2 ">
+      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             {selectedContent[localizationKeys.totalBids]}

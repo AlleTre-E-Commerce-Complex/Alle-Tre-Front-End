@@ -149,12 +149,12 @@ border-radius: 1px 16px 1px 16px !important;
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/
 .edit-For-my-auctions-tabs  .ui.secondary.pointing.menu {
-  @apply sm:border-primary  border-primary !important;
+  @apply border-primary  !important;
 }
 .edit-For-my-auctions-tabs  .ui.secondary.pointing.menu .item {
   @apply gap-x-5 py-2 px-12 font-normal text-base text-gray-dark !important;
 }
 .edit-For-my-auctions-tabs  .ui.secondary.pointing.menu .active.item {
-  @apply sm:border-none border-primary  bg-primary  sm:rounded-t-xl rounded-xl sm:rounded-none  font-normal text-base py-2 px-12 text-white !important;
+  @apply border-primary bg-primary rounded-t-xl font-normal text-base py-2 px-12 text-white !important;
 }
 /* ///////////////////////////////////////////////////////////////////// */

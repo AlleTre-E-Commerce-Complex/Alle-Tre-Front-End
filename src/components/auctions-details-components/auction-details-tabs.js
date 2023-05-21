@@ -75,12 +75,12 @@ const AuctionDetailsTabs = ({
 
   return (
     <div className="">
-      <div className="h-auto edit-For-my-auctions-tabs  animate-in ">
+      <div className="h-auto edit-For-my-auctions-tabs animate-in  ">
         <Tab
           menu={{
             secondary: true,
             pointing: true,
-            className: "flex flex-wrap",
+            className: "flex overflow-x-scroll scrollbar-hide ",
           }}
           activeIndex={activeIndexTab}
           onTabChange={(e, { activeIndex }) => setActiveIndexTab(activeIndex)}

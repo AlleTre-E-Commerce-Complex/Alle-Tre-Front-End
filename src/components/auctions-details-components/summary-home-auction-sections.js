@@ -154,7 +154,7 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Time Left and  Total Bids sections */}
-      <div className="pt-6 grid grid-cols-2 ">
+      <div className="pt-6 grid grid-cols-2  ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             {selectedContent[localizationKeys.timeLeft]}
@@ -168,7 +168,7 @@ const SummaryHomeAuctionSections = ({
           </p>
         </div>
         <div>
-          <p className="text-gray-med text-base font-normal pb-2">
+          <p className="text-gray-med text-base font-normal pb-2 ">
             {selectedContent[localizationKeys.totalBids]}
           </p>
           <p
@@ -180,14 +180,14 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Current Bid and Buy Now sections */}
-      <div className="pt-6 grid grid-cols-2  ">
+      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1  ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             {!CurrentBid
               ? selectedContent[localizationKeys.startingBidAmount]
               : selectedContent[localizationKeys.currentBid]}
           </p>
-          <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
+          <p className="text-gray-verydark cursor-default text-2xl flex flex-wrap gap-12">
             <p>
               {formatCurrency(
                 lastestBid?.bidAmount || CurrentBid || startBidAmount
@@ -196,7 +196,9 @@ const SummaryHomeAuctionSections = ({
             <div className="my-auto"></div>
           </p>
         </div>
-        <div className={isBuyNowAllowed ? "block mt-auto" : "hidden"}>
+        <div
+          className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}
+        >
           <button className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg">
             {selectedContent[localizationKeys.buyNow]}
             <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
@@ -204,10 +206,10 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Submit Bid sections */}
-      <div className="pt-6 grid grid-cols-2">
+      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">
         <div>
           <input
-            className="border-[1px] border-veryLight h-[48px] w-[310px] rounded-lg px-4 outline-none"
+            className="border-[1px] border-veryLight h-[48px] w-[304px] rounded-lg px-4 outline-none"
             type="number"
             value={submitBidValue}
             onChange={(e) => setSubmitBidValue(e?.target?.value)}
@@ -219,7 +221,7 @@ const SummaryHomeAuctionSections = ({
         <div>
           <button
             onClick={() => handelSumbitBid()}
-            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg"
+            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0"
           >
             {selectedContent[localizationKeys.submitBid]}
           </button>

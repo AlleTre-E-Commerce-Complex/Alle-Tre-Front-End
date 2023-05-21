@@ -19,7 +19,7 @@ const FilterSections = ({ myRef, Results, hiddenGatogry, categoryId }) => {
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
 
   return (
-    <div className="flex flex-col gap-y-5">
+    <div className="sm:flex flex-col gap-y-5 hidden ">
       <div className={hiddenGatogry && "hidden"}>
         <AuctionFilterCardList
           title={selectedContent[localizationKeys.categories]}
