@@ -5,8 +5,13 @@ import { authAxios } from "../../../config/axios-config";
 import useAxios from "../../../hooks/use-axios";
 import AuctionCard from "../../../components/home-components/auction-card";
 import EmtyWatchlist from "../../../../src/assets/icons/emty-watchlist.png";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const Watshlist = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [watshlist, setWatshlist] = useState();
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
@@ -35,12 +40,14 @@ const Watshlist = () => {
               alt="EmtyWatchlist"
             />
             <h1 className="text-gray-dark pt-10">
-              There are no Watchlist yet.
+              {selectedContent[localizationKeys.thereAreNoWatchlistYet]}
             </h1>
           </div>
         </div>
       ) : (
-        <h1 className="text-gray-dark pb-14 pt-4 font-bold">Your Watchlist</h1>
+        <h1 className="text-gray-dark pb-14 pt-4 font-bold">
+          {selectedContent[localizationKeys.yourWatchlist]}
+        </h1>
       )}
       <div className="grid grid-cols-4 gap-5">
         {watshlist?.map((e) => (

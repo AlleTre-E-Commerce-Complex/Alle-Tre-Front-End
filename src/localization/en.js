@@ -216,6 +216,64 @@ const en = {
   [localizationKeys.delete]: "Delete",
   [localizationKeys.makeDefault]: " Make Default",
   [localizationKeys.the]: " The",
+  [localizationKeys.yourWatchlist]: " Your Watchlist",
+  [localizationKeys.thereAreNoWatchlistYet]: "  There are no Watchlist yet.",
+  // myauctions
+  [localizationKeys.createNow]: "Create Now",
+  [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:
+    "There are no auctions currently. Make your first auction right away.",
+  [localizationKeys.totalAuctions]: "Total Auctions",
+  [localizationKeys.active]: "Active",
+  [localizationKeys.total]: "Total",
+  [localizationKeys.totalActive]: "Total Active Auctions..",
+  [localizationKeys.youCanCreateOne]: "You can create one",
+  [localizationKeys.oppsActive]: "Ops, there are no active auctions yet.",
+  [localizationKeys.lastPrice]: "Last Price",
+  [localizationKeys.startingPrice]: "Starting Price",
+  [localizationKeys.startingDate]: "Starting Date",
+  [localizationKeys.pendingDeposit]: "Pending Deposit",
+  [localizationKeys.purchasePrice]: " Purchase Price",
+  [localizationKeys.endingDate]: " Ending Date",
+  [localizationKeys.endingTime]: " Ending Time",
+  [localizationKeys.totalScheduled]: "Total Scheduled Auctions..",
+  [localizationKeys.opsScheduled]: "Ops, there are no Scheduled auctions yet.",
+  [localizationKeys.totalDraft]: "Total Draft Auctions..",
+  [localizationKeys.opsDraft]: "Ops, there are no expired auctions yet.",
+  [localizationKeys.totalSold]: "Total Sold Auctions..",
+  [localizationKeys.opsSold]: "Ops, there are no sold auctions yet.",
+  [localizationKeys.totalPending]: "Total Pending Auctions..",
+  [localizationKeys.opsPending]: "Ops, there are no sold pending yet.",
+  [localizationKeys.totalExpired]: "Total Expired Auctions...",
+  [localizationKeys.opsExpired]: "Ops, there are no Expired auctions yet.",
+  // details
+  [localizationKeys.reviews]: "Reviews",
+  [localizationKeys.timeLeft]: "Time Left",
+  [localizationKeys.submitBid]: "Submit Bid",
+  [localizationKeys.description]: "Description",
+  [localizationKeys.series]: "Series",
+  [localizationKeys.bidderName]: "Bidder Name",
+  [localizationKeys.biddingEndingTime]: "Bidding Ending Time",
+  [localizationKeys.lastBidAmount]: "Last Bid Amount",
+  [localizationKeys.totalBidders]: "Total Bidders",
+  [localizationKeys.biddingTime]: "Bidding Time",
+  [localizationKeys.bidAmount]: "Bid Amount",
+  [localizationKeys.startingBidAmount]: "Starting Bid Amount",
+  [localizationKeys.currentBid]: "Current Bid",
+  [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
+    "Submit value is required and must be bigger than current Bid",
+  [localizationKeys.yourAddNewSubmitValueSuccessfully]:
+    "Your add new submit value successfully",
+  [localizationKeys.congratulationsOnYourFirstBid]:
+    "Congratulations On Your First Bid",
+  [localizationKeys.editBid]: "Edit Bid",
+  [localizationKeys.pay]: "Pay",
+  [localizationKeys.deposit]: "Deposit",
+  [localizationKeys.YouAreAboutToPlaceBidFor]:
+    "You are about to place a Bid For",
+  [localizationKeys.InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding]:
+    "in this auction please notice that you will need to pay a 20% of the price as a deposit only once so you can freely enjoy bidding",
+  [localizationKeys.endingPrice]: "Ending Price",
+  [localizationKeys.viewAll]: "View All",
 
   // err
   [localizationKeys.required]: "Required",
@@ -226,8 +284,12 @@ const en = {
   [localizationKeys.oops]:
     "oops, sorry something with wrong please make sure everything is correct and try again",
   // success
+  [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
+    "This auction delete from WatchList been successfully",
+  [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
+    "This auction add to WatchList been successfully",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
-    "ُhe Password Has Been Edit Successfully",
+    "he Password Has Been Edit Successfully",
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]:
     "has been Make Default successfully",

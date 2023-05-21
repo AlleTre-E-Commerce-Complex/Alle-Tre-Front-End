@@ -10,8 +10,13 @@ import { authAxios } from "../../../config/axios-config";
 import MyAuctionsTabs from "../../../components/profile-components/my-auctions-tabs";
 import TotalAuctions from "../../../components/profile-components/total-auctions";
 import { ReactComponent as AuctionIcon } from "../../../../src/assets/icons/Auction-Icon.svg";
+import content from "../../../localization/content";
+import { useLanguage } from "../../../context/language-context";
+import localizationKeys from "../../../localization/localization-keys";
 
 const MyAuctions = () => {
+  const [lang] = useLanguage();
+  const selectedContent = content[lang];
   const history = useHistory();
 
   const [analyticsData, setAnalyticsData] = useState();
@@ -70,15 +75,19 @@ const MyAuctions = () => {
             <div>
               <AuctionIcon className="mx-auto" />
               <p className="text-gray-dark text-center mt-12 ">
-                There are no auctions currently. Make your first auction right
-                away.
+                {
+                  selectedContent[
+                    localizationKeys
+                      .thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway
+                  ]
+                }
               </p>
               <div className="flex justify-center mt-8">
                 <button
                   onClick={() => history.push(routes.app.createAuction.default)}
                   className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
                 >
-                  Create Now
+                  {selectedContent[localizationKeys.createNow]}
                 </button>
               </div>
             </div>

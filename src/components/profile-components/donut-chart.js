@@ -1,5 +1,8 @@
 import React from "react";
 import { VictoryPie } from "victory";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const DonutChart = ({
   active,
@@ -10,6 +13,8 @@ const DonutChart = ({
   pending,
   totalcount,
 }) => {
+  const [lang] = useLanguage();
+  const selectedContent = content[lang];
   const data = [
     { x: "Active Auctions", y: active },
     { x: "Drafts", y: drafted },
@@ -35,7 +40,7 @@ const DonutChart = ({
           {totalcount}
         </text>
         <text x={50} y={64} textAnchor="middle" fontSize={14} fill="#ACACAC">
-          Total
+          {selectedContent[localizationKeys.total]}
         </text>
         <VictoryPie
           data={data}

@@ -12,8 +12,13 @@ import ActionsRowTable from "./actions-row-table";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import PaginationApp from "../shared/pagination/pagination-app";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const ExpiredAuctions = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
@@ -46,7 +51,8 @@ const ExpiredAuctions = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {expiredAuctionsData?.length} Total Expired Auctions..
+          {expiredAuctionsData?.length}{" "}
+          {selectedContent[localizationKeys.totalExpired]}
         </p>
       </div>
       {expiredAuctionsData?.length === 0 ? (
@@ -54,15 +60,15 @@ const ExpiredAuctions = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-primary-light text-center mt-8 ">
-              Ops, there are no Expired auctions yet.<br></br> You can create
-              one
+              {selectedContent[localizationKeys.opsExpired]}
+              <br></br> {selectedContent[localizationKeys.youCanCreateOne]}
             </p>
             <div className="flex justify-center mt-4">
               <button
                 onClick={() => history.push(routes.app.createAuction.default)}
                 className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
               >
-                Create Now
+                {selectedContent[localizationKeys.createNow]}
               </button>
             </div>
           </div>

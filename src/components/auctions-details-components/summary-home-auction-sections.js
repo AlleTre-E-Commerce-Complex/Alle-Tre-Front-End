@@ -22,6 +22,9 @@ import { toast } from "react-hot-toast";
 import { useSocket } from "../../context/socket-context";
 import auth from "../../utils/auth";
 import { io } from "socket.io-client";
+import content from "../../localization/content";
+import { useLanguage } from "../../context/language-context";
+import localizationKeys from "../../localization/localization-keys";
 
 const SummaryHomeAuctionSections = ({
   numberStare,
@@ -42,6 +45,8 @@ const SummaryHomeAuctionSections = ({
   acceptedAmount,
 }) => {
   // const { user } = useAuthState();
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { pathname } = useLocation();
   const [openSubmitBid, setSubmitBidOpen] = useState(false);
   const [submitBidValue, setSubmitBidValue] = useState();
@@ -81,14 +86,20 @@ const SummaryHomeAuctionSections = ({
   }, []);
 
   const timeLeft = useCountdown(TimeLeft);
-  const formattedTimeLeft = `${timeLeft.days} days : ${timeLeft.hours} hrs : ${timeLeft.minutes} min`;
+  const formattedTimeLeft = `${timeLeft.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    timeLeft.minutes
+  } ${selectedContent[localizationKeys.min]}`;
 
   const handelSumbitBid = () => {
     const newValue = Number(submitBidValue);
     if (user) {
       if (newValue <= Math.max(lastestBid?.bidAmount, CurrentBid)) {
         toast.error(
-          "Submit value is required and must be bigger than current bid "
+          selectedContent[
+            localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid
+          ]
         );
       } else setSubmitBidOpen(true);
     } else dispatch(Open());
@@ -101,12 +112,15 @@ const SummaryHomeAuctionSections = ({
         <AuctionsStatus status={status} big />
         <RatingStare max={numberStare} size="huge" />
         <p className="text-gray-dark text-base font-normal">
-          ( {totalReviews} reviews )
+          ( {totalReviews} {selectedContent[localizationKeys.reviews]} )
         </p>
       </div>
       {/* Description */}
       <div className="pt-8">
-        <h3 className="text-gray-dark text-base font-normal">Description</h3>
+        <h3 className="text-gray-dark text-base font-normal">
+          {" "}
+          {selectedContent[localizationKeys.description]}
+        </h3>
         <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
           {truncateString(description, 80)}
         </p>
@@ -116,21 +130,23 @@ const SummaryHomeAuctionSections = ({
           to={`${pathname}#itemDescription`}
           onClick={() => setActiveIndexTab(0)}
         >
-          View Details
+          {selectedContent[localizationKeys.viewDetails]}
         </HashLink>
       </div>
       {/* Category sections */}
       <div className="pt-6 flex flex-wrap gap-x-3">
         {/* Category left */}
         <div>
-          <p className="text-gray-med text-base font-normal pb-2">Category</p>
+          <p className="text-gray-med text-base font-normal pb-2">
+            {selectedContent[localizationKeys.category]}
+          </p>
           <button className="border-[1px] border-gray-dark rounded-lg text-gray-dark px-12 py-1 cursor-default">
             {category}
           </button>
         </div>
         <div className={subCategory ? "block " : "hidden"}>
           <p className="text-gray-med text-base font-normal pb-2">
-            Sub-Category
+            {selectedContent[localizationKeys.subCategory]}
           </p>
           <button className="border-[1px] border-gray-dark rounded-lg text-gray-dark px-12 py-1 cursor-default">
             {subCategory}
@@ -140,7 +156,9 @@ const SummaryHomeAuctionSections = ({
       {/* Time Left and  Total Bids sections */}
       <div className="pt-6 grid grid-cols-2 ">
         <div>
-          <p className="text-gray-med text-base font-normal pb-2">Time Left</p>
+          <p className="text-gray-med text-base font-normal pb-2">
+            {selectedContent[localizationKeys.timeLeft]}
+          </p>
           <p
             className={`${
               timeLeft.days === 0 ? "text-red" : "text-gray-verydark"
@@ -150,7 +168,9 @@ const SummaryHomeAuctionSections = ({
           </p>
         </div>
         <div>
-          <p className="text-gray-med text-base font-normal pb-2">Total Bids</p>
+          <p className="text-gray-med text-base font-normal pb-2">
+            {selectedContent[localizationKeys.totalBids]}
+          </p>
           <p
             onClick={() => setTotalBidOpen(true)}
             className="text-gray-dark text-base font-normal underline cursor-pointer "
@@ -163,7 +183,9 @@ const SummaryHomeAuctionSections = ({
       <div className="pt-6 grid grid-cols-2  ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
-            {!CurrentBid ? "Starting Bid Amount" : "Current Bid"}
+            {!CurrentBid
+              ? selectedContent[localizationKeys.startingBidAmount]
+              : selectedContent[localizationKeys.currentBid]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
             <p>
@@ -174,9 +196,9 @@ const SummaryHomeAuctionSections = ({
             <div className="my-auto"></div>
           </p>
         </div>
-        <div className={isBuyNowAllowed ? "block my-auto" : "hidden"}>
+        <div className={isBuyNowAllowed ? "block mt-auto" : "hidden"}>
           <button className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg">
-            Buy Now
+            {selectedContent[localizationKeys.buyNow]}
             <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
           </button>
         </div>
@@ -199,7 +221,7 @@ const SummaryHomeAuctionSections = ({
             onClick={() => handelSumbitBid()}
             className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg"
           >
-            Submit Bid
+            {selectedContent[localizationKeys.submitBid]}
           </button>
         </div>
       </div>

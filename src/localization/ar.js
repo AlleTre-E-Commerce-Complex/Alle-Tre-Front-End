@@ -213,6 +213,62 @@ const ar = {
   [localizationKeys.delete]: "حذف",
   [localizationKeys.makeDefault]: "جعله افتراضيًا",
   [localizationKeys.the]: " ال",
+  [localizationKeys.yourWatchlist]: "قائمة المراقبة الخاصة بك",
+  [localizationKeys.thereAreNoWatchlistYet]: "لا توجد قائمة المراقبة حتى الآن.",
+  // myauctions
+  [localizationKeys.createNow]: "أنشئ الآن",
+  [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:
+    "لا توجد مزادات حاليًا. قم بإجراء مزادك الأول على الفور.",
+  [localizationKeys.totalAuctions]: "إجمالي المزادات",
+  [localizationKeys.active]: "نشط",
+  [localizationKeys.total]: "إجمالي",
+  [localizationKeys.totalActive]: "إجمالي المزادات النشطة ..",
+  [localizationKeys.youCanCreateOne]: "يمكنك إنشاء واحد",
+  [localizationKeys.oppsActive]: "عفوًا ، لا توجد مزادات نشطة حتى الآن.",
+  [localizationKeys.lastPrice]: "آخر سعر",
+  [localizationKeys.startingPrice]: "السعر المبدئي",
+  [localizationKeys.startingDate]: "تاريخ البدء",
+  [localizationKeys.pendingDeposit]: "إيداع معلق",
+  [localizationKeys.purchasePrice]: " سعر الشراء",
+  [localizationKeys.endingDate]: " تاريخ الانتهاء",
+  [localizationKeys.endingTime]: " وقت الانتهاء",
+  [localizationKeys.totalScheduled]: "إجمالي المزادات المجدولة ..",
+  [localizationKeys.opsScheduled]: "عفوًا ، لا توجد مزادات مجدولة بعد",
+  [localizationKeys.totalDraft]: "إجمالي مزادات المسودة ..",
+  [localizationKeys.opsDraft]: "عفوًا ، لا توجد مزادات منتهية الصلاحية بعد.",
+  [localizationKeys.totalSold]: "إجمالي المزادات المباعة ..",
+  [localizationKeys.opsSold]: "عفوًا ، لا توجد مزادات مباعة بعد.",
+  [localizationKeys.totalPending]: "إجمالي المزادات المعلقة ..",
+  [localizationKeys.opsPending]: "عفوًا ، لا توجد عمليات بيع معلقة حتى الآن.",
+  [localizationKeys.totalExpired]: "إجمالي المزادات المنتهية الصلاحية ...",
+  // details
+  [localizationKeys.reviews]: "مراجعات",
+  [localizationKeys.timeLeft]: "الوقت المتبقي",
+  [localizationKeys.submitBid]: "إرسال مزايدتك",
+  [localizationKeys.description]: "الوصف",
+  [localizationKeys.series]: "رقم تسلسلي",
+  [localizationKeys.bidderName]: "اسم المزايد",
+  [localizationKeys.biddingEndingTime]: "وقت انتهاء المزايدة",
+  [localizationKeys.lastBidAmount]: "مبلغ المزايدة الأخير",
+  [localizationKeys.totalBidders]: "إجمالي المزايدين",
+  [localizationKeys.biddingTime]: "وقت  المزايدين",
+  [localizationKeys.bidAmount]: "مبلغ المزايدة",
+  [localizationKeys.startingBidAmount]: "بدء مبلغ المزايدة",
+  [localizationKeys.currentBid]: " المزايدة الحالية",
+  [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
+    "إرسال القيمة مطلوبة ويجب أن تكون أكبر من المزايدة الحالي",
+  [localizationKeys.yourAddNewSubmitValueSuccessfully]:
+    "إضافة قيمة إرسال جديدة بنجاح",
+  [localizationKeys.congratulationsOnYourFirstBid]: "مبروك على عرضك الأول",
+  [localizationKeys.editBid]: "تحرير المزايدة",
+  [localizationKeys.pay]: "الدفع",
+  [localizationKeys.deposit]: "إيداع",
+  [localizationKeys.YouAreAboutToPlaceBidFor]: "أنت على وشك تقديم مزايدة",
+  [localizationKeys.InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding]:
+    "في هذا المزاد ، يرجى ملاحظة أنك ستحتاج إلى دفع 20٪ من السعر كوديعة مرة واحدة فقط حتى تتمكن من الاستمتاع بالمزايدة بحرية",
+  [localizationKeys.endingPrice]: "السعر النهائي",
+  [localizationKeys.viewAll]: "عرض الكل",
+
   // err
   [localizationKeys.required]: "مطلوب",
   [localizationKeys.makeSureThatYouChooseItemConditionValue]:
@@ -222,6 +278,10 @@ const ar = {
   [localizationKeys.oops]:
     "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
   // sucsess
+  [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
+    "تم حذف هذا المزاد من قائمة المراقبة بنجاح",
+  [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
+    "تم إضافة هذا المزاد إلى قائمة المراقبة بنجاح",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "تم تعديل كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",

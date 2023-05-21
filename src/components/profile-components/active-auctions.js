@@ -11,8 +11,13 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
 import PaginationApp from "../shared/pagination/pagination-app";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const ActiveAuctions = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
@@ -41,7 +46,8 @@ const ActiveAuctions = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {activeAuctionData?.length} Total Active Auctions..
+          {activeAuctionData?.length}{" "}
+          {selectedContent[localizationKeys.totalActive]}
         </p>
       </div>
       {activeAuctionData?.length === 0 ? (
@@ -49,14 +55,15 @@ const ActiveAuctions = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-primary-light text-center mt-8 ">
-              Ops, there are no active auctions yet.<br></br> You can create one
+              {selectedContent[localizationKeys.oppsActive]}
+              <br></br> {selectedContent[localizationKeys.youCanCreateOne]}
             </p>
             <div className="flex justify-center mt-4">
               <button
                 onClick={() => history.push(routes.app.createAuction.default)}
                 className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
               >
-                Create Now
+                {selectedContent[localizationKeys.createNow]}
               </button>
             </div>
           </div>

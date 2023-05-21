@@ -7,6 +7,9 @@ import { useHistory } from "react-router-dom";
 import { formatCurrency } from "../../utils/format-currency";
 import moment from "moment";
 import useCountdown from "../../hooks/use-countdown";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const ActionsRowTable = ({
   status,
@@ -23,6 +26,8 @@ const ActionsRowTable = ({
   endingDate,
   goToDetails,
 }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
@@ -57,7 +62,7 @@ const ActionsRowTable = ({
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Total Bids
+                    {selectedContent[localizationKeys.totalBids]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {totalBids}
@@ -65,7 +70,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Last Price
+                    {selectedContent[localizationKeys.lastPrice]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {formatCurrency(lastPrice)}
@@ -73,7 +78,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Ending Time
+                    {selectedContent[localizationKeys.endingTime]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
@@ -86,7 +91,7 @@ const ActionsRowTable = ({
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Starting Price
+                    {selectedContent[localizationKeys.endingTime]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {formatCurrency(startingPrice)}
@@ -94,7 +99,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Starting Date
+                    {selectedContent[localizationKeys.startingDate]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* March,23 2023 */}
@@ -102,7 +107,7 @@ const ActionsRowTable = ({
                   </p>
                 </div>
                 <button className="bg-secondary-light text-white text-xs px-2 rounded h-6 my-auto cursor-default w-1/2 sm:w-auto">
-                  Pending Deposit
+                  {selectedContent[localizationKeys.pendingDeposit]}
                 </button>
               </div>
             )}
@@ -110,7 +115,7 @@ const ActionsRowTable = ({
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Starting Price
+                    {selectedContent[localizationKeys.startingPrice]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {formatCurrency(startingPrice)}
@@ -118,7 +123,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Purchase Price
+                    {selectedContent[localizationKeys.purchasePrice]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {formatCurrency(purchasePrice)}
@@ -126,7 +131,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Starting Date
+                    {selectedContent[localizationKeys.startDate]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
@@ -139,7 +144,7 @@ const ActionsRowTable = ({
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Total Bids
+                    {selectedContent[localizationKeys.totalBids]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {totalBids}
@@ -147,7 +152,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Price
+                    {selectedContent[localizationKeys.price]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {formatCurrency(price)}
@@ -155,7 +160,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    Ending Date
+                    {selectedContent[localizationKeys.endingDate]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* March,23 2023 */}
@@ -170,7 +175,7 @@ const ActionsRowTable = ({
             <div className="pt-2  gap-x-10 hidden">
               <div>
                 <h1 className="text-gray-veryLight text-[10px] font-normal">
-                  Total Bids
+                  {selectedContent[localizationKeys.totalBids]}
                 </h1>
                 <p className="text-gray-dark text-[10px] font-normal">
                   {totalBids} Bid
@@ -178,7 +183,7 @@ const ActionsRowTable = ({
               </div>
               <div>
                 <h1 className="text-gray-veryLight text-[10px] font-normal">
-                  Last Price
+                  {selectedContent[localizationKeys.lastPrice]}
                 </h1>
                 <p className="text-gray-dark text-[10px] font-normal">
                   {lastPrice} AED
@@ -186,7 +191,7 @@ const ActionsRowTable = ({
               </div>
               <div>
                 <h1 className="text-gray-veryLight text-[10px] font-normal">
-                  Ending Time
+                  {selectedContent[localizationKeys.endingTime]}
                 </h1>
                 <p className="text-gray-dark text-[10px] font-normal">
                   {/* 02 days.05 hrs.02 min */}
@@ -200,7 +205,7 @@ const ActionsRowTable = ({
           onClick={() => history.push(goToDetails)}
           className="bg-primary-dark text-white text-sm font-normal sm:w-32 w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
         >
-          View details
+          {selectedContent[localizationKeys.viewDetails]}
         </button>
       </div>
     </div>

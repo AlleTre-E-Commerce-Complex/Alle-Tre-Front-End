@@ -12,11 +12,14 @@ import "../../../../src/components/shared/header-app/nav-link-header.css";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../../context/language-context";
 import { toast } from "react-hot-toast";
+import localizationKeys from "../../../localization/localization-keys";
+import content from "../../../localization/content";
 
 const Sidebar = ({ SetSid, sid }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const [lang] = useLanguage();
+  const selectedContent = content[lang];
 
   const sidebarVariants = {
     open: {
@@ -99,7 +102,7 @@ const Sidebar = ({ SetSid, sid }) => {
           </div>
           <div className="flex flex-col flex-grow gap-y-8 mx-6 mt-10">
             <NavLink
-              title="My Bids"
+              title={selectedContent[localizationKeys.myBids]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.myBides)
               }
@@ -109,7 +112,7 @@ const Sidebar = ({ SetSid, sid }) => {
               }}
             />
             <NavLink
-              title="Sell Now"
+              title={selectedContent[localizationKeys.sellNow]}
               isActive={
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.createAuction.default)
@@ -120,7 +123,7 @@ const Sidebar = ({ SetSid, sid }) => {
               }}
             />
             <NavLink
-              title="My Profile"
+              title={selectedContent[localizationKeys.profile]}
               isActive={
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.default)
@@ -132,7 +135,7 @@ const Sidebar = ({ SetSid, sid }) => {
             />
             <AccordionMenu />
             <NavLink
-              title="Watchlist"
+              title={selectedContent[localizationKeys.watchlist]}
               isActive={
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.watchlist)
@@ -143,7 +146,7 @@ const Sidebar = ({ SetSid, sid }) => {
               }}
             />
             <NavLink
-              title="FAQS"
+              title={selectedContent[localizationKeys.faqs]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.faqs)
               }
@@ -153,7 +156,7 @@ const Sidebar = ({ SetSid, sid }) => {
               }}
             />
             <NavLink
-              title="Support"
+              title={selectedContent[localizationKeys.support]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.support)
               }

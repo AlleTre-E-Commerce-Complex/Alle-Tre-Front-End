@@ -62,7 +62,10 @@ const AuctionCard = ({
             .then((res) => {
               setWatshlist(false);
               toast.success(
-                "This auction delete from WatchList been successfully"
+                selectedContent[
+                  localizationKeys
+                    .thisAuctionDeleteFromWatchListBeenSuccessfully
+                ]
               );
               onReload();
             })
@@ -76,7 +79,11 @@ const AuctionCard = ({
             .post(api.app.WatchList.add, body)
             .then((res) => {
               setWatshlist(true);
-              toast.success("This auction add to WatchList been successfully");
+              toast.success(
+                selectedContent[
+                  localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
+                ]
+              );
               onReload();
             })
             .catch((err) => {

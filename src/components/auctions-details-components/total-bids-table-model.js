@@ -9,10 +9,13 @@ import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
 import backArrowSecandryColor from "../../../src/assets/icons/back_arrow_secandry_color.png";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const TotalBidsTableModel = ({ open, setOpen }) => {
   const { user } = useAuthState();
-  const [lang] = useLanguage();
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { auctionId } = useParams();
   const [userID, setUserID] = useState();
   const [totalBids, setTotalBidse] = useState();
@@ -56,19 +59,19 @@ const TotalBidsTableModel = ({ open, setOpen }) => {
           <Table.Header>
             <Table.Row className="rounded-xl shadow bg-[#F8F8F8]">
               <Table.HeaderCell className="rounded-l-xl font-medium text-sm text-gray-dark text-center">
-                Series
+                {selectedContent[localizationKeys.series]}
               </Table.HeaderCell>
               <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
-                Bidder Name
+                {selectedContent[localizationKeys.bidderName]}
               </Table.HeaderCell>
               <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
-                Bidding Ending Time
+                {selectedContent[localizationKeys.biddingEndingTime]}
               </Table.HeaderCell>
               <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
-                Total Bids
+                {selectedContent[localizationKeys.totalBids]}
               </Table.HeaderCell>
               <Table.HeaderCell className="rounded-r-xl font-medium text-sm text-gray-dark text-center ">
-                Last Bid Amount
+                {selectedContent[localizationKeys.lastBidAmount]}
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -122,6 +125,8 @@ export const TotalBidsDetailsTableModel = ({
   auctionId,
   userId,
 }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [totalBids, setTotalBidse] = useState();
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
@@ -158,18 +163,18 @@ export const TotalBidsDetailsTableModel = ({
           <Loader active />
         </Dimmer>
         <div className=" mt-8">
-          <div className="bg-[#F9F9F9] w-[266px] h-[423px] rounded-lg fixed left-4">
+          <div className="bg-[#F9F9F9] w-[266px] h-[423px] rounded-lg fixed ltr:left-4 rtl:right-4">
             <div
               onClick={() => setOpenSecondModel(false)}
               className="flex mx-2 cursor-pointer "
             >
               <img
-                className="w-[w-40px] h-[40px]"
+                className="w-[w-40px] h-[40px] ltr:rotate-0 rtl:rotate-180"
                 src={backArrowSecandryColor}
                 alt="backArrowSecandryColor"
               />
               <p className="text-gray-dark font-medium text-sm my-auto pt-0.5">
-                Total Bidders
+                {selectedContent[localizationKeys.totalBidders]}
               </p>
             </div>
             <div className="flex gap-x-4 mx-6 pb-8 pt-6">
@@ -186,7 +191,9 @@ export const TotalBidsDetailsTableModel = ({
                 <h1 className="text-base text-gray-dark font-medium">
                   {totalBids?.biderInfo?.userName}
                 </h1>
-                <p className="text-xs text-gray-med font-normal">Online</p>
+                <p className="text-xs text-gray-med font-normal">
+                  {selectedContent[localizationKeys.online]}
+                </p>
               </div>
             </div>
           </div>
@@ -195,13 +202,13 @@ export const TotalBidsDetailsTableModel = ({
               <Table.Header className=" w-[754px] ">
                 <Table.Row className="rounded-xl shadow bg-[#F8F8F8]">
                   <Table.HeaderCell className="rounded-l-xl font-medium text-sm text-gray-dark text-center">
-                    Series
+                    {selectedContent[localizationKeys.series]}
                   </Table.HeaderCell>
                   <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
-                    Bidding Time
+                    {selectedContent[localizationKeys.biddingTime]}
                   </Table.HeaderCell>
                   <Table.HeaderCell className="rounded-r-xl font-medium text-sm text-gray-dark text-center ">
-                    Bid Amount
+                    {selectedContent[localizationKeys.bidAmount]}
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>

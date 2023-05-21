@@ -12,8 +12,13 @@ import ActionsRowTable from "./actions-row-table";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import PaginationApp from "../shared/pagination/pagination-app";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const ScheduledAuctions = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
@@ -46,7 +51,8 @@ const ScheduledAuctions = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {scheduledAuctionData?.length} Total Scheduled Auctions..
+          {scheduledAuctionData?.length}{" "}
+          {selectedContent[localizationKeys.totalScheduled]}
         </p>
       </div>
       {scheduledAuctionData?.length === 0 ? (
@@ -54,15 +60,15 @@ const ScheduledAuctions = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-primary-light text-center mt-8 ">
-              Ops, there are no scheduled auctions yet.<br></br> You can create
-              one
+              {selectedContent[localizationKeys.opsScheduled]}
+              <br></br> {selectedContent[localizationKeys.youCanCreateOne]}
             </p>
             <div className="flex justify-center mt-4">
               <button
                 onClick={() => history.push(routes.app.createAuction.default)}
                 className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
               >
-                Create Now
+                {selectedContent[localizationKeys.createNow]}
               </button>
             </div>
           </div>

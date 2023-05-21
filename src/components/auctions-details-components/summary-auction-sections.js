@@ -12,6 +12,9 @@ import { useLocation, useParams } from "react-router-dom";
 import AuctionsStatus from "../shared/status/auctions-status";
 import TotalBidsTableModel from "./total-bids-table-model";
 import moment from "moment";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const SummaryAuctionSections = ({
   numberStare,
@@ -26,6 +29,8 @@ const SummaryAuctionSections = ({
   setActiveIndexTab,
   status,
 }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const { pathname } = useLocation();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
 
@@ -36,12 +41,14 @@ const SummaryAuctionSections = ({
         <AuctionsStatus status={status} big />
         <RatingStare max={numberStare} size="huge" />
         <p className="text-gray-dark text-base font-normal">
-          ( {totalReviews} reviews )
+          ( {totalReviews} {selectedContent[localizationKeys.reviews]} )
         </p>
       </div>
       {/* Description */}
       <div className="pt-8">
-        <h3 className="text-gray-dark text-base font-normal">Description</h3>
+        <h3 className="text-gray-dark text-base font-normal">
+          {selectedContent[localizationKeys.description]}
+        </h3>
         <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
           {truncateString(description, 250)}
         </p>
@@ -51,21 +58,23 @@ const SummaryAuctionSections = ({
           to={`${pathname}#itemDescription`}
           onClick={() => setActiveIndexTab(0)}
         >
-          View Details
+          {selectedContent[localizationKeys.viewDetails]}
         </HashLink>
       </div>
       {/* Category sections */}
       <div className="pt-6 flex flex-wrap gap-x-3">
         {/* Category left */}
         <div>
-          <p className="text-gray-med text-base font-normal pb-2">Category</p>
+          <p className="text-gray-med text-base font-normal pb-2">
+            {selectedContent[localizationKeys.category]}
+          </p>
           <button className="border-[1px] border-gray-dark rounded-lg text-gray-dark px-12 py-1 cursor-default">
             {category}
           </button>
         </div>
         <div className={subCategory ? "block " : "hidden"}>
           <p className="text-gray-med text-base font-normal pb-2">
-            Sub-Category
+            {selectedContent[localizationKeys.subCategory]}
           </p>
           <button className="border-[1px] border-gray-dark rounded-lg text-gray-dark px-12 py-1 cursor-default">
             {subCategory}
@@ -76,7 +85,7 @@ const SummaryAuctionSections = ({
       <div className="pt-6 grid grid-cols-2 ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
-            Starting Price
+            {selectedContent[localizationKeys.startingPrice]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl">
             {formatCurrency(startingPrice)}
@@ -84,7 +93,7 @@ const SummaryAuctionSections = ({
         </div>
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
-            Ending Price
+            {selectedContent[localizationKeys.endingPrice]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl">
             {formatCurrency(endingPrice)}
@@ -94,7 +103,9 @@ const SummaryAuctionSections = ({
       {/* Bids  sections */}
       <div className="pt-6 grid grid-cols-2 ">
         <div>
-          <p className="text-gray-med text-base font-normal pb-2">Total Bids</p>
+          <p className="text-gray-med text-base font-normal pb-2">
+            {selectedContent[localizationKeys.totalBids]}
+          </p>
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
             <p>{totalBids}</p>
             <div className="my-auto">
@@ -102,7 +113,7 @@ const SummaryAuctionSections = ({
                 onClick={() => setTotalBidOpen(true)}
                 className="w-20 h-6 text-xs font-normal bg-primary rounded text-white flex justify-center gap-x-2 pt-1 "
               >
-                <p>View All</p>
+                <p> {selectedContent[localizationKeys.viewAll]}</p>
                 <img
                   className="w-2.5 h-2.5 mt-[2px]"
                   src={AnglesRight}
@@ -114,7 +125,7 @@ const SummaryAuctionSections = ({
         </div>
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
-            Ending Time
+            {selectedContent[localizationKeys.endingTime]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl">
             {moment(endingTime).format("hh:mmA DD MMM YYYY")}

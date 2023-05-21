@@ -9,8 +9,13 @@ import { authAxios } from "../../config/axios-config";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { DraftsItem } from "../../page/app/create-auction/create-auction";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const DraftsAuctions = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [draftAuctionData, setDraftAuctionData] = useState();
 
   const [forceReload, setForceReload] = useState(false);
@@ -35,7 +40,8 @@ const DraftsAuctions = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {draftAuctionData?.length} Total Draft Auctions..
+          {draftAuctionData?.length}{" "}
+          {selectedContent[localizationKeys.totalDraft]}
         </p>
       </div>
       {draftAuctionData?.length === 0 ? (
@@ -43,15 +49,15 @@ const DraftsAuctions = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-primary-light text-center mt-8 ">
-              Ops, there are no expired auctions yet.<br></br> You can create
-              one
+              {selectedContent[localizationKeys.opsDraft]}
+              <br></br> {selectedContent[localizationKeys.youCanCreateOne]}
             </p>
             <div className="flex justify-center mt-4">
               <button
                 onClick={() => history.push(routes.app.createAuction.default)}
                 className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
               >
-                Create Now
+                {selectedContent[localizationKeys.createNow]}
               </button>
             </div>
           </div>

@@ -12,13 +12,16 @@ import DraftsAuctions from "./drafts-auctions";
 import SoldAuctions from "./sold-auctions";
 
 import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const MyAuctionsTabs = () => {
-  const [lang, setLang] = useLanguage("");
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
 
   const panes = [
     {
-      menuItem: "Active",
+      menuItem: `${selectedContent[localizationKeys.active]}`,
       route: routes.app.profile.myAuctions.active,
       render: () => (
         <div>
@@ -29,7 +32,7 @@ const MyAuctionsTabs = () => {
       ),
     },
     {
-      menuItem: "Scheduled",
+      menuItem: `${selectedContent[localizationKeys.Scheduled]}`,
       route: routes.app.profile.myAuctions.scheduled,
       render: () => (
         <div>
@@ -40,7 +43,7 @@ const MyAuctionsTabs = () => {
       ),
     },
     {
-      menuItem: "Drafts",
+      menuItem: `${selectedContent[localizationKeys.drafts]}`,
       route: routes.app.profile.myAuctions.drafts,
       render: () => (
         <div>
@@ -51,7 +54,7 @@ const MyAuctionsTabs = () => {
       ),
     },
     {
-      menuItem: "Sold",
+      menuItem: `${selectedContent[localizationKeys.sold]}`,
       route: routes.app.profile.myAuctions.sold,
       render: () => (
         <div>
@@ -62,7 +65,7 @@ const MyAuctionsTabs = () => {
       ),
     },
     {
-      menuItem: "Pending",
+      menuItem: `${selectedContent[localizationKeys.pending]}`,
       route: routes.app.profile.myAuctions.pending,
       render: () => (
         <div>
@@ -73,7 +76,7 @@ const MyAuctionsTabs = () => {
       ),
     },
     {
-      menuItem: "Expired",
+      menuItem: `${selectedContent[localizationKeys.expired]}`,
       route: routes.app.profile.myAuctions.expired,
       render: () => (
         <div>

@@ -12,8 +12,13 @@ import ActionsRowTable from "./actions-row-table";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { formatCurrency } from "../../utils/format-currency";
 import PaginationApp from "../shared/pagination/pagination-app";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const PendingAuctions = () => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
@@ -50,7 +55,8 @@ const PendingAuctions = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {pendingAuctionsData?.length} Total Pending Auctions..
+          {pendingAuctionsData?.length}{" "}
+          {selectedContent[localizationKeys.totalPending]}
         </p>
       </div>
       {pendingAuctionsData?.length === 0 ? (
@@ -58,14 +64,15 @@ const PendingAuctions = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-primary-light text-center mt-8 ">
-              Ops, there are no sold pending yet.<br></br> You can create one
+              {selectedContent[localizationKeys.opsPending]}.<br></br>{" "}
+              {selectedContent[localizationKeys.youCanCreateOne]}
             </p>
             <div className="flex justify-center mt-4">
               <button
                 onClick={() => history.push(routes.app.createAuction.default)}
                 className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
               >
-                Create Now
+                {selectedContent[localizationKeys.createNow]}
               </button>
             </div>
           </div>
