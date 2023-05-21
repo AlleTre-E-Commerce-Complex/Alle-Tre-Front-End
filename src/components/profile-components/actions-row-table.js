@@ -31,8 +31,16 @@ const ActionsRowTable = ({
   const history = useHistory();
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
-  const startingDateLeft = `${starting_Date.days} days : ${starting_Date.hours} hrs : ${starting_Date.minutes} min`;
-  const endingTimeLeft = `${ending_Time.days} days : ${ending_Time.hours} hrs : ${ending_Time.minutes} min`;
+  const startingDateLeft = `${starting_Date.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${starting_Date.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    starting_Date.minutes
+  } ${selectedContent[localizationKeys.min]}`;
+  const endingTimeLeft = `${ending_Time.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${ending_Time.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    ending_Time.minutes
+  } ${selectedContent[localizationKeys.min]}`;
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
       <div className="flex flex-wrap justify-between">

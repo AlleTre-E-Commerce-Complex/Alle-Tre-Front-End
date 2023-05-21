@@ -4,9 +4,12 @@ import api from "../../api";
 import { axios } from "../../config/axios-config";
 import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const ItemDetails = ({ itemDetailsData }) => {
-  const [lang, setLang] = useLanguage("");
+  const [lang] = useLanguage();
+  const selectedContent = content[lang];
   const [sysField, setSysField] = useState([]);
   const itemDetailsDataObject = Object.keys(itemDetailsData || {});
   const itemDetailsArray = sysField
@@ -45,7 +48,9 @@ const ItemDetails = ({ itemDetailsData }) => {
         id="itemDescription"
         className="text-gray-dark text-base font-normal"
       >
-        <h1 className="pb-8">About The Brand:</h1>
+        <h1 className="pb-8">
+          {selectedContent[localizationKeys.aboutTheBrand]}:
+        </h1>
         <p>{itemDetailsData?.description}</p>
       </div>
       <div className="grid sm:grid-rows-5 sm:grid-flow-col gap-x-4 mt-4 mb-40">

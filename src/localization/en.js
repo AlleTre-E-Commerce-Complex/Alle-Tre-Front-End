@@ -274,6 +274,12 @@ const en = {
     "in this auction please notice that you will need to pay a 20% of the price as a deposit only once so you can freely enjoy bidding",
   [localizationKeys.endingPrice]: "Ending Price",
   [localizationKeys.viewAll]: "View All",
+  // tab details
+  [localizationKeys.shippingPolicy]: "Shipping Policy",
+  [localizationKeys.returnPolicy]: "Shipping Policy",
+  [localizationKeys.payment]: "Shipping Policy",
+  [localizationKeys.feedback]: "Shipping Policy",
+  [localizationKeys.aboutTheBrand]: "Shipping Policy",
 
   // err
   [localizationKeys.required]: "Required",

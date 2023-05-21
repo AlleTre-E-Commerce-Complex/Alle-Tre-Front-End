@@ -9,17 +9,20 @@ import ReturnPolicy from "./return-policy";
 import ItemDetails from "./item-details";
 import Feedback from "./feedback";
 import Payment from "./payment";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 
 const AuctionDetailsTabs = ({
   dataTabs,
   activeIndexTab,
   setActiveIndexTab,
 }) => {
-  const [lang, setLang] = useLanguage("");
+  const [lang] = useLanguage();
+  const selectedContent = content[lang];
 
   const panes = [
     {
-      menuItem: "Item Details",
+      menuItem: `${selectedContent[localizationKeys.itemDetails]}`,
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full animate-in">
@@ -29,7 +32,7 @@ const AuctionDetailsTabs = ({
       ),
     },
     {
-      menuItem: "Shipping Policy",
+      menuItem: `${selectedContent[localizationKeys.shippingPolicy]}`,
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full  animate-in">
@@ -39,7 +42,7 @@ const AuctionDetailsTabs = ({
       ),
     },
     {
-      menuItem: "Return Policy",
+      menuItem: `${selectedContent[localizationKeys.returnPolicy]}`,
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full  animate-in">
@@ -49,7 +52,7 @@ const AuctionDetailsTabs = ({
       ),
     },
     {
-      menuItem: "Payment",
+      menuItem: `${selectedContent[localizationKeys.payment]}`,
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full  animate-in">
@@ -59,7 +62,7 @@ const AuctionDetailsTabs = ({
       ),
     },
     {
-      menuItem: "Feedback",
+      menuItem: `${selectedContent[localizationKeys.feedback]}`,
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full  animate-in">

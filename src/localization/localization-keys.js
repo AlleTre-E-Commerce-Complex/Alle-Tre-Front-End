@@ -253,6 +253,12 @@ const localizationKeys = {
     "InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding",
   endingPrice: "endingPrice",
   viewAll: "viewAll",
+  // tab details
+  shippingPolicy: "shippingPolicy",
+  returnPolicy: "returnPolicy",
+  payment: "payment",
+  feedback: "feedback",
+  aboutTheBrand: "aboutTheBrand",
   // err
   required: "required",
   makeSureThatYouChooseItemConditionValue:

@@ -268,7 +268,12 @@ const ar = {
     "في هذا المزاد ، يرجى ملاحظة أنك ستحتاج إلى دفع 20٪ من السعر كوديعة مرة واحدة فقط حتى تتمكن من الاستمتاع بالمزايدة بحرية",
   [localizationKeys.endingPrice]: "السعر النهائي",
   [localizationKeys.viewAll]: "عرض الكل",
-
+  // tab details
+  [localizationKeys.shippingPolicy]: "سياسة الشحن",
+  [localizationKeys.returnPolicy]: " سياسة الإرجاع",
+  [localizationKeys.payment]: "الدفع",
+  [localizationKeys.feedback]: "الملاحظات",
+  [localizationKeys.aboutTheBrand]: "حول العلامة التجارية",
   // err
   [localizationKeys.required]: "مطلوب",
   [localizationKeys.makeSureThatYouChooseItemConditionValue]:

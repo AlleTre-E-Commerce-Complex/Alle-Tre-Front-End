@@ -7,7 +7,7 @@ const Feedback = () => {
     <div className="animate-in">
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
         <div className="flex flex-wrap sm:flex-nowrap my-6 ">
-          <div className="flex gap-x-2 pl-6">
+          <div className="flex gap-x-2 ltr:pl-6 rtl:pr-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
               src={userProfileicon}
@@ -36,14 +36,14 @@ const Feedback = () => {
 
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
         <div className="flex flex-wrap sm:flex-nowrap my-6 ">
-          <div className="flex gap-x-2 pl-6">
+          <div className="flex gap-x-2 ltr:pl-6 rtl:pr-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
               src={userProfileicon}
               alt="userProfileicon"
             />
             <div className="mt-1 w-44">
-              <p className="text-gray-dark text-sm font-normal">Ahmed Ismail</p>
+              <p className="text-gray-dark text-sm font-normal">Haleem Rafat</p>
               <p className="text-gray-med text-xs font-normal">
                 March 23 . 2023
               </p>
@@ -62,17 +62,16 @@ const Feedback = () => {
           </div>
         </div>
       </div>
-
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
         <div className="flex flex-wrap sm:flex-nowrap my-6 ">
-          <div className="flex gap-x-2 pl-6">
+          <div className="flex gap-x-2 ltr:pl-6 rtl:pr-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
               src={userProfileicon}
               alt="userProfileicon"
             />
             <div className="mt-1 w-44">
-              <p className="text-gray-dark text-sm font-normal">Ahmed Ismail</p>
+              <p className="text-gray-dark text-sm font-normal">Haleem Rafat</p>
               <p className="text-gray-med text-xs font-normal">
                 March 23 . 2023
               </p>
@@ -91,17 +90,16 @@ const Feedback = () => {
           </div>
         </div>
       </div>
-
       <div className="w-full bg-background drop-shadow rounded-lg pt-4">
         <div className="flex flex-wrap sm:flex-nowrap my-6 ">
-          <div className="flex gap-x-2 pl-6">
+          <div className="flex gap-x-2 ltr:pl-6 rtl:pr-6">
             <img
               className="w-12 h-12 rounded-full object-cover"
               src={userProfileicon}
               alt="userProfileicon"
             />
             <div className="mt-1 w-44">
-              <p className="text-gray-dark text-sm font-normal">Ahmed Ismail</p>
+              <p className="text-gray-dark text-sm font-normal">Haleem Rafat</p>
               <p className="text-gray-med text-xs font-normal">
                 March 23 . 2023
               </p>
