@@ -61,55 +61,53 @@ const MyAuctions = () => {
   }, []);
 
   return (
-    <div className="animate-in ">
-      <div className="ltr:ml-4 rtl:mr-4 relative ">
-        <Dimmer
-          className="animate-pulse"
-          active={isLoadingAnalyticsData}
-          inverted
-        >
-          {/* <Loader active /> */}
-        </Dimmer>
-        {analyticsData?.length === 0 ? (
-          <div className="align-middle pt-52">
-            <div>
-              <AuctionIcon className="mx-auto" />
-              <p className="text-gray-dark text-center mt-12 ">
-                {
-                  selectedContent[
-                    localizationKeys
-                      .thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway
-                  ]
-                }
-              </p>
-              <div className="flex justify-center mt-8">
-                <button
-                  onClick={() => history.push(routes.app.createAuction.default)}
-                  className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
-                >
-                  {selectedContent[localizationKeys.createNow]}
-                </button>
-              </div>
+    <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4 relative animate-in  ">
+      <Dimmer
+        className="animate-pulse"
+        active={isLoadingAnalyticsData}
+        inverted
+      >
+        {/* <Loader active /> */}
+      </Dimmer>
+      {analyticsData?.length === 0 ? (
+        <div className="align-middle pt-52">
+          <div>
+            <AuctionIcon className="mx-auto" />
+            <p className="text-gray-dark text-center mt-12 ">
+              {
+                selectedContent[
+                  localizationKeys
+                    .thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway
+                ]
+              }
+            </p>
+            <div className="flex justify-center mt-8">
+              <button
+                onClick={() => history.push(routes.app.createAuction.default)}
+                className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
+              >
+                {selectedContent[localizationKeys.createNow]}
+              </button>
             </div>
           </div>
-        ) : (
-          <>
-            {/* DoughnutChart */}
-            <TotalAuctions
-              active={analyticsDataObject?.ACTIVE?.count}
-              drafted={analyticsDataObject?.DRAFTED?.count}
-              sold={analyticsDataObject?.SOLD?.count}
-              scheduled={analyticsDataObject?.IN_SCHEDULED?.count}
-              expired={analyticsDataObject?.EXPIRED?.count}
-              pending={analyticsDataObject?.PENDING_OWNER_DEPOIST?.count}
-              totalcount={analyticsDataObject?.totalcount}
-            />
-            <div className="mt-4">
-              <MyAuctionsTabs />
-            </div>
-          </>
-        )}
-      </div>
+        </div>
+      ) : (
+        <>
+          {/* DoughnutChart */}
+          <TotalAuctions
+            active={analyticsDataObject?.ACTIVE?.count}
+            drafted={analyticsDataObject?.DRAFTED?.count}
+            sold={analyticsDataObject?.SOLD?.count}
+            scheduled={analyticsDataObject?.IN_SCHEDULED?.count}
+            expired={analyticsDataObject?.EXPIRED?.count}
+            pending={analyticsDataObject?.PENDING_OWNER_DEPOIST?.count}
+            totalcount={analyticsDataObject?.totalcount}
+          />
+          <div className="mt-4">
+            <MyAuctionsTabs />
+          </div>
+        </>
+      )}
     </div>
   );
 };

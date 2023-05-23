@@ -59,7 +59,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
 
   return (
     <section className="mt-7 relative max-w-[1440px] lg:h-[561px] md:h-[350px] h-[200px] mx-auto">
-      <div className="relative ">
+      <div className="relative hidden lg:block ">
         <img
           className="object-cover absolute -right-8 lg:-top-6 md:-top-2 w-1/2 lg:h-[541px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
           src={images[0]?.[nextindex]?.imageLink}
@@ -78,7 +78,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
             key={index}
           >
             {index === current && (
-              <div className="lg:h-[561px] md:h-[350px] h-[200px] mx-16 relative rounded-[32px]  ">
+              <div className="lg:h-[561px] md:h-[350px] h-[200px] lg:mx-16 mx-4 relative rounded-[32px]  ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img
@@ -86,7 +86,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                     alt="anglesRightIcon"
                     className="absolute z-20 lg:right-5 md:right-0 right-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer right-arrow-parent"
                   />
-                  <div className="overflow-hidden absolute inset-0 hidden sm:block">
+                  <div className="overflow-hidden absolute inset-0 hidden l:block">
                     <div className="right-arrow lg:w-[541px] md:w-[490px] w-[300px] -rotate-90 lg:right-2.5 md:-right-20 -right-14 top-0"></div>
                   </div>
                 </div>
@@ -97,7 +97,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                     alt="anglesLeftIcon"
                     className="absolute z-20 lg:left-5 md:left-1 left-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer left-arrow-parent "
                   />
-                  <div className="overflow-hidden absolute inset-0 hidden sm:block">
+                  <div className="overflow-hidden absolute inset-0 hidden l:block">
                     <div className="left-arrow lg:w-[541px] md:w-[490px] w-[299px] rotate-90 lg:left-2.5 md:-left-20 -left-14 top-0"></div>
                   </div>
                 </div>
@@ -116,7 +116,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                         top: myRef?.current?.offsetTop,
                       })
                     }
-                    className="absolute -bottom-9 z-50 left-1/2 transform -translate-x-1/2 cursor-pointer"
+                    className="absolute -bottom-9 z-50 left-1/2 transform -translate-x-1/2 cursor-pointer hidden l:block"
                   />
                   <div>
                     {/* title */}

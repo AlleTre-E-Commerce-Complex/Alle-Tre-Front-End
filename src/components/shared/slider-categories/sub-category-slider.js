@@ -37,7 +37,7 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
   };
   return (
     <div className="max-w-[1440px] mx-auto">
-      <div className="ezd-content relative">
+      <div className="ezd-content relative overflow-hidden">
         <div className="ezd-snapslider pt-10">
           <div className="snapslider-wrapper">
             <div ref={swiperRef} className={`snapslider-overflow`}>

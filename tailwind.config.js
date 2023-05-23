@@ -8,7 +8,9 @@ module.exports = {
       // => @media (min-width: 640px) { ... }
       md: "821px",
       // => @media (min-width: 768px) { ... }
-      lg: "1366px",
+      l: "11500px",
+      // => @media (min-width: 768px) { ... }
+      lg: "1440px",
       // => @media (min-width: 1025px) { ... }
       xl: "1280px",
       // => @media (min-width: 1280px) { ... }

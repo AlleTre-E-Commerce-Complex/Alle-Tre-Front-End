@@ -118,23 +118,23 @@ const AuctionCard = ({
 
   return (
     <div className={className}>
-      <div className="group lg:w-[272px] md:w-[299px] max-h-[363px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
-        <div className="lg:w-[240px] md:w-[267px] h-[165px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
+      <div className="group lg:w-[272px] l:w-[367px] md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
+        <div className="lg:w-[240px] l:w-[335px] md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
           <div
             className={
               isMyAuction
                 ? "hidden"
-                : "bg-white rounded-lg w-[38px] h-[44px] absolute z-20 top-2 ltr:right-2 rtl:left-2 "
+                : "bg-white rounded-lg md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 top-2 ltr:right-2 rtl:left-2 "
             }
           >
             <div
               onClick={() => handelAddNewWatshlist(auctionId)}
-              className="flex justify-center items-center mt-2.5 cursor-pointer "
+              className="flex justify-center items-center md:mt-2.5 mt-1.5 cursor-pointer "
             >
               {watshlistForceState || isWatshlist ? (
-                <BsBookmarkFill className="text-primary" size={25} />
+                <BsBookmarkFill className="text-primary text-2xl md:text-3xl" />
               ) : (
-                <BsBookmark className="text-gray-med" size={25} />
+                <BsBookmark className="text-gray-med text-2xl md:text-3xl " />
               )}
             </div>
           </div>
@@ -185,7 +185,7 @@ const AuctionCard = ({
             <div className="mt-4 flex gap-x-3 justify-end">
               <button
                 onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg"
+                className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
               >
                 {selectedContent[localizationKeys.viewDetails]}
               </button>
@@ -194,19 +194,19 @@ const AuctionCard = ({
             <div
               className={`${
                 isBuyNowAllowed ? "justify-between" : "justify-end"
-              } mt-4 flex gap-x-3`}
+              } mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3`}
             >
               {isBuyNowAllowed && (
                 <button
                   onClick={() => handelGoDetails(auctionId)}
-                  className="border-primary border-[1px] text-primary w-[128px] h-[32px] rounded-lg"
+                  className="border-primary border-[1px] text-primary md:w-[128px] w-full h-[32px] rounded-lg"
                 >
                   {selectedContent[localizationKeys.buyNow]}
                 </button>
               )}
               <button
                 onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white w-[128px] h-[32px] rounded-lg"
+                className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
               >
                 {selectedContent[localizationKeys.bidNow]}
               </button>

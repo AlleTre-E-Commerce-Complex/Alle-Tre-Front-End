@@ -105,7 +105,7 @@ const Home = () => {
       >
         <Loader active />
       </Dimmer>
-      <div className="z-20 lg:h-[561px] md:h-[350px] h-[200px]">
+      <div className="z-20 ">
         <ImageSlider
           myRef={myRef}
           images={sponsoredAuctions?.map((img) => img?.product?.images)}
@@ -124,14 +124,42 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <h6 className="max-w-[1440px] lg:mx-auto mx-12 pb-4 text-gray-med text-base font-normal">
+      <h6 className="max-w-[1440px] lg:mx-auto mx-2 pb-4 text-gray-med text-base font-normal">
         {mainAuctions?.length} {selectedContent[localizationKeys.results]}
       </h6>
-      <div className="flex gap-3 max-w-[1440px] lg:mx-auto mx-12">
+      <div className="flex gap-5 max-w-[1440px] lg:mx-auto mx-2">
         {/* left filter sections */}
         <FilterSections myRef={myRef} />
         {/* right card sections */}
-        <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto ">
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
+          {mainAuctions?.map((e) => (
+            <AuctionCard
+              auctionId={e?.id}
+              price={e?.acceptedAmount || e?.startBidAmount}
+              title={e?.product?.title}
+              status={e?.status}
+              adsImg={e?.product?.images[0].imageLink}
+              totalBods={15}
+              WatshlistState={e?.isSaved}
+              endingTime={e?.expiryDate}
+              isBuyNowAllowed={e?.isBuyNowAllowed}
+              isMyAuction={e?.isMyAuction}
+            />
+          ))}
+          {mainAuctions?.map((e) => (
+            <AuctionCard
+              auctionId={e?.id}
+              price={e?.acceptedAmount || e?.startBidAmount}
+              title={e?.product?.title}
+              status={e?.status}
+              adsImg={e?.product?.images[0].imageLink}
+              totalBods={15}
+              WatshlistState={e?.isSaved}
+              endingTime={e?.expiryDate}
+              isBuyNowAllowed={e?.isBuyNowAllowed}
+              isMyAuction={e?.isMyAuction}
+            />
+          ))}
           {mainAuctions?.map((e) => (
             <AuctionCard
               auctionId={e?.id}

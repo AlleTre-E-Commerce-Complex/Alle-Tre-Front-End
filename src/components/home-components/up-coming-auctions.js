@@ -83,7 +83,13 @@ const UpComingAuctionsSlider = () => {
   };
 
   return (
-    <div className={auctions?.length === 0 ? "hidden" : "ezd-content relative"}>
+    <div
+      className={
+        auctions?.length === 0
+          ? "hidden"
+          : "ezd-content relative overflow-hidden "
+      }
+    >
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
           {selectedContent[localizationKeys.upComingAuctions]}
@@ -118,7 +124,7 @@ const UpComingAuctionsSlider = () => {
             </div>
             <button
               onClick={handleNextClick}
-              className={`swiper-button-next absolute top-1/2 -right-3`}
+              className={`swiper-button-next absolute top-1/2 -right-3 overflow-hidden `}
             >
               <img
                 className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
@@ -128,7 +134,7 @@ const UpComingAuctionsSlider = () => {
             </button>
             <button
               onClick={handlePrevClick}
-              className={`swiper-button-prev absolute top-1/2 -left-5 `}
+              className={`swiper-button-prev absolute top-1/2 -left-5 overflow-hidden `}
             >
               <img
                 className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "

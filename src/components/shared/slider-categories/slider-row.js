@@ -59,9 +59,9 @@ const SliderRow = () => {
     swiper4?.slidePrev();
   };
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div className="max-w-[1440px] mx-auto overflow-hidden ">
       <div className="ezd-content relative">
-        <div className="ezd-snapslider pt-10">
+        <div className="ezd-snapslider pt-10 ">
           <div className="snapslider-wrapper">
             <div ref={swiperRef4} className={`snapslider-overflow`}>
               <div className={`snapslider-scroll swiper-wrapper py-2`}>
@@ -78,7 +78,7 @@ const SliderRow = () => {
                 </div>
                 <button
                   onClick={handleNextClick}
-                  className={`swiper-button-next absolute top-1/2 -right-3`}
+                  className={`swiper-button-next absolute top-1/2 -right-3 overflow-hidden`}
                 >
                   <img
                     className="rounded-full  cursor-pointer z-20 w-14 h-14 "
@@ -88,7 +88,7 @@ const SliderRow = () => {
                 </button>
                 <button
                   onClick={handlePrevClick}
-                  className={`swiper-button-prev absolute top-1/2 -left-5 `}
+                  className={`swiper-button-prev absolute top-1/2 -left-5 overflow-hidden `}
                 >
                   <img
                     className="rounded-full  cursor-pointer z-20 w-14 h-14 "

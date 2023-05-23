@@ -88,7 +88,7 @@ const ProfileSettings = () => {
   }, []);
 
   return (
-    <div className="ltr:ml-4 rtl:mr-4 relative animate-in ">
+    <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4 relative animate-in  ">
       <Dimmer
         className="animate-pulse"
         active={isLoadingPofile || isLoadingLocationData}

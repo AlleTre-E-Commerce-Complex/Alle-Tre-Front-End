@@ -27,7 +27,7 @@ const Watshlist = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   return (
-    <div className="ltr:ml-8 rtl:mr-8 relative animate-in ">
+    <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8 relative animate-in  ">
       <Dimmer className="animate-pulse" active={isLoadingWatshlist} inverted>
         <Loader active />
       </Dimmer>
@@ -49,7 +49,7 @@ const Watshlist = () => {
           {selectedContent[localizationKeys.yourWatchlist]}
         </h1>
       )}
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5">
         {watshlist?.map((e) => (
           <AuctionCard
             auctionId={e?.auction?.id}
@@ -64,6 +64,7 @@ const Watshlist = () => {
             isBuyNowAllowed={e?.auction?.isBuyNowAllowed}
             isMyAuction={e?.auction?.isMyAuction}
             onReload={onReload}
+            className=""
           />
         ))}
       </div>
