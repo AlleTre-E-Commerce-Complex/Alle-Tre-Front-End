@@ -88,7 +88,7 @@ const ExpiredAuctions = () => {
               goToDetails={routes.app.profile.myAuctions.expiredDetails(e?.id)}
             />
           ))}
-          <div className="flex justify-end mt-7">
+          <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
             <PaginationApp totalPages={totalPages} perPage={5} />
           </div>
         </div>

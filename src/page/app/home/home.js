@@ -97,7 +97,7 @@ const Home = () => {
   };
 
   return (
-    <div className="lg:mt-36 md:mt-32 mt-24 py-6 home">
+    <div className="lg:mt-36 md:mt-32 mt-24 py-6 home overflow-hidden">
       <Dimmer
         className="animate-pulse fixed w-full h-full top-0"
         active={isLoadingMainAuctions || isLoadingrunSponsoredAuctions}
@@ -176,7 +176,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div className="flex justify-end mt-7 mb-12 max-w-[1440px] mx-auto">
+      <div className="flex justify-end mt-7 mb-12 max-w-[1440px] mx-auto ltr:mr-2 rtl:ml-2">
         <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div>
       <div className="max-w-[1440px] mx-auto">

@@ -48,7 +48,7 @@ const Categories = () => {
   }, []);
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-36">
+    <div className="max-w-[1440px] mx-auto mt-36 overflow-hidden">
       <Dimmer
         className="animate-pulse fixed w-full h-full top-0"
         active={loadingSubGatogry || isLoadingCategories}
@@ -63,9 +63,9 @@ const Categories = () => {
           alt=""
         />
       </div>
-      <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
+      {/* <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
         <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
-      </div>
+      </div> */}
       <h6 className="max-w-[1440px] mx-auto pb-4 pt-2 text-gray-med text-base font-normal">
         {mainAuctions?.length} Results
       </h6>
@@ -90,7 +90,7 @@ const Categories = () => {
           ))}
         </div>
       </div>
-      <div className="flex justify-end mt-7 pb-12 max-w-[1440px] mx-auto">
+      <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 max-w-[1440px] mx-auto ">
         <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div>
     </div>

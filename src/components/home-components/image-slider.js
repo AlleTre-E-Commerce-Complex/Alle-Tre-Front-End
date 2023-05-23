@@ -58,15 +58,15 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
   };
 
   return (
-    <section className="mt-7 relative max-w-[1440px] lg:h-[561px] md:h-[350px] h-[200px] mx-auto">
+    <section className="mt-7 relative max-w-[1440px] md:h-[541px] h-[200px] mx-auto">
       <div className="relative hidden lg:block ">
         <img
-          className="object-cover absolute -right-8 lg:-top-6 md:-top-2 w-1/2 lg:h-[541px] md:h-[350px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
+          className="object-cover absolute -right-8 lg:-top-6 md:-top-2 w-1/2 md:h-[541px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "
           src={images[0]?.[nextindex]?.imageLink}
           alt="travel"
         />
         <img
-          className="object-cover absolute -left-8 lg:-top-6 md:-top-2  w-1/2 lg:h-[541px] md:h-[350px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
+          className="object-cover absolute -left-8 lg:-top-6 md:-top-2  w-1/2 md:h-[541px] h-[200px] rounded-l-[32px] drop-shadow-home-img blur-[0.1px] opacity-30 "
           src={images[0]?.[previndex]?.imageLink}
           alt="travel"
         />
@@ -78,7 +78,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
             key={index}
           >
             {index === current && (
-              <div className="lg:h-[561px] md:h-[350px] h-[200px] lg:mx-16 mx-4 relative rounded-[32px]  ">
+              <div className="md:h-[561px] h-[200px] lg:mx-16 mx-4 relative rounded-[32px]  ">
                 <div onClick={nextSlide} className="overflow-hidden ">
                   {/* right */}
                   <img
@@ -103,12 +103,12 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                 </div>
                 <div className="drop-shadow-[0px 3px 16px #E9E9E980] lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
                   <img
-                    className="object-cover w-full lg:h-[541px] md:h-[350px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]  "
+                    className="object-cover w-full md:h-[541px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]  "
                     src={slide?.product?.images[0]?.imageLink}
                     alt="travel"
                   />
                 </div>
-                <div className="w-full lg:h-[541px] md:h-[350px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 ltr:sm:pl-24 rtl:sm:pr-24 ltr:pl-10 rtl:pr-10 pt-5 ">
+                <div className="w-full md:h-[541px] h-[200px] rounded-[32px] bg-gradient-to-r from-black/80 absolute top-0  text-white lg:pt-24 md:pt-10 ltr:sm:pl-24 rtl:sm:pr-24 ltr:pl-10 rtl:pr-10 pt-5 ">
                   <ScrollingIcon
                     onClick={() =>
                       window.scrollTo({

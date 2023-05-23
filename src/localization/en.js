@@ -276,10 +276,10 @@ const en = {
   [localizationKeys.viewAll]: "View All",
   // tab details
   [localizationKeys.shippingPolicy]: "Shipping Policy",
-  [localizationKeys.returnPolicy]: "Shipping Policy",
-  [localizationKeys.payment]: "Shipping Policy",
-  [localizationKeys.feedback]: "Shipping Policy",
-  [localizationKeys.aboutTheBrand]: "Shipping Policy",
+  [localizationKeys.returnPolicy]: "Return Policy",
+  [localizationKeys.payment]: "Payment",
+  [localizationKeys.feedback]: "Feedback",
+  [localizationKeys.aboutTheBrand]: "About The Brand",
 
   // err
   [localizationKeys.required]: "Required",

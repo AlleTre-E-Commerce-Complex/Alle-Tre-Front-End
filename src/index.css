@@ -111,7 +111,7 @@ border-radius: 1px 16px 1px 16px !important;
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/
 .edit-For-o-auth-tabs .ui.secondary.pointing.menu {
-@apply border-primary !important;
+@apply border-primary h-0 !important;
 }
 .edit-For-o-auth-tabs .ui.secondary.pointing.menu .active.item {
   @apply gap-x-5 py-1.5 px-10 font-normal text-xl rounded-t-xl  bg-white text-gray  !important;
@@ -122,7 +122,7 @@ border-radius: 1px 16px 1px 16px !important;
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/
 .edit-For-reset-password-page-tabs .ui.secondary.pointing.menu {
-@apply border-primary !important;
+@apply border-primary h-0  !important;
 }
 .edit-For-reset-password-page-tabs .ui.secondary.pointing.menu .item {
   @apply gap-x-5 py-1.5 px-10 font-normal text-xl rounded-t-xl  bg-white text-gray  !important;
@@ -149,7 +149,7 @@ border-radius: 1px 16px 1px 16px !important;
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/
 .edit-For-my-auctions-tabs  .ui.secondary.pointing.menu {
-  @apply border-primary  !important;
+  @apply border-primary h-0  !important;
 }
 .edit-For-my-auctions-tabs  .ui.secondary.pointing.menu .item {
   @apply gap-x-5 py-2 px-12 font-normal text-base text-gray-dark !important;

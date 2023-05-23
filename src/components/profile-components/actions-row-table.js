@@ -43,7 +43,7 @@ const ActionsRowTable = ({
   } ${selectedContent[localizationKeys.min]}`;
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
-      <div className="flex flex-wrap justify-between">
+      <div className="flex flex-wrap justify-between overflow-clip">
         <div className="flex gap-x-4">
           <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9] cursor-default  ">
             {img ? (
@@ -61,9 +61,11 @@ const ActionsRowTable = ({
             )}
             <AuctionsStatus status={status} small absolute />
           </div>
-          <div>
-            <h1 className="text-gray-dark text-sm font-medium">{title}</h1>
-            <p className="text-gray-med text-xs font-normal pt-1">
+          <div className="">
+            <h1 className="text-gray-dark text-sm font-medium">
+              {truncateString(title, 80)}
+            </h1>
+            <p className="text-gray-med text-xs font-normal pt-1 ">
               {truncateString(description, 80)}
             </p>
             {status === "ACTIVE" && (
@@ -96,16 +98,16 @@ const ActionsRowTable = ({
               </div>
             )}
             {status === "PENDING_OWNER_DEPOIST" && (
-              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5 w-full ">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
                     {selectedContent[localizationKeys.endingTime]}
                   </h1>
-                  <p className="text-gray-dark text-[10px] font-normal">
+                  <p className="text-gray-dark text-[10px] font-normal ">
                     {formatCurrency(startingPrice)}
                   </p>
                 </div>
-                <div>
+                <div className="w-full">
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
                     {selectedContent[localizationKeys.startingDate]}
                   </h1>
@@ -113,10 +115,10 @@ const ActionsRowTable = ({
                     {/* March,23 2023 */}
                     {moment.utc(startingDate).format("MMMM, DD YYYY")}
                   </p>
+                  <button className="bg-secondary-light text-white text-xs px-2 rounded h-6 my-auto cursor-default  w-auto">
+                    {selectedContent[localizationKeys.pendingDeposit]}
+                  </button>
                 </div>
-                <button className="bg-secondary-light text-white text-xs px-2 rounded h-6 my-auto cursor-default w-1/2 sm:w-auto">
-                  {selectedContent[localizationKeys.pendingDeposit]}
-                </button>
               </div>
             )}
             {status === "IN_SCHEDULED" && (
@@ -179,8 +181,7 @@ const ActionsRowTable = ({
             ) : (
               ""
             )}
-
-            <div className="pt-2  gap-x-10 hidden">
+            <div className="pt-2 gap-x-10 hidden">
               <div>
                 <h1 className="text-gray-veryLight text-[10px] font-normal">
                   {selectedContent[localizationKeys.totalBids]}

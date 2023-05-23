@@ -116,7 +116,7 @@ const SummaryHomeAuctionSections = ({
         </p>
       </div>
       {/* Description */}
-      <div className="pt-8">
+      <div className="pt-8 overflow-clip">
         <h3 className="text-gray-dark text-base font-normal">
           {" "}
           {selectedContent[localizationKeys.description]}
