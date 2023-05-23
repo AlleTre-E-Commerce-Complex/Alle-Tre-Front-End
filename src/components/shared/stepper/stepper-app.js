@@ -52,15 +52,15 @@ const StepperApp = () => {
                 {selectedContent[localizationKeys.shippingDetails]}
               </p>
             </div>
-            {/* <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
-                Payment Details
+                {selectedContent[localizationKeys.paymentDetails]}
               </p>
-            </div> */}
+            </div>
           </div>
         ))}
 
@@ -104,15 +104,15 @@ const StepperApp = () => {
                 {selectedContent[localizationKeys.shippingDetails]}
               </p>
             </div>
-            {/* <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-gray cursor-pointer">
-                Payment Details
+                {selectedContent[localizationKeys.paymentDetails]}
               </p>
-            </div> */}
+            </div>
           </div>
         ))}
 
@@ -173,15 +173,15 @@ const StepperApp = () => {
               </p>
             </div>
 
-            {/* <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
+            <div className="border-gray-med border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="text-center relative">
               <button className="bg-gray-med w-8 h-8 rounded-full text-white text-center mx-2">
                 4
               </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2  text-gray-med  cursor-pointer">
-                Payment Details
+                {selectedContent[localizationKeys.paymentDetails]}
               </p>
-            </div> */}
+            </div>
           </div>
         ))}
 
@@ -252,7 +252,7 @@ const StepperApp = () => {
 
             <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
 
-            {/* <div className="text-center relative">
+            <div className="text-center relative">
               <button
                 onClick={() =>
                   history.push(routes.app.createAuction.paymentDetails)
@@ -267,9 +267,9 @@ const StepperApp = () => {
                 }
                 className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
               >
-                Payment Details
+                {selectedContent[localizationKeys.paymentDetails]}
               </p>
-            </div> */}
+            </div>
           </div>
         ))}
     </>
