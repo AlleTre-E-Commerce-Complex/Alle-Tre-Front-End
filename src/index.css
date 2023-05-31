@@ -158,3 +158,10 @@ border-radius: 1px 16px 1px 16px !important;
   @apply border-primary bg-primary rounded-t-xl font-normal text-base py-2 px-12 text-white !important;
 }
 /* ///////////////////////////////////////////////////////////////////// */
+.edit_pop.ui.top.left.popup{
+  @apply rounded-xl shadow-md border-none 
+}
+.edit_pop.ui.top.left.popup:before{
+  @apply border-none shadow
+}
+/* ///////////////////////////////////////////////////////////////////// */

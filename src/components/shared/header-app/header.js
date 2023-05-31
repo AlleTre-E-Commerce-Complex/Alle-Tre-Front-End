@@ -63,7 +63,7 @@ const Header = ({ SetSid }) => {
   };
   return (
     <div className=" w-full fixed top-0 z-50 bg-white/30 backdrop-blur-md ">
-      <div className="md:h-[72px] h-[60px] flex justify-between max-w-[1440px] w-full lg:mx-auto md:mx-12 ">
+      <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4  max-w-[1440px] lg:mx-auto md:mx-12 px-2 md:px-0">
         <div className="my-auto hidden md:block">
           <AllatreLogo
             className="cursor-pointer hidden md:block"

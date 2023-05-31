@@ -37,6 +37,7 @@ const api = {
       totalBidsDetails: (auctionsId, userId) =>
         `/auctions/user/${auctionsId}/bids-history?userId=${userId}`,
       submitBid: (auctionsId) => `/auctions/user/${auctionsId}/submit-bid`,
+      payForAuction: "/auctions/user/pay",
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,

@@ -7,7 +7,11 @@ import useAxios from "../hooks/use-axios";
 
 const AuthContext = React.createContext();
 
-const WHITE_LIST = [routes.auth.forgetpass.default, routes.auth.default];
+const WHITE_LIST = [
+  routes.auth.forgetpass.default,
+  routes.auth.default,
+  routes.app.createAuction.paymentDetails,
+];
 
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);

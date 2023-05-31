@@ -32,10 +32,12 @@ import {
 } from "../../../redux-store/auction-details-slice";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import useLocalStorage from "../../../hooks/use-localstorage";
 
 const ShippingDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+
   const dispatch = useDispatch();
 
   const productDetailsInt = useSelector(
@@ -209,10 +211,11 @@ const ShippingDetails = () => {
               formData
             )
             .then((res) => {
+              window.localStorage.setItem("auctionId", res?.data?.data.id);
               toast.success(
                 selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
               );
-              history.push(routes.app.profile.myAuctions.pending);
+              history.push(routes.app.createAuction.paymentDetails);
               dispatch(productDetails({}));
               dispatch(auctionDetails({}));
               dispatch(type({}));
@@ -232,10 +235,11 @@ const ShippingDetails = () => {
           authAxios
             .post(api.app.auctions.default, formData)
             .then((res) => {
+              window.localStorage.setItem("auctionId", res?.data?.data.id);
               toast.success(
                 selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
               );
-              history.push(routes.app.profile.myAuctions.pending);
+              history.push(routes.app.createAuction.paymentDetails);
               dispatch(productDetails({}));
               dispatch(auctionDetails({}));
               dispatch(type({}));

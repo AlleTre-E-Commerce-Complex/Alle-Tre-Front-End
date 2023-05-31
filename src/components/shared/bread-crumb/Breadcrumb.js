@@ -51,7 +51,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
                   ? "text-gray-med"
                   : "text-primary"
               } mx-2 text-base font-normal `}
-              to={routes.app.createAuction.productDetails}
+              // to={routes.app.createAuction.productDetails}
             >
               {selectedContent[localizationKeys.productDetails]}
             </Link>
@@ -68,7 +68,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
                   ? "text-gray-med"
                   : "text-primary"
               } mx-2 text-base font-normal `}
-              to={routes.app.createAuction.auctionDetails}
+              // to={routes.app.createAuction.auctionDetails}
             >
               {selectedContent[localizationKeys.auctionDetails]}
             </Link>
@@ -85,7 +85,7 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
                   ? "text-gray-med"
                   : "text-primary"
               } mx-2 text-base font-normal `}
-              to={routes.app.createAuction.shippingDetails}
+              // to={routes.app.createAuction.shippingDetails}
             >
               {selectedContent[localizationKeys.shippingDetails]}
             </Link>

@@ -189,20 +189,20 @@ const StepperApp = () => {
       {pathname.length === 1 ||
         (pathname.endsWith(routes.app.createAuction.paymentDetails) && (
           <div className="flex">
-            <div className="text-center relative">
+            <div className="text-center relative cursor-not-allowed ">
               <button
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails)
-                }
-                className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
+                // onClick={() =>
+                //   history.push(routes.app.createAuction.productDetails)
+                // }
+                className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2 cursor-not-allowed"
               >
                 1
               </button>
               <p
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails)
-                }
-                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
+                // onClick={() =>
+                //   history.push(routes.app.createAuction.productDetails)
+                // }
+                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-not-allowed"
               >
                 {selectedContent[localizationKeys.productDetails]}
               </p>
@@ -210,20 +210,20 @@ const StepperApp = () => {
 
             <div className="border-primary border-dashed border-b-2 lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
 
-            <div className="text-center relative">
+            <div className="text-center relative ">
               <button
-                onClick={() =>
-                  history.push(routes.app.createAuction.auctionDetails)
-                }
-                className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
+                // onClick={() =>
+                //   history.push(routes.app.createAuction.auctionDetails)
+                // }
+                className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2 cursor-not-allowed"
               >
                 2
               </button>
               <p
-                onClick={() =>
-                  history.push(routes.app.createAuction.auctionDetails)
-                }
-                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
+                // onClick={() =>
+                //   history.push(routes.app.createAuction.auctionDetails)
+                // }
+                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-not-allowed"
               >
                 {selectedContent[localizationKeys.auctionDetails]}
               </p>
@@ -233,18 +233,18 @@ const StepperApp = () => {
 
             <div className="text-center relative">
               <button
-                onClick={() =>
-                  history.push(routes.app.createAuction.shippingDetails)
-                }
-                className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
+                // onClick={() =>
+                //   history.push(routes.app.createAuction.shippingDetails)
+                // }
+                className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2 cursor-not-allowed"
               >
                 3
               </button>
               <p
-                onClick={() =>
-                  history.push(routes.app.createAuction.shippingDetails)
-                }
-                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
+                // onClick={() =>
+                //   history.push(routes.app.createAuction.shippingDetails)
+                // }
+                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-not-allowed"
               >
                 {selectedContent[localizationKeys.shippingDetails]}
               </p>

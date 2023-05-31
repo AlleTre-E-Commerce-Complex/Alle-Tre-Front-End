@@ -162,6 +162,8 @@ const localizationKeys = {
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",
+  // paymemt details
+  paymentMethod: "paymentMethod",
   // profile
   online: "online",
   profileSettings: "profileSettings",

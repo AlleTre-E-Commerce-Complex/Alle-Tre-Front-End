@@ -82,6 +82,7 @@ const PendingAuctions = () => {
           {pendingAuctionsData?.map((e) => (
             <ActionsRowTable
               key={e?.id}
+              auctionsId={e?.id}
               status={e?.status}
               title={e?.product?.title}
               description={e?.product?.description}
