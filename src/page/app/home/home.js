@@ -150,7 +150,7 @@ const Home = () => {
           </div>
         </div>
         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-          <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
+          <PaginationApp totalPages={totalPages} perPage={28} myRef={myRef} />
         </div>
       </div>
       <div className="max-w-[1440px] mx-auto">
