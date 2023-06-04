@@ -81,6 +81,7 @@ const LiveAuctionsSlider = ({ type }) => {
   const handlePrevClick = () => {
     swiper1?.slidePrev();
   };
+  console.log({ auctions });
 
   return (
     <div
@@ -105,7 +106,7 @@ const LiveAuctionsSlider = ({ type }) => {
                 <div className="snapslider-card swiper-slide">
                   <AuctionCard
                     auctionId={e?.id}
-                    price={e?.acceptedAmount}
+                    price={e?.startBidAmount || e?.acceptedAmount}
                     title={e?.product?.title}
                     status={e?.status}
                     adsImg={e?.product?.images[0].imageLink}
