@@ -29,6 +29,8 @@ const routes = {
       auctionDetails: `/allatre/home/create-auction/product-details/auction-details`,
       shippingDetails: `/allatre/home/create-auction/product-details/auction-details/shipping-details`,
       paymentDetails: `/allatre/home/create-auction/product-details/auction-details/shipping-details/payment-details`,
+      paymentSucsess: `/allatre/home/create-auction/product-details/auction-details/shipping-details/payment-details/Sucsess`,
+      paymentFaild: `/allatre/home/create-auction/product-details/auction-details/shipping-details/payment-details/Faild`,
     },
 
     profile: {

@@ -127,57 +127,31 @@ const Home = () => {
       <h6 className="max-w-[1440px] lg:mx-auto mx-2 pb-4 text-gray-med text-base font-normal">
         {mainAuctions?.length} {selectedContent[localizationKeys.results]}
       </h6>
-      <div className="flex gap-5 max-w-[1440px] lg:mx-auto mx-2">
-        {/* left filter sections */}
-        <FilterSections myRef={myRef} />
-        {/* right card sections */}
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
-          {mainAuctions?.map((e) => (
-            <AuctionCard
-              auctionId={e?.id}
-              price={e?.acceptedAmount || e?.startBidAmount}
-              title={e?.product?.title}
-              status={e?.status}
-              adsImg={e?.product?.images[0].imageLink}
-              totalBods={15}
-              WatshlistState={e?.isSaved}
-              endingTime={e?.expiryDate}
-              isBuyNowAllowed={e?.isBuyNowAllowed}
-              isMyAuction={e?.isMyAuction}
-            />
-          ))}
-          {mainAuctions?.map((e) => (
-            <AuctionCard
-              auctionId={e?.id}
-              price={e?.acceptedAmount || e?.startBidAmount}
-              title={e?.product?.title}
-              status={e?.status}
-              adsImg={e?.product?.images[0].imageLink}
-              totalBods={15}
-              WatshlistState={e?.isSaved}
-              endingTime={e?.expiryDate}
-              isBuyNowAllowed={e?.isBuyNowAllowed}
-              isMyAuction={e?.isMyAuction}
-            />
-          ))}
-          {mainAuctions?.map((e) => (
-            <AuctionCard
-              auctionId={e?.id}
-              price={e?.acceptedAmount || e?.startBidAmount}
-              title={e?.product?.title}
-              status={e?.status}
-              adsImg={e?.product?.images[0].imageLink}
-              totalBods={15}
-              WatshlistState={e?.isSaved}
-              endingTime={e?.expiryDate}
-              isBuyNowAllowed={e?.isBuyNowAllowed}
-              isMyAuction={e?.isMyAuction}
-            />
-          ))}
+      <div className="max-w-[1440px] lg:mx-auto mx-2">
+        <div className="flex gap-5 max-w-[1440px] lg:mx-auto mx-2">
+          {/* left filter sections */}
+          <FilterSections myRef={myRef} />
+          {/* right card sections */}
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
+            {mainAuctions?.map((e) => (
+              <AuctionCard
+                auctionId={e?.id}
+                price={e?.acceptedAmount || e?.startBidAmount}
+                title={e?.product?.title}
+                status={e?.status}
+                adsImg={e?.product?.images[0].imageLink}
+                totalBods={15}
+                WatshlistState={e?.isSaved}
+                endingTime={e?.expiryDate}
+                isBuyNowAllowed={e?.isBuyNowAllowed}
+                isMyAuction={e?.isMyAuction}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="flex justify-end mt-7 mb-12 max-w-[1440px] mx-auto ltr:mr-2 rtl:ml-2">
-        <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
+        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+          <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
+        </div>
       </div>
       <div className="max-w-[1440px] mx-auto">
         <LiveAuctionsSlider />

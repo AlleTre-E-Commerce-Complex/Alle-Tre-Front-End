@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import {
   PaymentElement,
-  LinkAuthenticationElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
 import { Button } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
+import routes from "../../routes";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 export default function CheckoutForm({ payPrice }) {
+  const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -32,20 +32,21 @@ export default function CheckoutForm({ payPrice }) {
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
         case "succeeded":
-          setMessage("Payment succeeded!");
+          toast.success("Payment succeeded!");
           break;
         case "processing":
-          setMessage("Your payment is processing.");
+          toast.loading("Your payment is processing.");
           break;
         case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
+          toast.error("Your payment was not successful, please try again.");
+          // history.push(routes.app.createAuction.paymentFaild);
           break;
         default:
-          setMessage("Something went wrong.");
+          toast.error("Something went wrong.");
           break;
       }
     });
-  }, [stripe]);
+  }, [history, stripe]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +63,7 @@ export default function CheckoutForm({ payPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
+        return_url: `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}`,
       },
     });
 
@@ -72,9 +73,9 @@ export default function CheckoutForm({ payPrice }) {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+      toast.error(error.message);
     } else {
-      setMessage("An unexpected error occurred.");
+      toast.error("An unexpected error occurred.");
     }
 
     setIsLoading(false);
@@ -84,14 +85,8 @@ export default function CheckoutForm({ payPrice }) {
     layout: "tabs",
   };
 
-  // toast.error(message && message);
-
   return (
     <form className="w-full mx-auto" id="payment-form" onSubmit={handleSubmit}>
-      {/* <LinkAuthenticationElement
-        id="link-authentication-element"
-        onChange={(e) => setEmail(e.target.value)}
-      /> */}
       <PaymentElement id="payment-element" options={paymentElementOptions} />
       <Button
         className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"

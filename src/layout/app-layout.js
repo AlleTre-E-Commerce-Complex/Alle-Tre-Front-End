@@ -24,11 +24,13 @@ import ProfileLayouts from "../page/app/profile/profile-layouts";
 import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
 import Footer from "../components/shared/footer/footer";
 import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
+import PaymentSucsessModel from "../components/shared/payment-models/payment-sucsess-model";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
+  const { pathname } = useLocation();
 
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
@@ -36,6 +38,14 @@ const AppLayouts = () => {
       <Sidebar SetSid={SetSid} sid={sid} />
       <div className="p-0 m-0 border-none min-h-screen ">
         <AuthModel currentPAth={currentPath} />
+        <PaymentSucsessModel
+          open={
+            pathname.length === 1 ||
+            pathname.endsWith(routes.app.createAuction.paymentSucsess)
+              ? true
+              : false
+          }
+        />
         {/* <SocketProvider> */}
         <Switch>
           <Route
