@@ -88,7 +88,7 @@ const HomeAuctionDetails = () => {
                     ? auctionsDetailsData?.product?.subCategory?.nameEn
                     : auctionsDetailsData?.product?.subCategory?.nameAr
                 }
-                TimeLeft={auctionsDetailsData?.endDate}
+                TimeLeft={auctionsDetailsData?.expiryDate}
                 startBidAmount={auctionsDetailsData?.startBidAmount}
                 CurrentBid={auctionsDetailsData?.latestBidAmount}
                 totalBids={auctionsDetailsData?._count?.bids}

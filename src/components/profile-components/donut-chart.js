@@ -5,17 +5,26 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
 const DonutChart = ({
+  isTotalAuctions,
+  //
   active,
   drafted,
   sold,
   scheduled,
   expired,
   pending,
+  //
+  inProgressAuction,
+  pendingAuction,
+  completedAuction,
+  expiredAuctions,
+  waitingForDeliveryAuctions,
+  //
   totalcount,
 }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
-  const data = [
+  const totalAuctionsData = [
     { x: "Active Auctions", y: active },
     { x: "Drafts", y: drafted },
     { x: "Sold", y: sold },
@@ -23,6 +32,32 @@ const DonutChart = ({
     { x: "Expired", y: expired },
     { x: "Pending", y: pending },
   ];
+
+  const totalBidsData = [
+    { x: "In Progress Auction", y: inProgressAuction },
+    { x: "Pending Auction", y: pendingAuction },
+    { x: "Completed Auction", y: completedAuction },
+    { x: "Expired Auctions", y: expiredAuctions },
+    { x: "Waiting For Delivery Auctions", y: waitingForDeliveryAuctions },
+  ];
+
+  const auctionscolorScale = [
+    "#45BF55",
+    "#67C6B9",
+    "#A2547A",
+    "#FBAE4C",
+    "#ACACAC",
+    "#00134F",
+  ];
+  const bidscolorScale = [
+    "#45BF55",
+    "#67C6B9",
+    "#A2547A",
+    "#ACACAC",
+    "#FBAE4C",
+  ];
+
+  console.log({ isTotalAuctions });
 
   const options = {
     innerRadius: 40,
@@ -43,21 +78,14 @@ const DonutChart = ({
           {selectedContent[localizationKeys.total]}
         </text>
         <VictoryPie
-          data={data}
+          data={isTotalAuctions ? totalAuctionsData : totalBidsData}
           innerRadius={options.innerRadius}
           style={options.style}
           standalone={false}
           height={100}
           width={100}
           padding={{ top: 0, bottom: 0, left: 0, right: 0 }}
-          colorScale={[
-            "#45BF55",
-            "#67C6B9",
-            "#A2547A",
-            "#FBAE4C",
-            "#ACACAC",
-            "#00134F",
-          ]}
+          colorScale={isTotalAuctions ? auctionscolorScale : bidscolorScale}
           labels={options.labels} // Pass the labels prop to the VictoryPie component
         />
       </svg>

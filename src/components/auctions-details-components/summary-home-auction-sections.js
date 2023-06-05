@@ -92,6 +92,8 @@ const SummaryHomeAuctionSections = ({
     timeLeft.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
+  console.log({ formattedTimeLeft, timeLeft });
+
   const handelSumbitBid = () => {
     const newValue = Number(submitBidValue);
     if (user) {

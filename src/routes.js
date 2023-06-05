@@ -56,6 +56,16 @@ const routes = {
         expiredDetails: (auctionId = ":auctionId") =>
           `/allatre/profile/my-auctions/expired/${auctionId}/details`,
       },
+
+      myBids: {
+        default: `/allatre/profile/my-bids`,
+        inPogress: `/allatre/profile/my-bids/in-pogress`,
+        pending: `/allatre/profile/my-bids/pending`,
+        waitingForDelivery: `/allatre/profile/my-bids/waiting-for-delivery`,
+        expired: `/allatre/profile/my-bids/expired`,
+        completed: `/allatre/profile/my-bids/completed`,
+      },
+
       watchlist: `/allatre/profile/watchlist`,
       watchlistDetails: (auctionId = ":auctionId") =>
         `/allatre/profile/watchlist/${auctionId}/details`,

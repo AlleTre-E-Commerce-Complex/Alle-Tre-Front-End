@@ -8,6 +8,7 @@ import ProfileSideBare from "../../../components/profile-components/profile-side
 import routes from "../../../routes";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { Route, Switch } from "react-router-dom";
+import MyBids from "./my-bids";
 
 const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -31,6 +32,8 @@ const ProfileLayouts = () => {
             path={routes.app.profile.myAuctions.default}
             component={MyAuctions}
           />
+          <Route path={routes.app.profile.myBids.default} component={MyBids} />
+
           <Route path={routes.app.profile.watchlist} component={Watshlist} />
         </Switch>
       </div>

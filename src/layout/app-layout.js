@@ -5,7 +5,6 @@ import routes from "../routes";
 
 import Home from "../page/app/home/home";
 import Header from "../components/shared/header-app/header";
-import MyBids from "../page/app/my-bids/my-bids";
 import FAQs from "../page/app/FAQs/FAQs";
 import Support from "../page/app/support/support";
 import Categories from "../page/app/categories/categories";
@@ -94,7 +93,6 @@ const AppLayouts = () => {
             component={HomeAuctionDetails}
           />
           <Route path={routes.app.home} component={Home} />
-          <Route path={routes.app.myBides} component={MyBids} />
           <Route path={routes.app.categories()} component={Categories} />
           <Route path={routes.app.faqs} component={FAQs} />
           <Route path={routes.app.support} component={Support} />
