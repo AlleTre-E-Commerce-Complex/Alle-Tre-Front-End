@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
 import useAxios from "../../../hooks/use-axios";
 import { Dimmer } from "semantic-ui-react";
 import MyBidsTabs from "../../../components/profile-components/my-bids-tabs";
 import TotalMyBids from "../../../components/profile-components/total-my-bids";
 import routes from "../../../routes";
+import { useHistory } from "react-router-dom";
+
+import { ReactComponent as BidIcon } from "../../../../src/assets/icons/no-Bids-icon.svg";
 
 const MyBids = () => {
   const [lang] = useLanguage();
@@ -65,21 +68,16 @@ const MyBids = () => {
       {false ? (
         <div className="align-middle pt-52">
           <div>
-            {/* <AuctionIcon className="mx-auto" /> */}
+            <BidIcon className="mx-auto" />
             <p className="text-gray-dark text-center mt-12 ">
-              {/* {
-                selectedContent[
-                  localizationKeys
-                    .thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway
-                ]
-              } */}
+              You are not bidding on any items.
             </p>
             <div className="flex justify-center mt-8">
               <button
-                // onClick={() => history.push(routes.app.createAuction.default)}
-                className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
+                onClick={() => history.push(routes.app.home)}
+                className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 h-8 "
               >
-                {/* {selectedContent[localizationKeys.createNow]} */}
+                Check active auctions to start bidding
               </button>
             </div>
           </div>

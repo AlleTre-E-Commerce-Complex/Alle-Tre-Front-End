@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
@@ -11,9 +11,13 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import routes from "../../routes";
+import TotalBidsTableModel from "../auctions-details-components/total-bids-table-model";
 
 const ActionsRowTable = ({
   key,
+  isBidsButtons,
+  buttonActions,
+  textButton,
   auctionsId,
   status,
   title,
@@ -32,6 +36,7 @@ const ActionsRowTable = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
+  const [openTotalBid, setOpenTotalBidsModel] = useState(false);
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
   const startingDateLeft = `${starting_Date.days} ${
@@ -73,6 +78,7 @@ const ActionsRowTable = ({
                 {truncateString(description, 80)}
               </p>
             </div>
+            {/* auctions */}
             {status === "ACTIVE" && (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
@@ -192,43 +198,120 @@ const ActionsRowTable = ({
             ) : (
               ""
             )}
-            <div className="pt-2 gap-x-10 hidden">
-              <div>
-                <h1 className="text-gray-veryLight text-[10px] font-normal">
-                  {selectedContent[localizationKeys.totalBids]}
-                </h1>
-                <p className="text-gray-dark text-[10px] font-normal">
-                  {totalBids} Bid
-                </p>
+            {/* bids */}
+            {status === "InProgressBids" && (
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.totalBids]}
+                  </h1>
+                  <p
+                    onClick={() => setOpenTotalBidsModel(true)}
+                    className="text-gray-dark text-[10px] font-normal underline cursor-pointer"
+                  >
+                    {totalBids}
+                    {/* {selectedContent[localizationKeys.bid]} */}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.purchasePrice]}
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {formatCurrency(purchasePrice)}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.endingTime]}
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* 02 days.05 hrs.02 min */}
+                    {/* {startingDateLeft} */}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-gray-veryLight text-[10px] font-normal">
-                  {selectedContent[localizationKeys.lastPrice]}
-                </h1>
-                <p className="text-gray-dark text-[10px] font-normal">
-                  {lastPrice} AED
-                </p>
+            )}
+
+            {status === "pendingBids" ||
+            status === "WatingForDeliveryBids" ||
+            status === "ExpiredBids" ||
+            status === "completeBids" ? (
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.totalBids]}
+                  </h1>
+                  <p
+                    onClick={() => setOpenTotalBidsModel(true)}
+                    className="text-gray-dark text-[10px] font-normal underline cursor-pointer"
+                  >
+                    {totalBids}
+                    {/* {selectedContent[localizationKeys.bid]} */}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.lastPrice]}
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {formatCurrency(lastPrice)}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.endingTime]}
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* 02 days.05 hrs.02 min */}
+                    {/* {startingDateLeft} */}
+                  </p>
+                </div>
+
+                <div className={status === "ExpiredBids" ? "block" : "hidden"}>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    status
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* 02 days.05 hrs.02 min */}
+                    {/* {startingDateLeft} */}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-gray-veryLight text-[10px] font-normal">
-                  {selectedContent[localizationKeys.endingTime]}
-                </h1>
-                <p className="text-gray-dark text-[10px] font-normal">
-                  {/* 02 days.05 hrs.02 min */}
-                  {endingTimeLeft}
-                </p>
-              </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
-        <button
-          onClick={() => history.push(goToDetails)}
-          className="bg-primary-dark text-white text-sm font-normal sm:w-28 w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-        >
-          {selectedContent[localizationKeys.viewDetails]}
-        </button>
+        {isBidsButtons ? (
+          <div className="flex gap-x-2">
+            <button
+              onClick={() => buttonActions}
+              className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+            >
+              {textButton}
+            </button>
+            <button
+              onClick={() => history.push(goToDetails)}
+              className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => history.push(goToDetails)}
+            className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+          >
+            {selectedContent[localizationKeys.viewDetails]}
+          </button>
+        )}
       </div>
+      <TotalBidsTableModel
+        setOpen={setOpenTotalBidsModel}
+        open={openTotalBid}
+      />
     </div>
   );
 };
