@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-// import "../../../../src/assets/style/checkout-form.css";
 import StepperApp from "../../../components/shared/stepper/stepper-app";
 import {
   AuctionHomeDetailsBreadcrumb,
@@ -20,7 +19,10 @@ import { formatCurrency } from "../../../utils/format-currency";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import CheckoutForm from "./checkout-form";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useLocation,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-hot-toast";
 import useLocalStorage from "../../../hooks/use-localstorage";
 import { useSelector } from "react-redux";
@@ -42,9 +44,6 @@ export default function CheckoutPage({ payDeposite }) {
   const [clientSecret, setClientSecret] = useState("");
   const [hiddenMess, setHiddenMess] = useState(false);
   const [pendingAuctionData, setPendingAuctionData] = useState("");
-  console.log("====================================");
-  console.log({ bidAmountValue, clientSecret });
-  console.log("====================================");
 
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
@@ -258,8 +257,8 @@ export default function CheckoutPage({ payDeposite }) {
             {clientSecret && (
               <Elements options={options} stripe={stripePromise}>
                 <CheckoutForm
-                  auctionId={auctionId}
                   payDeposite
+                  auctionId={auctionId}
                   payPrice={
                     pendingAuctionData?.product?.category
                       ?.bidderDepositFixedAmount
@@ -277,7 +276,6 @@ export default function CheckoutPage({ payDeposite }) {
 export const PandingRow = ({
   title,
   description,
-  payDeposite,
   img,
   startingPrice,
   startingDate,

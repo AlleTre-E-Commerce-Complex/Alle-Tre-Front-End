@@ -9,13 +9,19 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function CheckoutForm({ payPrice }) {
+export default function CheckoutForm({ payPrice, payDeposite }) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
+  const { pathname } = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log("====================================");
+  console.log({ pathname });
+  console.log("====================================");
 
   useEffect(() => {
     if (!stripe) {
@@ -59,12 +65,15 @@ export default function CheckoutForm({ payPrice }) {
     }
 
     setIsLoading(true);
+    const return_url = payDeposite
+      ? `https://allatre-front.vercel.app/${pathname}/paymentSucsess`
+      : `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}`;
 
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}`,
+        return_url: return_url,
       },
     });
 

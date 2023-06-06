@@ -44,7 +44,7 @@ const AppLayouts = () => {
           open={
             pathname.length === 1 ||
             pathname.endsWith(routes.app.createAuction.paymentSucsess) ||
-            pathname.endsWith(routes.app.payDepositeSucsess)
+            pathname.endsWith(`${pathname}/paymentSucsess`)
               ? true
               : false
           }

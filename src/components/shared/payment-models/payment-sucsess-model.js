@@ -6,11 +6,13 @@ import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import PaymentSucsess from "../lotties-file/payment-sucsess";
 import routes from "../../../routes";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
+  const { pathname } = useLocation();
 
   return (
     <Modal
@@ -33,7 +35,11 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
         </p>
         <div className="flex justify-center gap-x-10 pt-8">
           <button
-            onClick={() => history.push(routes.app.profile.myAuctions.active)}
+            onClick={() => {
+              pathname.endsWith(`${pathname}/paymentSucsess`)
+                ? history.push(pathname)
+                : history.push(routes.app.profile.myAuctions.active);
+            }}
             className="border-primary text-primary border-[1px] w-[136px] h-[48px] rounded-lg text-base font-normal "
           >
             View auction
