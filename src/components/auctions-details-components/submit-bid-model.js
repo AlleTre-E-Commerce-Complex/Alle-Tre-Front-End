@@ -9,36 +9,49 @@ import { useParams } from "react-router-dom";
 import { authAxios } from "../../config/axios-config";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import routes from "../../routes";
+import { useDispatch } from "react-redux";
+import { bidAmount } from "../../redux-store/bid-amount-slice";
 
 const SubmitBidModel = ({
   open,
   setOpen,
+  isDepostPay,
   submitBidValue,
   setSubmitBidValue,
 }) => {
+  const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios();
+  const dispatch = useDispatch();
   const handelSubmitBid = () => {
     const body = {
       bidAmount: parseInt(submitBidValue),
     };
-    run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
-      .then((res) => {
-        toast.success(
-          selectedContent[localizationKeys.yourAddNewSubmitValueSuccessfully]
-        );
-        setOpen(false);
-        setSubmitBidValue("");
-      })
-      .catch((err) => {
-        toast.error(
-          lang === "en"
-            ? err.message.en || err.message
-            : err.message.ar || err.message
-        );
-      });
+    if (isDepostPay) {
+      setOpen(false);
+      dispatch(bidAmount(parseInt(submitBidValue)));
+      history.push(routes.app.payDeposite(auctionId));
+    } else {
+      run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
+        .then((res) => {
+          toast.success(
+            selectedContent[localizationKeys.yourAddNewSubmitValueSuccessfully]
+          );
+          setOpen(false);
+          setSubmitBidValue("");
+        })
+        .catch((err) => {
+          toast.error(
+            lang === "en"
+              ? err.message.en || err.message
+              : err.message.ar || err.message
+          );
+        });
+    }
   };
 
   return (

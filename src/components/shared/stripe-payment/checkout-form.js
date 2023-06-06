@@ -6,8 +6,8 @@ import {
 } from "@stripe/react-stripe-js";
 import { Button } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
-import routes from "../../routes";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import routes from "../../../routes";
 
 export default function CheckoutForm({ payPrice }) {
   const history = useHistory();

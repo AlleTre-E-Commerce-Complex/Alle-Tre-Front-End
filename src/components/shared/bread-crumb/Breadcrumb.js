@@ -391,13 +391,30 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
           content: (
             <Link
               className={`${
-                pathname.startsWith(routes.app.homeDetails(details))
-                  ? "text-primary"
-                  : "text-gray-med"
+                pathname.startsWith(routes.app.payDeposite(details))
+                  ? "text-gray-med"
+                  : "text-primary"
               } mx-2 text-base font-normal `}
               to={routes.app.homeDetails(details)}
             >
               {selectedContent[localizationKeys.auctionDetails]}
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.payDeposite(details)) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.payDeposite(details))
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.payDeposite(details)}
+            >
+              Pay Deposite
             </Link>
           ),
         },

@@ -82,20 +82,23 @@ const Header = ({ SetSid }) => {
           </div>
           <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto">
             <NavLinkHeader
-              title={selectedContent[localizationKeys.myBids]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.myBides)
-              }
-              onClick={() => history.push(routes.app.myBides)}
-            />
-            {/* <NavLinkHeader
-              title={selectedContent[localizationKeys.categories]}
+              title={selectedContent[localizationKeys.myAuctions]}
               isActive={
                 pathname.length === 1 ||
-                pathname.startsWith(routes.app.categories)
+                pathname.startsWith(routes.app.profile.myAuctions.default)
               }
-              onClick={() => history.push(routes.app.categories)}
-            /> */}
+              onClick={() =>
+                history.push(routes.app.profile.myAuctions.default)
+              }
+            />
+            <NavLinkHeader
+              title={selectedContent[localizationKeys.myBids]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.myBids.default)
+              }
+              onClick={() => history.push(routes.app.profile.myBids.default)}
+            />
             <NavLinkHeader
               title={selectedContent[localizationKeys.watchlist]}
               isActive={

@@ -24,6 +24,7 @@ import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-d
 import Footer from "../components/shared/footer/footer";
 import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
 import PaymentSucsessModel from "../components/shared/payment-models/payment-sucsess-model";
+import PayDeposite from "../components/home-components/pay-deposite";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -88,6 +89,7 @@ const AppLayouts = () => {
             path={routes.app.createAuction.default}
             component={CreateAuction}
           />
+          <Route path={routes.app.payDeposite()} component={PayDeposite} />
           <Route
             path={routes.app.homeDetails()}
             component={HomeAuctionDetails}

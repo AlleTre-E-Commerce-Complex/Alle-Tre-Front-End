@@ -38,6 +38,8 @@ const api = {
         `/auctions/user/${auctionsId}/bids-history?userId=${userId}`,
       submitBid: (auctionsId) => `/auctions/user/${auctionsId}/submit-bid`,
       payForAuction: "/auctions/user/pay",
+      PayDepositByBidder: (auctionsId) =>
+        `/auctions/user/${auctionsId}/bidder-deposit`,
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,

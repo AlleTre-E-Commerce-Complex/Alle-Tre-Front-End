@@ -15,11 +15,13 @@ const routes = {
     home: `/allatre/home`,
     homeDetails: (auctionId = ":auctionId") =>
       `/allatre/home/${auctionId}/details`,
+    payDeposite: (auctionId = ":auctionId") =>
+      `/allatre/home/${auctionId}/details/pay-deposite`,
     categories: (
       categoryTitle = ":categoryTitle",
       categoryId = ":categoryId"
     ) => `/allatre/categories/${categoryTitle}/${categoryId}`,
-    myBides: `/allatre/my-bides`,
+
     faqs: `/allatre/FAQs`,
     support: `/allatre/support`,
 

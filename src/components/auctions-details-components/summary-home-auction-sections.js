@@ -44,7 +44,6 @@ const SummaryHomeAuctionSections = ({
   isBuyNowAllowed,
   acceptedAmount,
 }) => {
-  // const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
@@ -92,12 +91,14 @@ const SummaryHomeAuctionSections = ({
     timeLeft.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
-  console.log({ formattedTimeLeft, timeLeft });
-
   const handelSumbitBid = () => {
     const newValue = Number(submitBidValue);
     if (user) {
-      if (newValue <= Math.max(lastestBid?.bidAmount, CurrentBid)) {
+      if (
+        submitBidValue === undefined ||
+        newValue <=
+          Math.max(lastestBid?.bidAmount || CurrentBid || startBidAmount)
+      ) {
         toast.error(
           selectedContent[
             localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid
@@ -231,8 +232,9 @@ const SummaryHomeAuctionSections = ({
       </div>
       <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
       <SubmitBidModel
-        setOpen={setSubmitBidOpen}
+        isDepostPay
         open={openSubmitBid}
+        setOpen={setSubmitBidOpen}
         submitBidValue={submitBidValue}
         setSubmitBidValue={setSubmitBidValue}
       />
