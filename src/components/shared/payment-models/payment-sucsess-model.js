@@ -7,13 +7,17 @@ import { useLanguage } from "../../../context/language-context";
 import PaymentSucsess from "../lotties-file/payment-sucsess";
 import routes from "../../../routes";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector } from "react-redux";
 
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
-
+  const bidAmountPathName = useSelector((state) => state?.bidAmount);
+  console.log("====================================");
+  console.log({ bidAmountPathName });
+  console.log("====================================");
   return (
     <Modal
       className="sm:w-[506px] w-full h-auto bg-transparent scale-in "
@@ -36,8 +40,10 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
         <div className="flex justify-center gap-x-10 pt-8">
           <button
             onClick={() => {
-              pathname.endsWith(`${pathname}/paymentSucsess`)
-                ? history.push(pathname)
+              pathname.endsWith(
+                `${routes.app.createAuction.paymentSucsess}/payDeposite`
+              )
+                ? history.goBack()
                 : history.push(routes.app.profile.myAuctions.active);
             }}
             className="border-primary text-primary border-[1px] w-[136px] h-[48px] rounded-lg text-base font-normal "

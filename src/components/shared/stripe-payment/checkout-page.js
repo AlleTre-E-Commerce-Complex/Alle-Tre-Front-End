@@ -32,7 +32,7 @@ import { ReactComponent as CircleCloseIcon } from "../../../../src/assets/icons/
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
-export default function CheckoutPage({ payDeposite }) {
+export default function CheckoutPage({ payDeposite = true }) {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -90,7 +90,7 @@ export default function CheckoutPage({ payDeposite }) {
           })
       );
     }
-  }, [auctionId, auctionIdLocal, bidAmountValue, lang, run]);
+  }, [auctionId, auctionIdLocal, bidAmountValue, lang, run, payDeposite]);
 
   const appearance = {
     theme: "flat",

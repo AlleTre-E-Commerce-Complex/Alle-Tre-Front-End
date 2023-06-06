@@ -17,6 +17,8 @@ const routes = {
       `/allatre/home/${auctionId}/details`,
     payDeposite: (auctionId = ":auctionId") =>
       `/allatre/home/${auctionId}/details/pay-deposite`,
+    paymentSucsess: (auctionId = ":auctionId") =>
+      `/allatre/home/${auctionId}/details/pay-deposite/paymentSucsess`,
     categories: (
       categoryTitle = ":categoryTitle",
       categoryId = ":categoryId"

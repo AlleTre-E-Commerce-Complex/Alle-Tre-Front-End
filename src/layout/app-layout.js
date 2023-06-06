@@ -34,6 +34,11 @@ const AppLayouts = () => {
   const { pathname, auctionId } = useLocation();
   const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
 
+  console.log("====================================");
+  console.log(auctionId);
+  console.log(`${routes.app.createAuction.paymentSucsess}/payDeposite`);
+  console.log("====================================");
+
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <Header SetSid={SetSid} sid={sid} />
@@ -44,7 +49,9 @@ const AppLayouts = () => {
           open={
             pathname.length === 1 ||
             pathname.endsWith(routes.app.createAuction.paymentSucsess) ||
-            pathname.endsWith(`${pathname}/paymentSucsess`)
+            pathname.endsWith(
+              `${routes.app.createAuction.paymentSucsess}/payDeposite`
+            )
               ? true
               : false
           }
