@@ -8,6 +8,7 @@ import { Button } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
+import { formatCurrency } from "../../../utils/format-currency";
 
 export default function CheckoutForm({ payPrice }) {
   const history = useHistory();
@@ -94,7 +95,7 @@ export default function CheckoutForm({ payPrice }) {
         disabled={isLoading || !stripe || !elements}
         id="submit"
       >
-        Pay {payPrice}$
+        Pay {formatCurrency(payPrice)}$
       </Button>
     </form>
   );

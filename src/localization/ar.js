@@ -264,8 +264,10 @@ const ar = {
   [localizationKeys.pay]: "الدفع",
   [localizationKeys.deposit]: "إيداع",
   [localizationKeys.YouAreAboutToPlaceBidFor]: "أنت على وشك تقديم مزايدة",
-  [localizationKeys.InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding]:
-    "في هذا المزاد ، يرجى ملاحظة أنك ستحتاج إلى دفع 20٪ من السعر كوديعة مرة واحدة فقط حتى تتمكن من الاستمتاع بالمزايدة بحرية",
+  [localizationKeys.InThisAuctionPleaseNoticeThatYouWillNeedToPayA]:
+    "في هذا المزاد ، يرجى ملاحظة أنك ستحتاج إلى دفع أ",
+  [localizationKeys.ofThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding]:
+    "من السعر كوديعة مرة واحدة فقط حتى تتمكن من الاستمتاع بالمزايدة بحرية",
   [localizationKeys.endingPrice]: "السعر النهائي",
   [localizationKeys.viewAll]: "عرض الكل",
   // tab details

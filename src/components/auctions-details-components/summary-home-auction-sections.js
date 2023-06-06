@@ -27,6 +27,8 @@ import { useLanguage } from "../../context/language-context";
 import localizationKeys from "../../localization/localization-keys";
 
 const SummaryHomeAuctionSections = ({
+  bidderDepositFixedAmount,
+  isDepositPaid,
   numberStare,
   totalReviews,
   description,
@@ -232,7 +234,8 @@ const SummaryHomeAuctionSections = ({
       </div>
       <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
       <SubmitBidModel
-        isDepostPay
+        bidderDepositFixedAmount={bidderDepositFixedAmount}
+        isDepostPay={isDepositPaid}
         open={openSubmitBid}
         setOpen={setSubmitBidOpen}
         submitBidValue={submitBidValue}

@@ -47,7 +47,7 @@ const HomeAuctionDetails = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   console.log("====================================");
-  console.log(auctionsDetailsData);
+  console.log({ auctionsDetailsData });
   console.log("====================================");
 
   return (
@@ -75,6 +75,11 @@ const HomeAuctionDetails = () => {
             </div>
             <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
               <SummaryHomeAuctionSections
+                bidderDepositFixedAmount={
+                  auctionsDetailsData?.product?.category
+                    ?.bidderDepositFixedAmount
+                }
+                isDepositPaid={auctionsDetailsData?.isDepositPaid}
                 numberStare={3}
                 totalReviews={20}
                 description={auctionsDetailsData?.product?.description}

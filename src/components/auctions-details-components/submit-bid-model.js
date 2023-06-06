@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import routes from "../../routes";
 import { useDispatch } from "react-redux";
 import { bidAmount } from "../../redux-store/bid-amount-slice";
+import { formatCurrency } from "../../utils/format-currency";
 
 const SubmitBidModel = ({
   open,
@@ -20,6 +21,7 @@ const SubmitBidModel = ({
   isDepostPay,
   submitBidValue,
   setSubmitBidValue,
+  bidderDepositFixedAmount,
 }) => {
   const history = useHistory();
   const [lang] = useLanguage("");
@@ -32,10 +34,6 @@ const SubmitBidModel = ({
       bidAmount: parseInt(submitBidValue),
     };
     if (isDepostPay) {
-      setOpen(false);
-      dispatch(bidAmount(parseInt(submitBidValue)));
-      history.push(routes.app.payDeposite(auctionId));
-    } else {
       run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
         .then((res) => {
           toast.success(
@@ -51,6 +49,10 @@ const SubmitBidModel = ({
               : err.message.ar || err.message
           );
         });
+    } else {
+      setOpen(false);
+      dispatch(bidAmount(parseInt(submitBidValue)));
+      history.push(routes.app.payDeposite(auctionId));
     }
   };
 
@@ -68,11 +70,17 @@ const SubmitBidModel = ({
         </h1>
         <p className="text-center text-gray-dark pt-5">
           {selectedContent[localizationKeys.YouAreAboutToPlaceBidFor]}{" "}
-          {submitBidValue}{" "}
+          {formatCurrency(submitBidValue)}{" "}
+          {
+            selectedContent[
+              localizationKeys.InThisAuctionPleaseNoticeThatYouWillNeedToPayA
+            ]
+          }
+          {formatCurrency(bidderDepositFixedAmount)}
           {
             selectedContent[
               localizationKeys
-                .InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding
+                .ofThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding
             ]
           }
         </p>
@@ -97,9 +105,11 @@ const SubmitBidModel = ({
             onClick={() => handelSubmitBid()}
             className="w-[200px] h-[48px] rounded-lg bg-primary hover:bg-primary-dark text-white opacity-100 ltr:font-serifEN rtl:font-serifAR"
           >
-            {`${selectedContent[localizationKeys.pay]} ${submitBidValue} ${
-              selectedContent[localizationKeys.deposit]
-            } `}
+            {`${selectedContent[localizationKeys.pay]} ${
+              isDepostPay
+                ? formatCurrency(submitBidValue)
+                : formatCurrency(bidderDepositFixedAmount)
+            } ${selectedContent[localizationKeys.deposit]} `}
           </Button>
         </div>
       </div>

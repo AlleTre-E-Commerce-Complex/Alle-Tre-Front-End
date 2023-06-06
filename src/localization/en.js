@@ -270,8 +270,10 @@ const en = {
   [localizationKeys.deposit]: "Deposit",
   [localizationKeys.YouAreAboutToPlaceBidFor]:
     "You are about to place a Bid For",
-  [localizationKeys.InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding]:
-    "in this auction please notice that you will need to pay a 20% of the price as a deposit only once so you can freely enjoy bidding",
+  [localizationKeys.InThisAuctionPleaseNoticeThatYouWillNeedToPayA]:
+    "in this auction please notice that you will need to pay a ",
+  [localizationKeys.ofThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding]:
+    " of the price as a deposit only once so you can freely enjoy bidding",
   [localizationKeys.endingPrice]: "Ending Price",
   [localizationKeys.viewAll]: "View All",
   // tab details

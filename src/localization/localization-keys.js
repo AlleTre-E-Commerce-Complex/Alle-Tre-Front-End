@@ -251,8 +251,10 @@ const localizationKeys = {
   pay: "pay",
   deposit: "deposit",
   YouAreAboutToPlaceBidFor: " YouAreAboutToPlaceBidFor",
-  InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding:
-    "InThisAuctionPleaseNoticeThatYouWillNeedToPayA20OfThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding",
+  InThisAuctionPleaseNoticeThatYouWillNeedToPayA:
+    "InThisAuctionPleaseNoticeThatYouWillNeedToPayA",
+  ofThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding:
+    "ofThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding",
   endingPrice: "endingPrice",
   viewAll: "viewAll",
   // tab details

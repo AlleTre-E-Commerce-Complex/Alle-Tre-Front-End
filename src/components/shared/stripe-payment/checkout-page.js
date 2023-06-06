@@ -38,7 +38,7 @@ export default function CheckoutPage({ payDeposite }) {
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
   console.log("====================================");
-  console.log({ bidAmountValue });
+  console.log({ bidAmountValue, clientSecret });
   console.log("====================================");
 
   const { run, isLoading } = useAxios([]);
@@ -59,11 +59,15 @@ export default function CheckoutPage({ payDeposite }) {
         authAxios
           .post(api.app.auctions.PayDepositByBidder(auctionId), bidAmount)
           .then((res) => {
+            console.log("====================================");
+            console.log(res);
+            console.log("====================================");
             setClientSecret(res?.data?.data.clientSecret);
           })
           .catch((err) => {
             toast.error(
-              err?.response?.data?.message[lang] ||
+              console.log({ err }) ||
+                err?.response?.data?.message[lang] ||
                 selectedContent[
                   localizationKeys.somethingWentWrongPleaseTryAgainLater
                 ]
