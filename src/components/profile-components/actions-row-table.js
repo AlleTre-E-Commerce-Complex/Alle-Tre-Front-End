@@ -199,7 +199,7 @@ const ActionsRowTable = ({
               ""
             )}
             {/* bids */}
-            {status === "InProgressBids" && (
+            {status === "IN_PROGRESS" && (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
@@ -233,7 +233,7 @@ const ActionsRowTable = ({
               </div>
             )}
 
-            {status === "pendingBids" ||
+            {status === "PENDING_PAYMENT" ||
             status === "WatingForDeliveryBids" ||
             status === "ExpiredBids" ||
             status === "completeBids" ? (
@@ -309,6 +309,7 @@ const ActionsRowTable = ({
         )}
       </div>
       <TotalBidsTableModel
+        auctionsIdB={auctionsId}
         setOpen={setOpenTotalBidsModel}
         open={openTotalBid}
       />

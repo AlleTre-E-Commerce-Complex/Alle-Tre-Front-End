@@ -66,6 +66,28 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           {selectedContent[localizationKeys.expired]}
         </button>
       )}
+      {status === "IN_PROGRESS" && (
+        <button
+          className={`state-button 
+          ${small && "w-14 h-4 text-[0.5rem]"}
+          ${big && "w-24 h-7 text-base"}
+          ${absolute && "absolute"}
+          font-normal text-green bg-green-light top-0`}
+        >
+          in progress
+        </button>
+      )}
+      {status === "PENDING_PAYMENT" && (
+        <button
+          className={`state-button 
+          ${small && "w-14 h-4 text-[0.5rem]"}
+          ${big && "w-24 h-7 text-base"}
+          ${absolute && "absolute"}
+          font-normal text-secondary bg-secondary-light top-0`}
+        >
+          {selectedContent[localizationKeys.pending]}
+        </button>
+      )}
     </div>
   );
 };

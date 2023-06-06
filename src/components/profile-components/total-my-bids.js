@@ -39,7 +39,11 @@ const TotalMyBids = ({
             </p>
           </div>
           <p className="text-gray-verydark">
-            {inProgressAuction} <span className="px-1"> Bids</span>{" "}
+            {inProgressAuction}{" "}
+            <span className="px-1">
+              {" "}
+              {selectedContent[localizationKeys.auction]}
+            </span>{" "}
           </p>
         </div>
         <div className="flex justify-between py-1.5">
@@ -52,7 +56,10 @@ const TotalMyBids = ({
           </div>
           <p className="text-gray-verydark">
             {pendingAuction}
-            <span className="px-1"> Bids</span>{" "}
+            <span className="px-1">
+              {" "}
+              {selectedContent[localizationKeys.auction]}
+            </span>{" "}
           </p>
         </div>
         <div className="flex justify-between py-1.5">
@@ -65,7 +72,10 @@ const TotalMyBids = ({
           </div>
           <p className="text-gray-verydark">
             {pendingAuction}
-            <span className="px-1"> Bids</span>{" "}
+            <span className="px-1">
+              {" "}
+              {selectedContent[localizationKeys.auction]}
+            </span>{" "}
           </p>
         </div>
       </div>
@@ -79,7 +89,11 @@ const TotalMyBids = ({
             </p>
           </div>
           <p className="text-gray-verydark">
-            {expiredAuctions} <span className="px-1"> Bids</span>{" "}
+            {expiredAuctions}{" "}
+            <span className="px-1">
+              {" "}
+              {selectedContent[localizationKeys.auction]}
+            </span>{" "}
           </p>
         </div>
         <div className="flex justify-between py-1.5">
@@ -91,7 +105,11 @@ const TotalMyBids = ({
             </p>
           </div>
           <p className="text-gray-verydark">
-            {waitingForDeliveryAuctions} <span className="px-1"> Bids</span>{" "}
+            {waitingForDeliveryAuctions}{" "}
+            <span className="px-1">
+              {" "}
+              {selectedContent[localizationKeys.auction]}
+            </span>{" "}
           </p>
         </div>
       </div>

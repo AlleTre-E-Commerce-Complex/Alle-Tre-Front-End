@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useHistory,
   useLocation,
@@ -10,6 +10,10 @@ import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction
 import routes from "../../routes";
 import ActionsRowTable from "./actions-row-table";
 import PaginationApp from "../shared/pagination/pagination-app";
+import api from "../../api";
+import { authAxios } from "../../config/axios-config";
+import useAxios from "../../hooks/use-axios";
+import localizationKeys from "../../localization/localization-keys";
 
 const PendingBids = () => {
   const [lang] = useLanguage("");
@@ -23,26 +27,26 @@ const PendingBids = () => {
   const history = useHistory();
   const { search } = useLocation();
 
-  // const { run, isLoading } = useAxios([]);
-  // useEffect(() => {
-  //   run(
-  //     authAxios
-  //       .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=ACTIVE`)
-  //       .then((res) => {
-  //         setActiveAuctionData(res?.data?.data);
-  //         setTotalPages(res?.data?.pagination?.totalPages);
-  //       })
-  //   );
-  // }, [run, forceReload, search]);
+  const { run, isLoading } = useAxios([]);
+  useEffect(() => {
+    run(
+      authAxios
+        .get(`${api.app.auctions.getAllMyBids}${search}&status=PENDING_PAYMENT`)
+        .then((res) => {
+          setActiveAuctionData(res?.data?.data);
+          setTotalPages(res?.data?.pagination?.totalPages);
+        })
+    );
+  }, [run, forceReload, search]);
   return (
     <div className="relative">
-      <Dimmer className="animate-pulse" active={""} inverted>
+      <Dimmer className="animate-pulse" active={isLoading} inverted>
         <Loader active />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
           {activeAuctionData?.length}{" "}
-          {/* {selectedContent[localizationKeys.totalActive]} */}
+          {selectedContent[localizationKeys.totalActive]}
         </p>
       </div>
       {activeAuctionData?.length === 0 ? (
@@ -70,7 +74,7 @@ const PendingBids = () => {
             // key={e?.id}
             isBidsButtons
             textButton={"Complete Payment"}
-            status={"pendingBids"}
+            status={"PENDING_PAYMENT"}
             // title={e?.product?.title}
             // description={e?.product?.description}
             // img={e?.product?.images[0]?.imageLink}

@@ -12,7 +12,7 @@ import backArrowSecandryColor from "../../../src/assets/icons/back_arrow_secandr
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
-const TotalBidsTableModel = ({ open, setOpen }) => {
+const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -24,17 +24,27 @@ const TotalBidsTableModel = ({ open, setOpen }) => {
 
   useEffect(() => {
     if (user)
+      if (auctionId) {
+        run(
+          authAxios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
+            setTotalBidse(res?.data?.data);
+          })
+        );
+      } else {
+        run(
+          authAxios.get(api.app.auctions.totalBids(auctionsIdB)).then((res) => {
+            setTotalBidse(res?.data?.data);
+          })
+        );
+      }
+    else {
       run(
-        authAxios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
+        axios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
           setTotalBidse(res?.data?.data);
         })
       );
-    run(
-      axios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
-        setTotalBidse(res?.data?.data);
-      })
-    );
-  }, [auctionId, run, user, open]);
+    }
+  }, [run, user, open, auctionId]);
 
   console.log("====================================");
   console.log(totalBids);
@@ -111,7 +121,7 @@ const TotalBidsTableModel = ({ open, setOpen }) => {
         setOpenSecondModel={setOpenSecondModel}
         user={user}
         userId={userID}
-        auctionId={auctionId}
+        auctionId={auctionId ? auctionId : auctionsIdB}
       />
     </Modal>
   );
