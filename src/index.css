@@ -66,6 +66,7 @@ height: 280px;
 
 .animate-out {
   animation: fade-out 400ms ease-in-out forwards;
+  visibility: hidden;
 }
 
 .scale-in {

@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
 
-export default function CheckoutForm({ payPrice, payDeposite, auctionId }) {
+export default function CheckoutForm({ payPrice }) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
@@ -60,21 +60,11 @@ export default function CheckoutForm({ payPrice, payDeposite, auctionId }) {
 
     setIsLoading(true);
 
-    const return_url = payDeposite
-      ? `https://allatre-front.vercel.app/${routes.app.payDepositeSucsess(
-          auctionId
-        )}`
-      : `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}`;
-
-    console.log("====================================");
-    console.log(return_url);
-    console.log("====================================");
-
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: return_url,
+        return_url: `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}`,
       },
     });
 
@@ -105,7 +95,7 @@ export default function CheckoutForm({ payPrice, payDeposite, auctionId }) {
         disabled={isLoading || !stripe || !elements}
         id="submit"
       >
-        Pay {formatCurrency(payPrice)}$
+        Pay {formatCurrency(payPrice)}
       </Button>
     </form>
   );
