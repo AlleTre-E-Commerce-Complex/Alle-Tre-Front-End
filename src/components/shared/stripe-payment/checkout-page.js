@@ -86,7 +86,7 @@ export default function CheckoutPage({ payDeposite }) {
           })
       );
     }
-  }, [auctionId, auctionIdLocal, bidAmountValue, lang, payDeposite, run]);
+  }, [auctionId, auctionIdLocal, bidAmountValue, lang, run]);
 
   const appearance = {
     theme: "flat",
@@ -116,7 +116,11 @@ export default function CheckoutPage({ payDeposite }) {
         <Loader active />
       </Dimmer>
       <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">
-        <AuctionHomeDetailsBreadcrumb details={auctionId} />
+        {payDeposite ? (
+          <AuctionHomeDetailsBreadcrumb details={auctionId} />
+        ) : (
+          <CreateAuctionBreadcrumb />
+        )}
       </div>
       <div className="flex justify-center">
         <StepperApp />
@@ -210,6 +214,8 @@ export default function CheckoutPage({ payDeposite }) {
             {clientSecret && (
               <Elements options={options} stripe={stripePromise}>
                 <CheckoutForm
+                  auctionId={auctionId}
+                  payDeposite
                   payPrice={
                     pendingAuctionData?.product?.category
                       ?.bidderDepositFixedAmount

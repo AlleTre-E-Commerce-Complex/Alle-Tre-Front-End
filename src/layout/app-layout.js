@@ -25,12 +25,14 @@ import Footer from "../components/shared/footer/footer";
 import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
 import PaymentSucsessModel from "../components/shared/payment-models/payment-sucsess-model";
 import PayDeposite from "../components/home-components/pay-deposite";
+import useLocalStorage from "../hooks/use-localstorage";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
-  const { pathname } = useLocation();
+  const { pathname, auctionId } = useLocation();
+  const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
 
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
@@ -41,7 +43,8 @@ const AppLayouts = () => {
         <PaymentSucsessModel
           open={
             pathname.length === 1 ||
-            pathname.endsWith(routes.app.createAuction.paymentSucsess)
+            pathname.endsWith(routes.app.createAuction.paymentSucsess) ||
+            pathname.endsWith(routes.app.payDepositeSucsess(auctionId))
               ? true
               : false
           }
