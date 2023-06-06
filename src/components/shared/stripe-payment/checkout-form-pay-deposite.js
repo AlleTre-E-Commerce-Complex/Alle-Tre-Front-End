@@ -11,7 +11,7 @@ import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function CheckoutForm({ payPrice, payDeposite }) {
+export default function CheckoutFormPayDeposite({ payPrice }) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
@@ -46,7 +46,6 @@ export default function CheckoutForm({ payPrice, payDeposite }) {
           break;
         case "requires_payment_method":
           toast.error("Your payment was not successful, please try again.");
-          // history.push(routes.app.createAuction.paymentFaild);
           break;
         default:
           toast.error("Something went wrong.");
@@ -70,9 +69,8 @@ export default function CheckoutForm({ payPrice, payDeposite }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: payDeposite
-          ? `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}/payDeposite`
-          : `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}`,
+        return_url: `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}/payDeposite`,
+        // return_url: `http://localhost:3000${routes.app.home}/payDeposite`,
       },
     });
 

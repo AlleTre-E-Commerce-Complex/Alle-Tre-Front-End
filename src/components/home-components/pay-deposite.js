@@ -1,11 +1,11 @@
 import React from "react";
-import CheckoutPage from "../shared/stripe-payment/checkout-page";
+import CheckoutPagePayDeposite from "../shared/stripe-payment/checkout-page-pay-deposite";
 
 const PayDeposite = () => {
   return (
     <div>
       <div>
-        <CheckoutPage payDeposite />
+        <CheckoutPagePayDeposite />
       </div>
     </div>
   );

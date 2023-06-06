@@ -40,10 +40,8 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
         <div className="flex justify-center gap-x-10 pt-8">
           <button
             onClick={() => {
-              pathname.endsWith(
-                `${routes.app.createAuction.paymentSucsess}/payDeposite`
-              )
-                ? history.goBack()
+              pathname.endsWith(`${routes.app.home}/payDeposite`)
+                ? history.goBack(history.goBack())
                 : history.push(routes.app.profile.myAuctions.active);
             }}
             className="border-primary text-primary border-[1px] w-[136px] h-[48px] rounded-lg text-base font-normal "
