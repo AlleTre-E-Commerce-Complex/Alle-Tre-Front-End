@@ -71,6 +71,9 @@ const ShippingDetails = () => {
       })
     );
   }, [run, forceReload]);
+  console.log("====================================");
+  console.log();
+  console.log("====================================");
 
   const {
     run: runCreatAuction,
@@ -187,8 +190,9 @@ const ShippingDetails = () => {
       if (typeInt.type === "SCHEDULED") {
         const date = moment(
           typeInt.date + " " + typeInt.from,
-          "DD-MM-YYYY HH:mm"
-        ).toISOString();
+          "DD-MM-YYYY hh:mm A"
+        ).format("YYYY-MM-DDTHH:mm:ss.SSS");
+
         formData.append("type", typeInt.type);
         formData.append("startDate", date);
       } else {

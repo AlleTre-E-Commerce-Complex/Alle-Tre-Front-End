@@ -34,6 +34,10 @@ const SummaryAuctionSections = ({
   const { pathname } = useLocation();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
 
+  console.log("====================================");
+  console.log({ endingTime });
+  console.log("====================================");
+
   return (
     <div>
       {/* rating */}
@@ -96,7 +100,7 @@ const SummaryAuctionSections = ({
             {selectedContent[localizationKeys.endingPrice]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl">
-            {formatCurrency(endingPrice)}
+            {formatCurrency(endingPrice) || "--"}
           </p>
         </div>
       </div>

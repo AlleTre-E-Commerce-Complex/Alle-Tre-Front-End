@@ -241,7 +241,7 @@ const AuctionDetails = () => {
                           <FormikTimePicker
                             name="from"
                             label={selectedContent[localizationKeys.time]}
-                            placeholder="DD/MM/YYYY"
+                            placeholder="HH:MM"
                           />
                         </div>
                       </div>

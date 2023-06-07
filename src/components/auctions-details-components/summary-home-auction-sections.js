@@ -25,6 +25,7 @@ import { io } from "socket.io-client";
 import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
 import localizationKeys from "../../localization/localization-keys";
+import moment from "moment";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -45,6 +46,7 @@ const SummaryHomeAuctionSections = ({
   startBidAmount,
   isBuyNowAllowed,
   acceptedAmount,
+  StartDate,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -60,29 +62,30 @@ const SummaryHomeAuctionSections = ({
   const { auctionId } = useParams();
   const { user, logout } = useAuthState();
   useEffect(() => {
-    auth.getToken().then((accessToken) => {
-      const headers = {
-        Authorization: accessToken ? "Bearer " + accessToken : undefined,
-      };
-      const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
-      const newSocket = io(URL, {
-        query: { auctionId: auctionId },
-        extraHeaders: Object.entries(headers).reduce(
-          (acc, [key, value]) =>
-            value !== undefined ? { ...acc, [key]: value } : acc,
-          {}
-        ),
-        path: "/socket.io",
-      });
-      newSocket?.on("bid:submitted", (data) => {
-        setLastestBid(data);
-      });
+    if (auctionId)
+      auth.getToken().then((accessToken) => {
+        const headers = {
+          Authorization: accessToken ? "Bearer " + accessToken : undefined,
+        };
+        const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+        const newSocket = io(URL, {
+          query: { auctionId: auctionId },
+          extraHeaders: Object.entries(headers).reduce(
+            (acc, [key, value]) =>
+              value !== undefined ? { ...acc, [key]: value } : acc,
+            {}
+          ),
+          path: "/socket.io",
+        });
+        newSocket?.on("bid:submitted", (data) => {
+          setLastestBid(data);
+        });
 
-      return () => {
-        newSocket.close();
-        logout();
-      };
-    });
+        return () => {
+          newSocket.close();
+          logout();
+        };
+      });
   }, []);
 
   const timeLeft = useCountdown(TimeLeft);
@@ -90,6 +93,14 @@ const SummaryHomeAuctionSections = ({
     selectedContent[localizationKeys.days]
   } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : ${
     timeLeft.minutes
+  } ${selectedContent[localizationKeys.min]}`;
+
+  const startDate = useCountdown(StartDate);
+
+  const formattedstartDate = `${startDate.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    startDate.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
   const handelSumbitBid = () => {
@@ -161,14 +172,16 @@ const SummaryHomeAuctionSections = ({
       <div className="pt-6 grid grid-cols-2  ">
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
-            {selectedContent[localizationKeys.timeLeft]}
+            {status === "IN_SCHEDULED"
+              ? selectedContent[localizationKeys.startDate]
+              : selectedContent[localizationKeys.timeLeft]}
           </p>
           <p
             className={`${
               timeLeft.days === 0 ? "text-red" : "text-gray-verydark"
             } cursor-default text-base font-bold`}
           >
-            {formattedTimeLeft}
+            {status === "IN_SCHEDULED" ? formattedstartDate : formattedTimeLeft}
           </p>
         </div>
         <div>
@@ -184,7 +197,13 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Current Bid and Buy Now sections */}
-      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1  ">
+      <div
+        className={
+          status === "IN_SCHEDULED"
+            ? "hidden"
+            : "pt-6 grid md:grid-cols-2 sm:grid-cols-1 "
+        }
+      >
         <div>
           <p className="text-gray-med text-base font-normal pb-2">
             {!CurrentBid
@@ -210,7 +229,13 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Submit Bid sections */}
-      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">
+      <div
+        className={
+          status === "IN_SCHEDULED"
+            ? "hidden"
+            : "pt-6 grid md:grid-cols-2 sm:grid-cols-1"
+        }
+      >
         <div>
           <input
             className="border-[1px] border-veryLight h-[48px] w-[304px] rounded-lg px-4 outline-none"

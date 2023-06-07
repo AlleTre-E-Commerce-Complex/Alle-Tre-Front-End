@@ -76,7 +76,7 @@ const ProfileSettings = () => {
   }, [runLocationData, forceReload]);
 
   const handelCompleteProfle = () => {
-    if (locationData.length <= 0) {
+    if (locationData.length <= 0 || pofileData?.imageLink) {
       setImgModelOpen(true);
       setOpen(true);
     }

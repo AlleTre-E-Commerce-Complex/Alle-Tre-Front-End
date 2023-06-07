@@ -65,7 +65,6 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        // return_url: `http://localhost:3000${routes.app.createAuction.paymentSucsess}`,
         return_url: `https://allatre-front.vercel.app/${routes.app.home}/paymentdetails`,
       },
     });

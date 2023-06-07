@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import moment from "moment";
 
 const AuctionCard = ({
   price,
@@ -31,6 +32,7 @@ const AuctionCard = ({
   isBuyNowAllowed,
   isMyAuction,
   onReload,
+  StartDate,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -45,6 +47,14 @@ const AuctionCard = ({
   } :
   ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
   ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
+
+  const startDate = useCountdown(StartDate);
+
+  const formattedstartDate = `${startDate.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    startDate.minutes
+  } ${selectedContent[localizationKeys.min]}`;
 
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
@@ -170,14 +180,18 @@ const AuctionCard = ({
             </div>
             <div>
               <h6 className="text-gray-veryLight font-normal text-[10px]">
-                {selectedContent[localizationKeys.endingTime]}
+                {status === "IN_SCHEDULED"
+                  ? selectedContent[localizationKeys.startDate]
+                  : selectedContent[localizationKeys.endingTime]}
               </h6>
               <p
                 className={`${
                   timeLeft.days === 0 ? "text-red" : "text-gray-dark"
                 } font-medium text-[10px] `}
               >
-                {formattedTimeLeft}
+                {status === "IN_SCHEDULED"
+                  ? formattedstartDate
+                  : formattedTimeLeft}
               </p>
             </div>
           </div>

@@ -40,9 +40,6 @@ const Home = () => {
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
-  console.log("====================================");
-  console.log(sponsoredAuctions);
-  console.log("====================================");
 
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
@@ -136,7 +133,8 @@ const Home = () => {
           {/* left filter sections */}
           <FilterSections myRef={myRef} />
           {/* right card sections */}
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
+          {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto "> */}
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
             {mainAuctions?.map((e) => (
               <AuctionCard
                 auctionId={e?.id}
@@ -147,6 +145,7 @@ const Home = () => {
                 totalBods={e?._count?.bids}
                 WatshlistState={e?.isSaved}
                 endingTime={e?.expiryDate}
+                StartDate={e?.startDate}
                 isBuyNowAllowed={e?.isBuyNowAllowed}
                 isMyAuction={e?.isMyAuction}
               />
