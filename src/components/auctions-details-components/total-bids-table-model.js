@@ -23,7 +23,7 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const { run, isLoading } = useAxios([]);
 
   useEffect(() => {
-    if (user)
+    if (user) {
       if (auctionId) {
         run(
           authAxios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
@@ -36,14 +36,14 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
             setTotalBidse(res?.data?.data);
           })
         );
-      } else if (auctionId) {
-        run(
-          axios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
-            setTotalBidse(res?.data?.data);
-          })
-        );
       }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    } else if (auctionId) {
+      run(
+        axios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
+          setTotalBidse(res?.data?.data);
+        })
+      );
+    }
   }, []);
 
   return (
