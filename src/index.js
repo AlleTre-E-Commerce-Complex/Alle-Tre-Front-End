@@ -8,7 +8,9 @@ import { store } from "./redux-store/store";
 
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
+import "semantic-ui-css/semantic.min.css";
 import "./index.css";
+
 import { LanguageProvider } from "./context/language-context";
 import { AuthProvider } from "./context/auth-context";
 
