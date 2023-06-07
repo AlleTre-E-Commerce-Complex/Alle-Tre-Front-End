@@ -30,10 +30,6 @@ const MyBids = () => {
     );
   }, [runAlyticsData]);
 
-  console.log("====================================");
-  console.log(analyticsData);
-  console.log("====================================");
-
   //   IN_PROGRESS,
   //   PENDING_PAYMENT,
   //   WAITING_FOR_DELIVERY,
@@ -65,10 +61,6 @@ const MyBids = () => {
     }
   });
   analyticsDataObject.totalcount = totalCount;
-
-  console.log("====================================");
-  console.log({ analyticsDataObject });
-  console.log("====================================");
 
   useEffect(() => {
     window.scrollTo({ top: 1, left: 0, behavior: "smooth" });

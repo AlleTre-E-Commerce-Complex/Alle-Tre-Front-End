@@ -30,7 +30,7 @@ const SoldAuctions = () => {
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    if (search) {
+    if (search.includes("page") && search.includes("perPage")) {
       run(
         authAxios
           .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=SOLD`)

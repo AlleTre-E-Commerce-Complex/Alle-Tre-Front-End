@@ -57,8 +57,6 @@ const DonutChart = ({
     "#FBAE4C",
   ];
 
-  console.log({ isTotalAuctions });
-
   const options = {
     innerRadius: 40,
     style: {

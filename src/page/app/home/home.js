@@ -49,19 +49,20 @@ const Home = () => {
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
   useEffect(() => {
-    if (!user) {
-      runMainAuctions(
-        axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-          setMainAuctions(res?.data?.data);
-          setTotalPages(res?.data?.pagination?.totalPages);
-        })
-      );
-      runSponsoredAuctions(
-        axios.get(`${api.app.auctions.sponsored}`).then((res) => {
-          SetSponsoredAuctions(res?.data?.data);
-        })
-      );
-    }
+    if (search.includes("page") && search.includes("perPage"))
+      if (!user) {
+        runMainAuctions(
+          axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+            setMainAuctions(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+        );
+        runSponsoredAuctions(
+          axios.get(`${api.app.auctions.sponsored}`).then((res) => {
+            SetSponsoredAuctions(res?.data?.data);
+          })
+        );
+      }
     runMainAuctions(
       authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
         setMainAuctions(res?.data?.data);

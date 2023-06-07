@@ -25,15 +25,16 @@ const Categories = () => {
   const { run: runCategories, isLoading: isLoadingCategories } = useAxios([]);
 
   useEffect(() => {
-    if (!user) {
-      runCategories(
-        axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-          setMainAuctions(res?.data?.data);
-          setTotalPages(res?.data?.pagination?.totalPages);
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        })
-      );
-    }
+    if (search.includes("page") && search.includes("perPage"))
+      if (!user) {
+        runCategories(
+          axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+            setMainAuctions(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          })
+        );
+      }
     runCategories(
       authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
         setMainAuctions(res?.data?.data);

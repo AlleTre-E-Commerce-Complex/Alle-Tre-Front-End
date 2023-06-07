@@ -29,19 +29,17 @@ const InProgressBids = () => {
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    run(
-      authAxios
-        .get(`${api.app.auctions.getAllMyBids}${search}&status=IN_PROGRESS`)
-        .then((res) => {
-          setActiveAuctionData(res?.data?.data);
-          setTotalPages(res?.data?.pagination?.totalPages);
-        })
-    );
+    if (search.includes("page") && search.includes("perPage"))
+      run(
+        authAxios
+          .get(`${api.app.auctions.getAllMyBids}${search}&status=IN_PROGRESS`)
+          .then((res) => {
+            setActiveAuctionData(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+      );
   }, [run, forceReload, search]);
 
-  console.log("====================================");
-  console.log({ activeAuctionData });
-  console.log("====================================");
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>

@@ -24,7 +24,7 @@ const PaginationApp = ({ totalPages, perPage, myRef, myRef1 }) => {
           behavior: "smooth",
           top: myRef1?.current?.offsetTop,
         });
-        setPage(data?.activePage);
+        setPage(data?.activePage || page);
       }}
     />
   );

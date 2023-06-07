@@ -30,7 +30,7 @@ const PendingAuctions = () => {
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    if (search) {
+    if (search.includes("page") && search.includes("perPage")) {
       run(
         authAxios
           .get(
@@ -43,10 +43,6 @@ const PendingAuctions = () => {
       );
     }
   }, [run, forceReload, search]);
-
-  console.log("====================================");
-  console.log(pendingAuctionsData);
-  console.log("====================================");
 
   return (
     <div className="relative">

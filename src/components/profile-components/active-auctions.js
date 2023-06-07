@@ -29,14 +29,15 @@ const ActiveAuctions = () => {
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    run(
-      authAxios
-        .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=ACTIVE`)
-        .then((res) => {
-          setActiveAuctionData(res?.data?.data);
-          setTotalPages(res?.data?.pagination?.totalPages);
-        })
-    );
+    if (search.includes("page") && search.includes("perPage"))
+      run(
+        authAxios
+          .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=ACTIVE`)
+          .then((res) => {
+            setActiveAuctionData(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+      );
   }, [run, forceReload, search]);
 
   return (

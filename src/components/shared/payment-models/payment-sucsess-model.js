@@ -15,9 +15,6 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const bidAmountPathName = useSelector((state) => state?.bidAmount);
-  console.log("====================================");
-  console.log({ bidAmountPathName });
-  console.log("====================================");
   return (
     <Modal
       className="sm:w-[506px] w-full h-auto bg-transparent scale-in "

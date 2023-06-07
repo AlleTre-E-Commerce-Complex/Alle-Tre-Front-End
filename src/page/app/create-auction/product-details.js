@@ -45,18 +45,11 @@ const ProductDetails = () => {
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-  console.log("====================================");
-  console.log(auctionState);
-  console.log(completeDraftVal?.auctionId);
-  console.log("====================================");
 
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
   );
 
-  console.log("====================================");
-  console.log(productDetailsint?.auctionId);
-  console.log("====================================");
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -67,9 +60,6 @@ const ProductDetails = () => {
     runAuctionById(
       authAxios.get(api.app.auctions.getAuctionsDetails(id)).then((res) => {
         const completeDraftValue = res?.data?.data;
-        console.log("====================================");
-        console.log(completeDraftValue);
-        console.log("====================================");
         setAuctionState(res?.data?.data?.status);
         setimgtest(completeDraftValue?.product?.images);
         setCompleteDraftValue(res?.data?.data);

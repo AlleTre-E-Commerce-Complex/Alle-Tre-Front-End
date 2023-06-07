@@ -53,8 +53,7 @@ export default function CheckoutPagePayDeposite() {
         })
         .catch((err) => {
           toast.error(
-            console.log({ err }) ||
-              err?.response?.data?.message[lang] ||
+            err?.response?.data?.message[lang] ||
               selectedContent[
                 localizationKeys.somethingWentWrongPleaseTryAgainLater
               ]

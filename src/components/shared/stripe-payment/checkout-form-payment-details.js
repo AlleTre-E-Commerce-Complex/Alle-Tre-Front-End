@@ -19,10 +19,6 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("====================================");
-  console.log({ pathname });
-  console.log("====================================");
-
   useEffect(() => {
     if (!stripe) {
       return;
@@ -70,7 +66,7 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
       confirmParams: {
         // Make sure to change this to your payment completion page
         // return_url: `http://localhost:3000${routes.app.createAuction.paymentSucsess}`,
-        return_url: `https://allatre-front.vercel.app/${routes.app.createAuction.paymentSucsess}`,
+        return_url: `https://allatre-front.vercel.app/${routes.app.home}/paymentdetails`,
       },
     });
 

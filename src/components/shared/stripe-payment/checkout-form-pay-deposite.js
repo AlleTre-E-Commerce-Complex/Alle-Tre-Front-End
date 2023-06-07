@@ -19,10 +19,6 @@ export default function CheckoutFormPayDeposite({ payPrice }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("====================================");
-  console.log({ pathname });
-  console.log("====================================");
-
   useEffect(() => {
     if (!stripe) {
       return;

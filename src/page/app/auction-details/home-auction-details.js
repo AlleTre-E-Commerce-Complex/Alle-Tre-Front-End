@@ -46,9 +46,6 @@ const HomeAuctionDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-  console.log("====================================");
-  console.log({ auctionsDetailsData });
-  console.log("====================================");
 
   return (
     <div className="mt-44 animate-in mx-5 ">

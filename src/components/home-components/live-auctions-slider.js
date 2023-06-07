@@ -41,25 +41,26 @@ const LiveAuctionsSlider = ({ type }) => {
   };
 
   useEffect(() => {
-    if (user) {
-      runAuctions(
-        authAxios
-          .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)
-          .then((res) => {
-            setAuctions(res?.data?.data);
-            setPagination(res?.data?.pagination);
-          })
-      );
-    } else {
-      runAuctions(
-        axios
-          .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)
-          .then((res) => {
-            setAuctions(res?.data?.data);
-            setPagination(res?.data?.pagination);
-          })
-      );
-    }
+    if (search.includes("page") && search.includes("perPage"))
+      if (user) {
+        runAuctions(
+          authAxios
+            .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)
+            .then((res) => {
+              setAuctions(res?.data?.data);
+              setPagination(res?.data?.pagination);
+            })
+        );
+      } else {
+        runAuctions(
+          axios
+            .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)
+            .then((res) => {
+              setAuctions(res?.data?.data);
+              setPagination(res?.data?.pagination);
+            })
+        );
+      }
   }, [page, runAuctions, search, type, user]);
 
   const swiperRef1 = useRef(null);
@@ -81,7 +82,6 @@ const LiveAuctionsSlider = ({ type }) => {
   const handlePrevClick = () => {
     swiper1?.slidePrev();
   };
-  console.log({ auctions });
 
   return (
     <div
@@ -101,7 +101,9 @@ const LiveAuctionsSlider = ({ type }) => {
       <div className="ezd-snapslider pt-10">
         <div className="snapslider-wrapper">
           <div ref={swiperRef1} className={`snapslider-overflow `}>
-            <div className={`snapslider-scroll swiper-wrapper py-2`}>
+            <div
+              className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+            >
               {auctions?.map((e) => (
                 <div className="snapslider-card swiper-slide">
                   <AuctionCard

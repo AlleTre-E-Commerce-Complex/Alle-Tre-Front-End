@@ -30,25 +30,21 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
             setTotalBidse(res?.data?.data);
           })
         );
-      } else {
+      } else if (auctionsIdB) {
         run(
           authAxios.get(api.app.auctions.totalBids(auctionsIdB)).then((res) => {
             setTotalBidse(res?.data?.data);
           })
         );
+      } else if (auctionId) {
+        run(
+          axios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
+            setTotalBidse(res?.data?.data);
+          })
+        );
       }
-    else {
-      run(
-        axios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
-          setTotalBidse(res?.data?.data);
-        })
-      );
-    }
-  }, [run, user, open, auctionId]);
-
-  console.log("====================================");
-  console.log(totalBids);
-  console.log("====================================");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Modal
@@ -121,6 +117,7 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
         setOpenSecondModel={setOpenSecondModel}
         user={user}
         userId={userID}
+        totalBids={totalBids}
         auctionId={auctionId ? auctionId : auctionsIdB}
       />
     </Modal>
@@ -134,28 +131,22 @@ export const TotalBidsDetailsTableModel = ({
   user,
   auctionId,
   userId,
+  totalBids,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const [totalBids, setTotalBidse] = useState();
+  const [historyBids, setHistoryBids] = useState();
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    if (user)
+    if (totalBids?.length > 0 && openSecondModel && auctionId && userId)
       run(
-        authAxios
+        (user ? authAxios : axios)
           .get(api.app.auctions.totalBidsDetails(auctionId, userId))
           .then((res) => {
-            setTotalBidse(res?.data?.data);
+            setHistoryBids(res?.data?.data);
           })
       );
-    run(
-      axios
-        .get(api.app.auctions.totalBidsDetails(auctionId, userId))
-        .then((res) => {
-          setTotalBidse(res?.data?.data);
-        })
-    );
-  }, [auctionId, run, user, userId]);
+  }, [totalBids, openSecondModel, auctionId, userId]);
 
   return (
     <Modal
@@ -191,15 +182,15 @@ export const TotalBidsDetailsTableModel = ({
               <img
                 className="w-12 h-12 rounded-full object-cover"
                 src={
-                  totalBids?.biderInfo?.imageLink
-                    ? totalBids?.biderInfo?.imageLink
+                  historyBids?.biderInfo?.imageLink
+                    ? historyBids?.biderInfo?.imageLink
                     : userProfileicon
                 }
                 alt="userProfileicon"
               />
               <div className="pt-1">
                 <h1 className="text-base text-gray-dark font-medium">
-                  {totalBids?.biderInfo?.userName}
+                  {historyBids?.biderInfo?.userName}
                 </h1>
                 <p className="text-xs text-gray-med font-normal">
                   {selectedContent[localizationKeys.online]}
@@ -223,7 +214,7 @@ export const TotalBidsDetailsTableModel = ({
                 </Table.Row>
               </Table.Header>
 
-              {totalBids?.bidsHistory?.map((e, index) => (
+              {historyBids?.bidsHistory?.map((e, index) => (
                 <Table.Body className="my-2">
                   <div className="my-2"></div>
                   <Table.Row className="bg-background border-none shadow rounded-lg ">

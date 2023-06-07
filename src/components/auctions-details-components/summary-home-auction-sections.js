@@ -75,7 +75,6 @@ const SummaryHomeAuctionSections = ({
         path: "/socket.io",
       });
       newSocket?.on("bid:submitted", (data) => {
-        console.log("Received data:", data);
         setLastestBid(data);
       });
 
