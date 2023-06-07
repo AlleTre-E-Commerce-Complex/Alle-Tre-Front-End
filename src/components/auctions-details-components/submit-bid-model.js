@@ -68,7 +68,7 @@ const SubmitBidModel = ({
         <h1 className="text-center font-bold text-black ">
           {selectedContent[localizationKeys.congratulationsOnYourFirstBid]}
         </h1>
-        <p className="text-center text-gray-dark pt-5">
+        <p className="text-center text-gray-dark pt-5 ">
           {selectedContent[localizationKeys.YouAreAboutToPlaceBidFor]}{" "}
           {formatCurrency(submitBidValue)}{" "}
           {
