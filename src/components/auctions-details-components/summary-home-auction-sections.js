@@ -10,7 +10,7 @@ import { HashLink } from "react-router-hash-link";
 import { useLocation, useParams } from "react-router-dom";
 import AuctionsStatus from "../shared/status/auctions-status";
 import useCountdown from "../../hooks/use-countdown";
-import { Modal } from "semantic-ui-react";
+import { Button, Modal } from "semantic-ui-react";
 import SubmitBidModel from "./submit-bid-model";
 import TotalBidsTableModel from "./total-bids-table-model";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +26,9 @@ import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
 import localizationKeys from "../../localization/localization-keys";
 import moment from "moment";
+import useAxios from "../../hooks/use-axios";
+import { authAxios } from "../../config/axios-config";
+import api from "../../api";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -118,6 +121,27 @@ const SummaryHomeAuctionSections = ({
         );
       } else setSubmitBidOpen(true);
     } else dispatch(Open());
+  };
+
+  const { run, isLoading } = useAxios();
+  const handelSubmitBidButton = () => {
+    const body = {
+      bidAmount: parseInt(submitBidValue),
+    };
+    run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
+      .then((res) => {
+        toast.success(
+          selectedContent[localizationKeys.yourAddNewSubmitValueSuccessfully]
+        );
+        setSubmitBidValue("");
+      })
+      .catch((err) => {
+        toast.error(
+          lang === "en"
+            ? err.message.en || err.message
+            : err.message.ar || err.message
+        );
+      });
   };
 
   return (
@@ -248,12 +272,15 @@ const SummaryHomeAuctionSections = ({
           />
         </div>
         <div>
-          <button
-            onClick={() => handelSumbitBid()}
-            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0"
+          <Button
+            loading={isLoading}
+            onClick={() =>
+              isDepositPaid ? handelSubmitBidButton() : handelSumbitBid()
+            }
+            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base "
           >
             {selectedContent[localizationKeys.submitBid]}
-          </button>
+          </Button>
         </div>
       </div>
       <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
