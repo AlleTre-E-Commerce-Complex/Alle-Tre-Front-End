@@ -57,45 +57,46 @@ const ProductDetails = () => {
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
   useEffect(() => {
     const id = productDetailsint?.auctionId || state?.auctionId;
-    runAuctionById(
-      authAxios.get(api.app.auctions.getAuctionsDetails(id)).then((res) => {
-        const completeDraftValue = res?.data?.data;
-        setAuctionState(res?.data?.data?.status);
-        setimgtest(completeDraftValue?.product?.images);
-        setCompleteDraftValue(res?.data?.data);
-        dispatch(
-          productDetails({
-            itemName: completeDraftValue?.product?.title,
-            category: completeDraftValue?.product.categoryId,
-            subCategory: completeDraftValue?.product?.subCategoryId,
-            operatingSystem: completeDraftValue?.product?.operatingSystem,
-            releaseYear: completeDraftValue?.product?.releaseYear,
-            regionOfManufacture:
-              completeDraftValue?.product?.regionOfManufacture,
-            ramSize: completeDraftValue?.product?.ramSize,
-            processor: completeDraftValue?.product?.processor,
-            screenSize: completeDraftValue?.product?.screenSize,
-            model: completeDraftValue?.product?.model,
-            color: completeDraftValue?.product?.color,
-            brandId: completeDraftValue?.product?.brandId,
-            cameraType: completeDraftValue?.product?.cameraType,
-            material: completeDraftValue?.product?.material,
-            age: completeDraftValue?.product?.age,
-            totalArea: completeDraftValue?.product?.totalArea,
-            numberOfRooms: completeDraftValue?.product?.numberOfRooms,
-            numberOfFloors: completeDraftValue?.product?.numberOfFloors,
-            landType: completeDraftValue?.product?.landType,
-            carType: completeDraftValue?.product?.carType,
-            cityId: completeDraftValue?.product?.cityId,
-            countryId: completeDraftValue?.product?.countryId,
-            itemDescription: completeDraftValue?.product?.description,
-            hasUsageCondition:
-              completeDraftValue?.product?.category?.hasUsageCondition,
-            valueRadio: completeDraftValue?.product?.usageStatus,
-          })
-        );
-      })
-    );
+    if (id)
+      runAuctionById(
+        authAxios.get(api.app.auctions.getAuctionsDetails(id)).then((res) => {
+          const completeDraftValue = res?.data?.data;
+          setAuctionState(res?.data?.data?.status);
+          setimgtest(completeDraftValue?.product?.images);
+          setCompleteDraftValue(res?.data?.data);
+          dispatch(
+            productDetails({
+              itemName: completeDraftValue?.product?.title,
+              category: completeDraftValue?.product.categoryId,
+              subCategory: completeDraftValue?.product?.subCategoryId,
+              operatingSystem: completeDraftValue?.product?.operatingSystem,
+              releaseYear: completeDraftValue?.product?.releaseYear,
+              regionOfManufacture:
+                completeDraftValue?.product?.regionOfManufacture,
+              ramSize: completeDraftValue?.product?.ramSize,
+              processor: completeDraftValue?.product?.processor,
+              screenSize: completeDraftValue?.product?.screenSize,
+              model: completeDraftValue?.product?.model,
+              color: completeDraftValue?.product?.color,
+              brandId: completeDraftValue?.product?.brandId,
+              cameraType: completeDraftValue?.product?.cameraType,
+              material: completeDraftValue?.product?.material,
+              age: completeDraftValue?.product?.age,
+              totalArea: completeDraftValue?.product?.totalArea,
+              numberOfRooms: completeDraftValue?.product?.numberOfRooms,
+              numberOfFloors: completeDraftValue?.product?.numberOfFloors,
+              landType: completeDraftValue?.product?.landType,
+              carType: completeDraftValue?.product?.carType,
+              cityId: completeDraftValue?.product?.cityId,
+              countryId: completeDraftValue?.product?.countryId,
+              itemDescription: completeDraftValue?.product?.description,
+              hasUsageCondition:
+                completeDraftValue?.product?.category?.hasUsageCondition,
+              valueRadio: completeDraftValue?.product?.usageStatus,
+            })
+          );
+        })
+      );
   }, [runAuctionById, state?.auctionId, forceReload, productDetailsint?.id]);
 
   const [draftValue, setDraftValue] = useState();

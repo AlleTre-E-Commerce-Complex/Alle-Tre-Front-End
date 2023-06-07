@@ -40,6 +40,9 @@ const Home = () => {
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
+  console.log("====================================");
+  console.log(sponsoredAuctions);
+  console.log("====================================");
 
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
@@ -62,28 +65,28 @@ const Home = () => {
             SetSponsoredAuctions(res?.data?.data);
           })
         );
+      } else {
+        runMainAuctions(
+          authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+            setMainAuctions(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+        );
+        runSponsoredAuctions(
+          authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
+            SetSponsoredAuctions(res?.data?.data);
+          })
+        );
       }
-    runMainAuctions(
-      authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-        setMainAuctions(res?.data?.data);
-        setTotalPages(res?.data?.pagination?.totalPages);
-      })
-    );
-    runSponsoredAuctions(
-      authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
-        SetSponsoredAuctions(res?.data?.data);
-      })
-    );
   }, [runMainAuctions, runSponsoredAuctions, search, user]);
 
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
-    "", // set the default value to false if no data is stored
+    // set the default value to false if no data is stored
     (val) => {
       try {
         return JSON.parse(val);
       } catch (e) {
-        console.error("Error parsing stored data", e);
         return false; // return false if there is an error parsing the stored data
       }
     }
@@ -141,7 +144,7 @@ const Home = () => {
                 title={e?.product?.title}
                 status={e?.status}
                 adsImg={e?.product?.images[0].imageLink}
-                totalBods={15}
+                totalBods={e?._count?.bids}
                 WatshlistState={e?.isSaved}
                 endingTime={e?.expiryDate}
                 isBuyNowAllowed={e?.isBuyNowAllowed}
@@ -193,7 +196,11 @@ const Home = () => {
         <BuyNowAuctionsSlider />
       </div>
 
-      <AddLocationModel open={open} setOpen={setOpen} TextButton={"Proceed"} />
+      <AddLocationModel
+        open={open}
+        setOpen={setOpen}
+        TextButton={selectedContent[localizationKeys.proceed]}
+      />
     </div>
   );
 };

@@ -65,6 +65,10 @@ const MyBids = () => {
   useEffect(() => {
     window.scrollTo({ top: 1, left: 0, behavior: "smooth" });
   }, []);
+
+  console.log("====================================");
+  console.log({ analyticsData, allStatuses });
+  console.log("====================================");
   return (
     <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4 relative animate-in  ">
       <Dimmer

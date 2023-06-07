@@ -71,7 +71,7 @@ const TotalMyBids = ({
             </p>
           </div>
           <p className="text-gray-verydark">
-            {pendingAuction}
+            {completedAuction}
             <span className="px-1">
               {" "}
               {selectedContent[localizationKeys.auction]}

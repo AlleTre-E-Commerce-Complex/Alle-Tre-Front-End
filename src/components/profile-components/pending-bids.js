@@ -41,6 +41,10 @@ const PendingBids = () => {
           })
       );
   }, [run, forceReload, search]);
+
+  console.log("====================================");
+  console.log({ activeAuctionData });
+  console.log("====================================");
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
@@ -72,21 +76,21 @@ const PendingBids = () => {
         </div>
       ) : (
         <div>
-          {/* {activeAuctionData?.map((e) => ( */}
-          <ActionsRowTable
-            // key={e?.id}
-            isBidsButtons
-            textButton={"Complete Payment"}
-            status={"PENDING_PAYMENT"}
-            // title={e?.product?.title}
-            // description={e?.product?.description}
-            // img={e?.product?.images[0]?.imageLink}
-            // totalBids={e?._count?.bids}
-            // lastPrice={e?.startBidAmount}
-            // endingTime={e?.expiryDate}
-            // goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
-          />
-          {/* ))} */}
+          {activeAuctionData?.map((e) => (
+            <ActionsRowTable
+              key={e?.id}
+              isBidsButtons
+              textButton={"Complete Payment"}
+              status={"PENDING_PAYMENT"}
+              title={e?.product?.title}
+              description={e?.product?.description}
+              img={e?.product?.images[0]?.imageLink}
+              totalBids={e?._count?.bids}
+              lastPrice={e?.startBidAmount}
+              endingTime={e?.expiryDate}
+              // goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
+            />
+          ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
             <PaginationApp totalPages={totalPages} perPage={5} />
           </div>

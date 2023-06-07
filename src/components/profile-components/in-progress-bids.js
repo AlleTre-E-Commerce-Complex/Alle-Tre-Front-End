@@ -84,7 +84,7 @@ const InProgressBids = () => {
               totalBids={e?._count?.bids}
               lastPrice={e?.startBidAmount}
               endingTime={e?.expiryDate}
-              goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
+              // goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">

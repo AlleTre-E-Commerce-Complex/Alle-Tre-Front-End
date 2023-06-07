@@ -100,7 +100,9 @@ const BuyNowAuctionsSlider = () => {
       <div className="ezd-snapslider pt-10">
         <div className="snapslider-wrapper">
           <div ref={swiperRef2} className={`snapslider-overflow`}>
-            <div className={`snapslider-scroll swiper-wrapper py-2`}>
+            <div
+              className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+            >
               {auctions?.map((e) => (
                 <div className="snapslider-card swiper-slide">
                   <AuctionCard

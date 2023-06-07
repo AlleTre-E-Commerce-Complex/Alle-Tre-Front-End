@@ -218,7 +218,7 @@ const ActionsRowTable = ({
                     {selectedContent[localizationKeys.purchasePrice]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
-                    {formatCurrency(purchasePrice)}
+                    {formatCurrency(lastPrice)}
                   </p>
                 </div>
                 <div>
@@ -227,16 +227,16 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
-                    {/* {startingDateLeft} */}
+                    {endingTimeLeft}
                   </p>
                 </div>
               </div>
             )}
 
             {status === "PENDING_PAYMENT" ||
-            status === "WatingForDeliveryBids" ||
+            status === "WAITING_FOR_DELIVERY" ||
             status === "ExpiredBids" ||
-            status === "completeBids" ? (
+            status === "COMPLETED" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
@@ -264,7 +264,7 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
-                    {/* {startingDateLeft} */}
+                    {endingTimeLeft}
                   </p>
                 </div>
 
