@@ -14,6 +14,7 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import localizationKeys from "../../localization/localization-keys";
+import IncreaseBidModel from "./increase-bid-model";
 
 const InProgressBids = () => {
   const [lang] = useLanguage("");
@@ -26,6 +27,10 @@ const InProgressBids = () => {
 
   const history = useHistory();
   const { search } = useLocation();
+
+  const [openIncreaseModel, setOpenIncreaseModel] = useState(false);
+  const [auctionId, setAuctionId] = useState();
+  const [compareValue, setCompareValue] = useState();
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
@@ -68,7 +73,11 @@ const InProgressBids = () => {
               isBidsButtons
               auctionsId={e?.auction?.id}
               textButton={"Increase Bid"}
-              // buttonActions={""}
+              buttonActions={() => {
+                setOpenIncreaseModel(true);
+                setAuctionId(e?.auction?.id);
+                setCompareValue(e?.auction?.bids[0]?.amount);
+              }}
               status={"IN_PROGRESS"}
               title={e?.auction?.product?.title}
               description={e?.auction?.product?.description}
@@ -84,6 +93,14 @@ const InProgressBids = () => {
           </div>
         </div>
       )}
+
+      <IncreaseBidModel
+        open={openIncreaseModel}
+        setOpen={setOpenIncreaseModel}
+        onReload={onReload}
+        auctionId={auctionId}
+        compareValue={compareValue}
+      />
     </div>
   );
 };

@@ -20,7 +20,7 @@ import AddLocationModel from "../../../components/create-auction-components/add-
 import useLocalStorage from "../../../hooks/use-localstorage";
 import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
 import { Open } from "../../../redux-store/auth-model-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UpComingAuctionsSlider from "../../../components/home-components/up-coming-auctions";
 import PaginationApp from "../../../components/shared/pagination/pagination-app";
 import { useLanguage } from "../../../context/language-context";
@@ -48,9 +48,10 @@ const Home = () => {
     run: runSponsoredAuctions,
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (!user) {
+      if (!user || !loginData?.IsLogIN) {
         runMainAuctions(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);

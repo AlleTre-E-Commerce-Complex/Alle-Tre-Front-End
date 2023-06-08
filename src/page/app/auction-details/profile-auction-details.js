@@ -13,6 +13,7 @@ import { AuctionDetailsBreadcrumb } from "../../../components/shared/bread-crumb
 import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
 import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
 import { useAuthState } from "../../../context/auth-context";
+import { useSelector } from "react-redux";
 
 const ProfileAuctionDetails = () => {
   const { user } = useAuthState();
@@ -21,8 +22,9 @@ const ProfileAuctionDetails = () => {
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
-    if (user)
+    if (user || loginData?.IsLogIN)
       run(
         authAxios
           .get(api.app.auctions.getAuctionsDetails(auctionId))
@@ -35,7 +37,7 @@ const ProfileAuctionDetails = () => {
         setAuctionsDetailsData(res?.data?.data);
       })
     );
-  }, [auctionId, run, user]);
+  }, [auctionId, run]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });

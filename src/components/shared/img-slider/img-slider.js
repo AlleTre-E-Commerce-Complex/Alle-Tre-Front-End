@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../../api";
 import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
@@ -28,13 +28,16 @@ const ImgSlider = ({
     setTimeout(() => setIsClicked(false), 300);
   };
 
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   const [isWatshlist, setWatshlist] = useState(false);
   useEffect(() => {
     setWatshlist(WatshlistState);
   }, [WatshlistState]);
+
   const { run, isLoading } = useAxios([]);
   const handelAddNewWatshlist = () => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       const body = {
         auctionId: auctionId,
       };

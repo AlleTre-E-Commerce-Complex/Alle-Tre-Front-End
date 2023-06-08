@@ -4,6 +4,7 @@ import Auth from "../utils/auth";
 import routes from "../routes";
 import { useLocation } from "react-router-dom";
 import useAxios from "../hooks/use-axios";
+import { useSelector } from "react-redux";
 
 const AuthContext = React.createContext();
 
@@ -35,9 +36,11 @@ function AuthProvider({ children }) {
     history.push(routes.app.home);
   };
 
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   React.useEffect(() => {
     Auth.getUser().then((user) => {
-      if (!user) {
+      if (!user || !loginData?.IsLogIN) {
         if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
           history.push(routes.app.home);
         }

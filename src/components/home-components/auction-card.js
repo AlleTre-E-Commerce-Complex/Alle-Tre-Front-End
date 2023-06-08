@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AuctionsStatus from "../../components/shared/status/auctions-status";
 import { useAuthState } from "../../context/auth-context";
 import { formatCurrency } from "../../utils/format-currency";
@@ -60,8 +60,10 @@ const AuctionCard = ({
     if (WatshlistState) setWatshlist(WatshlistState);
   }, [WatshlistState]);
 
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   const handelAddNewWatshlist = (auctionId) => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       const body = {
         auctionId: auctionId,
       };

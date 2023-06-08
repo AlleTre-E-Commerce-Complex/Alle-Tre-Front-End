@@ -71,9 +71,6 @@ const ShippingDetails = () => {
       })
     );
   }, [run, forceReload]);
-  console.log("====================================");
-  console.log();
-  console.log("====================================");
 
   const {
     run: runCreatAuction,

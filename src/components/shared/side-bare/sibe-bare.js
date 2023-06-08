@@ -7,7 +7,7 @@ import DropdownLang from "../header-app/dropdown-lang";
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuthState } from "../../../context/auth-context";
 import { Open } from "../../../redux-store/auth-model-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../../../../src/components/shared/header-app/nav-link-header.css";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../../context/language-context";
@@ -46,10 +46,12 @@ const Sidebar = ({ SetSid, sid }) => {
     },
   };
 
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   const { user } = useAuthState();
   const dispatch = useDispatch();
   const handelOnSell = () => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       history.push(routes.app.createAuction.default);
     } else {
       dispatch(Open());
@@ -58,7 +60,7 @@ const Sidebar = ({ SetSid, sid }) => {
   };
 
   const handelMyPfofile = () => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       history.push(routes.app.profile.profileSettings);
     } else {
       dispatch(Open());

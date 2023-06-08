@@ -11,6 +11,7 @@ import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
 import backArrowSecandryColor from "../../../src/assets/icons/back_arrow_secandry_color.png";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useSelector } from "react-redux";
 
 const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const { user } = useAuthState();
@@ -22,8 +23,10 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const [openSecondModel, setOpenSecondModel] = useState(false);
   const { run, isLoading } = useAxios([]);
 
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   useEffect(() => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       if (auctionId) {
         run(
           authAxios.get(api.app.auctions.totalBids(auctionId)).then((res) => {
@@ -137,10 +140,11 @@ export const TotalBidsDetailsTableModel = ({
   const selectedContent = content[lang];
   const [historyBids, setHistoryBids] = useState();
   const { run, isLoading } = useAxios([]);
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
     if (totalBids?.length > 0 && openSecondModel && auctionId && userId)
       run(
-        (user ? authAxios : axios)
+        (user || loginData?.IsLogIN ? authAxios : axios)
           .get(api.app.auctions.totalBidsDetails(auctionId, userId))
           .then((res) => {
             setHistoryBids(res?.data?.data);

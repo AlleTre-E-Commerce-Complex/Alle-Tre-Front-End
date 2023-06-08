@@ -15,6 +15,7 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useSelector } from "react-redux";
 
 const UpComingAuctionsSlider = () => {
   const [lang] = useLanguage("");
@@ -27,10 +28,11 @@ const UpComingAuctionsSlider = () => {
   const [auctions, setAuctions] = useState();
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(6);
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (user) {
+      if (user || loginData?.IsLogIN) {
         runAuctions(
           authAxios
             .get(`${api.app.auctions.getUpComming}?page=1&perPage=${page}`)
@@ -49,7 +51,7 @@ const UpComingAuctionsSlider = () => {
             })
         );
       }
-  }, [page, runAuctions, search, user]);
+  }, [page, runAuctions, search]);
 
   const swiperOptions = {
     cssMode: true,

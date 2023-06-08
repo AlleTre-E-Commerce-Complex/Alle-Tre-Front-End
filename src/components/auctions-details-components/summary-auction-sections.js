@@ -34,10 +34,6 @@ const SummaryAuctionSections = ({
   const { pathname } = useLocation();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
 
-  console.log("====================================");
-  console.log({ endingTime });
-  console.log("====================================");
-
   return (
     <div>
       {/* rating */}

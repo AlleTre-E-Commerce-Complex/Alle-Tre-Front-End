@@ -15,6 +15,7 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useSelector } from "react-redux";
 
 const LiveAuctionsSlider = ({ type }) => {
   const [lang] = useLanguage("");
@@ -40,9 +41,11 @@ const LiveAuctionsSlider = ({ type }) => {
     keyboard: true,
   };
 
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (user) {
+      if (user || loginData?.IsLogIN) {
         runAuctions(
           authAxios
             .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)

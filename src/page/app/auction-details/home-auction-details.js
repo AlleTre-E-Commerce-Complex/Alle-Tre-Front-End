@@ -15,6 +15,7 @@ import SummaryAuctionSections from "../../../components/auctions-details-compone
 import SummaryHomeAuctionSections from "../../../components/auctions-details-components/summary-home-auction-sections";
 import { useAuthState } from "../../../context/auth-context";
 import { authAxios, axios } from "../../../config/axios-config";
+import { useSelector } from "react-redux";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
@@ -23,8 +24,9 @@ const HomeAuctionDetails = () => {
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       run(
         authAxios
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
@@ -46,10 +48,6 @@ const HomeAuctionDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-
-  console.log("====================================");
-  console.log({ auctionsDetailsData });
-  console.log("====================================");
 
   return (
     <div className="mt-44 animate-in mx-5 ">

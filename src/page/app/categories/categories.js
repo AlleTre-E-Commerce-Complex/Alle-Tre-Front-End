@@ -11,6 +11,7 @@ import useGetSubGatogry from "../../../hooks/use-get-sub-category";
 import SubCategorySlider from "../../../components/shared/slider-categories/sub-category-slider";
 import PaginationApp from "../../../components/shared/pagination/pagination-app";
 import { Dimmer, Loader } from "semantic-ui-react";
+import { useSelector } from "react-redux";
 
 const Categories = () => {
   const { user } = useAuthState();
@@ -24,9 +25,11 @@ const Categories = () => {
   const [totalPages, setTotalPages] = useState();
   const { run: runCategories, isLoading: isLoadingCategories } = useAxios([]);
 
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (!user) {
+      if (!user || !loginData?.IsLogIN) {
         runCategories(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -42,7 +45,7 @@ const Categories = () => {
         window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       })
     );
-  }, [categoryId, runCategories, search, user]);
+  }, [categoryId, runCategories, search]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });

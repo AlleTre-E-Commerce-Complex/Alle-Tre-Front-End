@@ -61,6 +61,7 @@ const SummaryHomeAuctionSections = ({
 
   const dispatch = useDispatch();
   dispatch(auctionsId(auctionsID));
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   const { auctionId } = useParams();
   const { user, logout } = useAuthState();
@@ -108,7 +109,7 @@ const SummaryHomeAuctionSections = ({
 
   const handelSumbitBid = () => {
     const newValue = Number(submitBidValue);
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       if (
         submitBidValue === undefined ||
         newValue <=

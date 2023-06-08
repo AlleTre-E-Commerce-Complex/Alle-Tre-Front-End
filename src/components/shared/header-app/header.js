@@ -5,7 +5,7 @@ import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/allat
 import routes from "../../../routes";
 import DropdownLang from "./dropdown-lang";
 import NavLinkHeader from "./nav-link-header";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
@@ -43,21 +43,22 @@ const Header = ({ SetSid }) => {
 
   const { user } = useAuthState();
   const dispatch = useDispatch();
+  const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   const handelOnSell = () => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       history.push(routes.app.createAuction.default);
     } else dispatch(Open());
   };
 
   const handelRegister = () => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       history.push(routes.app.profile.profileSettings);
     } else dispatch(Open());
   };
 
   const handelWatchlist = () => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       history.push(routes.app.profile.watchlist);
     } else dispatch(Open());
   };
@@ -169,7 +170,7 @@ const Header = ({ SetSid }) => {
             >
               <FaUser size={15} className="mt-1" />
               <p className="pt-1">
-                {user
+                {user || loginData?.IsLogIN
                   ? selectedContent[localizationKeys.profile]
                   : selectedContent[localizationKeys.registerNow]}
               </p>

@@ -171,7 +171,6 @@ const AuctionDetails = () => {
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>
-                {console.log(formik.values)}
                 <ScrollToFieldError />
                 <div className="grid sm:grid-cols-2 grid-cols-1">
                   <div>
