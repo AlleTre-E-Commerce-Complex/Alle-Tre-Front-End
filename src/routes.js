@@ -68,6 +68,8 @@ const routes = {
         waitingForDelivery: `/allatre/profile/my-bids/waiting-for-delivery`,
         expired: `/allatre/profile/my-bids/expired`,
         completed: `/allatre/profile/my-bids/completed`,
+
+        completePayment: `/allatre/profile/my-bids/pending/complete-payment`,
       },
 
       watchlist: `/allatre/profile/watchlist`,

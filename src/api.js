@@ -40,6 +40,8 @@ const api = {
       payForAuction: "/auctions/user/pay",
       PayDepositByBidder: (auctionsId) =>
         `/auctions/user/${auctionsId}/bidder-deposit`,
+      auctionPurchaseByBidder: (auctionsId) =>
+        `/auctions/user/${auctionsId}/bidder-purchase`,
       //
       getAllMyBids: "/auctions/user/joined-auctions",
       bidAnalytics: "auctions/user/joined-auctions/analytics",

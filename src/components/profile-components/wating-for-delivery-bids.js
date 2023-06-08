@@ -6,7 +6,7 @@ import {
 import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
 import { Dimmer, Loader } from "semantic-ui-react";
-import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
+import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Bids-icon.svg";
 import routes from "../../routes";
 import ActionsRowTable from "./actions-row-table";
 import PaginationApp from "../shared/pagination/pagination-app";
@@ -56,29 +56,20 @@ const WatingForDeliveryBids = () => {
         <div className="flex justify-center mt-32">
           <div>
             <AuctionIcon className="mx-auto" />
-            <p className="text-primary-light text-center mt-8 ">
-              {/* {selectedContent[localizationKeys.oppsActive]} */}
-              {/* <br></br> {selectedContent[localizationKeys.youCanCreateOne]} */}
+            <p className="text-gray-dark text-center mt-8 ">
+              There is no bids yet on Waiting for delivery auctions right now
             </p>
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={() => history.push(routes.app.createAuction.default)}
-                className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
-              >
-                {/* {selectedContent[localizationKeys.createNow]} */}
-              </button>
-            </div>
           </div>
         </div>
       ) : (
         <div>
           {activeAuctionData?.map((e) => (
             <ActionsRowTable
-              key={e?.id}
+              key={e?.auction?.id}
               isBidsButtons
               textButton={"Confirm delivery"}
               status={"WAITING_FOR_DELIVERY"}
-              title={e?.product?.title}
+              title={e?.auction?.product?.title}
               // description={e?.product?.description}
               // img={e?.product?.images[0]?.imageLink}
               // totalBids={e?._count?.bids}

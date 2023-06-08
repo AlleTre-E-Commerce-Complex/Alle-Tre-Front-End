@@ -2,9 +2,7 @@ import moment from "moment";
 import { useState, useEffect } from "react";
 
 function useCountdown(date) {
-  const dateWithoutTimeZone = moment
-    .utc(date)
-    .format("YYYY-MM-DDTHH:mm:ss.SSSS");
+  const dateWithoutTimeZone = moment(date).format("YYYY-MM-DDTHH:mm:ss.SSSS");
   const [timeLeft, setTimeLeft] = useState(getTimeLeft(dateWithoutTimeZone));
 
   useEffect(() => {
@@ -19,7 +17,7 @@ function useCountdown(date) {
 
 function getTimeLeft(targetDate) {
   const target = new Date(
-    moment.utc(targetDate).format("YYYY-MM-DDTHH:mm:ss.SSSS")
+    moment(targetDate).format("YYYY-MM-DDTHH:mm:ss.SSSS")
   );
   const now = new Date();
   const diff = target.getTime() - now.getTime();

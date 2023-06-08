@@ -6,7 +6,7 @@ import {
 import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
 import { Dimmer, Loader } from "semantic-ui-react";
-import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
+import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Bids-icon.svg";
 import routes from "../../routes";
 import ActionsRowTable from "./actions-row-table";
 import PaginationApp from "../shared/pagination/pagination-app";
@@ -56,35 +56,27 @@ const InProgressBids = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-primary-light text-center mt-8 ">
-              {/* {selectedContent[localizationKeys.oppsActive]} */}
-              {/* <br></br> {selectedContent[localizationKeys.youCanCreateOne]} */}
+              There is no bids yet In Progress auctions right now
             </p>
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={() => history.push(routes.app.createAuction.default)}
-                className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
-              >
-                {/* {selectedContent[localizationKeys.createNow]} */}
-              </button>
-            </div>
           </div>
         </div>
       ) : (
         <div>
           {activeAuctionData?.map((e) => (
             <ActionsRowTable
-              key={e?.id}
+              key={e?.auction?.id}
               isBidsButtons
-              auctionsId={e?.id}
+              auctionsId={e?.auction?.id}
               textButton={"Increase Bid"}
+              // buttonActions={""}
               status={"IN_PROGRESS"}
-              title={e?.product?.title}
-              description={e?.product?.description}
-              img={e?.product?.images[0]?.imageLink}
-              totalBids={e?._count?.bids}
-              lastPrice={e?.startBidAmount}
-              endingTime={e?.expiryDate}
-              // goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
+              title={e?.auction?.product?.title}
+              description={e?.auction?.product?.description}
+              img={e?.auction?.product?.images[0]?.imageLink}
+              totalBids={e?.auction?._count?.bids}
+              lastPrice={e?.auction?.startBidAmount}
+              endingTime={e?.auction?.expiryDate}
+              goToDetails={routes.app.homeDetails(e?.auction?.id)}
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">

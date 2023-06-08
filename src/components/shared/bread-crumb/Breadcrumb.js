@@ -428,3 +428,169 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
     />
   );
 };
+
+export const MyBidsBreadcrumb = ({ details }) => {
+  const { pathname } = useLocation();
+  const [lang, setLang] = useLanguage("");
+  const selectedContent = content[lang];
+
+  const MyBidsSections = (pathname, details) =>
+    [
+      {
+        key: "Home",
+        content: (
+          <Link
+            className="text-gray-med mx-2 text-base font-normal"
+            to={routes.app.home}
+          >
+            {selectedContent[localizationKeys.home]}
+          </Link>
+        ),
+      },
+      ...[
+        pathname.startsWith(routes.app.profile.default) && {
+          key: "Auction Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.profile.default)
+                  ? "text-gray-med"
+                  : "text-primary"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.default}
+            >
+              {selectedContent[localizationKeys.profile]}
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.profile.myBids.default) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.default)
+                  ? "text-gray-med"
+                  : "text-primary"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.default}
+            >
+              {selectedContent[localizationKeys.myBids]}
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.profile.myBids.inPogress) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.inPogress)
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.inPogress}
+            >
+              In Pogress
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.profile.myBids.pending) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.pending)
+                  ? "text-gray-med"
+                  : "text-primary"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.pending}
+            >
+              Pending
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.profile.myBids.waitingForDelivery) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.waitingForDelivery
+                )
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.waitingForDelivery}
+            >
+              Waiting For Delivery
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.profile.myBids.expired) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.expired)
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.expired}
+            >
+              Expired
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.profile.myBids.completed) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.completed)
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.completed}
+            >
+              Expired
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(routes.app.profile.myBids.completePayment) && {
+          key: "Pay Deposite",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.completePayment)
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.completePayment}
+            >
+              Complete Payment
+            </Link>
+          ),
+        },
+      ],
+    ].filter(Boolean);
+
+  return (
+    <Breadcrumb
+      className="Edit_Breadcrumb"
+      sections={MyBidsSections(pathname, details)}
+    />
+  );
+};

@@ -14,6 +14,8 @@ import api from "../../api";
 import { authAxios } from "../../config/axios-config";
 import useAxios from "../../hooks/use-axios";
 import localizationKeys from "../../localization/localization-keys";
+import { useDispatch, useSelector } from "react-redux";
+import { completePaymentData } from "../../redux-store/complete-payment-slice";
 
 const PendingBids = () => {
   const [lang] = useLanguage("");
@@ -41,6 +43,8 @@ const PendingBids = () => {
           })
       );
   }, [run, forceReload, search]);
+
+  const dispatch = useDispatch();
 
   console.log("====================================");
   console.log({ activeAuctionData });
@@ -78,16 +82,26 @@ const PendingBids = () => {
         <div>
           {activeAuctionData?.map((e) => (
             <ActionsRowTable
-              key={e?.id}
+              key={e?.auction?.id}
               isBidsButtons
+              auctionsId={e?.auction?.id}
               textButton={"Complete Payment"}
+              buttonActions={() => {
+                history.push(routes.app.profile.myBids.completePayment);
+                dispatch(
+                  completePaymentData({
+                    auctionsId: e?.auction?.id,
+                    lastPrice: e?.auction?.bids[0]?.amount,
+                  })
+                );
+              }}
               status={"PENDING_PAYMENT"}
-              title={e?.product?.title}
-              description={e?.product?.description}
-              img={e?.product?.images[0]?.imageLink}
-              totalBids={e?._count?.bids}
-              lastPrice={e?.startBidAmount}
-              endingTime={e?.expiryDate}
+              title={e?.auction?.product?.title}
+              description={e?.auction?.product?.description}
+              img={e?.auction?.product?.images[0]?.imageLink}
+              totalBids={e?.auction?._count?.bids}
+              lastPrice={e?.auction?.bids[0]?.amount}
+              endingTime={e?.auction?.expiryDate}
               // goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
             />
           ))}

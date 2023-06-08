@@ -287,7 +287,7 @@ const ActionsRowTable = ({
         {isBidsButtons ? (
           <div className="flex gap-x-2">
             <button
-              onClick={() => buttonActions}
+              onClick={buttonActions}
               className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
             >
               {textButton}

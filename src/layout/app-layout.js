@@ -44,7 +44,8 @@ const AppLayouts = () => {
           open={
             pathname.length === 1 ||
             pathname.endsWith(`${routes.app.home}/paymentdetails`) ||
-            pathname.endsWith(`${routes.app.home}/payDeposite`)
+            pathname.endsWith(`${routes.app.home}/payDeposite`) ||
+            pathname.endsWith(`${routes.app.home}/complete-pay`)
               ? true
               : false
           }

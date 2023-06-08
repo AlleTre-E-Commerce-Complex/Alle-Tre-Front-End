@@ -9,6 +9,7 @@ import routes from "../../../routes";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { Route, Switch } from "react-router-dom";
 import MyBids from "./my-bids";
+import MyBidsCompletePayment from "../../../components/profile-components/my-bids-complete-payment";
 
 const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -24,6 +25,11 @@ const ProfileLayouts = () => {
       </button>
       <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0 ">
         <Switch>
+          <Route
+            path={routes.app.profile.myBids.completePayment}
+            component={MyBidsCompletePayment}
+          />
+
           <Route
             path={routes.app.profile.profileSettings}
             component={ProfileSettings}
