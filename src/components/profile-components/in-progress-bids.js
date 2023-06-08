@@ -55,7 +55,7 @@ const InProgressBids = () => {
         <div className="flex justify-center mt-32">
           <div>
             <AuctionIcon className="mx-auto" />
-            <p className="text-primary-light text-center mt-8 ">
+            <p className="text-gray-dark text-center mt-8 ">
               There is no bids yet In Progress auctions right now
             </p>
           </div>

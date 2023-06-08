@@ -66,9 +66,6 @@ const MyBids = () => {
     window.scrollTo({ top: 1, left: 0, behavior: "smooth" });
   }, []);
 
-  console.log("====================================");
-  console.log({ analyticsData, allStatuses });
-  console.log("====================================");
   return (
     <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4 relative animate-in  ">
       <Dimmer
@@ -78,7 +75,7 @@ const MyBids = () => {
       >
         {/* <Loader active /> */}
       </Dimmer>
-      {false ? (
+      {analyticsData?.length === 0 ? (
         <div className="align-middle pt-52">
           <div>
             <BidIcon className="mx-auto" />

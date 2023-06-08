@@ -31,10 +31,6 @@ export default function CheckoutPageCompletePayment() {
     (state) => state?.completePayment?.completePaymentData
   );
 
-  console.log("====================================");
-  console.log({ completedPaymentData });
-  console.log("====================================");
-
   const { auctionId } = useParams();
 
   const [clientSecret, setClientSecret] = useState("");
