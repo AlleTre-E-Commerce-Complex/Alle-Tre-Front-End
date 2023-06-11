@@ -32,13 +32,17 @@ const MultiButtonFilter = ({ name, values, history, myRef }) => {
             {filter.includes(v?.value) ? <BiCheck size={20} /> : ""}
           </button>
           <p
-            onClick={() =>
+            onClick={() => {
               setFilter(
                 filter.includes(v?.value)
                   ? removeFromArray(filter, v?.value)
                   : [...filter, v?.value]
-              )
-            }
+              );
+              window.scrollTo({
+                behavior: "smooth",
+                top: myRef?.current?.offsetTop,
+              });
+            }}
             className="text-gray-dark text-base font-normal px-2 cursor-pointer "
           >
             {v?.name}

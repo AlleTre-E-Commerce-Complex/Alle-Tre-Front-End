@@ -53,11 +53,7 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
       </Dimmer>
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
-          {isMyAuction ? (
-            <AuctionDetailsBreadcrumb details={auctionId} />
-          ) : (
-            <AuctionHomeDetailsBreadcrumb details={auctionId} />
-          )}
+          <AuctionDetailsBreadcrumb details={auctionId} />
         </div>
         {/* up sections */}
         <div>

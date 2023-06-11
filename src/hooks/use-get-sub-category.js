@@ -29,7 +29,7 @@ const useGetSubGatogry = (categoryId) => {
         }
       );
     }
-  }, [categoryId, lang, run]);
+  }, [categoryId]);
 
   return {
     SubGatogryOptions,

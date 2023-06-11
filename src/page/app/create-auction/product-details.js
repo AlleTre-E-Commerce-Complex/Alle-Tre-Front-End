@@ -95,6 +95,7 @@ const ProductDetails = () => {
               valueRadio: completeDraftValue?.product?.usageStatus,
             })
           );
+          setRadioValue(completeDraftValue?.product?.usageStatus);
         })
       );
   }, [runAuctionById, state?.auctionId, forceReload, productDetailsint?.id]);
@@ -114,6 +115,7 @@ const ProductDetails = () => {
       productDetailsint.valueRadio ||
       null
   );
+
   const [countriesId, setCountriesId] = useState();
   const [categoryId, setCategoryId] = useState();
   const [subCategoryId, setSubCategoryId] = useState();
@@ -564,9 +566,9 @@ const ProductDetails = () => {
                           (go) => go.value === value
                         );
                         onReload();
+                        setCustomFromData([]);
                         setSubCategoryId(undefined);
                         setHasUsageCondition(fieldOption?.hasUsageCondition);
-                        setCustomFromData([]);
                       }}
                     />
                   </div>

@@ -31,7 +31,13 @@ const Header = ({ SetSid }) => {
   const [serchShow, setSerchShow] = useState(false);
 
   const [name, setTitle] = useFilter("title", "");
-  const debounced = useDebouncedCallback((value) => setTitle(value), 850);
+  const debounced = useDebouncedCallback((value) => {
+    setTitle(value);
+    window.scrollTo({
+      behavior: "smooth",
+      top: 950,
+    });
+  }, 850);
 
   const handleOpen = () => {
     setIsOpen(true);

@@ -71,11 +71,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
           alt="travel"
         />
       </div>
-      {slidesData.length === 0 && (
-        <div className="object-cover w-full md:h-[541px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980] bg-gray-light">
-          dsjhbcdskjhb
-        </div>
-      )}
+
       {slidesData?.map((slide, index) => {
         return (
           <div
