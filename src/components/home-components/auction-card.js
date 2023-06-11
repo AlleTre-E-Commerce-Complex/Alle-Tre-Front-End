@@ -41,6 +41,7 @@ const AuctionCard = ({
   const history = useHistory();
   const { run, isLoading } = useAxios([]);
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
+
   const timeLeft = useCountdown(endingTime);
   const formattedTimeLeft = `${timeLeft.days} ${
     selectedContent[localizationKeys.days]

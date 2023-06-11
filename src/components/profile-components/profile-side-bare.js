@@ -71,18 +71,20 @@ const ProfileSideBare = ({ SetSid, sid }) => {
     <>
       <div className="h-screen fixed md:block hidden w-[250px] ">
         {/* img */}
-        <div className="flex gap-x-4 mx-14 pb-8 pt-3">
-          <img
-            className="w-12 h-12 rounded-full object-cover"
-            src={
-              ProfileData?.img || pofileData?.imageLink
-                ? ProfileData?.img || pofileData?.imageLink
-                : userProfileicon
-            }
-            alt="userProfileicon"
-          />
+        <div className="flex  gap-x-4 mx-14 pb-8 pt-3">
+          <div className="w-[64px] h-12">
+            <img
+              className="w-12 h-12 rounded-full object-cover"
+              src={
+                ProfileData?.img || pofileData?.imageLink
+                  ? ProfileData?.img || pofileData?.imageLink
+                  : userProfileicon
+              }
+              alt="userProfileicon"
+            />
+          </div>
           <div className="pt-1">
-            <h1 className="text-base text-gray-dark font-medium">
+            <h1 className="text-base text-gray-dark font-medium ">
               {ProfileData?.name || pofileData?.userName}
             </h1>
             <p className="text-xs text-gray-med font-normal">

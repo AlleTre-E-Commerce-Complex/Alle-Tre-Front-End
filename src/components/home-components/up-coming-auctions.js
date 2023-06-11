@@ -117,6 +117,7 @@ const UpComingAuctionsSlider = () => {
                     totalBods={15}
                     WatshlistState={e?.isSaved}
                     endingTime={e?.expiryDate}
+                    StartDate={e?.startDate}
                     isBuyNowAllowed={e?.isBuyNowAllowed}
                     isMyAuction={e?.isMyAuction}
                   />

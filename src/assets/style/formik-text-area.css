@@ -7,6 +7,6 @@
 }
 
 .Edit_FormikTextArea .ui.form input[type=checkbox], .ui.form textarea{
-  @apply rounded-lg focus:border-primary focus:rounded-lg  h-[189px]
+  @apply rounded-lg focus:border-primary focus:rounded-lg  h-[189px] !important
 }
 

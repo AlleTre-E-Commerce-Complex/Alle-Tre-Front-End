@@ -31,7 +31,8 @@ import { ScrollToFieldError } from "../../../components/shared/formik/formik-scr
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import { pureFinalPropsSelectorFactory } from "react-redux/es/connect/selectorFactory";
+
+import "../../../assets/style/radio-toggle.css";
 
 const AuctionDetails = () => {
   const [lang] = useLanguage("");
