@@ -188,7 +188,7 @@ const ShippingDetails = () => {
         const date = moment(
           typeInt.date + " " + typeInt.from,
           "DD-MM-YYYY hh:mm A"
-        ).format("YYYY-MM-DDTHH:mm:ss.SSS");
+        ).toLocaleString();
 
         formData.append("type", typeInt.type);
         formData.append("startDate", date);
