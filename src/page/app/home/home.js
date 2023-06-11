@@ -91,7 +91,7 @@ const Home = () => {
   );
 
   const handelCreatOuction = () => {
-    if (user) {
+    if (user || loginData?.IsLogIN) {
       if (hasCompletedProfile) {
         history.push(routes.app.createAuction.productDetails);
       } else setOpen(true);

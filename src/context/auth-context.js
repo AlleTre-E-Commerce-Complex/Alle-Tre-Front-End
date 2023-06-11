@@ -12,6 +12,9 @@ const WHITE_LIST = [
   routes.auth.forgetpass.default,
   routes.auth.default,
   routes.app.createAuction.paymentDetails,
+  `${routes.app.home}/paymentdetails`,
+  `${routes.app.home}/payDeposite`,
+  `${routes.app.home}/complete-pay`,
 ];
 
 function AuthProvider({ children }) {
@@ -40,7 +43,7 @@ function AuthProvider({ children }) {
 
   React.useEffect(() => {
     Auth.getUser().then((user) => {
-      if (!user || !loginData?.IsLogIN) {
+      if (!user) {
         if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
           history.push(routes.app.home);
         }
