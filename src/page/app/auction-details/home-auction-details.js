@@ -56,7 +56,7 @@ const HomeAuctionDetails = () => {
         <Loader active />
       </Dimmer>
       {user ? (
-        <ProfileAuctionDetails />
+        <ProfileAuctionDetails isMyAuction />
       ) : (
         <div className="max-w-[1440px] mx-auto">
           <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
