@@ -45,7 +45,7 @@ const LiveAuctionsSlider = ({ type }) => {
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (user || loginData?.IsLogIN) {
+      if (user) {
         runAuctions(
           authAxios
             .get(`${api.app.auctions.getLiveAuctions}?page=1&perPage=${page}`)

@@ -16,6 +16,7 @@ import SummaryHomeAuctionSections from "../../../components/auctions-details-com
 import { useAuthState } from "../../../context/auth-context";
 import { authAxios, axios } from "../../../config/axios-config";
 import { useSelector } from "react-redux";
+import ProfileAuctionDetails from "./profile-auction-details";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
@@ -26,7 +27,7 @@ const HomeAuctionDetails = () => {
   const { run, isLoading } = useAxios([]);
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       run(
         authAxios
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
@@ -54,67 +55,74 @@ const HomeAuctionDetails = () => {
       <Dimmer className="animate-pulse" active={isLoading} inverted>
         <Loader active />
       </Dimmer>
-      <div className="max-w-[1440px] mx-auto">
-        <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
-          <AuctionHomeDetailsBreadcrumb details={auctionId} />
-        </div>
-        {/* up sections */}
-        <div>
-          <h1 className="text-black font-medium text-2xl py-4">
-            {auctionsDetailsData?.product?.title}
-          </h1>
-          <div className="grid md:grid-cols-2 grid-cols-1">
-            <div className="">
-              <ImgSlider
-                images={auctionsDetailsData?.product?.images}
-                auctionId={auctionsDetailsData?.id}
-                WatshlistState={auctionsDetailsData?.isSaved}
-                isMyAuction={auctionsDetailsData?.isMyAuction}
-              />
-            </div>
-            <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
-              <SummaryHomeAuctionSections
-                bidderDepositFixedAmount={
-                  auctionsDetailsData?.product?.category
-                    ?.bidderDepositFixedAmount
-                }
-                isDepositPaid={auctionsDetailsData?.isDepositPaid}
-                numberStare={3}
-                totalReviews={20}
-                description={auctionsDetailsData?.product?.description}
-                category={
-                  lang === "en"
-                    ? auctionsDetailsData?.product?.category?.nameEn
-                    : auctionsDetailsData?.product?.category?.nameAr
-                }
-                subCategory={
-                  lang === "en"
-                    ? auctionsDetailsData?.product?.subCategory?.nameEn
-                    : auctionsDetailsData?.product?.subCategory?.nameAr
-                }
-                TimeLeft={auctionsDetailsData?.expiryDate}
-                startBidAmount={auctionsDetailsData?.startBidAmount}
-                StartDate={auctionsDetailsData?.startDate}
-                CurrentBid={auctionsDetailsData?.latestBidAmount}
-                totalBids={auctionsDetailsData?._count?.bids}
-                setActiveIndexTab={setActiveIndexTab}
-                status={auctionsDetailsData?.status}
-                auctionsID={auctionsDetailsData?.id}
-                isBuyNowAllowed={auctionsDetailsData?.isBuyNowAllowed}
-                acceptedAmount={auctionsDetailsData?.acceptedAmount}
-              />
+      {user ? (
+        <ProfileAuctionDetails />
+      ) : (
+        <div className="max-w-[1440px] mx-auto">
+          <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
+            <AuctionHomeDetailsBreadcrumb details={auctionId} />
+          </div>
+          {/* up sections */}
+          <div>
+            <h1 className="text-black font-medium text-2xl py-4">
+              {auctionsDetailsData?.product?.title}
+            </h1>
+            <div className="grid md:grid-cols-2 grid-cols-1">
+              <div className="">
+                <ImgSlider
+                  images={auctionsDetailsData?.product?.images}
+                  auctionId={auctionsDetailsData?.id}
+                  WatshlistState={auctionsDetailsData?.isSaved}
+                  isMyAuction={auctionsDetailsData?.isMyAuction}
+                />
+              </div>
+              <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
+                {auctionsDetailsData && (
+                  <SummaryHomeAuctionSections
+                    bidderDepositFixedAmount={
+                      auctionsDetailsData?.product?.category
+                        ?.bidderDepositFixedAmount
+                    }
+                    isDepositPaid={auctionsDetailsData?.isDepositPaid || false}
+                    numberStare={3}
+                    totalReviews={20}
+                    description={auctionsDetailsData?.product?.description}
+                    category={
+                      lang === "en"
+                        ? auctionsDetailsData?.product?.category?.nameEn
+                        : auctionsDetailsData?.product?.category?.nameAr
+                    }
+                    subCategory={
+                      lang === "en"
+                        ? auctionsDetailsData?.product?.subCategory?.nameEn
+                        : auctionsDetailsData?.product?.subCategory?.nameAr
+                    }
+                    TimeLeft={auctionsDetailsData?.expiryDate}
+                    startBidAmount={auctionsDetailsData?.startBidAmount}
+                    StartDate={auctionsDetailsData?.startDate}
+                    CurrentBid={auctionsDetailsData?.latestBidAmount}
+                    totalBids={auctionsDetailsData?._count?.bids}
+                    setActiveIndexTab={setActiveIndexTab}
+                    status={auctionsDetailsData?.status}
+                    auctionsID={auctionsDetailsData?.id}
+                    isBuyNowAllowed={auctionsDetailsData?.isBuyNowAllowed}
+                    acceptedAmount={auctionsDetailsData?.acceptedAmount}
+                    latestBidAmount={auctionsDetailsData?.latestBidAmount}
+                  />
+                )}
+              </div>
             </div>
           </div>
+          {/* under sections */}
+          <div className="mt-9">
+            <AuctionDetailsTabs
+              dataTabs={auctionsDetailsData}
+              activeIndexTab={activeIndexTab}
+              setActiveIndexTab={setActiveIndexTab}
+            />
+          </div>
         </div>
-        {/* under sections */}
-        <div className="mt-9">
-          <AuctionDetailsTabs
-            dataTabs={auctionsDetailsData}
-            activeIndexTab={activeIndexTab}
-            setActiveIndexTab={setActiveIndexTab}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

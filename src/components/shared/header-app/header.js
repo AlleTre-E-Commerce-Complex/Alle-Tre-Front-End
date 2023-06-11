@@ -46,19 +46,19 @@ const Header = ({ SetSid }) => {
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   const handelOnSell = () => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       history.push(routes.app.createAuction.default);
     } else dispatch(Open());
   };
 
   const handelRegister = () => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       history.push(routes.app.profile.profileSettings);
     } else dispatch(Open());
   };
 
   const handelWatchlist = () => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       history.push(routes.app.profile.watchlist);
     } else dispatch(Open());
   };

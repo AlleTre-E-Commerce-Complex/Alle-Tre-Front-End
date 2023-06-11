@@ -37,7 +37,7 @@ const ImgSlider = ({
 
   const { run, isLoading } = useAxios([]);
   const handelAddNewWatshlist = () => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       const body = {
         auctionId: auctionId,
       };

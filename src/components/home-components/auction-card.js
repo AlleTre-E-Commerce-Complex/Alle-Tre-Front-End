@@ -64,7 +64,7 @@ const AuctionCard = ({
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   const handelAddNewWatshlist = (auctionId) => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       const body = {
         auctionId: auctionId,
       };

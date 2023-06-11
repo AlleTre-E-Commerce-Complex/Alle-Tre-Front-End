@@ -63,12 +63,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               "hasCompletedProfile",
               hasCompletedProfile
             );
+            window.location.reload();
             isAuthModel
               ? history.push(currentPAth)
               : history.push(routes.app.home);
             dispatch(Close());
             dispatch(loginDate({ IsLogIN: true }));
-            // window.location.reload();
           })
           .catch((err) => {
             toast.error(
@@ -111,12 +111,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               "hasCompletedProfile",
               hasCompletedProfile
             );
+            window.location.reload();
             isAuthModel
               ? history.push(currentPAth)
               : history.push(routes.app.home);
             dispatch(Close());
             dispatch(loginDate({ IsLogIN: true }));
-            // window.location.reload();
           })
           .catch((err) => {
             toast.error(
@@ -159,12 +159,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               "hasCompletedProfile",
               hasCompletedProfile
             );
+            window.location.reload();
             isAuthModel
               ? history.push(currentPAth)
               : history.push(routes.app.home);
             dispatch(Close());
             dispatch(loginDate({ IsLogIN: true }));
-            // window.location.reload();
           })
           .catch((err) => {
             toast.error(

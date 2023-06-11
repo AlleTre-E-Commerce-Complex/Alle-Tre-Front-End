@@ -9,13 +9,16 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 
 import ImgSlider from "../../../components/shared/img-slider/img-slider";
-import { AuctionDetailsBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
+import {
+  AuctionDetailsBreadcrumb,
+  AuctionHomeDetailsBreadcrumb,
+} from "../../../components/shared/bread-crumb/Breadcrumb";
 import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
 import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
 import { useAuthState } from "../../../context/auth-context";
 import { useSelector } from "react-redux";
 
-const ProfileAuctionDetails = () => {
+const ProfileAuctionDetails = ({ isMyAuction }) => {
   const { user } = useAuthState();
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
@@ -24,7 +27,7 @@ const ProfileAuctionDetails = () => {
   const { run, isLoading } = useAxios([]);
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
-    if (user || loginData?.IsLogIN)
+    if (user)
       run(
         authAxios
           .get(api.app.auctions.getAuctionsDetails(auctionId))
@@ -50,7 +53,11 @@ const ProfileAuctionDetails = () => {
       </Dimmer>
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
-          <AuctionDetailsBreadcrumb details={auctionId} />
+          {isMyAuction ? (
+            <AuctionDetailsBreadcrumb details={auctionId} />
+          ) : (
+            <AuctionHomeDetailsBreadcrumb details={auctionId} />
+          )}
         </div>
         {/* up sections */}
         <div>

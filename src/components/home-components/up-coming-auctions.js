@@ -32,7 +32,7 @@ const UpComingAuctionsSlider = () => {
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (user || loginData?.IsLogIN) {
+      if (user) {
         runAuctions(
           authAxios
             .get(`${api.app.auctions.getUpComming}?page=1&perPage=${page}`)

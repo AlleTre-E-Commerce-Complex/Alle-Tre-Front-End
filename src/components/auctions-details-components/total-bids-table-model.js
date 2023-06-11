@@ -26,7 +26,7 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   useEffect(() => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       if (auctionId) {
         run(
           authAxios.get(api.app.auctions.totalBids(auctionId)).then((res) => {

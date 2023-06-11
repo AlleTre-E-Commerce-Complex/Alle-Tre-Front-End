@@ -49,9 +49,9 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
         });
         window.localStorage.setItem("hasCompletedProfile", hasCompletedProfile);
         isAuthModel ? history.push(currentPAth) : history.push(routes.app.home);
+        window.location.reload();
         dispatch(Close());
         dispatch(loginDate({ IsLogIN: true }));
-        // window.location.reload();
       })
       .catch((err) => {
         if (err.message.en === "Verify your account") {

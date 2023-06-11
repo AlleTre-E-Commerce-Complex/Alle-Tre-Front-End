@@ -50,13 +50,14 @@ const SummaryHomeAuctionSections = ({
   isBuyNowAllowed,
   acceptedAmount,
   StartDate,
+  latestBidAmount,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
   const [openSubmitBid, setSubmitBidOpen] = useState(false);
   const [submitBidValue, setSubmitBidValue] = useState();
-  const [lastestBid, setLastestBid] = useState();
+  const [lastestBid, setLastestBid] = useState(latestBidAmount);
   const [openTotaltBid, setTotalBidOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -107,27 +108,53 @@ const SummaryHomeAuctionSections = ({
     startDate.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
-  const handelSumbitBid = () => {
+  const { run, isLoading } = useAxios();
+  const handelSubmitBidButton = () => {
     const newValue = Number(submitBidValue);
-    if (user || loginData?.IsLogIN) {
-      if (
-        submitBidValue === undefined ||
-        newValue <=
-          Math.max(lastestBid?.bidAmount || CurrentBid || startBidAmount)
-      ) {
+    if (user) {
+      if (validateBidAmount(newValue)) {
+        if (isDepositPaid) {
+          sendSubmitBid(newValue);
+        } else {
+          setSubmitBidValue(newValue);
+          setSubmitBidOpen(true);
+        }
+      } else
         toast.error(
           selectedContent[
             localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid
           ]
         );
-      } else setSubmitBidOpen(true);
-    } else dispatch(Open());
+    } else {
+      dispatch(Open());
+    }
   };
 
-  const { run, isLoading } = useAxios();
-  const handelSubmitBidButton = () => {
+  const validateBidAmount = (newValue) => {
+    console.log(
+      newValue,
+      lastestBid?.bidAmount ? lastestBid?.bidAmount : 0,
+      latestBidAmount,
+      CurrentBid,
+      startBidAmount
+    );
+    if (
+      isNaN(newValue) ||
+      newValue <=
+        Math.max(
+          lastestBid?.bidAmount ? lastestBid?.bidAmount : 0,
+          latestBidAmount ? latestBidAmount : 0,
+          CurrentBid ? CurrentBid : 0,
+          startBidAmount ? startBidAmount : 0
+        )
+    )
+      return false;
+    return true;
+  };
+
+  const sendSubmitBid = (newValue) => {
     const body = {
-      bidAmount: parseInt(submitBidValue),
+      bidAmount: newValue,
     };
     run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
       .then((res) => {
@@ -275,10 +302,8 @@ const SummaryHomeAuctionSections = ({
         <div>
           <Button
             loading={isLoading}
-            onClick={() =>
-              isDepositPaid ? handelSubmitBidButton() : handelSumbitBid()
-            }
-            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base "
+            onClick={handelSubmitBidButton}
+            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base"
           >
             {selectedContent[localizationKeys.submitBid]}
           </Button>

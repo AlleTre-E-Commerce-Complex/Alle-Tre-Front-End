@@ -51,7 +51,7 @@ const Home = () => {
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (!user || !loginData?.IsLogIN) {
+      if (!user) {
         runMainAuctions(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -91,7 +91,7 @@ const Home = () => {
   );
 
   const handelCreatOuction = () => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       if (hasCompletedProfile) {
         history.push(routes.app.createAuction.productDetails);
       } else setOpen(true);

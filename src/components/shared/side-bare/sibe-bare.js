@@ -51,7 +51,7 @@ const Sidebar = ({ SetSid, sid }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
   const handelOnSell = () => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       history.push(routes.app.createAuction.default);
     } else {
       dispatch(Open());
@@ -60,7 +60,7 @@ const Sidebar = ({ SetSid, sid }) => {
   };
 
   const handelMyPfofile = () => {
-    if (user || loginData?.IsLogIN) {
+    if (user) {
       history.push(routes.app.profile.profileSettings);
     } else {
       dispatch(Open());

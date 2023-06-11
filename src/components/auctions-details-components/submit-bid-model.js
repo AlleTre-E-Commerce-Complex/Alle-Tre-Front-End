@@ -29,9 +29,14 @@ const SubmitBidModel = ({
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios();
   const dispatch = useDispatch();
+
   const handelSubmitBid = () => {
+    console.log("====================================");
+    console.log(isDepostPay);
+    console.log("====================================");
+
     const body = {
-      bidAmount: parseInt(submitBidValue),
+      bidAmount: submitBidValue,
     };
     if (isDepostPay) {
       run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
@@ -50,8 +55,11 @@ const SubmitBidModel = ({
           );
         });
     } else {
+      console.log("====================================");
+      console.log(submitBidValue);
+      console.log("====================================");
       setOpen(false);
-      dispatch(bidAmount(parseInt(submitBidValue)));
+      dispatch(bidAmount(submitBidValue));
       history.push(routes.app.payDeposite(auctionId));
     }
   };
