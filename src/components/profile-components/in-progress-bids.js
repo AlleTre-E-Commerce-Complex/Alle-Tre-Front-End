@@ -70,8 +70,8 @@ const InProgressBids = () => {
           {activeAuctionData?.map((e) => (
             <ActionsRowTable
               key={e?.auction?.id}
-              isBidsButtons
               auctionsId={e?.auction?.id}
+              isBidsButtons
               textButton={"Increase Bid"}
               buttonActions={() => {
                 setOpenIncreaseModel(true);

@@ -110,7 +110,6 @@ export default function CheckoutPagePaymentDetails() {
                 description={pendingAuctionData?.product?.description}
                 img={pendingAuctionData?.product?.images[0]?.imageLink}
                 startingPrice={pendingAuctionData?.startBidAmount}
-                startDate={pendingAuctionData?.startDate}
               />
               <div>
                 <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
@@ -130,24 +129,6 @@ export default function CheckoutPagePaymentDetails() {
                     {lang === "en"
                       ? pendingAuctionData?.product?.category?.nameEn
                       : pendingAuctionData?.product?.category?.nameAr}
-                  </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5 ">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction starting date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.startDate).format("DD/MM/YYYY")}
-                  </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction Ending date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.expiryDate).format(
-                      "DD/MM/YYYY"
-                    )}
                   </p>
                 </p>
                 <p className="flex justify-between px-4 py-1.5">
@@ -242,15 +223,7 @@ export const PandingRow = ({
               {formatCurrency(startingPrice)}
             </p>
           </div>
-          <div className="w-full">
-            <h1 className="text-gray-veryLight text-[10px] font-normal">
-              {selectedContent[localizationKeys.startingDate]}
-            </h1>
-            <p className="text-gray-dark text-[10px] font-normal">
-              {/* March,23 2023 */}
-              {moment.utc(startingDate).format("MMMM, DD YYYY")}
-            </p>
-          </div>
+
           {status === "PENDING_OWNER_DEPOIST" ? (
             <button className="bg-secondary-light text-white text-xs px-2 rounded h-6 my-auto cursor-default w-full">
               {selectedContent[localizationKeys.pendingDeposit]}

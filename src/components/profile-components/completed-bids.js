@@ -73,8 +73,10 @@ const CompletedBids = () => {
               img={e?.auction?.product?.images[0]?.imageLink}
               totalBids={e?.auction?._count?.bids}
               lastPrice={e?.auction?.startBidAmount}
-              endingTime={e?.auction?.expiryDate}
-              goToDetails={routes.app.homeDetails(e?.auction?.id)}
+              endingDate={e?.auction?.endDate}
+              goToDetails={routes.app.profile.myBids.completedDetails(
+                e?.auction?.id
+              )}
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">

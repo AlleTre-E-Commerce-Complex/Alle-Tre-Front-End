@@ -302,6 +302,7 @@ const SummaryHomeAuctionSections = ({
         </div>
         <div>
           <Button
+            disabled={status === "SOLD" || status === "EXPIRED" ? true : false}
             loading={isLoading}
             onClick={handelSubmitBidButton}
             className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base"

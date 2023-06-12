@@ -563,7 +563,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completed}
             >
-              completed
+              Completed
             </Link>
           ),
         },

@@ -23,16 +23,17 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
 
   const nextSlide = () => {
     setTranslate("slideRight");
-    setCurrent(current === images[0]?.length - 1 ? 0 : current + 1);
+    setCurrent(current === slidesData.length - 1 ? 0 : current + 1);
   };
   const prevSlide = () => {
     setTranslate("slideleft");
-    setCurrent(current === 0 ? images[0]?.length - 1 : current - 1);
+    setCurrent(current === 0 ? slidesData.length - 1 : current - 1);
   };
 
   if (!Array.isArray(images) || images.length <= 0) {
     return null;
   }
+
   const nextindex =
     current + 1 === images[0]?.length ? current - 1 : current + 1;
   const previndex = current + 1 && current - 1 < 0 ? 0 : current - 1;

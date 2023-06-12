@@ -32,6 +32,7 @@ const ActionsRowTable = ({
   endingTime,
   endingDate,
   goToDetails,
+  filterJoinState,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -124,7 +125,7 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* March,23 2023 */}
-                    {moment.utc(startingDate).format("MMMM, DD YYYY")}
+                    {moment(startingDate).local().format("MMMM, DD YYYY")}
                   </p>
                 </div>
                 <button
@@ -191,7 +192,7 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* March,23 2023 */}
-                    {moment.utc(endingDate).format("MMMM, DD YYYY")}
+                    {moment(endingDate).local().format("MMMM, DD YYYY")}
                   </p>
                 </div>
               </div>
@@ -235,7 +236,7 @@ const ActionsRowTable = ({
 
             {status === "PENDING_PAYMENT" ||
             status === "WAITING_FOR_DELIVERY" ||
-            status === "ExpiredBids" ||
+            status === "PAYMENT_EXPIRED" ||
             status === "COMPLETED" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
@@ -264,18 +265,28 @@ const ActionsRowTable = ({
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
-                    {endingTimeLeft}
+                    {status === "COMPLETED" || status === "PAYMENT_EXPIRED"
+                      ? moment(endingDate).local().format("MMMM, DD YYYY")
+                      : endingTimeLeft}
                   </p>
                 </div>
-
-                <div className={status === "ExpiredBids" ? "block" : "hidden"}>
+                <div
+                  className={status === "PAYMENT_EXPIRED" ? "block" : "hidden"}
+                >
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
                     status
                   </h1>
-                  <p className="text-gray-dark text-[10px] font-normal">
-                    {/* 02 days.05 hrs.02 min */}
-                    {/* {startingDateLeft} */}
-                  </p>
+                  {filterJoinState === "PAYMENT_EXPIRED" ? (
+                    <p className="text-gray-verydark text-[10px] font-normal flex gap-x-1.5">
+                      <p className="w-2 h-2 rounded-full bg-gray-verydark my-auto"></p>
+                      <p>Payment Expired</p>
+                    </p>
+                  ) : (
+                    <p className="text-[#B9BDCD] text-[10px] font-normal flex gap-x-1.5">
+                      <p className="w-2 h-2 rounded-full bg-[#B9BDCD] my-auto"></p>
+                      <p>Lost Auction</p>
+                    </p>
+                  )}
                 </div>
               </div>
             ) : (
