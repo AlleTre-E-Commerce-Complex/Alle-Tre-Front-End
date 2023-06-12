@@ -47,7 +47,7 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
         })
       );
     }
-  }, []);
+  }, [auctionId, auctionsIdB]);
 
   return (
     <Modal

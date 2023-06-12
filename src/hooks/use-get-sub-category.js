@@ -24,7 +24,6 @@ const useGetSubGatogry = (categoryId) => {
               value: d.id,
             })
           );
-
           setSubGatogryOptions(options);
         }
       );

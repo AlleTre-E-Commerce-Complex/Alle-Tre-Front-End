@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 
@@ -15,6 +15,9 @@ import moment from "moment";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useAuthState } from "../../context/auth-context";
+import auth from "../../utils/auth";
+import { io } from "socket.io-client";
 
 const SummaryAuctionSections = ({
   numberStare,
@@ -33,6 +36,37 @@ const SummaryAuctionSections = ({
   const selectedContent = content[lang];
   const { pathname } = useLocation();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
+  const [lastestBid, setLastestBid] = useState();
+
+  const { auctionId } = useParams();
+  const { user, logout } = useAuthState();
+  useEffect(() => {
+    if (auctionId) {
+      auth.getToken().then((accessToken) => {
+        const headers = {
+          Authorization: accessToken ? "Bearer " + accessToken : undefined,
+        };
+        const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+        const newSocket = io(URL, {
+          query: { auctionId: auctionId },
+          extraHeaders: Object.entries(headers).reduce(
+            (acc, [key, value]) =>
+              value !== undefined ? { ...acc, [key]: value } : acc,
+            {}
+          ),
+          path: "/socket.io",
+        });
+        newSocket?.on("bid:submitted", (data) => {
+          setLastestBid(data);
+        });
+
+        return () => {
+          newSocket.close();
+          logout();
+        };
+      });
+    }
+  }, []);
 
   return (
     <div>
@@ -96,7 +130,9 @@ const SummaryAuctionSections = ({
             {selectedContent[localizationKeys.endingPrice]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl">
-            {formatCurrency(endingPrice) || "--"}
+            {formatCurrency(lastestBid?.bidAmount) ||
+              formatCurrency(endingPrice) ||
+              "--"}
           </p>
         </div>
       </div>
@@ -107,7 +143,7 @@ const SummaryAuctionSections = ({
             {selectedContent[localizationKeys.totalBids]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
-            <p>{totalBids}</p>
+            <p>{lastestBid?.totalBids || totalBids}</p>
             <div className="my-auto">
               <button
                 onClick={() => setTotalBidOpen(true)}

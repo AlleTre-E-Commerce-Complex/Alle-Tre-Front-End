@@ -67,7 +67,7 @@ const SummaryHomeAuctionSections = ({
   const { auctionId } = useParams();
   const { user, logout } = useAuthState();
   useEffect(() => {
-    if (auctionId)
+    if (auctionId) {
       auth.getToken().then((accessToken) => {
         const headers = {
           Authorization: accessToken ? "Bearer " + accessToken : undefined,
@@ -91,6 +91,7 @@ const SummaryHomeAuctionSections = ({
           logout();
         };
       });
+    }
   }, []);
 
   const timeLeft = useCountdown(TimeLeft);
