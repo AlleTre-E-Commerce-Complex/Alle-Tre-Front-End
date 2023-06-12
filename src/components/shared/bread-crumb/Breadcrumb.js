@@ -466,7 +466,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(routes.app.profile.myBids.default) && {
-          key: "Pay Deposite",
+          key: "My Bids",
           content: (
             <Link
               className={`${
@@ -483,7 +483,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(routes.app.profile.myBids.inPogress) && {
-          key: "Pay Deposite",
+          key: "  In Pogress",
           content: (
             <Link
               className={`${
@@ -500,7 +500,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(routes.app.profile.myBids.pending) && {
-          key: "Pay Deposite",
+          key: "Pending",
           content: (
             <Link
               className={`${
@@ -517,7 +517,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(routes.app.profile.myBids.waitingForDelivery) && {
-          key: "Pay Deposite",
+          key: " Waiting For Delivery",
           content: (
             <Link
               className={`${
@@ -536,7 +536,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(routes.app.profile.myBids.expired) && {
-          key: "Pay Deposite",
+          key: "Expired",
           content: (
             <Link
               className={`${
@@ -553,7 +553,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(routes.app.profile.myBids.completed) && {
-          key: "Pay Deposite",
+          key: "completed",
           content: (
             <Link
               className={`${
@@ -563,14 +563,14 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completed}
             >
-              Expired
+              completed
             </Link>
           ),
         },
       ],
       ...[
         pathname.startsWith(routes.app.profile.myBids.completePayment) && {
-          key: "Pay Deposite",
+          key: " Complete Payment",
           content: (
             <Link
               className={`${
@@ -581,6 +581,111 @@ export const MyBidsBreadcrumb = ({ details }) => {
               to={routes.app.profile.myBids.completePayment}
             >
               Complete Payment
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(
+          routes.app.profile.myBids.inPogressDetails(details)
+        ) && {
+          key: "View Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.inPogressDetails(details)
+                )
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.inPogressDetails(details)}
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(
+          routes.app.profile.myBids.pendingDetails(details)
+        ) && {
+          key: "View Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.pendingDetails(details)
+                )
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.pendingDetails(details)}
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(
+          routes.app.profile.myBids.waitingForDeliveryDetails(details)
+        ) && {
+          key: "View Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.waitingForDeliveryDetails(details)
+                )
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.waitingForDeliveryDetails(details)}
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(
+          routes.app.profile.myBids.expiredDetails(details)
+        ) && {
+          key: "View Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.expiredDetails(details)
+                )
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.expiredDetails(details)}
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </Link>
+          ),
+        },
+      ],
+      ...[
+        pathname.startsWith(
+          routes.app.profile.myBids.completedDetails(details)
+        ) && {
+          key: "View Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.completedDetails(details)
+                )
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.profile.myBids.completedDetails(details)}
+            >
+              {selectedContent[localizationKeys.viewDetails]}
             </Link>
           ),
         },

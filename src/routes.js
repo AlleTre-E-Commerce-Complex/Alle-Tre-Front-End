@@ -69,6 +69,17 @@ const routes = {
         expired: `/allatre/profile/my-bids/expired`,
         completed: `/allatre/profile/my-bids/completed`,
 
+        inPogressDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-bids/in-pogress/${auctionId}/details`,
+        pendingDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-bids/pending/${auctionId}/details`,
+        waitingForDeliveryDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-bids/waitingForDelivery/${auctionId}/details`,
+        expiredDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-bids/expired/${auctionId}/details`,
+        completedDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-bids/completed/${auctionId}/details`,
+
         completePayment: `/allatre/profile/my-bids/pending/complete-payment`,
       },
 

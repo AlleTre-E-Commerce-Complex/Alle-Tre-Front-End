@@ -53,6 +53,27 @@ const AppLayouts = () => {
         {/* <SocketProvider> */}
         <Switch>
           <Route
+            path={routes.app.profile.myBids.inPogressDetails()}
+            component={HomeAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myBids.pendingDetails()}
+            component={HomeAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myBids.waitingForDeliveryDetails()}
+            component={HomeAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myBids.expiredDetails()}
+            component={HomeAuctionDetails}
+          />
+          <Route
+            path={routes.app.profile.myBids.completedDetails()}
+            component={HomeAuctionDetails}
+          />
+
+          <Route
             path={routes.app.profile.myAuctions.activeDetails()}
             component={ProfileAuctionDetails}
           />
@@ -72,7 +93,9 @@ const AppLayouts = () => {
             path={routes.app.profile.myAuctions.expiredDetails()}
             component={ProfileAuctionDetails}
           />
+
           <Route path={routes.app.profile.default} component={ProfileLayouts} />
+
           <Route
             path={routes.app.createAuction.paymentDetails}
             component={PaymentDetails}
@@ -94,10 +117,12 @@ const AppLayouts = () => {
             component={CreateAuction}
           />
           <Route path={routes.app.payDeposite()} component={PayDeposite} />
+
           <Route
             path={routes.app.homeDetails()}
             component={HomeAuctionDetails}
           />
+
           <Route path={routes.app.home} component={Home} />
           <Route path={routes.app.categories()} component={Categories} />
           <Route path={routes.app.faqs} component={FAQs} />

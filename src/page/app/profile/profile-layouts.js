@@ -25,9 +25,12 @@ const ProfileLayouts = () => {
       </button>
       <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0 ">
         <Switch>
+          <Route path={routes.app.profile.watchlist} component={Watshlist} />
+          <Route path={routes.app.profile.myBids.default} component={MyBids} />
+
           <Route
-            path={routes.app.profile.myBids.completePayment}
-            component={MyBidsCompletePayment}
+            path={routes.app.profile.myAuctions.default}
+            component={MyAuctions}
           />
 
           <Route
@@ -35,12 +38,9 @@ const ProfileLayouts = () => {
             component={ProfileSettings}
           />
           <Route
-            path={routes.app.profile.myAuctions.default}
-            component={MyAuctions}
+            path={routes.app.profile.myBids.completePayment}
+            component={MyBidsCompletePayment}
           />
-          <Route path={routes.app.profile.myBids.default} component={MyBids} />
-
-          <Route path={routes.app.profile.watchlist} component={Watshlist} />
         </Switch>
       </div>
     </div>

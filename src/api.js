@@ -45,6 +45,8 @@ const api = {
       //
       getAllMyBids: "/auctions/user/joined-auctions",
       bidAnalytics: "auctions/user/joined-auctions/analytics",
+      ConfirmDelivery: (auctionsId) =>
+        `/auctions/user/${auctionsId}/confirm-delivery`,
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,

@@ -84,7 +84,7 @@ const ExpiredAuctions = () => {
               img={e?.product?.images[0]?.imageLink}
               totalBids={e?._count?.bids}
               endingTime={e?.expiryDate}
-              price={e?.bids[0]?.amount}
+              price={e?.startBidAmount}
               goToDetails={routes.app.profile.myAuctions.expiredDetails(e?.id)}
             />
           ))}

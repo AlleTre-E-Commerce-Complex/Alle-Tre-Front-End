@@ -90,7 +90,9 @@ const PendingBids = () => {
               totalBids={e?.auction?._count?.bids}
               lastPrice={e?.auction?.bids[0]?.amount}
               endingTime={e?.auction?.expiryDate}
-              goToDetails={routes.app.homeDetails(e?.auction?.id)}
+              goToDetails={routes.app.profile.myBids.pendingDetails(
+                e?.auction?.id
+              )}
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">

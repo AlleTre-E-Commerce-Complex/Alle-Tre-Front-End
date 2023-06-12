@@ -8,7 +8,10 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 
 import ImgSlider from "../../../components/shared/img-slider/img-slider";
-import { AuctionHomeDetailsBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
+import {
+  AuctionHomeDetailsBreadcrumb,
+  MyBidsBreadcrumb,
+} from "../../../components/shared/bread-crumb/Breadcrumb";
 
 import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
 import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
@@ -17,6 +20,8 @@ import { useAuthState } from "../../../context/auth-context";
 import { authAxios, axios } from "../../../config/axios-config";
 import { useSelector } from "react-redux";
 import ProfileAuctionDetails from "./profile-auction-details";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import routes from "../../../routes";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
@@ -25,6 +30,8 @@ const HomeAuctionDetails = () => {
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
+  const { pathname } = useLocation();
+
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
     if (user) {
@@ -58,7 +65,11 @@ const HomeAuctionDetails = () => {
 
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
-          <AuctionHomeDetailsBreadcrumb details={auctionId} />
+          {pathname.startsWith(routes.app.profile.myAuctions.default) ? (
+            <AuctionHomeDetailsBreadcrumb details={auctionId} />
+          ) : (
+            <MyBidsBreadcrumb details={auctionId} />
+          )}
         </div>
         {/* up sections */}
         <div>

@@ -14,7 +14,7 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
-const MyBidsTabs = () => {
+const MyBidsTabs = ({ onReload }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -25,7 +25,7 @@ const MyBidsTabs = () => {
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
-            <InProgressBids />
+            <InProgressBids OnReload={onReload} />
           </Tab.Pane>
         </div>
       ),
@@ -36,7 +36,7 @@ const MyBidsTabs = () => {
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
-            <PendingBids />
+            <PendingBids OnReload={onReload} />
           </Tab.Pane>
         </div>
       ),
@@ -47,7 +47,7 @@ const MyBidsTabs = () => {
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
-            <WatingForDeliveryBids />
+            <WatingForDeliveryBids OnReload={onReload} />
           </Tab.Pane>
         </div>
       ),
@@ -58,7 +58,7 @@ const MyBidsTabs = () => {
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
-            <ExpiredBids />
+            <ExpiredBids OnReload={onReload} />
           </Tab.Pane>
         </div>
       ),
@@ -69,7 +69,7 @@ const MyBidsTabs = () => {
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
-            <CompletedBids />
+            <CompletedBids OnReload={onReload} />
           </Tab.Pane>
         </div>
       ),

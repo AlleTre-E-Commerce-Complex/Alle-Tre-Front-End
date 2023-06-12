@@ -17,6 +17,8 @@ const MyBids = () => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
   const history = useHistory();
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [analyticsData, setAnalyticsData] = useState();
   const { run: runAlyticsData, isLoading: isLoadingAnalyticsData } = useAxios(
@@ -28,7 +30,7 @@ const MyBids = () => {
         setAnalyticsData(res?.data?.data);
       })
     );
-  }, [runAlyticsData]);
+  }, [runAlyticsData, forceReload]);
 
   //   IN_PROGRESS,
   //   PENDING_PAYMENT,
@@ -109,7 +111,7 @@ const MyBids = () => {
             totalcount={analyticsDataObject?.totalcount}
           />
           <div className="mt-4">
-            <MyBidsTabs />
+            <MyBidsTabs onReload={onReload} />
           </div>
         </>
       )}

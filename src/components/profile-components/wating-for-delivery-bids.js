@@ -14,8 +14,9 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import localizationKeys from "../../localization/localization-keys";
+import { toast } from "react-toastify";
 
-const WatingForDeliveryBids = () => {
+const WatingForDeliveryBids = ({ OnReload }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
@@ -28,6 +29,8 @@ const WatingForDeliveryBids = () => {
   const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);
+  const { run: runConfirmDelivery, isLoading: isLoadingConfirmDelivery } =
+    useAxios([]);
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
       run(
@@ -41,9 +44,31 @@ const WatingForDeliveryBids = () => {
           })
       );
   }, [run, forceReload, search]);
+
+  const handelConfirmDelivery = (auctionId) => {
+    runConfirmDelivery(
+      authAxios
+        .post(api.app.auctions.ConfirmDelivery(auctionId))
+        .then((res) => {
+          onReload();
+          OnReload();
+          history.push(routes.app.profile.myBids.completed);
+          toast.success("This auctions is Confirm Delivery success");
+        })
+        .catch((err) => {
+          console.log("====================================");
+          console.log(err);
+          console.log("====================================");
+        })
+    );
+  };
   return (
     <div className="relative">
-      <Dimmer className="animate-pulse" active={isLoading} inverted>
+      <Dimmer
+        className="animate-pulse"
+        active={isLoading || isLoadingConfirmDelivery}
+        inverted
+      >
         <Loader active />
       </Dimmer>
       <div>
@@ -68,14 +93,15 @@ const WatingForDeliveryBids = () => {
               key={e?.auction?.id}
               isBidsButtons
               textButton={"Confirm delivery"}
+              buttonActions={() => handelConfirmDelivery(e?.auction?.id)}
               status={"WAITING_FOR_DELIVERY"}
               title={e?.auction?.product?.title}
               description={e?.auction?.product?.description}
               img={e?.auction?.product?.images[0]?.imageLink}
               totalBids={e?._count?.bids}
-              lastPrice={e?.bids[0]?.amount}
+              lastPrice={e?.auction?.bids[0]?.amount}
               endingTime={e?.expiryDate}
-              // goToDetails={routes.app.profile.myAuctions.activeDetails(e?.id)}
+              goToDetails={routes.app.homeDetails(e?.auction?.id)}
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
