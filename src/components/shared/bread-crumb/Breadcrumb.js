@@ -488,8 +488,8 @@ export const MyBidsBreadcrumb = ({ details }) => {
             <Link
               className={`${
                 pathname.startsWith(routes.app.profile.myBids.inPogress)
-                  ? "text-primary"
-                  : "text-gray-med"
+                  ? "text-gray-med"
+                  : "text-primary"
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.inPogress}
             >
@@ -524,8 +524,8 @@ export const MyBidsBreadcrumb = ({ details }) => {
                 pathname.startsWith(
                   routes.app.profile.myBids.waitingForDelivery
                 )
-                  ? "text-primary"
-                  : "text-gray-med"
+                  ? "text-gray-med"
+                  : "text-primary"
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.waitingForDelivery}
             >
@@ -541,8 +541,8 @@ export const MyBidsBreadcrumb = ({ details }) => {
             <Link
               className={`${
                 pathname.startsWith(routes.app.profile.myBids.expired)
-                  ? "text-primary"
-                  : "text-gray-med"
+                  ? "text-gray-med"
+                  : "text-primary"
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.expired}
             >
@@ -558,8 +558,8 @@ export const MyBidsBreadcrumb = ({ details }) => {
             <Link
               className={`${
                 pathname.startsWith(routes.app.profile.myBids.completed)
-                  ? "text-primary"
-                  : "text-gray-med"
+                  ? "text-gray-med"
+                  : "text-primary"
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completed}
             >

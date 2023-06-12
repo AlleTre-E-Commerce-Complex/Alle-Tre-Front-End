@@ -12,6 +12,7 @@ import backArrowSecandryColor from "../../../src/assets/icons/back_arrow_secandr
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
+import { formatCurrency } from "../../utils/format-currency";
 
 const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const { user } = useAuthState();
@@ -108,7 +109,7 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
                   {e?.totalBids}
                 </Table.Cell>
                 <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-r-lg ">
-                  {e?.lastBidAmount}
+                  {formatCurrency(e?.lastBidAmount)}
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
@@ -231,7 +232,7 @@ export const TotalBidsDetailsTableModel = ({
                       )}
                     </Table.Cell>
                     <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-r-lg ">
-                      {e?.amount}
+                      {formatCurrency(e?.amount)}
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>

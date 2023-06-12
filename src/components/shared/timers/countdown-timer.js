@@ -9,7 +9,7 @@ function CountdownTimer({ date }) {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const timeLeft = useCountdown(
-    moment.utc(date).format("YYYY-MM-DDTHH:mm:ss.SSSS")
+    moment(date).local().format("YYYY-MM-DDTHH:mm:ss.SSSS")
   );
   const formattedTimeLeft = `${timeLeft.days} ${
     selectedContent[localizationKeys.days]

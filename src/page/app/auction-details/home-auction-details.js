@@ -65,7 +65,7 @@ const HomeAuctionDetails = () => {
 
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
-          {pathname.startsWith(routes.app.profile.myAuctions.default) ? (
+          {pathname.startsWith(routes.app.home) ? (
             <AuctionHomeDetailsBreadcrumb details={auctionId} />
           ) : (
             <MyBidsBreadcrumb details={auctionId} />

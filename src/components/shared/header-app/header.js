@@ -25,6 +25,7 @@ const Header = ({ SetSid }) => {
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
+  const { search } = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,6 +34,7 @@ const Header = ({ SetSid }) => {
   const [name, setTitle] = useFilter("title", "");
   const debounced = useDebouncedCallback((value) => {
     setTitle(value);
+    history.push(`${routes.app.home}?page=1&perPage=28&title=${value}`);
     window.scrollTo({
       behavior: "smooth",
       top: 950,
