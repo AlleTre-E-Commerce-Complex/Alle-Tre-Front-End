@@ -41,9 +41,12 @@ const Win = () => {
   }, [IsWinner, logout]);
 
   const wooooOptions = {
-    loop: false,
     autoplay: true,
     animationData: woooo,
+    rendererSettings: {
+      loop: true,
+      duration: 10000,
+    },
   };
   const wafferOptions = {
     loop: false,
