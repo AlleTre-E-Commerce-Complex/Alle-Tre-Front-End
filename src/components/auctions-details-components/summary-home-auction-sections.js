@@ -282,13 +282,7 @@ const SummaryHomeAuctionSections = ({
         </div>
       </div>
       {/* Submit Bid sections */}
-      <div
-        className={
-          status === "IN_SCHEDULED"
-            ? "hidden"
-            : "pt-6 grid md:grid-cols-2 sm:grid-cols-1"
-        }
-      >
+      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">
         <div>
           <input
             className="border-[1px] border-veryLight h-[48px] w-[304px] rounded-lg px-4 outline-none"
@@ -302,7 +296,13 @@ const SummaryHomeAuctionSections = ({
         </div>
         <div>
           <Button
-            disabled={status === "SOLD" || status === "EXPIRED" ? true : false}
+            disabled={
+              status === "SOLD" ||
+              status === "EXPIRED" ||
+              status === "IN_SCHEDULED"
+                ? true
+                : false
+            }
             loading={isLoading}
             onClick={handelSubmitBidButton}
             className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base"
