@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
 import CheckoutFormPayDeposite from "./checkout-form-pay-deposite";
 import CheckoutFromCompletePayment from "./checkout-from-complete-payment";
+import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -91,7 +92,8 @@ export default function CheckoutPageCompletePayment() {
         active={isLoading && isLoadingPendingAuctionData}
         inverted
       >
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div className=" mx-auto h-14 my-7 py-4 sm:block hidden">
         <MyBidsBreadcrumb />

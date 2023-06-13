@@ -29,6 +29,7 @@ import { truncateString } from "../../../utils/truncate-string";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const CreateAuction = () => {
   const [lang] = useLanguage("");
@@ -78,7 +79,8 @@ const CreateAuction = () => {
   return (
     <div className="mt-44 animate-in  ">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
         <CreateAuctionBreadcrumb />

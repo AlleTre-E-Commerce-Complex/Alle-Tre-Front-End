@@ -16,6 +16,7 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const LiveAuctionsSlider = ({ type }) => {
   const [lang] = useLanguage("");
@@ -99,7 +100,8 @@ const LiveAuctionsSlider = ({ type }) => {
         </p>
       </div>
       <Dimmer className="animate-pulse " active={isLoadingAuctions} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div className="ezd-snapslider pt-10">
         <div className="snapslider-wrapper">

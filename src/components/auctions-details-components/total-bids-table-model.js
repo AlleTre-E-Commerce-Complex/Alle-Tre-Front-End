@@ -13,6 +13,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import { formatCurrency } from "../../utils/format-currency";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const { user } = useAuthState();
@@ -63,7 +64,8 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
           active={isLoading}
           inverted
         >
-          <Loader active />
+          {/* <Loader active /> */}
+          <LodingTestAllatre />
         </Dimmer>
         <Table className="bg-transparent border-none px-5 pt-8 ">
           <Table.Header>

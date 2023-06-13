@@ -34,6 +34,7 @@ import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 import EditImgeMedia from "../../../components/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const ProductDetails = () => {
   const [lang] = useLanguage("");
@@ -493,7 +494,8 @@ const ProductDetails = () => {
         }
         inverted
       >
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div className=" h-14 my-7 py-4 sm:block hidden">
         {/* Breadcrumb  */}

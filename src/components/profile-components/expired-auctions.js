@@ -15,6 +15,7 @@ import PaginationApp from "../shared/pagination/pagination-app";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const ExpiredAuctions = () => {
   const [lang] = useLanguage("");
@@ -47,7 +48,8 @@ const ExpiredAuctions = () => {
   return (
     <div className="relative ">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">

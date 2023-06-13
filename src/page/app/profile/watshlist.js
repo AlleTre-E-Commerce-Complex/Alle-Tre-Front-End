@@ -8,6 +8,7 @@ import EmtyWatchlist from "../../../../src/assets/icons/emty-watchlist.png";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const Watshlist = () => {
   const [lang] = useLanguage("");
@@ -29,7 +30,8 @@ const Watshlist = () => {
   return (
     <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8 relative animate-in  ">
       <Dimmer className="animate-pulse" active={isLoadingWatshlist} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       {watshlist?.length === 0 ? (
         <div className="flex justify-center items-center pt-56 ">

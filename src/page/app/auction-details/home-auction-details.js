@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 import ProfileAuctionDetails from "./profile-auction-details";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
@@ -60,7 +61,8 @@ const HomeAuctionDetails = () => {
   return (
     <div className="mt-44 animate-in mx-5 ">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
 
       <div className="max-w-[1440px] mx-auto">

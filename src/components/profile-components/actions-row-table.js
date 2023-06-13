@@ -121,7 +121,7 @@ const ActionsRowTable = ({
                 </div>
                 <div className="">
                   <h1 className="text-gray-veryLight text-[10px] font-normal w-20">
-                    {selectedContent[localizationKeys.startingDate]}
+                    Creation Date
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {/* March,23 2023 */}
@@ -239,7 +239,11 @@ const ActionsRowTable = ({
             status === "PAYMENT_EXPIRED" ||
             status === "COMPLETED" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
-                <div>
+                <div
+                  className={
+                    status === "WAITING_FOR_DELIVERY" ? "hidden" : "block"
+                  }
+                >
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
                     {selectedContent[localizationKeys.totalBids]}
                   </h1>

@@ -32,6 +32,7 @@ import { PofileData } from "../../../redux-store/pofile-data-slice";
 import { useDispatch } from "react-redux";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage("");
@@ -94,7 +95,8 @@ const ProfileSettings = () => {
         active={isLoadingPofile || isLoadingLocationData}
         inverted
       >
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       {/* complete profile */}
 

@@ -15,6 +15,7 @@ import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import localizationKeys from "../../localization/localization-keys";
 import IncreaseBidModel from "./increase-bid-model";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const InProgressBids = () => {
   const [lang] = useLanguage("");
@@ -48,7 +49,8 @@ const InProgressBids = () => {
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">

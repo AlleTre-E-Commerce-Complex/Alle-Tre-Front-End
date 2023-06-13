@@ -33,6 +33,7 @@ import {
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import useLocalStorage from "../../../hooks/use-localstorage";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const ShippingDetails = () => {
   const [lang] = useLanguage("");
@@ -284,7 +285,8 @@ const ShippingDetails = () => {
             active={isLoading || isLoadingCreatAuction}
             inverted
           >
-            <Loader active />
+            {/* <Loader active /> */}
+            <LodingTestAllatre />
           </Dimmer>
           {locatonData?.map((e) => (
             <LocationDetailsCard

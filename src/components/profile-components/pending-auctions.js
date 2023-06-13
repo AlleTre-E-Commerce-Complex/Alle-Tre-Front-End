@@ -15,6 +15,7 @@ import PaginationApp from "../shared/pagination/pagination-app";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const PendingAuctions = () => {
   const [lang] = useLanguage("");
@@ -47,7 +48,8 @@ const PendingAuctions = () => {
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
@@ -84,7 +86,7 @@ const PendingAuctions = () => {
               description={e?.product?.description}
               img={e?.product?.images[0]?.imageLink}
               startingPrice={e?.startBidAmount}
-              startingDate={e?.startDate}
+              startingDate={e?.createdAt}
               goToDetails={routes.app.profile.myAuctions.pendingDetails(e?.id)}
             />
           ))}

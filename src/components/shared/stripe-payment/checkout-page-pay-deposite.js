@@ -21,6 +21,7 @@ import { truncateString } from "../../../utils/truncate-string";
 import { ReactComponent as MoneyINHand } from "../../../../src/assets/icons/money-in-hand-icon.svg";
 import { ReactComponent as CircleCloseIcon } from "../../../../src/assets/icons/circle-close-icon.svg";
 import CheckoutFormPayDeposite from "./checkout-form-pay-deposite";
+import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -87,7 +88,8 @@ export default function CheckoutPagePayDeposite() {
         active={isLoading && isLoadingPendingAuctionData}
         inverted
       >
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">
         <AuctionHomeDetailsBreadcrumb details={auctionId} />

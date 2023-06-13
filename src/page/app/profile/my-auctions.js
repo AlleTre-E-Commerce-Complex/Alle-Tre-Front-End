@@ -13,6 +13,7 @@ import { ReactComponent as AuctionIcon } from "../../../../src/assets/icons/Auct
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "../../../localization/localization-keys";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const MyAuctions = () => {
   const [lang] = useLanguage();
@@ -68,6 +69,7 @@ const MyAuctions = () => {
         inverted
       >
         {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       {analyticsData?.length === 0 ? (
         <div className="align-middle pt-52">

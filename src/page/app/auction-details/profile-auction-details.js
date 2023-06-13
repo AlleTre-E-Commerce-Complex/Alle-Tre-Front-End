@@ -17,6 +17,7 @@ import SummaryAuctionSections from "../../../components/auctions-details-compone
 import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
 import { useAuthState } from "../../../context/auth-context";
 import { useSelector } from "react-redux";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const ProfileAuctionDetails = ({ isMyAuction }) => {
   const { user } = useAuthState();
@@ -49,7 +50,8 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
   return (
     <div className="mt-44 animate-in mx-5 ">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div className="max-w-[1440px] mx-auto">
         <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">

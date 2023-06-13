@@ -14,6 +14,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const ActiveAuctions = () => {
   const [lang] = useLanguage("");
@@ -43,7 +44,8 @@ const ActiveAuctions = () => {
   return (
     <div className="relative">
       <Dimmer className="animate-pulse" active={isLoading} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">

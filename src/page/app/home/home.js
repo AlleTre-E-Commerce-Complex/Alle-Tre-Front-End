@@ -26,6 +26,7 @@ import PaginationApp from "../../../components/shared/pagination/pagination-app"
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -105,7 +106,8 @@ const Home = () => {
         active={isLoadingMainAuctions || isLoadingrunSponsoredAuctions}
         inverted
       >
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div className="z-20 ">
         <ImageSlider

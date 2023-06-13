@@ -12,6 +12,7 @@ import SubCategorySlider from "../../../components/shared/slider-categories/sub-
 import PaginationApp from "../../../components/shared/pagination/pagination-app";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { useSelector } from "react-redux";
+import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
 const Categories = () => {
   const { user } = useAuthState();
@@ -58,7 +59,8 @@ const Categories = () => {
         active={loadingSubGatogry || isLoadingCategories}
         inverted
       >
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       <div>
         <img

@@ -6,6 +6,7 @@ import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const ItemDetails = ({ itemDetailsData }) => {
   const [lang] = useLanguage();
@@ -41,7 +42,8 @@ const ItemDetails = ({ itemDetailsData }) => {
   return (
     <div className="animate-in relative">
       <Dimmer className="animate-pulse" active={isLoadingysField} inverted>
-        <Loader active />
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
       </Dimmer>
       {/* item description */}
       <div
