@@ -46,7 +46,7 @@ const Win = () => {
     animationData: woooo,
   };
 
-  return true ? (
+  return IsWinner ? (
     <div className="fixed top-0 w-full h-full z-[500]">
       <div className="flex justify-between">
         <Lottie options={wooooOptions} />
