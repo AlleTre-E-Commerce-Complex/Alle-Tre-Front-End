@@ -49,7 +49,6 @@ const Home = () => {
     run: runSponsoredAuctions,
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
       if (!user) {
@@ -81,19 +80,12 @@ const Home = () => {
 
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
-    // set the default value to false if no data is stored
-    (val) => {
-      try {
-        return JSON.parse(val);
-      } catch (e) {
-        return false; // return false if there is an error parsing the stored data
-      }
-    }
+    ""
   );
 
   const handelCreatOuction = () => {
     if (user) {
-      if (hasCompletedProfile) {
+      if (JSON.parse(hasCompletedProfile)) {
         history.push(routes.app.createAuction.productDetails);
       } else setOpen(true);
     } else dispatch(Open());

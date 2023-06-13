@@ -36,15 +36,7 @@ const CreateAuction = () => {
   const selectedContent = content[lang];
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
-    "", // set the default value to false if no data is stored
-    (val) => {
-      try {
-        return JSON.parse(val);
-      } catch (e) {
-        console.error("Error parsing stored data", e);
-        return false; // return false if there is an error parsing the stored data
-      }
-    }
+    ""
   );
 
   const history = useHistory();
@@ -57,7 +49,7 @@ const CreateAuction = () => {
 
   const dispatch = useDispatch();
   const handelCreatOuction = () => {
-    if (hasCompletedProfile) {
+    if (JSON.parse(hasCompletedProfile)) {
       history.push(routes.app.createAuction.productDetails);
       dispatch(productDetails({}));
     } else setOpen(true);
