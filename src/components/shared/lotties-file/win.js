@@ -10,33 +10,34 @@ import { io } from "socket.io-client";
 
 const Win = () => {
   const { user, logout } = useAuthState();
-  const [IsWinner, setIsWinner] = useState();
+  const [IsWinner, setIsWinner] = useState(null);
 
   useEffect(() => {
-    if (IsWinner) {
-      auth.getToken().then((accessToken) => {
-        const headers = {
-          Authorization: accessToken ? "Bearer " + accessToken : undefined,
-        };
-        const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
-        const newSocket = io(URL, {
-          extraHeaders: Object.entries(headers).reduce(
-            (acc, [key, value]) =>
-              value !== undefined ? { ...acc, [key]: value } : acc,
-            {}
-          ),
-          path: "/socket.io",
-        });
-        newSocket?.on("auction:winner", (data) => {
-          setIsWinner(data);
-        });
-
-        return () => {
-          newSocket.close();
-          logout();
-        };
+    auth.getToken().then((accessToken) => {
+      const headers = {
+        Authorization: accessToken ? "Bearer " + accessToken : undefined,
+      };
+      const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+      const newSocket = io(URL, {
+        extraHeaders: Object.entries(headers).reduce(
+          (acc, [key, value]) =>
+            value !== undefined ? { ...acc, [key]: value } : acc,
+          {}
+        ),
+        path: "/socket.io",
       });
-    }
+      newSocket?.on("auction:winner", (data) => {
+        setIsWinner(data);
+        console.log("====================================");
+        console.log({ "auction:winner": data });
+        console.log("====================================");
+      });
+
+      return () => {
+        newSocket.close();
+        logout();
+      };
+    });
   }, [IsWinner, logout]);
 
   const wooooOptions = {
