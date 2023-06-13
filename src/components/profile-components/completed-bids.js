@@ -42,8 +42,12 @@ const CompletedBids = () => {
   }, [run, forceReload, search]);
 
   return (
-    <div className="relative">
-      <Dimmer className="animate-pulse" active={isLoading} inverted>
+    <div className="">
+      <Dimmer
+        className="fixed w-full h-full top-0 bg-white/50"
+        active={isLoading}
+        inverted
+      >
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>

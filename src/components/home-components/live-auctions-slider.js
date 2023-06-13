@@ -28,7 +28,7 @@ const LiveAuctionsSlider = ({ type }) => {
 
   const [auctions, setAuctions] = useState([]);
   const [pagination, setPagination] = useState(null);
-  const [page, setPage] = useState(6);
+  const [page, setPage] = useState(20);
 
   const swiperOptions = {
     cssMode: true,
@@ -89,7 +89,7 @@ const LiveAuctionsSlider = ({ type }) => {
 
   return (
     <div
-      className={auctions?.length === 0 ? "hidden" : "ezd-content relative "}
+      className={auctions?.length === 0 ? "hidden" : "ezd-content  relative "}
     >
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
@@ -99,7 +99,7 @@ const LiveAuctionsSlider = ({ type }) => {
           Lorem ipsum dolor sit amet, consetetur
         </p>
       </div>
-      <Dimmer className="animate-pulse " active={isLoadingAuctions} inverted>
+      <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>

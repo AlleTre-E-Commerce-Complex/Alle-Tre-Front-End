@@ -94,7 +94,7 @@ const Home = () => {
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home overflow-hidden">
       <Dimmer
-        className="animate-pulse fixed w-full h-full top-0"
+        className="fixed w-full h-full top-0 bg-white/50"
         active={isLoadingMainAuctions || isLoadingrunSponsoredAuctions}
         inverted
       >

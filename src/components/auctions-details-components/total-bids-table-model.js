@@ -60,7 +60,7 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
     >
       <div className="w-[1070px] h-[523px] rounded-2xl bg-white border-2 border-primary  ">
         <Dimmer
-          className="animate-pulse fixed w-full h-full top-0"
+          className="fixed w-full h-full top-0 bg-white/50"
           active={isLoading}
           inverted
         >
@@ -164,7 +164,7 @@ export const TotalBidsDetailsTableModel = ({
     >
       <div className="w-[1070px] h-[523px] rounded-2xl bg-white border-2 border-primary  overflow-y-scroll scrollbar-hide ">
         <Dimmer
-          className="animate-pulse fixed w-full h-full top-0"
+          className="fixed w-full h-full top-0 bg-white/50"
           active={isLoading}
           inverted
         >

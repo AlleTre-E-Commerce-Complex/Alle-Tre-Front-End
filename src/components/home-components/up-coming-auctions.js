@@ -28,7 +28,7 @@ const UpComingAuctionsSlider = () => {
 
   const [auctions, setAuctions] = useState();
   const [pagination, setpagination] = useState();
-  const [page, setPage] = useState(6);
+  const [page, setPage] = useState(20);
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const UpComingAuctionsSlider = () => {
           Lorem ipsum dolor sit amet, consetetur
         </p>
       </div>
-      <Dimmer className="animate-pulse " active={isLoadingAuctions} inverted>
+      <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
@@ -112,7 +112,7 @@ const UpComingAuctionsSlider = () => {
                 <div class="snapslider-card swiper-slide">
                   <AuctionCard
                     auctionId={e?.id}
-                    price={e?.acceptedAmount}
+                    price={e?.startBidAmount || e?.acceptedAmount}
                     title={e?.product?.title}
                     status={e?.status}
                     adsImg={e?.product?.images[0].imageLink}

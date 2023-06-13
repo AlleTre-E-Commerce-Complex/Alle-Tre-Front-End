@@ -40,8 +40,12 @@ const ItemDetails = ({ itemDetailsData }) => {
   }, [runSysField]);
 
   return (
-    <div className="animate-in relative">
-      <Dimmer className="animate-pulse" active={isLoadingysField} inverted>
+    <div className="animate-in ">
+      <Dimmer
+        className="fixed w-full h-full top-0 bg-white/50"
+        active={isLoadingysField}
+        inverted
+      >
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>

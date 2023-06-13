@@ -62,9 +62,9 @@ const MyAuctions = () => {
   }, []);
 
   return (
-    <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4 relative animate-in  ">
+    <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4  animate-in  ">
       <Dimmer
-        className="animate-pulse"
+        className="fixed w-full h-full top-0 bg-white/50"
         active={isLoadingAnalyticsData}
         inverted
       >

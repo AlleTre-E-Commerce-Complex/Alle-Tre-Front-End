@@ -14,7 +14,7 @@ const LodingTestAllatre = () => {
 
   return (
     <div className="mt-6">
-      <img className="animate-pulse animate-bounce" src={logo} alt="logo" />
+      <img className="animate-pulse" src={logo} alt="logo" />
       {/* <Lottie options={defaultOptions} width={300} /> */}
     </div>
   );

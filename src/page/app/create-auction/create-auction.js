@@ -70,7 +70,11 @@ const CreateAuction = () => {
 
   return (
     <div className="mt-44 animate-in  ">
-      <Dimmer className="animate-pulse" active={isLoading} inverted>
+      <Dimmer
+        className="fixed w-full h-full top-0 bg-white/50"
+        active={isLoading}
+        inverted
+      >
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>

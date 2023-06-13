@@ -281,7 +281,7 @@ const ShippingDetails = () => {
         </h1>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mx-auto pt-6">
           <Dimmer
-            className="animate-pulse"
+            className="fixed w-full h-full top-0 bg-white/50"
             active={isLoading || isLoadingCreatAuction}
             inverted
           >

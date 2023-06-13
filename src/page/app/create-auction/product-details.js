@@ -485,7 +485,7 @@ const ProductDetails = () => {
   return (
     <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
       <Dimmer
-        className="animate-pulse"
+        className="fixed w-full h-full top-0 bg-white/50"
         active={
           isLoading ||
           loadingSubGatogry ||

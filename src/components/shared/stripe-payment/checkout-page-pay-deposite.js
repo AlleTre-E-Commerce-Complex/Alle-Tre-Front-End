@@ -84,7 +84,7 @@ export default function CheckoutPagePayDeposite() {
   return (
     <div className="mt-44 animate-in ">
       <Dimmer
-        className="animate-pulse"
+        className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading && isLoadingPendingAuctionData}
         inverted
       >

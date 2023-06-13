@@ -64,9 +64,9 @@ const WatingForDeliveryBids = ({ OnReload }) => {
     );
   };
   return (
-    <div className="relative">
+    <div className="">
       <Dimmer
-        className="animate-pulse"
+        className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading || isLoadingConfirmDelivery}
         inverted
       >
