@@ -1,10 +1,10 @@
+import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 
 import woooo from "./woooo.json";
 import congrat from "./congrat.json";
 
 import { useAuthState } from "../../../context/auth-context";
-import { useState, useEffect } from "react";
 import auth from "../../../utils/auth";
 import { io } from "socket.io-client";
 
@@ -38,7 +38,19 @@ const Win = () => {
         logout();
       };
     });
-  }, [IsWinner, logout]);
+  }, [logout]);
+
+  useEffect(() => {
+    if (IsWinner) {
+      const timeoutId = setTimeout(() => {
+        setIsWinner(null);
+      }, 10000); // 10 seconds in milliseconds
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [IsWinner]);
 
   const wooooOptions = {
     loop: false,
