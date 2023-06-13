@@ -1,8 +1,8 @@
 import Lottie from "react-lottie";
 
 import woooo from "./woooo.json";
-import waffer from "./waffer.json";
-import ballon from "./ballon.json";
+import congrat from "./congrat.json";
+
 import { useAuthState } from "../../../context/auth-context";
 import { useState, useEffect } from "react";
 import auth from "../../../utils/auth";
@@ -41,14 +41,18 @@ const Win = () => {
   }, [IsWinner, logout]);
 
   const wooooOptions = {
-    loop: true,
+    loop: false,
     autoplay: true,
     animationData: woooo,
   };
 
-  return IsWinner ? (
+  return true ? (
     <div className="fixed top-0 w-full h-full z-[500]">
-      <Lottie options={wooooOptions} />
+      <div className="flex justify-between">
+        <Lottie options={wooooOptions} />
+        <Lottie options={wooooOptions} />
+        <Lottie options={wooooOptions} />
+      </div>
     </div>
   ) : null;
 };
