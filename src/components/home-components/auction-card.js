@@ -16,6 +16,7 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import moment from "moment";
+import { truncateString } from "../../utils/truncate-string";
 
 const AuctionCard = ({
   price,
@@ -168,7 +169,7 @@ const AuctionCard = ({
           onClick={() => handelGoDetails(auctionId)}
           className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10"
         >
-          {title}
+          {truncateString(title, 75)}
         </h1>
         <div onClick={() => handelGoDetails(auctionId)}>
           <AuctionsStatus status={status} small />

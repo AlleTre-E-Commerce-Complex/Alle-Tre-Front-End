@@ -73,6 +73,7 @@ const CompletedBids = () => {
               key={e?.id}
               // isBidsButtons
               // textButton={"Confirm delivery"}
+              auctionsId={e?.auction?.id}
               status={"COMPLETED"}
               title={e?.auction?.product?.title}
               description={e?.auction?.product?.description}
