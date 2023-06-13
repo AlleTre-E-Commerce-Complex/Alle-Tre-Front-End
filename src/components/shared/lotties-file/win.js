@@ -11,7 +11,6 @@ import { io } from "socket.io-client";
 const Win = () => {
   const { user, logout } = useAuthState();
   const [IsWinner, setIsWinner] = useState(null);
-  const [loop, setLoop] = useState(true);
 
   useEffect(() => {
     auth.getToken().then((accessToken) => {
@@ -29,10 +28,9 @@ const Win = () => {
       });
       newSocket?.on("auction:winner", (data) => {
         setIsWinner(data);
-        const timer = setTimeout(() => setLoop(false), 60000);
-        return () => {
-          clearTimeout(timer);
-        };
+        console.log("====================================");
+        console.log(data);
+        console.log("====================================");
       });
 
       return () => {
@@ -43,31 +41,14 @@ const Win = () => {
   }, [IsWinner, logout]);
 
   const wooooOptions = {
-    loop: loop, // Set loop to true
+    loop: true,
     autoplay: true,
     animationData: woooo,
   };
-  // const wafferOptions = {
-  //   loop: false,
-  //   autoplay: true,
-  //   animationData: waffer,
-  // };
-  // const ballonOptions = {
-  //   loop: false,
-  //   autoplay: true,
-  //   animationData: ballon,
-  // };
 
   return IsWinner ? (
-    <div className="fixed top-0 w-full z-[500]">
+    <div className="fixed top-0 w-full h-full z-[500]">
       <Lottie options={wooooOptions} />
-      {/* <Lottie options={ballonOptions} /> */}
-      {/* <div className="w-[500px] fixed bottom-0 right-0">
-        <Lottie options={wafferOptions} />
-      </div>
-      <div className="w-[500px] fixed bottom-0 left-0 flex">
-        <Lottie options={wafferOptions} />
-      </div> */}
     </div>
   ) : null;
 };
