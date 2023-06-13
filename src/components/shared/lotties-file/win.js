@@ -53,7 +53,7 @@ const Win = () => {
   }, [IsWinner]);
 
   const wooooOptions = {
-    loop: false,
+    loop: true,
     autoplay: true,
     animationData: woooo,
   };
