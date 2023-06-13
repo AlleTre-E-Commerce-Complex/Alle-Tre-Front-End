@@ -26,6 +26,11 @@ import HomeAuctionDetails from "../page/app/auction-details/home-auction-details
 import PaymentSucsessModel from "../components/shared/payment-models/payment-sucsess-model";
 import PayDeposite from "../components/home-components/pay-deposite";
 import useLocalStorage from "../hooks/use-localstorage";
+import Win from "../components/shared/lotties-file/win";
+import { useEffect } from "react";
+import auth from "../utils/auth";
+import { useAuthState } from "../context/auth-context";
+import { io } from "socket.io-client";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -39,6 +44,7 @@ const AppLayouts = () => {
       <Header SetSid={SetSid} sid={sid} />
       <Sidebar SetSid={SetSid} sid={sid} />
       <div className="p-0 m-0 border-none min-h-screen ">
+        <Win />
         <AuthModel currentPAth={currentPath} />
         <PaymentSucsessModel
           open={
