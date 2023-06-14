@@ -6,7 +6,7 @@ import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import PaymentSucsess from "../lotties-file/payment-sucsess";
 import routes from "../../../routes";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
@@ -41,12 +41,16 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
                 ? history.goBack(history.goBack())
                 : pathname.endsWith(`${routes.app.home}/complete-pay`)
                 ? history.push(routes.app.profile.myBids.default)
+                : pathname.endsWith(`${routes.app.home}/buyNow`)
+                ? history.push(routes.app.profile.purchased)
                 : history.push(routes.app.profile.myAuctions.active);
             }}
             className="border-primary text-primary border-[1px] w-[136px] h-[48px] rounded-lg text-base font-normal "
           >
             {pathname.endsWith(`${routes.app.home}/complete-pay`)
               ? " View Bids"
+              : pathname.endsWith(`${routes.app.home}/buyNow`)
+              ? "View Your Purchased"
               : " View auction"}
           </button>
           <button

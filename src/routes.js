@@ -17,6 +17,8 @@ const routes = {
       `/allatre/home/${auctionId}/details`,
     payDeposite: (auctionId = ":auctionId") =>
       `/allatre/home/${auctionId}/details/pay-deposite`,
+    buyNow: (auctionId = ":auctionId") =>
+      `/allatre/home/${auctionId}/details/buy-now`,
     paymentSucsess: (auctionId = ":auctionId") =>
       `/allatre/home/${auctionId}/details/pay-deposite/paymentSucsess`,
     categories: (
@@ -86,6 +88,8 @@ const routes = {
       watchlist: `/allatre/profile/watchlist`,
       watchlistDetails: (auctionId = ":auctionId") =>
         `/allatre/profile/watchlist/${auctionId}/details`,
+
+      purchased: `/allatre/profile/purchased`,
     },
   },
 };

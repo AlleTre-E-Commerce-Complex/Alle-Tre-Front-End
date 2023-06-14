@@ -31,6 +31,7 @@ import { useEffect } from "react";
 import auth from "../utils/auth";
 import { useAuthState } from "../context/auth-context";
 import { io } from "socket.io-client";
+import BuyNowPaymentPage from "../components/auctions-details-components/buy-now-payment-page";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -51,7 +52,8 @@ const AppLayouts = () => {
             pathname.length === 1 ||
             pathname.endsWith(`${routes.app.home}/paymentdetails`) ||
             pathname.endsWith(`${routes.app.home}/payDeposite`) ||
-            pathname.endsWith(`${routes.app.home}/complete-pay`)
+            pathname.endsWith(`${routes.app.home}/complete-pay`) ||
+            pathname.endsWith(`${routes.app.home}/buyNow`)
               ? true
               : false
           }
@@ -122,6 +124,8 @@ const AppLayouts = () => {
             path={routes.app.createAuction.default}
             component={CreateAuction}
           />
+
+          <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />
           <Route path={routes.app.payDeposite()} component={PayDeposite} />
 
           <Route

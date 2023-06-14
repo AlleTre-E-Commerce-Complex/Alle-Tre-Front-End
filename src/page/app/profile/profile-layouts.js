@@ -10,6 +10,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { Route, Switch } from "react-router-dom";
 import MyBids from "./my-bids";
 import MyBidsCompletePayment from "../../../components/profile-components/my-bids-complete-payment";
+import Purchased from "./purchased";
 
 const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -41,6 +42,7 @@ const ProfileLayouts = () => {
           <Route path={routes.app.profile.myBids.default} component={MyBids} />
 
           <Route path={routes.app.profile.watchlist} component={Watshlist} />
+          <Route path={routes.app.profile.purchased} component={Purchased} />
         </Switch>
       </div>
     </div>

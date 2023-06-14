@@ -29,6 +29,8 @@ import moment from "moment";
 import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
+import routes from "../../routes";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -55,6 +57,8 @@ const SummaryHomeAuctionSections = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
+  const { auctionId } = useParams();
+  const history = useHistory();
   const [openSubmitBid, setSubmitBidOpen] = useState(false);
   const [submitBidValue, setSubmitBidValue] = useState();
   const [lastestBid, setLastestBid] = useState(latestBidAmount);
@@ -64,7 +68,6 @@ const SummaryHomeAuctionSections = ({
   dispatch(auctionsId(auctionsID));
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
-  const { auctionId } = useParams();
   const { user, logout } = useAuthState();
   useEffect(() => {
     if (auctionId) {
@@ -275,7 +278,10 @@ const SummaryHomeAuctionSections = ({
         <div
           className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}
         >
-          <button className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg">
+          <button
+            onClick={() => history.push(routes.app.buyNow(auctionId))}
+            className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg"
+          >
             {selectedContent[localizationKeys.buyNow]}
             <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
           </button>

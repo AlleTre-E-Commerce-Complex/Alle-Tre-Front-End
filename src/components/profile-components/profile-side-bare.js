@@ -126,6 +126,14 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             }
             onClick={() => history.push(routes.app.profile.watchlist)}
           />
+          <NavLink
+            title="Purchased"
+            isActive={
+              pathname.length === 1 ||
+              pathname.startsWith(routes.app.profile.purchased)
+            }
+            onClick={() => history.push(routes.app.profile.purchased)}
+          />
         </div>
         <div
           onClick={onLogout}
@@ -212,7 +220,21 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                   pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.watchlist)
                 }
-                onClick={() => history.push(routes.app.profile.watchlist)}
+                onClick={() => {
+                  history.push(routes.app.profile.watchlist);
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title="Purchased"
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.purchased)
+                }
+                onClick={() => {
+                  history.push(routes.app.profile.purchased);
+                  SetSid(false);
+                }}
               />
             </div>
             <div

@@ -38,7 +38,7 @@ const Win = () => {
         logout();
       };
     });
-  }, [logout]);
+  }, []);
 
   useEffect(() => {
     if (IsWinner) {

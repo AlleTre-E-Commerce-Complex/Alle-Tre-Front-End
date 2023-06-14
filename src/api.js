@@ -47,6 +47,7 @@ const api = {
       bidAnalytics: "auctions/user/joined-auctions/analytics",
       ConfirmDelivery: (auctionsId) =>
         `/auctions/user/${auctionsId}/confirm-delivery`,
+      buyNow: (auctionsId) => `/auctions/user/${auctionsId}/buy-now`,
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
@@ -81,6 +82,7 @@ const api = {
       editPersonalInfo: "/users/personal-info",
       editCredentialsInfo: "/users/credentials-info",
       analytics: "/auctions/user/ownes/analytics",
+      purchased: "/auctions/user/purchased-auctions",
     },
     WatchList: {
       get: "/watch-lists/saved",
