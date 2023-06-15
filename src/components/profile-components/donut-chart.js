@@ -13,6 +13,7 @@ const DonutChart = ({
   scheduled,
   expired,
   pending,
+  watingForPayment,
   //
   inProgressAuction,
   pendingAuction,
@@ -29,6 +30,7 @@ const DonutChart = ({
     { x: "Drafts", y: drafted },
     { x: "Sold", y: sold },
     { x: "Scheduled", y: scheduled },
+    { x: "watingForPayment", y: watingForPayment },
     { x: "Expired", y: expired },
     { x: "Pending", y: pending },
   ];
@@ -46,6 +48,7 @@ const DonutChart = ({
     "#67C6B9",
     "#A2547A",
     "#FBAE4C",
+    "#B9BDCD",
     "#ACACAC",
     "#00134F",
   ];

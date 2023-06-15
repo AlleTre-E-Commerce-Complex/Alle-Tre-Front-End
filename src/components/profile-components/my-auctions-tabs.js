@@ -14,6 +14,7 @@ import SoldAuctions from "./sold-auctions";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import WatingForPaymentAuctions from "./wating-for-payment-auctions";
 
 const MyAuctionsTabs = () => {
   const [lang] = useLanguage("");
@@ -71,6 +72,17 @@ const MyAuctionsTabs = () => {
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
             <PendingAuctions />
+          </Tab.Pane>
+        </div>
+      ),
+    },
+    {
+      menuItem: `wating for payment`,
+      route: routes.app.profile.myAuctions.watingForPayment,
+      render: () => (
+        <div>
+          <Tab.Pane className="border-none w-full h-full bg-backgroundGray  dark:bg-darkMood-backgroundBlack animate-in">
+            <WatingForPaymentAuctions />
           </Tab.Pane>
         </div>
       ),

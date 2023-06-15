@@ -49,6 +49,7 @@ const routes = {
         drafts: `/allatre/profile/my-auctions/drafts`,
         sold: `/allatre/profile/my-auctions/sold`,
         pending: `/allatre/profile/my-auctions/pending`,
+        watingForPayment: `/allatre/profile/my-auctions/wating-for-payment`,
         expired: `/allatre/profile/my-auctions/expired`,
 
         activeDetails: (auctionId = ":auctionId") =>
@@ -59,6 +60,8 @@ const routes = {
           `/allatre/profile/my-auctions/sold/${auctionId}/details`,
         pendingDetails: (auctionId = ":auctionId") =>
           `/allatre/profile/my-auctions/pending/${auctionId}/details`,
+        watingForPaymentDetails: (auctionId = ":auctionId") =>
+          `/allatre/profile/my-auctions/wating-for-payment/${auctionId}/details`,
         expiredDetails: (auctionId = ":auctionId") =>
           `/allatre/profile/my-auctions/expired/${auctionId}/details`,
       },

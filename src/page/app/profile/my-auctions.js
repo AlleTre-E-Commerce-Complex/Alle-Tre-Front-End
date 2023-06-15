@@ -49,6 +49,7 @@ const MyAuctions = () => {
     "SOLD" || null,
     "EXPIRED" || null,
     "ACTIVE" || null,
+    "WAITING_FOR_PAYMENT" || null,
   ];
   allStatuses?.forEach((status) => {
     if (!analyticsDataObject[status]) {
@@ -101,8 +102,9 @@ const MyAuctions = () => {
             drafted={analyticsDataObject?.DRAFTED?.count}
             sold={analyticsDataObject?.SOLD?.count}
             scheduled={analyticsDataObject?.IN_SCHEDULED?.count}
-            expired={analyticsDataObject?.EXPIRED?.count}
             pending={analyticsDataObject?.PENDING_OWNER_DEPOIST?.count}
+            watingForPayment={analyticsDataObject?.WAITING_FOR_PAYMENT?.count}
+            expired={analyticsDataObject?.EXPIRED?.count}
             totalcount={analyticsDataObject?.totalcount}
           />
           <div className="mt-4">
