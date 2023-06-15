@@ -5,6 +5,7 @@ export const bidAmountSlice = createSlice({
   initialState: {
     bidAmount: {},
     bidAmountPathName: {},
+    buyNow: {},
   },
   reducers: {
     bidAmount: (state, action) => {
@@ -13,8 +14,11 @@ export const bidAmountSlice = createSlice({
     bidAmountPathName: (state, action) => {
       state.bidAmountPathName = action.payload;
     },
+    buyNow: (state, action) => {
+      state.buyNow = action.payload;
+    },
   },
 });
 
-export const { bidAmount, bidAmountPathName } = bidAmountSlice.actions;
+export const { bidAmount, bidAmountPathName, buyNow } = bidAmountSlice.actions;
 export default bidAmountSlice.reducer;

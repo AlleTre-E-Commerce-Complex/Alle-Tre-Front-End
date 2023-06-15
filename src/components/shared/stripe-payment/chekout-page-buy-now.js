@@ -17,9 +17,9 @@ import api from "../../../api";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
-import CheckoutFormPaymentDetails from "./checkout-form-payment-details";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
+import CheckoutFormBuyNow from "./checkout-form-buy-now";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -27,7 +27,7 @@ export default function CheckoutPageBuyNow() {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
-  const bidAmountValue = useSelector((state) => state?.bidAmount?.bidAmount);
+  const buyNowValue = useSelector((state) => state?.bidAmount?.buyNow);
 
   const { auctionId } = useParams();
 
@@ -49,7 +49,7 @@ export default function CheckoutPageBuyNow() {
           toast.error(err?.response?.data?.message[lang]);
         })
     );
-  }, [auctionId, bidAmountValue, lang, run]);
+  }, [auctionId, buyNowValue, lang, run]);
 
   const appearance = {
     theme: "flat",
@@ -152,13 +152,10 @@ export default function CheckoutPageBuyNow() {
             </h1>
             {clientSecret && (
               <Elements options={options} stripe={stripePromise}>
-                <CheckoutFormPaymentDetails
+                <CheckoutFormBuyNow
                   payDeposite
                   auctionId={auctionId}
-                  payPrice={
-                    pendingAuctionData?.product?.category
-                      ?.bidderDepositFixedAmount
-                  }
+                  payPrice={buyNowValue}
                 />
               </Elements>
             )}

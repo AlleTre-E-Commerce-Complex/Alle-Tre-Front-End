@@ -31,6 +31,7 @@ import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { buyNow } from "../../redux-store/bid-amount-slice";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -279,7 +280,10 @@ const SummaryHomeAuctionSections = ({
           className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}
         >
           <button
-            onClick={() => history.push(routes.app.buyNow(auctionId))}
+            onClick={() => {
+              history.push(routes.app.buyNow(auctionId));
+              dispatch(buyNow(acceptedAmount));
+            }}
             className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg"
           >
             {selectedContent[localizationKeys.buyNow]}

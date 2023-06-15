@@ -9,13 +9,11 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function CheckoutFormBuyNow({ payPrice }) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
-  const { pathname, auctionId } = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
 
