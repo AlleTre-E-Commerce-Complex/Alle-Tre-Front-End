@@ -101,7 +101,7 @@ const Home = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="z-20 ">
+      <div className="z-20 md:h-[541px] h-[200px] ">
         <ImageSlider
           myRef={myRef}
           images={sponsoredAuctions?.map((img) => img?.product?.images)}
