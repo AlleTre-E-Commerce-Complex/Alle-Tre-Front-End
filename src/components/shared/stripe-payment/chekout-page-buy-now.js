@@ -92,8 +92,8 @@ export default function CheckoutPageBuyNow() {
             {selectedContent[localizationKeys.paymentDetails]}
           </h1>
           <p className="text-gray-dark font-normal text-base py-4">
-            In order to complete publishing your ad successfully, please pay the
-            ad fee and start receiving bids immediately
+            To successfully complete the purchase of this ad, you must pay for
+            this auction
           </p>
         </div>
         <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
