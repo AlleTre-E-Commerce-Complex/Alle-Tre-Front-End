@@ -123,6 +123,8 @@ const HomeAuctionDetails = () => {
                   isBuyNowAllowed={auctionsDetailsData?.isBuyNowAllowed}
                   acceptedAmount={auctionsDetailsData?.acceptedAmount}
                   latestBidAmount={auctionsDetailsData?.latestBidAmount}
+                  // TODO add PurchasedTime
+                  PurchasedTime={""}
                 />
               )}
             </div>

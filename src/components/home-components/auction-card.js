@@ -34,6 +34,8 @@ const AuctionCard = ({
   isMyAuction,
   onReload,
   StartDate,
+  isPurchased,
+  PurchasedTime,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -136,7 +138,7 @@ const AuctionCard = ({
         <div className="lg:w-[240px] l:w-[335px] md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
           <div
             className={
-              isMyAuction
+              isMyAuction || isPurchased
                 ? "hidden"
                 : "bg-white rounded-lg md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 top-2 ltr:right-2 rtl:left-2 "
             }
@@ -186,21 +188,33 @@ const AuctionCard = ({
               <h6 className="text-gray-veryLight font-normal text-[10px]">
                 {status === "IN_SCHEDULED"
                   ? selectedContent[localizationKeys.startDate]
+                  : status === "SOLD"
+                  ? "Purchased Time"
                   : selectedContent[localizationKeys.endingTime]}
               </h6>
-              <p
-                className={`${
-                  timeLeft.days === 0 ? "text-red" : "text-gray-dark"
-                } font-medium text-[10px] `}
-              >
-                {status === "IN_SCHEDULED"
-                  ? formattedstartDate
-                  : formattedTimeLeft}
-              </p>
+              {status === "SOLD" ? (
+                <p className="font-medium text-[10px] text-gray-dark">
+                  {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
+                </p>
+              ) : (
+                <p
+                  className={`${
+                    timeLeft.days === 0 ? "text-red" : "text-gray-dark"
+                  } font-medium text-[10px] `}
+                >
+                  {status === "IN_SCHEDULED"
+                    ? formattedstartDate
+                    : formattedTimeLeft}
+                </p>
+              )}
             </div>
           </div>
           {isMyAuction ? (
-            <div className="mt-4 flex gap-x-3 justify-end">
+            <div
+              className={
+                isPurchased ? "hidden" : "mt-4 flex gap-x-3 justify-end"
+              }
+            >
               <button
                 onClick={() => handelGoDetails(auctionId)}
                 className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
@@ -210,7 +224,9 @@ const AuctionCard = ({
             </div>
           ) : (
             <div
-              className={`${
+              className={` ${
+                isPurchased ? "hidden" : "mt-4 flex gap-x-3 justify-end"
+              }  ${
                 isBuyNowAllowed ? "justify-between" : "justify-end"
               } mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3`}
             >

@@ -27,6 +27,9 @@ const Purchased = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+  console.log("====================================");
+  console.log(purchased);
+  console.log("====================================");
   return (
     <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8 ">
       <Dimmer
@@ -57,17 +60,14 @@ const Purchased = () => {
       <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5 animate-in ">
         {purchased?.map((e) => (
           <AuctionCard
-            auctionId={e?.auction?.id}
-            price={e?.auction?.acceptedAmount || e?.auction?.startBidAmount}
-            title={e?.auction?.product?.title}
-            status={e?.auction?.status}
-            adsImg={e?.auction?.product?.images[0].imageLink}
-            totalBods={15}
-            // WatshlistState={true}
-            // watshlistForceState={true}
-            endingTime={e?.auction?.expiryDate}
-            isBuyNowAllowed={e?.auction?.isBuyNowAllowed}
-            isMyAuction={e?.auction?.isMyAuction}
+            auctionId={e?.id}
+            price={e?.acceptedAmount || e?.auction?.startBidAmount}
+            title={e?.product?.title}
+            status={e?.status}
+            adsImg={e?.product?.images[0].imageLink}
+            totalBods={e?._count?.bids}
+            isPurchased
+            PurchasedTime={e?.Payment[0]?.createdAt}
             onReload={onReload}
             className=""
           />

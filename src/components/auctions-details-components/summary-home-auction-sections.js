@@ -54,6 +54,7 @@ const SummaryHomeAuctionSections = ({
   acceptedAmount,
   StartDate,
   latestBidAmount,
+  PurchasedTime,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -231,15 +232,26 @@ const SummaryHomeAuctionSections = ({
           <p className="text-gray-med text-base font-normal pb-2">
             {status === "IN_SCHEDULED"
               ? selectedContent[localizationKeys.startDate]
+              : status === "SOLD"
+              ? "Purchased Time"
               : selectedContent[localizationKeys.timeLeft]}
           </p>
-          <p
-            className={`${
-              timeLeft.days === 0 ? "text-red" : "text-gray-verydark"
-            } cursor-default text-base font-bold`}
-          >
-            {status === "IN_SCHEDULED" ? formattedstartDate : formattedTimeLeft}
-          </p>
+
+          {status === "SOLD" ? (
+            <p className="cursor-default text-base font-bold text-gray-verydark">
+              {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
+            </p>
+          ) : (
+            <p
+              className={`${
+                timeLeft.days === 0 ? "text-red" : "text-gray-verydark"
+              } cursor-default text-base font-bold`}
+            >
+              {status === "IN_SCHEDULED"
+                ? formattedstartDate
+                : formattedTimeLeft}
+            </p>
+          )}
         </div>
         <div>
           <p className="text-gray-med text-base font-normal pb-2 ">
@@ -280,11 +292,24 @@ const SummaryHomeAuctionSections = ({
           className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}
         >
           <button
+            disabled={
+              status === "SOLD" ||
+              status === "EXPIRED" ||
+              status === "IN_SCHEDULED"
+                ? true
+                : false
+            }
             onClick={() => {
               history.push(routes.app.buyNow(auctionId));
               dispatch(buyNow(acceptedAmount));
             }}
-            className="border-[1px] border-primary text-primary w-[304px] h-[48px] rounded-lg"
+            className={`${
+              status === "SOLD" ||
+              status === "EXPIRED" ||
+              status === "IN_SCHEDULED"
+                ? " border-primary/50 text-primary/50 "
+                : "border-primary text-primary "
+            }  border-[1px]  w-[304px] h-[48px] rounded-lg`}
           >
             {selectedContent[localizationKeys.buyNow]}
             <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
