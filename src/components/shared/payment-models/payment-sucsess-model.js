@@ -50,7 +50,7 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
             {pathname.endsWith(`${routes.app.home}/complete-pay`)
               ? " View Bids"
               : pathname.endsWith(`${routes.app.home}/buyNow`)
-              ? "View Your Purchased"
+              ? "View Purchased"
               : " View auction"}
           </button>
           <button

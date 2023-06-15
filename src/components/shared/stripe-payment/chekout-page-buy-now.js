@@ -20,6 +20,7 @@ import { truncateString } from "../../../utils/truncate-string";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import CheckoutFormBuyNow from "./checkout-form-buy-now";
+import moment from "moment";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -103,21 +104,18 @@ export default function CheckoutPageBuyNow() {
               </h1>
               <PandingRow
                 payDeposite
-                status={"PENDING_OWNER_DEPOIST"}
+                status={"ACTIVE"}
                 title={pendingAuctionData?.product?.title}
                 description={pendingAuctionData?.product?.description}
                 img={pendingAuctionData?.product?.images[0]?.imageLink}
                 startingPrice={pendingAuctionData?.startBidAmount}
+                startDate={pendingAuctionData?.startDate}
+                expiryDate={pendingAuctionData?.expiryDate}
               />
               <div>
                 <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
-                  <h1>Auctions fees</h1>
-                  <p>
-                    {formatCurrency(
-                      pendingAuctionData?.product?.category
-                        ?.bidderDepositFixedAmount
-                    )}
-                  </p>
+                  <h1>purchased price</h1>
+                  <p>{formatCurrency(pendingAuctionData?.acceptedAmount)}</p>
                 </p>
                 <p className="flex justify-between px-4 py-1.5">
                   <h1 className="text-gray-dark font-medium text-sm">
@@ -131,10 +129,28 @@ export default function CheckoutPageBuyNow() {
                 </p>
                 <p className="flex justify-between px-4 py-1.5">
                   <h1 className="text-gray-dark font-medium text-sm">
-                    Auction starting price
+                    Auction Starting date
                   </h1>
                   <p className="text-gray-med font-normal text-base">
-                    {formatCurrency(pendingAuctionData?.startBidAmount)}
+                    {moment(pendingAuctionData?.startDate).format("DD/MM/YYYY")}
+                  </p>
+                </p>
+                <p className="flex justify-between px-4 py-1.5">
+                  <h1 className="text-gray-dark font-medium text-sm">
+                    Auction Ending date
+                  </h1>
+                  <p className="text-gray-med font-normal text-base">
+                    {moment(pendingAuctionData?.expiryDate).format(
+                      "DD/MM/YYYY"
+                    )}
+                  </p>
+                </p>
+                <p className="flex justify-between px-4 py-1.5">
+                  <h1 className="text-gray-dark font-medium text-sm">
+                    Auction purchased price
+                  </h1>
+                  <p className="text-gray-med font-normal text-base">
+                    {formatCurrency(pendingAuctionData?.acceptedAmount)}
                   </p>
                 </p>
               </div>
@@ -155,7 +171,7 @@ export default function CheckoutPageBuyNow() {
                 <CheckoutFormBuyNow
                   payDeposite
                   auctionId={auctionId}
-                  payPrice={buyNowValue}
+                  payPrice={buyNowValue || pendingAuctionData?.acceptedAmount}
                 />
               </Elements>
             )}
@@ -171,7 +187,8 @@ export const PandingRow = ({
   description,
   img,
   startingPrice,
-  startingDate,
+  expiryDate,
+  startDate,
   status,
 }) => {
   const [lang] = useLanguage("");
@@ -218,7 +235,24 @@ export const PandingRow = ({
               {formatCurrency(startingPrice)}
             </p>
           </div>
-
+          <div className="w-full">
+            <h1 className="text-gray-veryLight text-[10px] font-normal">
+              {selectedContent[localizationKeys.startDate]}
+            </h1>
+            <p className="text-gray-dark text-[10px] font-normal">
+              {/* March,23 2023 */}
+              {moment(startDate).format("MMMM, DD YYYY")}
+            </p>
+          </div>
+          <div className="w-full">
+            <h1 className="text-gray-veryLight text-[10px] font-normal">
+              {selectedContent[localizationKeys.endingTime]}
+            </h1>
+            <p className="text-gray-dark text-[10px] font-normal">
+              {/* March,23 2023 */}
+              {moment(expiryDate).format("MMMM, DD YYYY")}
+            </p>
+          </div>
           {status === "PENDING_OWNER_DEPOIST" ? (
             <button className="bg-secondary-light text-white text-xs px-2 rounded h-6 my-auto cursor-default w-full">
               {selectedContent[localizationKeys.pendingDeposit]}
