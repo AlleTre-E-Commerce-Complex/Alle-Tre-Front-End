@@ -40,7 +40,7 @@ const ItemDetails = ({ itemDetailsData }) => {
   }, [runSysField]);
 
   return (
-    <div className="animate-in ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoadingysField}
@@ -49,38 +49,40 @@ const ItemDetails = ({ itemDetailsData }) => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      {/* item description */}
-      <div
-        id="itemDescription"
-        className="text-gray-dark text-base font-normal"
-      >
-        <h1 className="pb-8">
-          {selectedContent[localizationKeys.aboutTheBrand]}:
-        </h1>
-        <p>{itemDetailsData?.description}</p>
+      <div className="animate-in ">
+        {/* item description */}
+        <div
+          id="itemDescription"
+          className="text-gray-dark text-base font-normal"
+        >
+          <h1 className="pb-8">
+            {selectedContent[localizationKeys.aboutTheBrand]}:
+          </h1>
+          <p>{itemDetailsData?.description}</p>
+        </div>
+        <div className="grid sm:grid-rows-5 sm:grid-flow-col gap-x-4 mt-4 mb-40">
+          {itemDetailsArray.map((field, index) => {
+            const colors = ["bg-[#F2F2F2]", "bg-[#FEFEFE]"];
+            const bgColor = colors[index % colors.length];
+            return (
+              <div
+                className={`flex ${bgColor} drop-shadow my-2 py-3 rounded ${
+                  itemDetailsArray.length > 4 ? "w-auto" : "sm:w-1/2 w-auto "
+                }`}
+                key={index}
+              >
+                <p className="text-gray-med font-normal text-sm  px-5 w-1/2">
+                  {field?.label[lang]} :
+                </p>
+                <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
+                  {field.value}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <div className="grid sm:grid-rows-5 sm:grid-flow-col gap-x-4 mt-4 mb-40">
-        {itemDetailsArray.map((field, index) => {
-          const colors = ["bg-[#F2F2F2]", "bg-[#FEFEFE]"];
-          const bgColor = colors[index % colors.length];
-          return (
-            <div
-              className={`flex ${bgColor} drop-shadow my-2 py-3 rounded ${
-                itemDetailsArray.length > 4 ? "w-auto" : "sm:w-1/2 w-auto "
-              }`}
-              key={index}
-            >
-              <p className="text-gray-med font-normal text-sm  px-5 w-1/2">
-                {field?.label[lang]} :
-              </p>
-              <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
-                {field.value}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    </>
   );
 };
 

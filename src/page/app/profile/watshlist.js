@@ -28,7 +28,7 @@ const Watshlist = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   return (
-    <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8 ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoadingWatshlist}
@@ -37,44 +37,46 @@ const Watshlist = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      {watshlist?.length === 0 ? (
-        <div className="flex justify-center items-center pt-56 ">
-          <div>
-            <img
-              className="w-28 mx-auto"
-              src={EmtyWatchlist}
-              alt="EmtyWatchlist"
-            />
-            <h1 className="text-gray-dark pt-10">
-              {selectedContent[localizationKeys.thereAreNoWatchlistYet]}
-            </h1>
+      <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8 animate-in">
+        {watshlist?.length === 0 ? (
+          <div className="flex justify-center items-center pt-56 ">
+            <div>
+              <img
+                className="w-28 mx-auto"
+                src={EmtyWatchlist}
+                alt="EmtyWatchlist"
+              />
+              <h1 className="text-gray-dark pt-10">
+                {selectedContent[localizationKeys.thereAreNoWatchlistYet]}
+              </h1>
+            </div>
           </div>
+        ) : (
+          <h1 className="text-gray-dark pb-14 pt-4 font-bold">
+            {selectedContent[localizationKeys.yourWatchlist]}
+          </h1>
+        )}
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5 animate-in ">
+          {watshlist?.map((e) => (
+            <AuctionCard
+              auctionId={e?.auction?.id}
+              price={e?.auction?.acceptedAmount || e?.auction?.startBidAmount}
+              title={e?.auction?.product?.title}
+              status={e?.auction?.status}
+              adsImg={e?.auction?.product?.images[0].imageLink}
+              totalBods={15}
+              WatshlistState={true}
+              watshlistForceState={true}
+              endingTime={e?.auction?.expiryDate}
+              isBuyNowAllowed={e?.auction?.isBuyNowAllowed}
+              isMyAuction={e?.auction?.isMyAuction}
+              onReload={onReload}
+              className=""
+            />
+          ))}
         </div>
-      ) : (
-        <h1 className="text-gray-dark pb-14 pt-4 font-bold">
-          {selectedContent[localizationKeys.yourWatchlist]}
-        </h1>
-      )}
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5 animate-in ">
-        {watshlist?.map((e) => (
-          <AuctionCard
-            auctionId={e?.auction?.id}
-            price={e?.auction?.acceptedAmount || e?.auction?.startBidAmount}
-            title={e?.auction?.product?.title}
-            status={e?.auction?.status}
-            adsImg={e?.auction?.product?.images[0].imageLink}
-            totalBods={15}
-            WatshlistState={true}
-            watshlistForceState={true}
-            endingTime={e?.auction?.expiryDate}
-            isBuyNowAllowed={e?.auction?.isBuyNowAllowed}
-            isMyAuction={e?.auction?.isMyAuction}
-            onReload={onReload}
-            className=""
-          />
-        ))}
       </div>
-    </div>
+    </>
   );
 };
 

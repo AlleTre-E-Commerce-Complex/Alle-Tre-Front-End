@@ -31,7 +31,7 @@ const Purchased = () => {
   console.log(purchased);
   console.log("====================================");
   return (
-    <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8 ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoadingWatshlist}
@@ -40,40 +40,44 @@ const Purchased = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      {purchased?.length === 0 ? (
-        <div className="flex justify-center items-center pt-56 ">
-          <div>
-            <img
-              className="w-28 mx-auto"
-              src={EmtyWatchlist}
-              alt="EmtyWatchlist"
-            />
-            <h1 className="text-gray-dark pt-10">
-              {" "}
-              There are no Purchased yet.
-            </h1>
+      <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8  animate-in">
+        {purchased?.length === 0 ? (
+          <div className="flex justify-center items-center pt-56 ">
+            <div>
+              <img
+                className="w-28 mx-auto"
+                src={EmtyWatchlist}
+                alt="EmtyWatchlist"
+              />
+              <h1 className="text-gray-dark pt-10">
+                {" "}
+                There are no Purchased yet.
+              </h1>
+            </div>
           </div>
+        ) : (
+          <h1 className="text-gray-dark pb-14 pt-4 font-bold">
+            Your Purchased
+          </h1>
+        )}
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5 animate-in ">
+          {purchased?.map((e) => (
+            <AuctionCard
+              auctionId={e?.id}
+              price={e?.acceptedAmount || e?.auction?.startBidAmount}
+              title={e?.product?.title}
+              status={e?.status}
+              adsImg={e?.product?.images[0].imageLink}
+              totalBods={e?._count?.bids}
+              isPurchased
+              PurchasedTime={e?.Payment[0]?.createdAt}
+              onReload={onReload}
+              className=""
+            />
+          ))}
         </div>
-      ) : (
-        <h1 className="text-gray-dark pb-14 pt-4 font-bold">Your Purchased</h1>
-      )}
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5 animate-in ">
-        {purchased?.map((e) => (
-          <AuctionCard
-            auctionId={e?.id}
-            price={e?.acceptedAmount || e?.auction?.startBidAmount}
-            title={e?.product?.title}
-            status={e?.status}
-            adsImg={e?.product?.images[0].imageLink}
-            totalBods={e?._count?.bids}
-            isPurchased
-            PurchasedTime={e?.Payment[0]?.createdAt}
-            onReload={onReload}
-            className=""
-          />
-        ))}
       </div>
-    </div>
+    </>
   );
 };
 

@@ -86,7 +86,7 @@ export default function CheckoutPageCompletePayment() {
   }, [completedPaymentData?.auctionsId, runPendingAuctionData]);
 
   return (
-    <div className="mt-44 animate-in ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading && isLoadingPendingAuctionData}
@@ -95,100 +95,104 @@ export default function CheckoutPageCompletePayment() {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className=" mx-auto h-14 my-7 py-4 sm:block hidden">
-        <MyBidsBreadcrumb />
-      </div>
-      <div className="mx-auto ">
-        <div>
-          <h1 className="font-bold text-base text-black">
-            {selectedContent[localizationKeys.paymentDetails]}
-          </h1>
-          <p className="text-gray-dark font-normal text-base py-4">
-            Congratulations, you won this auction. Now you have to pay for the
-            auction and there is a three day grace period
-          </p>
+      <div className="mt-44 animate-in ">
+        <div className=" mx-auto h-14 my-7 py-4 sm:block hidden">
+          <MyBidsBreadcrumb />
         </div>
-        <div className="grid l:grid-cols-2 grid-cols-1 l:gap-x-10 gap-y-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
-          <div className="w-full ">
-            <div className="bg-gray-light rounded-2xl px-8 py-5">
-              <h1 className="font-bold text-base text-black pb-4 ">
-                Ad preview
-              </h1>
-              <PandingRow
-                payDeposite
-                status={"ACTIVE"}
-                title={pendingAuctionData?.product?.title}
-                description={pendingAuctionData?.product?.description}
-                img={pendingAuctionData?.product?.images[0]?.imageLink}
-                startingPrice={completedPaymentData?.lastPrice}
-                expiryDate={pendingAuctionData?.expiryDate}
-              />
-              <div>
-                <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
-                  <h1>Auctions price</h1>
-                  <p>{formatCurrency(completedPaymentData?.lastPrice)}</p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Category
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {lang === "en"
-                      ? pendingAuctionData?.product?.category?.nameEn
-                      : pendingAuctionData?.product?.category?.nameAr}
+        <div className="mx-auto ">
+          <div>
+            <h1 className="font-bold text-base text-black">
+              {selectedContent[localizationKeys.paymentDetails]}
+            </h1>
+            <p className="text-gray-dark font-normal text-base py-4">
+              Congratulations, you won this auction. Now you have to pay for the
+              auction and there is a three day grace period
+            </p>
+          </div>
+          <div className="grid l:grid-cols-2 grid-cols-1 l:gap-x-10 gap-y-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
+            <div className="w-full ">
+              <div className="bg-gray-light rounded-2xl px-8 py-5">
+                <h1 className="font-bold text-base text-black pb-4 ">
+                  Ad preview
+                </h1>
+                <PandingRow
+                  payDeposite
+                  status={"ACTIVE"}
+                  title={pendingAuctionData?.product?.title}
+                  description={pendingAuctionData?.product?.description}
+                  img={pendingAuctionData?.product?.images[0]?.imageLink}
+                  startingPrice={completedPaymentData?.lastPrice}
+                  expiryDate={pendingAuctionData?.expiryDate}
+                />
+                <div>
+                  <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
+                    <h1>Auctions price</h1>
+                    <p>{formatCurrency(completedPaymentData?.lastPrice)}</p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5 ">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction starting date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.startDate).format("DD/MM/YYYY")}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Category
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {lang === "en"
+                        ? pendingAuctionData?.product?.category?.nameEn
+                        : pendingAuctionData?.product?.category?.nameAr}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction Ending date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.expiryDate).format(
-                      "DD/MM/YYYY"
-                    )}
+                  <p className="flex justify-between px-4 py-1.5 ">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction starting date
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {moment(pendingAuctionData?.startDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction price
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {formatCurrency(completedPaymentData?.lastPrice)}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction Ending date
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {moment(pendingAuctionData?.expiryDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </p>
                   </p>
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction price
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {formatCurrency(completedPaymentData?.lastPrice)}
+                    </p>
+                  </p>
+                </div>
+                <p className="text-gray-med text-xs mt-11 text-center">
+                  If you want to check Auctions policy you can check{" "}
+                  <span className="text-primary underline cursor-pointer">
+                    FAQs
+                  </span>
                 </p>
               </div>
-              <p className="text-gray-med text-xs mt-11 text-center">
-                If you want to check Auctions policy you can check{" "}
-                <span className="text-primary underline cursor-pointer">
-                  FAQs
-                </span>
-              </p>
             </div>
-          </div>
-          <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
-            <h1 className="font-bold text-base text-black pt-4 pb-6">
-              Payment method
-            </h1>
-            {clientSecret && (
-              <Elements options={options} stripe={stripePromise}>
-                <CheckoutFromCompletePayment
-                  auctionId={completedPaymentData?.auctionsId}
-                  payPrice={completedPaymentData?.lastPrice}
-                />
-              </Elements>
-            )}
+            <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
+              <h1 className="font-bold text-base text-black pt-4 pb-6">
+                Payment method
+              </h1>
+              {clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                  <CheckoutFromCompletePayment
+                    auctionId={completedPaymentData?.auctionsId}
+                    payPrice={completedPaymentData?.lastPrice}
+                  />
+                </Elements>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

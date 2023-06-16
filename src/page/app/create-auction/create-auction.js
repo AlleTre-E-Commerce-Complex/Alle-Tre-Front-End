@@ -69,7 +69,7 @@ const CreateAuction = () => {
   }, [run, forceReload]);
 
   return (
-    <div className="mt-44 animate-in  ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading}
@@ -78,60 +78,62 @@ const CreateAuction = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
-        <CreateAuctionBreadcrumb />
-      </div>
-      <div className="relative">
-        <img
-          className="w-full h-auto object-cover md:block hidden "
-          src={createAuctionimgBGfrom}
-          alt="createAuctionimgBGfrom"
-        />
-        <img
-          className="w-full h-auto object-cover  block md:hidden "
-          src={createAuctionimgSm}
-          alt="createAuctionimgSm"
-        />
-        <button
-          onClick={() => handelCreatOuction()}
-          className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[68px] right-[90px] hidden md:block"
-        >
-          {selectedContent[localizationKeys.createAuctionNow]}
-        </button>
-        <button
-          onClick={() => handelCreatOuction()}
-          className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[41px] right-[25px] md:hidden block"
-        >
-          {selectedContent[localizationKeys.createAuction]}
-        </button>
-        <img
-          className="lg:w-[700px] w-[500px] absolute bottom-[68px] left-[90px] hidden md:block"
-          src={CreaAuctionText}
-          alt="CreaAuctionText"
-        />
-      </div>
-      <div className="max-w-[1366px] mx-auto px-2">
-        <h1 className="text-black py-5 text-base font-normal">
-          {selectedContent[localizationKeys.drafts]}
-        </h1>
-        <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
-          {draftAuctionData?.map((e) => (
-            <DraftsItem
-              auctionId={e?.id}
-              img={e && e?.product?.images[0]?.imageLink}
-              itemName={e?.product?.title}
-              date={e?.createdAt}
-              onReload={onReload}
-            />
-          ))}
+      <div className="mt-44 animate-in  ">
+        <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
+          <CreateAuctionBreadcrumb />
         </div>
+        <div className="relative">
+          <img
+            className="w-full h-auto object-cover md:block hidden "
+            src={createAuctionimgBGfrom}
+            alt="createAuctionimgBGfrom"
+          />
+          <img
+            className="w-full h-auto object-cover  block md:hidden "
+            src={createAuctionimgSm}
+            alt="createAuctionimgSm"
+          />
+          <button
+            onClick={() => handelCreatOuction()}
+            className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[68px] right-[90px] hidden md:block"
+          >
+            {selectedContent[localizationKeys.createAuctionNow]}
+          </button>
+          <button
+            onClick={() => handelCreatOuction()}
+            className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[41px] right-[25px] md:hidden block"
+          >
+            {selectedContent[localizationKeys.createAuction]}
+          </button>
+          <img
+            className="lg:w-[700px] w-[500px] absolute bottom-[68px] left-[90px] hidden md:block"
+            src={CreaAuctionText}
+            alt="CreaAuctionText"
+          />
+        </div>
+        <div className="max-w-[1366px] mx-auto px-2">
+          <h1 className="text-black py-5 text-base font-normal">
+            {selectedContent[localizationKeys.drafts]}
+          </h1>
+          <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
+            {draftAuctionData?.map((e) => (
+              <DraftsItem
+                auctionId={e?.id}
+                img={e && e?.product?.images[0]?.imageLink}
+                itemName={e?.product?.title}
+                date={e?.createdAt}
+                onReload={onReload}
+              />
+            ))}
+          </div>
+        </div>
+        <AddLocationModel
+          open={open}
+          setOpen={setOpen}
+          TextButton={selectedContent[localizationKeys.proceed]}
+        />
       </div>
-      <AddLocationModel
-        open={open}
-        setOpen={setOpen}
-        TextButton={selectedContent[localizationKeys.proceed]}
-      />
-    </div>
+    </>
   );
 };
 

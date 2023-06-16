@@ -268,70 +268,72 @@ const ShippingDetails = () => {
   };
 
   return (
-    <div className="mt-44 animate-in mx-5 ">
-      <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
-        <CreateAuctionBreadcrumb />
-      </div>
-      <div className="flex justify-center">
-        <Stepper />
-      </div>
-      <div className=" max-w-[1366px] mx-auto ">
-        <h1 className="font-bold text-base text-black pt-6">
-          {selectedContent[localizationKeys.locationDetails]}
-        </h1>
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mx-auto pt-6">
-          <Dimmer
-            className="fixed w-full h-full top-0 bg-white/50"
-            active={isLoading || isLoadingCreatAuction}
-            inverted
-          >
-            {/* <Loader active /> */}
-            <LodingTestAllatre />
-          </Dimmer>
-          {locatonData?.map((e) => (
-            <LocationDetailsCard
-              key={e?.id}
-              Id={e?.id}
-              AddressLable={e?.addressLabel}
-              Address={e?.address}
-              Country={lang === "en" ? e?.country?.nameEn : e?.country.nameAn}
-              City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
-              PostalCode={e?.zipCode}
-            />
-          ))}
-          <button
-            onClick={() => setOpen(true)}
-            className="border-gray-med border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex justify-center gap-x-2 "
-          >
-            <GoPlus className="my-auto" size={16} />
-            <p className="my-auto">
-              {selectedContent[localizationKeys.addAddress]}
-            </p>
-          </button>
+    <>
+      <Dimmer
+        className="fixed w-full h-full top-0 bg-white/50"
+        active={isLoading || isLoadingCreatAuction}
+        inverted
+      >
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
+      </Dimmer>
+      <div className="mt-44 animate-in mx-5 ">
+        <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
+          <CreateAuctionBreadcrumb />
         </div>
-        {/* <button
+        <div className="flex justify-center">
+          <Stepper />
+        </div>
+        <div className=" max-w-[1366px] mx-auto ">
+          <h1 className="font-bold text-base text-black pt-6">
+            {selectedContent[localizationKeys.locationDetails]}
+          </h1>
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mx-auto pt-6">
+            {locatonData?.map((e) => (
+              <LocationDetailsCard
+                key={e?.id}
+                Id={e?.id}
+                AddressLable={e?.addressLabel}
+                Address={e?.address}
+                Country={lang === "en" ? e?.country?.nameEn : e?.country.nameAn}
+                City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
+                PostalCode={e?.zipCode}
+              />
+            ))}
+            <button
+              onClick={() => setOpen(true)}
+              className="border-gray-med border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex justify-center gap-x-2 "
+            >
+              <GoPlus className="my-auto" size={16} />
+              <p className="my-auto">
+                {selectedContent[localizationKeys.addAddress]}
+              </p>
+            </button>
+          </div>
+          {/* <button
           onClick={() => history.push(routes.createAuction.paymentDetails)}
         >
           go to paymentDetails
         </button> */}
-        {/* buttons */}
-        <div className=" flex justify-end  mt-28">
-          <button
-            className="bg-primary hover:bg-primary-dark text-white sm:w-[304px] w-full h-[48px] rounded-lg  sm:mt-8 mt-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN mb-5"
-            onClick={creatAuction}
-            loading={isLoadingCreatAuction}
-          >
-            {selectedContent[localizationKeys.createAuction]}
-          </button>
+          {/* buttons */}
+          <div className=" flex justify-end  mt-28">
+            <button
+              className="bg-primary hover:bg-primary-dark text-white sm:w-[304px] w-full h-[48px] rounded-lg  sm:mt-8 mt-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN mb-5"
+              onClick={creatAuction}
+              loading={isLoadingCreatAuction}
+            >
+              {selectedContent[localizationKeys.createAuction]}
+            </button>
+          </div>
         </div>
+        <AddLocationModel
+          open={open}
+          setOpen={setOpen}
+          TextButton={selectedContent[localizationKeys.add]}
+          onReload={onReload}
+        />
       </div>
-      <AddLocationModel
-        open={open}
-        setOpen={setOpen}
-        TextButton={selectedContent[localizationKeys.add]}
-        onReload={onReload}
-      />
-    </div>
+    </>
   );
 };
 

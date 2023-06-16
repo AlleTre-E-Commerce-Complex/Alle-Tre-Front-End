@@ -483,7 +483,7 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={
@@ -494,264 +494,272 @@ const ProductDetails = () => {
         }
         inverted
       >
-        {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className=" h-14 my-7 py-4 sm:block hidden">
-        {/* Breadcrumb  */}
-        <CreateAuctionBreadcrumb />
-      </div>
-      {/* stepper */}
-      <div className="flex justify-center">
-        <Stepper />
-      </div>
-      <div className="">
-        <h1 className="text-black text-base font-bold mt-4">
-          {selectedContent[localizationKeys.itemDetails]}
-        </h1>
-        {/* formik */}
-        <div>
-          <Formik
-            initialValues={{
-              itemName: productDetailsint.itemName || "",
-              category: productDetailsint.category || "",
-              subCategory: productDetailsint.subCategory || "",
-              operatingSystem: productDetailsint.operatingSystem || "",
-              releaseYear: productDetailsint.releaseYear || "",
-              regionOfManufacture: productDetailsint.regionOfManufacture || "",
-              ramSize: productDetailsint.ramSize || "",
-              processor: productDetailsint.processor || "",
-              screenSize: productDetailsint.screenSize || "",
-              model: productDetailsint.model || "",
-              color: productDetailsint.color || "",
-              brandId: productDetailsint.brandId || "",
-              cameraType: productDetailsint.cameraType || "",
-              material: productDetailsint.material || "",
-              age: productDetailsint.age || "",
-              totalArea: productDetailsint.totalArea || "",
-              numberOfRooms: productDetailsint.numberOfRooms || "",
-              numberOfFloors: productDetailsint.numberOfFloors || "",
-              landType: productDetailsint.landType || "",
-              carType: productDetailsint.carType || "",
-              cityId: productDetailsint.cityId || "",
-              countryId: productDetailsint.countryId || "",
-              itemDescription: productDetailsint.itemDescription || "",
-            }}
-            onSubmit={handelProductDetailsdata}
-            validationSchema={ProductDetailsSchema}
-            enableReinitialize
-          >
-            {(formik) => (
-              <Form onSubmit={formik.handleSubmit}>
-                <ScrollToFieldError />
-                {setDraftValue(formik?.values)}
-                <div className="grid gap-x-4 gap-y-10 md:grid-cols-4 grid-cols-2 mt-10 ">
-                  <div className="col-span-2">
-                    <FormikInput
-                      name="itemName"
-                      type={"text"}
-                      label={selectedContent[localizationKeys.itemName]}
-                      placeholder={selectedContent[localizationKeys.itemName]}
-                    />
-                  </div>
-                  <div className="col-span-2 hidden md:block"></div>
-                  <div className="col-span-2 ">
-                    <FormikMultiDropdown
-                      name="category"
-                      label={selectedContent[localizationKeys.category]}
-                      placeholder={selectedContent[localizationKeys.category]}
-                      options={GatogryOptions}
-                      loading={loadingGatogry}
-                      onChange={(value) => {
-                        setCategoryId(value);
-                        const fieldOption = GatogryOptions.find(
-                          (go) => go.value === value
-                        );
-                        onReload();
-                        setCustomFromData([]);
-                        setSubCategoryId(undefined);
-                        setHasUsageCondition(fieldOption?.hasUsageCondition);
-                      }}
-                    />
-                  </div>
-                  <div
-                    className={
-                      SubGatogryOptions?.length === 0 ? "hidden" : "col-span-2"
-                    }
-                  >
-                    <FormikMultiDropdown
-                      name="subCategory"
-                      label={selectedContent[localizationKeys.subCategory]}
-                      placeholder={
-                        selectedContent[localizationKeys.subCategory]
-                      }
-                      loading={loadingSubGatogry}
-                      options={SubGatogryOptions}
-                      onChange={(e) => setSubCategoryId(e)}
-                    />
-                  </div>
-                  {customFromData?.arrayCustomFields?.map((e) => (
-                    <div className="w-full col-span-2 sm:col-span-1 ">
-                      <FormikMultiDropdown
-                        name={e?.key}
-                        label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
-                        placeholder={`${
-                          lang === "en" ? e?.labelEn : e?.labelAr
-                        }`}
-                        options={
-                          e?.key === "brandId"
-                            ? NotAllBranOptions
-                            : e?.key === "countryId"
-                            ? AllCountriesOptions
-                            : e?.key === "cityId"
-                            ? AllCitiesOptions
-                            : allCustomFileOptions[e?.key]
-                        }
-                        onChange={(e) => setCountriesId(e)}
-                        loading={
-                          loadingAllBranOptions ||
-                          loadingAllCountries ||
-                          loadingCitiesOptions
-                        }
-                      />
-                    </div>
-                  ))}
-                  <div
-                    className={
-                      customFromData?.model?.key
-                        ? "w-full mt-1.5 col-span-2 sm:col-span-1"
-                        : "hidden"
-                    }
-                  >
-                    <FormikInput
-                      name={`${customFromData?.model?.key}`}
-                      label={`${
-                        lang === "en"
-                          ? customFromData?.model?.labelEn
-                          : customFromData?.model?.labelAr
-                      }`}
-                      placeholder={`${
-                        lang === "en"
-                          ? customFromData?.model?.labelEn
-                          : customFromData?.model?.labelAr
-                      }`}
-                    />
-                  </div>
-                  {customFromData?.regularCustomFields?.map((e) => (
-                    <div className="w-full mt-1.5 col-span-2 sm:col-span-1">
+      <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
+        {/* <Loader active /> */}
+        <div className=" h-14 my-7 py-4 sm:block hidden">
+          {/* Breadcrumb  */}
+          <CreateAuctionBreadcrumb />
+        </div>
+        {/* stepper */}
+        <div className="flex justify-center">
+          <Stepper />
+        </div>
+        <div className="">
+          <h1 className="text-black text-base font-bold mt-4">
+            {selectedContent[localizationKeys.itemDetails]}
+          </h1>
+          {/* formik */}
+          <div>
+            <Formik
+              initialValues={{
+                itemName: productDetailsint.itemName || "",
+                category: productDetailsint.category || "",
+                subCategory: productDetailsint.subCategory || "",
+                operatingSystem: productDetailsint.operatingSystem || "",
+                releaseYear: productDetailsint.releaseYear || "",
+                regionOfManufacture:
+                  productDetailsint.regionOfManufacture || "",
+                ramSize: productDetailsint.ramSize || "",
+                processor: productDetailsint.processor || "",
+                screenSize: productDetailsint.screenSize || "",
+                model: productDetailsint.model || "",
+                color: productDetailsint.color || "",
+                brandId: productDetailsint.brandId || "",
+                cameraType: productDetailsint.cameraType || "",
+                material: productDetailsint.material || "",
+                age: productDetailsint.age || "",
+                totalArea: productDetailsint.totalArea || "",
+                numberOfRooms: productDetailsint.numberOfRooms || "",
+                numberOfFloors: productDetailsint.numberOfFloors || "",
+                landType: productDetailsint.landType || "",
+                carType: productDetailsint.carType || "",
+                cityId: productDetailsint.cityId || "",
+                countryId: productDetailsint.countryId || "",
+                itemDescription: productDetailsint.itemDescription || "",
+              }}
+              onSubmit={handelProductDetailsdata}
+              validationSchema={ProductDetailsSchema}
+              enableReinitialize
+            >
+              {(formik) => (
+                <Form onSubmit={formik.handleSubmit}>
+                  <ScrollToFieldError />
+                  {setDraftValue(formik?.values)}
+                  <div className="grid gap-x-4 gap-y-10 md:grid-cols-4 grid-cols-2 mt-10 ">
+                    <div className="col-span-2">
                       <FormikInput
-                        name={e?.key}
-                        type={e?.type}
-                        label={lang === "en" ? e?.labelEn : e?.labelAr}
+                        name="itemName"
+                        type={"text"}
+                        label={selectedContent[localizationKeys.itemName]}
+                        placeholder={selectedContent[localizationKeys.itemName]}
+                      />
+                    </div>
+                    <div className="col-span-2 hidden md:block"></div>
+                    <div className="col-span-2 ">
+                      <FormikMultiDropdown
+                        name="category"
+                        label={selectedContent[localizationKeys.category]}
+                        placeholder={selectedContent[localizationKeys.category]}
+                        options={GatogryOptions}
+                        loading={loadingGatogry}
+                        onChange={(value) => {
+                          setCategoryId(value);
+                          const fieldOption = GatogryOptions.find(
+                            (go) => go.value === value
+                          );
+                          onReload();
+                          setCustomFromData([]);
+                          setSubCategoryId(undefined);
+                          setHasUsageCondition(fieldOption?.hasUsageCondition);
+                        }}
+                      />
+                    </div>
+                    <div
+                      className={
+                        SubGatogryOptions?.length === 0
+                          ? "hidden"
+                          : "col-span-2"
+                      }
+                    >
+                      <FormikMultiDropdown
+                        name="subCategory"
+                        label={selectedContent[localizationKeys.subCategory]}
+                        placeholder={
+                          selectedContent[localizationKeys.subCategory]
+                        }
+                        loading={loadingSubGatogry}
+                        options={SubGatogryOptions}
+                        onChange={(e) => setSubCategoryId(e)}
+                      />
+                    </div>
+                    {customFromData?.arrayCustomFields?.map((e) => (
+                      <div className="w-full col-span-2 sm:col-span-1 ">
+                        <FormikMultiDropdown
+                          name={e?.key}
+                          label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
+                          placeholder={`${
+                            lang === "en" ? e?.labelEn : e?.labelAr
+                          }`}
+                          options={
+                            e?.key === "brandId"
+                              ? NotAllBranOptions
+                              : e?.key === "countryId"
+                              ? AllCountriesOptions
+                              : e?.key === "cityId"
+                              ? AllCitiesOptions
+                              : allCustomFileOptions[e?.key]
+                          }
+                          onChange={(e) => setCountriesId(e)}
+                          loading={
+                            loadingAllBranOptions ||
+                            loadingAllCountries ||
+                            loadingCitiesOptions
+                          }
+                        />
+                      </div>
+                    ))}
+                    <div
+                      className={
+                        customFromData?.model?.key
+                          ? "w-full mt-1.5 col-span-2 sm:col-span-1"
+                          : "hidden"
+                      }
+                    >
+                      <FormikInput
+                        name={`${customFromData?.model?.key}`}
+                        label={`${
+                          lang === "en"
+                            ? customFromData?.model?.labelEn
+                            : customFromData?.model?.labelAr
+                        }`}
                         placeholder={`${
-                          lang === "en" ? e?.labelEn : e?.labelAr
+                          lang === "en"
+                            ? customFromData?.model?.labelEn
+                            : customFromData?.model?.labelAr
                         }`}
                       />
                     </div>
-                  ))}
-                  <div className="col-span-2 col-start-1 mt-1">
-                    <FormikTextArea
-                      name="itemDescription"
-                      type={"text"}
-                      label={selectedContent[localizationKeys.itemDescription]}
-                      placeholder={
-                        selectedContent[localizationKeys.writeItemDescription]
-                      }
-                    />
-                  </div>
-                </div>
-                <div>
-                  <h1 className="font-bold text-base text-black pt-6">
-                    {selectedContent[localizationKeys.addMedia]}{" "}
-                    <span className="text-gray-med text-base font-normal px-1">
-                      {selectedContent[localizationKeys.from3upto5photos]}
-                    </span>
-                  </h1>
-                  <div className="mt-6 w-full">
-                    {auctionState === "DRAFTED" ||
-                    productDetailsint?.auctionState === "DRAFTED" ? (
-                      <EditImgeMedia
-                        auctionId={state?.auctionId}
-                        imgOne={imgtest && imgtest[0]}
-                        fileOne={fileOne}
-                        setFileOne={setFileOne}
-                        imgTwo={imgtest && imgtest[1]}
-                        fileTwo={fileTwo}
-                        setFileTwo={setFileTwo}
-                        imgThree={imgtest && imgtest[2]}
-                        fileThree={fileThree}
-                        setFileThree={setFileThree}
-                        imgFour={imgtest && imgtest[3]}
-                        fileFour={fileFour}
-                        setFileFour={setFileFour}
-                        imgFive={imgtest && imgtest[4]}
-                        fileFive={fileFive}
-                        setFileFive={setFileFive}
-                        onReload={onReload}
-                        setLoadingImg={setLoadingImg}
+                    {customFromData?.regularCustomFields?.map((e) => (
+                      <div className="w-full mt-1.5 col-span-2 sm:col-span-1">
+                        <FormikInput
+                          name={e?.key}
+                          type={e?.type}
+                          label={lang === "en" ? e?.labelEn : e?.labelAr}
+                          placeholder={`${
+                            lang === "en" ? e?.labelEn : e?.labelAr
+                          }`}
+                        />
+                      </div>
+                    ))}
+                    <div className="col-span-2 col-start-1 mt-1">
+                      <FormikTextArea
+                        name="itemDescription"
+                        type={"text"}
+                        label={
+                          selectedContent[localizationKeys.itemDescription]
+                        }
+                        placeholder={
+                          selectedContent[localizationKeys.writeItemDescription]
+                        }
                       />
-                    ) : (
-                      <AddImgMedia
-                        fileOne={fileOne}
-                        setFileOne={setFileOne}
-                        fileTwo={fileTwo}
-                        setFileTwo={setFileTwo}
-                        fileThree={fileThree}
-                        setFileThree={setFileThree}
-                        fileFour={fileFour}
-                        setFileFour={setFileFour}
-                        fileFive={fileFive}
-                        setFileFive={setFileFive}
-                      />
-                    )}
+                    </div>
                   </div>
-                </div>
-                <div
-                  className={
-                    hasUsageCondition ||
-                    completeDraftVal?.product?.category?.hasUsageCondition ||
-                    productDetailsint?.hasUsageCondition
-                      ? "w-full"
-                      : "hidden"
-                  }
-                >
-                  <h1 className="font-bold text-base text-black pt-6">
-                    {selectedContent[localizationKeys.itemCondition]}
-                  </h1>
+                  <div>
+                    <h1 className="font-bold text-base text-black pt-6">
+                      {selectedContent[localizationKeys.addMedia]}{" "}
+                      <span className="text-gray-med text-base font-normal px-1">
+                        {selectedContent[localizationKeys.from3upto5photos]}
+                      </span>
+                    </h1>
+                    <div className="mt-6 w-full">
+                      {auctionState === "DRAFTED" ||
+                      productDetailsint?.auctionState === "DRAFTED" ? (
+                        <EditImgeMedia
+                          auctionId={state?.auctionId}
+                          imgOne={imgtest && imgtest[0]}
+                          fileOne={fileOne}
+                          setFileOne={setFileOne}
+                          imgTwo={imgtest && imgtest[1]}
+                          fileTwo={fileTwo}
+                          setFileTwo={setFileTwo}
+                          imgThree={imgtest && imgtest[2]}
+                          fileThree={fileThree}
+                          setFileThree={setFileThree}
+                          imgFour={imgtest && imgtest[3]}
+                          fileFour={fileFour}
+                          setFileFour={setFileFour}
+                          imgFive={imgtest && imgtest[4]}
+                          fileFive={fileFive}
+                          setFileFive={setFileFive}
+                          onReload={onReload}
+                          setLoadingImg={setLoadingImg}
+                        />
+                      ) : (
+                        <AddImgMedia
+                          fileOne={fileOne}
+                          setFileOne={setFileOne}
+                          fileTwo={fileTwo}
+                          setFileTwo={setFileTwo}
+                          fileThree={fileThree}
+                          setFileThree={setFileThree}
+                          fileFour={fileFour}
+                          setFileFour={setFileFour}
+                          fileFive={fileFive}
+                          setFileFive={setFileFive}
+                        />
+                      )}
+                    </div>
+                  </div>
                   <div
                     className={
                       hasUsageCondition ||
                       completeDraftVal?.product?.category?.hasUsageCondition ||
                       productDetailsint?.hasUsageCondition
-                        ? "mt-6 w-full"
+                        ? "w-full"
                         : "hidden"
                     }
                   >
-                    <CheckboxRadioProductDetails
-                      valueRadio={valueRadio}
-                      setRadioValue={setRadioValue}
-                    />
-                  </div>
-                </div>
-                <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
-                  <div className="mt-auto w-full sm:w-auto ">
+                    <h1 className="font-bold text-base text-black pt-6">
+                      {selectedContent[localizationKeys.itemCondition]}
+                    </h1>
                     <div
-                      onClick={() => SaveAuctionAsDraft()}
-                      className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                      className={
+                        hasUsageCondition ||
+                        completeDraftVal?.product?.category
+                          ?.hasUsageCondition ||
+                        productDetailsint?.hasUsageCondition
+                          ? "mt-6 w-full"
+                          : "hidden"
+                      }
                     >
-                      {selectedContent[localizationKeys.saveAsDraft]}
+                      <CheckboxRadioProductDetails
+                        valueRadio={valueRadio}
+                        setRadioValue={setRadioValue}
+                      />
                     </div>
                   </div>
-                  <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                    {selectedContent[localizationKeys.next]}
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                  <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
+                    <div className="mt-auto w-full sm:w-auto ">
+                      <div
+                        onClick={() => SaveAuctionAsDraft()}
+                        className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                      >
+                        {selectedContent[localizationKeys.saveAsDraft]}
+                      </div>
+                    </div>
+                    <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                      {selectedContent[localizationKeys.next]}
+                    </button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

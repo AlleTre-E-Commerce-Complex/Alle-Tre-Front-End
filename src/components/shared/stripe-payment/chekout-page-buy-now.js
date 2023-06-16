@@ -71,7 +71,7 @@ export default function CheckoutPageBuyNow() {
   }, [auctionId, run, runPendingAuctionData]);
 
   return (
-    <div className="mt-44 animate-in ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading && isLoadingPendingAuctionData}
@@ -80,105 +80,109 @@ export default function CheckoutPageBuyNow() {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">
-        <AuctionHomeDetailsBreadcrumb details={auctionId} />
-      </div>
-      <div className="flex justify-center">
-        <StepperApp />
-      </div>
-      <div className="max-w-[1366px] mx-auto ">
-        <div>
-          <h1 className="font-bold text-base text-black">
-            {selectedContent[localizationKeys.paymentDetails]}
-          </h1>
-          <p className="text-gray-dark font-normal text-base py-4">
-            To successfully complete the purchase of this ad, you must pay for
-            this auction
-          </p>
+      <div className="mt-44 animate-in ">
+        <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">
+          <AuctionHomeDetailsBreadcrumb details={auctionId} />
         </div>
-        <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
-          <div className="w-full ">
-            <div className="bg-gray-light rounded-2xl px-8 py-5">
-              <h1 className="font-bold text-base text-black pb-4 ">
-                Ad preview
-              </h1>
-              <PandingRow
-                payDeposite
-                status={"ACTIVE"}
-                title={pendingAuctionData?.product?.title}
-                description={pendingAuctionData?.product?.description}
-                img={pendingAuctionData?.product?.images[0]?.imageLink}
-                startingPrice={pendingAuctionData?.startBidAmount}
-                startDate={pendingAuctionData?.startDate}
-                expiryDate={pendingAuctionData?.expiryDate}
-              />
-              <div>
-                <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
-                  <h1>purchased price</h1>
-                  <p>{formatCurrency(pendingAuctionData?.acceptedAmount)}</p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Category
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {lang === "en"
-                      ? pendingAuctionData?.product?.category?.nameEn
-                      : pendingAuctionData?.product?.category?.nameAr}
+        <div className="flex justify-center">
+          <StepperApp />
+        </div>
+        <div className="max-w-[1366px] mx-auto ">
+          <div>
+            <h1 className="font-bold text-base text-black">
+              {selectedContent[localizationKeys.paymentDetails]}
+            </h1>
+            <p className="text-gray-dark font-normal text-base py-4">
+              To successfully complete the purchase of this ad, you must pay for
+              this auction
+            </p>
+          </div>
+          <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
+            <div className="w-full ">
+              <div className="bg-gray-light rounded-2xl px-8 py-5">
+                <h1 className="font-bold text-base text-black pb-4 ">
+                  Ad preview
+                </h1>
+                <PandingRow
+                  payDeposite
+                  status={"ACTIVE"}
+                  title={pendingAuctionData?.product?.title}
+                  description={pendingAuctionData?.product?.description}
+                  img={pendingAuctionData?.product?.images[0]?.imageLink}
+                  startingPrice={pendingAuctionData?.startBidAmount}
+                  startDate={pendingAuctionData?.startDate}
+                  expiryDate={pendingAuctionData?.expiryDate}
+                />
+                <div>
+                  <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
+                    <h1>purchased price</h1>
+                    <p>{formatCurrency(pendingAuctionData?.acceptedAmount)}</p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction Starting date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.startDate).format("DD/MM/YYYY")}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Category
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {lang === "en"
+                        ? pendingAuctionData?.product?.category?.nameEn
+                        : pendingAuctionData?.product?.category?.nameAr}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction Ending date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.expiryDate).format(
-                      "DD/MM/YYYY"
-                    )}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction Starting date
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {moment(pendingAuctionData?.startDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction purchased price
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {formatCurrency(pendingAuctionData?.acceptedAmount)}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction Ending date
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {moment(pendingAuctionData?.expiryDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </p>
                   </p>
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction purchased price
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {formatCurrency(pendingAuctionData?.acceptedAmount)}
+                    </p>
+                  </p>
+                </div>
+                <p className="text-gray-med text-xs mt-11 text-center">
+                  If you want to check Auctions policy you can check{" "}
+                  <span className="text-primary underline cursor-pointer">
+                    FAQs
+                  </span>
                 </p>
               </div>
-              <p className="text-gray-med text-xs mt-11 text-center">
-                If you want to check Auctions policy you can check{" "}
-                <span className="text-primary underline cursor-pointer">
-                  FAQs
-                </span>
-              </p>
             </div>
-          </div>
-          <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
-            <h1 className="font-bold text-base text-black pt-4 pb-6">
-              Payment method
-            </h1>
-            {clientSecret && (
-              <Elements options={options} stripe={stripePromise}>
-                <CheckoutFormBuyNow
-                  payDeposite
-                  auctionId={auctionId}
-                  payPrice={buyNowValue || pendingAuctionData?.acceptedAmount}
-                />
-              </Elements>
-            )}
+            <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
+              <h1 className="font-bold text-base text-black pt-4 pb-6">
+                Payment method
+              </h1>
+              {clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                  <CheckoutFormBuyNow
+                    payDeposite
+                    auctionId={auctionId}
+                    payPrice={buyNowValue || pendingAuctionData?.acceptedAmount}
+                  />
+                </Elements>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -53,7 +53,7 @@ const Categories = () => {
   }, []);
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-36 overflow-hidden">
+    <div className="max-w-[1440px] mx-auto mt-36 ">
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={loadingSubGatogry || isLoadingCategories}

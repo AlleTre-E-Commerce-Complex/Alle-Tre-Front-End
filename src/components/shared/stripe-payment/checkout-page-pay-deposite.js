@@ -82,7 +82,7 @@ export default function CheckoutPagePayDeposite() {
   }, [auctionId, runPendingAuctionData]);
 
   return (
-    <div className="mt-44 animate-in ">
+    <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading && isLoadingPendingAuctionData}
@@ -91,126 +91,130 @@ export default function CheckoutPagePayDeposite() {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">
-        <AuctionHomeDetailsBreadcrumb details={auctionId} />
-      </div>
-      <div className="max-w-[1366px] mx-auto ">
-        <div>
-          <h1 className="font-bold text-base text-black">
-            {selectedContent[localizationKeys.paymentDetails]}
-          </h1>
-          <p className="text-gray-dark font-normal text-base py-4">
-            In order to complete submitting your bid , please pay the deposite
-            for the auction
-          </p>
+      <div className="mt-44 animate-in ">
+        <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">
+          <AuctionHomeDetailsBreadcrumb details={auctionId} />
         </div>
-        <div
-          className={
-            hiddenMess
-              ? "hidden"
-              : "bg-[#A2547A05] border-primary-light border-[0.5px] rounded-lg w-full h-auto pt-9 pb-7 flex gap-x-10 justify-start px-10 mt-4 mb-5 relative"
-          }
-        >
-          <CircleCloseIcon
-            onClick={() => setHiddenMess(true)}
-            className="absolute right-3 -top-5 cursor-pointer"
-          />
-          <MoneyINHand />
-          <p className="text-gray-dark my-auto">
-            Please notice that The bidding deposit will be captured until the
-            auction is completed within 6 days. if you wins the auction, the
-            website will withdraw the deposit.
-          </p>
-        </div>
-        <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
-          <div className="w-full ">
-            <div className="bg-gray-light rounded-2xl px-8 py-5">
-              <h1 className="font-bold text-base text-black pb-4 ">
-                Ad preview
-              </h1>
-              <PandingRow
-                payDeposite
-                status={"ACTIVE"}
-                title={pendingAuctionData?.product?.title}
-                description={pendingAuctionData?.product?.description}
-                img={pendingAuctionData?.product?.images[0]?.imageLink}
-                startingPrice={pendingAuctionData?.startBidAmount}
-                startDate={pendingAuctionData?.startDate}
-              />
-              <div>
-                <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
-                  <h1>Auctions fees</h1>
-                  <p>
-                    {formatCurrency(
-                      pendingAuctionData?.product?.category
-                        ?.bidderDepositFixedAmount
-                    )}
+        <div className="max-w-[1366px] mx-auto ">
+          <div>
+            <h1 className="font-bold text-base text-black">
+              {selectedContent[localizationKeys.paymentDetails]}
+            </h1>
+            <p className="text-gray-dark font-normal text-base py-4">
+              In order to complete submitting your bid , please pay the deposite
+              for the auction
+            </p>
+          </div>
+          <div
+            className={
+              hiddenMess
+                ? "hidden"
+                : "bg-[#A2547A05] border-primary-light border-[0.5px] rounded-lg w-full h-auto pt-9 pb-7 flex gap-x-10 justify-start px-10 mt-4 mb-5 relative"
+            }
+          >
+            <CircleCloseIcon
+              onClick={() => setHiddenMess(true)}
+              className="absolute right-3 -top-5 cursor-pointer"
+            />
+            <MoneyINHand />
+            <p className="text-gray-dark my-auto">
+              Please notice that The bidding deposit will be captured until the
+              auction is completed within 6 days. if you wins the auction, the
+              website will withdraw the deposit.
+            </p>
+          </div>
+          <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
+            <div className="w-full ">
+              <div className="bg-gray-light rounded-2xl px-8 py-5">
+                <h1 className="font-bold text-base text-black pb-4 ">
+                  Ad preview
+                </h1>
+                <PandingRow
+                  payDeposite
+                  status={"ACTIVE"}
+                  title={pendingAuctionData?.product?.title}
+                  description={pendingAuctionData?.product?.description}
+                  img={pendingAuctionData?.product?.images[0]?.imageLink}
+                  startingPrice={pendingAuctionData?.startBidAmount}
+                  startDate={pendingAuctionData?.startDate}
+                />
+                <div>
+                  <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
+                    <h1>Auctions fees</h1>
+                    <p>
+                      {formatCurrency(
+                        pendingAuctionData?.product?.category
+                          ?.bidderDepositFixedAmount
+                      )}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Category
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {lang === "en"
-                      ? pendingAuctionData?.product?.category?.nameEn
-                      : pendingAuctionData?.product?.category?.nameAr}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Category
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {lang === "en"
+                        ? pendingAuctionData?.product?.category?.nameEn
+                        : pendingAuctionData?.product?.category?.nameAr}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5 ">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction starting date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.startDate).format("DD/MM/YYYY")}
+                  <p className="flex justify-between px-4 py-1.5 ">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction starting date
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {moment(pendingAuctionData?.startDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction Ending date
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {moment(pendingAuctionData?.expiryDate).format(
-                      "DD/MM/YYYY"
-                    )}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction Ending date
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {moment(pendingAuctionData?.expiryDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </p>
                   </p>
-                </p>
-                <p className="flex justify-between px-4 py-1.5">
-                  <h1 className="text-gray-dark font-medium text-sm">
-                    Auction starting price
-                  </h1>
-                  <p className="text-gray-med font-normal text-base">
-                    {formatCurrency(pendingAuctionData?.startBidAmount)}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction starting price
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {formatCurrency(pendingAuctionData?.startBidAmount)}
+                    </p>
                   </p>
+                </div>
+                <p className="text-gray-med text-xs mt-11 text-center">
+                  If you want to check Auctions policy you can check{" "}
+                  <span className="text-primary underline cursor-pointer">
+                    FAQs
+                  </span>
                 </p>
               </div>
-              <p className="text-gray-med text-xs mt-11 text-center">
-                If you want to check Auctions policy you can check{" "}
-                <span className="text-primary underline cursor-pointer">
-                  FAQs
-                </span>
-              </p>
             </div>
-          </div>
-          <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
-            <h1 className="font-bold text-base text-black pt-4 pb-6">
-              Payment method
-            </h1>
-            {clientSecret && (
-              <Elements options={options} stripe={stripePromise}>
-                <CheckoutFormPayDeposite
-                  auctionId={auctionId}
-                  payPrice={
-                    pendingAuctionData?.product?.category
-                      ?.bidderDepositFixedAmount
-                  }
-                />
-              </Elements>
-            )}
+            <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
+              <h1 className="font-bold text-base text-black pt-4 pb-6">
+                Payment method
+              </h1>
+              {clientSecret && (
+                <Elements options={options} stripe={stripePromise}>
+                  <CheckoutFormPayDeposite
+                    auctionId={auctionId}
+                    payPrice={
+                      pendingAuctionData?.product?.category
+                        ?.bidderDepositFixedAmount
+                    }
+                  />
+                </Elements>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
