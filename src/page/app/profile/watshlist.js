@@ -64,10 +64,11 @@ const Watshlist = () => {
               title={e?.auction?.product?.title}
               status={e?.auction?.status}
               adsImg={e?.auction?.product?.images[0].imageLink}
-              totalBods={15}
+              totalBods={e?._count?.bids}
               WatshlistState={true}
               watshlistForceState={true}
               endingTime={e?.auction?.expiryDate}
+              StartDate={e?.auction?.startDate}
               isBuyNowAllowed={e?.auction?.isBuyNowAllowed}
               isMyAuction={e?.auction?.isMyAuction}
               onReload={onReload}

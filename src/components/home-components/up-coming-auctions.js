@@ -116,7 +116,7 @@ const UpComingAuctionsSlider = () => {
                     title={e?.product?.title}
                     status={e?.status}
                     adsImg={e?.product?.images[0].imageLink}
-                    totalBods={15}
+                    totalBods={e?._count?.bids}
                     WatshlistState={e?.isSaved}
                     endingTime={e?.expiryDate}
                     StartDate={e?.startDate}
