@@ -91,7 +91,7 @@ const HomeAuctionDetails = () => {
                 />
               </div>
               <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
-                {user ? (
+                {auctionsDetailsData?.isMyAuction ? (
                   <SummaryAuctionSections
                     numberStare={3}
                     totalReviews={20}
