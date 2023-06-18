@@ -27,6 +27,9 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import ShowFilterSections from "../../../components/home-components/show-filter-sections";
+import listicon from "../../../../src/assets/icons/list-icon.png";
+import menuicon from "../../../../src/assets/icons/menu-icon.png";
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -120,9 +123,29 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <h6 className="max-w-[1440px] lg:mx-auto mx-2 pb-4 text-gray-med text-base font-normal">
-        {mainAuctions?.length} {selectedContent[localizationKeys.results]}
-      </h6>
+      <div className="flex justify-between max-w-[1440px] lg:mx-auto mx-2 pb-4 ">
+        <div className="flex  gap-x-60">
+          <h6 className=" text-gray-med text-base font-normal pt-3 ">
+            {mainAuctions?.length} {selectedContent[localizationKeys.results]}
+          </h6>
+          <div className="">
+            <ShowFilterSections />
+          </div>
+        </div>
+        <div className="mt-auto">
+          {true ? (
+            <button className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2">
+              <img src={menuicon} alt="menuiconicon" />
+              <p>Grid</p>
+            </button>
+          ) : (
+            <button className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2">
+              <img src={listicon} alt="listicon" />
+              <p>List</p>
+            </button>
+          )}
+        </div>
+      </div>
       <div className="max-w-[1440px] lg:mx-auto mx-2">
         <div className="flex gap-5 max-w-[1440px] lg:mx-auto mx-2">
           {/* left filter sections */}
