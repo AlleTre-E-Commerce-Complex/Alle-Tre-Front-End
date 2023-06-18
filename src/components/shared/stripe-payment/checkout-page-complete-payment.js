@@ -14,17 +14,22 @@ import AuctionsStatus from "../status/auctions-status";
 import { formatCurrency } from "../../../utils/format-currency";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  useHistory,
+  useParams,
+} from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
 import CheckoutFormPayDeposite from "./checkout-form-pay-deposite";
 import CheckoutFromCompletePayment from "./checkout-from-complete-payment";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import routes from "../../../routes";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 export default function CheckoutPageCompletePayment() {
+  const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -84,6 +89,9 @@ export default function CheckoutPageCompletePayment() {
         })
     );
   }, [completedPaymentData?.auctionsId, runPendingAuctionData]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <>
@@ -170,7 +178,10 @@ export default function CheckoutPageCompletePayment() {
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
                   If you want to check Auctions policy you can check{" "}
-                  <span className="text-primary underline cursor-pointer">
+                  <span
+                    onClick={() => history.push(routes.app.faqs)}
+                    className="text-primary underline cursor-pointer"
+                  >
                     FAQs
                   </span>
                 </p>

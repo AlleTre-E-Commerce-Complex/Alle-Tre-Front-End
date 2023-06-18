@@ -19,8 +19,7 @@ import SummaryHomeAuctionSections from "../../../components/auctions-details-com
 import { useAuthState } from "../../../context/auth-context";
 import { authAxios, axios } from "../../../config/axios-config";
 import { useSelector } from "react-redux";
-import ProfileAuctionDetails from "./profile-auction-details";
-import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import { useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 
@@ -92,7 +91,29 @@ const HomeAuctionDetails = () => {
                 />
               </div>
               <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
-                {auctionsDetailsData && (
+                {user ? (
+                  <SummaryAuctionSections
+                    numberStare={3}
+                    totalReviews={20}
+                    description={auctionsDetailsData?.product?.description}
+                    category={
+                      lang === "en"
+                        ? auctionsDetailsData?.product?.category?.nameEn
+                        : auctionsDetailsData?.product?.category?.nameAr
+                    }
+                    subCategory={
+                      lang === "en"
+                        ? auctionsDetailsData?.product?.subCategory?.nameEn
+                        : auctionsDetailsData?.product?.subCategory?.nameAr
+                    }
+                    startingPrice={auctionsDetailsData?.startBidAmount}
+                    endingPrice={auctionsDetailsData?.latestBidAmount}
+                    totalBids={auctionsDetailsData?._count?.bids}
+                    endingTime={auctionsDetailsData?.expiryDate}
+                    setActiveIndexTab={setActiveIndexTab}
+                    status={auctionsDetailsData?.status}
+                  />
+                ) : (
                   <SummaryHomeAuctionSections
                     bidderDepositFixedAmount={
                       auctionsDetailsData?.product?.category

@@ -21,10 +21,13 @@ import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import CheckoutFormBuyNow from "./checkout-form-buy-now";
 import moment from "moment";
+import routes from "../../../routes";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 export default function CheckoutPageBuyNow() {
+  const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -159,7 +162,10 @@ export default function CheckoutPageBuyNow() {
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
                   If you want to check Auctions policy you can check{" "}
-                  <span className="text-primary underline cursor-pointer">
+                  <span
+                    onClick={() => history.push(routes.app.faqs)}
+                    className="text-primary underline cursor-pointer"
+                  >
                     FAQs
                   </span>
                 </p>

@@ -21,12 +21,15 @@ import { useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
 import CheckoutFormPaymentDetails from "./checkout-form-payment-details";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import routes from "../../../routes";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 export default function CheckoutPagePaymentDetails() {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+  const history = useHistory();
 
   const bidAmountValue = useSelector((state) => state?.bidAmount?.bidAmount);
 
@@ -145,7 +148,10 @@ export default function CheckoutPagePaymentDetails() {
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
                   If you want to check Auctions policy you can check{" "}
-                  <span className="text-primary underline cursor-pointer">
+                  <span
+                    onClick={() => history.push(routes.app.faqs)}
+                    className="text-primary underline cursor-pointer"
+                  >
                     FAQs
                   </span>
                 </p>

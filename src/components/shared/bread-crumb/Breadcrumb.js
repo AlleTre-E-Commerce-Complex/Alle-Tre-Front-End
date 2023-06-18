@@ -717,3 +717,48 @@ export const MyBidsBreadcrumb = ({ details }) => {
     />
   );
 };
+
+export const FAQsBreadcrumb = ({ details }) => {
+  const { pathname } = useLocation();
+  const [lang, setLang] = useLanguage("");
+  const selectedContent = content[lang];
+
+  const FAQsSections = (pathname, details) =>
+    [
+      {
+        key: "Home",
+        content: (
+          <Link
+            className="text-gray-med mx-2 text-base font-normal"
+            to={routes.app.home}
+          >
+            {selectedContent[localizationKeys.home]}
+          </Link>
+        ),
+      },
+      ...[
+        pathname.startsWith(routes.app.faqs) && {
+          key: "Auction Details",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.faqs)
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.faqs}
+            >
+              {selectedContent[localizationKeys.faqs]}
+            </Link>
+          ),
+        },
+      ],
+    ].filter(Boolean);
+
+  return (
+    <Breadcrumb
+      className="Edit_Breadcrumb"
+      sections={FAQsSections(pathname, details)}
+    />
+  );
+};

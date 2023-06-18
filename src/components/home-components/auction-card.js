@@ -181,7 +181,7 @@ const AuctionCard = ({
                 {selectedContent[localizationKeys.totalBids]}
               </h6>
               <p className="text-gray-dark font-medium text-[10px]">
-                {totalBods} {selectedContent[localizationKeys.bid]}
+                {totalBods || 0} {selectedContent[localizationKeys.bid]}
               </p>
             </div>
             <div>
