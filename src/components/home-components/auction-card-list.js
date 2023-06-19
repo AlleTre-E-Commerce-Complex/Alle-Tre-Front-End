@@ -125,8 +125,8 @@ const AuctionCardList = ({
     } else history.push(routes.app.homeDetails(id));
   };
   return (
-    <div className="cursor-pointer" onClick={() => handelGoDetails(auctionId)}>
-      <div className=" h-auto my-2 rounded-lg shadow-md p-4 flex justify-between  ">
+    <div className="cursor-pointer " onClick={() => handelGoDetails(auctionId)}>
+      <div className=" h-auto my-2 rounded-lg group hover:border-primary border-transparent border-[1px] shadow-md p-4 flex justify-between  ">
         <div className="flex  gap-x-4">
           {/* img */}
           <div className="w-[103px] min-w-[103px] h-[112px] rounded-lg relative overflow-hidden bg-gray-light ">

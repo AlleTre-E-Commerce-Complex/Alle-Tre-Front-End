@@ -90,6 +90,7 @@ const ScheduledAuctions = () => {
               img={e?.product?.images[0]?.imageLink}
               purchasePrice={e?.startBidAmount}
               startingDate={e?.startDate}
+              startingPrice={e?.startBidAmount}
               goToDetails={routes.app.profile.myAuctions.scheduledDetails(
                 e?.id
               )}

@@ -30,6 +30,7 @@ import LodingTestAllatre from "../../../components/shared/lotties-file/loding-te
 import ShowFilterSections from "../../../components/home-components/show-filter-sections";
 import listicon from "../../../../src/assets/icons/list-icon.png";
 import menuicon from "../../../../src/assets/icons/menu-icon.png";
+import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../components/home-components/auction-card-list";
 
 const Home = () => {
@@ -41,7 +42,7 @@ const Home = () => {
   const myRef = useRef();
   const dispatch = useDispatch();
 
-  const [isGrid, setIsGrid] = useState(false);
+  const [isGrid, setIsGrid] = useState(true);
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
@@ -95,9 +96,6 @@ const Home = () => {
       } else setOpen(true);
     } else dispatch(Open());
   };
-  console.log("====================================");
-  console.log({ mainAuctions });
-  console.log("====================================");
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home ">
@@ -128,7 +126,7 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <div className="flex justify-between max-w-[1440px] lg:mx-auto mx-2 pb-4 ">
+      <div className="flex justify-between max-w-[1440px] lg:mx-auto mx-2 px-2 pb-4 ">
         <div className="flex  gap-x-60">
           <h6 className=" text-gray-med text-base font-normal pt-3 ">
             {mainAuctions?.length} {selectedContent[localizationKeys.results]}
@@ -143,16 +141,16 @@ const Home = () => {
               onClick={() => setIsGrid((p) => !p)}
               className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
-              <img src={listicon} alt="listicon" />
-              <p>List</p>
+              <img src={menuicon} alt="menuiconicon" />
+              <p>Grid</p>
             </button>
           ) : (
             <button
               onClick={() => setIsGrid((p) => !p)}
               className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
-              <img src={menuicon} alt="menuiconicon" />
-              <p>Grid</p>
+              <img src={listicon} alt="listicon" />
+              <p>List</p>
             </button>
           )}
         </div>
@@ -163,41 +161,61 @@ const Home = () => {
           <FilterSections myRef={myRef} />
           {/* right card sections */}
           {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto "> */}
-          {isGrid ? (
-            <div className="w-full">
-              {mainAuctions?.map((e) => (
-                <AuctionCardList
-                  auctionId={e?.id}
-                  price={e?.acceptedAmount || e?.startBidAmount}
-                  title={e?.product?.title}
-                  status={e?.status}
-                  adsImg={e?.product?.images[0].imageLink}
-                  totalBods={e?._count?.bids}
-                  WatshlistState={e?.isSaved}
-                  endingTime={e?.expiryDate}
-                  StartDate={e?.startDate}
-                  isBuyNowAllowed={e?.isBuyNowAllowed}
-                  isMyAuction={e?.isMyAuction}
-                />
-              ))}
+          {mainAuctions?.length === 0 ? (
+            <div className="w-full flex justify-center items-center bg-[#E5E5E51A] rounded-2xl">
+              <div className="mx-auto text-center">
+                <EmtyHome className="mx-auto" />
+                <p className="text-gray-dark font-normal text-base py-8">
+                  There are no auctions currently. You can create your own
+                  auction right now
+                </p>
+                <button
+                  onClick={() => handelCreatOuction()}
+                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[128px] h-[32px]"
+                >
+                  Create Now
+                </button>
+              </div>
             </div>
           ) : (
-            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
-              {mainAuctions?.map((e) => (
-                <AuctionCard
-                  auctionId={e?.id}
-                  price={e?.acceptedAmount || e?.startBidAmount}
-                  title={e?.product?.title}
-                  status={e?.status}
-                  adsImg={e?.product?.images[0].imageLink}
-                  totalBods={e?._count?.bids}
-                  WatshlistState={e?.isSaved}
-                  endingTime={e?.expiryDate}
-                  StartDate={e?.startDate}
-                  isBuyNowAllowed={e?.isBuyNowAllowed}
-                  isMyAuction={e?.isMyAuction}
-                />
-              ))}
+            <div className="w-full">
+              {isGrid ? (
+                <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
+                  {mainAuctions?.map((e) => (
+                    <AuctionCard
+                      auctionId={e?.id}
+                      price={e?.acceptedAmount || e?.startBidAmount}
+                      title={e?.product?.title}
+                      status={e?.status}
+                      adsImg={e?.product?.images[0].imageLink}
+                      totalBods={e?._count?.bids}
+                      WatshlistState={e?.isSaved}
+                      endingTime={e?.expiryDate}
+                      StartDate={e?.startDate}
+                      isBuyNowAllowed={e?.isBuyNowAllowed}
+                      isMyAuction={e?.isMyAuction}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="w-full">
+                  {mainAuctions?.map((e) => (
+                    <AuctionCardList
+                      auctionId={e?.id}
+                      price={e?.acceptedAmount || e?.startBidAmount}
+                      title={e?.product?.title}
+                      status={e?.status}
+                      adsImg={e?.product?.images[0].imageLink}
+                      totalBods={e?._count?.bids}
+                      WatshlistState={e?.isSaved}
+                      endingTime={e?.expiryDate}
+                      StartDate={e?.startDate}
+                      isBuyNowAllowed={e?.isBuyNowAllowed}
+                      isMyAuction={e?.isMyAuction}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

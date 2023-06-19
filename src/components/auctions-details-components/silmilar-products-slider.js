@@ -3,7 +3,6 @@ import Swiper from "swiper";
 import AnglesRight from "../../../src/assets/icons/angles-right-icon.png";
 import AnglesLeft from "../../../src/assets/icons/angles-left-icon.png";
 import "./auctions-slider.scss";
-import AuctionCard from "./auction-card";
 import { useLocation } from "react-router-dom";
 import { useAuthState } from "../../context/auth-context";
 import useAxios from "../../hooks/use-axios";
@@ -17,8 +16,9 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import AuctionCard from "../home-components/auction-card";
 
-const BuyNowAuctionsSlider = () => {
+const SilmilarProductsSlider = ({ categoriesId }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { search } = useLocation();
@@ -30,13 +30,14 @@ const BuyNowAuctionsSlider = () => {
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(20);
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
-
   useEffect(() => {
-    if (search.includes("page") && search.includes("perPage"))
+    if (categoriesId)
       if (user) {
         runAuctions(
           authAxios
-            .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
+            .get(
+              `${api.app.auctions.getMain}?page=1&perPage=${page}&categories[]=${categoriesId}`
+            )
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
@@ -45,14 +46,16 @@ const BuyNowAuctionsSlider = () => {
       } else {
         runAuctions(
           axios
-            .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
+            .get(
+              `${api.app.auctions.getMain}?page=1&perPage=${page}&categories[]=${categoriesId}`
+            )
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
             })
         );
       }
-  }, [page, runAuctions, search]);
+  }, [categoriesId, page, runAuctions, user]);
 
   const swiperOptions = {
     cssMode: true,
@@ -66,33 +69,31 @@ const BuyNowAuctionsSlider = () => {
     keyboard: true,
   };
 
-  const swiperRef2 = useRef(null);
-  const swiper2 = new Swiper(swiperRef2?.current, { ...swiperOptions });
+  const swiperRef6 = useRef(null);
+  const swiper6 = new Swiper(swiperRef6?.current, { ...swiperOptions });
 
   useEffect(() => {
     return () => {
-      swiper2?.destroy();
+      swiper6?.destroy();
     };
   }, []);
 
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
-      swiper2?.slideNext();
+      swiper6?.slideNext();
       setPage(page + 5);
-    } else swiper2?.slideNext();
+    } else swiper6?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiper2?.slidePrev();
+    swiper6?.slidePrev();
   };
   return (
     <div
       className={auctions?.length === 0 ? "hidden" : "ezd-content relative  "}
     >
       <div className="text-center">
-        <h1 className="text-gray-dark text-base font-bold">
-          {selectedContent[localizationKeys.buyNow]}
-        </h1>
+        <h1 className="text-gray-dark text-base font-bold">Similar Products</h1>
         <p className="text-gray-med text-base font-normal">
           Lorem ipsum dolor sit amet, consetetur
         </p>
@@ -103,7 +104,7 @@ const BuyNowAuctionsSlider = () => {
       </Dimmer>
       <div className="ezd-snapslider pt-10">
         <div className="snapslider-wrapper">
-          <div ref={swiperRef2} className={`snapslider-overflow`}>
+          <div ref={swiperRef6} className={`snapslider-overflow`}>
             <div
               className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
             >
@@ -151,4 +152,4 @@ const BuyNowAuctionsSlider = () => {
   );
 };
 
-export default BuyNowAuctionsSlider;
+export default SilmilarProductsSlider;

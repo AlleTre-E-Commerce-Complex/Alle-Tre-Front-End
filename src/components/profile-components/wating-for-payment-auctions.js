@@ -36,7 +36,7 @@ const WatingForPaymentAuctions = () => {
       run(
         authAxios
           .get(
-            `${api.app.auctions.getAllOwnesAuctions}${search}&status=EXPIRED`
+            `${api.app.auctions.getAllOwnesAuctions}${search}&status=WAITING_FOR_PAYMENT`
           )
           .then((res) => {
             setWatingForPaymentAuctionsData(res?.data?.data);

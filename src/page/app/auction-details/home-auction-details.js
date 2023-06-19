@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import SilmilarProductsSlider from "../../../components/auctions-details-components/silmilar-products-slider";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
@@ -159,6 +160,11 @@ const HomeAuctionDetails = () => {
               setActiveIndexTab={setActiveIndexTab}
             />
           </div>
+        </div>
+        <div className="max-w-[1440px] mx-auto ">
+          <SilmilarProductsSlider
+            categoriesId={auctionsDetailsData?.product?.category?.id}
+          />
         </div>
       </div>
     </div>
