@@ -95,7 +95,7 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">Similar Products</h1>
         <p className="text-gray-med text-base font-normal">
-          Lorem ipsum dolor sit amet, consetetur
+          Explore Related Find
         </p>
       </div>
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>

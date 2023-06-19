@@ -94,7 +94,7 @@ const BuyNowAuctionsSlider = () => {
           {selectedContent[localizationKeys.buyNow]}
         </h1>
         <p className="text-gray-med text-base font-normal">
-          Lorem ipsum dolor sit amet, consetetur
+          Don't Wait, Buy Now!
         </p>
       </div>
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>

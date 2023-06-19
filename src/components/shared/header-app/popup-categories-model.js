@@ -6,12 +6,10 @@ import VehiclesImg from "../../../../src/assets/img/vehicles-img.png";
 import JewerlyImg from "../../../../src/assets/img/Jewerly-img.png";
 import useGetGatogry from "../../../hooks/use-get-category";
 import useGetSubGatogry from "../../../hooks/use-get-sub-category";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
   const arrowSize = 15;
-
-  const [activeSidebar, setActiveSidebar] = useState("Electronic Devices");
 
   const [categoryId, setCategoryId] = useState();
 
@@ -19,6 +17,24 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || GatogryOptions[0]?.value
   );
+  const [activeSidebar, setActiveSidebar] = useState(GatogryOptions[0]?.text);
+
+  const bannerLinks = GatogryOptions.map((category) => ({
+    id: category.value,
+    bannerLink: category.bannerLink,
+  }));
+  useEffect(() => {
+    setCategoryId(GatogryOptions[0]?.value);
+    setActiveSidebar(GatogryOptions[0]?.text);
+  }, [GatogryOptions]);
+  const findSliderLinkById = (id) => {
+    const foundObject = bannerLinks.find((obj) => obj.id === id);
+    if (foundObject) {
+      return foundObject.bannerLink;
+    }
+    return null;
+  };
+  const bannerLink = findSliderLinkById(categoryId || GatogryOptions[0]?.value);
 
   return (
     <>
@@ -66,38 +82,14 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
                   </div>
                   {/* imges */}
                   <div>
-                    {activeSidebar === "Electronic Devices" && (
-                      <img
-                        className="object-cover w-[613px] md:h-[500px] rounded-2xl animate-in"
-                        src={ElectronicsImg}
-                        alt=""
-                      />
-                    )}
-                    {activeSidebar === "Properties" && (
-                      <img
-                        className="object-cover w-[613px] h-[500px] rounded-2xl animate-in"
-                        src={PropertiesImg}
-                        alt=""
-                      />
-                    )}
-                    {activeSidebar === "Cars" && (
-                      <img
-                        className="object-cover w-[613px] h-[500px] rounded-2xl animate-in"
-                        src={VehiclesImg}
-                        alt=""
-                      />
-                    )}
-                    {activeSidebar === "Jewelry" && (
-                      <img
-                        className="object-cover w-[613px] h-[500px] rounded-2xl animate-in"
-                        src={JewerlyImg}
-                        alt=""
-                      />
-                    )}
+                    <img
+                      className="object-cover w-[613px] md:h-[500px] rounded-2xl animate-in"
+                      src={bannerLink}
+                      alt="bannerLink"
+                    />
                   </div>
                 </div>
               </>
-
               <span
                 className="absolute bg-white border-b border-r border-l rounded-md transform -rotate-45 -top-3.5 ltr:md:right-10 rtl:md:left-10 ltr:right-28 rtl:left-28 z-10"
                 style={{

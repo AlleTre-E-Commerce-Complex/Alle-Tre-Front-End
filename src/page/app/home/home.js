@@ -119,8 +119,7 @@ const Home = () => {
           {selectedContent[localizationKeys.popularCategories]}
         </h1>
         <p className="text-gray-med text-base font-normal">
-          Lorem ipsum dolor sit amet, consetetur<br></br> sadipscing elitr, sed
-          diam nonumy eirmod
+          Popular Picks, Perfect Choices
         </p>
       </div>
       <div className="mt-11 mb-20">

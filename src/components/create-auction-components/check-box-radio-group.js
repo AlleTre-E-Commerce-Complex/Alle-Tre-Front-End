@@ -23,8 +23,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          Lorem ipsum dolor sit amet, consetetur <br></br>sadipscing elitr, sed
-          diam nonumy eirmod <br></br>tempor invidu
+          Get It New, Feel the Difference.
         </p>
       </Form.Field>
       <Form.Field>
@@ -38,8 +37,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          Lorem ipsum dolor sit amet, consetetur <br></br>sadipscing elitr, sed
-          diam nonumy eirmod <br></br>tempor invidu
+          Shop Sustainable: Choose Pre-Owned.
         </p>
       </Form.Field>
       <Form.Field>
@@ -53,8 +51,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          Lorem ipsum dolor sit amet, consetetur <br></br>sadipscing elitr, sed
-          diam nonumy eirmod <br></br>tempor invidu
+          Unwrap Incredible Savings with Open Box Items.
         </p>
       </Form.Field>
     </Form>

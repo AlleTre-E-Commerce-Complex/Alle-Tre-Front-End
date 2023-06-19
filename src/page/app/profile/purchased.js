@@ -27,9 +27,6 @@ const Purchased = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-  console.log("====================================");
-  console.log(purchased);
-  console.log("====================================");
   return (
     <>
       <Dimmer
@@ -72,7 +69,6 @@ const Purchased = () => {
               isPurchased
               PurchasedTime={e?.Payment[0]?.createdAt}
               onReload={onReload}
-              className=""
             />
           ))}
         </div>

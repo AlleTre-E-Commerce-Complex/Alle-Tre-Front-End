@@ -95,9 +95,7 @@ const LiveAuctionsSlider = ({ type }) => {
         <h1 className="text-gray-dark text-base font-bold">
           {selectedContent[localizationKeys.liveAuction]}
         </h1>
-        <p className="text-gray-med text-base font-normal">
-          Lorem ipsum dolor sit amet, consetetur
-        </p>
+        <p className="text-gray-med text-base font-normal">Bid, Win, Repeat!</p>
       </div>
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
         {/* <Loader active /> */}

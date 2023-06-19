@@ -3,31 +3,14 @@ import AnglesRight from "../../../../src/assets/icons/angles-right-icon.png";
 import AnglesLeft from "../../../../src/assets/icons/angles-left-icon.png";
 import Category from "./Category";
 import Swiper from "swiper";
-
-const testData = [
-  {
-    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
-    title: "Electronic Devices",
-    id: "25",
-  },
-  {
-    img: "https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png",
-    title: "Jewelry",
-    id: "26",
-  },
-  {
-    img: "https://pngimg.com/d/acura_PNG129.png",
-    title: "Properties",
-    id: "27",
-  },
-  {
-    img: "https://pngimg.com/d/acura_PNG129.png",
-    title: "Cars",
-    id: "28",
-  },
-];
+import useGetGatogry from "../../../hooks/use-get-category";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
 
 const SliderRow = () => {
+  const [lang] = useLanguage();
+  const selectedContent = content[lang];
+  const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const swiperOptions = {
     cssMode: true,
     speed: 1000,
@@ -50,7 +33,7 @@ const SliderRow = () => {
   }, []);
 
   const handleNextClick = () => {
-    if (testData?.length) {
+    if (GatogryOptions?.length) {
       swiper4?.slideNext();
     } else swiper4?.slideNext();
   };
@@ -58,6 +41,7 @@ const SliderRow = () => {
   const handlePrevClick = () => {
     swiper4?.slidePrev();
   };
+
   return (
     <div className="max-w-[1440px] mx-auto overflow-hidden  ">
       <div className="ezd-content relative ltr:ml-2 rtl:mr-2">
@@ -65,19 +49,19 @@ const SliderRow = () => {
           <div className="snapslider-wrapper">
             <div ref={swiperRef4} className={`snapslider-overflow`}>
               <div
-                className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+                className={` snapslider-scroll swiper-wrapper py-2 justify-center`}
               >
-                <div className="snapslider-card swiper-slide">
-                  {/* slider */}
-                  {testData.map((e, index) => (
+                {/* slider */}
+                {GatogryOptions?.map((e, index) => (
+                  <div className="snapslider-card swiper-slide">
                     <Category
                       key={index}
-                      img={e?.img}
-                      title={e?.title}
-                      id={e?.id}
+                      img={e?.sliderLink}
+                      title={e?.text}
+                      id={e?.value}
                     />
-                  ))}
-                </div>
+                  </div>
+                ))}
                 <button
                   onClick={handleNextClick}
                   className={`swiper-button-next absolute top-1/2 -right-3 overflow-hidden`}

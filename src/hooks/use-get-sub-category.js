@@ -21,7 +21,8 @@ const useGetSubGatogry = (categoryId) => {
             options.push({
               text: lang === "en" ? d?.nameEn : d?.nameAr,
               key: d?.id,
-              value: d.id,
+              value: d?.id,
+              imageLink: d?.imageLink,
             })
           );
           setSubGatogryOptions(options);

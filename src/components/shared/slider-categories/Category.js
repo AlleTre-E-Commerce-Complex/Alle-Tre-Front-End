@@ -2,16 +2,19 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
 
-const Category = ({ img, title, id }) => {
+const Category = ({ img, title, id, view }) => {
   const history = useHistory();
   return (
     <div className="inline-block md:mx-24 mx-16">
       <div className="group">
         <div
-          onClick={() =>
-            history.push(
-              `${routes.app.categories(title, id)}?categories[]=${id}`
-            )
+          onClick={
+            view
+              ? ""
+              : () =>
+                  history.push(
+                    `${routes.app.categories(title, id)}?categories[]=${id}`
+                  )
           }
           className=" w-[119px] h-[119px] bg-white hover:bg-primary/10 duration-300 ease-in-out transform rounded-full pt-2.5 cursor-pointer"
         >

@@ -72,7 +72,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
       <div className="h-screen fixed md:block hidden w-[250px] ">
         {/* img */}
         <div className="flex  gap-x-4 mx-14 pb-8 pt-3">
-          <div className="w-[64px] h-12">
+          <div className="min-w-[48px] h-12">
             <img
               className="w-12 h-12 rounded-full object-cover"
               src={

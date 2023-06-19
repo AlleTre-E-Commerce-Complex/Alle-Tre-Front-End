@@ -37,22 +37,25 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
   };
   return (
     <div className="max-w-[1440px] mx-auto">
-      <div className="ezd-content relative overflow-hidden">
+      <div className="ezd-content relative ">
         <div className="ezd-snapslider pt-10">
           <div className="snapslider-wrapper">
             <div ref={swiperRef} className={`snapslider-overflow`}>
-              <div className={`snapslider-scroll swiper-wrapper py-2`}>
-                <div className="snapslider-card swiper-slide">
-                  {/* slider */}
-                  {SubGatogryOptions.map((e, index) => (
+              <div
+                className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+              >
+                {/* slider */}
+                {SubGatogryOptions.map((e, index) => (
+                  <div className="snapslider-card swiper-slide">
                     <Category
+                      view
                       key={index}
-                      img="https://www.seekpng.com/png/full/2-21511_laptop-hd-png-picture-png-format-laptop-png.png"
+                      img={e?.imageLink}
                       title={e?.text}
                       id={e?.id}
                     />
-                  ))}
-                </div>
+                  </div>
+                ))}
                 <button
                   onClick={handleNextClick}
                   className={`swiper-button-next absolute top-1/2 -right-3`}

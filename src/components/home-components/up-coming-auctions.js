@@ -95,7 +95,7 @@ const UpComingAuctionsSlider = () => {
           {selectedContent[localizationKeys.upComingAuctions]}
         </h1>
         <p className="text-gray-med text-base font-normal">
-          Lorem ipsum dolor sit amet, consetetur
+          Coming Soon: Get Ready to Bid!
         </p>
       </div>
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
