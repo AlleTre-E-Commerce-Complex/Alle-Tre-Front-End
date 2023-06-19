@@ -33,13 +33,6 @@ const MyBids = () => {
     );
   }, [runAlyticsData, forceReload]);
 
-  //   IN_PROGRESS,
-  //   PENDING_PAYMENT,
-  //   WAITING_FOR_DELIVERY,
-  //   PAYMENT_EXPIRED,
-  //   LOST,
-  //   COMPLETED;
-
   const analyticsDataObject = {};
   let totalCount = 0;
   analyticsData?.forEach((item) => {

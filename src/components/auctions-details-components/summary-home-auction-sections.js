@@ -4,8 +4,6 @@ import { truncateString } from "../../utils/truncate-string";
 
 import RatingStare from "../shared/rating-star/rating-star";
 
-import AnglesRight from "../../../src/assets/icons/angles-right-wihte.png";
-
 import { HashLink } from "react-router-hash-link";
 import { useLocation, useParams } from "react-router-dom";
 import AuctionsStatus from "../shared/status/auctions-status";
@@ -19,7 +17,6 @@ import { auctionsId } from "../../redux-store/auction-details-slice";
 import { useAuthState } from "../../context/auth-context";
 import { Open } from "../../redux-store/auth-model-slice";
 import { toast } from "react-hot-toast";
-import { useSocket } from "../../context/socket-context";
 import auth from "../../utils/auth";
 import { io } from "socket.io-client";
 import content from "../../localization/content";
@@ -32,6 +29,8 @@ import api from "../../api";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { buyNow } from "../../redux-store/bid-amount-slice";
+import useLocalStorage from "../../hooks/use-localstorage";
+import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -68,7 +67,18 @@ const SummaryHomeAuctionSections = ({
 
   const dispatch = useDispatch();
   dispatch(auctionsId(auctionsID));
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
+  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    ""
+  );
+  const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
+
+  const handelBuyNow = () => {
+    if (JSON.parse(hasCompletedProfile)) {
+      history.push(routes.app.buyNow(auctionId));
+    } else setOpenMakeDefultLocations(true);
+  };
 
   const { user, logout } = useAuthState();
   useEffect(() => {
@@ -118,19 +128,22 @@ const SummaryHomeAuctionSections = ({
   const handelSubmitBidButton = () => {
     const newValue = Number(submitBidValue);
     if (user) {
-      if (validateBidAmount(newValue)) {
-        if (isDepositPaid) {
-          sendSubmitBid(newValue);
-        } else {
-          setSubmitBidValue(newValue);
-          setSubmitBidOpen(true);
-        }
-      } else
-        toast.error(
-          selectedContent[
-            localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid
-          ]
-        );
+      if (JSON.parse(hasCompletedProfile)) {
+        if (validateBidAmount(newValue)) {
+          if (isDepositPaid) {
+            sendSubmitBid(newValue);
+          } else {
+            setSubmitBidValue(newValue);
+            setSubmitBidOpen(true);
+          }
+        } else
+          toast.error(
+            selectedContent[
+              localizationKeys
+                .submitValueIsRequiredAndMustBeBiggerThanCurrentBid
+            ]
+          );
+      } else setOpenMakeDefultLocations(true);
     } else {
       dispatch(Open());
     }
@@ -300,7 +313,8 @@ const SummaryHomeAuctionSections = ({
                 : false
             }
             onClick={() => {
-              history.push(routes.app.buyNow(auctionId));
+              handelBuyNow();
+
               dispatch(buyNow(acceptedAmount));
             }}
             className={`${
@@ -354,6 +368,10 @@ const SummaryHomeAuctionSections = ({
         setOpen={setSubmitBidOpen}
         submitBidValue={submitBidValue}
         setSubmitBidValue={setSubmitBidValue}
+      />
+      <MakeDefultLocations
+        openMakeDefultLocations={openMakeDefultLocations}
+        setOpenMakeDefultLocations={setOpenMakeDefultLocations}
       />
     </div>
   );

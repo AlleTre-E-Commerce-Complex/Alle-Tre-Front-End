@@ -17,6 +17,8 @@ import localizationKeys from "../../localization/localization-keys";
 import { useDispatch, useSelector } from "react-redux";
 import { completePaymentData } from "../../redux-store/complete-payment-slice";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import useLocalStorage from "../../hooks/use-localstorage";
+import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 
 const PendingBids = () => {
   const [lang] = useLanguage("");
@@ -46,6 +48,24 @@ const PendingBids = () => {
   }, [run, forceReload, search]);
 
   const dispatch = useDispatch();
+
+  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    ""
+  );
+  const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
+
+  const handelCompletePayment = (auctionsId, lastPrice) => {
+    if (JSON.parse(hasCompletedProfile)) {
+      history.push(routes.app.profile.myBids.completePayment);
+      dispatch(
+        completePaymentData({
+          auctionsId,
+          lastPrice,
+        })
+      );
+    } else setOpenMakeDefultLocations(true);
+  };
 
   return (
     <div className="">
@@ -81,12 +101,9 @@ const PendingBids = () => {
               auctionsId={e?.auction?.id}
               textButton={"Complete Payment"}
               buttonActions={() => {
-                history.push(routes.app.profile.myBids.completePayment);
-                dispatch(
-                  completePaymentData({
-                    auctionsId: e?.auction?.id,
-                    lastPrice: e?.auction?.bids[0]?.amount,
-                  })
+                handelCompletePayment(
+                  e?.auction?.id,
+                  e?.auction?.bids[0]?.amount
                 );
               }}
               status={"PENDING_PAYMENT"}
@@ -106,6 +123,10 @@ const PendingBids = () => {
           </div>
         </div>
       )}
+      <MakeDefultLocations
+        openMakeDefultLocations={openMakeDefultLocations}
+        setOpenMakeDefultLocations={setOpenMakeDefultLocations}
+      />
     </div>
   );
 };

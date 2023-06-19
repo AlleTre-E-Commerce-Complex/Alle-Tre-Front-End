@@ -298,6 +298,7 @@ const ShippingDetails = () => {
                 Country={lang === "en" ? e?.country?.nameEn : e?.country.nameAn}
                 City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
                 PostalCode={e?.zipCode}
+                isMain={e?.isMain}
               />
             ))}
             <button

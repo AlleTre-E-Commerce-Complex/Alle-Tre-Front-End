@@ -33,6 +33,7 @@ import { useDispatch } from "react-redux";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import useLocalStorage from "../../../hooks/use-localstorage";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage("");
@@ -393,6 +394,7 @@ export const LocationDetailsCard = ({
   Id,
   key,
   isMain,
+  setOpenMakeDefultLocations,
   onReload,
 }) => {
   const [lang] = useLanguage();
@@ -401,6 +403,11 @@ export const LocationDetailsCard = ({
   const [open, setOpen] = useState(false);
   const [locationId, setLocationId] = useFilter("locationId", "");
   const { run: runDelete, isLoading: isLoadingDelete } = useAxios([]);
+
+  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    ""
+  );
   const handelDelete = (id) => {
     runDelete(
       authAxios
@@ -412,6 +419,9 @@ export const LocationDetailsCard = ({
               ` ${selectedContent[localizationKeys.hasBeenDeleteSuccessfully]}`
           );
           setOpen(false);
+          setOpenMakeDefultLocations(false);
+          setHasCompletedProfile(true);
+          window.localStorage.setItem("hasCompletedProfile", true);
           onReload();
         })
         .catch((err) => {
