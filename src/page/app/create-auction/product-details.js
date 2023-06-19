@@ -572,6 +572,7 @@ const ProductDetails = () => {
                           onReload();
                           setCustomFromData([]);
                           setSubCategoryId(undefined);
+                          formik.setFieldValue("subCategory", "");
                           setHasUsageCondition(fieldOption?.hasUsageCondition);
                         }}
                       />

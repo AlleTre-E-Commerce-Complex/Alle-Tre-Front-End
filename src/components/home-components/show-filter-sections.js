@@ -54,7 +54,7 @@ const ShowFilterSections = () => {
 
   return (
     <div className="flex ">
-      <div className="flex gap-3 max-w-2xl">
+      <div className=" gap-3 max-w-2xl">
         <ArrayButtonFilter
           name="categories"
           values={GatogryFind?.map((CategoryName) => ({
@@ -132,7 +132,7 @@ export const ArrayButtonFilter = ({ name, values }) => {
   return (
     <div className="flex gap-3 my-1 flex-wrap">
       {values.map((v) => (
-        <div className="bg-[#62143A0C] text-gray-dark w-fit p-1.5 rounded-md">
+        <div className="bg-[#62143A0C] text-gray-dark w- h-9 p-1.5 rounded-md">
           {v?.name}
           <button
             onClick={() => {
@@ -159,7 +159,7 @@ export const ButtonFilter = ({ name, values }) => {
   return (
     <div className="flex gap-3 my-1 flex-wrap">
       {values.map((v) => (
-        <div className="bg-[#62143A0C] text-gray-dark w-fit p-1.5 rounded-md">
+        <div className="bg-[#62143A0C] text-gray-dark w-fit h-9 p-1.5 rounded-md">
           {v?.auctionStatus === "IN_SCHEDULED" &&
             selectedContent[localizationKeys.comingSoon]}
           {v?.auctionStatus === "ACTIVE" &&

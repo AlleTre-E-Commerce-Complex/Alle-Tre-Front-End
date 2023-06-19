@@ -100,7 +100,15 @@ border-radius: 7px 1px 8px 1px !important;
 font-size: 0.5rem;
 }
 .state-button:lang(ar){
-border-radius: 1px 7px 1px 8px !important;
+border-radius: 1px 7px 1px 1px !important;
+font-size: 0.5rem;
+}
+.price-button-list:lang(en){
+border-radius: 7px 1px 20px 1px !important;
+font-size: 0.5rem;
+}
+.price-button-list:lang(ar){
+border-radius: 1px 7px 1px 20px !important;
 font-size: 0.5rem;
 }
 .price-button:lang(en){

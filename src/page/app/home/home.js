@@ -30,6 +30,7 @@ import LodingTestAllatre from "../../../components/shared/lotties-file/loding-te
 import ShowFilterSections from "../../../components/home-components/show-filter-sections";
 import listicon from "../../../../src/assets/icons/list-icon.png";
 import menuicon from "../../../../src/assets/icons/menu-icon.png";
+import AuctionCardList from "../../../components/home-components/auction-card-list";
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -40,6 +41,7 @@ const Home = () => {
   const myRef = useRef();
   const dispatch = useDispatch();
 
+  const [isGrid, setIsGrid] = useState(false);
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
@@ -93,6 +95,9 @@ const Home = () => {
       } else setOpen(true);
     } else dispatch(Open());
   };
+  console.log("====================================");
+  console.log({ mainAuctions });
+  console.log("====================================");
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home ">
@@ -133,15 +138,21 @@ const Home = () => {
           </div>
         </div>
         <div className="mt-auto">
-          {true ? (
-            <button className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2">
-              <img src={menuicon} alt="menuiconicon" />
-              <p>Grid</p>
-            </button>
-          ) : (
-            <button className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2">
+          {isGrid ? (
+            <button
+              onClick={() => setIsGrid((p) => !p)}
+              className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+            >
               <img src={listicon} alt="listicon" />
               <p>List</p>
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsGrid((p) => !p)}
+              className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+            >
+              <img src={menuicon} alt="menuiconicon" />
+              <p>Grid</p>
             </button>
           )}
         </div>
@@ -152,23 +163,43 @@ const Home = () => {
           <FilterSections myRef={myRef} />
           {/* right card sections */}
           {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto "> */}
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
-            {mainAuctions?.map((e) => (
-              <AuctionCard
-                auctionId={e?.id}
-                price={e?.acceptedAmount || e?.startBidAmount}
-                title={e?.product?.title}
-                status={e?.status}
-                adsImg={e?.product?.images[0].imageLink}
-                totalBods={e?._count?.bids}
-                WatshlistState={e?.isSaved}
-                endingTime={e?.expiryDate}
-                StartDate={e?.startDate}
-                isBuyNowAllowed={e?.isBuyNowAllowed}
-                isMyAuction={e?.isMyAuction}
-              />
-            ))}
-          </div>
+          {isGrid ? (
+            <div className="w-full">
+              {mainAuctions?.map((e) => (
+                <AuctionCardList
+                  auctionId={e?.id}
+                  price={e?.acceptedAmount || e?.startBidAmount}
+                  title={e?.product?.title}
+                  status={e?.status}
+                  adsImg={e?.product?.images[0].imageLink}
+                  totalBods={e?._count?.bids}
+                  WatshlistState={e?.isSaved}
+                  endingTime={e?.expiryDate}
+                  StartDate={e?.startDate}
+                  isBuyNowAllowed={e?.isBuyNowAllowed}
+                  isMyAuction={e?.isMyAuction}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
+              {mainAuctions?.map((e) => (
+                <AuctionCard
+                  auctionId={e?.id}
+                  price={e?.acceptedAmount || e?.startBidAmount}
+                  title={e?.product?.title}
+                  status={e?.status}
+                  adsImg={e?.product?.images[0].imageLink}
+                  totalBods={e?._count?.bids}
+                  WatshlistState={e?.isSaved}
+                  endingTime={e?.expiryDate}
+                  StartDate={e?.startDate}
+                  isBuyNowAllowed={e?.isBuyNowAllowed}
+                  isMyAuction={e?.isMyAuction}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
           <PaginationApp totalPages={totalPages} perPage={28} myRef={myRef} />
