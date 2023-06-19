@@ -5,7 +5,7 @@ import routes from "../../../routes";
 const Category = ({ img, title, id, view }) => {
   const history = useHistory();
   return (
-    <div className="inline-block md:mx-24 mx-16">
+    <div className="inline-block md:mx-24 px-8">
       <div className="group">
         <div
           onClick={
