@@ -126,6 +126,11 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
             </div>
           </div>
         </div>
+        <AddLocationModel
+          open={open}
+          setOpen={setOpen}
+          TextButton={selectedContent[localizationKeys.proceed]}
+        />
       </section>
     );
   }
@@ -276,11 +281,6 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
           </div>
         );
       })}
-      <AddLocationModel
-        open={open}
-        setOpen={setOpen}
-        TextButton={selectedContent[localizationKeys.proceed]}
-      />
     </section>
   );
 };

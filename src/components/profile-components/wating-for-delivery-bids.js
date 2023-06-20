@@ -56,11 +56,7 @@ const WatingForDeliveryBids = ({ OnReload }) => {
           history.push(routes.app.profile.myBids.completed);
           toast.success("This auctions is Confirm Delivery success");
         })
-        .catch((err) => {
-          console.log("====================================");
-          console.log(err);
-          console.log("====================================");
-        })
+        .catch((err) => {})
     );
   };
   return (

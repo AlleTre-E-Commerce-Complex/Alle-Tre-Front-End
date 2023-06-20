@@ -79,17 +79,11 @@ const SummaryHomeAuctionSections = ({
   const IsCompletedProfile = useSelector(
     (state) => state?.loginDate?.hasCompletedProfile
   );
-  console.log("====================================");
-  console.log({ IsCompletedProfile });
-  console.log("====================================");
 
   const handelBuyNow = () => {
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
-    console.log("====================================");
-    console.log(isCompletedProfile);
-    console.log("====================================");
     if (JSON.parse(isCompletedProfile)) {
       history.push(routes.app.buyNow(auctionId));
     } else setOpenMakeDefultLocations(true);
@@ -145,9 +139,6 @@ const SummaryHomeAuctionSections = ({
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
-    console.log("====================================");
-    console.log(JSON.parse(isCompletedProfile));
-    console.log("====================================");
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
         if (validateBidAmount(newValue)) {
@@ -171,13 +162,6 @@ const SummaryHomeAuctionSections = ({
   };
 
   const validateBidAmount = (newValue) => {
-    console.log(
-      newValue,
-      lastestBid?.bidAmount ? lastestBid?.bidAmount : 0,
-      latestBidAmount,
-      CurrentBid,
-      startBidAmount
-    );
     if (
       isNaN(newValue) ||
       newValue <=

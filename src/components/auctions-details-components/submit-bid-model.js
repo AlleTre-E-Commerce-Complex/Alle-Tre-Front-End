@@ -31,10 +31,6 @@ const SubmitBidModel = ({
   const dispatch = useDispatch();
 
   const handelSubmitBid = () => {
-    console.log("====================================");
-    console.log(isDepostPay);
-    console.log("====================================");
-
     const body = {
       bidAmount: submitBidValue,
     };
@@ -55,9 +51,6 @@ const SubmitBidModel = ({
           );
         });
     } else {
-      console.log("====================================");
-      console.log(submitBidValue);
-      console.log("====================================");
       setOpen(false);
       dispatch(bidAmount(submitBidValue));
       history.push(routes.app.payDeposite(auctionId));
