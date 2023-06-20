@@ -54,20 +54,21 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   const handleAddLocation = (values) => {
     run(authAxios.post(api.app.location.post, values))
       .then(({ data }) => {
+        window.localStorage.setItem("hasCompletedProfile", true);
         if (TextButton === selectedContent[localizationKeys.proceed]) {
           history.push(routes.app.createAuction.productDetails);
           toast.success(selectedContent[localizationKeys.successAddLocatons]);
-          dispatch(hasCompletedProfile(true));
-          window.localStorage.setItem("hasCompletedProfile", true);
+          // dispatch(hasCompletedProfile(true));
         } else {
-          window.localStorage.setItem("hasCompletedProfile", true);
-          dispatch(hasCompletedProfile(true));
+          // dispatch(hasCompletedProfile(true));
           setOpen(false);
           onReload();
         }
       })
       .catch((err) => {
-        toast.error(err?.message?.map((e) => e));
+        toast.error(
+          err?.message?.map((e) => e) || selectedContent[localizationKeys.oops]
+        );
       });
   };
 
