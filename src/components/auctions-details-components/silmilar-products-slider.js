@@ -74,7 +74,7 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
 
   useEffect(() => {
     return () => {
-      swiper6?.destroy();
+      swiper6 && swiper6?.destroy();
     };
   }, []);
 

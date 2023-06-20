@@ -61,7 +61,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
-              hasCompletedProfile
+              JSON.stringify(hasCompletedProfile)
             );
             window.location.reload();
             isAuthModel
@@ -109,7 +109,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
-              hasCompletedProfile
+              JSON.stringify(hasCompletedProfile)
             );
             window.location.reload();
             isAuthModel
@@ -157,7 +157,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
-              hasCompletedProfile
+              JSON.stringify(hasCompletedProfile)
             );
             window.location.reload();
             isAuthModel

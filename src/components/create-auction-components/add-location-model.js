@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
 import FormikMultiDropdown from "../shared/formik/formik-dropdown";
+import { useDispatch } from "react-redux";
 
 import { Button, Modal } from "semantic-ui-react";
 
@@ -22,6 +23,7 @@ import { toast } from "react-hot-toast";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { hasCompletedProfile } from "../../redux-store/login-date-slice";
 
 const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
@@ -31,6 +33,8 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
   const { AllCitiesOptions, loadingCitiesOptions } =
     useGetAllCities(countriesId);
+
+  const dispatch = useDispatch();
 
   const AddLocationSchema = Yup.object({
     countryId: Yup.string().required(
@@ -53,9 +57,17 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
         if (TextButton === selectedContent[localizationKeys.proceed]) {
           history.push(routes.app.createAuction.productDetails);
           toast.success(selectedContent[localizationKeys.successAddLocatons]);
-          window.localStorage.setItem("hasCompletedProfile", true);
+          dispatch(hasCompletedProfile(true));
+          window.localStorage.setItem(
+            "hasCompletedProfile",
+            JSON.stringify(true)
+          );
         } else {
-          window.localStorage.setItem("hasCompletedProfile", true);
+          window.localStorage.setItem(
+            "hasCompletedProfile",
+            JSON.stringify(true)
+          );
+          dispatch(hasCompletedProfile(true));
           setOpen(false);
           onReload();
         }

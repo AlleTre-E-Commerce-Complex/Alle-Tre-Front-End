@@ -76,6 +76,13 @@ const SummaryHomeAuctionSections = ({
   );
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
 
+  const IsCompletedProfile = useSelector(
+    (state) => state?.loginDate?.hasCompletedProfile
+  );
+  console.log("====================================");
+  console.log({ IsCompletedProfile });
+  console.log("====================================");
+
   const handelBuyNow = () => {
     if (JSON.parse(hasCompletedProfile)) {
       history.push(routes.app.buyNow(auctionId));
@@ -316,7 +323,6 @@ const SummaryHomeAuctionSections = ({
             }
             onClick={() => {
               handelBuyNow();
-
               dispatch(buyNow(acceptedAmount));
             }}
             className={`${

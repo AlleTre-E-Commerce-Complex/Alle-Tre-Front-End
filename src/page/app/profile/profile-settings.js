@@ -419,8 +419,6 @@ export const LocationDetailsCard = ({
               ` ${selectedContent[localizationKeys.hasBeenDeleteSuccessfully]}`
           );
           setOpen(false);
-          setOpenMakeDefultLocations(false);
-
           onReload();
         })
         .catch((err) => {
