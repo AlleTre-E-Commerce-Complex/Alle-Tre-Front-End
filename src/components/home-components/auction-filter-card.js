@@ -1,8 +1,9 @@
 import React from "react";
-import { RadioButtonsFilter } from "../shared/buttons/radio-buttons-filter";
+
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { RadioButtonsFilter } from "components/shared/buttons/radio-buttons-filter";
 
 const AuctionFilterCard = ({ title, seeAll, name, values, myRef }) => {
   const [lang] = useLanguage("");

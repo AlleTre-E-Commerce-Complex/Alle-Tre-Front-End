@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import AuctionsStatus from "../../components/shared/status/auctions-status";
 import { useAuthState } from "../../context/auth-context";
 import { formatCurrency } from "../../utils/format-currency";
 import { Open } from "../../redux-store/auth-model-slice";
@@ -17,6 +16,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import moment from "moment";
 import { truncateString } from "../../utils/truncate-string";
+import AuctionsStatus from "components/shared/status/auctions-status";
 
 const AuctionCard = ({
   price,

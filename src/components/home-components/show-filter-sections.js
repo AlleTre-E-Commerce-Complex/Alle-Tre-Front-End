@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { ReactComponent as ClearFilterIcon } from "../../../src/assets/icons/clear-filter-icon.svg";
 import { useLanguage } from "../../context/language-context";
-import content from "../../localization/content";
-import useGetGatogry from "../../hooks/use-get-category";
+import useFilter from "../../hooks/use-filter";
 import useGetALLBrand from "../../hooks/use-get-all-brands";
 import useGetAllCountries from "../../hooks/use-get-all-countries";
-import useFilter from "../../hooks/use-filter";
+import useGetGatogry from "../../hooks/use-get-category";
+import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-
-import { ReactComponent as ClearFilterIcon } from "../../../src/assets/icons/clear-filter-icon.svg";
 import routes from "../../routes";
-import { useHistory, useLocation } from "react-router-dom";
 
 const ShowFilterSections = () => {
   const history = useHistory();

@@ -14,8 +14,8 @@ import { toast } from "react-hot-toast";
 import routes from "../../routes";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
-import AuctionsStatus from "../shared/status/auctions-status";
 import moment from "moment";
+import AuctionsStatus from "components/shared/status/auctions-status";
 
 const AuctionCardList = ({
   price,

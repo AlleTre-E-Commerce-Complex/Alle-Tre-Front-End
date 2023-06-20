@@ -6,7 +6,6 @@ import { ReactComponent as ScrollingIcon } from "../../../src/assets/icons/scrol
 
 import "./image-slider.css";
 import { truncateString } from "../../utils/truncate-string";
-import CountdownTimer from "../shared/timers/countdown-timer";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom";
 import { useLanguage } from "../../context/language-context";
@@ -17,6 +16,7 @@ import { useAuthState } from "../../context/auth-context";
 import { useDispatch } from "react-redux";
 import AddLocationModel from "../create-auction-components/add-location-model";
 import { Open } from "../../redux-store/auth-model-slice";
+import CountdownTimer from "components/shared/timers/countdown-timer";
 
 const ImageSlider = ({ myRef, images, slidesData }) => {
   const [lang] = useLanguage("");

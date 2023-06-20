@@ -16,8 +16,9 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+
 import upCompingEmty from "../../../src/assets/img/up-comping-emty-state.png";
+import LodingTestAllatre from "components/shared/lotties-file/loding-test-allatre";
 
 const UpComingAuctionsSlider = () => {
   const [lang] = useLanguage("");

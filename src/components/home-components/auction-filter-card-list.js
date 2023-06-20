@@ -1,8 +1,8 @@
 import React from "react";
-import { useLanguage } from "../../context/language-context";
-import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import MultiButtonFilter from "../../shared/buttons/multi-button-filter";
+import content from "../../localization/content";
+import { useLanguage } from "../../context/language-context";
+import MultiButtonFilter from "components/shared/buttons/multi-button-filter";
 
 const AuctionFilterCardList = ({ title, seeAll, name, values, myRef }) => {
   const [lang] = useLanguage("");
