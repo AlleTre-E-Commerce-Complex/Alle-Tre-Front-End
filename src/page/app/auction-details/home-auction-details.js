@@ -23,6 +23,7 @@ import { useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
 import SilmilarProductsSlider from "../../../components/auctions-details-components/silmilar-products-slider";
+import useLocalStorage from "../../../hooks/use-localstorage";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
@@ -33,8 +34,12 @@ const HomeAuctionDetails = () => {
   const { run, isLoading } = useAxios([]);
   const { pathname } = useLocation();
 
-  const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  // const [forceReload, setForceReload] = useState(false);
+  // const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    ""
+  );
 
   useEffect(() => {
     if (user) {
@@ -54,7 +59,7 @@ const HomeAuctionDetails = () => {
           })
       );
     }
-  }, [auctionId, run, user, forceReload]);
+  }, [auctionId, run, user, hasCompletedProfile]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -147,7 +152,7 @@ const HomeAuctionDetails = () => {
                     isBuyNowAllowed={auctionsDetailsData?.isBuyNowAllowed}
                     acceptedAmount={auctionsDetailsData?.acceptedAmount}
                     latestBidAmount={auctionsDetailsData?.latestBidAmount}
-                    onReload={onReload}
+                    // onReload={onReload}
                     // TODO add PurchasedTime
                     PurchasedTime={""}
                   />

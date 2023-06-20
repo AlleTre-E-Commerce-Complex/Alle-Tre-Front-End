@@ -453,7 +453,7 @@ const ProductDetails = () => {
           })
           .catch((err) => {
             toast.error(
-              err?.message.map((e) => e) ||
+              err?.message?.map((e) => e) ||
                 selectedContent[localizationKeys.oops]
             );
           })

@@ -84,7 +84,13 @@ const SummaryHomeAuctionSections = ({
   console.log("====================================");
 
   const handelBuyNow = () => {
-    if (JSON.parse(hasCompletedProfile)) {
+    const isCompletedProfile = window.localStorage.getItem(
+      "hasCompletedProfile"
+    );
+    console.log("====================================");
+    console.log(isCompletedProfile);
+    console.log("====================================");
+    if (JSON.parse(isCompletedProfile)) {
       history.push(routes.app.buyNow(auctionId));
     } else setOpenMakeDefultLocations(true);
   };
@@ -136,8 +142,14 @@ const SummaryHomeAuctionSections = ({
   const { run, isLoading } = useAxios();
   const handelSubmitBidButton = () => {
     const newValue = Number(submitBidValue);
+    const isCompletedProfile = window.localStorage.getItem(
+      "hasCompletedProfile"
+    );
+    console.log("====================================");
+    console.log(JSON.parse(isCompletedProfile));
+    console.log("====================================");
     if (user) {
-      if (JSON.parse(hasCompletedProfile)) {
+      if (JSON.parse(isCompletedProfile)) {
         if (validateBidAmount(newValue)) {
           if (isDepositPaid) {
             sendSubmitBid(newValue);

@@ -58,22 +58,16 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
           history.push(routes.app.createAuction.productDetails);
           toast.success(selectedContent[localizationKeys.successAddLocatons]);
           dispatch(hasCompletedProfile(true));
-          window.localStorage.setItem(
-            "hasCompletedProfile",
-            JSON.stringify(true)
-          );
+          window.localStorage.setItem("hasCompletedProfile", true);
         } else {
-          window.localStorage.setItem(
-            "hasCompletedProfile",
-            JSON.stringify(true)
-          );
+          window.localStorage.setItem("hasCompletedProfile", true);
           dispatch(hasCompletedProfile(true));
           setOpen(false);
           onReload();
         }
       })
       .catch((err) => {
-        toast.error(err?.message.map((e) => e));
+        toast.error(err?.message?.map((e) => e));
       });
   };
 
