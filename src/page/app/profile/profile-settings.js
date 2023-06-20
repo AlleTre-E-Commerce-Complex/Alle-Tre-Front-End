@@ -421,7 +421,7 @@ export const LocationDetailsCard = ({
           setOpen(false);
           setOpenMakeDefultLocations(false);
           setHasCompletedProfile(true);
-          window.localStorage.setItem("hasCompletedProfile", true);
+
           onReload();
         })
         .catch((err) => {

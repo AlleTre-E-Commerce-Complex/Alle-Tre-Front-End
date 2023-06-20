@@ -53,6 +53,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
         if (TextButton === selectedContent[localizationKeys.proceed]) {
           history.push(routes.app.createAuction.productDetails);
           toast.success(selectedContent[localizationKeys.successAddLocatons]);
+          window.localStorage.setItem("hasCompletedProfile", true);
         } else {
           setOpen(false);
           onReload();
