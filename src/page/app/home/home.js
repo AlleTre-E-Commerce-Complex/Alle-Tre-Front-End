@@ -98,9 +98,6 @@ const Home = () => {
       } else setOpen(true);
     } else dispatch(Open());
   };
-  console.log("====================================");
-  console.log(sponsoredAuctions);
-  console.log("====================================");
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home ">
