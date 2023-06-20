@@ -55,6 +55,7 @@ const SummaryHomeAuctionSections = ({
   StartDate,
   latestBidAmount,
   PurchasedTime,
+  onReload,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -374,6 +375,7 @@ const SummaryHomeAuctionSections = ({
         open={openMakeDefultLocations}
         setOpen={setOpenMakeDefultLocations}
         TextButton={selectedContent[localizationKeys.add]}
+        onReload={onReload}
       />
       <MakeDefultLocations />
     </div>

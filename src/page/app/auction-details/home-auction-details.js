@@ -33,7 +33,9 @@ const HomeAuctionDetails = () => {
   const { run, isLoading } = useAxios([]);
   const { pathname } = useLocation();
 
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+
   useEffect(() => {
     if (user) {
       run(
@@ -52,7 +54,7 @@ const HomeAuctionDetails = () => {
           })
       );
     }
-  }, [auctionId, run, user]);
+  }, [auctionId, run, user, forceReload]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -145,6 +147,7 @@ const HomeAuctionDetails = () => {
                     isBuyNowAllowed={auctionsDetailsData?.isBuyNowAllowed}
                     acceptedAmount={auctionsDetailsData?.acceptedAmount}
                     latestBidAmount={auctionsDetailsData?.latestBidAmount}
+                    onReload={onReload}
                     // TODO add PurchasedTime
                     PurchasedTime={""}
                   />
