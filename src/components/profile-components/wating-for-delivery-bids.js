@@ -71,8 +71,7 @@ const WatingForDeliveryBids = ({ OnReload }) => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {activeAuctionData?.length}{" "}
-          {selectedContent[localizationKeys.totalActive]}
+          {activeAuctionData?.length} {selectedContent[localizationKeys.total]}
         </p>
       </div>
       {activeAuctionData?.length === 0 ? (
@@ -80,7 +79,12 @@ const WatingForDeliveryBids = ({ OnReload }) => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-gray-dark text-center mt-8 ">
-              There is no bids yet on Waiting for delivery auctions right now
+              {
+                selectedContent[
+                  localizationKeys
+                    .ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow
+                ]
+              }
             </p>
           </div>
         </div>
@@ -90,7 +94,7 @@ const WatingForDeliveryBids = ({ OnReload }) => {
             <ActionsRowTable
               key={e?.auction?.id}
               isBidsButtons
-              textButton={"Confirm delivery"}
+              textButton={selectedContent[localizationKeys.confirmDelivery]}
               buttonActions={() => handelConfirmDelivery(e?.auction?.id)}
               status={"WAITING_FOR_DELIVERY"}
               title={e?.auction?.product?.title}

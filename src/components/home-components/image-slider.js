@@ -96,7 +96,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
               alt="travel"
             />
           </div>
-          <div className="w-full md:h-[541px] h-[200px] rounded-[32px]  from-black/80 absolute top-0  text-white  pt-12 ">
+          <div className="w-full md:h-[541px] h-[200px] rounded-[32px]  from-black/80 absolute top-0 z-10 text-white  pt-12 ">
             <ScrollingIcon
               onClick={() =>
                 window.scrollTo({
@@ -108,19 +108,33 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
             />
             <div>
               <h1 className="text-center text-4xl font-normal mt-[128px]">
-                Achieve a visually impressive auction & attract bidders more
-                easily.
+                {
+                  selectedContent[
+                    localizationKeys
+                      .achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily
+                  ]
+                }
               </h1>
               <p className="text-center pt-4">
-                You can make your auction Ad a priority and display it first to
-                increase bidder<br></br> participation and attract more bidders
+                {
+                  selectedContent[
+                    localizationKeys
+                      .YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder
+                  ]
+                }
+                <br></br>{" "}
+                {
+                  selectedContent[
+                    localizationKeys.participationAndAttractMoreBidders
+                  ]
+                }
               </p>
               <div className="flex justify-center">
                 <button
                   onClick={handelCreatOuction}
                   className="bg-primary-dark  w-[304px] h-[48px] rounded-lg mt-[48px]"
                 >
-                  Create your Ad Now
+                  {selectedContent[localizationKeys.CreateyourAdNow]}
                 </button>
               </div>
             </div>

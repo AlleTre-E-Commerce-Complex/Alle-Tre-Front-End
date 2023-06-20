@@ -84,6 +84,23 @@ const localizationKeys = {
   days: "days",
   hrs: "hrs",
   min: "min",
+  achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily:
+    "achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily",
+  YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder:
+    "YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder",
+  participationAndAttractMoreBidders: "participationAndAttractMoreBidders",
+  CreateyourAdNow: "CreateyourAdNow",
+  PopularPicksPerfectChoices: "PopularPicksPerfectChoices",
+  Grid: "Grid",
+  List: "List",
+  ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow:
+    "ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow",
+  BidWinRepeat: "BidWinRepeat",
+  ComingSoonGetReadytoBid: "ComingSoonGetReadytoBid",
+  DontWaitBuyNow: "DontWaitBuyNow",
+  Bysubscribingyounevermissbeat: "Bysubscribingyounevermissbeat",
+  Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales:
+    "Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -102,6 +119,8 @@ const localizationKeys = {
   soldAuctions: "soldAuctions",
   pendingAuctions: "pendingAuctions",
   expiredAuctions: "expiredAuctions",
+  payDeposite: "payDeposite",
+
   // create auctions
   drafts: "drafts",
   proceed: "proceed",
@@ -229,6 +248,30 @@ const localizationKeys = {
   opsPending: "opsPending",
   totalExpired: "totalExpired",
   opsExpired: "opsExpired",
+  // mybids
+  Youarenotbiddingonanyitems: "Youarenotbiddingonanyitems",
+  Checkactiveauctionstostartbidding: "Checkactiveauctionstostartbidding",
+  inProgress: "inProgress",
+  waitingForDelivery: "waitingForDelivery",
+  completed: "completed",
+  ThereIsNoBidsYetInProgressAuctionsRightNow:
+    "ThereIsNoBidsYetInProgressAuctionsRightNow",
+  increaseBid: "increaseBid",
+  submitNewBid: " submitNewBid",
+  ThereIsNoBidsYetPendingAuctionsRightNow:
+    "ThereIsNoBidsYetPendingAuctionsRightNow",
+  completePayment: "completePayment",
+  ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow:
+    "ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow",
+  confirmDelivery: "confirmDelivery",
+  ThereIsNoBidsYetExpiredAuctionsRightNow:
+    "ThereIsNoBidsYetExpiredAuctionsRightNow",
+  ThereIsNoBidsyetCompletedAuctionsRightNow:
+    "ThereIsNoBidsyetCompletedAuctionsRightNow",
+  // Purchased
+  Purchased: "Purchased",
+  yourPurchased: "yourPurchased",
+  ThereAreNoPurchasedYet: " ThereAreNoPurchasedYet",
   //  details
   reviews: "reviews",
   timeLeft: "timeLeft",
@@ -273,6 +316,8 @@ const localizationKeys = {
   mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter:
     "mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter",
   notMatch: "notMatch",
+  YouHaveToIncreaseTheBiddingRateNotingThatTheLastBiddingWasInValue:
+    "YouHaveToIncreaseTheBiddingRateNotingThatTheLastBiddingWasInValue",
   // sucsess
   thisAuctionDeleteFromWatchListBeenSuccessfully:
     "thisAuctionDeleteFromWatchListBeenSuccessfully",

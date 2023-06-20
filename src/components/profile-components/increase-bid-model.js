@@ -51,7 +51,12 @@ const IncreaseBidModel = ({
       then: Yup.number()
         .required(selectedContent[localizationKeys.required])
         .test({
-          message: ` You have to increase the bidding rate, noting that the last bidding was in value ${compareValue}`,
+          message: ` ${
+            selectedContent[
+              localizationKeys
+                .YouHaveToIncreaseTheBiddingRateNotingThatTheLastBiddingWasInValue
+            ]
+          } ${compareValue}`,
           test(value) {
             return value >= compareValue;
           },
@@ -70,7 +75,9 @@ const IncreaseBidModel = ({
       <div className="sm:w-[384px] w-full h-auto border-2 border-primary rounded-2xl bg-background px-8">
         <div className="text-center pt-11 pb-6">
           <AuctionIcon className="mx-auto" />
-          <h1 className="text-gray-dark pt-3 font-semibold">Increase Bid</h1>
+          <h1 className="text-gray-dark pt-3 font-semibold">
+            {selectedContent[localizationKeys.increaseBid]}
+          </h1>
         </div>
         <Formik
           initialValues={{
@@ -95,7 +102,7 @@ const IncreaseBidModel = ({
                   loading={isLoading}
                   className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg"
                 >
-                  Submit new bid
+                  {selectedContent[localizationKeys.submitNewBid]}
                 </Button>
                 <button
                   className="text-primary w-full h-[48px] rounded-lg underline "
@@ -103,7 +110,7 @@ const IncreaseBidModel = ({
                     setOpen(false);
                   }}
                 >
-                  Cancel
+                  {selectedContent[localizationKeys.cancel]}
                 </button>
               </div>
             </Form>

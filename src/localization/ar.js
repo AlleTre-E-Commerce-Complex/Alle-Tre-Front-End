@@ -88,6 +88,27 @@ const ar = {
   [localizationKeys.days]: "أيام",
   [localizationKeys.hrs]: "ساعة",
   [localizationKeys.min]: "دقيقة",
+  [localizationKeys.achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily]:
+    "حقق مزادًا مثيرًا للإعجاب من الناحية المرئية وجذب المزايدين بسهولة أكبر.",
+  [localizationKeys.YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder]:
+    "يمكنك جعل إعلان المزاد الخاص بك أولوية وعرضه أولاً لزيادة العطاء",
+  [localizationKeys.participationAndAttractMoreBidders]:
+    "المشاركة وجذب المزيد من العطاءات",
+  [localizationKeys.CreateyourAdNow]: "أنشئ إعلانك الآن",
+  [localizationKeys.PopularPicksPerfectChoices]:
+    "اختيارات رائجة ، اختيارات مثالية",
+  [localizationKeys.Grid]: "الشبكة",
+  [localizationKeys.List]: "قائمة",
+  [localizationKeys.ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow]:
+    "لا توجد مزادات حاليًا. يمكنك إنشاء مزادك الخاص الآن",
+  [localizationKeys.BidWinRepeat]: "المزايدة ، الفوز ، التكرار!",
+  [localizationKeys.ComingSoonGetReadytoBid]: "قريبًا: استعد للمزايدة!",
+  [localizationKeys.DontWaitBuyNow]: "لا تنتظر ، اشتر الآن!",
+  [localizationKeys.Bysubscribingyounevermissbeat]: "لا تنتظر ، اشتر الآن!",
+  [localizationKeys.Bysubscribingyounevermissbeat]:
+    "من خلال الاشتراك ، لن يفوتك أي شيء أبدًا.",
+  [localizationKeys.Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales]:
+    "ابق على اطلاع بأحدث المنتجات التي وصلتنا ، والعروض الترويجية الخاصة ، والمبيعات الموسمية.",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
@@ -106,6 +127,7 @@ const ar = {
   [localizationKeys.soldAuctions]: "المزادات المباعة",
   [localizationKeys.pendingAuctions]: "المزادات المعلقة",
   [localizationKeys.expiredAuctions]: "المزادات المنتهية",
+  [localizationKeys.payDeposite]: "إيداع الدفع",
   // create auctions
   [localizationKeys.drafts]: "المسودات",
   [localizationKeys.proceed]: "متابعة",
@@ -241,6 +263,32 @@ const ar = {
   [localizationKeys.totalPending]: "إجمالي المزادات المعلقة ..",
   [localizationKeys.opsPending]: "عفوًا ، لا توجد عمليات بيع معلقة حتى الآن.",
   [localizationKeys.totalExpired]: "إجمالي المزادات المنتهية الصلاحية ...",
+  // mybids
+  [localizationKeys.Youarenotbiddingonanyitems]:
+    "أنت لا تقدم عطاءات على أي عناصر.",
+  [localizationKeys.Checkactiveauctionstostartbidding]:
+    "تحقق من المزادات النشطة لبدء تقديم العطاءات",
+  [localizationKeys.inProgress]: "قيد التقدم",
+  [localizationKeys.waitingForDelivery]: "بانتظار الطلبية",
+  [localizationKeys.completed]: "مكتمل",
+  [localizationKeys.ThereIsNoBidsYetInProgressAuctionsRightNow]:
+    "لا توجد عطاءات حتى الآن مزادات قيد التقدم في الوقت الحالي",
+  [localizationKeys.increaseBid]: "زيادة العطاء",
+  [localizationKeys.inPrsubmitNewBidogress]: "تقديم عطاء جديد",
+  [localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow]:
+    "لا توجد عطاءات بعد المزادات المعلقة في الوقت الحالي",
+  [localizationKeys.completePayment]: "إتمام الدفع",
+  [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
+    "لا توجد عروض حتى الآن في انتظار مزادات التسليم في الوقت الحالي",
+  [localizationKeys.confirmDelivery]: "تأكيد التسليم",
+  [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
+    "لا توجد عروض حتى الآن مزادات منتهية الصلاحية",
+  [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
+    "لا توجد عطاءات بعد المزادات المكتملة في الوقت الحالي",
+  //  Purchased
+  [localizationKeys.Purchased]: "مشترياتي",
+  [localizationKeys.yourPurchased]: "مشترياتي",
+  [localizationKeys.ThereAreNoPurchasedYet]: "لا يوجد مشتريات حتى الآن",
   // details
   [localizationKeys.reviews]: "مراجعات",
   [localizationKeys.timeLeft]: "الوقت المتبقي",
@@ -278,6 +326,8 @@ const ar = {
   [localizationKeys.aboutTheBrand]: "حول العلامة التجارية",
   // err
   [localizationKeys.required]: "مطلوب",
+  [localizationKeys.YouHaveToIncreaseTheBiddingRateNotingThatTheLastBiddingWasInValue]:
+    "يجب عليك زيادة معدل المزايدة مع ملاحظة أن آخر العطاءات كانت ذات قيمة",
   [localizationKeys.makeSureThatYouChooseItemConditionValue]:
     "تأكد من اختيار قيمة حالة العنصر",
   [localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos]:

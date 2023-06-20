@@ -54,8 +54,7 @@ const ExpiredBids = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {activeAuctionData?.length}{" "}
-          {selectedContent[localizationKeys.totalActive]}
+          {activeAuctionData?.length} {selectedContent[localizationKeys.total]}
         </p>
       </div>
       {activeAuctionData?.length === 0 ? (
@@ -63,7 +62,11 @@ const ExpiredBids = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-gray-dark text-center mt-8 ">
-              There is no bids yet Expired auctions right now
+              {
+                selectedContent[
+                  localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow
+                ]
+              }
             </p>
           </div>
         </div>

@@ -94,7 +94,7 @@ const UpComingAuctionsSlider = () => {
           {selectedContent[localizationKeys.upComingAuctions]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
-          Coming Soon: Get Ready to Bid!
+          {selectedContent[localizationKeys.ComingSoonGetReadytoBid]}
         </p>
       </div>
       {auctions?.length === 0 ? (

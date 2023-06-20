@@ -125,7 +125,7 @@ const Home = () => {
           {selectedContent[localizationKeys.popularCategories]}
         </h1>
         <p className="text-gray-med text-base font-normal">
-          Popular Picks, Perfect Choices
+          {selectedContent[localizationKeys.PopularPicksPerfectChoices]}
         </p>
       </div>
       <div className="mt-11 mb-20">
@@ -144,18 +144,18 @@ const Home = () => {
           {isGrid ? (
             <button
               onClick={() => setIsGrid((p) => !p)}
-              className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
               <img src={menuicon} alt="menuiconicon" />
-              <p>Grid</p>
+              <p> {selectedContent[localizationKeys.Grid]}</p>
             </button>
           ) : (
             <button
               onClick={() => setIsGrid((p) => !p)}
-              className="flex gap-x-3 w-20 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
               <img src={listicon} alt="listicon" />
-              <p>List</p>
+              <p> {selectedContent[localizationKeys.List]}</p>
             </button>
           )}
         </div>
@@ -171,14 +171,18 @@ const Home = () => {
               <div className="mx-auto text-center">
                 <EmtyHome className="mx-auto" />
                 <p className="text-gray-dark font-normal text-base py-8">
-                  There are no auctions currently. You can create your own
-                  auction right now
+                  {
+                    selectedContent[
+                      localizationKeys
+                        .thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway
+                    ]
+                  }
                 </p>
                 <button
                   onClick={() => handelCreatOuction()}
                   className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[128px] h-[32px]"
                 >
-                  Create Now
+                  {selectedContent[localizationKeys.createNow]}
                 </button>
               </div>
             </div>

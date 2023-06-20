@@ -53,7 +53,6 @@ const PendingBids = () => {
     "hasCompletedProfile",
     ""
   );
-  const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
 
   const handelCompletePayment = (auctionsId, lastPrice) => {
     if (JSON.parse(hasCompletedProfile)) {
@@ -64,7 +63,7 @@ const PendingBids = () => {
           lastPrice,
         })
       );
-    } else setOpenMakeDefultLocations(true);
+    }
   };
 
   return (
@@ -79,8 +78,7 @@ const PendingBids = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {activeAuctionData?.length}{" "}
-          {selectedContent[localizationKeys.totalActive]}
+          {activeAuctionData?.length} {selectedContent[localizationKeys.total]}
         </p>
       </div>
       {activeAuctionData?.length === 0 ? (
@@ -88,7 +86,11 @@ const PendingBids = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-gray-dark text-center mt-8 ">
-              There is no bids yet pending auctions right now
+              {
+                selectedContent[
+                  localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow
+                ]
+              }
             </p>
           </div>
         </div>
@@ -99,7 +101,7 @@ const PendingBids = () => {
               key={e?.auction?.id}
               isBidsButtons
               auctionsId={e?.auction?.id}
-              textButton={"Complete Payment"}
+              textButton={selectedContent[localizationKeys.completePayment]}
               buttonActions={() => {
                 handelCompletePayment(
                   e?.auction?.id,
@@ -123,10 +125,6 @@ const PendingBids = () => {
           </div>
         </div>
       )}
-      <MakeDefultLocations
-        openMakeDefultLocations={openMakeDefultLocations}
-        setOpenMakeDefultLocations={setOpenMakeDefultLocations}
-      />
     </div>
   );
 };

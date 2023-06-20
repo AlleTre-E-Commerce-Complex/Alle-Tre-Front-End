@@ -415,7 +415,7 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.payDeposite(details)}
             >
-              Pay Deposite
+              {selectedContent[localizationKeys.payDeposite]}
             </Link>
           ),
         },
@@ -432,7 +432,7 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.buyNow(details)}
             >
-              Buy Now
+              {selectedContent[localizationKeys.buyNow]}
             </Link>
           ),
         },
@@ -511,7 +511,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.inPogress}
             >
-              In Pogress
+              {selectedContent[localizationKeys.inProgress]}
             </Link>
           ),
         },
@@ -528,7 +528,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.pending}
             >
-              Pending
+              {selectedContent[localizationKeys.pending]}
             </Link>
           ),
         },
@@ -547,7 +547,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.waitingForDelivery}
             >
-              Waiting For Delivery
+              {selectedContent[localizationKeys.waitingForDelivery]}
             </Link>
           ),
         },
@@ -564,7 +564,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.expired}
             >
-              Expired
+              {selectedContent[localizationKeys.expired]}
             </Link>
           ),
         },
@@ -581,7 +581,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completed}
             >
-              Completed
+              {selectedContent[localizationKeys.completed]}
             </Link>
           ),
         },
@@ -598,7 +598,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
               } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completePayment}
             >
-              Complete Payment
+              {selectedContent[localizationKeys.completePayment]}
             </Link>
           ),
         },

@@ -47,14 +47,13 @@ const Purchased = () => {
                 alt="EmtyWatchlist"
               />
               <h1 className="text-gray-dark pt-10">
-                {" "}
-                There are no Purchased yet.
+                {selectedContent[localizationKeys.ThereAreNoPurchasedYet]}
               </h1>
             </div>
           </div>
         ) : (
           <h1 className="text-gray-dark pb-14 pt-4 font-bold">
-            Your Purchased
+            {selectedContent[localizationKeys.yourPurchased]}
           </h1>
         )}
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5 animate-in ">

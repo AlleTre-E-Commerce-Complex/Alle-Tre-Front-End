@@ -13,6 +13,7 @@ import { ReactComponent as BidIcon } from "../../../../src/assets/icons/no-Bids-
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import localizationKeys from "../../../localization/localization-keys";
 
 const MyBids = () => {
   const [lang] = useLanguage();
@@ -78,14 +79,18 @@ const MyBids = () => {
             <div>
               <BidIcon className="mx-auto" />
               <p className="text-gray-dark text-center mt-12 ">
-                You are not bidding on any items.
+                {selectedContent[localizationKeys.Youarenotbiddingonanyitems]}
               </p>
               <div className="flex justify-center mt-8">
                 <button
                   onClick={() => history.push(routes.app.home)}
                   className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 h-8 "
                 >
-                  Check active auctions to start bidding
+                  {
+                    selectedContent[
+                      localizationKeys.Checkactiveauctionstostartbidding
+                    ]
+                  }
                 </button>
               </div>
             </div>

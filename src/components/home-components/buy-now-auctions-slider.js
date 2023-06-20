@@ -93,7 +93,7 @@ const BuyNowAuctionsSlider = () => {
           {selectedContent[localizationKeys.buyNow]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
-          Don't Wait, Buy Now!
+          {selectedContent[localizationKeys.DontWaitBuyNow]}
         </p>
       </div>
       {auctions?.length === 0 ? (

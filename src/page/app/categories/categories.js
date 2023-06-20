@@ -121,14 +121,18 @@ const Categories = () => {
             <div className="mx-auto text-center">
               <EmtyHome className="mx-auto" />
               <p className="text-gray-dark font-normal text-base py-8">
-                There are no auctions currently. You can create your own auction
-                right now
+                {
+                  selectedContent[
+                    localizationKeys
+                      .thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway
+                  ]
+                }
               </p>
               <button
                 onClick={() => handelCreatOuction()}
                 className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[128px] h-[32px]"
               >
-                Create Now
+                {selectedContent[localizationKeys.createNow]}
               </button>
             </div>
           </div>

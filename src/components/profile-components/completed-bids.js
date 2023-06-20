@@ -62,7 +62,11 @@ const CompletedBids = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-gray-dark text-center mt-8 ">
-              There is no bids yet Completed auctions right now
+              {
+                selectedContent[
+                  localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow
+                ]
+              }
             </p>
           </div>
         </div>

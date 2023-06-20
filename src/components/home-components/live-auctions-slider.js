@@ -95,7 +95,7 @@ const LiveAuctionsSlider = ({ type }) => {
           {selectedContent[localizationKeys.liveAuction]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
-          Bid, Win, Repeat!
+          {selectedContent[localizationKeys.BidWinRepeat]}
         </p>
       </div>
       {auctions?.length === 0 ? (

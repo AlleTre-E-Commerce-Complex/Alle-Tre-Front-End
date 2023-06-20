@@ -58,8 +58,7 @@ const InProgressBids = () => {
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
-          {activeAuctionData?.length}{" "}
-          {selectedContent[localizationKeys.totalActive]}
+          {activeAuctionData?.length} {selectedContent[localizationKeys.total]}
         </p>
       </div>
       {activeAuctionData?.length === 0 ? (
@@ -67,7 +66,11 @@ const InProgressBids = () => {
           <div>
             <AuctionIcon className="mx-auto" />
             <p className="text-gray-dark text-center mt-8 ">
-              There is no bids yet In Progress auctions right now
+              {
+                selectedContent[
+                  localizationKeys.ThereIsNoBidsYetInProgressAuctionsRightNow
+                ]
+              }
             </p>
           </div>
         </div>
@@ -78,7 +81,7 @@ const InProgressBids = () => {
               key={e?.auction?.id}
               auctionsId={e?.auction?.id}
               isBidsButtons
-              textButton={"Increase Bid"}
+              textButton={selectedContent[localizationKeys.increaseBid]}
               buttonActions={() => {
                 setOpenIncreaseModel(true);
                 setAuctionId(e?.auction?.id);

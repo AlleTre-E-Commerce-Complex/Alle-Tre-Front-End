@@ -111,7 +111,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             onClick={() => history.push(routes.app.profile.myAuctions.default)}
           />
           <NavLink
-            title={"My Bids"}
+            title={selectedContent[localizationKeys.myBids]}
             isActive={
               pathname.length === 1 ||
               pathname.startsWith(routes.app.profile.myBids.default)
@@ -127,7 +127,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             onClick={() => history.push(routes.app.profile.watchlist)}
           />
           <NavLink
-            title="Purchased"
+            title={selectedContent[localizationKeys.Purchased]}
             isActive={
               pathname.length === 1 ||
               pathname.startsWith(routes.app.profile.purchased)
@@ -204,7 +204,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                 }}
               />
               <NavLink
-                title={"My Bids"}
+                title={selectedContent[localizationKeys.myBids]}
                 isActive={
                   pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.myBids.default)
@@ -226,7 +226,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                 }}
               />
               <NavLink
-                title="Purchased"
+                title={selectedContent[localizationKeys.Purchased]}
                 isActive={
                   pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.purchased)

@@ -34,9 +34,14 @@ const Footer = () => {
                   localizationKeys.subscribeNowToGetNewOffersAndUpdates
                 ]
               }
-              By subscribing, you'll never miss a beat. <br></br>Stay informed
-              about our latest product arrivals, special promotions, and
-              seasonal sales.
+              {selectedContent[localizationKeys.Bysubscribingyounevermissbeat]}
+              <br></br>{" "}
+              {
+                selectedContent[
+                  localizationKeys
+                    .Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales
+                ]
+              }
             </p>
           </div>
           <div className="flex gap-5 absolute lg:ltr:right-24 ltr:right-2 lg:rtl:left-24 rtl:left-2 lg:bottom-20 bottom-2 ">

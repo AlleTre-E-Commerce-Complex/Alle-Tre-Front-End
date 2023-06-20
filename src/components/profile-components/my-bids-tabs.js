@@ -20,7 +20,7 @@ const MyBidsTabs = ({ onReload }) => {
 
   const panes = [
     {
-      menuItem: `In progress`,
+      menuItem: `${selectedContent[localizationKeys.inProgress]}`,
       route: routes.app.profile.myBids.inPogress,
       render: () => (
         <div>
@@ -31,7 +31,7 @@ const MyBidsTabs = ({ onReload }) => {
       ),
     },
     {
-      menuItem: `Pending`,
+      menuItem: `${selectedContent[localizationKeys.pending]}`,
       route: routes.app.profile.myBids.pending,
       render: () => (
         <div>
@@ -42,7 +42,7 @@ const MyBidsTabs = ({ onReload }) => {
       ),
     },
     {
-      menuItem: `Waiting for delivery`,
+      menuItem: `${selectedContent[localizationKeys.pending]}`,
       route: routes.app.profile.myBids.waitingForDelivery,
       render: () => (
         <div>
@@ -53,7 +53,7 @@ const MyBidsTabs = ({ onReload }) => {
       ),
     },
     {
-      menuItem: `Expired`,
+      menuItem: `${selectedContent[localizationKeys.expired]}`,
       route: routes.app.profile.myBids.expired,
       render: () => (
         <div>
@@ -64,7 +64,7 @@ const MyBidsTabs = ({ onReload }) => {
       ),
     },
     {
-      menuItem: `Completed`,
+      menuItem: `${selectedContent[localizationKeys.completed]}`,
       route: routes.app.profile.myBids.completed,
       render: () => (
         <div>

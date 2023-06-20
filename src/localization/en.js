@@ -90,6 +90,26 @@ const en = {
   [localizationKeys.days]: "days",
   [localizationKeys.hrs]: "hrs",
   [localizationKeys.min]: "min",
+  [localizationKeys.achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily]:
+    "Achieve a visually impressive auction & attract bidders more easily.",
+  [localizationKeys.YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder]:
+    " You can make your auction Ad a priority and display it first to increase bidder",
+  [localizationKeys.participationAndAttractMoreBidders]:
+    " participation and attract more bidders",
+  [localizationKeys.CreateyourAdNow]: "Create your Ad Now",
+  [localizationKeys.PopularPicksPerfectChoices]:
+    "Popular Picks, Perfect Choices",
+  [localizationKeys.Grid]: "Grid",
+  [localizationKeys.List]: "List",
+  [localizationKeys.ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow]:
+    " There are no auctions currently. You can create your own auction right now",
+  [localizationKeys.BidWinRepeat]: "Bid, Win, Repeat!",
+  [localizationKeys.ComingSoonGetReadytoBid]: " Coming Soon: Get Ready to Bid!",
+  [localizationKeys.DontWaitBuyNow]: "   Don't Wait, Buy Now!",
+  [localizationKeys.Bysubscribingyounevermissbeat]:
+    "By subscribing, you'll never miss a beat.",
+  [localizationKeys.Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales]:
+    "Stay informed about our latest product arrivals, special promotions, and seasonal sales.",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
@@ -108,6 +128,7 @@ const en = {
   [localizationKeys.soldAuctions]: "Sold Auctions",
   [localizationKeys.pendingAuctions]: "Pending Auctions",
   [localizationKeys.expiredAuctions]: "Expired Auctions",
+  [localizationKeys.payDeposite]: "Pay Deposite",
   // create auctions
   [localizationKeys.drafts]: "Drafts",
   [localizationKeys.proceed]: "Proceed",
@@ -245,6 +266,33 @@ const en = {
   [localizationKeys.opsPending]: "Ops, there are no sold pending yet.",
   [localizationKeys.totalExpired]: "Total Expired Auctions...",
   [localizationKeys.opsExpired]: "Ops, there are no Expired auctions yet.",
+  // mybids
+  [localizationKeys.Youarenotbiddingonanyitems]:
+    "You are not bidding on any items.",
+  [localizationKeys.Checkactiveauctionstostartbidding]:
+    "Check active auctions to start bidding",
+  [localizationKeys.inProgress]: "In Progress",
+  [localizationKeys.waitingForDelivery]: "Waiting for delivery",
+  [localizationKeys.completed]: "Completed",
+  [localizationKeys.ThereIsNoBidsYetInProgressAuctionsRightNow]:
+    "There is no bids yet in progress auctions right now",
+  [localizationKeys.increaseBid]: "Increase Bid",
+  [localizationKeys.inPrsubmitNewBidogress]: "Submit new bid",
+  [localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow]:
+    "There is no bids yet pending auctions right now",
+  [localizationKeys.completePayment]: "Complete payment",
+  [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
+    "There is no bids yet on waiting for delivery auctions right now",
+  [localizationKeys.confirmDelivery]: "Confirm delivery",
+  [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
+    "There is no bids yet expiredauctions right now",
+  [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
+    "There is no bids yet completed auctions right now",
+  //  Purchased
+  [localizationKeys.Purchased]: "Purchased",
+  [localizationKeys.yourPurchased]: "Your Purchased",
+  [localizationKeys.ThereAreNoPurchasedYet]: "There are no purchased yet",
+
   // details
   [localizationKeys.reviews]: "Reviews",
   [localizationKeys.timeLeft]: "Time Left",
@@ -285,6 +333,8 @@ const en = {
 
   // err
   [localizationKeys.required]: "Required",
+  [localizationKeys.YouHaveToIncreaseTheBiddingRateNotingThatTheLastBiddingWasInValue]:
+    "You have to increase the bidding rate noting that the last bidding was in value",
   [localizationKeys.makeSureThatYouChooseItemConditionValue]:
     "Make sure that you choose Item Condition value",
   [localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos]:
