@@ -471,8 +471,8 @@ const ProductDetails = () => {
           })
           .catch((err) => {
             toast.error(
-              err?.message.map((e) => e) ||
-                selectedContent[localizationKeys.oops]
+              selectedContent[localizationKeys.oops] ||
+                err?.message?.map((e) => e)
             );
           })
       );
