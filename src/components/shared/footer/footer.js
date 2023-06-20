@@ -17,7 +17,7 @@ const Footer = () => {
 
   return (
     <div className={pathname.startsWith(routes.app.home) ? "" : "hidden "}>
-      <div className="relative ">
+      <div className="relative mt-10">
         <img
           className="w-full h-[209px] object-cover"
           src={footerImg}
@@ -33,10 +33,10 @@ const Footer = () => {
                 selectedContent[
                   localizationKeys.subscribeNowToGetNewOffersAndUpdates
                 ]
-              }{" "}
-              <br></br>Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-              sed diam<br></br>
-              nonumy eirmod tempor
+              }
+              By subscribing, you'll never miss a beat. <br></br>Stay informed
+              about our latest product arrivals, special promotions, and
+              seasonal sales.
             </p>
           </div>
           <div className="flex gap-5 absolute lg:ltr:right-24 ltr:right-2 lg:rtl:left-24 rtl:left-2 lg:bottom-20 bottom-2 ">

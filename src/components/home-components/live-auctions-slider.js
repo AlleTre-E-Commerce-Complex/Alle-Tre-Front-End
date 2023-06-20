@@ -17,6 +17,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import liveEmty from "../../../src/assets/img/live-emty-state.png";
 
 const LiveAuctionsSlider = ({ type }) => {
   const [lang] = useLanguage("");
@@ -88,65 +89,77 @@ const LiveAuctionsSlider = ({ type }) => {
   };
 
   return (
-    <div
-      className={auctions?.length === 0 ? "hidden" : "ezd-content  relative "}
-    >
+    <div>
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
           {selectedContent[localizationKeys.liveAuction]}
         </h1>
-        <p className="text-gray-med text-base font-normal">Bid, Win, Repeat!</p>
+        <p className="text-gray-med text-base font-normal pb-10">
+          Bid, Win, Repeat!
+        </p>
       </div>
-      <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
-        {/* <Loader active /> */}
-        <LodingTestAllatre />
-      </Dimmer>
-      <div className="ezd-snapslider pt-10">
-        <div className="snapslider-wrapper">
-          <div ref={swiperRef1} className={`snapslider-overflow `}>
-            <div
-              className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
-            >
-              {auctions?.map((e) => (
-                <div className="snapslider-card swiper-slide">
-                  <AuctionCard
-                    auctionId={e?.id}
-                    price={e?.startBidAmount || e?.acceptedAmount}
-                    title={e?.product?.title}
-                    status={e?.status}
-                    adsImg={e?.product?.images[0].imageLink}
-                    totalBods={e?._count?.bids}
-                    WatshlistState={e?.isSaved}
-                    endingTime={e?.expiryDate}
-                    isBuyNowAllowed={e?.isBuyNowAllowed}
-                    isMyAuction={e?.isMyAuction}
-                  />
+      {auctions?.length === 0 ? (
+        <div>
+          <img
+            className="w-full h-full object-cover rounded-2xl shadow"
+            src={liveEmty}
+            alt="liveEmty"
+          />
+        </div>
+      ) : (
+        <div className="ezd-content  relative ">
+          <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
+            {/* <Loader active /> */}
+            <LodingTestAllatre />
+          </Dimmer>
+          <div className="ezd-snapslider pt-10">
+            <div className="snapslider-wrapper">
+              <div ref={swiperRef1} className={`snapslider-overflow `}>
+                <div
+                  className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+                >
+                  {auctions?.map((e) => (
+                    <div className="snapslider-card swiper-slide">
+                      <AuctionCard
+                        auctionId={e?.id}
+                        price={e?.startBidAmount || e?.acceptedAmount}
+                        title={e?.product?.title}
+                        status={e?.status}
+                        adsImg={e?.product?.images[0].imageLink}
+                        totalBods={e?._count?.bids}
+                        WatshlistState={e?.isSaved}
+                        endingTime={e?.expiryDate}
+                        isBuyNowAllowed={e?.isBuyNowAllowed}
+                        isMyAuction={e?.isMyAuction}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <button
+                  onClick={handleNextClick}
+                  className={`swiper-button-next absolute top-1/2 -right-3 `}
+                >
+                  <img
+                    className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
+                    src={AnglesRight}
+                    alt="AnglesRight"
+                  />
+                </button>
+                <button
+                  onClick={handlePrevClick}
+                  className={`swiper-button-prev absolute top-1/2 -left-5  `}
+                >
+                  <img
+                    className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
+                    src={AnglesLeft}
+                    alt="AnglesLeft"
+                  />
+                </button>
+              </div>
             </div>
-            <button
-              onClick={handleNextClick}
-              className={`swiper-button-next absolute top-1/2 -right-3 `}
-            >
-              <img
-                className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
-                src={AnglesRight}
-                alt="AnglesRight"
-              />
-            </button>
-            <button
-              onClick={handlePrevClick}
-              className={`swiper-button-prev absolute top-1/2 -left-5  `}
-            >
-              <img
-                className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
-                src={AnglesLeft}
-                alt="AnglesLeft"
-              />
-            </button>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

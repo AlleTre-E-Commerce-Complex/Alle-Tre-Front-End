@@ -12,11 +12,19 @@ import { useHistory } from "react-router-dom";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import useLocalStorage from "../../hooks/use-localstorage";
+import { useAuthState } from "../../context/auth-context";
+import { useDispatch } from "react-redux";
+import AddLocationModel from "../create-auction-components/add-location-model";
+import { Open } from "../../redux-store/auth-model-slice";
 
 const ImageSlider = ({ myRef, images, slidesData }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
+  const { user } = useAuthState();
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
   const [translate, setTranslate] = useState("");
   const [current, setCurrent] = useState(0);
@@ -30,8 +38,96 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
     setCurrent(current === 0 ? slidesData.length - 1 : current - 1);
   };
 
-  if (!Array.isArray(images) || images.length <= 0) {
-    return null;
+  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
+    "hasCompletedProfile",
+    ""
+  );
+
+  const handelCreatOuction = () => {
+    if (user) {
+      if (JSON.parse(hasCompletedProfile)) {
+        history.push(routes.app.createAuction.productDetails);
+      } else setOpen(true);
+    } else dispatch(Open());
+  };
+
+  if (!Array.isArray(images) || images?.length <= 0) {
+    return (
+      <section className="mt-7 relative max-w-[1440px] md:h-[541px] h-[200px] mx-auto">
+        <div className="relative hidden lg:block ">
+          <img
+            className="object-cover absolute -right-0 lg:-top-6 md:-top-2 w-1/2 md:h-[541px] h-[200px] rounded-r-[32px] shadow-md drop-shadow-md blur-[0.1px] opacity-40 brightness-90  "
+            src={images}
+            alt="travel"
+          />
+          <img
+            className="object-cover absolute -left-0 lg:-top-6 md:-top-2  w-1/2 md:h-[541px] h-[200px] rounded-l-[32px] shadow-md drop-shadow-md blur-[0.1px] opacity-40 brightness-90 "
+            src={images}
+            alt="travel"
+          />
+        </div>
+        <div className="md:h-[561px] h-[200px] lg:mx-16 mx-auto relative rounded-[32px]   ">
+          <div onClick={nextSlide} className="overflow-hidden ">
+            {/* right */}
+            <img
+              src={anglesRightIcon}
+              alt="anglesRightIcon"
+              className="absolute z-20 lg:right-5 md:right-0 right-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer right-arrow-parent"
+            />
+            <div className="overflow-hidden absolute inset-0 hidden l:block">
+              <div className="right-arrow lg:w-[541px] md:w-[490px] w-[300px] -rotate-90 lg:right-2.5 md:-right-20 -right-14 top-0"></div>
+            </div>
+          </div>
+          <div onClick={prevSlide} className="overflow-hidden">
+            {/* left */}
+            <img
+              src={anglesLeftIcon}
+              alt="anglesLeftIcon"
+              className="absolute z-20 lg:left-5 md:left-1 left-1 top-1/2 lg:w-16 md:w-14 lg:h-16 md:h-14 w-8 cursor-pointer left-arrow-parent "
+            />
+            <div className="overflow-hidden absolute inset-0 hidden l:block">
+              <div className="left-arrow lg:w-[541px] md:w-[490px] w-[299px] rotate-90 lg:left-2.5 md:-left-20 -left-14 top-0"></div>
+            </div>
+          </div>
+          <div className="drop-shadow-md lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
+            <img
+              className="object-cover w-full md:h-[541px] h-[200px] rounded-[32px] shadow-md drop-shadow-md"
+              src={images}
+              alt="travel"
+            />
+          </div>
+          <div className="w-full md:h-[541px] h-[200px] rounded-[32px]  from-black/80 absolute top-0  text-white  pt-12 ">
+            <ScrollingIcon
+              onClick={() =>
+                window.scrollTo({
+                  behavior: "smooth",
+                  top: myRef?.current?.offsetTop,
+                })
+              }
+              className="absolute -bottom-[33px] z-50 left-1/2 transform -translate-x-1/2 cursor-pointer hidden l:block"
+            />
+            <div>
+              <h1 className="text-center text-4xl font-normal mt-[128px]">
+                Achieve a visually impressive auction & attract bidders more
+                easily.
+              </h1>
+              <p className="text-center pt-4">
+                You can make your auction Ad a priority and display it first to
+                increase bidder<br></br> participation and attract more bidders
+              </p>
+              <div className="flex justify-center">
+                <button
+                  onClick={handelCreatOuction}
+                  className="bg-primary-dark  w-[304px] h-[48px] rounded-lg mt-[48px]"
+                >
+                  Create your Ad Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   const nextindex =
@@ -106,7 +202,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                 <div className="drop-shadow-[0px 3px 16px #E9E9E980] lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
                   <img
                     className="object-cover w-full md:h-[541px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]"
-                    src={slide?.product?.images[0]?.imageLink}
+                    src={images || slide?.product?.images[0]?.imageLink}
                     alt="travel"
                   />
                 </div>
@@ -180,6 +276,11 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
           </div>
         );
       })}
+      <AddLocationModel
+        open={open}
+        setOpen={setOpen}
+        TextButton={selectedContent[localizationKeys.proceed]}
+      />
     </section>
   );
 };

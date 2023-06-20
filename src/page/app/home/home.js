@@ -32,6 +32,8 @@ import listicon from "../../../../src/assets/icons/list-icon.png";
 import menuicon from "../../../../src/assets/icons/menu-icon.png";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../components/home-components/auction-card-list";
+// import bigSliderEmtyState from "../../../../src/assets/img/big-slider-emty-state.png";
+import bigSliderEmtyState from "../../../../src/assets/img/Allatre-banner.png";
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -96,6 +98,9 @@ const Home = () => {
       } else setOpen(true);
     } else dispatch(Open());
   };
+  console.log("====================================");
+  console.log(sponsoredAuctions);
+  console.log("====================================");
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home ">
@@ -110,7 +115,11 @@ const Home = () => {
       <div className="z-20 md:h-[541px] h-[200px] ">
         <ImageSlider
           myRef={myRef}
-          images={sponsoredAuctions?.map((img) => img?.product?.images)}
+          images={
+            sponsoredAuctions?.length === 0
+              ? bigSliderEmtyState
+              : sponsoredAuctions?.map((img) => img?.product?.images)
+          }
           slidesData={sponsoredAuctions}
         />
       </div>
@@ -222,10 +231,10 @@ const Home = () => {
           <PaginationApp totalPages={totalPages} perPage={28} myRef={myRef} />
         </div>
       </div>
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1440px] mx-auto py-10">
         <LiveAuctionsSlider />
       </div>
-      <div className="relative py-12">
+      <div className="relative py-14 ">
         <img
           className="w-full h-[257px] object-cover md:block hidden "
           src={createAuctionimgBGfrom}
@@ -254,10 +263,10 @@ const Home = () => {
           alt="CreaAuctionText"
         />
       </div>
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1440px] mx-auto py-10">
         <UpComingAuctionsSlider />
       </div>
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1440px] mx-auto py-10">
         <BuyNowAuctionsSlider />
       </div>
 

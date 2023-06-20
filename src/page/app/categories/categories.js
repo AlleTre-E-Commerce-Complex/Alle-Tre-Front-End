@@ -21,6 +21,7 @@ import AddLocationModel from "../../../components/create-auction-components/add-
 import localizationKeys from "../../../localization/localization-keys";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
+import addImage from "../../../../src/assets/icons/add-image-icon.png";
 
 const Categories = () => {
   const [lang] = useLanguage("");
@@ -101,7 +102,7 @@ const Categories = () => {
       <div>
         <img
           className="w-full h-[317px] object-cover pb-4"
-          src={selectedBannerLink}
+          src={selectedBannerLink || addImage}
           alt=""
         />
       </div>

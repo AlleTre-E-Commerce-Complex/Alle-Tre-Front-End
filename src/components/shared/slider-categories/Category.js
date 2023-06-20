@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
+import addImage from "../../../../src/assets/icons/add-image-icon.png";
 
 const Category = ({ img, title, id, view }) => {
   const history = useHistory();
@@ -20,8 +21,12 @@ const Category = ({ img, title, id, view }) => {
         >
           <div className="w-[98px] h-[98px] rounded-full bg-primary-light group-hover:bg-primary duration-300 ease-in-out transform  mx-auto my-auto p-2">
             <img
-              className="group-hover:scale-125 pt-3 duration-300 ease-in-out transform "
-              src={img}
+              className={
+                img
+                  ? "group-hover:scale-125 pt-3 duration-300 ease-in-out transform"
+                  : "pl-2 pt-3 group-hover:scale-125  duration-300 ease-in-out transform"
+              }
+              src={img || addImage}
               alt={title}
             />
           </div>
