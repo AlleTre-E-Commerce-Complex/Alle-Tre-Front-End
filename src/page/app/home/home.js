@@ -20,7 +20,7 @@ import AddLocationModel from "../../../components/create-auction-components/add-
 import useLocalStorage from "../../../hooks/use-localstorage";
 import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
 import { Open } from "../../../redux-store/auth-model-slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import UpComingAuctionsSlider from "../../../components/home-components/up-coming-auctions";
 import PaginationApp from "../../../components/shared/pagination/pagination-app";
 import { useLanguage } from "../../../context/language-context";
@@ -32,7 +32,6 @@ import listicon from "../../../../src/assets/icons/list-icon.png";
 import menuicon from "../../../../src/assets/icons/menu-icon.png";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../components/home-components/auction-card-list";
-// import bigSliderEmtyState from "../../../../src/assets/img/big-slider-emty-state.png";
 import bigSliderEmtyState from "../../../../src/assets/img/Allatre-banner.png";
 
 const Home = () => {
