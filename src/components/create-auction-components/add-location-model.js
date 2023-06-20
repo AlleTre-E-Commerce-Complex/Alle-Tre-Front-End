@@ -55,6 +55,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
           toast.success(selectedContent[localizationKeys.successAddLocatons]);
           window.localStorage.setItem("hasCompletedProfile", true);
         } else {
+          window.localStorage.setItem("hasCompletedProfile", true);
           setOpen(false);
           onReload();
         }

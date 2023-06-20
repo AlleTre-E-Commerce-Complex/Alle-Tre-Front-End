@@ -420,7 +420,6 @@ export const LocationDetailsCard = ({
           );
           setOpen(false);
           setOpenMakeDefultLocations(false);
-          setHasCompletedProfile(true);
 
           onReload();
         })
@@ -449,6 +448,7 @@ export const LocationDetailsCard = ({
           );
           setOpen(false);
           onReload();
+          window.localStorage.setItem("hasCompletedProfile", true);
         })
         .catch((err) => {
           toast.error(

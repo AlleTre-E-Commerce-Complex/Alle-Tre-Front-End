@@ -31,6 +31,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { buyNow } from "../../redux-store/bid-amount-slice";
 import useLocalStorage from "../../hooks/use-localstorage";
 import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
+import AddLocationModel from "../create-auction-components/add-location-model";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -369,10 +370,12 @@ const SummaryHomeAuctionSections = ({
         submitBidValue={submitBidValue}
         setSubmitBidValue={setSubmitBidValue}
       />
-      <MakeDefultLocations
-        openMakeDefultLocations={openMakeDefultLocations}
-        setOpenMakeDefultLocations={setOpenMakeDefultLocations}
+      <AddLocationModel
+        open={openMakeDefultLocations}
+        setOpen={setOpenMakeDefultLocations}
+        TextButton={selectedContent[localizationKeys.add]}
       />
+      <MakeDefultLocations />
     </div>
   );
 };
