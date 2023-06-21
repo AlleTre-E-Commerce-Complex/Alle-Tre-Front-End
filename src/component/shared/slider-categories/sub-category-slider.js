@@ -42,7 +42,9 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
           <div className="snapslider-wrapper">
             <div ref={swiperRef} className={`snapslider-overflow`}>
               <div
-                className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+                className={`${
+                  SubGatogryOptions?.length > 4 ? "" : "justify-center"
+                } snapslider-scroll swiper-wrapper py-2`}
               >
                 {/* slider */}
                 {SubGatogryOptions.map((e, index) => (
