@@ -8,16 +8,16 @@ import { authAxios, axios } from "../../../config/axios-config";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 
-import ImgSlider from "../../../components/shared/img-slider/img-slider";
+import ImgSlider from "../../../component/shared/img-slider/img-slider";
 import {
   AuctionDetailsBreadcrumb,
   AuctionHomeDetailsBreadcrumb,
-} from "../../../components/shared/bread-crumb/Breadcrumb";
-import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
-import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
+} from "../../../component/shared/bread-crumb/Breadcrumb";
+import SummaryAuctionSections from "../../../component/auctions-details-components/summary-auction-sections";
+import AuctionDetailsTabs from "../../../component/auctions-details-components/auction-details-tabs";
 import { useAuthState } from "../../../context/auth-context";
 import { useSelector } from "react-redux";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 
 const ProfileAuctionDetails = ({ isMyAuction }) => {
   const { user } = useAuthState();

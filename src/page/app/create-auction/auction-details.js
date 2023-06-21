@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 
 import { Form, Radio } from "semantic-ui-react";
-import Stepper from "../../../components/shared/stepper/stepper-app";
-import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
+import Stepper from "../../../component/shared/stepper/stepper-app";
+import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
 
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
 
 import * as Yup from "yup";
 import { Formik } from "formik";
-import FormikDate from "../../../components/shared/formik/formik-date";
-import FormikInput from "../../../components/shared/formik/formik-input";
-import FormikTimePicker from "../../../components/shared/formik/formik-time-picker";
-import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
-import { CheckboxRadioAuctionDetails } from "../../../components/create-auction-components/check-box-radio-group";
+import FormikDate from "../../../component/shared/formik/formik-date";
+import FormikInput from "../../../component/shared/formik/formik-input";
+import FormikTimePicker from "../../../component/shared/formik/formik-time-picker";
+import FormikMultiDropdown from "../../../component/shared/formik/formik-dropdown";
+import { CheckboxRadioAuctionDetails } from "../../../component/create-auction-components/check-box-radio-group";
 
 import { hoursOptions } from "../../../utils/hours-options";
 import { daysOptions } from "../../../utils/days-options";
@@ -27,7 +27,7 @@ import {
 } from "../../../redux-store/auction-details-slice";
 
 import "../../../../src/assets/style/radio-toggle.css";
-import { ScrollToFieldError } from "../../../components/shared/formik/formik-scroll-to-field-error";
+import { ScrollToFieldError } from "../../../component/shared/formik/formik-scroll-to-field-error";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";

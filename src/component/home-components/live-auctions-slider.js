@@ -17,7 +17,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import liveEmty from "../../../src/assets/img/live-emty-state.png";
-import LodingTestAllatre from "components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 
 const LiveAuctionsSlider = ({ type }) => {
   const [lang] = useLanguage("");

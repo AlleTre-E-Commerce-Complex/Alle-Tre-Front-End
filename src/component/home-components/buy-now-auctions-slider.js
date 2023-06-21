@@ -17,10 +17,10 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 
-import upCompingEmty from "../../../src/assets/img/up-comping-emty-state.png";
-import LodingTestAllatre from "components/shared/lotties-file/loding-test-allatre";
+import buyNowEmty from "../../../src/assets/img/buy-now-emty-state.png";
+import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 
-const UpComingAuctionsSlider = () => {
+const BuyNowAuctionsSlider = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { search } = useLocation();
@@ -38,7 +38,7 @@ const UpComingAuctionsSlider = () => {
       if (user) {
         runAuctions(
           authAxios
-            .get(`${api.app.auctions.getUpComming}?page=1&perPage=${page}`)
+            .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
@@ -47,7 +47,7 @@ const UpComingAuctionsSlider = () => {
       } else {
         runAuctions(
           axios
-            .get(`${api.app.auctions.getUpComming}?page=1&perPage=${page}`)
+            .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
@@ -68,42 +68,41 @@ const UpComingAuctionsSlider = () => {
     keyboard: true,
   };
 
-  const swiperRef3 = useRef(null);
-  const swiper3 = new Swiper(swiperRef3?.current, { ...swiperOptions });
+  const swiperRef2 = useRef(null);
+  const swiper2 = new Swiper(swiperRef2?.current, { ...swiperOptions });
 
   useEffect(() => {
     return () => {
-      swiper3?.destroy();
+      swiper2?.destroy();
     };
   }, []);
 
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
-      swiper3?.slideNext();
+      swiper2?.slideNext();
       setPage(page + 5);
-    } else swiper3?.slideNext();
+    } else swiper2?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiper3?.slidePrev();
+    swiper2?.slidePrev();
   };
-
   return (
     <div>
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
-          {selectedContent[localizationKeys.upComingAuctions]}
+          {selectedContent[localizationKeys.buyNow]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
-          {selectedContent[localizationKeys.ComingSoonGetReadytoBid]}
+          {selectedContent[localizationKeys.DontWaitBuyNow]}
         </p>
       </div>
       {auctions?.length === 0 ? (
         <div>
           <img
-            className="w-full h-full object-cover rounded-2xl shadow"
-            src={upCompingEmty}
-            alt="upCompingEmty"
+            className="w-full h-full object-cover rounded-2xl  shadow"
+            src={buyNowEmty}
+            alt="buyNowEmty"
           />
         </div>
       ) : (
@@ -114,22 +113,21 @@ const UpComingAuctionsSlider = () => {
           </Dimmer>
           <div className="ezd-snapslider pt-10">
             <div className="snapslider-wrapper">
-              <div ref={swiperRef3} className={`snapslider-overflow`}>
+              <div ref={swiperRef2} className={`snapslider-overflow`}>
                 <div
                   className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
                 >
                   {auctions?.map((e) => (
-                    <div class="snapslider-card swiper-slide">
+                    <div className="snapslider-card swiper-slide">
                       <AuctionCard
                         auctionId={e?.id}
-                        price={e?.startBidAmount || e?.acceptedAmount}
+                        price={e?.acceptedAmount || e?.startBidAmount}
                         title={e?.product?.title}
                         status={e?.status}
                         adsImg={e?.product?.images[0].imageLink}
                         totalBods={e?._count?.bids}
                         WatshlistState={e?.isSaved}
                         endingTime={e?.expiryDate}
-                        StartDate={e?.startDate}
                         isBuyNowAllowed={e?.isBuyNowAllowed}
                         isMyAuction={e?.isMyAuction}
                       />
@@ -138,7 +136,7 @@ const UpComingAuctionsSlider = () => {
                 </div>
                 <button
                   onClick={handleNextClick}
-                  className={`swiper-button-next absolute top-1/2 -right-3  `}
+                  className={`swiper-button-next absolute top-1/2 -right-3 `}
                 >
                   <img
                     className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
@@ -165,4 +163,4 @@ const UpComingAuctionsSlider = () => {
   );
 };
 
-export default UpComingAuctionsSlider;
+export default BuyNowAuctionsSlider;

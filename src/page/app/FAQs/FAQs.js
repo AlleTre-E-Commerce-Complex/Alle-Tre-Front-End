@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FAQsBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
+import { FAQsBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../../context/language-context";

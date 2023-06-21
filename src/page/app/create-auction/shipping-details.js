@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
 
-import AddLocationModel from "../../../components/create-auction-components/add-location-model";
-import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
-import Stepper from "../../../components/shared/stepper/stepper-app";
+import AddLocationModel from "../../../component/create-auction-components/add-location-model";
+import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
+import Stepper from "../../../component/shared/stepper/stepper-app";
 
 import { GoPlus } from "react-icons/go";
 import { Dimmer, Loader } from "semantic-ui-react";
@@ -33,7 +33,7 @@ import {
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import useLocalStorage from "../../../hooks/use-localstorage";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 
 const ShippingDetails = () => {
   const [lang] = useLanguage("");

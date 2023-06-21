@@ -3,18 +3,18 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import routes from "../../../routes";
 
-import { CheckboxRadioProductDetails } from "../../../components/create-auction-components/check-box-radio-group";
-import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
-import AddImgMedia from "../../../components/create-auction-components/add-img-media";
+import { CheckboxRadioProductDetails } from "../../../component/create-auction-components/check-box-radio-group";
+import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
+import AddImgMedia from "../../../component/create-auction-components/add-img-media";
 import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
-import Stepper from "../../../components/shared/stepper/stepper-app";
+import Stepper from "../../../component/shared/stepper/stepper-app";
 import { Dimmer, Loader, Form } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 
-import { ScrollToFieldError } from "../../../components/shared/formik/formik-scroll-to-field-error";
-import FormikMultiDropdown from "../../../components/shared/formik/formik-dropdown";
-import FormikTextArea from "../../../components/shared/formik/formik-text-area";
-import FormikInput from "../../../components/shared/formik/formik-input";
+import { ScrollToFieldError } from "../../../component/shared/formik/formik-scroll-to-field-error";
+import FormikMultiDropdown from "../../../component/shared/formik/formik-dropdown";
+import FormikTextArea from "../../../component/shared/formik/formik-text-area";
+import FormikInput from "../../../component/shared/formik/formik-input";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -32,9 +32,9 @@ import { productDetails } from "../../../redux-store/product-details-Slice";
 import { useDispatch, useSelector } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
-import EditImgeMedia from "../../../components/create-auction-components/edit-imge-media";
+import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 
 const ProductDetails = () => {
   const [lang] = useLanguage("");

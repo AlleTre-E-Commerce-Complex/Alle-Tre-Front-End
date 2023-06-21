@@ -4,15 +4,15 @@ import content from "../../../localization/content";
 
 import useAxios from "../../../hooks/use-axios";
 import { Dimmer } from "semantic-ui-react";
-import MyBidsTabs from "../../../components/profile-components/my-bids-tabs";
-import TotalMyBids from "../../../components/profile-components/total-my-bids";
+import MyBidsTabs from "../../../component/profile-components/my-bids-tabs";
+import TotalMyBids from "../../../component/profile-components/total-my-bids";
 import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
 
 import { ReactComponent as BidIcon } from "../../../../src/assets/icons/no-Bids-icon.svg";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import localizationKeys from "../../../localization/localization-keys";
 
 const MyBids = () => {

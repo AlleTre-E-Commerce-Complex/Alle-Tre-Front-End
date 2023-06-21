@@ -7,22 +7,22 @@ import useAxios from "../../../hooks/use-axios";
 import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 
-import ImgSlider from "../../../components/shared/img-slider/img-slider";
+import ImgSlider from "../../../component/shared/img-slider/img-slider";
 import {
   AuctionHomeDetailsBreadcrumb,
   MyBidsBreadcrumb,
-} from "../../../components/shared/bread-crumb/Breadcrumb";
+} from "../../../component/shared/bread-crumb/Breadcrumb";
 
-import AuctionDetailsTabs from "../../../components/auctions-details-components/auction-details-tabs";
-import SummaryAuctionSections from "../../../components/auctions-details-components/summary-auction-sections";
-import SummaryHomeAuctionSections from "../../../components/auctions-details-components/summary-home-auction-sections";
+import AuctionDetailsTabs from "../../../component/auctions-details-components/auction-details-tabs";
+import SummaryAuctionSections from "../../../component/auctions-details-components/summary-auction-sections";
+import SummaryHomeAuctionSections from "../../../component/auctions-details-components/summary-home-auction-sections";
 import { useAuthState } from "../../../context/auth-context";
 import { authAxios, axios } from "../../../config/axios-config";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import routes from "../../../routes";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
-import SilmilarProductsSlider from "../../../components/auctions-details-components/silmilar-products-slider";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import SilmilarProductsSlider from "../../../component/auctions-details-components/silmilar-products-slider";
 import useLocalStorage from "../../../hooks/use-localstorage";
 
 const HomeAuctionDetails = () => {

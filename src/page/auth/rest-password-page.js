@@ -5,7 +5,7 @@ import oAuthFooterImg from "../../../src/assets/img/o-auth-path-footer.svg";
 import allatreLogoWhite from "../../../src/assets/logo/allatre-logo-white.svg";
 
 import { Dropdown, Tab } from "semantic-ui-react";
-import ForgetPassword from "../../components/O-Auth-components/forget-password";
+import ForgetPassword from "../../component/O-Auth-components/forget-password";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";

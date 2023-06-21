@@ -15,7 +15,7 @@ import routes from "../../routes";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 import moment from "moment";
-import AuctionsStatus from "components/shared/status/auctions-status";
+import AuctionsStatus from "component/shared/status/auctions-status";
 
 const AuctionCardList = ({
   price,

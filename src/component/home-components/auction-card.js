@@ -16,7 +16,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import moment from "moment";
 import { truncateString } from "../../utils/truncate-string";
-import AuctionsStatus from "components/shared/status/auctions-status";
+import AuctionsStatus from "component/shared/status/auctions-status";
 
 const AuctionCard = ({
   price,

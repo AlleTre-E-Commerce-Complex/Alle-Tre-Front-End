@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import MyAuctions from "./my-auctions";
 import ProfileSettings from "./profile-settings";
 import Watshlist from "./watshlist";
-import ProfileSideBare from "../../../components/profile-components/profile-side-bare";
+import ProfileSideBare from "../../../component/profile-components/profile-side-bare";
 
 import routes from "../../../routes";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { Route, Switch } from "react-router-dom";
 import MyBids from "./my-bids";
-import MyBidsCompletePayment from "../../../components/profile-components/my-bids-complete-payment";
+import MyBidsCompletePayment from "../../../component/profile-components/my-bids-complete-payment";
 import Purchased from "./purchased";
 
 const ProfileLayouts = () => {

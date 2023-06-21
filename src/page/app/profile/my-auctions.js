@@ -7,13 +7,13 @@ import { useHistory } from "react-router-dom";
 import useAxios from "../../../hooks/use-axios";
 import { authAxios } from "../../../config/axios-config";
 
-import MyAuctionsTabs from "../../../components/profile-components/my-auctions-tabs";
-import TotalAuctions from "../../../components/profile-components/total-auctions";
+import MyAuctionsTabs from "../../../component/profile-components/my-auctions-tabs";
+import TotalAuctions from "../../../component/profile-components/total-auctions";
 import { ReactComponent as AuctionIcon } from "../../../../src/assets/icons/Auction-Icon.svg";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 
 const MyAuctions = () => {
   const [lang] = useLanguage();

@@ -12,11 +12,11 @@ import googleIcon from "../../../../src/assets/icons/Google-icon.svg";
 import facebookIcon from "../../../../src/assets/icons/Fcaebook-icon.svg";
 import userProfileicon from "../../../../src/assets/icons/user-Profile-icon.png";
 
-import UploadeImgModel from "../../../components/profile-components/uploade-img-model";
-import EditPasswordModel from "../../../components/profile-components/edit-password-model";
-import EditUserNameModel from "../../../components/profile-components/edit-user-name-model";
-import AddLocationModel from "../../../components/create-auction-components/add-location-model";
-import EditPhoneNumberModel from "../../../components/profile-components/edit-phone-number-model";
+import UploadeImgModel from "../../../component/profile-components/uploade-img-model";
+import EditPasswordModel from "../../../component/profile-components/edit-password-model";
+import EditUserNameModel from "../../../component/profile-components/edit-user-name-model";
+import AddLocationModel from "../../../component/create-auction-components/add-location-model";
+import EditPhoneNumberModel from "../../../component/profile-components/edit-phone-number-model";
 
 import useFilter from "../../../hooks/use-filter";
 import useAxios from "../../../hooks/use-axios";
@@ -32,7 +32,7 @@ import { PofileData } from "../../../redux-store/pofile-data-slice";
 import { useDispatch } from "react-redux";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import useLocalStorage from "../../../hooks/use-localstorage";
 
 const ProfileSettings = () => {

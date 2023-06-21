@@ -5,7 +5,7 @@ import routes from "../routes";
 import { useLocation } from "react-router-dom";
 import useAxios from "../hooks/use-axios";
 import { useSelector } from "react-redux";
-import LodingTestAllatre from "../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../component/shared/lotties-file/loding-test-allatre";
 
 const AuthContext = React.createContext();
 

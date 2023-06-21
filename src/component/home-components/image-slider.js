@@ -16,7 +16,7 @@ import { useAuthState } from "../../context/auth-context";
 import { useDispatch } from "react-redux";
 import AddLocationModel from "../create-auction-components/add-location-model";
 import { Open } from "../../redux-store/auth-model-slice";
-import CountdownTimer from "components/shared/timers/countdown-timer";
+import CountdownTimer from "component/shared/timers/countdown-timer";
 
 const ImageSlider = ({ myRef, images, slidesData }) => {
   const [lang] = useLanguage("");

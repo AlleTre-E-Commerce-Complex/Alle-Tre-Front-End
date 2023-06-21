@@ -3,12 +3,12 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import api from "../../../api";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "../../../hooks/use-axios";
-import AuctionCard from "../../../components/home-components/auction-card";
+import AuctionCard from "../../../component/home-components/auction-card";
 import EmtyWatchlist from "../../../../src/assets/icons/emty-watchlist.png";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 
 const Purchased = () => {
   const [lang] = useLanguage("");

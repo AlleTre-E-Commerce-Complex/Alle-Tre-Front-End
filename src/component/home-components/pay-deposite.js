@@ -1,4 +1,4 @@
-import CheckoutPagePayDeposite from "components/shared/stripe-payment/checkout-page-pay-deposite";
+import CheckoutPagePayDeposite from "component/shared/stripe-payment/checkout-page-pay-deposite";
 import React from "react";
 
 const PayDeposite = () => {

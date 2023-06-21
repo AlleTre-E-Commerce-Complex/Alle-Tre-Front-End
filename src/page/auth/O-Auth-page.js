@@ -1,7 +1,7 @@
 import React from "react";
 
-import LogIn from "../../components/O-Auth-components/log-in";
-import SignUp from "../../components/O-Auth-components/sign-up";
+import LogIn from "../../component/O-Auth-components/log-in";
+import SignUp from "../../component/O-Auth-components/sign-up";
 
 import { Dropdown, Tab } from "semantic-ui-react";
 import useTab from "../../hooks/use-tab";

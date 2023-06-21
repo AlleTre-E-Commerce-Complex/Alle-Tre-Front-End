@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import { CreateAuctionBreadcrumb } from "../../../components/shared/bread-crumb/Breadcrumb";
-import Trash from "../../../components/shared/lotties-file/trash-lotifile";
+import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
+import Trash from "../../../component/shared/lotties-file/trash-lotifile";
 import { Button, Dimmer, Loader, Modal } from "semantic-ui-react";
 import moment from "moment";
 
@@ -15,7 +15,7 @@ import PenIcon from "../../../../src/assets/icons/pen-icon.png";
 import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
 
-import AddLocationModel from "../../../components/create-auction-components/add-location-model";
+import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import useLocalStorage from "../../../hooks/use-localstorage";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "../../../hooks/use-axios";
@@ -29,7 +29,7 @@ import { truncateString } from "../../../utils/truncate-string";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../components/shared/lotties-file/loding-test-allatre";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 
 const CreateAuction = () => {
   const [lang] = useLanguage("");
