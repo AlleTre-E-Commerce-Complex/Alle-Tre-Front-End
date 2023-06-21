@@ -32,6 +32,7 @@ import { buyNow } from "../../redux-store/bid-amount-slice";
 import useLocalStorage from "../../hooks/use-localstorage";
 import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 import AddLocationModel from "../create-auction-components/add-location-model";
+import { useSocket } from "context/socket-context";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -90,31 +91,17 @@ const SummaryHomeAuctionSections = ({
   };
 
   const { user, logout } = useAuthState();
+  const socket = useSocket();
+
   useEffect(() => {
     if (auctionId) {
-      auth.getToken().then((accessToken) => {
-        const headers = {
-          Authorization: accessToken ? "Bearer " + accessToken : undefined,
-        };
-        const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
-        const newSocket = io(URL, {
-          query: { auctionId: auctionId },
-          extraHeaders: Object.entries(headers).reduce(
-            (acc, [key, value]) =>
-              value !== undefined ? { ...acc, [key]: value } : acc,
-            {}
-          ),
-          path: "/socket.io",
-        });
-        newSocket?.on("bid:submitted", (data) => {
-          setLastestBid(data);
-        });
-
-        return () => {
-          newSocket.close();
-          logout();
-        };
+      socket?.on("bid:submitted", (data) => {
+        setLastestBid(data);
       });
+      return () => {
+        socket.close();
+        logout();
+      };
     }
   }, []);
 

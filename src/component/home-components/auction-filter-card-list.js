@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import localizationKeys from "../../localization/localization-keys";
 import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
@@ -7,12 +7,24 @@ import MultiButtonFilter from "component/shared/buttons/multi-button-filter";
 const AuctionFilterCardList = ({ title, seeAll, name, values, myRef }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+  const [IsseeAll, setSeeAll] = useState(false);
   return (
     <div>
-      <div className="group w-auto  h-fit rounded-2xl shadow p-4">
+      <div
+        className={
+          name === "brands"
+            ? IsseeAll
+              ? " h-fit shadow group w-auto p-4 rounded-2xl"
+              : " h-[228px] overflow-hidden shadow group w-auto p-4 rounded-2xl"
+            : "group w-auto h-fit rounded-2xl shadow p-4 "
+        }
+      >
         <div className="flex justify-between border-b-[1px] border-[#EEEEEE] mt-4 pb-4">
           <h1 className="text-gray-dark text-base font-bold ">{title}</h1>
-          <p className="text-gray-med text-xs font-normal cursor-default">
+          <p
+            onClick={() => setSeeAll((p) => !p)}
+            className="text-gray-med text-xs font-normal cursor-default cursor-pointer"
+          >
             {selectedContent[localizationKeys.seeAll]} ({seeAll})
           </p>
         </div>

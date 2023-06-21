@@ -1,37 +1,33 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { Route, Switch, useLocation } from "react-router-dom";
 import routes from "../routes";
 
-import Home from "../page/app/home/home";
 import Header from "../component/shared/header-app/header";
 import FAQs from "../page/app/FAQs/FAQs";
-import Support from "../page/app/support/support";
 import Categories from "../page/app/categories/categories";
+import Home from "../page/app/home/home";
+import Support from "../page/app/support/support";
 
-import CreateAuction from "../page/app/create-auction/create-auction";
-import ProductDetails from "../page/app/create-auction/product-details";
 import AuctionDetails from "../page/app/create-auction/auction-details";
-import ShippingDetails from "../page/app/create-auction/shipping-details";
+import CreateAuction from "../page/app/create-auction/create-auction";
 import PaymentDetails from "../page/app/create-auction/payment-details";
+import ProductDetails from "../page/app/create-auction/product-details";
+import ShippingDetails from "../page/app/create-auction/shipping-details";
 
 import Sidebar from "../component/shared/side-bare/sibe-bare";
 
 import AuthModel from "../component/shared/auth-model/auth-model";
 
-import ProfileLayouts from "../page/app/profile/profile-layouts";
-import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
-import Footer from "../component/shared/footer/footer";
-import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
-import PaymentSucsessModel from "../component/shared/payment-models/payment-sucsess-model";
-import PayDeposite from "../component/home-components/pay-deposite";
-import useLocalStorage from "../hooks/use-localstorage";
-import Win from "../component/shared/lotties-file/win";
-import { useEffect } from "react";
-import auth from "../utils/auth";
-import { useAuthState } from "../context/auth-context";
-import { io } from "socket.io-client";
 import BuyNowPaymentPage from "../component/auctions-details-components/buy-now-payment-page";
+import PayDeposite from "../component/home-components/pay-deposite";
+import Footer from "../component/shared/footer/footer";
+import Win from "../component/shared/lotties-file/win";
+import PaymentSucsessModel from "../component/shared/payment-models/payment-sucsess-model";
+import useLocalStorage from "../hooks/use-localstorage";
+import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
+import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
+import ProfileLayouts from "../page/app/profile/profile-layouts";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);

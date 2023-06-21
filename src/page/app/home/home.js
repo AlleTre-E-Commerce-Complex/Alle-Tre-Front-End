@@ -136,7 +136,7 @@ const Home = () => {
             <ShowFilterSections />
           </div>
         </div>
-        <div className="mt-auto">
+        <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
           {isGrid ? (
             <button
               onClick={() => setIsGrid((p) => !p)}
@@ -163,7 +163,7 @@ const Home = () => {
           {/* right card sections */}
           {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto "> */}
           {mainAuctions?.length === 0 ? (
-            <div className="w-full flex justify-center items-center bg-[#E5E5E51A] rounded-2xl">
+            <div className="w-full flex justify-center pt-52 bg-[#E5E5E51A] rounded-2xl">
               <div className="mx-auto text-center">
                 <EmtyHome className="mx-auto" />
                 <p className="text-gray-dark font-normal text-base py-8">

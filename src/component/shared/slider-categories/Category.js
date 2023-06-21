@@ -23,8 +23,8 @@ const Category = ({ img, title, id, view }) => {
             <img
               className={
                 img
-                  ? "group-hover:scale-125 pt-3 duration-300 ease-in-out transform"
-                  : "pl-2 pt-3 group-hover:scale-125  duration-300 ease-in-out transform"
+                  ? "group-hover:scale-125 pt-3 duration-300 ease-in-out transform flex justify-center items-center"
+                  : "pl-2 pt-3 group-hover:scale-125  duration-300 ease-in-out transform flex justify-center items-center"
               }
               src={img || addImage}
               alt={title}

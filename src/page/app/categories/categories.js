@@ -117,9 +117,9 @@ const Categories = () => {
         <FilterSections myRef={myRef} categoryId={categoryId} hiddenGatogry />
         {/* right card sections */}
         {mainAuctions?.length === 0 ? (
-          <div className="w-full flex justify-center items-center bg-[#E5E5E51A] rounded-2xl">
+          <div className="w-full flex justify-center pt-52 bg-[#E5E5E51A] rounded-2xl">
             <div className="mx-auto text-center">
-              <EmtyHome className="mx-auto" />
+              <EmtyHome className="mx-auto " />
               <p className="text-gray-dark font-normal text-base py-8">
                 {
                   selectedContent[
