@@ -18,7 +18,7 @@ import AddLocationModel from "../create-auction-components/add-location-model";
 import { Open } from "../../redux-store/auth-model-slice";
 import CountdownTimer from "component/shared/timers/countdown-timer";
 
-const ImageSlider = ({ myRef, images, slidesData }) => {
+const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -57,12 +57,12 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
         <div className="relative hidden lg:block ">
           <img
             className="object-cover absolute -right-0 lg:-top-6 md:-top-2 w-1/2 md:h-[541px] h-[200px] rounded-r-[32px] shadow-md drop-shadow-md blur-[0.1px] opacity-40 brightness-90  "
-            src={images}
+            src={emtystateImg}
             alt="travel"
           />
           <img
             className="object-cover absolute -left-0 lg:-top-6 md:-top-2  w-1/2 md:h-[541px] h-[200px] rounded-l-[32px] shadow-md drop-shadow-md blur-[0.1px] opacity-40 brightness-90 "
-            src={images}
+            src={emtystateImg}
             alt="travel"
           />
         </div>
@@ -92,7 +92,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
           <div className="drop-shadow-md lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
             <img
               className="object-cover w-full md:h-[541px] h-[200px] rounded-[32px] shadow-md drop-shadow-md"
-              src={images}
+              src={emtystateImg}
               alt="travel"
             />
           </div>

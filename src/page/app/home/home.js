@@ -111,10 +111,9 @@ const Home = () => {
       <div className="z-20 md:h-[541px] h-[200px] ">
         <ImageSlider
           myRef={myRef}
-          images={sponsoredAuctions?.map(
-            (img) => img?.product?.images || bigSliderEmtyState
-          )}
+          images={sponsoredAuctions?.map((img) => img?.product?.images)}
           slidesData={sponsoredAuctions}
+          emtystateImg={bigSliderEmtyState}
         />
       </div>
       <div className="pt-32 text-center">
