@@ -111,11 +111,9 @@ const Home = () => {
       <div className="z-20 md:h-[541px] h-[200px] ">
         <ImageSlider
           myRef={myRef}
-          images={
-            sponsoredAuctions?.length === 0
-              ? bigSliderEmtyState
-              : sponsoredAuctions?.map((img) => img?.product?.images)
-          }
+          images={sponsoredAuctions?.map(
+            (img) => img?.product?.images || bigSliderEmtyState
+          )}
           slidesData={sponsoredAuctions}
         />
       </div>

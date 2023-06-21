@@ -221,7 +221,7 @@ const ImageSlider = ({ myRef, images, slidesData }) => {
                 <div className="drop-shadow-[0px 3px 16px #E9E9E980] lg:h-[561px] md:h-[350px] h-[200px] shadow-img ">
                   <img
                     className="object-cover w-full md:h-[541px] h-[200px] rounded-[32px] drop-shadow-[0px 3px 16px #E9E9E980]"
-                    src={images || slide?.product?.images[0]?.imageLink}
+                    src={slide?.product?.images[0]?.imageLink}
                     alt="travel"
                   />
                 </div>
