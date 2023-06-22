@@ -60,6 +60,11 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
     }
 
     setIsLoading(true);
+    console.log("====================================");
+    console.log(
+      process.env.REACT_APP_STRIPE_RETURN_URL`${routes.app.home}/paymentdetails`
+    );
+    console.log("====================================");
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -67,6 +72,8 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
         // Make sure to change this to your payment completion page
         return_url: `https://allatre.com${routes.app.home}/paymentdetails`,
         // return_url: `https://allatre-front.vercel.app/${routes.app.home}/paymentdetails`,
+        // return_url: process.env
+        //   .REACT_APP_STRIPE_RETURN_URL`${routes.app.home}/paymentdetails`,
       },
     });
 

@@ -67,7 +67,8 @@ export default function CheckoutFormPayDeposite({ payPrice }) {
         // Make sure to change this to your payment completion page
         return_url: `https://allatre.com${routes.app.home}/payDeposite`,
         // return_url: `https://allatre-front.vercel.app/${routes.app.home}/payDeposite`,
-        // return_url: `http://localhost:3000${routes.app.home}/payDeposite`,
+        // return_url: process.env
+        //   .REACT_APP_STRIPE_RETURN_URL`${routes.app.home}/payDeposite`,
       },
     });
 

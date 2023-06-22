@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 
 import woooo from "./woooo.json";
 
-import { useAuthState } from "../../../context/auth-context";
-import auth from "../../../utils/auth";
-import { io } from "socket.io-client";
 import { useSocket } from "context/socket-context";
+import { useAuthState } from "../../../context/auth-context";
 
 const Win = () => {
   const { user, logout } = useAuthState();
@@ -16,11 +14,11 @@ const Win = () => {
   useEffect(() => {
     socket?.once("auction:winner", (data) => {
       setIsWinner(data);
+      return () => {
+        socket.close();
+        logout();
+      };
     });
-    return () => {
-      socket.close();
-      logout();
-    };
   }, []);
 
   useEffect(() => {

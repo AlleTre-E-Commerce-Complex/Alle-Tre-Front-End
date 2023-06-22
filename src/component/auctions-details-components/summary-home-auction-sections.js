@@ -68,8 +68,8 @@ const SummaryHomeAuctionSections = ({
   const dispatch = useDispatch();
   dispatch(auctionsId(auctionsID));
 
-  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
-    "hasCompletedProfile",
+  const [SocketauctionId, setSocketauctionId] = useLocalStorage(
+    "SocketauctionId",
     ""
   );
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
@@ -95,16 +95,18 @@ const SummaryHomeAuctionSections = ({
   const socket = useSocket();
 
   useEffect(() => {
-    if (auctionId) {
-      socket?.on("bid:submitted", (data) => {
-        setLastestBid(data);
-        return () => {
-          socket.close();
-          logout();
-        };
-      });
-    }
+    setSocketauctionId(auctionId);
+    socket?.on("bid:submitted", (data) => {
+      setLastestBid(data);
+      return () => {
+        socket.close();
+        logout();
+      };
+    });
   }, []);
+  console.log("====================================");
+  console.log(lastestBid);
+  console.log("====================================");
 
   const timeLeft = useCountdown(TimeLeft);
   const formattedTimeLeft = `${timeLeft.days} ${

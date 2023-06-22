@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 
@@ -6,19 +6,17 @@ import RatingStare from "../shared/rating-star/rating-star";
 
 import AnglesRight from "../../../src/assets/icons/angles-right-wihte.png";
 
-import { HashLink } from "react-router-hash-link";
-import routes from "../../routes";
-import { useLocation, useParams } from "react-router-dom";
-import AuctionsStatus from "../shared/status/auctions-status";
-import TotalBidsTableModel from "./total-bids-table-model";
+import { useSocket } from "context/socket-context";
+import useLocalStorage from "hooks/use-localstorage";
 import moment from "moment";
+import { useLocation, useParams } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+import { useAuthState } from "../../context/auth-context";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { useAuthState } from "../../context/auth-context";
-import auth from "../../utils/auth";
-import { io } from "socket.io-client";
-import { useSocket } from "context/socket-context";
+import AuctionsStatus from "../shared/status/auctions-status";
+import TotalBidsTableModel from "./total-bids-table-model";
 
 const SummaryAuctionSections = ({
   numberStare,
@@ -38,21 +36,28 @@ const SummaryAuctionSections = ({
   const { pathname } = useLocation();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
   const [lastestBid, setLastestBid] = useState();
+  const [SocketauctionId, setSocketauctionId] = useLocalStorage(
+    "SocketauctionId",
+    ""
+  );
 
   const { auctionId } = useParams();
   const { user, logout } = useAuthState();
+
   const socket = useSocket();
   useEffect(() => {
-    if (auctionId) {
-      socket?.on("bid:submitted", (data) => {
-        setLastestBid(data);
-      });
+    setSocketauctionId(auctionId);
+    socket?.on("bid:submitted", (data) => {
+      setLastestBid(data);
       return () => {
         socket.close();
         logout();
       };
-    }
+    });
   }, []);
+  console.log("====================================");
+  console.log(lastestBid);
+  console.log("====================================");
 
   return (
     <div>
