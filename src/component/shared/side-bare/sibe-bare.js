@@ -67,6 +67,18 @@ const Sidebar = ({ SetSid, sid }) => {
       toast.error("You must log in first to show your profile");
     }
   };
+
+  const handelmyBids = () => {
+    if (user) {
+      history.push(routes.app.profile.myBids);
+    } else dispatch(Open());
+  };
+  const handelWatchlist = () => {
+    if (user) {
+      history.push(routes.app.profile.watchlist);
+    } else dispatch(Open());
+  };
+
   return (
     <>
       {/* Overlay */}
@@ -109,7 +121,7 @@ const Sidebar = ({ SetSid, sid }) => {
                 pathname.length === 1 || pathname.startsWith(routes.app.myBides)
               }
               onClick={() => {
-                history.push(routes.app.myBides);
+                handelmyBids();
                 SetSid(false);
               }}
             />
@@ -143,7 +155,7 @@ const Sidebar = ({ SetSid, sid }) => {
                 pathname.startsWith(routes.app.profile.watchlist)
               }
               onClick={() => {
-                history.push(routes.app.profile.watchlist);
+                handelWatchlist();
                 SetSid(false);
               }}
             />

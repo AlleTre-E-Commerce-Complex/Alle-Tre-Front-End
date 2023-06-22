@@ -175,17 +175,17 @@ const AuctionCard = ({
         </h1>
         <div onClick={() => handelGoDetails(auctionId)}>
           <AuctionsStatus status={status} small />
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between mt-2 ">
             <div>
-              <h6 className="text-gray-veryLight font-normal text-[10px]">
+              <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
                 {selectedContent[localizationKeys.totalBids]}
               </h6>
-              <p className="text-gray-dark font-medium text-[10px]">
+              <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
                 {totalBods || 0} {selectedContent[localizationKeys.bid]}
               </p>
             </div>
             <div>
-              <h6 className="text-gray-veryLight font-normal text-[10px]">
+              <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
                 {status === "IN_SCHEDULED"
                   ? selectedContent[localizationKeys.startDate]
                   : status === "SOLD"
@@ -193,14 +193,14 @@ const AuctionCard = ({
                   : selectedContent[localizationKeys.endingTime]}
               </h6>
               {status === "SOLD" ? (
-                <p className="font-medium text-[10px] text-gray-dark">
+                <p className="font-medium md:text-[10px] text-[8px]  text-gray-dark">
                   {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
                 </p>
               ) : (
                 <p
                   className={`${
                     timeLeft.days === 0 ? "text-red" : "text-gray-dark"
-                  } font-medium text-[10px] `}
+                  } font-medium md:text-[10px] text-[8px] `}
                 >
                   {status === "IN_SCHEDULED"
                     ? formattedstartDate

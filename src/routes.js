@@ -12,7 +12,7 @@ const routes = {
   },
   app: {
     default: `/allatre`,
-    home: `/allatre/home`,
+    home: "/allatre/home",
     homeDetails: (auctionId = ":auctionId") =>
       `/allatre/home/${auctionId}/details`,
     payDeposite: (auctionId = ":auctionId") =>

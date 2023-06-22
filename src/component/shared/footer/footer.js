@@ -25,10 +25,10 @@ const Footer = () => {
         />
         <div className="">
           <div className="absolute lg:bottom-9 bottom-20 lg:ltr:left-24 ltr:left-2 lg:rtl:right-24 rtl:right-2">
-            <h1 className="text-2xl text-white font-medium ">
+            <h1 className="md:text-2xl text-base text-white font-medium ">
               {selectedContent[localizationKeys.weAreAlwaysHereToHelpYou]}
             </h1>
-            <p className="text-base text-white font-normal pt-4 ">
+            <p className="md:text-base text-sm text-white font-normal pt-4 ">
               {
                 selectedContent[
                   localizationKeys.subscribeNowToGetNewOffersAndUpdates
@@ -44,12 +44,12 @@ const Footer = () => {
               }
             </p>
           </div>
-          <div className="flex gap-5 absolute lg:ltr:right-24 ltr:right-2 lg:rtl:left-24 rtl:left-2 lg:bottom-20 bottom-2 ">
+          <div className="flex gap-5 absolute lg:ltr:right-24 ltr:right-2 lg:rtl:left-24 rtl:left-2 lg:bottom-20 bottom-5 ">
             <input
-              className="sm:w-[400px] w-full h-[48px] rounded-lg px-4 outline-none"
+              className="sm:w-[400px] w-[200px] md:h-[48px] h-[32px] rounded-lg px-4 outline-none"
               placeholder={selectedContent[localizationKeys.writeYourMail]}
             />
-            <button className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] h-[48px] text-white ">
+            <button className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] md:h-[48px] h-[32px] text-white ">
               {selectedContent[localizationKeys.subscribe]}
             </button>
           </div>
@@ -59,7 +59,7 @@ const Footer = () => {
         <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[82px]">
           <AllatreLogoWhite />
           <div className="flex gap-x-14 mt-5 md:mt-0">
-            <div>
+            <div className="w-full">
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.categories]}
               </h1>
@@ -72,7 +72,7 @@ const Footer = () => {
                 </p>
               ))}
             </div>
-            <div>
+            <div className="w-full">
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.sellingOnAllatre]}
               </h1>
@@ -89,7 +89,7 @@ const Footer = () => {
                 {selectedContent[localizationKeys.createAuction]}
               </p>
             </div>
-            <div>
+            <div className="w-full">
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.myAccount]}
               </h1>

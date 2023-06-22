@@ -96,7 +96,7 @@ const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
               alt="travel"
             />
           </div>
-          <div className="w-full md:h-[541px] h-[200px] rounded-[32px]  from-black/80 absolute top-0 z-10 text-white  pt-12 ">
+          <div className="w-full md:h-[541px] h-[200px] rounded-[32px]  from-black/80 absolute top-0 z-10 text-white  lg:pt-12 pt-3 ">
             <ScrollingIcon
               onClick={() =>
                 window.scrollTo({
@@ -107,7 +107,7 @@ const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
               className="absolute -bottom-[33px] z-50 left-1/2 transform -translate-x-1/2 cursor-pointer hidden l:block"
             />
             <div>
-              <h1 className="text-center text-4xl font-normal mt-[128px]">
+              <h1 className="text-center lg:text-4xl md:text-lg text-sm font-normal md:mt-[128px] mt-4 md:px-5 ">
                 {
                   selectedContent[
                     localizationKeys
@@ -115,14 +115,14 @@ const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
                   ]
                 }
               </h1>
-              <p className="text-center pt-4">
+              <p className="text-center pt-4 md:text-base text-sm px-8">
                 {
                   selectedContent[
                     localizationKeys
                       .YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder
                   ]
                 }
-                <br></br>{" "}
+                <br></br>
                 {
                   selectedContent[
                     localizationKeys.participationAndAttractMoreBidders
@@ -132,7 +132,7 @@ const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
               <div className="flex justify-center">
                 <button
                   onClick={handelCreatOuction}
-                  className="bg-primary-dark  w-[304px] h-[48px] rounded-lg mt-[48px]"
+                  className="bg-primary-dark  md:w-[304px] w-48 md:h-[48px] h-[32px] rounded-lg md:mt-[48px] mt-4"
                 >
                   {selectedContent[localizationKeys.CreateyourAdNow]}
                 </button>

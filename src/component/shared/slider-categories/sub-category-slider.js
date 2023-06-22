@@ -37,13 +37,15 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
   };
   return (
     <div className="max-w-[1440px] mx-auto">
-      <div className="ezd-content relative ">
+      <div className="ezd-content relative tr:ml-2 rtl:mr-2 ">
         <div className="ezd-snapslider pt-10">
           <div className="snapslider-wrapper">
             <div ref={swiperRef} className={`snapslider-overflow`}>
               <div
                 className={`${
-                  SubGatogryOptions?.length > 4 ? "" : "justify-center"
+                  SubGatogryOptions?.length > 3
+                    ? ""
+                    : "md:justify-center justify-start"
                 } snapslider-scroll swiper-wrapper py-2`}
               >
                 {/* slider */}

@@ -9,9 +9,9 @@ import { io } from "socket.io-client";
 import { useSocket } from "context/socket-context";
 
 const Win = () => {
-  const socket = useSocket();
   const { user, logout } = useAuthState();
   const [IsWinner, setIsWinner] = useState(null);
+  const socket = useSocket();
 
   useEffect(() => {
     socket?.once("auction:winner", (data) => {

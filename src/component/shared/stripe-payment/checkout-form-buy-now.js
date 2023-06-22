@@ -63,7 +63,7 @@ export default function CheckoutFormBuyNow({ payPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://allatre.com/${routes.app.home}/buyNow`,
+        return_url: `https://allatre.com${routes.app.home}/buyNow`,
         // return_url: `https://allatre-front.vercel.app/${routes.app.home}/buyNow`,
         // return_url: `https://allatre-front.vercel.app/${routes.app.home}/buyNow`,
       },

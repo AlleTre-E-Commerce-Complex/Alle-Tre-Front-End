@@ -32,24 +32,31 @@ const SliderRow = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (GatogryOptions?.length && swiper4) {
+      swiper4.slideTo(0, 0); // Go to the first index of the slider
+    }
+  }, [GatogryOptions]);
+
   const handleNextClick = () => {
-    if (GatogryOptions?.length) {
-      swiper4?.slideNext();
-    } else swiper4?.slideNext();
+    swiper4?.slideNext();
   };
 
   const handlePrevClick = () => {
     swiper4?.slidePrev();
   };
-
   return (
-    <div className="max-w-[1440px] mx-auto overflow-hidden  ">
+    <div className="max-w-[1440px] mx-auto   ">
       <div className="ezd-content relative ltr:ml-2 rtl:mr-2">
         <div className="ezd-snapslider pt-10 ">
           <div className="snapslider-wrapper">
             <div ref={swiperRef4} className={`snapslider-overflow`}>
               <div
-                className={` snapslider-scroll swiper-wrapper py-2 justify-center`}
+                className={`${
+                  GatogryOptions?.length > 3
+                    ? ""
+                    : "md:justify-center justify-start"
+                } snapslider-scroll swiper-wrapper py-2`}
               >
                 {/* slider */}
                 {GatogryOptions?.map((e, index) => (

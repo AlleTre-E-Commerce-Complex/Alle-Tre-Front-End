@@ -1,21 +1,13 @@
-import React, { useState } from "react";
-import { useLanguage } from "../../context/language-context";
-import content from "../../localization/content";
-import { useAuthState } from "../../context/auth-context";
-import { useDispatch } from "react-redux";
+import AuctionsStatus from "component/shared/status/auctions-status";
+import moment from "moment";
 import { useHistory } from "react-router-dom";
-import useAxios from "../../hooks/use-axios";
+import { useLanguage } from "../../context/language-context";
 import useCountdown from "../../hooks/use-countdown";
+import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { Open } from "../../redux-store/auth-model-slice";
-import { authAxios } from "../../config/axios-config";
-import api from "../../api";
-import { toast } from "react-hot-toast";
 import routes from "../../routes";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
-import moment from "moment";
-import AuctionsStatus from "component/shared/status/auctions-status";
 
 const AuctionCardList = ({
   price,
@@ -38,11 +30,7 @@ const AuctionCardList = ({
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const { user } = useAuthState();
-  const dispatch = useDispatch();
   const history = useHistory();
-  const { run, isLoading } = useAxios([]);
-  const [isWatshlist, setWatshlist] = useState(WatshlistState);
 
   const timeLeft = useCountdown(endingTime);
   const formattedTimeLeft = `${timeLeft.days} ${
@@ -59,52 +47,6 @@ const AuctionCardList = ({
     startDate.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
-  const handelAddNewWatshlist = (auctionId) => {
-    if (user) {
-      const body = {
-        auctionId: auctionId,
-      };
-      if (watshlistForceState || isWatshlist) {
-        run(
-          authAxios
-            .delete(api.app.WatchList.delete(auctionId))
-            .then((res) => {
-              setWatshlist(false);
-              toast.success(
-                selectedContent[
-                  localizationKeys
-                    .thisAuctionDeleteFromWatchListBeenSuccessfully
-                ]
-              );
-              onReload();
-            })
-            .catch((err) => {
-              onReload();
-            })
-        );
-      } else {
-        run(
-          authAxios
-            .post(api.app.WatchList.add, body)
-            .then((res) => {
-              setWatshlist(true);
-              toast.success(
-                selectedContent[
-                  localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
-                ]
-              );
-              onReload();
-            })
-            .catch((err) => {
-              onReload();
-            })
-        );
-      }
-    } else {
-      dispatch(Open());
-      onReload();
-    }
-  };
   const handelGoDetails = (id) => {
     if (isMyAuction) {
       if (status === "ACTIVE") {
@@ -126,10 +68,10 @@ const AuctionCardList = ({
   };
   return (
     <div className="cursor-pointer " onClick={() => handelGoDetails(auctionId)}>
-      <div className=" h-auto my-2 rounded-lg group hover:border-primary border-transparent border-[1px] shadow-md p-4 flex justify-between  ">
+      <div className=" h-auto my-2 rounded-lg group hover:border-primary border-transparent border-[1px] shadow-md p-4 flex md:flex-row flex-col justify-between ">
         <div className="flex  gap-x-4">
           {/* img */}
-          <div className="w-[103px] min-w-[103px] h-[112px] rounded-lg relative overflow-hidden bg-gray-light ">
+          <div className="w-[103px] min-w-[80px] md:h-[112px] h-[100px] rounded-lg relative overflow-hidden bg-gray-light ">
             <img
               onClick={() => handelGoDetails(auctionId)}
               className="w-full h-full mx-auto rounded-lg  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
@@ -154,27 +96,27 @@ const AuctionCardList = ({
             <div>
               <AuctionsStatus status={status} small />
             </div>
-            <div className="flex gap-x-10 mt-2">
+            <div className="flex md:gap-x-10 gap-x-6 mt-2">
               <div>
-                <h6 className="text-gray-veryLight font-normal text-[10px]">
+                <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
                   {selectedContent[localizationKeys.totalBids]}
                 </h6>
-                <p className="text-gray-dark font-medium text-[10px]">
+                <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
                   {totalBods || 0} {selectedContent[localizationKeys.bid]}
                 </p>
               </div>
               {/*  */}
               <div>
-                <h6 className="text-gray-veryLight font-normal text-[10px]">
+                <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
                   {selectedContent[localizationKeys.lastPrice]}
                 </h6>
-                <p className="text-gray-dark font-medium text-[10px]">
+                <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
                   {formatCurrency(price)}
                 </p>
               </div>
               {/*  */}
               <div>
-                <h6 className="text-gray-veryLight font-normal text-[10px]">
+                <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
                   {status === "IN_SCHEDULED"
                     ? selectedContent[localizationKeys.startDate]
                     : status === "SOLD"
@@ -182,14 +124,14 @@ const AuctionCardList = ({
                     : selectedContent[localizationKeys.endingTime]}
                 </h6>
                 {status === "SOLD" ? (
-                  <p className="font-medium text-[10px] text-gray-dark">
+                  <p className="font-medium md:text-[10px] text-[8px] text-gray-dark">
                     {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
                   </p>
                 ) : (
                   <p
                     className={`${
                       timeLeft.days === 0 ? "text-red" : "text-gray-dark"
-                    } font-medium text-[10px] `}
+                    } font-medium md:text-[10px] text-[8px] `}
                   >
                     {status === "IN_SCHEDULED"
                       ? formattedstartDate
@@ -215,7 +157,7 @@ const AuctionCardList = ({
             <div
               className={` ${isPurchased ? "hidden" : " flex gap-x-3 "}  ${
                 isBuyNowAllowed ? "justify-between" : "justify-end"
-              } mt-4 flex flex-col gap-y-4 `}
+              } mt-4 flex md:flex-col flex-row gap-y-4 `}
             >
               {isBuyNowAllowed && (
                 <button

@@ -58,18 +58,27 @@ const Header = ({ SetSid }) => {
       history.push(routes.app.createAuction.default);
     } else dispatch(Open());
   };
-
   const handelRegister = () => {
     if (user) {
       history.push(routes.app.profile.profileSettings);
     } else dispatch(Open());
   };
-
+  const handelmyAuctions = () => {
+    if (user) {
+      history.push(routes.app.profile.myAuctions);
+    } else dispatch(Open());
+  };
+  const handelmyBids = () => {
+    if (user) {
+      history.push(routes.app.profile.myBids);
+    } else dispatch(Open());
+  };
   const handelWatchlist = () => {
     if (user) {
       history.push(routes.app.profile.watchlist);
     } else dispatch(Open());
   };
+
   return (
     <div className=" w-full fixed top-0 z-50 bg-white/30 backdrop-blur-md ">
       <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4  max-w-[1440px] lg:mx-auto md:mx-12 px-2 md:px-0">
@@ -96,9 +105,7 @@ const Header = ({ SetSid }) => {
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.myAuctions.default)
               }
-              onClick={() =>
-                history.push(routes.app.profile.myAuctions.default)
-              }
+              onClick={() => handelmyAuctions()}
             />
             <NavLinkHeader
               title={selectedContent[localizationKeys.myBids]}
@@ -106,7 +113,7 @@ const Header = ({ SetSid }) => {
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.myBids.default)
               }
-              onClick={() => history.push(routes.app.profile.myBids.default)}
+              onClick={() => handelmyBids()}
             />
             <NavLinkHeader
               title={selectedContent[localizationKeys.watchlist]}

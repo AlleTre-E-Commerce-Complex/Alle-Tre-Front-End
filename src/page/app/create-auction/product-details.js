@@ -99,7 +99,7 @@ const ProductDetails = () => {
           setRadioValue(completeDraftValue?.product?.usageStatus);
         })
       );
-  }, [runAuctionById, state?.auctionId, forceReload, productDetailsint?.id]);
+  }, [runAuctionById, state?.auctionId, productDetailsint?.id]);
 
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
@@ -182,7 +182,6 @@ const ProductDetails = () => {
     SubGatogryOptions.length,
     productDetailsint.category,
     productDetailsint.subCategory,
-    forceReload,
     loadingImg,
   ]);
   const regularCustomFieldsvalidations =
@@ -546,6 +545,7 @@ const ProductDetails = () => {
               {(formik) => (
                 <Form onSubmit={formik.handleSubmit}>
                   <ScrollToFieldError />
+                  {console.log(formik?.values)}
                   {setDraftValue(formik?.values)}
                   <div className="grid gap-x-4 gap-y-10 md:grid-cols-4 grid-cols-2 mt-10 ">
                     <div className="col-span-2">
@@ -569,11 +569,17 @@ const ProductDetails = () => {
                           const fieldOption = GatogryOptions.find(
                             (go) => go.value === value
                           );
-                          onReload();
+                          // onReload();
                           setCustomFromData([]);
                           setSubCategoryId(undefined);
                           formik.setFieldValue("subCategory", "");
                           setHasUsageCondition(fieldOption?.hasUsageCondition);
+                          dispatch(
+                            productDetails({
+                              category: value,
+                              itemName: draftValue.itemName,
+                            })
+                          );
                         }}
                       />
                     </div>
@@ -645,6 +651,7 @@ const ProductDetails = () => {
                     {customFromData?.regularCustomFields?.map((e) => (
                       <div className="w-full mt-1.5 col-span-2 sm:col-span-1">
                         <FormikInput
+                          min={1}
                           name={e?.key}
                           type={e?.type}
                           label={lang === "en" ? e?.labelEn : e?.labelAr}
