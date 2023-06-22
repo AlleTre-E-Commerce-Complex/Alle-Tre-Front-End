@@ -82,9 +82,13 @@ const SummaryHomeAuctionSections = ({
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
-    if (JSON.parse(isCompletedProfile)) {
-      history.push(routes.app.buyNow(auctionId));
-    } else setOpenMakeDefultLocations(true);
+    if (user) {
+      if (JSON.parse(isCompletedProfile)) {
+        history.push(routes.app.buyNow(auctionId));
+      } else setOpenMakeDefultLocations(true);
+    } else {
+      dispatch(Open());
+    }
   };
 
   const { user, logout } = useAuthState();
@@ -123,6 +127,7 @@ const SummaryHomeAuctionSections = ({
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
+
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
         if (validateBidAmount(newValue)) {
