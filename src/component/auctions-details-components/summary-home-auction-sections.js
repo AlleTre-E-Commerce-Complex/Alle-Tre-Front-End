@@ -1,38 +1,35 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 
 import RatingStare from "../shared/rating-star/rating-star";
 
-import { HashLink } from "react-router-hash-link";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import AuctionsStatus from "../shared/status/auctions-status";
+import { HashLink } from "react-router-hash-link";
+import { Button } from "semantic-ui-react";
 import useCountdown from "../../hooks/use-countdown";
-import { Button, Modal } from "semantic-ui-react";
+import AuctionsStatus from "../shared/status/auctions-status";
 import SubmitBidModel from "./submit-bid-model";
 import TotalBidsTableModel from "./total-bids-table-model";
-import { useDispatch, useSelector } from "react-redux";
 
-import { auctionsId } from "../../redux-store/auction-details-slice";
-import { useAuthState } from "../../context/auth-context";
-import { Open } from "../../redux-store/auth-model-slice";
-import { toast } from "react-hot-toast";
-import auth from "../../utils/auth";
-import { io } from "socket.io-client";
-import content from "../../localization/content";
-import { useLanguage } from "../../context/language-context";
-import localizationKeys from "../../localization/localization-keys";
-import moment from "moment";
-import useAxios from "../../hooks/use-axios";
-import { authAxios } from "../../config/axios-config";
-import api from "../../api";
-import routes from "../../routes";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { buyNow } from "../../redux-store/bid-amount-slice";
-import useLocalStorage from "../../hooks/use-localstorage";
-import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
-import AddLocationModel from "../create-auction-components/add-location-model";
 import { useSocket } from "context/socket-context";
+import moment from "moment";
+import { toast } from "react-hot-toast";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import api from "../../api";
+import { authAxios } from "../../config/axios-config";
+import { useAuthState } from "../../context/auth-context";
+import { useLanguage } from "../../context/language-context";
+import useAxios from "../../hooks/use-axios";
+import useLocalStorage from "../../hooks/use-localstorage";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
+import { auctionsId } from "../../redux-store/auction-details-slice";
+import { Open } from "../../redux-store/auth-model-slice";
+import { buyNow } from "../../redux-store/bid-amount-slice";
+import routes from "../../routes";
+import AddLocationModel from "../create-auction-components/add-location-model";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -97,11 +94,11 @@ const SummaryHomeAuctionSections = ({
     if (auctionId) {
       socket?.on("bid:submitted", (data) => {
         setLastestBid(data);
+        return () => {
+          socket.close();
+          logout();
+        };
       });
-      return () => {
-        socket.close();
-        logout();
-      };
     }
   }, []);
 
@@ -167,20 +164,24 @@ const SummaryHomeAuctionSections = ({
     const body = {
       bidAmount: newValue,
     };
-    run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
-      .then((res) => {
-        toast.success(
-          selectedContent[localizationKeys.yourAddNewSubmitValueSuccessfully]
-        );
-        setSubmitBidValue("");
-      })
-      .catch((err) => {
-        toast.error(
-          lang === "en"
-            ? err.message.en || err.message
-            : err.message.ar || err.message
-        );
-      });
+    if (user) {
+      run(authAxios.post(api.app.auctions.submitBid(auctionId), body))
+        .then((res) => {
+          toast.success(
+            selectedContent[localizationKeys.yourAddNewSubmitValueSuccessfully]
+          );
+          setSubmitBidValue("");
+        })
+        .catch((err) => {
+          toast.error(
+            lang === "en"
+              ? err.message.en || err.message
+              : err.message.ar || err.message
+          );
+        });
+    } else {
+      dispatch(Open());
+    }
   };
 
   return (
@@ -366,7 +367,6 @@ const SummaryHomeAuctionSections = ({
         TextButton={selectedContent[localizationKeys.add]}
         onReload={onReload}
       />
-      <MakeDefultLocations />
     </div>
   );
 };

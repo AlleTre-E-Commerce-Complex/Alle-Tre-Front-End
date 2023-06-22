@@ -18,6 +18,7 @@ import localizationKeys from "../../localization/localization-keys";
 import { useAuthState } from "../../context/auth-context";
 import auth from "../../utils/auth";
 import { io } from "socket.io-client";
+import { useSocket } from "context/socket-context";
 
 const SummaryAuctionSections = ({
   numberStare,
@@ -40,31 +41,16 @@ const SummaryAuctionSections = ({
 
   const { auctionId } = useParams();
   const { user, logout } = useAuthState();
+  const socket = useSocket();
   useEffect(() => {
     if (auctionId) {
-      auth.getToken().then((accessToken) => {
-        const headers = {
-          Authorization: accessToken ? "Bearer " + accessToken : undefined,
-        };
-        const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
-        const newSocket = io(URL, {
-          query: { auctionId: auctionId },
-          extraHeaders: Object.entries(headers).reduce(
-            (acc, [key, value]) =>
-              value !== undefined ? { ...acc, [key]: value } : acc,
-            {}
-          ),
-          path: "/socket.io",
-        });
-        newSocket?.on("bid:submitted", (data) => {
-          setLastestBid(data);
-        });
-
-        return () => {
-          newSocket.close();
-          logout();
-        };
+      socket?.on("bid:submitted", (data) => {
+        setLastestBid(data);
       });
+      return () => {
+        socket.close();
+        logout();
+      };
     }
   }, []);
 

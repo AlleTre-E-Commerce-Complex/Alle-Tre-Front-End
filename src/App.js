@@ -18,7 +18,10 @@ function App() {
           path={routes.auth.forgetpass.default}
           component={CredentialsuUpdateLayout}
         />
-        <Redirect path={routes.app.home} component={Home} />
+        <Redirect
+          path={`${routes.app.home}?page=1&perPage=28`}
+          component={Home}
+        />
       </Switch>
 
       <Toaster

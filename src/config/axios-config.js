@@ -1,10 +1,7 @@
 import Axios from "axios";
 import auth from "../utils/auth";
 
-Axios.defaults.baseURL =
-  process.env.NODE_ENV !== "production"
-    ? process.env.REACT_APP_DEV_URL
-    : process.env.REACT_APP_SERVER_URL;
+Axios.defaults.baseURL = process.env.REACT_APP_DEV_URL;
 
 const AuthAxios = Axios.create();
 
