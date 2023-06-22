@@ -285,6 +285,7 @@ const ar = {
     "لا توجد عروض حتى الآن مزادات منتهية الصلاحية",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
     "لا توجد عطاءات بعد المزادات المكتملة في الوقت الحالي",
+  [localizationKeys.submitNewBid]: "تقديم مزايدة جديد",
   //  Purchased
   [localizationKeys.Purchased]: "مشترياتي",
   [localizationKeys.yourPurchased]: "مشترياتي",

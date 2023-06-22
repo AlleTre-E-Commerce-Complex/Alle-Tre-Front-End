@@ -288,6 +288,7 @@ const en = {
     "There is no bids yet expiredauctions right now",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
     "There is no bids yet completed auctions right now",
+  [localizationKeys.submitNewBid]: "Submit New Bid",
   //  Purchased
   [localizationKeys.Purchased]: "Purchased",
   [localizationKeys.yourPurchased]: "Your Purchased",
