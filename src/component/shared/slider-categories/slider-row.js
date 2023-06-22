@@ -53,7 +53,7 @@ const SliderRow = () => {
             <div ref={swiperRef4} className={`snapslider-overflow`}>
               <div
                 className={`${
-                  GatogryOptions?.length > 3
+                  GatogryOptions?.length > 4
                     ? ""
                     : "md:justify-center justify-start"
                 } snapslider-scroll swiper-wrapper py-2`}
