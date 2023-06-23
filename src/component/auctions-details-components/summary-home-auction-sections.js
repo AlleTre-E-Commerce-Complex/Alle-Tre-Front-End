@@ -104,9 +104,6 @@ const SummaryHomeAuctionSections = ({
       };
     });
   }, []);
-  console.log("====================================");
-  console.log(lastestBid);
-  console.log("====================================");
 
   const timeLeft = useCountdown(TimeLeft);
   const formattedTimeLeft = `${timeLeft.days} ${

@@ -68,11 +68,6 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
         return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails`,
       },
     });
-    console.log("====================================");
-    console.log(
-      `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails`
-    );
-    console.log("====================================");
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

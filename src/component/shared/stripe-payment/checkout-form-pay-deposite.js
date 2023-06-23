@@ -68,9 +68,6 @@ export default function CheckoutFormPayDeposite({ payPrice }) {
         return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite`,
       },
     });
-    console.log(
-      `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite`
-    );
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

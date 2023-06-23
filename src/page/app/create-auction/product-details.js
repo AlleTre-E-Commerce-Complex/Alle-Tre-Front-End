@@ -545,7 +545,6 @@ const ProductDetails = () => {
               {(formik) => (
                 <Form onSubmit={formik.handleSubmit}>
                   <ScrollToFieldError />
-                  {console.log(formik?.values)}
                   {setDraftValue(formik?.values)}
                   <div className="grid gap-x-4 gap-y-10 md:grid-cols-4 grid-cols-2 mt-10 ">
                     <div className="col-span-2">

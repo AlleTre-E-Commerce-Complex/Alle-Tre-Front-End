@@ -65,10 +65,6 @@ const ImgSlider = ({
     }
   };
 
-  console.log("====================================");
-  console.log({ isMyAuction });
-  console.log("====================================");
-
   return (
     <div className=" shadow rounded-2xl group overflow-hidden ">
       <div

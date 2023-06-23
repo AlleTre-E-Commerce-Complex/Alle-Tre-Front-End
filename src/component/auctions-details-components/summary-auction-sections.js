@@ -55,9 +55,6 @@ const SummaryAuctionSections = ({
       };
     });
   }, []);
-  console.log("====================================");
-  console.log(lastestBid);
-  console.log("====================================");
 
   return (
     <div>
