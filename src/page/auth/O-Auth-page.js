@@ -24,7 +24,7 @@ const OAuthpage = () => {
       render: () => (
         <div>
           <Tab.Pane className="border-none h-full animate-in md:pt-10 pt-0 flex justify-center">
-            <LogIn />
+            <LogIn isAuthModel={false} />
           </Tab.Pane>
         </div>
       ),
@@ -36,7 +36,7 @@ const OAuthpage = () => {
       render: () => (
         <div>
           <Tab.Pane className="border-none h-full animate-in pt-2 flex justify-center ">
-            <SignUp />
+            <SignUp isAuthModel={false} />
           </Tab.Pane>
         </div>
       ),

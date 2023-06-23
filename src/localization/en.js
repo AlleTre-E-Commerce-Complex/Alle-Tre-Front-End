@@ -266,6 +266,7 @@ const en = {
   [localizationKeys.opsPending]: "Ops, there are no sold pending yet.",
   [localizationKeys.totalExpired]: "Total Expired Auctions...",
   [localizationKeys.opsExpired]: "Ops, there are no Expired auctions yet.",
+  [localizationKeys.watingForPaymentAuctions]: "Wating For Payment Auctions...",
   // mybids
   [localizationKeys.Youarenotbiddingonanyitems]:
     "You are not bidding on any items.",

@@ -42,7 +42,7 @@ const MyBidsTabs = ({ onReload }) => {
       ),
     },
     {
-      menuItem: `${selectedContent[localizationKeys.pending]}`,
+      menuItem: `${selectedContent[localizationKeys.waitingForDelivery]}`,
       route: routes.app.profile.myBids.waitingForDelivery,
       render: () => (
         <div>

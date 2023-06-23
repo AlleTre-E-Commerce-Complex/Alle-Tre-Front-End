@@ -1,13 +1,12 @@
 import { Modal } from "semantic-ui-react";
 
-import localizationKeys from "../../../localization/localization-keys";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import content from "../../../localization/content";
-import { useLanguage } from "../../../context/language-context";
-import PaymentSucsess from "../lotties-file/payment-sucsess";
-import routes from "../../../routes";
-import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import routes from "../../../routes";
+import PaymentSucsess from "../lotties-file/payment-sucsess";
 
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");

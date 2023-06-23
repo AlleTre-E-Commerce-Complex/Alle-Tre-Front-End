@@ -29,6 +29,7 @@ import routes from "../../routes";
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
 import { loginDate } from "../../redux-store/login-date-slice";
+import { useAuthState } from "context/auth-context";
 
 const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   const [lang] = useLanguage("");
@@ -37,6 +38,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   const history = useHistory();
 
   const dispatch = useDispatch();
+  const { login } = useAuthState();
 
   const { run } = useAxios();
   const signInWithApple = () => {
@@ -55,15 +57,14 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
             const { accessToken, refreshToken, hasCompletedProfile } =
               res.data.data;
-            auth.setToken({
-              newAccessToken: accessToken,
-              newRefreshToken: refreshToken,
+            login({
+              accessToken: accessToken,
+              refreshToken: refreshToken,
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
               JSON.stringify(hasCompletedProfile)
             );
-            window.location.reload();
             isAuthModel
               ? history.push(currentPAth)
               : history.push(routes.app.home);
@@ -103,15 +104,14 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
             const { accessToken, refreshToken, hasCompletedProfile } =
               res.data.data;
-            auth.setToken({
-              newAccessToken: accessToken,
-              newRefreshToken: refreshToken,
+            login({
+              accessToken: accessToken,
+              refreshToken: refreshToken,
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
               JSON.stringify(hasCompletedProfile)
             );
-            window.location.reload();
             isAuthModel
               ? history.push(currentPAth)
               : history.push(routes.app.home);
@@ -151,15 +151,14 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
             const { accessToken, refreshToken, hasCompletedProfile } =
               res.data.data;
-            auth.setToken({
-              newAccessToken: accessToken,
-              newRefreshToken: refreshToken,
+            login({
+              accessToken: accessToken,
+              refreshToken: refreshToken,
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
               JSON.stringify(hasCompletedProfile)
             );
-            window.location.reload();
             isAuthModel
               ? history.push(currentPAth)
               : history.push(routes.app.home);

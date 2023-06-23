@@ -263,6 +263,7 @@ const ar = {
   [localizationKeys.totalPending]: "إجمالي المزادات المعلقة ..",
   [localizationKeys.opsPending]: "عفوًا ، لا توجد عمليات بيع معلقة حتى الآن.",
   [localizationKeys.totalExpired]: "إجمالي المزادات المنتهية الصلاحية ...",
+  [localizationKeys.watingForPaymentAuctions]: "في انتظار مزادات الدفع ...",
   // mybids
   [localizationKeys.Youarenotbiddingonanyitems]:
     "أنت لا تقدم عطاءات على أي عناصر.",

@@ -1,22 +1,13 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import Auth from "../utils/auth";
-import routes from "../routes";
-import { useLocation } from "react-router-dom";
-import useAxios from "../hooks/use-axios";
-import { useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 import LodingTestAllatre from "../component/shared/lotties-file/loding-test-allatre";
+import useAxios from "../hooks/use-axios";
+import routes from "../routes";
+import Auth from "../utils/auth";
 
 const AuthContext = React.createContext();
 
-const WHITE_LIST = [
-  routes.auth.forgetpass.default,
-  routes.auth.default,
-  routes.app.createAuction.paymentDetails,
-  `${routes.app.home}/paymentdetails`,
-  `${routes.app.home}/payDeposite`,
-  `${routes.app.home}/complete-pay`,
-];
+const WHITE_LIST = [routes.auth.default];
 
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -29,6 +20,7 @@ function AuthProvider({ children }) {
 
   const login = ({ accessToken, refreshToken }) => {
     setUser(Auth._decodeToken(accessToken));
+
     Auth.setToken({
       newAccessToken: accessToken,
       newRefreshToken: refreshToken,
@@ -37,27 +29,21 @@ function AuthProvider({ children }) {
 
   const logout = () => {
     Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
+    setUser(null);
     history.push(routes.app.home);
   };
-
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   React.useEffect(() => {
     Auth.getUser().then((user) => {
       if (!user) {
         if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
-          history.push(routes.app.home);
+          history.push(`${routes.app.home}?page=1&perPage=28`);
         }
       }
       setUser(user);
       setIsLoading(false);
     });
   }, []);
-
-  React.useLayoutEffect(() => {
-    if (isLoading) document.body.classList.add("bg-gray-100");
-    else document.body.classList.remove("bg-gray-100");
-  }, [isLoading]);
 
   return (
     <AuthContext.Provider
@@ -72,7 +58,6 @@ function AuthProvider({ children }) {
       {isLoading ? (
         <div className="h-screen w-screen flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
-            {/* <p>Authenticating...</p> */}
             <LodingTestAllatre />
           </div>
         </div>
@@ -96,4 +81,4 @@ function useAuthState() {
   };
 }
 
-export { useAuthState, AuthProvider };
+export { AuthProvider, useAuthState };

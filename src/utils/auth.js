@@ -1,9 +1,10 @@
 import jwt_decode from "jwt-decode";
 import Axios from "axios";
 import api from "../api";
+import routes from "routes";
 
 let accessToken = "";
-let refreshToken = localStorage.getItem("token") || "";
+//
 
 class Auth {
   async getDecodedToken() {
@@ -18,7 +19,6 @@ class Auth {
 
   setToken({ newAccessToken, newRefreshToken }) {
     accessToken = newAccessToken;
-    refreshToken = newRefreshToken;
     localStorage.setItem("token", newRefreshToken || "");
   }
 
@@ -27,21 +27,27 @@ class Auth {
   }
 
   async getToken() {
-    if (this.hasExpired()) return this.refreshToken();
+    const localStorageToken = localStorage.getItem("token");
+    if (!localStorageToken || this.hasExpired()) return this.refreshToken();
     else return accessToken;
   }
 
   async refreshToken() {
+    const localStorageToken = localStorage.getItem("token");
+    if (!localStorageToken && accessToken) {
+      window.location = routes.app.home;
+      return false;
+    }
     if (!this.hasExpired()) return accessToken;
 
     try {
       const res = await Axios.post(api.auth.RefrshToken, {
-        refreshToken: refreshToken,
+        refreshToken: localStorageToken,
       });
       const data = res.data;
       this.setToken({
         newAccessToken: data?.data.accessToken,
-        newRefreshToken: refreshToken,
+        newRefreshToken: data?.data?.refreshToken,
       });
       return data?.data?.accessToken;
     } catch (e) {

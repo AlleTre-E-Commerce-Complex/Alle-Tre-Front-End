@@ -64,8 +64,6 @@ export default function CheckoutFromCompletePayment({ payPrice }) {
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: `https://allatre.com${routes.app.home}/complete-pay`,
-        // return_url: `https://allatre-front.vercel.app/${routes.app.home}/complete-pay`,
-        // return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/complete-pay`,
       },
     });
 

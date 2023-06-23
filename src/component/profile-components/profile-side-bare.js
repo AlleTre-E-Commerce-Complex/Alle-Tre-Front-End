@@ -16,6 +16,7 @@ import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useAuthState } from "context/auth-context";
 
 const ProfileSideBare = ({ SetSid, sid }) => {
   const [lang] = useLanguage("");
@@ -23,6 +24,8 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const [pofileData, setPofileData] = useState();
+
+  const { logout } = useAuthState();
 
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
@@ -61,9 +64,9 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   };
 
   const onLogout = () => {
-    window.location.reload();
+    // window.location.reload();
     history.push(routes.app.home);
-    auth.logout();
+    logout();
   };
 
   const ProfileData = useSelector((state) => state.profileData.PofileData);

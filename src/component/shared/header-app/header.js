@@ -185,7 +185,7 @@ const Header = ({ SetSid }) => {
             >
               <FaUser size={15} className="mt-1" />
               <p className="pt-1">
-                {user || loginData?.IsLogIN
+                {user
                   ? selectedContent[localizationKeys.profile]
                   : selectedContent[localizationKeys.registerNow]}
               </p>

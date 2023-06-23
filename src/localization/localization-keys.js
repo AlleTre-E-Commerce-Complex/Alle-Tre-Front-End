@@ -248,6 +248,7 @@ const localizationKeys = {
   opsPending: "opsPending",
   totalExpired: "totalExpired",
   opsExpired: "opsExpired",
+  watingForPaymentAuctions: "watingForPaymentAuctions",
   // mybids
   Youarenotbiddingonanyitems: "Youarenotbiddingonanyitems",
   Checkactiveauctionstostartbidding: "Checkactiveauctionstostartbidding",

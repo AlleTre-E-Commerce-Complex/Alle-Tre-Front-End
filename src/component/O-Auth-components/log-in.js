@@ -23,6 +23,7 @@ import localizationKeys from "../../localization/localization-keys";
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
 import { loginDate } from "../../redux-store/login-date-slice";
+import { useAuthState } from "context/auth-context";
 
 const LogIn = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
@@ -37,13 +38,15 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
 
   const dispatch = useDispatch();
 
+  const { login } = useAuthState();
+
   const logIn = (values) => {
     setEmail(values.email);
     run(axios.post(api.auth.login, values))
       .then((res) => {
         const { accessToken, refreshToken, hasCompletedProfile } =
           res.data.data;
-        auth.setToken({
+        login({
           newAccessToken: accessToken,
           newRefreshToken: refreshToken,
         });
@@ -74,7 +77,6 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                           localizationKeys.aVerificationMailHasBeenSent
                         ]
                       );
-                      // history.push(routes.auth.logIn);
                     })
                     .catch((err) => {
                       toast.error(
@@ -101,11 +103,15 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
 
   const logInSchema = Yup.object({
     email: Yup.string().required("Required field"),
-    password: Yup.string().min(8).max(20).required("Required field").trim(),
-    // .matches(
-    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-    //   "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
-    // ),
+    password: Yup.string()
+      .min(8)
+      .max(20)
+      .required("Required field")
+      .trim()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      ),
   });
 
   const { run: runforgetPassword, isLoading: isLoadingorgetPassword } =
@@ -132,7 +138,11 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
   return (
     <div className="flex flex-col md:flex-row  mt-8 gap-x-3 animate-in z-50 rtl:font-serifAR ltr:font-serifEN ">
       <div className="mx-auto md:mx-0">
-        <OAuthSections isLogin={true} currentPAth={currentPAth} isAuthModel />
+        <OAuthSections
+          isLogin={true}
+          currentPAth={currentPAth}
+          isAuthModel={isAuthModel}
+        />
       </div>
       <div className="mx-5 ">
         <p className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">
@@ -189,7 +199,6 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                     </div>
                     <Link
                       onClick={() => setIsHidden(true)}
-                      // to={routes.auth.enterEmail}
                       className="underline text-primary-dark text-sm font-normal pt-1"
                     >
                       {selectedContent[localizationKeys.forgetPassword]}
@@ -198,9 +207,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                   <div className="md:flex block justify-center ">
                     <Button
                       loading={isLoading}
-                      onClick={() => {
-                        // history.push(routes.dashboard.app);
-                      }}
+                      onClick={() => {}}
                       className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
                     >
                       {selectedContent[localizationKeys.login]}

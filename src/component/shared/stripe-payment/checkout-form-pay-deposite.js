@@ -65,12 +65,12 @@ export default function CheckoutFormPayDeposite({ payPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://allatre.com${routes.app.home}/payDeposite`,
-        // return_url: `https://allatre-front.vercel.app/${routes.app.home}/payDeposite`,
-        // return_url: process.env
-        //   .REACT_APP_STRIPE_RETURN_URL`${routes.app.home}/payDeposite`,
+        return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite`,
       },
     });
+    console.log(
+      `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite`
+    );
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

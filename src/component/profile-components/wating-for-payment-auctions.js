@@ -59,8 +59,7 @@ const WatingForPaymentAuctions = () => {
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
           {watingForPaymentAuctionsDataData?.length}{" "}
-          {/* {selectedContent[localizationKeys.totalExpired]} */}
-          watingForPaymentAuctionsDataData
+          {selectedContent[localizationKeys.watingForPaymentAuctions]}
         </p>
       </div>
       {watingForPaymentAuctionsDataData?.length === 0 ? (
