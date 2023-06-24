@@ -22,6 +22,10 @@ import localizationKeys from "../../../localization/localization-keys";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
+import ShowFilterSections from "component/home-components/show-filter-sections";
+import listicon from "../../../../src/assets/icons/list-icon.png";
+import menuicon from "../../../../src/assets/icons/menu-icon.png";
+import AuctionCardList from "component/home-components/auction-card-list";
 
 const Categories = () => {
   const [lang] = useLanguage("");
@@ -33,6 +37,7 @@ const Categories = () => {
   const myRef = useRef();
   const dispatch = useDispatch();
 
+  const [isGrid, setIsGrid] = useState(true);
   const [open, setOpen] = useState(false);
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
@@ -99,19 +104,43 @@ const Categories = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div>
+      <div className="h-[317px]">
         <img
           className="w-full h-[317px] object-cover pb-4"
           src={selectedBannerLink || addImage}
           alt=""
         />
+        <div></div>
       </div>
       <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
         <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
       </div>
-      <h6 className="max-w-[1440px] mx-auto pb-4 pt-2 text-gray-med text-base font-normal">
-        {mainAuctions?.length} Results
-      </h6>
+      <div className="flex justify-between max-w-[1440px] lg:mx-auto mx-2 px-2 pb-4 ">
+        <div className="flex  gap-x-60">
+          <h6 className=" text-gray-med text-base font-normal pt-3 ">
+            {mainAuctions?.length} {selectedContent[localizationKeys.results]}
+          </h6>
+        </div>
+        <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
+          {isGrid ? (
+            <button
+              onClick={() => setIsGrid((p) => !p)}
+              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+            >
+              <img src={menuicon} alt="menuiconicon" />
+              <p> {selectedContent[localizationKeys.Grid]}</p>
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsGrid((p) => !p)}
+              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+            >
+              <img src={listicon} alt="listicon" />
+              <p> {selectedContent[localizationKeys.List]}</p>
+            </button>
+          )}
+        </div>
+      </div>
       <div className="flex gap-3 max-w-[1440px] lg:mx-auto md:mx-12 ">
         {/* left filter sections */}
         <FilterSections myRef={myRef} categoryId={categoryId} hiddenGatogry />
@@ -137,21 +166,43 @@ const Categories = () => {
             </div>
           </div>
         ) : (
-          <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto">
-            {mainAuctions?.map((e) => (
-              <AuctionCard
-                auctionId={e?.id}
-                price={e?.acceptedAmount || e?.startBidAmount}
-                title={e?.product?.title}
-                status={e?.status}
-                adsImg={e?.product?.images[0].imageLink}
-                totalBods={e?._count?.bids}
-                WatshlistState={e?.isSaved}
-                endingTime={e?.expiryDate}
-                isBuyNowAllowed={e?.isBuyNowAllowed}
-                isMyAuction={e?.isMyAuction}
-              />
-            ))}
+          <div className="w-full">
+            {isGrid ? (
+              <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto">
+                {mainAuctions?.map((e) => (
+                  <AuctionCard
+                    auctionId={e?.id}
+                    price={e?.acceptedAmount || e?.startBidAmount}
+                    title={e?.product?.title}
+                    status={e?.status}
+                    adsImg={e?.product?.images[0].imageLink}
+                    totalBods={e?._count?.bids}
+                    WatshlistState={e?.isSaved}
+                    endingTime={e?.expiryDate}
+                    isBuyNowAllowed={e?.isBuyNowAllowed}
+                    isMyAuction={e?.isMyAuction}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="w-full">
+                {mainAuctions?.map((e) => (
+                  <AuctionCardList
+                    auctionId={e?.id}
+                    price={e?.acceptedAmount || e?.startBidAmount}
+                    title={e?.product?.title}
+                    status={e?.status}
+                    adsImg={e?.product?.images[0].imageLink}
+                    totalBods={e?._count?.bids}
+                    WatshlistState={e?.isSaved}
+                    endingTime={e?.expiryDate}
+                    StartDate={e?.startDate}
+                    isBuyNowAllowed={e?.isBuyNowAllowed}
+                    isMyAuction={e?.isMyAuction}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

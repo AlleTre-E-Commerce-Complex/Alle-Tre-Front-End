@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
 
-import ElectronicsImg from "../../../../src/assets/img/Electronics-img.png";
-import PropertiesImg from "../../../../src/assets/img/Properties-img.png";
-import VehiclesImg from "../../../../src/assets/img/vehicles-img.png";
-import JewerlyImg from "../../../../src/assets/img/Jewerly-img.png";
+import { useEffect, useState } from "react";
+import { Dimmer, Loader } from "semantic-ui-react";
 import useGetGatogry from "../../../hooks/use-get-category";
 import useGetSubGatogry from "../../../hooks/use-get-sub-category";
-import { useEffect, useState } from "react";
 
 const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
   const arrowSize = 15;
@@ -81,7 +78,14 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
                     ))}
                   </div>
                   {/* imges */}
-                  <div>
+                  <div className="relative">
+                    <Dimmer
+                      className=" bg-white/50"
+                      active={loadingGatogry || loadingSubGatogry}
+                      inverted
+                    >
+                      <Loader active />
+                    </Dimmer>
                     <img
                       className="object-cover w-[613px] md:h-[500px] rounded-2xl animate-in"
                       src={bannerLink}

@@ -12,12 +12,8 @@ const Win = () => {
   const socket = useSocket();
 
   useEffect(() => {
-    socket?.once("auction:winner", (data) => {
+    socket?.on("auction:winner", (data) => {
       setIsWinner(data);
-      return () => {
-        socket.close();
-        logout();
-      };
     });
   }, []);
 

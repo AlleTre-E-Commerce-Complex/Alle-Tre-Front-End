@@ -9,7 +9,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import routes from "../../routes";
 
-const ShowFilterSections = () => {
+const ShowFilterSections = ({ category }) => {
   const history = useHistory();
   const { search } = useLocation();
 

@@ -134,18 +134,18 @@ const AuctionCard = ({
 
   return (
     <div className={className}>
-      <div className="group lg:w-[272px] l:w-[367px] md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
-        <div className="lg:w-[240px] l:w-[335px] md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden ">
+      <div className="group lg:w-[272px] l:w-[367px]  md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
+        <div className="lg:w-[240px] l:w-[335px]  md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden">
           <div
             className={
               isMyAuction || isPurchased
                 ? "hidden"
-                : "bg-white rounded-lg md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 top-2 ltr:right-2 rtl:left-2 "
+                : "bg-white rounded-lg md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 top-2 ltr:right-2 rtl:left-2"
             }
           >
             <div
               onClick={() => handelAddNewWatshlist(auctionId)}
-              className="flex justify-center items-center md:mt-2.5 mt-1.5 cursor-pointer "
+              className="flex justify-center items-center md:mt-2.5 mt-1.5 cursor-pointer"
             >
               {watshlistForceState || isWatshlist ? (
                 <BsBookmarkFill className="text-primary text-2xl md:text-3xl" />

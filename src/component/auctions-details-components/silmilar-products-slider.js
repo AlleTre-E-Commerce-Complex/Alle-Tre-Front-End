@@ -106,11 +106,14 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
         <div className="snapslider-wrapper">
           <div ref={swiperRef6} className={`snapslider-overflow`}>
             <div
-              className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+              className={`${
+                auctions?.length > 4 ? "" : "md:justify-center justify-start"
+              } snapslider-scroll swiper-wrapper py-2`}
             >
               {auctions?.map((e) => (
                 <div className="snapslider-card swiper-slide">
                   <AuctionCard
+                    className="min-w-[272px]"
                     auctionId={e?.id}
                     price={e?.acceptedAmount || e?.startBidAmount}
                     title={e?.product?.title}

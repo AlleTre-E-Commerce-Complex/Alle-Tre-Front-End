@@ -116,11 +116,16 @@ const LiveAuctionsSlider = ({ type }) => {
             <div className="snapslider-wrapper">
               <div ref={swiperRef1} className={`snapslider-overflow `}>
                 <div
-                  className={`snapslider-scroll swiper-wrapper py-2 justify-center`}
+                  className={`${
+                    auctions?.length > 4
+                      ? ""
+                      : "md:justify-center justify-start"
+                  } snapslider-scroll swiper-wrapper py-2`}
                 >
                   {auctions?.map((e) => (
                     <div className="snapslider-card swiper-slide">
                       <AuctionCard
+                        className="min-w-[272px]"
                         auctionId={e?.id}
                         price={e?.startBidAmount || e?.acceptedAmount}
                         title={e?.product?.title}

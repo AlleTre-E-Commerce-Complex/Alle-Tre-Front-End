@@ -85,7 +85,7 @@ const Header = ({ SetSid }) => {
         <div className="my-auto hidden md:block">
           <AllatreLogo
             className="cursor-pointer hidden md:block"
-            onClick={() => history.push(routes.app.home)}
+            onClick={() => history.push(`${routes.app.home}?page=1&perPage=28`)}
           />
         </div>
         <div onClick={() => SetSid(true)} className="my-auto md:hidden block">
