@@ -23,7 +23,7 @@ import { toast } from "react-hot-toast";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { hasCompletedProfile } from "../../redux-store/login-date-slice";
+import { hasCompletedProfile } from "../../redux-store/socket-auctionId-slice";
 
 const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");

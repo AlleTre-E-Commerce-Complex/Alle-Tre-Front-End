@@ -5,7 +5,7 @@ import auctionDetailsSlice from "./auction-details-slice";
 import pofileDataSlice from "./pofile-data-slice";
 import bidAmountSlice from "./bid-amount-slice";
 import completePaymentSlice from "./complete-payment-slice";
-import loginDateSlice from "./login-date-slice";
+import socketAuctionIdSlice from "./socket-auctionId-slice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +15,6 @@ export const store = configureStore({
     profileData: pofileDataSlice,
     bidAmount: bidAmountSlice,
     completePayment: completePaymentSlice,
-    loginDate: loginDateSlice,
+    socketAuctionId: socketAuctionIdSlice,
   },
 });

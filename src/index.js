@@ -19,15 +19,13 @@ import "./index.css";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <SocketProvider>
+      <Provider store={store}>
+        <AuthProvider>
           <LanguageProvider>
-            <Provider store={store}>
-              <App />
-            </Provider>
+            <App />
           </LanguageProvider>
-        </SocketProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

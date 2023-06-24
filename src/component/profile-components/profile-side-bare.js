@@ -17,6 +17,7 @@ import api from "../../api";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useAuthState } from "context/auth-context";
+import { useSocket } from "context/socket-context";
 
 const ProfileSideBare = ({ SetSid, sid }) => {
   const [lang] = useLanguage("");
@@ -62,10 +63,10 @@ const ProfileSideBare = ({ SetSid, sid }) => {
       transition: { ease: "easeInOut", duration: 0.3 },
     },
   };
-
+  const socket = useSocket();
   const onLogout = () => {
-    // window.location.reload();
     history.push(routes.app.home);
+    socket.close();
     logout();
   };
 

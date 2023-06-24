@@ -22,7 +22,7 @@ import localizationKeys from "../../localization/localization-keys";
 
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
-import { loginDate } from "../../redux-store/login-date-slice";
+import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
 
 const LogIn = ({ currentPAth, isAuthModel }) => {
@@ -54,7 +54,6 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
         isAuthModel ? history.push(currentPAth) : history.push(routes.app.home);
         window.location.reload();
         dispatch(Close());
-        dispatch(loginDate({ IsLogIN: true }));
       })
       .catch((err) => {
         if (err.message.en === "Verify your account") {

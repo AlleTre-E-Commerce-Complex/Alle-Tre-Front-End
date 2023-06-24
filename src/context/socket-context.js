@@ -8,25 +8,22 @@ export function useSocket() {
   return React.useContext(SocketContext);
 }
 
-export function SocketProvider({ children }) {
+export function SocketProvider({ auctionId, children }) {
   const [socket, setSocket] = useState();
 
-  const SocketauctionId = window.localStorage.getItem("SocketauctionId");
-
   useEffect(() => {
-    if (SocketauctionId)
-      auth.getToken().then((accessToken) => {
-        const headers = {
-          Authorization: accessToken ? "Bearer " + accessToken : undefined,
-        };
-        const newSocket = io(URL, {
-          extraHeaders: headers,
-          query: { auctionId: SocketauctionId },
-          path: "/socket.io",
-        });
-        setSocket(newSocket);
+    auth.getToken().then((accessToken) => {
+      const headers = {
+        Authorization: accessToken ? "Bearer " + accessToken : null,
+      };
+      const newSocket = io(URL, {
+        extraHeaders: headers,
+        query: { auctionId: auctionId },
+        path: "/socket.io",
       });
-  }, []);
+      setSocket(newSocket);
+    });
+  }, [auctionId]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

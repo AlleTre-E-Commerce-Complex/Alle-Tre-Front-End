@@ -6,13 +6,20 @@ import routes from "./routes";
 import CredentialsuUpdateLayout from "./layout/credentials-update-layout";
 import AuthLayouts from "./layout/auth-layout";
 import AppLayouts from "./layout/app-layout";
-import Home from "./page/app/home/home";
+import { SocketProvider } from "context/socket-context";
+import { useSelector } from "react-redux";
 
 function App() {
+  const socketauctionId = useSelector(
+    (state) => state?.socketAuctionId?.socketAuctionId
+  );
+
   return (
     <div className="App">
       <Switch>
-        <Route path={routes.app.default} component={AppLayouts} />
+        <SocketProvider auctionId={socketauctionId}>
+          <Route path={routes.app.default} component={AppLayouts} />
+        </SocketProvider>
         <Route path={routes.auth.default} component={AuthLayouts} />
         <Route
           path={routes.auth.forgetpass.default}

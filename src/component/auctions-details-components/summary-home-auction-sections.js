@@ -4,7 +4,7 @@ import { truncateString } from "../../utils/truncate-string";
 
 import RatingStare from "../shared/rating-star/rating-star";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { Button } from "semantic-ui-react";
@@ -17,15 +17,14 @@ import { useSocket } from "context/socket-context";
 import moment from "moment";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { socketAuctionId } from "redux-store/socket-auctionId-slice";
 import api from "../../api";
 import { authAxios } from "../../config/axios-config";
 import { useAuthState } from "../../context/auth-context";
 import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
-import useLocalStorage from "../../hooks/use-localstorage";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { auctionsId } from "../../redux-store/auction-details-slice";
 import { Open } from "../../redux-store/auth-model-slice";
 import { buyNow } from "../../redux-store/bid-amount-slice";
 import routes from "../../routes";
@@ -55,6 +54,7 @@ const SummaryHomeAuctionSections = ({
   PurchasedTime,
   onReload,
 }) => {
+  const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
@@ -65,19 +65,7 @@ const SummaryHomeAuctionSections = ({
   const [lastestBid, setLastestBid] = useState(latestBidAmount);
   const [openTotaltBid, setTotalBidOpen] = useState(false);
 
-  const dispatch = useDispatch();
-  dispatch(auctionsId(auctionsID));
-
-  const [SocketauctionId, setSocketauctionId] = useLocalStorage(
-    "SocketauctionId",
-    ""
-  );
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
-
-  const IsCompletedProfile = useSelector(
-    (state) => state?.loginDate?.hasCompletedProfile
-  );
-
   const handelBuyNow = () => {
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
@@ -91,19 +79,24 @@ const SummaryHomeAuctionSections = ({
     }
   };
 
-  const { user, logout } = useAuthState();
   const socket = useSocket();
 
+  const dispatch = useDispatch();
+  dispatch(socketAuctionId(auctionId));
+
   useEffect(() => {
-    setSocketauctionId(auctionId);
-    socket?.on("bid:submitted", (data) => {
-      setLastestBid(data);
-      return () => {
-        socket.close();
-        logout();
-      };
-    });
-  }, []);
+    if (socket) {
+      socket.on("bid:submitted", (data) => {
+        setLastestBid(data);
+      });
+    }
+
+    return () => {
+      if (socket) {
+        socket.off("bid:submitted");
+      }
+    };
+  }, [socket]);
 
   const timeLeft = useCountdown(TimeLeft);
   const formattedTimeLeft = `${timeLeft.days} ${

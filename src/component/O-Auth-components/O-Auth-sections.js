@@ -28,7 +28,7 @@ import routes from "../../routes";
 
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
-import { loginDate } from "../../redux-store/login-date-slice";
+import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
 
 const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
@@ -69,7 +69,6 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               ? history.push(currentPAth)
               : history.push(routes.app.home);
             dispatch(Close());
-            dispatch(loginDate({ IsLogIN: true }));
           })
           .catch((err) => {
             toast.error(
@@ -116,7 +115,6 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               ? history.push(currentPAth)
               : history.push(routes.app.home);
             dispatch(Close());
-            dispatch(loginDate({ IsLogIN: true }));
           })
           .catch((err) => {
             toast.error(
@@ -163,7 +161,6 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               ? history.push(currentPAth)
               : history.push(routes.app.home);
             dispatch(Close());
-            dispatch(loginDate({ IsLogIN: true }));
           })
           .catch((err) => {
             toast.error(

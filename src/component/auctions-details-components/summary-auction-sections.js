@@ -7,11 +7,11 @@ import RatingStare from "../shared/rating-star/rating-star";
 import AnglesRight from "../../../src/assets/icons/angles-right-wihte.png";
 
 import { useSocket } from "context/socket-context";
-import useLocalStorage from "hooks/use-localstorage";
 import moment from "moment";
+import { useDispatch } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { useAuthState } from "../../context/auth-context";
+import { socketAuctionId } from "redux-store/socket-auctionId-slice";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
@@ -36,26 +36,25 @@ const SummaryAuctionSections = ({
   const { pathname } = useLocation();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
   const [lastestBid, setLastestBid] = useState();
-  const [SocketauctionId, setSocketauctionId] = useLocalStorage(
-    "SocketauctionId",
-    ""
-  );
 
+  const dispatch = useDispatch();
   const { auctionId } = useParams();
-  const { user, logout } = useAuthState();
+  dispatch(socketAuctionId(auctionId));
 
   const socket = useSocket();
   useEffect(() => {
-    setSocketauctionId(auctionId);
-    socket?.on("bid:submitted", (data) => {
-      setLastestBid(data);
-      return () => {
-        socket.close();
-        logout();
-      };
-    });
-  }, []);
+    if (socket) {
+      socket.on("bid:submitted", (data) => {
+        setLastestBid(data);
+      });
+    }
 
+    return () => {
+      if (socket) {
+        socket.off("bid:submitted");
+      }
+    };
+  }, [socket]);
   return (
     <div>
       {/* rating */}
