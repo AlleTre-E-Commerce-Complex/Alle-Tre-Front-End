@@ -91,6 +91,7 @@ const IncreaseBidModel = ({
               <div className=" w-full ">
                 <div className="mx-auto ">
                   <FormikInput
+                    min={0}
                     name="bidAmount"
                     type="number"
                     placeholder={`min. AED ${compareValue}`}

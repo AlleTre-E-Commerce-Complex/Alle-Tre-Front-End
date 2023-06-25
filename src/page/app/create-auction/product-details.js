@@ -634,6 +634,7 @@ const ProductDetails = () => {
                       }
                     >
                       <FormikInput
+                        min={0}
                         name={`${customFromData?.model?.key}`}
                         label={`${
                           lang === "en"
@@ -650,7 +651,7 @@ const ProductDetails = () => {
                     {customFromData?.regularCustomFields?.map((e) => (
                       <div className="w-full mt-1.5 col-span-2 sm:col-span-1">
                         <FormikInput
-                          min={1}
+                          min={0}
                           name={e?.key}
                           type={e?.type}
                           label={lang === "en" ? e?.labelEn : e?.labelAr}

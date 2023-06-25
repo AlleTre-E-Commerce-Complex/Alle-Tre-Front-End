@@ -252,6 +252,7 @@ const AuctionDetails = () => {
                       </h1>
                       <div className="pt-6">
                         <FormikInput
+                          min={0}
                           type="number"
                           name="MinimumPrice"
                           label={selectedContent[localizationKeys.minimumPrice]}
@@ -293,6 +294,7 @@ const AuctionDetails = () => {
                       >
                         <div className="w-full">
                           <FormikInput
+                            min={0}
                             type="number"
                             name="PurchasingPrice"
                             label={

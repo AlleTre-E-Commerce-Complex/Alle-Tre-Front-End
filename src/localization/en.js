@@ -291,9 +291,9 @@ const en = {
     "There is no bids yet completed auctions right now",
   [localizationKeys.submitNewBid]: "Submit New Bid",
   //  Purchased
-  [localizationKeys.Purchased]: "Purchased",
-  [localizationKeys.yourPurchased]: "Your Purchased",
-  [localizationKeys.ThereAreNoPurchasedYet]: "There are no purchased yet",
+  [localizationKeys.Purchased]: "Purchases",
+  [localizationKeys.yourPurchased]: "Your purchases",
+  [localizationKeys.ThereAreNoPurchasedYet]: "There are no purchases yet",
 
   // details
   [localizationKeys.reviews]: "Reviews",

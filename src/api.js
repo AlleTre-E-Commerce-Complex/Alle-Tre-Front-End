@@ -48,6 +48,8 @@ const api = {
       ConfirmDelivery: (auctionsId) =>
         `/auctions/user/${auctionsId}/confirm-delivery`,
       buyNow: (auctionsId) => `/auctions/user/${auctionsId}/buy-now`,
+      SimilarAuctions: (auctionsId) =>
+        `/auctions/user/similar?auctionId=${auctionsId}`,
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,

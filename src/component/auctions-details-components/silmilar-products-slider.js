@@ -1,25 +1,26 @@
-import React, { useEffect, useRef } from "react";
-import Swiper from "swiper";
-import AnglesRight from "../../../src/assets/icons/angles-right-icon.png";
-import AnglesLeft from "../../../src/assets/icons/angles-left-icon.png";
-import "./auctions-slider.scss";
-import { useLocation } from "react-router-dom";
-import { useAuthState } from "../../context/auth-context";
-import useAxios from "../../hooks/use-axios";
-import { useState } from "react";
-import { authAxios } from "../../config/axios-config";
 import axios from "axios";
-import api from "../../api";
-import { Dimmer, Loader } from "semantic-ui-react";
-import { useLanguage } from "../../context/language-context";
-import content from "../../localization/content";
-import localizationKeys from "../../localization/localization-keys";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import { useLocation } from "react-router-dom";
+import { Dimmer } from "semantic-ui-react";
+import Swiper from "swiper";
+import AnglesLeft from "../../../src/assets/icons/angles-left-icon.png";
+import AnglesRight from "../../../src/assets/icons/angles-right-icon.png";
+import api from "../../api";
+import { authAxios } from "../../config/axios-config";
+import { useAuthState } from "../../context/auth-context";
+import { useLanguage } from "../../context/language-context";
+import useAxios from "../../hooks/use-axios";
+import content from "../../localization/content";
 import AuctionCard from "../home-components/auction-card";
+import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import "./auctions-slider.scss";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 const SilmilarProductsSlider = ({ categoriesId }) => {
   const [lang] = useLanguage("");
+  const { auctionId } = useParams();
+
   const selectedContent = content[lang];
   const { search } = useLocation();
   const { user } = useAuthState();
@@ -35,9 +36,7 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
       if (user) {
         runAuctions(
           authAxios
-            .get(
-              `${api.app.auctions.getMain}?page=1&perPage=${page}&categories[]=${categoriesId}`
-            )
+            .get(`${api.app.auctions.SimilarAuctions(auctionId)}`)
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
@@ -46,9 +45,7 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
       } else {
         runAuctions(
           axios
-            .get(
-              `${api.app.auctions.getMain}?page=1&perPage=${page}&categories[]=${categoriesId}`
-            )
+            .get(`${api.app.auctions.SimilarAuctions(auctionId)}`)
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
