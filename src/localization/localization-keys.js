@@ -52,6 +52,7 @@ const localizationKeys = {
   bid: "bid",
   results: "results",
   seeAll: "seeAll",
+  seeLess: "seeLess",
   brand: "brand",
   sellingType: "sellingType",
   auction: "auction",

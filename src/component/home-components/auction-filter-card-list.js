@@ -23,9 +23,14 @@ const AuctionFilterCardList = ({ title, seeAll, name, values, myRef }) => {
           <h1 className="text-gray-dark text-base font-bold ">{title}</h1>
           <p
             onClick={() => setSeeAll((p) => !p)}
-            className="text-gray-med text-xs font-normal cursor-default cursor-pointer"
+            className={`${
+              name === "brands" ? "cursor-pointer" : "cursor-default"
+            }  text-gray-med text-xs font-normal `}
           >
-            {selectedContent[localizationKeys.seeAll]} ({seeAll})
+            {name === "brands" && IsseeAll
+              ? selectedContent[localizationKeys.seeLess]
+              : selectedContent[localizationKeys.seeAll]}{" "}
+            {` (${seeAll})`}
           </p>
         </div>
         <MultiButtonFilter name={name} values={values} myRef={myRef} />

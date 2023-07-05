@@ -51,6 +51,7 @@ const ar = {
   [localizationKeys.popularCategories]: "الفئات الشائعة",
   [localizationKeys.results]: "من النتائج",
   [localizationKeys.seeAll]: "عرض الكل",
+  [localizationKeys.seeLess]: "عرض أقل",
   [localizationKeys.brand]: "العلامة التجارية",
   [localizationKeys.sellingType]: "نوع البيع",
   [localizationKeys.auction]: "مزاد",

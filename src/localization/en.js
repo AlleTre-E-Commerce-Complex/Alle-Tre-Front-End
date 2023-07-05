@@ -52,6 +52,7 @@ const en = {
   [localizationKeys.popularCategories]: "Popular Categories",
   [localizationKeys.results]: "Results",
   [localizationKeys.seeAll]: "See all",
+  [localizationKeys.seeLess]: "see Less",
   [localizationKeys.brand]: "Brand",
   [localizationKeys.sellingType]: "Selling Type",
   [localizationKeys.auction]: "Auction",

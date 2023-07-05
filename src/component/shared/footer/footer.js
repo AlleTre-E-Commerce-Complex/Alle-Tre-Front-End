@@ -59,20 +59,20 @@ const Footer = () => {
         <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[82px]">
           <AllatreLogoWhite />
           <div className="flex gap-x-14 mt-5 md:mt-0">
-            <div className="w-full">
+            <div className="">
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.categories]}
               </h1>
               {GatogryOptions.map((CategoryName) => (
                 <p
                   key={CategoryName?.text}
-                  className="cursor-pointer font-normal text-base text-gray-med py-0.5"
+                  className="cursor-pointer font-normal text-base text-gray-med py-0.5 w-fit"
                 >
                   {CategoryName?.text}
                 </p>
               ))}
             </div>
-            <div className="w-full">
+            <div className="">
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.sellingOnAllatre]}
               </h1>
@@ -89,7 +89,7 @@ const Footer = () => {
                 {selectedContent[localizationKeys.createAuction]}
               </p>
             </div>
-            <div className="w-full">
+            <div className="">
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.myAccount]}
               </h1>

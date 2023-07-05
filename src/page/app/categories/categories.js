@@ -1,31 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
-import useAxios from "../../../hooks/use-axios";
-import { authAxios, axios } from "../../../config/axios-config";
-import api from "../../../api";
-import { useAuthState } from "../../../context/auth-context";
-import { useHistory, useLocation, useParams } from "react-router-dom";
-import FilterSections from "../../../component/home-components/filter-sections";
-import AuctionCard from "../../../component/home-components/auction-card";
-import useGetSubGatogry from "../../../hooks/use-get-sub-category";
-import SubCategorySlider from "../../../component/shared/slider-categories/sub-category-slider";
-import PaginationApp from "../../../component/shared/pagination/pagination-app";
-import { Dimmer, Loader } from "semantic-ui-react";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
-import useGetGatogry from "../../../hooks/use-get-category";
-import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
-import useLocalStorage from "../../../hooks/use-localstorage";
-import routes from "../../../routes";
-import { Open } from "../../../redux-store/auth-model-slice";
+import AuctionCardList from "component/home-components/auction-card-list";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import AddLocationModel from "../../../component/create-auction-components/add-location-model";
-import localizationKeys from "../../../localization/localization-keys";
-import { useLanguage } from "../../../context/language-context";
-import content from "../../../localization/content";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+import { Dimmer } from "semantic-ui-react";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
-import ShowFilterSections from "component/home-components/show-filter-sections";
+import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import listicon from "../../../../src/assets/icons/list-icon.png";
 import menuicon from "../../../../src/assets/icons/menu-icon.png";
-import AuctionCardList from "component/home-components/auction-card-list";
+import api from "../../../api";
+import AddLocationModel from "../../../component/create-auction-components/add-location-model";
+import AuctionCard from "../../../component/home-components/auction-card";
+import FilterSections from "../../../component/home-components/filter-sections";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import PaginationApp from "../../../component/shared/pagination/pagination-app";
+import SubCategorySlider from "../../../component/shared/slider-categories/sub-category-slider";
+import { authAxios, axios } from "../../../config/axios-config";
+import { useAuthState } from "../../../context/auth-context";
+import { useLanguage } from "../../../context/language-context";
+import useAxios from "../../../hooks/use-axios";
+import useGetGatogry from "../../../hooks/use-get-category";
+import useGetSubGatogry from "../../../hooks/use-get-sub-category";
+import useLocalStorage from "../../../hooks/use-localstorage";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
+import { Open } from "../../../redux-store/auth-model-slice";
+import routes from "../../../routes";
 
 const Categories = () => {
   const [lang] = useLanguage("");
@@ -66,14 +65,14 @@ const Categories = () => {
     );
   }, [categoryId, runCategories, search, user]);
 
-  const [selectedBannerLink, setSelectedBannerLink] = useState(null);
+  const [selectedCategor, SetselectedCategor] = useState([]);
 
   useEffect(() => {
     if (categoryId) {
       const selectedCategory = GatogryOptions.find(
         (category) => category.value === parseInt(categoryId)
       );
-      if (selectedCategory) setSelectedBannerLink(selectedCategory.bannerLink);
+      if (selectedCategory) SetselectedCategor(selectedCategory);
     }
   }, [GatogryOptions, categoryId]);
 
@@ -95,7 +94,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-[132px] ">
+    <div className="max-w-[1440px] mx-auto mt-[120px] sm:mt-[132px] ">
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={loadingSubGatogry || isLoadingCategories || loadingGatogry}
@@ -104,13 +103,17 @@ const Categories = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="h-[317px]">
+      <div className="h-[320px] relative">
         <img
-          className="w-full h-[317px] object-cover pb-4"
-          src={selectedBannerLink || addImage}
-          alt=""
+          className="w-full h-full object-cover pb-4"
+          src={selectedCategor?.bannerLink || addImage}
+          alt="bannerLink"
         />
-        <div></div>
+        <div className="bg-gray/50 text-white text-5xl absolute top-0 w-full h-[305px]">
+          <p className="flex justify-center items-center  h-full">
+            {selectedCategor?.text}
+          </p>
+        </div>
       </div>
       <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
         <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />

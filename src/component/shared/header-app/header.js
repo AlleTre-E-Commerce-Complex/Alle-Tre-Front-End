@@ -65,12 +65,12 @@ const Header = ({ SetSid }) => {
   };
   const handelmyAuctions = () => {
     if (user) {
-      history.push(routes.app.profile.myAuctions);
+      history.push(routes.app.profile.myAuctions.default);
     } else dispatch(Open());
   };
   const handelmyBids = () => {
     if (user) {
-      history.push(routes.app.profile.myBids);
+      history.push(routes.app.profile.myBids.default);
     } else dispatch(Open());
   };
   const handelWatchlist = () => {
@@ -130,13 +130,13 @@ const Header = ({ SetSid }) => {
               }
               onClick={() => history.push(routes.app.faqs)}
             />
-            <NavLinkHeader
+            {/* <NavLinkHeader
               title={selectedContent[localizationKeys.support]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.support)
               }
               onClick={() => history.push(routes.app.support)}
-            />
+            /> */}
             <DropdownLang />
           </div>
           <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
