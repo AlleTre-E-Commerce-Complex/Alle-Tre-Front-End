@@ -9,6 +9,9 @@ const api = {
     RefrshToken: "/auth/refresh-token",
   },
   app: {
+    allHomecategory: {
+      default: "/categories/home",
+    },
     category: {
       default: "/categories/all",
     },

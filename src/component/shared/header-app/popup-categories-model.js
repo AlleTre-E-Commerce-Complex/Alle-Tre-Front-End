@@ -1,29 +1,34 @@
 import { motion } from "framer-motion";
 
+import useGetAllHomeCategory from "hooks/use-get-all-category-home";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import routes from "routes";
 import { Dimmer, Loader } from "semantic-ui-react";
-import useGetGatogry from "../../../hooks/use-get-category";
-import useGetSubGatogry from "../../../hooks/use-get-sub-category";
 
-const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
+const PopupCategoriesModel = ({ isOpen, onClose, setIsOpen }) => {
+  const history = useHistory();
   const arrowSize = 15;
 
   const [categoryId, setCategoryId] = useState();
 
-  const { GatogryOptions, loadingGatogry } = useGetGatogry();
-  const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
-    categoryId || GatogryOptions[0]?.value
-  );
-  const [activeSidebar, setActiveSidebar] = useState(GatogryOptions[0]?.text);
+  const { allHomecategoryOptions, loadingallHomecategory } =
+    useGetAllHomeCategory();
 
-  const bannerLinks = GatogryOptions.map((category) => ({
-    id: category.value,
-    bannerLink: category.bannerLink,
+  const subCategories = allHomecategoryOptions.map((e) => e?.subcategoty);
+
+  const [activeSidebar, setActiveSidebar] = useState(
+    allHomecategoryOptions[0]?.categoty?.text
+  );
+
+  const bannerLinks = allHomecategoryOptions.map((category) => ({
+    id: category?.categoty?.value,
+    bannerLink: category?.categoty?.bannerLink,
   }));
   useEffect(() => {
-    setCategoryId(GatogryOptions[0]?.value);
-    setActiveSidebar(GatogryOptions[0]?.text);
-  }, [GatogryOptions]);
+    setCategoryId(allHomecategoryOptions[0]?.categoty?.value);
+    setActiveSidebar(allHomecategoryOptions[0]?.categoty?.text);
+  }, [allHomecategoryOptions]);
   const findSliderLinkById = (id) => {
     const foundObject = bannerLinks.find((obj) => obj.id === id);
     if (foundObject) {
@@ -31,7 +36,18 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
     }
     return null;
   };
-  const bannerLink = findSliderLinkById(categoryId || GatogryOptions[0]?.value);
+  const bannerLink = findSliderLinkById(
+    categoryId || allHomecategoryOptions[0]?.categoty?.value
+  );
+
+  const findSubCat = (id) =>
+    subCategories?.find((subArr) =>
+      subArr?.some((item) => item?.categoryId === id)
+    );
+
+  const newArrSubCat = findSubCat(
+    categoryId || allHomecategoryOptions[0]?.categoty?.value
+  );
 
   return (
     <>
@@ -59,10 +75,10 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
                 <div className="flex ">
                   {/* sidebare-catigory */}
                   <div className="w-48">
-                    {GatogryOptions?.map((e) => (
+                    {allHomecategoryOptions?.map((e) => (
                       <NavLink
-                        id={e?.value}
-                        title={e?.text}
+                        id={e?.categoty?.value}
+                        title={e?.categoty?.text}
                         activeSidebar={activeSidebar}
                         setActiveSidebar={setActiveSidebar}
                         setCategoryId={setCategoryId}
@@ -71,8 +87,14 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
                   </div>
                   {/* sub-catigory */}
                   <div className="pt-4 w-60">
-                    {SubGatogryOptions.map((e) => (
-                      <p className="mx-6 text-gray-med text-base font-normal py-1 cursor-pointer">
+                    {newArrSubCat?.map((e) => (
+                      <p
+                        onClick={() => {
+                          history.push(routes.app.categories(e?.categoryId));
+                          setIsOpen(false);
+                        }}
+                        className="mx-6 text-gray-med text-base font-normal py-1 cursor-pointer"
+                      >
                         {e?.text}
                       </p>
                     ))}
@@ -81,7 +103,7 @@ const PopupCategoriesModel = ({ isOpen, onClose, children }) => {
                   <div className="relative">
                     <Dimmer
                       className=" bg-white/50"
-                      active={loadingGatogry || loadingSubGatogry}
+                      active={loadingallHomecategory}
                       inverted
                     >
                       <Loader active />

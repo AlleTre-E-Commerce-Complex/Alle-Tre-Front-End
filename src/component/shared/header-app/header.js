@@ -177,7 +177,11 @@ const Header = ({ SetSid }) => {
               <RiArrowDownSFill size={20} />
             </button>
           </div>
-          <PopupCategoriesModel isOpen={isOpen} onClose={handleClose} />
+          <PopupCategoriesModel
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            onClose={handleClose}
+          />
           <div className="md:block hidden">
             <button
               onClick={handelRegister}
