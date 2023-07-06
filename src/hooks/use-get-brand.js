@@ -3,15 +3,17 @@ import api from "../api";
 import { authAxios } from "../config/axios-config";
 import { useLanguage } from "../context/language-context";
 import useAxios from "./use-axios";
+import { useAuthState } from "context/auth-context";
 
 const useGetBrand = (categoryId) => {
+  const { user } = useAuthState();
   const [lang] = useLanguage();
   const [NotAllBranOptions, setAllAllBranOptions] = React.useState([]);
 
   const { run, isLoading, error, isError } = useAxios();
 
   useEffect(() => {
-    if (categoryId)
+    if (categoryId && user)
       run(authAxios.get(api.app.brand.default(categoryId))).then(({ data }) => {
         const AllBranOptions = data.data;
         const options = [];

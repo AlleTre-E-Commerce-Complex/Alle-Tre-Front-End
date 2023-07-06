@@ -47,7 +47,15 @@ const Categories = () => {
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      if (!user) {
+      if (user) {
+        runCategories(
+          authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+            setMainAuctions(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          })
+        );
+      } else {
         runCategories(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -56,13 +64,6 @@ const Categories = () => {
           })
         );
       }
-    runCategories(
-      authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-        setMainAuctions(res?.data?.data);
-        setTotalPages(res?.data?.pagination?.totalPages);
-        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-      })
-    );
   }, [categoryId, runCategories, search, user]);
 
   const [selectedCategor, SetselectedCategor] = useState([]);
