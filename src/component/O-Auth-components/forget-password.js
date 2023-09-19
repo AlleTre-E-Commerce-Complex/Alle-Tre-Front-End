@@ -156,7 +156,7 @@ const ForgetPassword = () => {
           <button
             loading={isLoading}
             onClick={() => {
-              history.push(routes.auth.logIn);
+              history.push(routes.app.home);
             }}
             className="bg-white border-[1px] border-primary w-80 h-12 rounded-lg text-primary mt-2 font-normal text-base font-serifAR "
           >
