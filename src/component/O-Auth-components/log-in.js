@@ -47,12 +47,14 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
         const { accessToken, refreshToken, hasCompletedProfile } =
           res.data.data;
         login({
-          newAccessToken: accessToken,
-          newRefreshToken: refreshToken,
+          accessToken: accessToken,
+          refreshToken: refreshToken,
         });
-        window.localStorage.setItem("hasCompletedProfile", hasCompletedProfile);
+        window.localStorage.setItem(
+          "hasCompletedProfile",
+          JSON.stringify(hasCompletedProfile)
+        );
         isAuthModel ? history.push(currentPAth) : history.push(routes.app.home);
-        window.location.reload();
         dispatch(Close());
       })
       .catch((err) => {
@@ -121,7 +123,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
         toast.loading(
           selectedContent[localizationKeys.aVerificationMailHasBeenSent]
         );
-        history.push(routes.auth.logIn);
+        // history.push(routes.auth.logIn);
       })
       .catch((err) => {
         toast.error(
@@ -206,7 +208,6 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                   <div className="md:flex block justify-center ">
                     <Button
                       loading={isLoading}
-                      onClick={() => {}}
                       className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
                     >
                       {selectedContent[localizationKeys.login]}

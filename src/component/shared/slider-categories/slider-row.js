@@ -28,7 +28,7 @@ const SliderRow = () => {
 
   useEffect(() => {
     return () => {
-      swiper4?.destroy();
+      swiper4 && swiper4?.destroy();
     };
   }, []);
 

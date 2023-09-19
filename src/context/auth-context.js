@@ -22,13 +22,13 @@ function AuthProvider({ children }) {
     setUser(Auth._decodeToken(accessToken));
 
     Auth.setToken({
-      newAccessToken: accessToken,
-      newRefreshToken: refreshToken,
+      accessToken: accessToken,
+      accessToken: refreshToken,
     });
   };
 
   const logout = () => {
-    Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
+    Auth.setToken({ accessToken: "", accessToken: "" });
     setUser(null);
     history.push(routes.app.home);
   };
