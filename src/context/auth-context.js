@@ -7,7 +7,7 @@ import Auth from "../utils/auth";
 
 const AuthContext = React.createContext();
 
-const WHITE_LIST = [routes.auth.default];
+const WHITE_LIST = [routes.auth.forgetpass.default];
 
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -22,13 +22,13 @@ function AuthProvider({ children }) {
     setUser(Auth._decodeToken(accessToken));
 
     Auth.setToken({
-      accessToken: accessToken,
-      accessToken: refreshToken,
+      newAccessToken: accessToken,
+      newRefreshToken: refreshToken,
     });
   };
 
   const logout = () => {
-    Auth.setToken({ accessToken: "", accessToken: "" });
+    Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
     setUser(null);
     history.push(routes.app.home);
   };
