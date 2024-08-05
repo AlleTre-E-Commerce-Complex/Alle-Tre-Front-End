@@ -19,6 +19,8 @@ import { Open } from "../../redux-store/auth-model-slice";
 import CountdownTimer from "component/shared/timers/countdown-timer";
 
 const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
+  // console.log('===>','images',images,'myRef',myRef,'slidesData',slidesData,'emtystateImg',emtystateImg);
+  
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();

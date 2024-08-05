@@ -49,9 +49,7 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
 
-  const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
-    []
-  );
+  const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios([]);
   const {
     run: runSponsoredAuctions,
     isLoading: isLoadingrunSponsoredAuctions,
@@ -60,26 +58,31 @@ const Home = () => {
     if (search.includes("page") && search.includes("perPage"))
       if (!user) {
         runMainAuctions(
-          axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+          axios.get(`${api.app.auctions.getMain}${search}`).then((res) => { 
             setMainAuctions(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
+            
           })
         );
         runSponsoredAuctions(
           axios.get(`${api.app.auctions.sponsored}`).then((res) => {
+            console.log('response of runMainAuctions when user not  have XXX',res);
             SetSponsoredAuctions(res?.data?.data);
           })
         );
       } else {
         runMainAuctions(
           authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+            console.log('response of runMainAuctions when user have',res);
             setMainAuctions(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
+            console.log("main Auctions ====>",mainAuctions);
           })
         );
         runSponsoredAuctions(
           authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
             SetSponsoredAuctions(res?.data?.data);
+            console.log('response of SetSponsoredAuctions when user have',res);
           })
         );
       }

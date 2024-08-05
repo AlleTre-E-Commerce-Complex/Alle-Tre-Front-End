@@ -9,9 +9,9 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import moment from "moment";
-import emtyPhotosIcon from "../../../../src/assets/icons/emty-photos-icon.svg";
+import emtyPhotosIcon from "../../../../src/assets/icons/emty-photos-icon.svg"; 
 import AuctionsStatus from "../status/auctions-status";
-import { formatCurrency } from "../../../utils/format-currency";
+import { formatCurrency } from "../../../utils/format-currency"; 
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import {
@@ -28,7 +28,7 @@ import routes from "../../../routes";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
-export default function CheckoutPageCompletePayment() {
+export default function CheckoutPageCompletePayment() { 
   const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];

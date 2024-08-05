@@ -79,6 +79,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           });
       })
       .catch((err) => {
+        console.log(err);
         toast.error(
           selectedContent[
             localizationKeys.somethingWentWrongPleaseTryAgainLater
@@ -89,8 +90,10 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
 
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
+
     signInWithPopup(authentications, provider)
       .then((res) => {
+        console.log('checking ...>',res)
         run(
           axios.post(api.auth.aAuth, {
             userName: res?._tokenResponse?.displayName || null,
@@ -125,6 +128,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           });
       })
       .catch((err) => {
+        console.log('google auth error ==>:',err)
         toast.error(
           selectedContent[
             localizationKeys.somethingWentWrongPleaseTryAgainLater
