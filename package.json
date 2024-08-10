@@ -19,7 +19,7 @@
     "react": "^17.0.2",
     "react-avatar-editor": "^13.0.0",
     "react-dom": "^17.0.2",
-    "react-drag-drop-files": "^2.3.4", 
+    "react-drag-drop-files": "^2.3.4",
     "react-dropzone": "^14.2.3",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
@@ -40,6 +40,7 @@
     "use-debounce": "^9.0.4",
     "use-places-autocomplete": "^4.0.0",
     "victory": "^36.6.8",
+    "wild-wild-parser": "^5.0.0",
     "wild-wild-path": "^3.6.0",
     "yup": "^0.32.11"
   },
@@ -73,7 +74,7 @@
     "postcss": "^8.4.14",
     "tailwindcss": "^3.2.6"
   },
-   "overrides": {
+  "overrides": {
     "react-lottie": {
       "react": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 "
     },
