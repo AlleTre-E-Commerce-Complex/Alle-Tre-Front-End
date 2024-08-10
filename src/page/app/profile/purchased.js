@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import api from "../../../api";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "../../../hooks/use-axios";

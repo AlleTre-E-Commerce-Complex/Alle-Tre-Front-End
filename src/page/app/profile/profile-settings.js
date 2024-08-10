@@ -21,7 +21,7 @@ import EditPhoneNumberModel from "../../../component/profile-components/edit-pho
 import useFilter from "../../../hooks/use-filter";
 import useAxios from "../../../hooks/use-axios";
 
-import { Dimmer, Loader, Popup } from "semantic-ui-react";
+import { Dimmer, Popup } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 
 import api from "../../../api";
