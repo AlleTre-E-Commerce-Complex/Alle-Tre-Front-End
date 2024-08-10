@@ -72,5 +72,10 @@
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.2.6"
+  },
+   "overrides": {
+    "react-lottie": {
+      "react": "^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 "
+    }
   }
 }

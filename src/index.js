@@ -10,7 +10,7 @@ import App from "./App";
 
 import { LanguageProvider } from "./context/language-context";
 import { AuthProvider } from "./context/auth-context";
-import { SocketProvider } from "context/socket-context";
+// import { SocketProvider } from "context/socket-context";
 
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
