@@ -9,7 +9,7 @@ import AppLayouts from "./layout/app-layout";
 import { SocketProvider } from "context/socket-context";
 import { useSelector } from "react-redux";
 
-function App() {
+function App() { 
   return (
     <div className="App">
       <Switch>
