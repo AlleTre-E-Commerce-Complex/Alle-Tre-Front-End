@@ -12,6 +12,7 @@ const TotalAuctions = ({
   expired,
   pending,
   watingForPayment,
+  cancelledAuction,
   totalcount,
 }) => {
   const [lang] = useLanguage();
@@ -31,6 +32,7 @@ const TotalAuctions = ({
           watingForPayment={watingForPayment}
           expired={expired}
           pending={pending}
+          cancelledAuction={cancelledAuction}
           totalcount={totalcount}
         />
       </div>
@@ -142,6 +144,22 @@ const TotalAuctions = ({
           </div>
           <p className="text-gray-verydark">
             {pending}{" "}
+            <span className="px-1">
+              {" "}
+              {selectedContent[localizationKeys.auction]}
+            </span>{" "}
+          </p>
+        </div>
+        <div className="flex justify-between py-1.5">
+          <div className="flex gap-x-2">
+            <p className="w-4 h-4 rounded-full mt-1 bg-red-600"></p>
+            <p className="text-base font-normal text-gray-med">
+              {" "}
+              {selectedContent[localizationKeys.cancelled]}
+            </p>
+          </div>
+          <p className="text-gray-verydark">
+            {cancelledAuction}{" "}
             <span className="px-1">
               {" "}
               {selectedContent[localizationKeys.auction]}

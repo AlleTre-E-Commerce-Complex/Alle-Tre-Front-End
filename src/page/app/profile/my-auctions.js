@@ -50,6 +50,8 @@ const MyAuctions = () => {
     "EXPIRED" || null,
     "ACTIVE" || null,
     "WAITING_FOR_PAYMENT" || null,
+    "CANCELLED_BEFORE_EXP_DATE" || null,
+    "CANCELLED_AFTER_EXP_DATE" || null,
   ];
   allStatuses?.forEach((status) => {
     if (!analyticsDataObject[status]) {
@@ -105,6 +107,7 @@ const MyAuctions = () => {
               scheduled={analyticsDataObject?.IN_SCHEDULED?.count}
               pending={analyticsDataObject?.PENDING_OWNER_DEPOIST?.count}
               watingForPayment={analyticsDataObject?.WAITING_FOR_PAYMENT?.count}
+              cancelledAuction={analyticsDataObject?.CANCELLED_BEFORE_EXP_DATE?.count + analyticsDataObject?.CANCELLED_AFTER_EXP_DATE?.count }
               expired={analyticsDataObject?.EXPIRED?.count}
               totalcount={analyticsDataObject?.totalcount}
             />

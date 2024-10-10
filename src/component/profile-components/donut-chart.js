@@ -14,12 +14,14 @@ const DonutChart = ({
   expired,
   pending,
   watingForPayment,
+  cancelledAuction,
   //
   inProgressAuction,
   pendingAuction,
   completedAuction,
   expiredAuctions,
   waitingForDeliveryAuctions,
+  cancelledBids,
   //
   totalcount,
 }) => {
@@ -33,6 +35,7 @@ const DonutChart = ({
     { x: "watingForPayment", y: watingForPayment },
     { x: "Expired", y: expired },
     { x: "Pending", y: pending },
+    { x: "Cancelled", y: cancelledAuction },
   ];
 
   const totalBidsData = [
@@ -41,6 +44,8 @@ const DonutChart = ({
     { x: "Completed Auction", y: completedAuction },
     { x: "Expired Auctions", y: expiredAuctions },
     { x: "Waiting For Delivery Auctions", y: waitingForDeliveryAuctions },
+    { x: "Cancelled", y: cancelledBids },
+
   ];
 
   const auctionscolorScale = [
@@ -51,6 +56,7 @@ const DonutChart = ({
     "#B9BDCD",
     "#ACACAC",
     "#00134F",
+    "#d72a20",
   ];
   const bidscolorScale = [
     "#45BF55",
@@ -58,6 +64,7 @@ const DonutChart = ({
     "#A2547A",
     "#ACACAC",
     "#FBAE4C",
+    "#d72a20",
   ];
 
   const options = {

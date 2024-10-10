@@ -122,7 +122,7 @@ const BuyNowAuctionsSlider = () => {
                   } snapslider-scroll swiper-wrapper py-2`}
                 >
                   {auctions?.map((e) => (
-                    <div className="snapslider-card swiper-slide">
+                    <div key={e?.id} className="snapslider-card swiper-slide">
                       <AuctionCard
                         className="min-w-[272px]"
                         auctionId={e?.id}

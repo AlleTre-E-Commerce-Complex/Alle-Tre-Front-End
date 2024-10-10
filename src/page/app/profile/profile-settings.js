@@ -392,7 +392,7 @@ export const LocationDetailsCard = ({
   City,
   PostalCode,
   Id,
-  key,
+
   isMain,
   setOpenMakeDefultLocations,
   onReload,
@@ -460,7 +460,7 @@ export const LocationDetailsCard = ({
 
   return (
     <div
-      key={key}
+
       onClick={() => {
         setLocationId(Id);
       }}

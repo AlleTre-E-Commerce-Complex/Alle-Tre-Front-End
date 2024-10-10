@@ -60,9 +60,8 @@ const SliderRow = () => {
               >
                 {/* slider */}
                 {GatogryOptions?.map((e, index) => (
-                  <div className="snapslider-card swiper-slide">
+                  <div key={index} className="snapslider-card swiper-slide">
                     <Category
-                      key={index}
                       img={e?.sliderLink}
                       title={e?.text}
                       id={e?.value}

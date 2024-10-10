@@ -8,6 +8,8 @@ function FormikInput({ label, name, className, placeholder, value, ...props }) {
       <Field name={name}>
         {({ form, field }) => {
           const { errors, touched } = form;
+          const isError = Boolean(touched[name] && errors[name]); // Calculate the error status
+
           return (
             <div>
               <InputForm
@@ -17,11 +19,9 @@ function FormikInput({ label, name, className, placeholder, value, ...props }) {
                 value={value}
                 {...field}
                 {...props}
-                error={Boolean(touched[name] && errors[name])}
+                error={isError ? "true" : undefined} // Pass as string "true" or omit it if not an error
               />
-              {touched[name] && errors[name] && (
-                <ErrorMessage message={errors[name]} />
-              )}
+              {isError && <ErrorMessage message={errors[name]} />}
             </div>
           );
         }}

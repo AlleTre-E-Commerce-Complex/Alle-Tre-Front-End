@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
@@ -12,9 +11,13 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import routes from "../../routes";
 import TotalBidsTableModel from "../auctions-details-components/total-bids-table-model";
+import DeliveryIssueModal from "component/shared/DeliveryIssueModal/DeliveryIssueModal";
+import BuyerObjectionModal from "component/shared/BuyerObjectionModal/BuyerObjectionModal";
+import WarningModal from "component/shared/warningModal/WarningModal";
+import SuccessModal from "component/shared/successModal/SuccessModal";
+import DeliverysentModal from "component/shared/DeliveryModal/DeliveryModal";
 
 const ActionsRowTable = ({
-  key,
   isBidsButtons,
   buttonActions,
   textButton,
@@ -33,10 +36,20 @@ const ActionsRowTable = ({
   endingDate,
   goToDetails,
   filterJoinState,
+  isItemSendForDelivery
+
 }) => {
+  // console.log('auction Id in auction row table:',auctionsId);
+  // console.log('Props:', { title, description, totalBids, lastPrice, endingTime });
+
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
+  const [openDeliveryIssueModal,setDeleveryIssueModal] = useState(false)
+  const [openBuyerObjectionModal,setBuyerObjectionModal] = useState(false)
+  const [openDeliverySentModal,setDeliverySentModal] = useState(false)
+  const [openSuccessModal,setSuccessModal] = useState(false)
+  const [openCancelAuctionModal,setCancelAuctionModal]= useState(false)
   const [openTotalBid, setOpenTotalBidsModel] = useState(false);
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
@@ -199,6 +212,37 @@ const ActionsRowTable = ({
             ) : (
               ""
             )}
+            {status === "CANCELLED_AFTER_EXP_DATE" || status === "CANCELLED_BEFORE_EXP_DATE" ? (
+              <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.totalBids]}
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {status}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.price]}
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {formatCurrency(price)}
+                  </p>
+                </div>
+                <div>
+                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                    {selectedContent[localizationKeys.endingDate]}
+                  </h1>
+                  <p className="text-gray-dark text-[10px] font-normal">
+                    {/* March,23 2023 */}
+                    {moment(endingDate).local().format("MMMM, DD YYYY")}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
             {/* bids */}
             {status === "IN_PROGRESS" && (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
@@ -301,11 +345,19 @@ const ActionsRowTable = ({
 
         {isBidsButtons ? (
           <div className="flex gap-x-2">
+                   {status === "WAITING_FOR_DELIVERY" &&
+            <button
+            onClick={()=>setDeleveryIssueModal(true)}
+            className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+          > 
+            {selectedContent[localizationKeys.AnyIssueWithDelivery]}
+          </button>
+          }
             <button
               onClick={buttonActions}
               className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
             >
-              {textButton}
+              {textButton} 
             </button>
             <button
               onClick={() => history.push(goToDetails)}
@@ -315,12 +367,56 @@ const ActionsRowTable = ({
             </button>
           </div>
         ) : (
+            <div >
+         
+           {status === "COMPLETED" &&
+            <button
+            onClick={()=>setBuyerObjectionModal(true)}
+            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+          > 
+            {selectedContent[localizationKeys.AnyObjection]}
+          </button>
+          }
+
+            {status === "ACTIVE"  &&
+            <button
+            onClick={()=>setCancelAuctionModal(true)}
+            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+          > 
+            {selectedContent[localizationKeys.cancelTheAuction]}
+          </button>
+          }
+           {status ===  "WAITING_FOR_PAYMENT" &&
+            <button
+            onClick={()=>setCancelAuctionModal(true)}
+            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+          > 
+            {selectedContent[localizationKeys.cancelTheAuction]}
+          </button>
+          }
+           {status ===  "SOLD" && !isItemSendForDelivery &&
+            <button
+            onClick={()=>setDeliverySentModal(true)}
+            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+          > 
+            {/* {selectedContent[localizationKeys.cancelTheAuction]} */}
+            Is Item Sent?
+          </button>
+          }
+          {status ===  "SOLD" && isItemSendForDelivery &&
+            <button
+            className="border-primary cursor-default border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+          > 
+          You have sent the item.
+          </button>
+          }
           <button
             onClick={() => history.push(goToDetails)}
             className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
           >
             {selectedContent[localizationKeys.viewDetails]}
           </button>
+            </div>
         )}
       </div>
       <TotalBidsTableModel
@@ -328,8 +424,36 @@ const ActionsRowTable = ({
         setOpen={setOpenTotalBidsModel}
         open={openTotalBid}
       />
+      <DeliveryIssueModal 
+          auctionId={auctionsId}
+          open={openDeliveryIssueModal} 
+          setOpen={setDeleveryIssueModal}/>
+
+       <BuyerObjectionModal
+          auctionId={auctionsId}
+          open={openBuyerObjectionModal} 
+          setOpen={setBuyerObjectionModal}/>
+        <WarningModal 
+        auctionId={auctionsId}
+        open={openCancelAuctionModal} 
+        setOpen={setCancelAuctionModal}
+        setSuccessModal={setSuccessModal}
+        message={selectedContent[localizationKeys.CancellAuctionWarningMessage]}
+        />
+        <SuccessModal 
+          open={openSuccessModal}
+          setOpen={setSuccessModal}
+          message={selectedContent[localizationKeys.YouSuccessfullyCancelledTheAuction]}
+        />
+        <DeliverysentModal 
+          auctionId={auctionsId}
+          open={openDeliverySentModal}
+          setOpen={setDeliverySentModal}
+          setSuccessModal={setSuccessModal}
+        />
+
     </div>
   );
 };
 
-export default ActionsRowTable;
+  export default React.memo(ActionsRowTable);

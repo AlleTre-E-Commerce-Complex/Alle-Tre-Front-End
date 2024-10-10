@@ -130,6 +130,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             }
             onClick={() => history.push(routes.app.profile.watchlist)}
           />
+          
           <NavLink
             title={selectedContent[localizationKeys.Purchased]}
             isActive={
@@ -137,6 +138,14 @@ const ProfileSideBare = ({ SetSid, sid }) => {
               pathname.startsWith(routes.app.profile.purchased)
             }
             onClick={() => history.push(routes.app.profile.purchased)}
+          />
+            <NavLink
+            title={selectedContent[localizationKeys.Wallet]}
+            isActive={
+              pathname.length === 1 ||
+              pathname.startsWith(routes.app.profile.wallet)
+            }
+            onClick={() => history.push(routes.app.profile.wallet)}
           />
         </div>
         <div
@@ -240,6 +249,17 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
+               <NavLink
+                title={selectedContent[localizationKeys.Wallet]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.wallet)
+                }
+                onClick={() => {
+                  history.push(routes.app.profile.wallet);
+                  SetSid(false);
+                }}
+              />
             </div>
             <div
               onClick={onLogout}
@@ -259,25 +279,24 @@ const ProfileSideBare = ({ SetSid, sid }) => {
 
 export const NavLink = ({ title, onClick, isActive }) => {
   return (
-    <div>
-      <p
-        onClick={onClick}
+    <div
+      onClick={onClick}
+      className={`${
+        isActive
+          ? "bg-primary-light/10 text-primary mx-0 px-10 font-bold "
+          : "mx-10 px-4 border-b-gray-veryLight border-b-[1px] "
+      } text-base text-gray-dark font-normal py-5 cursor-pointer flex`}
+    >
+      <span
         className={`${
           isActive
-            ? "bg-primary-light/10 text-primary mx-0 px-10 font-bold "
-            : "mx-10 px-4 border-b-gray-veryLight border-b-[1px] "
-        } text-base text-gray-dark font-normal py-5 cursor-pointer flex`}
-      >
-        <p
-          className={`${
-            isActive
-              ? "bg-primary font-bold w-2 h-2 rounded-full mt-1.5 mx-4"
-              : ""
-          } translate delay-150 duration-150 `}
-        ></p>
-        <p className={`${isActive ? "font-bold " : ""}`}>{title}</p>
-      </p>
+            ? "bg-primary font-bold w-2 h-2 rounded-full mt-1.5 mx-4"
+            : ""
+        } translate delay-150 duration-150 `}
+      ></span>
+      <span className={`${isActive ? "font-bold " : ""}`}>{title}</span>
     </div>
   );
 };
+
 export default ProfileSideBare;

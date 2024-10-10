@@ -13,6 +13,7 @@ import ExpiredBids from "./expired-bids";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import CancelledBids from "./CancelledBids";
 
 const MyBidsTabs = ({ onReload }) => {
   const [lang] = useLanguage("");
@@ -70,6 +71,17 @@ const MyBidsTabs = ({ onReload }) => {
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
             <CompletedBids OnReload={onReload} />
+          </Tab.Pane>
+        </div>
+      ),
+    },
+    {
+      menuItem: `${selectedContent[localizationKeys.cancelled]}`,
+      route: routes.app.profile.myBids.cancelled,
+      render: () => (
+        <div>
+          <Tab.Pane className="border-none w-full h-full bg-backgroundGray dark:bg-darkMood-backgroundBlack animate-in">
+            <CancelledBids OnReload={onReload} />
           </Tab.Pane>
         </div>
       ),

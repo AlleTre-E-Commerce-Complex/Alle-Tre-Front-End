@@ -79,8 +79,9 @@ const UploadeImgModel = ({
         <Dropzone
           onDrop={handleDrop}
           disabled={!dropzoneActive}
-          accept="image/*"
+          accept={{ 'image/*': [] }} // Accepts all image types
         >
+
           {({ getRootProps, getInputProps, open }) => (
             <div>
               <h1 className="text-start text-gray-dark text-base font-medium ">

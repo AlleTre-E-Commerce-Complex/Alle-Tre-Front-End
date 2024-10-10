@@ -40,6 +40,7 @@ const WatingForDeliveryBids = ({ OnReload }) => {
             `${api.app.auctions.getAllMyBids}${search}&status=WAITING_FOR_DELIVERY`
           )
           .then((res) => {
+            console.log('waiting for delevery data :',res?.data?.data)
             setActiveAuctionData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
@@ -94,6 +95,7 @@ const WatingForDeliveryBids = ({ OnReload }) => {
             <ActionsRowTable
               key={e?.auction?.id}
               isBidsButtons
+              auctionsId = {e?.auction?.id}
               textButton={selectedContent[localizationKeys.confirmDelivery]}
               buttonActions={() => handelConfirmDelivery(e?.auction?.id)}
               status={"WAITING_FOR_DELIVERY"}

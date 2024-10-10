@@ -15,6 +15,7 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import WatingForPaymentAuctions from "./wating-for-payment-auctions";
+import CancelledAuctions from "./CancelledAuctions";
 
 const MyAuctionsTabs = () => {
   const [lang] = useLanguage("");
@@ -94,6 +95,17 @@ const MyAuctionsTabs = () => {
         <div>
           <Tab.Pane className="border-none w-full h-full bg-backgroundGray  dark:bg-darkMood-backgroundBlack animate-in">
             <ExpiredAuctions />
+          </Tab.Pane>
+        </div>
+      ),
+    },
+    {
+      menuItem: `${selectedContent[localizationKeys.cancelled]}`,
+      route: routes.app.profile.myAuctions.cancelled,
+      render: () => (
+        <div>
+          <Tab.Pane className="border-none w-full h-full bg-backgroundGray  dark:bg-darkMood-backgroundBlack animate-in">
+            <CancelledAuctions />
           </Tab.Pane>
         </div>
       ),

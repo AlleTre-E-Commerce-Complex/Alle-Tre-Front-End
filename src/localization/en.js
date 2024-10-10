@@ -57,6 +57,9 @@ const en = {
   [localizationKeys.sellingType]: "Selling Type",
   [localizationKeys.auction]: "Auction",
   [localizationKeys.buyNow]: "Buy Now",
+  [localizationKeys.DeliveryPolicy]: "Delivery policy",
+  [localizationKeys.returnPolicy]: "Return Policy",
+  [localizationKeys.warrantyPolicy]: "Warranty Policy",
   [localizationKeys.auctionState]: "Auction State",
   [localizationKeys.comingSoon]: "Coming Soon",
   [localizationKeys.liveAuction]: "Live Auction",
@@ -140,6 +143,7 @@ const en = {
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "Are you sure you want to delete this draft",
   [localizationKeys.cancel]: "Cancel",
+  [localizationKeys.YesISentIt]: "Yes, I  sent it",
   [localizationKeys.yesDelete]: "Yes,delete",
   [localizationKeys.locationIsRequired]: "Location is required",
   [localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo]:
@@ -185,11 +189,22 @@ const en = {
   [localizationKeys.optional]: "(Optional)",
   [localizationKeys.unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately]:
     "Unless a start time and date are chosen, your listing becomes active immediately.",
+  [localizationKeys.youCanGiveHereYourDeliveryRelatedPolicy]:
+    "You can give your own delivery related policy here, ",
+    [localizationKeys.youCanGiveHereYourReturnRelatedPolicy]:
+    "You can give your own return related policy here ",
+    [localizationKeys.youCanGiveHereYourWarrantyRelatedPolicy]:
+    "You can give your own warranty related policy here ",
   [localizationKeys.startDate]: "Start Date",
+  [localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:'How many days will it take for the delivery after auction expired ?',
+  [localizationKeys.includingDeliveryDateAndOthers]: "Including delivery date and others..",
   [localizationKeys.time]: "Time",
+  [localizationKeys.NumberOfDays]: "Number of days",
   [localizationKeys.pricing]: "Pricing",
   [localizationKeys.minimumPrice]: "Minimum Price",
   [localizationKeys.purchasingPrice]: "Purchasing Price",
+  [localizationKeys.PolicyDescription]: "Policy Description",
+  [localizationKeys.PleaseGiveTheDescription]: "Please Give Your Description",
   [localizationKeys.minimum30MoreThanStartingBid]:
     "Minimum: 30% more than starting bid",
   [localizationKeys.purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice]:
@@ -246,10 +261,13 @@ const en = {
     "There are no auctions currently. Make your first auction right away.",
   [localizationKeys.totalAuctions]: "Total Auctions",
   [localizationKeys.active]: "Active",
+  [localizationKeys.cancelled]: "Cancelled",
   [localizationKeys.total]: "Total",
   [localizationKeys.totalActive]: "Total Active Auctions..",
+  [localizationKeys.totalCancel]: "Total Cancel Auctions..",
   [localizationKeys.youCanCreateOne]: "You can create one",
   [localizationKeys.oppsActive]: "Ops, there are no active auctions yet.",
+  [localizationKeys.oppsCancelled]: "Ops, there are no cancelled auctions yet.",
   [localizationKeys.lastPrice]: "Last Price",
   [localizationKeys.startingPrice]: "Starting Price",
   [localizationKeys.startingDate]: "Starting Date",
@@ -268,6 +286,22 @@ const en = {
   [localizationKeys.totalExpired]: "Total Expired Auctions...",
   [localizationKeys.opsExpired]: "Ops, there are no Expired auctions yet.",
   [localizationKeys.watingForPaymentAuctions]: "Wating For Payment Auctions...",
+  [localizationKeys.cancelTheAuction]:'Cancel the auction?',
+  [localizationKeys.Warning]:'Warning',
+  [localizationKeys.PaymentSelection]:'Payment selection',
+  [localizationKeys.walletPayment]:'Wallet Payment',
+  [localizationKeys.onlinePayment]:'Online Payment',
+  [localizationKeys.WhichPaymentMethodWouldYouLikeToSelect]:'Which payment method would you like to select?',
+  [localizationKeys.OK]:'OK',
+  [localizationKeys.didYouSendTheItemForDelivery]:'Did you send the item for delivery?',
+  [localizationKeys.sendMessageToBuyer]:'Send a message to buyer ',
+  [localizationKeys.Message]:'Message...',
+  [localizationKeys.CancellAuctionWarningMessage]:
+  'Cancelling the auction will cause to lose your security deposit..!',
+  [localizationKeys.ContinueToCancel]:'Continue to cancel ?',
+  [localizationKeys.discontinue]:'Discontinue',
+  [localizationKeys.YouSuccessfullyCancelledTheAuction]:"Succefully cancelled the auction..!",
+  [localizationKeys.YouHaveSuccessfullyNotifiedTheWinner]:"You have successfully notified the winner",
   // mybids
   [localizationKeys.Youarenotbiddingonanyitems]:
     "You are not bidding on any items.",
@@ -286,11 +320,29 @@ const en = {
   [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
     "There is no bids yet on waiting for delivery auctions right now",
   [localizationKeys.confirmDelivery]: "Confirm delivery",
+  [localizationKeys.AnyIssueWithDelivery]:'Any issue with delivery?',
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "There is no bids yet expiredauctions right now",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
     "There is no bids yet completed auctions right now",
+    [localizationKeys.ThereIsNoBidsyetCancelledAuctionsRightNow]:
+    "There is no bids yet cancelled auctions right now",
   [localizationKeys.submitNewBid]: "Submit New Bid",
+  [localizationKeys.AnyObjection]:"Any Objections?",
+  //delevery Issue Report Modal
+  [localizationKeys.NotDeliveredYet]:'Not Delivered yet?',
+  [localizationKeys.ProductIsNotAsShownInPicture]:'Product not as shown in picture?',
+  [localizationKeys.DoesProductHaveAnyIssueWhichIsNotMentionedInTheDescription]:'Does product have any issue which is not mentioned in the description?',
+  [localizationKeys.Others] :'Others?',
+  [localizationKeys.tellUsYourProblem]:'Tell us your problem..?',
+  [localizationKeys.Description]:'Description',
+  [localizationKeys.UploadYourImageshere]:'Upload Your Image here',
+  [localizationKeys.YouCanSelectMultipleImagestogether]:'You can select multiple images together',
+  [localizationKeys.Submit]:'Submit',
+  [localizationKeys.PleaseSelectAnyOption]:'Please Select any option..!',
+  [localizationKeys.PleaseGiveTheDescription]:'Please give the description..!',
+  [localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater]:'Sorry, Your submission has failed. please try again later..!',
+  [localizationKeys.ThankYouForYourSubmission]:'Thank you for your submission..!',
   //  Purchased
   [localizationKeys.Purchased]: "Purchases",
   [localizationKeys.yourPurchased]: "Your purchases",
@@ -317,7 +369,7 @@ const en = {
   [localizationKeys.congratulationsOnYourFirstBid]:
     "Congratulations On Your First Bid",
   [localizationKeys.editBid]: "Edit Bid",
-  [localizationKeys.pay]: "Pay",
+  [localizationKeys.pay]: "Pay", 
   [localizationKeys.deposit]: "Deposit",
   [localizationKeys.YouAreAboutToPlaceBidFor]:
     "You are about to place a Bid For",
@@ -329,7 +381,6 @@ const en = {
   [localizationKeys.viewAll]: "View All",
   // tab details
   [localizationKeys.shippingPolicy]: "Shipping Policy",
-  [localizationKeys.returnPolicy]: "Return Policy",
   [localizationKeys.payment]: "Payment",
   [localizationKeys.feedback]: "Feedback",
   [localizationKeys.aboutTheBrand]: "About The Brand",
@@ -364,6 +415,9 @@ const en = {
     "your Auction is Created success",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "Make sure that you choose the auction location or create another one",
+    //wallet
+   [localizationKeys.Wallet] : "Wallet", 
+   [localizationKeys.ThereAreNoTransactionYet] : "There are no transactions yet..!",
 };
 
 export default en;

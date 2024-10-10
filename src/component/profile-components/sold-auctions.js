@@ -83,6 +83,8 @@ const SoldAuctions = () => {
             <ActionsRowTable
               key={e?.id}
               status={e?.status}
+              isItemSendForDelivery={e?.isItemSendForDelivery}
+              auctionsId={e?.id}
               title={e?.product?.title}
               description={e?.product?.description}
               img={e?.product?.images[0]?.imageLink}

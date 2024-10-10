@@ -146,18 +146,18 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
         />
       </div>
       <div className="mx-5 ">
-        <p className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">
+        <div className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">
           <p className="absolute -left-[30px]  text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
             {selectedContent[localizationKeys.or]}
           </p>
-        </p>
+        </div>
       </div>
       <div className="mx-auto ">
-        <p className="border-t-[1px] border-gray-dark w-64  my-2 relative md:hidden left-0.5">
+        <div className="border-t-[1px] border-gray-dark w-64  my-2 relative md:hidden left-0.5">
           <p className="absolute text-gray-dark bg-white left-24 -top-3 px-6">
             {selectedContent[localizationKeys.or]}
           </p>
-        </p>
+        </div>
       </div>
       <div>
         <div className={isHidden ? "animate-out h-0" : "animate-in"}>
@@ -198,12 +198,12 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                         {selectedContent[localizationKeys.rememberPassword]}
                       </label>
                     </div>
-                    <Link
+                    <span
                       onClick={() => setIsHidden(true)}
-                      className="underline text-primary-dark text-sm font-normal pt-1"
+                      className="underline cursor-pointer text-primary-dark text-sm font-normal pt-1"
                     >
                       {selectedContent[localizationKeys.forgetPassword]}
-                    </Link>
+                    </span>
                   </div>
                   <div className="md:flex block justify-center ">
                     <Button
@@ -238,12 +238,12 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                     />
                   </div>
                   <div className="flex justify-end mt-2 mx-1">
-                    <Link
+                    <span
                       onClick={() => setIsHidden(false)}
-                      className="underline text-primary-dark text-sm font-normal pt-1"
+                      className="underline cursor-pointer text-primary-dark text-sm font-normal pt-1"
                     >
                       {selectedContent[localizationKeys.backToLogin]}
-                    </Link>
+                    </span>
                   </div>
                   <div className="w-full">
                     <Button

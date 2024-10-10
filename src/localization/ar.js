@@ -56,6 +56,9 @@ const ar = {
   [localizationKeys.sellingType]: "نوع البيع",
   [localizationKeys.auction]: "مزاد",
   [localizationKeys.buyNow]: "اشتري الآن",
+  [localizationKeys.DeliveryPolicy]: "سياسة التسليم ",
+  [localizationKeys.returnPolicy]: "سياسة العائدات",
+  [localizationKeys.PolicyDescription]: "وصف السياسة",
   [localizationKeys.auctionState]: "حالة المزاد",
   [localizationKeys.comingSoon]: "قريباً",
   [localizationKeys.liveAuction]: "المزاد المباشر",
@@ -138,6 +141,7 @@ const ar = {
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "هل أنت متأكد أنك تريد حذف هذه المسودة",
   [localizationKeys.cancel]: "إلغاء",
+  [localizationKeys.YesISentIt]: "نعم لقد ارسلته",
   [localizationKeys.yesDelete]: "نعم ، احذف",
   [localizationKeys.locationIsRequired]: "الموقع مطلوب",
   [localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo]:
@@ -183,11 +187,22 @@ const ar = {
   [localizationKeys.optional]: "(اختياري)",
   [localizationKeys.unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately]:
     "ما لم يتم اختيار وقت وتاريخ البدء ، تصبح قائمتك نشطة على الفور.",
+  [localizationKeys.youCanGiveHereYourDeliveryRelatedPolicy]:
+    "يمكنك تقديم سياسة التسليم الخاصة بك هنا, ",
   [localizationKeys.startDate]: "تاريخ البدء",
+  [localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:'كم يوما سيستغرق التسليم بعد انتهاء المزاد؟',
+  [localizationKeys.youCanGiveHereYourReturnRelatedPolicy]:
+  "يمكنك تقديم سياسة الإرجاع الخاصة بك هنا ",
+  [localizationKeys.youCanGiveHereYourWarrantyRelatedPolicy]:
+    "يمكنك تقديم سياسة الضمان الخاصة بك هنا ",
+  [localizationKeys.includingDeliveryDateAndOthers]: "بما في ذلك تاريخ التسليم وغيرها...",
   [localizationKeys.time]: "الوقت",
+  [localizationKeys.NumberOfDays]: "عدد الأيام",
   [localizationKeys.pricing]: "التسعير",
   [localizationKeys.minimumPrice]: "سعر الحد الأدنى",
   [localizationKeys.purchasingPrice]: "سعر الشراء",
+  [localizationKeys.DeliveryDescription]: "وصف التسليم",
+  [localizationKeys.PleaseGiveTheDescription]: "يرجى تقديم وصفك",
   [localizationKeys.minimum30MoreThanStartingBid]:
     "الحد الأدنى: 30٪ أكثر من عرض السعر المبدئي",
   [localizationKeys.purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice]:
@@ -244,10 +259,13 @@ const ar = {
     "لا توجد مزادات حاليًا. قم بإجراء مزادك الأول على الفور.",
   [localizationKeys.totalAuctions]: "إجمالي المزادات",
   [localizationKeys.active]: "نشط",
+  [localizationKeys.cancelled]: "تم الإلغاء",
   [localizationKeys.total]: "إجمالي",
   [localizationKeys.totalActive]: "إجمالي المزادات النشطة ..",
+  [localizationKeys.totalCancel]: "إجمالي إلغاء المزادات.",
   [localizationKeys.youCanCreateOne]: "يمكنك إنشاء واحد",
   [localizationKeys.oppsActive]: "عفوًا ، لا توجد مزادات نشطة حتى الآن.",
+  [localizationKeys.oppsCancelled]: "عفواً، لا توجد مزادات تم إلغاؤها حتى الآن.",
   [localizationKeys.lastPrice]: "آخر سعر",
   [localizationKeys.startingPrice]: "السعر المبدئي",
   [localizationKeys.startingDate]: "تاريخ البدء",
@@ -265,6 +283,23 @@ const ar = {
   [localizationKeys.opsPending]: "عفوًا ، لا توجد عمليات بيع معلقة حتى الآن.",
   [localizationKeys.totalExpired]: "إجمالي المزادات المنتهية الصلاحية ...",
   [localizationKeys.watingForPaymentAuctions]: "في انتظار مزادات الدفع ...",
+  [localizationKeys.cancelTheAuction]:'إلغاء المزاد؟',
+  [localizationKeys.Warning]:'تحذير', 
+  [localizationKeys.PaymentSelection]:'اختيار الدفع',
+  [localizationKeys.walletPayment]:'الدفع عن طريق المحفظة',
+  [localizationKeys.onlinePayment]:'الدفع عبر الإنترنت',
+  [localizationKeys.WhichPaymentMethodWouldYouLikeToSelect]:'ما هي طريقة الدفع التي ترغب في اختيارها؟',
+  [localizationKeys.OK]:'نعم',
+  [localizationKeys.didYouSendTheItemForDelivery]:'هل أرسلت العنصر للتسليم؟',
+  [localizationKeys.sendMessageToBuyer]:'إرسال رسالة إلى المشتري',
+  [localizationKeys.Message]:'رسالة...',
+  [localizationKeys.CancellAuctionWarningMessage]:
+  'سيؤدي إلغاء المزاد إلى خسارة وديعة الضمان الخاصة بك',
+  [localizationKeys.ContinueToCancel]:'متابعة الإلغاء؟',
+  [localizationKeys.discontinue]:'توقف',
+  [localizationKeys.YouSuccessfullyCancelledTheAuction]:"تم إلغاء المزاد بنجاح..!",
+  [localizationKeys.YouHaveSuccessfullyNotifiedTheWinner]:"لقد قمت بإخطار الفائز بنجاح",
+  
   // mybids
   [localizationKeys.Youarenotbiddingonanyitems]:
     "أنت لا تقدم عطاءات على أي عناصر.",
@@ -283,11 +318,29 @@ const ar = {
   [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
     "لا توجد عروض حتى الآن في انتظار مزادات التسليم في الوقت الحالي",
   [localizationKeys.confirmDelivery]: "تأكيد التسليم",
+  [localizationKeys.AnyIssueWithDelivery]:'هل هناك أي مشكلة مع التسليم؟',
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "لا توجد عروض حتى الآن مزادات منتهية الصلاحية",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
     "لا توجد عطاءات بعد المزادات المكتملة في الوقت الحالي",
+    [localizationKeys.ThereIsNoBidsyetCancelledAuctionsRightNow]:
+    "لا يوجد عروض حتى الآن تم إلغاء المزادات الآن",
   [localizationKeys.submitNewBid]: "تقديم مزايدة جديد",
+  [localizationKeys.AnyObjection]:"أي اعتراضات؟",
+  //deleveryIssueReportModal
+  [localizationKeys.NotDeliveredYet]:'لم يتم التسليم بعد؟',
+  [localizationKeys.ProductIsNotAsShownInPicture]: "المنتج ليس كما هو موضح في الصورة؟",
+  [localizationKeys.DoesProductHaveAnyIssueWhichIsNotMentionedInTheDescription]:'هل هناك أي مشكلة في المنتج غير المذكورة في الوصف؟',
+  [localizationKeys.Others]:'آحرون؟',
+  [localizationKeys.tellUsYourProblem]:'أخبرنا مشكلتك..؟',
+  [localizationKeys.Description]:'وصف',
+  [localizationKeys.UploadYourImageshere]:'قم بتحميل صورتك هنا',
+  [localizationKeys.YouCanSelectMultipleImagestogether]:'يمكنك تحديد صور متعددة معًا',
+  [localizationKeys.Submit]:'يُقدِّم',
+  [localizationKeys.PleaseSelectAnyOption]:"الرجاء اختيار أي خيار..!",
+  [localizationKeys.PleaseGiveTheDescription]:'من فضلك أعط الوصف..!',
+  [localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater]:'عذرا، لقد فشل إرسال طلبك. يرجى المحاولة مرة أخرى لاحقًا..!',
+  [localizationKeys.ThankYouForYourSubmission]:'شكرا لك على تقديمك..!',
   //  Purchased
   [localizationKeys.Purchased]: "مشترياتي",
   [localizationKeys.yourPurchased]: "مشترياتي",
@@ -324,6 +377,7 @@ const ar = {
   // tab details
   [localizationKeys.shippingPolicy]: "سياسة الشحن",
   [localizationKeys.returnPolicy]: " سياسة الإرجاع",
+  [localizationKeys.warrantyPolicy]: "سياسة الضمان",
   [localizationKeys.payment]: "الدفع",
   [localizationKeys.feedback]: "الملاحظات",
   [localizationKeys.aboutTheBrand]: "حول العلامة التجارية",
@@ -352,6 +406,10 @@ const ar = {
   [localizationKeys.yourAuctionIsCreatedSuccess]: "تم إنشاء مزادك بنجاح",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "تأكد من اختيار موقع المزاد أو إنشاء موقع آخر",
+    //wallet
+    [localizationKeys.Wallet] : "محفظة", 
+   [localizationKeys.ThereAreNoTransactionYet] : "لا توجد معاملات بعد",
+
 };
 
 export default ar;

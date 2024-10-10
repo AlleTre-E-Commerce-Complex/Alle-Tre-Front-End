@@ -256,6 +256,7 @@ const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
                       <div id="navigation">
                         {slidesData?.map((_, index) => (
                           <div
+                            key={index}
                             className={
                               index === current ? "active button " : "button"
                             }

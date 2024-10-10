@@ -63,9 +63,9 @@ const Footer = () => {
               <h1 className="text-white font-bold text-base">
                 {selectedContent[localizationKeys.categories]}
               </h1>
-              {GatogryOptions.map((CategoryName) => (
+              {GatogryOptions.map((CategoryName,index) => (
                 <p
-                  key={CategoryName?.text}
+                  key={index}
                   className="cursor-pointer font-normal text-base text-gray-med py-0.5 w-fit"
                 >
                   {CategoryName?.text}

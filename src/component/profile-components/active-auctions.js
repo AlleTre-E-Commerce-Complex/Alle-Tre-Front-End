@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import api from "../../api";
 import routes from "../../routes";
@@ -17,6 +17,7 @@ import localizationKeys from "../../localization/localization-keys";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 
 const ActiveAuctions = () => {
+
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
@@ -36,10 +37,14 @@ const ActiveAuctions = () => {
           .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=ACTIVE`)
           .then((res) => {
             setActiveAuctionData(res?.data?.data);
+            console.log('==>',res?.data?.data)
             setTotalPages(res?.data?.pagination?.totalPages);
           })
       );
   }, [run, forceReload, search]);
+
+  const mappedAuctionData = useMemo(() => activeAuctionData, [activeAuctionData]);
+
 
   return (
     <div className="">
@@ -77,10 +82,11 @@ const ActiveAuctions = () => {
         </div>
       ) : (
         <div>
-          {activeAuctionData?.map((e) => (
+          {mappedAuctionData?.map((e,index) => (
             <ActionsRowTable
-              key={e?.id}
+              key={index}
               status={e?.status}
+              auctionsId={e?.id}
               title={e?.product?.title}
               description={e?.product?.description}
               img={e?.product?.images[0]?.imageLink}
@@ -99,4 +105,4 @@ const ActiveAuctions = () => {
   );
 };
 
-export default ActiveAuctions;
+export default React.memo(ActiveAuctions)

@@ -11,6 +11,7 @@ const TotalMyBids = ({
   completedAuction,
   expiredAuctions,
   waitingForDeliveryAuctions,
+  cancelledAuction,
   totalcount,
 }) => {
   const [lang] = useLanguage();
@@ -27,6 +28,7 @@ const TotalMyBids = ({
           completedAuction={completedAuction}
           expiredAuctions={expiredAuctions}
           waitingForDeliveryAuctions={waitingForDeliveryAuctions}
+          cancelledBids={cancelledAuction}
           totalcount={totalcount}
         />
       </div>
@@ -106,6 +108,22 @@ const TotalMyBids = ({
           </div>
           <p className="text-gray-verydark">
             {waitingForDeliveryAuctions}{" "}
+            <span className="px-1">
+              {" "}
+              {selectedContent[localizationKeys.auction]}
+            </span>{" "}
+          </p>
+        </div>
+        <div className="flex justify-between py-1.5">
+          <div className="flex gap-x-2">
+            <p className="w-4 h-4 rounded-full mt-1 bg-red-600"></p>
+            <p className="text-base font-normal text-gray-med">
+              {" "}
+              Cancelled Auctions
+            </p>
+          </div>
+          <p className="text-gray-verydark">
+            {cancelledAuction}{" "}
             <span className="px-1">
               {" "}
               {selectedContent[localizationKeys.auction]}

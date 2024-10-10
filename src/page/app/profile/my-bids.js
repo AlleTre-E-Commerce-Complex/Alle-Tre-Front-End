@@ -51,6 +51,9 @@ const MyBids = () => {
     "PAYMENT_EXPIRED" || null,
     "LOST" || null,
     "COMPLETED" || null,
+    "CANCELLED_BEFORE_EXP_DATE" || null,
+    "CANCELLED_AFTER_EXP_DATE" || null,
+
   ];
   allStatuses?.forEach((status) => {
     if (!analyticsDataObject[status]) {
@@ -102,13 +105,9 @@ const MyBids = () => {
               inProgressAuction={analyticsDataObject?.IN_PROGRESS?.count}
               pendingAuction={analyticsDataObject?.PENDING_PAYMENT?.count}
               completedAuction={analyticsDataObject?.COMPLETED?.count}
-              expiredAuctions={
-                analyticsDataObject?.PAYMENT_EXPIRED?.count +
-                analyticsDataObject?.LOST?.count
-              }
-              waitingForDeliveryAuctions={
-                analyticsDataObject?.WAITING_FOR_DELIVERY?.count
-              }
+              expiredAuctions={analyticsDataObject?.PAYMENT_EXPIRED?.count +analyticsDataObject?.LOST?.count}
+              waitingForDeliveryAuctions={analyticsDataObject?.WAITING_FOR_DELIVERY?.count}
+              cancelledAuction={analyticsDataObject?.CANCELLED_BEFORE_EXP_DATE?.count + analyticsDataObject?.CANCELLED_AFTER_EXP_DATE?.count }
               totalcount={analyticsDataObject?.totalcount}
             />
             <div className="mt-4">

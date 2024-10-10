@@ -9,8 +9,8 @@ const MultiButtonFilter = ({ name, values, history, myRef }) => {
 
   return (
     <div className="pt-4">
-      {values.map((v) => (
-        <div className="flex pt-4 gap-x-3 ">
+      {values.map((v,index) => (
+        <div key={index} className="flex pt-4 gap-x-3 ">
           <button
             className={`${
               filter.includes(v?.value)

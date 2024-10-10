@@ -14,7 +14,7 @@ const PaginationApp = ({ totalPages, perPage, myRef, myRef1 }) => {
       firstItem={null}
       lastItem={null}
       secondary
-      totalPages={totalPages}
+      totalPages={totalPages ? totalPages : 0}
       onPageChange={(e, data) => {
         window.scrollTo({
           behavior: "smooth",

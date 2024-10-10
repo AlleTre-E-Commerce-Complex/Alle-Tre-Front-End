@@ -191,6 +191,7 @@ const Home = () => {
                 <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto ">
                   {mainAuctions?.map((e) => (
                     <AuctionCard
+                      key={e?.id}
                       auctionId={e?.id}
                       price={e?.acceptedAmount || e?.startBidAmount}
                       title={e?.product?.title}

@@ -46,6 +46,7 @@ const localizationKeys = {
   viewDetails: "viewDetails",
   bidNow: "bidNow",
   buyNow: "buyNow",
+  DeliveryPolicy:"DeliveryPolicy",
   popularCategories: "popularCategories",
   totalBids: "totalBids",
   endingTime: "endingTime",
@@ -129,6 +130,7 @@ const localizationKeys = {
   errorDelete: "errorDelete",
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
   cancel: "cancel",
+  YesISentIt :"YesIHaveSentIt",
   yesDelete: "yesDelete",
   locationIsRequired: "locationIsRequired",
   inOrderToFinishTheProcedureWeHaveToGetAccessTo:
@@ -171,11 +173,19 @@ const localizationKeys = {
   optional: "optional",
   unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately:
     "unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately",
+  youCanGiveHereYourDeliveryRelatedPolicy:"youCanGiveHereYourDeliveryRelatedPolicy",
+  youCanGiveHereYourReturnRelatedPolicy:"youCanGiveHereYourReturnRelatedPolicy",
+  youCanGiveHereYourWarrantyRelatedPolicy:"youCanGiveHereYourReturnRelatedPolicy",
+  includingDeliveryDateAndOthers:"includingDeliveryDateAndOthers",
   startDate: "startDate",
+  HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired:'HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired',
   time: "time",
+  NumberOfDays:'NumberOfDays',
   pricing: "pricing",
   minimumPrice: "minimumPrice",
   purchasingPrice: "purchasingPrice",
+  PolicyDescription:"PolicyDescription",
+  pleaseGiveYourDeliveryDescription:"pleaseGiveYourDeliveryDescription",
   minimum30MoreThanStartingBid: "minimum30MoreThanStartingBid",
   purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice:
     "purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice",
@@ -230,8 +240,11 @@ const localizationKeys = {
   totalAuctions: "totalAuctions",
   total: "total",
   active: "active",
+  cancelled:'cancelled',
   totalActive: "totalActive",
+  totalCancel: "totalCancel",
   oppsActive: "oppsActive",
+  oppsCancelled:'oppsCancelled',
   youCanCreateOne: "youCanCreateOne",
   lastPrice: "lastPrice",
   startingPrice: "startingPrice",
@@ -250,6 +263,21 @@ const localizationKeys = {
   totalExpired: "totalExpired",
   opsExpired: "opsExpired",
   watingForPaymentAuctions: "watingForPaymentAuctions",
+  cancelTheAuction:'cancelTheAuction',
+  Warning:'Warning',
+  PaymentSelection:"PaymentSelection",
+  WhichPaymentMethodWouldYouLikeToSelect:"WhichPaymentMethodWouldYouLikeToSelect",
+  walletPayment:"walletPayment",
+  onlinePayment:'onlinePayment',
+  OK:'OK',
+  didYouSendTheItemForDelivery:"didYouSendTheItemForDelivery",
+  sendMessageToBuyer:"sendMessageToBuyer",
+  Message:'Message',
+  CancellAuctionWarningMessage:'CancellAuctionWarningMessage',
+  ContinueToCancel:'ContinueToCancel',
+  discontinue:'discontinue',
+  YouSuccessfullyCancelledTheAuction:'YouSuccessfullyCancelledTheAuction',
+  YouHaveSuccessfullyNotifiedTheWinner:'YouHaveSuccessfullyNotifiedTheWinner',
   // mybids
   Youarenotbiddingonanyitems: "Youarenotbiddingonanyitems",
   Checkactiveauctionstostartbidding: "Checkactiveauctionstostartbidding",
@@ -266,11 +294,30 @@ const localizationKeys = {
   ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow:
     "ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow",
   confirmDelivery: "confirmDelivery",
+  AnyIssueWithDelivery:'AnyIssueWithDelivery',
   ThereIsNoBidsYetExpiredAuctionsRightNow:
     "ThereIsNoBidsYetExpiredAuctionsRightNow",
   ThereIsNoBidsyetCompletedAuctionsRightNow:
     "ThereIsNoBidsyetCompletedAuctionsRightNow",
+    ThereIsNoBidsyetCancelledAuctionsRightNow:
+    "ThereIsNoBidsyetCancelledAuctionsRightNow",
+  AnyObjection:'AnyObjection',
+    //deleveryIssueReportModal
+  NotDeliveredYet:'NotDeliveredYet',
+  ProductIsNotAsShownInPicture:'ProductIsNotSameLikePicture',
+  DoesProductHaveAnyIssueWhichIsNotMentionedInTheDescription:'DoesProductHaveAnyIssueWhichIsNotMentionedInTheDescription',
+  Others:'Others',
+  tellUsYourProblem:'tellUsYourProblem',
+  Description:'Description',
+  UploadYourImageshere:'UploadYourImageshere',
+  YouCanSelectMultipleImagestogether:'YouCanSelectMultipleImagestogether',
+  Submit:'Submit',
+  PleaseSelectAnyOption:'PleaseSelectAnyOption',
+  PleaseGiveTheDescription:'PleaseGiveTheDescription',
+  ThankYouForYourSubmission:'ThankYouForYourSubmission',
+  SorryYourSubmissionHasFailedPleaseTryAgainLater:'SorryYourSubmissionHasFailedPleaseTryAgainLater',
   // Purchased
+  
   Purchased: "Purchased",
   yourPurchased: "yourPurchased",
   ThereAreNoPurchasedYet: " ThereAreNoPurchasedYet",
@@ -305,6 +352,7 @@ const localizationKeys = {
   // tab details
   shippingPolicy: "shippingPolicy",
   returnPolicy: "returnPolicy",
+  warrantyPolicy:"warrantyPolicy",
   payment: "payment",
   feedback: "feedback",
   aboutTheBrand: "aboutTheBrand",
@@ -336,6 +384,9 @@ const localizationKeys = {
   yourAuctionIsCreatedSuccess: "yourAuctionIsCreatedSuccess",
   makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne:
     "makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne",
+  //wallet
+    Wallet:'Wallet',
+    ThereAreNoTransactionYet:"ThereAreNoTransactionYet"
 };
 
 export default localizationKeys;

@@ -51,6 +51,7 @@ const routes = {
         pending: `/alletre/profile/my-auctions/pending`,
         watingForPayment: `/alletre/profile/my-auctions/wating-for-payment`,
         expired: `/alletre/profile/my-auctions/expired`,
+        cancelled:`/alletre/profile/my-auctions/cancelled`,
 
         activeDetails: (auctionId = ":auctionId") =>
           `/alletre/profile/my-auctions/active/${auctionId}/details`,
@@ -73,6 +74,7 @@ const routes = {
         waitingForDelivery: `/alletre/profile/my-bids/waiting-for-delivery`,
         expired: `/alletre/profile/my-bids/expired`,
         completed: `/alletre/profile/my-bids/completed`,
+        cancelled: `/alletre/profile/my-bids/cancelled`,
 
         inPogressDetails: (auctionId = ":auctionId") =>
           `/alletre/profile/my-bids/in-pogress/${auctionId}/details`,
@@ -93,6 +95,7 @@ const routes = {
         `/alletre/profile/watchlist/${auctionId}/details`,
 
       purchased: `/alletre/profile/purchased`,
+      wallet: `/alletre/profile/wallet`
     },
   },
 };

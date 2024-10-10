@@ -7,8 +7,8 @@ export const RadioButtonsFilter = ({ valueRadio, name, myRef }) => {
 
   return (
     <Form className="pt-5">
-      {valueRadio?.map((e) => (
-        <Form.Field className="">
+      {valueRadio?.map((e,index) => (
+        <Form.Field key={index} className="">
           <Checkbox
             className="Edit_checkboxRadioGroup "
             radio

@@ -24,6 +24,9 @@ import {
   type,
   auctionDetails,
   isBuyNow,
+  deliveryPolicy,
+  returnPolicy,
+  warrantyPolicy,
 } from "../../../redux-store/auction-details-slice";
 
 import "../../../../src/assets/style/radio-toggle.css";
@@ -33,6 +36,7 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 
 import "../../../assets/style/radio-toggle.css";
+import FormikTextArea from "component/shared/formik/formik-text-area";
 
 const AuctionDetails = () => {
   const [lang] = useLanguage("");
@@ -48,6 +52,10 @@ const AuctionDetails = () => {
   );
   const [IsSchedule, setIsSchedule] = useState(auctionDetailsInt.IsSchedule);
   const [IsBuyNow, setIsBuyNow] = useState(auctionDetailsInt.IsBuyNow);
+
+  const [IsDelivery,setIsDelivery] = useState(false)
+  const [IsRetrunPolicy,setIsRetrunPolicy] = useState(false)
+  const [IsWaranty,setIsWaranty] = useState(false)
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -88,16 +96,32 @@ const AuctionDetails = () => {
                 .purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice
             ],
           test(value) {
-            return (
-              value >=
-              parseFloat(
-                this.parent.MinimumPrice + this.parent.MinimumPrice * 0.3
-              )
+            return ( value >= parseFloat(this.parent.MinimumPrice + this.parent.MinimumPrice * 0.3)
             );
           },
         }),
       otherwise: Yup.number().notRequired(),
     }),
+    numOfDaysOfExpecetdDelivery: Yup.number().when([],{
+      is:()=>IsDelivery,
+      then:Yup.number().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.number().notRequired(),
+    }),
+    deliveryPolicyDescription: Yup.string().when([],{
+      is:()=>IsDelivery,
+      then:Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    }),
+    returnPolicyDescription: Yup.string().when([],{
+      is:()=>IsRetrunPolicy,
+      then:Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    }),
+    warantyPolicyDescription: Yup.string().when([],{
+      is:()=>IsWaranty,
+      then:Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    })
   });
 
   const dispatch = useDispatch();
@@ -133,15 +157,51 @@ const AuctionDetails = () => {
     if (IsBuyNow) {
       dispatch(isBuyNow(BuyNow));
     } else dispatch(isBuyNow({}));
+
+    const DeliveryPolicy ={
+      IsDelivery :IsDelivery,
+      description : values.deliveryPolicyDescription,
+      expectedNumOfDays : values.numOfDaysOfExpecetdDelivery
+    }
+    if(IsDelivery){
+      dispatch(deliveryPolicy(DeliveryPolicy))
+    }else{
+      dispatch(deliveryPolicy({}))
+    }
+
+    const ReturnPolicy ={
+      IsRetrunPolicy : IsRetrunPolicy,
+      description : values.returnPolicyDescription,
+    }
+    if(IsRetrunPolicy){
+      dispatch(returnPolicy(ReturnPolicy))
+    }else{
+      dispatch(returnPolicy({}))
+    }
+    
+    const WarrantyPolicy ={
+      IsWaranty: IsWaranty,
+      description : values.warantyPolicyDescription,
+    }
+    if(IsWaranty){
+      dispatch(warrantyPolicy(WarrantyPolicy))
+    }else{
+      dispatch(warrantyPolicy({}))
+    }
+
     dispatch(
       auctionDetails({
         ...values,
         valueRadio: valueRadio,
         IsSchedule: IsSchedule,
         IsBuyNow: IsBuyNow,
+        IsDelivery:IsDelivery,
+        IsRetrunPolicy:IsRetrunPolicy,
+        IsWaranty:IsWaranty,
       })
     );
     history.push(routes.app.createAuction.shippingDetails);
+    console.log('auction details :',auctionDetails)
   };
 
   return (
@@ -166,6 +226,10 @@ const AuctionDetails = () => {
               from: auctionDetailsInt.from || "",
               MinimumPrice: auctionDetailsInt.MinimumPrice || "",
               PurchasingPrice: auctionDetailsInt.PurchasingPrice || "",
+              numOfDaysOfExpecetdDelivery: auctionDetailsInt.numOfDaysOfExpecetdDelivery || "",
+              deliveryPolicyDescription:auctionDetailsInt.deliveryPolicyDescription || "",
+              returnPolicyDescription:auctionDetailsInt.returnPolicyDescription || "",
+              warantyPolicyDescription:auctionDetailsInt.warantyPolicyDescription || "",
             }}
             onSubmit={handelAuctionDetailsData}
             validationSchema={AuctionDetailsDataSchema}
@@ -312,6 +376,134 @@ const AuctionDetails = () => {
                         </div>
                       </div>
                     </div>
+                    {/* =============================================== */}
+                    <div>
+                      <div className="flex mt-7">
+                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                          {selectedContent[localizationKeys.DeliveryPolicy]}
+                          <span className="text-gray-med text-base font-normal mx-2">
+                            {selectedContent[localizationKeys.optional]}
+                          </span>
+                        </h1>
+                        <div className="mt-auto">
+                          <Radio
+                            className="Edit_Radio_Toggle"
+                            toggle
+                            onChange={() => setIsDelivery((p) => !p)}
+                            checked={IsDelivery}
+                          />
+                        </div>
+                      </div>
+                      <p className="text-gray-med text-xs font-normal pt-1">
+                        {selectedContent[localizationKeys.youCanGiveHereYourDeliveryRelatedPolicy]}
+                        {selectedContent[localizationKeys.includingDeliveryDateAndOthers]}
+                      </p>
+                     
+                      <div
+                        className={
+                          IsDelivery
+                            ? "mt-9 flex flex-col justify-between gap-x-4 "
+                            : "hidden"
+                        }
+                      >
+                         <div className="w-full my-10">
+                      <FormikInput
+                            min={0}
+                            type="number"
+                            name="numOfDaysOfExpecetdDelivery"
+                            label={
+                              selectedContent[localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]
+                            }
+                            placeholder={selectedContent[localizationKeys.NumberOfDays]}
+                          />
+                        </div>
+                        <div className="w-full">
+                          <FormikTextArea
+                            label={selectedContent[localizationKeys.PolicyDescription]}
+                            name={'deliveryPolicyDescription'}
+                            placeholder={selectedContent[localizationKeys.PleaseGiveTheDescription]}
+                          />
+                     
+                        </div>
+                      </div>
+                    </div>
+                    {/* ================= */}
+                    <div>
+                      <div className="flex mt-7">
+                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                          {selectedContent[localizationKeys.returnPolicy]}
+                          <span className="text-gray-med text-base font-normal mx-2">
+                            {selectedContent[localizationKeys.optional]}
+                          </span>
+                        </h1>
+                        <div className="mt-auto">
+                          <Radio
+                            className="Edit_Radio_Toggle"
+                            toggle
+                            onChange={() =>{ setIsRetrunPolicy((p) => !p);alert(IsWaranty)}}
+                            checked={IsRetrunPolicy}
+                          />
+                        </div>
+                      </div>
+                      <p className="text-gray-med text-xs font-normal pt-1">
+                        {selectedContent[localizationKeys.youCanGiveHereYourReturnRelatedPolicy]}
+                      </p>
+                      <div
+                        className={
+                          IsRetrunPolicy
+                            ? "mt-9 flex justify-between gap-x-4 "
+                            : "hidden"
+                        }
+                      >
+                        <div className="w-full">
+                          <FormikTextArea
+                            label={selectedContent[localizationKeys.PolicyDescription]}
+                            name={'returnPolicyDescription'}
+                            placeholder={selectedContent[localizationKeys.PleaseGiveTheDescription]}
+                          />
+                     
+                        </div>
+                      </div>
+                    </div>
+                    {/* =================== */}
+                    <div>
+                      <div className="flex mt-7">
+                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                          {selectedContent[localizationKeys.warrantyPolicy]}
+                          <span className="text-gray-med text-base font-normal mx-2">
+                            {selectedContent[localizationKeys.optional]}
+                          </span>
+                        </h1>
+                        <div className="mt-auto">
+                          <Radio
+                            className="Edit_Radio_Toggle"
+                            toggle
+                            onChange={() => {setIsWaranty((p) => !p);alert(IsWaranty)}}
+                            checked={IsWaranty}
+                          />
+                        </div>
+                      </div>
+                      <p className="text-gray-med text-xs font-normal pt-1">
+                        {selectedContent[localizationKeys.youCanGiveHereYourReturnRelatedPolicy]}
+                      </p>
+                      <div
+                        className={
+                          IsWaranty
+                            ? "mt-9 flex justify-between gap-x-4 "
+                            : "hidden"
+                        }
+                      >
+                        <div className="w-full">
+                          <FormikTextArea
+                            label={selectedContent[localizationKeys.PolicyDescription]}
+                            name={'warantyPolicyDescription'}
+                            placeholder={selectedContent[localizationKeys.PleaseGiveTheDescription]}
+                          />
+                     
+                        </div>
+                      </div>
+                    </div>
+                    {/* =================== */}
                   </div>
                   {/* buttons */}
                   <div className="mt-auto flex justify-end  mb-6">

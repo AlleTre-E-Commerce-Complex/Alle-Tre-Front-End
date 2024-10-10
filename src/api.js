@@ -14,6 +14,8 @@ const api = {
     },
     category: {
       default: "/categories/all",
+      getParticularCatergory:(categoryId) =>
+        `/categories/getParticularCatergory?categoryId=${categoryId}`
     },
     subCategory: {
       default: (categoryId) =>
@@ -25,6 +27,10 @@ const api = {
       setUpdatedraft: (auctionsId) => `auctions/user/${auctionsId}/details`,
       completeUpdatedraft: (auctionsId) =>
         `auctions/user/${auctionsId}/draft-details`,
+      cancell_auction: (auctionId) =>
+        `/auctions/user/${auctionId}/cancel-auction`,
+      send_item_forDelivery: (auctionId) =>
+        `/auctions/user/${auctionId}/sendItem-forDelivery`,
       getAllOwnesAuctions: "auctions/user/ownes",
       getAlldraft: "auctions/user/ownes?status=DRAFTED",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
@@ -53,6 +59,7 @@ const api = {
       buyNow: (auctionsId) => `/auctions/user/${auctionsId}/buy-now`,
       SimilarAuctions: (auctionsId) =>
         `/auctions/user/similar?auctionId=${auctionsId}`,
+      deliveryIssue:"/auctions/user/auction-complaints",
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
@@ -94,6 +101,11 @@ const api = {
       add: "/watch-lists/save",
       delete: (auctionsId) => `/watch-lists/un-save?auctionId=${auctionsId}`,
     },
+    Wallet:{
+      get:"/wallet/get_from_wallet",
+      getBalance:"/wallet/get_balance",
+      post:"/wallet/add_to_wallet"
+    }
   },
 };
 

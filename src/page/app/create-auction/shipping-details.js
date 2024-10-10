@@ -8,7 +8,7 @@ import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/B
 import Stepper from "../../../component/shared/stepper/stepper-app";
 
 import { GoPlus } from "react-icons/go";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 
 import api from "../../../api";
 import useAxios from "../../../hooks/use-axios";
@@ -32,7 +32,6 @@ import {
 } from "../../../redux-store/auction-details-slice";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import useLocalStorage from "../../../hooks/use-localstorage";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 
 const ShippingDetails = () => {
@@ -44,13 +43,22 @@ const ShippingDetails = () => {
   const productDetailsInt = useSelector(
     (state) => state.productDetails.productDetails
   );
-
   const auctionDetailsInt = useSelector(
     (state) => state.auctionDetails.auctionDetails
   );
   const durationInt = useSelector((state) => state.auctionDetails.duration);
   const isBuyNowInt = useSelector((state) => state.auctionDetails.isBuyNow);
   const typeInt = useSelector((state) => state.auctionDetails.type);
+  const deliveryPolicyInt = useSelector(
+    (state) => state.auctionDetails.deliveryPolicy
+  );
+  const returnPolicyInt = useSelector(
+    (state) => state.auctionDetails.returnPolicy
+  );
+  const warrantyPolicyInt = useSelector(
+    (state) => state.auctionDetails.warrantyPolicy
+  );
+
   const [locationId, setLocationId] = useFilter("locationId", "");
 
   const history = useHistory();
@@ -79,6 +87,26 @@ const ShippingDetails = () => {
     error: errorCreatAuction,
     isError: isErrorCreatAuction,
   } = useAxios([]);
+
+  // const selectThePaymentOption =()=>{
+
+  //   run(
+  //     authAxios.get(`${api.app.Wallet.getBalance}`)
+  //     .then((response)=>{
+  //       const balance = response.data
+  //       alert(balance)
+  //       if(balance && balance > categoryData.sellerDepositFixedAmount){
+  //         dispatch(setWalletBalance({balance: balance }));
+  //         setPaymentSelectModal(true)
+
+  //       }else{
+  //         alert('no wallet balance')
+  //       }
+  //     })
+
+  //   )
+  // }
+
   const creatAuction = () => {
     if (locationId) {
       const formData = new FormData();
@@ -204,7 +232,28 @@ const ShippingDetails = () => {
         formData.append("durationInHours", durationInt.durationInHours);
       }
       formData.append("locationId", locationId);
-
+      if (deliveryPolicyInt.IsDelivery) {
+        formData.append("IsDelivery", deliveryPolicyInt.IsDelivery);
+        formData.append(
+          "deliveryPolicyDescription",
+          deliveryPolicyInt.description
+        );
+        formData.append(
+          "numOfDaysOfExpecetdDelivery",
+          deliveryPolicyInt.expectedNumOfDays
+        );
+      }
+      if (returnPolicyInt.IsRetrunPolicy) {
+        formData.append("IsRetrunPolicy", returnPolicyInt.IsRetrunPolicy);
+        formData.append("returnPolicyDescription", returnPolicyInt.description);
+      }
+      if (warrantyPolicyInt.IsWaranty) {
+        formData.append("IsWaranty", warrantyPolicyInt.IsWaranty);
+        formData.append(
+          "warrantyPolicyDescription",
+          warrantyPolicyInt.description
+        );
+      }
       if (productDetailsInt?.auctionState === "DRAFTED") {
         runCreatAuction(
           authAxios
@@ -225,14 +274,11 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
-              toast.error(
-                // err?.response?.data?.message.map((e) => e) ||
-                //   err?.message.map((e) => e) ||
-                selectedContent[localizationKeys.oops]
-              );
+              toast.error(selectedContent[localizationKeys.oops]);
             })
         );
       } else {
+        console.log("form data form create acuction", formData);
         runCreatAuction(
           authAxios
             .post(api.app.auctions.default, formData)
@@ -320,6 +366,7 @@ const ShippingDetails = () => {
           <div className=" flex justify-end  mt-28">
             <button
               className="bg-primary hover:bg-primary-dark text-white sm:w-[304px] w-full h-[48px] rounded-lg  sm:mt-8 mt-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN mb-5"
+              // onClick={creatAuction}
               onClick={creatAuction}
               loading={isLoadingCreatAuction}
             >
@@ -345,12 +392,10 @@ export const LocationDetailsCard = ({
   City,
   PostalCode,
   Id,
-  key,
 }) => {
   const [locationId, setLocationId] = useFilter("locationId", "");
   return (
     <div
-      key={key}
       onClick={() => {
         setLocationId(Id);
       }}
