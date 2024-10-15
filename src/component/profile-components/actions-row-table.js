@@ -355,10 +355,18 @@ const ActionsRowTable = ({
           }
             <button
               onClick={buttonActions}
-              className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              disabled={status === 'WAITING_FOR_DELIVERY' && !isItemSendForDelivery}
+              className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 ${
+                status === 'WAITING_FOR_DELIVERY' 
+                  ? isItemSendForDelivery 
+                    ? ''  // When the item is sent for delivery, keep it in default enabled state
+                    : 'border-gray-300 text-gray-300 bg-gray-100 cursor-auto'  // When not sent, disable styling
+                  : 'cursor-pointer'  // Default styles for other statuses
+              }`}
             >
-              {textButton} 
+              {textButton}
             </button>
+
             <button
               onClick={() => history.push(goToDetails)}
               className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "

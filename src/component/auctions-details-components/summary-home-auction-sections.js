@@ -122,10 +122,19 @@ const SummaryHomeAuctionSections = ({
 
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
+        console.log('test 1');
+        
         if (validateBidAmount(newValue)) {
+        console.log('test 2');
+        console.log('isDepositPaid :',isDepositPaid);
+
           if (isDepositPaid) {
+        console.log('test 3');
+
             sendSubmitBid(newValue);
           } else {
+        console.log('test 4');
+
             setSubmitBidValue(newValue);
             setSubmitBidOpen(true);
           }

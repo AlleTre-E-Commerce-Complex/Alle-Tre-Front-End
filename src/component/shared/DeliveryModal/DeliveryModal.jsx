@@ -8,11 +8,14 @@ import api from 'api.js';
 import useAxios from 'hooks/use-axios.js';
 import toast from 'react-hot-toast';
 import LodingTestAllatre from '../lotties-file/loding-test-allatre.js';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.js';
+import routes from 'routes.js';
 const DeliveryModal = ({open,setOpen,auctionId,setSuccessModal}) => {
     console.log('auctoin Id in Delevery  Modal:',auctionId);
     const [message,setMessage]= useState('')
     const [lang] = useLanguage(""); 
     const selectedContent = content[lang];
+    const history = useHistory()
     const {
         run,
         isLoading,
@@ -31,6 +34,7 @@ const DeliveryModal = ({open,setOpen,auctionId,setSuccessModal}) => {
                 if(res?.data?.success){
                     // setSuccessModal(true) 
                     toast.success(selectedContent[localizationKeys.YouHaveSuccessfullyNotifiedTheWinner]);
+                    history.push(routes.app.profile.myAuctions.sold)
                     HandleCancel()
                 }else{
                      toast.error(selectedContent[localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater])   

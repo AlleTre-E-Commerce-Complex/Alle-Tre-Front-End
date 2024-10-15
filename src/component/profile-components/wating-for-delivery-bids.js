@@ -106,6 +106,7 @@ const WatingForDeliveryBids = ({ OnReload }) => {
               lastPrice={e?.auction?.bids[0]?.amount}
               endingTime={e?.expiryDate}
               goToDetails={routes.app.homeDetails(e?.auction?.id)}
+              isItemSendForDelivery={e?.auction?.isItemSendForDelivery}
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">

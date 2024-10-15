@@ -47,16 +47,21 @@ const api = {
         `/auctions/user/${auctionsId}/bids-history?userId=${userId}`,
       submitBid: (auctionsId) => `/auctions/user/${auctionsId}/submit-bid`,
       payForAuction: "/auctions/user/pay",
+      walletPayForAuction:"/auctions/user/walletPay",
       PayDepositByBidder: (auctionsId) =>
         `/auctions/user/${auctionsId}/bidder-deposit`,
+      walletPayDepositByBidder:'auctions/user/bidder-walletDeposit',
       auctionPurchaseByBidder: (auctionsId) =>
         `/auctions/user/${auctionsId}/bidder-purchase`,
+      WalletPayForBidderFullPayment: (auctionsId) =>
+        `/auctions/user/${auctionsId}/wallet-bidder-purchase`,
       //
       getAllMyBids: "/auctions/user/joined-auctions",
       bidAnalytics: "auctions/user/joined-auctions/analytics",
       ConfirmDelivery: (auctionsId) =>
         `/auctions/user/${auctionsId}/confirm-delivery`,
       buyNow: (auctionsId) => `/auctions/user/${auctionsId}/buy-now`,
+      buyNowThroughWallet: (auctionsId) => `/auctions/user/${auctionsId}/buy-now-through-wallet`,
       SimilarAuctions: (auctionsId) =>
         `/auctions/user/similar?auctionId=${auctionsId}`,
       deliveryIssue:"/auctions/user/auction-complaints",

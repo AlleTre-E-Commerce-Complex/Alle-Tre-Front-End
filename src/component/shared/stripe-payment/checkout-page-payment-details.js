@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-
 import StepperApp from "../stepper/stepper-app";
 import { CreateAuctionBreadcrumb } from "../bread-crumb/Breadcrumb";
 import { Dimmer } from "semantic-ui-react";
@@ -102,16 +101,20 @@ export default function CheckoutPagePaymentDetails() {
         .then((res) => {
           setPendingAuctionData(res?.data?.data);
           const auctionData = res?.data?.data 
+          const amountToPay = auctionData.product.category.sellerDepositFixedAmount
+        
           if(auctionData){
             run(
               authAxios.get(`${api.app.Wallet.getBalance}`)
-              .then((response)=>{
+              .then((response)=>{ 
+                
                 const balance = response.data
-                if(balance && balance > auctionData.product.category.sellerDepositFixedAmount){
+                
+                if(balance && Number(balance) > Number(amountToPay)){
                   setWalletBalance(balance)
                   setShwoPaymentSelection(true)
                 }else{
-                  alert('no wallet balance')
+             
                   const body = {
                         auctionId: auctionId,
                       };
@@ -132,7 +135,8 @@ export default function CheckoutPagePaymentDetails() {
           }
         })
     );
-  }, [auctionId, run,bidAmountValue, runPendingAuctionData]);
+  }, [auctionId, run,bidAmountValue,lang, runPendingAuctionData]);
+
   const handleSubmitPayment = ()=>{
     if(isWalletPayment=== null){
       toast.error('Plese Select a payment method')
@@ -246,7 +250,7 @@ export default function CheckoutPagePaymentDetails() {
               <h1 className="font-bold text-base text-black pt-4 pb-6">
                 Payment method
               </h1> 
-              {walletBalance ? showPaymentSelecton && <PaymentSelection 
+              {walletBalance ?showPaymentSelecton &&  <PaymentSelection 
                 isWalletPayment={isWalletPayment}
                 setIsWalletPayment={setIsWalletPayment}
                 handleSubmitPayment={handleSubmitPayment}
@@ -277,7 +281,12 @@ export default function CheckoutPagePaymentDetails() {
                 </Elements>
               )}
               {showWalletPaymentMethod && 
-              <WalletPayment/>
+              <WalletPayment
+                auctionId={auctionId}
+                amount={pendingAuctionData?.product?.category?.bidderDepositFixedAmount}
+                walletBalance={walletBalance}
+                paymentAPI={api.app.auctions.walletPayForAuction}
+              />
               }
             </div>
             <div>

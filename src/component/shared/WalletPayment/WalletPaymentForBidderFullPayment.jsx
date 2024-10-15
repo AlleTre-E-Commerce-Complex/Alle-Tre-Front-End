@@ -1,4 +1,4 @@
-
+import api from 'api';
 import { authAxios } from 'config/axios-config';
 import useAxios from 'hooks/use-axios';
 import React, { useState } from 'react'
@@ -7,14 +7,13 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import routes from 'routes';
 import { Button } from 'semantic-ui-react'
 
-const WalletPayment = ({amount,walletBalance,auctionId,paymentAPI}) => {
+const WalletPaymentForBidderFullPayment = ({amount,walletBalance,auctionId,paymentAPI}) => {
   const history = useHistory()
   const [isWalletPaymentSuccess,setIsWalletPaymentSuccess] = useState(null)
   const { run, isLoading } = useAxios([]);
   const submitWalletPayment = ()=>{
     const body = {
       auctionId,
-      amount
     };
     run(
       authAxios.post(paymentAPI,body)
@@ -24,7 +23,7 @@ const WalletPayment = ({amount,walletBalance,auctionId,paymentAPI}) => {
           toast.success('Payment successful',{
             position: 'top-center', // Position of the toast
           });
-          history.push(routes.app.profile.myAuctions.active)
+          history.push(routes.app.profile.myBids.waitingForDelivery)
         }
       })
       .catch((error)=>{
@@ -51,4 +50,4 @@ const WalletPayment = ({amount,walletBalance,auctionId,paymentAPI}) => {
   )
 }
 
-export default WalletPayment
+export default WalletPaymentForBidderFullPayment

@@ -14,7 +14,7 @@ import api from "../../api";
 import { authAxios } from "../../config/axios-config";
 import useAxios from "../../hooks/use-axios";
 import localizationKeys from "../../localization/localization-keys";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { completePaymentData } from "../../redux-store/complete-payment-slice";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 import useLocalStorage from "../../hooks/use-localstorage";
@@ -33,6 +33,9 @@ const PendingBids = () => {
   const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);
+
+
+  
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
       run(

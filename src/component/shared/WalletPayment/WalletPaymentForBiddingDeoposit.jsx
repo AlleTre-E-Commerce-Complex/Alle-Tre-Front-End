@@ -1,4 +1,4 @@
-
+import api from 'api';
 import { authAxios } from 'config/axios-config';
 import useAxios from 'hooks/use-axios';
 import React, { useState } from 'react'
@@ -7,14 +7,15 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import routes from 'routes';
 import { Button } from 'semantic-ui-react'
 
-const WalletPayment = ({amount,walletBalance,auctionId,paymentAPI}) => {
+const WalletPaymentForBiddingDeoposit = ({amount,walletBalance,auctionId,paymentAPI,bidAmount}) => {
   const history = useHistory()
   const [isWalletPaymentSuccess,setIsWalletPaymentSuccess] = useState(null)
   const { run, isLoading } = useAxios([]);
   const submitWalletPayment = ()=>{
     const body = {
       auctionId,
-      amount
+      amount,
+      bidAmount
     };
     run(
       authAxios.post(paymentAPI,body)
@@ -51,4 +52,4 @@ const WalletPayment = ({amount,walletBalance,auctionId,paymentAPI}) => {
   )
 }
 
-export default WalletPayment
+export default WalletPaymentForBiddingDeoposit
