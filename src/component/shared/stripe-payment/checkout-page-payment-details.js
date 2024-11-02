@@ -27,6 +27,7 @@ import PaymentSelection from "../PaymentSelection/PaymentSelection";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 export default function CheckoutPagePaymentDetails() {
+  //pay deposit of the seller
   console.log('test re render of CheckoutPagePaymentDetails')
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -98,44 +99,56 @@ export default function CheckoutPagePaymentDetails() {
     runPendingAuctionData(
       authAxios
         .get(api.app.auctions.getUserAuctionsDetails(auctionId))
-        .then((res) => {
+        .then(async(res) => {
           setPendingAuctionData(res?.data?.data);
           const auctionData = res?.data?.data 
           const amountToPay = auctionData.product.category.sellerDepositFixedAmount
         
           if(auctionData){
-            run(
-              authAxios.get(`${api.app.Wallet.getBalance}`)
-              .then((response)=>{ 
-                
-                const balance = response.data
-                
-                if(balance && Number(balance) > Number(amountToPay)){
-                  setWalletBalance(balance)
-                  setShwoPaymentSelection(true)
-                }else{
-             
-                  const body = {
-                        auctionId: auctionId,
-                      };
-                  run(
-                    authAxios
-                      .post(api.app.auctions.payForAuction, body)
-                      .then((res) => {
-                        setClientSecret(res?.data?.data.clientSecret);
-                      })
-                      .catch((err) => {
-                        toast.error(err?.response?.data?.message[lang]);
-                      })
-                  );
-                }
-              })
+            const pendingPeymentData = 
+              await authAxios.get(`${api.app.auctions.isPendingPayment(auctionId,'SELLER_DEPOSIT')}`)
               
-            )
+                if(!pendingPeymentData?.data?.isPendingPaymentData){
+                  run(
+                    authAxios.get(`${api.app.Wallet.getBalance}`)
+                    .then((response)=>{ 
+                      
+                      const balance = response.data
+                      
+                      if(balance && Number(balance) > Number(amountToPay)){
+                        setWalletBalance(balance)
+                        setShwoPaymentSelection(true)
+                      }else{
+                      
+                      stripePaymentApiCall()
+                      }
+                    })
+                  )
+                }else{
+                  stripePaymentApiCall()
+                }
           }
         })
     );
   }, [auctionId, run,bidAmountValue,lang, runPendingAuctionData]);
+
+
+
+  const stripePaymentApiCall = () =>{
+    const body = {
+      auctionId: auctionId,
+    };
+      run(
+        authAxios
+          .post(api.app.auctions.payForAuction, body)
+          .then((res) => {
+            setClientSecret(res?.data?.data.clientSecret);
+          })
+          .catch((err) => {
+            toast.error(err?.response?.data?.message[lang]);
+          })
+      );
+  }
 
   const handleSubmitPayment = ()=>{
     if(isWalletPayment=== null){
@@ -146,19 +159,20 @@ export default function CheckoutPagePaymentDetails() {
     if(!isWalletPayment){
       setShowStripePayment(true)
       setShowWalletPaymentMethod(false)
-      const body = {
-        auctionId: auctionId,
-      };
-        run(
-          authAxios
-            .post(api.app.auctions.payForAuction, body)
-            .then((res) => {
-              setClientSecret(res?.data?.data.clientSecret);
-            })
-            .catch((err) => {
-              toast.error(err?.response?.data?.message[lang]);
-            })
-        );
+      stripePaymentApiCall()
+      // const body = {
+      //   auctionId: auctionId,
+      // };
+      //   run(
+      //     authAxios
+      //       .post(api.app.auctions.payForAuction, body)
+      //       .then((res) => {
+      //         setClientSecret(res?.data?.data.clientSecret);
+      //       })
+      //       .catch((err) => {
+      //         toast.error(err?.response?.data?.message[lang]);
+      //       })
+      //   );
     }else{
       setShowStripePayment(false)
       setShowWalletPaymentMethod(true)

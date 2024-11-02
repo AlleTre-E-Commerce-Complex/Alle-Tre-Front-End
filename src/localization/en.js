@@ -418,6 +418,28 @@ const en = {
     //wallet
    [localizationKeys.Wallet] : "Wallet", 
    [localizationKeys.ThereAreNoTransactionYet] : "There are no transactions yet..!",
+   [localizationKeys.ThereAreNoBankAccountAddedYet] :"No bank account added yet..!",
+   [localizationKeys.accountHolderName] :"Account Holder Name :",
+   [localizationKeys.bankName] :"Bank Name :",
+   [localizationKeys.bankAccountNumber] : 'Bank Account Number :',
+   [localizationKeys.IBANnumber] : 'IBAN Number :',
+   [localizationKeys.WalletBalance] : "Wallet Balance ",
+   [localizationKeys.Withdraw] : "Withdraw",
+   [localizationKeys.Date] : "Date",
+   [localizationKeys.Description] : "Description",
+   [localizationKeys.Withdrawals] : "Withdrawals",
+   [localizationKeys.Deposits] : "Deposits",
+   [localizationKeys.Balance] : "Balance",
+   [localizationKeys.YourBankDetails] : "Your Bank Details",
+   [localizationKeys.AddNewBankAccount] : "Add new bank account",
+   [localizationKeys.EnterTheAmount] : "Enter the amount",
+   [localizationKeys.Amount] : "Amount",
+   [localizationKeys.AmountMustBeMoreThan1AED] : "Amount must be more than AED 1",
+   [localizationKeys.GoBack] : "Go back",
+   [localizationKeys.SubmitWithdrawalRequest] : "Submit withdrawal request",
+   [localizationKeys.AddAccount] : "Add Account",
+   [localizationKeys.WithDrawalSuccessMessage] : "Success! Your withdrawal request has been processed successfully. Your funds are on their way, and you’ll receive them shortly. Thank you for using our service!",
+   
 };
 
 export default en;

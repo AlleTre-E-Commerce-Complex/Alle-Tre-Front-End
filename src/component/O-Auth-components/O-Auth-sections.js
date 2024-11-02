@@ -5,6 +5,9 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
+  linkWithCredential,
+  fetchSignInMethodsForEmail,
+ 
 } from "firebase/auth";
 
 import appleIcon from "../../../src/assets/icons/Apple-icon.svg";
@@ -138,9 +141,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   };
 
   const signInWithFacebook = () => {
+    console.log('face book auth test 1')
     const provider = new FacebookAuthProvider();
     signInWithPopup(authentications, provider)
       .then((res) => {
+        console.log('face book auth test 2 response from facebook :',res)
+
         run(
           axios.post(api.auth.aAuth, {
             userName: res?._tokenResponse?.displayName || null,
@@ -151,6 +157,8 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           })
         )
           .then((res) => {
+        console.log('face book auth test 3')
+            
             const { accessToken, refreshToken, hasCompletedProfile } =
               res.data.data;
             login({
@@ -167,6 +175,8 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             dispatch(Close());
           })
           .catch((err) => {
+    console.log('face book auth test 4 error 1:',err)
+
             toast.error(
               selectedContent[
                 localizationKeys.somethingWentWrongPleaseTryAgainLater
@@ -175,6 +185,8 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           });
       })
       .catch((err) => {
+    console.log('face book auth test 4 error 2:',err)
+
         toast.error(
           selectedContent[
             localizationKeys.somethingWentWrongPleaseTryAgainLater
@@ -182,6 +194,10 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
         );
       });
   };
+
+
+
+
 
   return (
     <div>

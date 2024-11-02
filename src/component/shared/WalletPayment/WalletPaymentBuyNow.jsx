@@ -1,5 +1,6 @@
 import api from 'api';
 import { authAxios } from 'config/axios-config';
+import { useLanguage } from 'context/language-context';
 import useAxios from 'hooks/use-axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
@@ -9,8 +10,11 @@ import { Button } from 'semantic-ui-react'
 
 const WalletPaymentBuyNow = ({amount,walletBalance,auctionId,paymentAPI}) => {
   const history = useHistory()
+  const [lang] = useLanguage("");
+  console.log('lang :',lang)
   const [isWalletPaymentSuccess,setIsWalletPaymentSuccess] = useState(null)
   const { run, isLoading } = useAxios([]);
+
   const submitWalletPayment = ()=>{
     const body = {
       auctionId,
@@ -24,6 +28,10 @@ const WalletPaymentBuyNow = ({amount,walletBalance,auctionId,paymentAPI}) => {
             position: 'top-center', // Position of the toast
           });
           history.push(routes.app.profile.myBids.waitingForDelivery)
+        }else{
+            let errorMessage = lang === 'en' ?
+             res?.data?.message_eng : res?.data?.message_arb
+            toast.error(errorMessage)
         }
       })
       .catch((error)=>{

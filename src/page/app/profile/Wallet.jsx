@@ -5,15 +5,23 @@ import content from "localization/content";
 import localizationKeys from "localization/localization-keys";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
+import toast from 'react-hot-toast';
 import api from "api";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import AddNewBankModal from "component/shared/withdrawalModal/AddNewBankModal";
+import SuccessModal from "component/shared/successModal/SuccessModal";
+import ShowBankDetailsModal from "component/shared/withdrawalModal/ShowBankDetailsModal";
+import routes from "routes";
 const Wallet = () => {
+  
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const {run : runWallet, isLoading: isLoadingWallet} = useAxios()
+  const {run : runWallet, isLoading: isLoadingWallet} = useAxios([])
   const [walletBalance, setWalletBalance] = useState(10000);
   const [walletHistory, setWalletHistory] = useState([]);
+  const [withdrawalOpen,setWithdrawalOpen] = useState(false)
+  const [successModalOpen,setSuccessModalOpen] = useState(false)
 
   useEffect(() => {
     const fetchWalletData = async () => {
@@ -39,7 +47,13 @@ const Wallet = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  async function handleWithdrawClick() {
+    setWithdrawalOpen(true)
+
   
+  }
+
+
   return (
    <div>
     <Dimmer className=" bg-white/50" active={isLoadingWallet} inverted>
@@ -49,11 +63,13 @@ const Wallet = () => {
       {walletHistory.length > 0 ?  
          <div className="">
          <div className="walletBalance  font-bold md:text-5xl text-xl px-2 fixed md:top-[130px] top-[110px] py-5 bg-[#FEFEFE] w-full md:w-4/5 z-10">
-           <div className="flex justify-between">
+           <div className="flex gap-10">
                    <h1 className="text-gray-500">
-                   Wallet Balance : AED<span> {walletBalance}/-</span>{" "}
+                     {selectedContent[localizationKeys.WalletBalance]}: AED<span> {walletBalance}</span>{" "}
                    </h1>
-                   <button className="bg-primary text-white text-lg font-normal px-5 rounded-lg">Withdraw</button>
+                   <button  
+                    className="bg-primary text-white text-lg my-2 font-normal px-5 rounded-lg "
+                    onClick={handleWithdrawClick}>{selectedContent[localizationKeys.Withdraw]}</button>
            </div>
          </div>
          <div className="transactions ">
@@ -62,24 +78,24 @@ const Wallet = () => {
                <thead className="text-md  w-full text-white uppercase bg-primary dark:bg-gray-700 dark:text-gray-400">
                  <tr className=" ">
                    <th scope="col" className="px-6 py-3">
-                     Date
+                   {selectedContent[localizationKeys.Date]}
                    </th>
                    <th scope="col" className="px-6 py-3">
-                     Discription
+                   {selectedContent[localizationKeys.Description]}
                    </th>
                    <th scope="col" className="px-6 py-3">
-                     Withdrawals
+                   {selectedContent[localizationKeys.Withdrawals]}
                    </th>
                    <th scope="col" className="px-6 py-3">
-                     Deposites
+                   {selectedContent[localizationKeys.Deposits]}
                    </th>
                    <th scope="col" className="px-6 py-3">
-                     Balance
+                   {selectedContent[localizationKeys.Balance]}
                    </th>
                  </tr>
                </thead>
                <tbody className="">
-                 {walletHistory.map((data, index) => (
+                 {[...walletHistory].reverse().map((data, index) => (
                    <tr
                      key={index}
                      className={`bg-white border-b ${
@@ -111,6 +127,29 @@ const Wallet = () => {
               </h1>
             </div>
           </div>}
+        
+          { withdrawalOpen &&
+           <ShowBankDetailsModal
+           open={withdrawalOpen}
+           setOpen={setWithdrawalOpen}
+           setSuccessModal={setSuccessModalOpen}
+          />
+           
+          }
+
+         
+          {successModalOpen && <SuccessModal
+          open={successModalOpen}
+          setOpen={setSuccessModalOpen}
+          returnUrl={routes.app.profile.wallet}
+          message={'Success! Your withdrawal request has been processed successfully. Your funds are on their way, and you’ll receive them shortly. Thank you for using our service!'}
+          isWithdrawal={true}
+          />
+          
+          }
+
+
+        
    </div>
   );
 };

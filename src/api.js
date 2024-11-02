@@ -36,6 +36,8 @@ const api = {
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       getUserAuctionsDetails: (auctionsId) =>
         `/auctions/user/${auctionsId}/details`,
+      isPendingPayment :(auctionId,paymentType)=>
+        `/auctions/user/pendingPayment?auctionId=${auctionId}&paymentType=${paymentType}`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
       getMain: "/auctions/user/main",
       getLiveAuctions: "auctions/user/live",
@@ -109,7 +111,10 @@ const api = {
     Wallet:{
       get:"/wallet/get_from_wallet",
       getBalance:"/wallet/get_balance",
-      post:"/wallet/add_to_wallet"
+      post:"/wallet/add_to_wallet",
+      withdrawalRequest:'/auctions/user/withdrawalRequest',
+      getAccountData:'/auctions/user/getAccountData',
+      addBankAccount: '/auctions/user/addBankAccount',
     }
   },
 };

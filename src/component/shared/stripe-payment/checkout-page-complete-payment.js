@@ -337,50 +337,61 @@ useEffect(() => {
   runPendingAuctionData(
     authAxios
       .get(api.app.auctions.getUserAuctionsDetails(completedPaymentData?.auctionsId))
-      .then((res) => {
+      .then(async (res) => {
         setPendingAuctionData(res?.data?.data);
         const auctionData = res?.data?.data 
         const amountToPay = completedPaymentData?.lastPrice
         if(auctionData){
-          run(
-            authAxios.get(`${api.app.Wallet.getBalance}`)
-            .then((response)=>{ 
-              const balance = response.data
-
-              if(balance && Number(balance) > Number(amountToPay)){
-                setWalletBalance(balance)
-                setShwoPaymentSelection(true)
-              }else{
-
-                run(
-                  authAxios
-                    .post(
-                      api.app.auctions.auctionPurchaseByBidder(
-                        completedPaymentData?.auctionsId
-                      )
-                    )
-                    .then((res) => {
-                      setClientSecret(res?.data?.data.clientSecret);
-                    })
-                    .catch((err) => {
-                      toast.error(
-                        err?.response?.data?.message[lang] ||
-                          selectedContent[
-                            localizationKeys.somethingWentWrongPleaseTryAgainLater
-                          ]
-                      );
-                    })
-                );
-              }
-            })
-            
-          )
+          const pendingPeymentData = 
+          await authAxios.get(`${api.app.auctions.isPendingPayment(
+            completedPaymentData?.auctionsId,'AUCTION_PURCHASE')}`)
+            if(!pendingPeymentData?.data?.isPendingPaymentData){
+              run( 
+                authAxios.get(`${api.app.Wallet.getBalance}`)
+                .then((response)=>{ 
+                  const balance = response.data
+    
+                  if(balance && Number(balance) > Number(amountToPay)){
+                    setWalletBalance(balance)
+                    setShwoPaymentSelection(true)
+                  }else{
+    
+                 stripePaymentApiCall()
+                  }
+                })
+                
+              )
+            }else{
+             stripePaymentApiCall()
+            }
+       
         }
 
       })
   );
 }, [completedPaymentData?.auctionsId, runPendingAuctionData, run, lang,auctionId,selectedContent]);
 
+const stripePaymentApiCall = ()=>{
+  run(
+    authAxios
+      .post(
+        api.app.auctions.auctionPurchaseByBidder(
+          completedPaymentData?.auctionsId
+        )
+      )
+      .then((res) => {
+        setClientSecret(res?.data?.data.clientSecret);
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message[lang] ||
+            selectedContent[
+              localizationKeys.somethingWentWrongPleaseTryAgainLater
+            ]
+        );
+      })
+  );
+}
 
 const handleSubmitPayment = ()=>{
   if(isWalletPayment=== null){
@@ -391,34 +402,31 @@ const handleSubmitPayment = ()=>{
   if(!isWalletPayment){
     setShowStripePayment(true)
     setShowWalletPaymentMethod(false)
-    run(
-      authAxios
-        .post(
-          api.app.auctions.auctionPurchaseByBidder(
-            completedPaymentData?.auctionsId
-          )
-        )
-        .then((res) => {
-          setClientSecret(res?.data?.data.clientSecret);
-        })
-        .catch((err) => {
-          toast.error(
-            err?.response?.data?.message[lang] ||
-              selectedContent[
-                localizationKeys.somethingWentWrongPleaseTryAgainLater
-              ]
-          );
-        })
-    );
+    // run(
+    //   authAxios
+    //     .post(
+    //       api.app.auctions.auctionPurchaseByBidder(
+    //         completedPaymentData?.auctionsId
+    //       )
+    //     )
+    //     .then((res) => {
+    //       setClientSecret(res?.data?.data.clientSecret);
+    //     })
+    //     .catch((err) => {
+    //       toast.error(
+    //         err?.response?.data?.message[lang] ||
+    //           selectedContent[
+    //             localizationKeys.somethingWentWrongPleaseTryAgainLater
+    //           ]
+    //       );
+    //     })
+    // );
+    stripePaymentApiCall()
   }else{
     setShowStripePayment(false)
     setShowWalletPaymentMethod(true)
   }
 }
-
-
-
-
 
   const appearance = {
     theme: "flat",

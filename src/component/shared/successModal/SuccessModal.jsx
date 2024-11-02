@@ -4,13 +4,22 @@ import { Modal } from "semantic-ui-react";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import LottieSuccess from "../lotties-file/LottieSuccess";
-const SuccessModal = ({open, setOpen,message}) => {
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import routes from "routes";
+const SuccessModal = ({open, setOpen,message,returnUrl,isWithdrawal,isAddAccount,closeAddNewBankAccountModal}) => {
+    const history = useHistory()
     const [lang] = useLanguage(""); 
     const selectedContent = content[lang];
     
-    const HandleSubmitBuyerObjection = () => {
+    const HandleSubmit = () => {
         setOpen(false)
-        window.location.reload()
+        if(isAddAccount)
+          closeAddNewBankAccountModal(false)
+        else if(isWithdrawal)
+          history.push(returnUrl)
+        else
+          history.push(routes.app.profile.myAuctions.active)
+ 
     };
   
 
@@ -30,7 +39,7 @@ const SuccessModal = ({open, setOpen,message}) => {
           <div className="gap-3 flex justify-center">
             <button
               className="bg-primary hover:bg-primary-light border border-primary-light text-white py-2 px-3 rounded-md my-2"
-              onClick={HandleSubmitBuyerObjection}
+              onClick={HandleSubmit}
             >
                 OK
             </button>

@@ -25,7 +25,7 @@ const WalletPaymentForBiddingDeoposit = ({amount,walletBalance,auctionId,payment
           toast.success('Payment successful',{
             position: 'top-center', // Position of the toast
           });
-          history.push(routes.app.profile.myAuctions.active)
+          history.push(routes.app.profile.myBids.inPogress)
         }
       })
       .catch((error)=>{

@@ -386,7 +386,30 @@ const localizationKeys = {
     "makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne",
   //wallet
     Wallet:'Wallet',
-    ThereAreNoTransactionYet:"ThereAreNoTransactionYet"
+    ThereAreNoTransactionYet:"ThereAreNoTransactionYet",
+    WalletBalance:'WalletBalance',
+    Withdraw:'Withdraw',
+    Description:'Description',
+    Date:'Date',
+    Withdrawals:'Withdrawals',
+    Deposits:'Deposits',
+    Balance:'Balance',
+    ThereAreNoBankAccountAddedYet:"ThereAreNoBankAccountAddedYet",
+    accountHolderName:'accountHolderName',
+    bankName: 'bankName',
+    bankAccountNumber :'Bank Account Number:',
+    IBANnumber :'IBANnumber',
+    YourBankDetails :'YourBankDetails',
+    EnterTheAmount :'EnterTheAmount',
+    Amount :'Amount',
+    AmountMustBeMoreThan1AED :'AmountMustBeMoreThan1AED',
+    AddNewBankAccount :'AddNewBankAccount',
+    GoBack :'GoBack',
+    SubmitWithdrawalRequest :'SubmitWithdrawalRequest',
+    AddAccount :'AddAccount',
+    WithDrawalSuccessMessage :'WithDrawalSuccessMessage',
+
+
 };
 
 export default localizationKeys;

@@ -40,7 +40,7 @@ const ActionsRowTable = ({
 
 }) => {
   // console.log('auction Id in auction row table:',auctionsId);
-  // console.log('Props:', { title, description, totalBids, lastPrice, endingTime });
+  // console.log('Props:',    goToDetails );
 
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -452,6 +452,7 @@ const ActionsRowTable = ({
           open={openSuccessModal}
           setOpen={setSuccessModal}
           message={selectedContent[localizationKeys.YouSuccessfullyCancelledTheAuction]}
+          returnUrl={routes.app.profile.myAuctions.active}
         />
         <DeliverysentModal 
           auctionId={auctionsId}

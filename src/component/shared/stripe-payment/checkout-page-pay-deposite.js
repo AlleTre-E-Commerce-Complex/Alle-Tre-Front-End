@@ -33,6 +33,7 @@ import WalletPaymentForBiddingDeoposit from "../WalletPayment/WalletPaymentForBi
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 export default function CheckoutPagePayDeposite() {
+  //pay deposite of bidder
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -67,44 +68,32 @@ export default function CheckoutPagePayDeposite() {
     runPendingAuctionData(
       authAxios
         .get(api.app.auctions.getUserAuctionsDetails(auctionId))
-        .then((res) => {
+        .then(async(res) => {
           setPendingAuctionData(res?.data?.data);
           const auctionData = res?.data?.data 
           const amountToPay = auctionData.product.category.bidderDepositFixedAmount
           if(auctionData){
-            run(
-              authAxios.get(`${api.app.Wallet.getBalance}`)
-              .then((response)=>{ 
-                const balance = response.data
-  
-                if(balance && Number(balance) > Number(amountToPay)){
-                  setWalletBalance(balance)
-                  setShwoPaymentSelection(true)
-                }else{
+            const pendingPeymentData = 
+              await authAxios.get(`${api.app.auctions.isPendingPayment(auctionId,'BIDDER_DEPOSIT')}`)
+              if(!pendingPeymentData?.data?.isPendingPaymentData){
+                run(
+                  authAxios.get(`${api.app.Wallet.getBalance}`)
+                  .then((response)=>{ 
+                    const balance = response.data
+      
+                    if(balance && Number(balance) > Number(amountToPay)){
+                      setWalletBalance(balance)
+                      setShwoPaymentSelection(true)
+                    }else{
+                      stripePaymentApiCall()
+                    }
+                  })
                   
-                  const body = {
-                    bidAmount: bidAmountValue,
-                  };
-              
-                  run(
-                    authAxios
-                      .post(api.app.auctions.PayDepositByBidder(auctionId), body)
-                      .then((res) => {
-                        setClientSecret(res?.data?.data.clientSecret);
-                      })
-                      .catch((err) => {
-                        toast.error(
-                          err?.response?.data?.message[lang] ||
-                            selectedContent[
-                              localizationKeys.somethingWentWrongPleaseTryAgainLater
-                            ]
-                        );
-                      })
-                  );
-                }
-              })
-              
-            )
+                )
+              }else{
+                stripePaymentApiCall()
+              }
+           
           }
 
         })
@@ -121,24 +110,7 @@ export default function CheckoutPagePayDeposite() {
     if(!isWalletPayment){
       setShowStripePayment(true)
       setShowWalletPaymentMethod(false)
-      const body = {
-        bidAmount: bidAmountValue,
-      };
-      run(
-        authAxios
-          .post(api.app.auctions.PayDepositByBidder(auctionId), body)
-          .then((res) => {
-            setClientSecret(res?.data?.data.clientSecret);
-          })
-          .catch((err) => {
-            toast.error(
-              err?.response?.data?.message[lang] ||
-                selectedContent[
-                  localizationKeys.somethingWentWrongPleaseTryAgainLater
-                ]
-            );
-          })
-      );
+      stripePaymentApiCall()
     }else{
       setShowStripePayment(false)
       setShowWalletPaymentMethod(true)
@@ -150,6 +122,26 @@ export default function CheckoutPagePayDeposite() {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const stripePaymentApiCall = () =>{
+    const body = {
+      bidAmount: bidAmountValue,
+    };
+    run(
+      authAxios
+        .post(api.app.auctions.PayDepositByBidder(auctionId), body)
+        .then((res) => {
+          setClientSecret(res?.data?.data.clientSecret);
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message[lang] ||
+              selectedContent[
+                localizationKeys.somethingWentWrongPleaseTryAgainLater
+              ]
+          );
+        })
+    );
+  }
   return (
     <>
       <Dimmer

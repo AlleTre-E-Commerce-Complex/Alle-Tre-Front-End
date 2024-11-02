@@ -409,6 +409,29 @@ const ar = {
     //wallet
     [localizationKeys.Wallet] : "محفظة", 
    [localizationKeys.ThereAreNoTransactionYet] : "لا توجد معاملات بعد",
+   [localizationKeys.ThereAreNoBankAccountAddedYet] :"لم يتم إضافة حساب بنكي بعد..!",
+   [localizationKeys.accountHolderName] :"اسم صاحب الحساب :",
+   [localizationKeys.bankName] :"اسم البنك :",
+   [localizationKeys.bankAccountNumber] : 'رقم الحساب البنكي :',
+   [localizationKeys.IBANnumber] : 'IBAN رقم :',
+   [localizationKeys.WalletBalance] : "رصيد المحفظة ",
+   [localizationKeys.Withdraw] : "ينسحب",
+   [localizationKeys.Date] : "تاريخ",
+   [localizationKeys.Description] : "وصف",
+   [localizationKeys.Withdrawals] : "السحوبات",
+   [localizationKeys.Deposits] : "الودائع",
+   [localizationKeys.Balance] : "توازن",
+   [localizationKeys.YourBankDetails] : "تفاصيل البنك الخاص بك",
+   [localizationKeys.AddNewBankAccount] : "إضافة حساب بنكي جديد",
+   [localizationKeys.EnterTheAmount] : "أدخل المبلغ",
+   [localizationKeys.Amount] : "كمية",
+   [localizationKeys.AmountMustBeMoreThan1AED] : "يجب أن يكون المبلغ أكثر من 1 درهم إماراتي",
+   [localizationKeys.GoBack] : "عُد",
+   [localizationKeys.SubmitWithdrawalRequest] : "إرسال طلب السحب",
+   [localizationKeys.AddAccount] : "إضافة حساب",
+   [localizationKeys.WithDrawalSuccessMessage] : 
+   "تم بنجاح! لقد تمت معالجة طلب السحب الخاص بك بنجاح. أموالك في طريقها إليك، وستصلك قريبًا. شكرًا لك على استخدام خدمتنا!",
+
 
 };
 
