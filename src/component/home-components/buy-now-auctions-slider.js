@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 
 import buyNowEmty from "../../../src/assets/img/buy-now-emty-state.png";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import BannerSingle from "./BannerSingle";
 
 const BuyNowAuctionsSlider = () => {
   const [lang] = useLanguage("");
@@ -99,11 +100,12 @@ const BuyNowAuctionsSlider = () => {
       </div>
       {auctions?.length === 0 ? (
         <div>
-          <img
+          {/* <img
             className="w-full h-full object-cover rounded-2xl  shadow"
             src={buyNowEmty}
             alt="buyNowEmty"
-          />
+          /> */}
+          <BannerSingle />
         </div>
       ) : (
         <div className="ezd-content relative">

@@ -18,6 +18,7 @@ import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import liveEmty from "../../../src/assets/img/live-emty-state.png";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import BannerSingle from "./BannerSingle";
 
 const LiveAuctionsSlider = ({ type }) => {
   const [lang] = useLanguage("");
@@ -100,11 +101,12 @@ const LiveAuctionsSlider = ({ type }) => {
       </div>
       {auctions?.length === 0 ? (
         <div>
-          <img
+          {/* <img
             className="w-full h-full object-cover rounded-2xl shadow"
             src={liveEmty}
             alt="liveEmty"
-          />
+          /> */}
+          <BannerSingle />  
         </div>
       ) : (
         <div className="ezd-content  relative ">

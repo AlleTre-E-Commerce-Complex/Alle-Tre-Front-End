@@ -42,7 +42,8 @@ module.exports = {
           veryLight: "#EAE2E6",
         },
         secondary: {
-          DEFAULT: "#00134F",
+          // DEFAULT: "#00134F",
+          DEFAULT: "#000000",
           light: "#B9BDCD",
           veryLight: "#00134F1A",
         },
@@ -80,4 +81,5 @@ module.exports = {
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
+  
 };

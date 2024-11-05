@@ -19,7 +19,7 @@ const Category = ({ img, title, id, view }) => {
           }
           className=" w-[119px] h-[119px] bg-white hover:bg-primary/10 duration-300 ease-in-out transform rounded-full pt-2.5 cursor-pointer"
         >
-          <div className="w-[98px] h-[98px] rounded-full bg-primary-light group-hover:bg-primary duration-300 ease-in-out transform  mx-auto my-auto p-2 flex justify-center items-center">
+          <div className="w-[98px] h-[98px] rounded-full bg-secondary  group-hover:bg-primary duration-300 ease-in-out transform  mx-auto my-auto p-2 flex justify-center items-center">
             <img
               className={
                 img

@@ -33,6 +33,7 @@ import menuicon from "../../../../src/assets/icons/menu-icon.png";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../component/home-components/auction-card-list";
 import bigSliderEmtyState from "../../../../src/assets/img/Allatre-banner.png";
+import BannerTop from "component/home-components/BannerTop";
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -111,15 +112,16 @@ const Home = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="z-20 md:h-[541px] h-[200px] ">
-        <ImageSlider
+      <div className="z-20 md:h-[464px] h-[200px] ">
+        {/* <ImageSlider
           myRef={myRef}
           images={sponsoredAuctions?.map((img) => img?.product?.images)}
           slidesData={sponsoredAuctions}
           emtystateImg={bigSliderEmtyState}
-        />
+        /> */}
+        <BannerTop />
       </div>
-      <div className="pt-32 text-center">
+      <div className="pt-10 text-center">
         <h1 ref={myRef} className="text-gray-dark text-base font-bold ">
           {selectedContent[localizationKeys.popularCategories]}
         </h1>

@@ -17,6 +17,7 @@ import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import upCompingEmty from "../../../src/assets/img/up-comping-emty-state.png";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import BannerSingle from "./BannerSingle";
 
 const UpComingAuctionsSlider = () => {
   const [lang] = useLanguage("");
@@ -103,11 +104,12 @@ const UpComingAuctionsSlider = () => {
       </div>
       {auctions?.length === 0 ? (
         <div>
-          <img
+          {/* <img
             className="w-full h-full object-cover rounded-2xl shadow"
             src={upCompingEmty}
             alt="upCompingEmty"
-          />
+          /> */}
+          <BannerSingle />
         </div>
       ) : (
         <div className="ezd-content relative">
