@@ -42,7 +42,7 @@ const BannerTop = () => {
     };
 
     return (
-        <div className="relative w-full md:w-[76%] mt-10 mx-auto">
+        <div className="relative w-full  mt-10 mx-auto">
             <div className="relative h-56 overflow-hidden rounded-lg md:h-[29rem]">
                 {images.map((image, index) => {
                     const isActive = currentIndex === index;
