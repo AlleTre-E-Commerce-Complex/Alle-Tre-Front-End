@@ -3,7 +3,7 @@ import footerImg from "../../../../src/assets/img/footer-img.png";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
 import useGetGatogry from "../../../hooks/use-get-category";
 import { FaInstagram, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
@@ -108,6 +108,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        
         <div className="relative ltr:-right-[685px] rtl:-left-[685px]">
           <div className="relative -rotate-90 ">
             <hr className="border-white" />
@@ -121,10 +122,11 @@ const Footer = () => {
                   className="bg-gradient-to-t from-secondary to-[#001248] cursor-pointer"
                   size={25}
                 />
+                 <a href="https://www.facebook.com/profile.php?id=61566470938503">
                 <FaFacebookF
                   className="bg-gradient-to-t from-secondary to-[#001248] mb-2 cursor-pointer"
                   size={25}
-                />
+                /></a>
               </span>
             </div>
           </div>

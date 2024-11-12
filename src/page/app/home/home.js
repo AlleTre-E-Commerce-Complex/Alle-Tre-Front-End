@@ -112,7 +112,7 @@ const Home = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="z-20 md:h-[464px] h-[200px] max-w-[1440px] mx-auto py-10 ">
+      <div className="z-20 md:h-[464px] w-full h-[200px] max-w-[1440px] mx-auto py-10 ">
         {/* <ImageSlider
           myRef={myRef}
           images={sponsoredAuctions?.map((img) => img?.product?.images)}

@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
-
-import RatingStare from "../shared/rating-star/rating-star";
-
+import RatingStare from "../shared/rating-star/rating-star"
 import { useDispatch } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
@@ -12,7 +10,6 @@ import useCountdown from "../../hooks/use-countdown";
 import AuctionsStatus from "../shared/status/auctions-status";
 import SubmitBidModel from "./submit-bid-model";
 import TotalBidsTableModel from "./total-bids-table-model";
-
 import { useSocket } from "context/socket-context";
 import moment from "moment";
 import { toast } from "react-hot-toast";
@@ -54,6 +51,7 @@ const SummaryHomeAuctionSections = ({
   PurchasedTime,
   onReload,
 }) => {
+
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -66,6 +64,8 @@ const SummaryHomeAuctionSections = ({
   const [openTotaltBid, setTotalBidOpen] = useState(false);
 
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
+
+  
   const handelBuyNow = () => {
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
@@ -195,10 +195,10 @@ const SummaryHomeAuctionSections = ({
       {/* rating */}
       <div className="flex  gap-x-5">
         <AuctionsStatus status={status} big />
-        <RatingStare max={numberStare} size="huge" />
+        {/* <RatingStare max={numberStare} size="huge" />
         <p className="text-gray-dark text-base font-normal">
           ( {totalReviews} {selectedContent[localizationKeys.reviews]} )
-        </p>
+        </p> */}
       </div>
       {/* Description */}
       <div className="pt-8 overflow-clip">
@@ -300,7 +300,7 @@ const SummaryHomeAuctionSections = ({
             <div className="my-auto"></div>
           </p>
         </div>
-        <div
+       { (Number(lastestBid?.bidAmount) || Number(CurrentBid)) < Number(acceptedAmount) && ( <div
           className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}
         >
           <button
@@ -326,7 +326,7 @@ const SummaryHomeAuctionSections = ({
             {selectedContent[localizationKeys.buyNow]}
             <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
           </button>
-        </div>
+        </div>)}
       </div>
       {/* Submit Bid sections */}
       <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">
@@ -377,4 +377,4 @@ const SummaryHomeAuctionSections = ({
   );
 };
 
-export default SummaryHomeAuctionSections;
+export default React.memo(SummaryHomeAuctionSections);

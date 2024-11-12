@@ -60,10 +60,10 @@ const SummaryAuctionSections = ({
       {/* rating */}
       <div className="flex  gap-x-5">
         <AuctionsStatus status={status} big />
-        <RatingStare max={numberStare} size="huge" />
+        {/* <RatingStare max={numberStare} size="huge" />
         <p className="text-gray-dark text-base font-normal">
           ( {totalReviews} {selectedContent[localizationKeys.reviews]} )
-        </p>
+        </p> */}
       </div>
       {/* Description */}
       <div className="pt-8 overflow-clip">

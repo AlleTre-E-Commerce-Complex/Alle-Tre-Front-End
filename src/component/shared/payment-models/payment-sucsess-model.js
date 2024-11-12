@@ -7,6 +7,7 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import routes from "../../../routes";
 import PaymentSucsess from "../lotties-file/payment-sucsess";
+import { useEffect } from "react";
 
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
@@ -14,6 +15,17 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const history = useHistory();
   const { pathname } = useLocation();
   const bidAmountPathName = useSelector((state) => state?.bidAmount);
+  
+  useEffect(() => {
+    const handlePopState = () => {
+      history.go(0); // Reloads the page on back button press
+    };
+  
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [history]);
+
+  
   return (
     <Modal
       className="sm:w-[506px] w-full h-auto bg-transparent scale-in "

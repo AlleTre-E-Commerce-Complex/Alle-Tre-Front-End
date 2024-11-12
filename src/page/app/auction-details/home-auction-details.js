@@ -48,6 +48,7 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
+            console.log('auction details authAxios : ',res?.data?.data)
           })
       );
     } else {
@@ -56,6 +57,7 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
+            console.log('auction details axios: ',res?.data?.data)
           })
       );
     }
@@ -64,7 +66,6 @@ const HomeAuctionDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-
   return (
     <div>
       <Dimmer
