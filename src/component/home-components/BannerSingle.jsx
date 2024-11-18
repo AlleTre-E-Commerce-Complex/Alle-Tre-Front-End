@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BannerTopImage1 from '../../assets/images/BannerTop1.png';
+import BannerTopImage1 from '../../assets/images/BannerTop1.jpg';
 
 
 const BannerSingle = ({banner}) => {

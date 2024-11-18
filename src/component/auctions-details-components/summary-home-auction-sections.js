@@ -300,33 +300,37 @@ const SummaryHomeAuctionSections = ({
             <div className="my-auto"></div>
           </p>
         </div>
-       { (Number(lastestBid?.bidAmount) || Number(CurrentBid)) < Number(acceptedAmount) && ( <div
-          className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}
-        >
-          <button
-            disabled={
-              status === "SOLD" ||
-              status === "EXPIRED" ||
-              status === "IN_SCHEDULED"
-                ? true
-                : false
-            }
-            onClick={() => {
-              handelBuyNow();
-              dispatch(buyNow(acceptedAmount));
-            }}
-            className={`${
-              status === "SOLD" ||
-              status === "EXPIRED" ||
-              status === "IN_SCHEDULED"
-                ? " border-primary/50 text-primary/50 "
-                : "border-primary text-primary "
-            }  border-[1px]  w-[304px] h-[48px] rounded-lg`}
-          >
-            {selectedContent[localizationKeys.buyNow]}
-            <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
-          </button>
-        </div>)}
+        {
+  ( (Number(lastestBid?.bidAmount) || Number(CurrentBid)) < Number(acceptedAmount) || 
+    (lastestBid?.bidAmount === undefined && CurrentBid === undefined) ) && (
+    <div className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}>
+      <button
+        disabled={
+          status === "SOLD" ||
+          status === "EXPIRED" ||
+          status === "IN_SCHEDULED"
+            ? true
+            : false
+        }
+        onClick={() => {
+          handelBuyNow();
+          dispatch(buyNow(acceptedAmount));
+        }}
+        className={`${
+          status === "SOLD" ||
+          status === "EXPIRED" ||
+          status === "IN_SCHEDULED"
+            ? "border-primary/50 text-primary/50"
+            : "border-primary text-primary"
+        } border-[1px] w-[304px] h-[48px] rounded-lg`}
+      >
+        {selectedContent[localizationKeys.buyNow]}
+        <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
+      </button>
+    </div>
+  )
+}
+
       </div>
       {/* Submit Bid sections */}
       <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">

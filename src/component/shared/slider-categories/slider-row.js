@@ -48,7 +48,7 @@ const SliderRow = () => {
   return (
     <div className="max-w-[1440px] mx-auto   ">
       <div className="ezd-content relative ltr:ml-2 rtl:mr-2">
-        <div className="ezd-snapslider pt-10 ">
+        <div className="ezd-snapslider">
           <div className="snapslider-wrapper">
             <div ref={swiperRef4} className={`snapslider-overflow`}>
               <div

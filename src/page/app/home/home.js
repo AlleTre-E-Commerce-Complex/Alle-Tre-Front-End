@@ -121,7 +121,7 @@ const Home = () => {
         /> */}
         <BannerTop />
       </div>
-      <div className="pt-10 text-center">
+      <div className="pt-10 text-center mt-16 md:mt-0">
         <h1 ref={myRef} className="text-gray-dark text-base font-bold ">
           {selectedContent[localizationKeys.popularCategories]}
         </h1>

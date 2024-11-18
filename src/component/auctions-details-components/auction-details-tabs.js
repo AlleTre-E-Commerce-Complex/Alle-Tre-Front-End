@@ -61,16 +61,16 @@ const AuctionDetailsTabs = ({
         </div>
       ),
     },
-    {
-      menuItem: `${selectedContent[localizationKeys.feedback]}`,
-      render: () => (
-        <div>
-          <Tab.Pane className="border-none w-full h-full  animate-in">
-            <Feedback />
-          </Tab.Pane>
-        </div>
-      ),
-    },
+    // {
+    //   menuItem: `${selectedContent[localizationKeys.feedback]}`,
+    //   render: () => (
+    //     <div>
+    //       <Tab.Pane className="border-none w-full h-full  animate-in">
+    //         <Feedback />
+    //       </Tab.Pane>
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (
