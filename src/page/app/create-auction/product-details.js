@@ -105,9 +105,7 @@ const ProductDetails = () => {
   const [imgtest, setimgtest] = useState();
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
-  const [fileThree, setFileThree] = useState(
-    productDetailsint.fileThree || null
-  );
+  const [fileThree, setFileThree] = useState(productDetailsint.fileThree || null);
   const [fileFour, setFileFour] = useState(productDetailsint.fileFour || null);
   const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
 
@@ -129,6 +127,7 @@ const ProductDetails = () => {
   const [customFromData, setCustomFromData] = useState();
 
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
+  console.log('Gategory Options :',GatogryOptions)
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || productDetailsint.category
   );
@@ -418,7 +417,7 @@ const ProductDetails = () => {
         draftValue.cityId || productDetailsint.countryId
       );
     }
-    if (fileFive) {
+    if (fileOne) {
       formData.append("images", fileOne || productDetailsint.fileOne);
     }
     if (fileTwo) {

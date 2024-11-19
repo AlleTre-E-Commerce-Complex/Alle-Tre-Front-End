@@ -153,6 +153,7 @@ const HomeAuctionDetails = () => {
                     isBuyNowAllowed={auctionsDetailsData?.isBuyNowAllowed}
                     acceptedAmount={auctionsDetailsData?.acceptedAmount}
                     latestBidAmount={auctionsDetailsData?.latestBidAmount}
+                    isOffer={auctionsDetailsData?.product?.isOffer}
                     // onReload={onReload}
                     // TODO add PurchasedTime
                     PurchasedTime={""}

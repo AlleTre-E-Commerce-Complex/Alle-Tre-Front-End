@@ -58,6 +58,7 @@ const ProfileSettings = () => {
           PofileData({
             name: res?.data?.data?.userName,
             img: res?.data?.data?.imageLink,
+            email:res?.data?.data?.email
           })
         );
       })
