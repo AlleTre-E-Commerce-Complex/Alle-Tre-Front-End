@@ -13,10 +13,11 @@ const useGetGatogry = () => {
   useEffect(() => {
     run(axios.get(api.app.category.default)).then(({ data }) => {
       const GatogryOptions = data.data;
+      console.log('**--->',data.data)
       const options = [];
 
-      GatogryOptions.forEach((d) =>
-        options.push({
+      GatogryOptions.forEach((d) =>{
+        d.status === true &&  options.push({
           text: lang === "en" ? d?.nameEn : d?.nameAr,
           key: d?.id,
           value: d.id,
@@ -24,7 +25,7 @@ const useGetGatogry = () => {
           bannerLink: d?.bannerLink,
           hasUsageCondition: d?.hasUsageCondition,
         })
-      );
+      });
 
       setGatogryOptions(options);
     });
