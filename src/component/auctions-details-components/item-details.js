@@ -38,8 +38,7 @@ const ItemDetails = ({ itemDetailsData }) => {
       })
     );
   }, [runSysField]);
-
-  return (
+    return (
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"

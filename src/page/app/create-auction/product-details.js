@@ -29,7 +29,7 @@ import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 
 import { productDetails } from "../../../redux-store/product-details-Slice";
-import { useDispatch, useSelector } from "react-redux"; 
+import { useDispatch, useSelector } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
