@@ -50,8 +50,9 @@ const SummaryHomeAuctionSections = ({
   latestBidAmount,
   PurchasedTime,
   onReload,
+  isOffer,
 }) => {
-
+  console.log('isOffer',isOffer)
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -114,29 +115,27 @@ const SummaryHomeAuctionSections = ({
   } ${selectedContent[localizationKeys.min]}`;
 
   const { run, isLoading } = useAxios();
+
+
   const handelSubmitBidButton = () => {
     const newValue = Number(submitBidValue);
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
-
+    
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
-        console.log('test 1');
-        
         if (validateBidAmount(newValue)) {
-        console.log('test 2');
-        console.log('isDepositPaid :',isDepositPaid);
 
           if (isDepositPaid) {
-        console.log('test 3');
-
             sendSubmitBid(newValue);
           } else {
-        console.log('test 4');
-
             setSubmitBidValue(newValue);
-            setSubmitBidOpen(true);
+            if(isOffer){
+              submitBidWithoutSecurityDeposit()
+            }else{
+              setSubmitBidOpen(true);
+            }
           }
         } else
           toast.error(
@@ -151,6 +150,31 @@ const SummaryHomeAuctionSections = ({
     }
   };
 
+  const [isPaymentWithout_SD_Success,setIsPaymentWithout_SD_Success] = useState(null)
+  const submitBidWithoutSecurityDeposit = ()=>{
+    const body = {
+      auctionId,
+      amount:0,
+      submitBidValue
+    };
+    run(
+      authAxios.post(api.app.auctions.walletPayDepositByBidder,body)
+      .then((res)=>{
+        setIsPaymentWithout_SD_Success(res?.data?.success)
+        if(res?.data?.success){
+          toast.success('Payment successful',{
+            position: 'top-center', // Position of the toast
+          });
+          history.push(routes.app.profile.myBids.inPogress)
+        }
+      })
+      .catch((error)=>{
+        toast.error('Payment Failed', {
+          position: 'top-center',
+        });
+      })
+    )
+  }
   const validateBidAmount = (newValue) => {
     if (
       isNaN(newValue) ||

@@ -27,6 +27,7 @@ import {
   deliveryPolicy,
   returnPolicy,
   warrantyPolicy,
+  OfferPrice,
 } from "../../../redux-store/auction-details-slice";
 
 import "../../../../src/assets/style/radio-toggle.css";
@@ -37,16 +38,27 @@ import localizationKeys from "../../../localization/localization-keys";
 
 import "../../../assets/style/radio-toggle.css";
 import FormikTextArea from "component/shared/formik/formik-text-area";
+import useAxios from "hooks/use-axios";
+import { authAxios } from "config/axios-config";
+import api from "api";
 
 const AuctionDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-
+  const [pofileData, setPofileData] = useState();
   const auctionDetailsInt = useSelector(
     (state) => state.auctionDetails.auctionDetails
   );
-
+  const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
+  useEffect(() => {
+    runPofile(
+      authAxios.get(api.app.profile.default).then((res) => {
+        console.log('profile data in auction details:',res?.data?.data)
+        setPofileData(res?.data?.data);
+      })
+    );
+  }, [runPofile]);
   const [valueRadio, setRadioValue] = useState(
     auctionDetailsInt.valueRadio || "Quick Auction"
   );
@@ -56,6 +68,8 @@ const AuctionDetails = () => {
   const [IsDelivery,setIsDelivery] = useState(false)
   const [IsRetrunPolicy,setIsRetrunPolicy] = useState(false)
   const [IsWaranty,setIsWaranty] = useState(false)
+  const [IsOfferPrice,setIsOfferPrice] = useState(false)
+  const [offerPrice,setOfferPrice] = useState(0)
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -121,7 +135,12 @@ const AuctionDetails = () => {
       is:()=>IsWaranty,
       then:Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
-    })
+    }),
+    offerPrice: Yup.number().when([],{
+      is:()=>IsOfferPrice,
+      then:Yup.number().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.number().notRequired(),
+    }),
   });
 
   const dispatch = useDispatch();
@@ -188,6 +207,15 @@ const AuctionDetails = () => {
     }else{
       dispatch(warrantyPolicy({}))
     }
+    const offer_Price ={
+      IsOfferPrice: IsOfferPrice,
+      offerAmount : values.offerPrice,
+    }
+    if(IsOfferPrice){
+      dispatch(OfferPrice(offer_Price))
+    }else{
+      dispatch(OfferPrice({}))
+    }
 
     dispatch(
       auctionDetails({
@@ -198,6 +226,7 @@ const AuctionDetails = () => {
         IsDelivery:IsDelivery,
         IsRetrunPolicy:IsRetrunPolicy,
         IsWaranty:IsWaranty,
+        IsOfferPrice:IsOfferPrice
       })
     );
     history.push(routes.app.createAuction.shippingDetails);
@@ -440,7 +469,7 @@ const AuctionDetails = () => {
                           <Radio
                             className="Edit_Radio_Toggle"
                             toggle
-                            onChange={() =>{ setIsRetrunPolicy((p) => !p);alert(IsWaranty)}}
+                            onChange={() =>{ setIsRetrunPolicy((p) => !p);}}
                             checked={IsRetrunPolicy}
                           />
                         </div>
@@ -478,7 +507,7 @@ const AuctionDetails = () => {
                           <Radio
                             className="Edit_Radio_Toggle"
                             toggle
-                            onChange={() => {setIsWaranty((p) => !p);alert(IsWaranty)}}
+                            onChange={() => {setIsWaranty((p) => !p);}}
                             checked={IsWaranty}
                           />
                         </div>
@@ -504,6 +533,44 @@ const AuctionDetails = () => {
                       </div>
                     </div>
                     {/* =================== */}
+
+                    {/* ============================  This is only if the use is admin */}
+                   {pofileData?.email === 'kamaru916@gmail.com'&&<div>
+                      <div className="flex mt-7">
+                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                          Offer Product
+                      
+                        </h1>
+                        <div className="mt-auto">
+                          <Radio
+                            className="Edit_Radio_Toggle"
+                            toggle
+                            onChange={() => {setIsOfferPrice((p) => !p);}}
+                            checked={IsOfferPrice}
+                          />
+                        </div>
+                      </div>
+            
+                      <div
+                        className={
+                          IsOfferPrice
+                            ? "mt-9 flex justify-between gap-x-4 "
+                            : "hidden"
+                        }
+                      >
+                        <div className="w-full">
+                        <FormikInput
+                            min={0}
+                            type="number"
+                            name="offerPrice"
+                            label={'Please enter the offer price'}
+                            placeholder={'Offer price'}
+                          />
+                     
+                        </div>
+                      </div>
+                    </div>}
+                    {/* ============================ */}
                   </div>
                   {/* buttons */}
                   <div className="mt-auto flex justify-end  mb-6">

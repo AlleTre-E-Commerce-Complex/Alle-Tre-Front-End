@@ -59,6 +59,10 @@ const ShippingDetails = () => {
     (state) => state.auctionDetails.warrantyPolicy
   );
 
+  const offerDataInt = useSelector(
+    (state) => state.auctionDetails.offerPrice
+  )
+  console.log('offer price data int : ',offerDataInt)
   const [locationId, setLocationId] = useFilter("locationId", "");
 
   const history = useHistory();
@@ -196,6 +200,10 @@ const ShippingDetails = () => {
       if (productDetailsInt.cityId) {
         formData.append("product[cityId]", productDetailsInt.cityId);
       }
+      if(offerDataInt.IsOfferPrice){
+        formData.append('product[isOffer]',offerDataInt.IsOfferPrice);
+        formData.append('product[offerAmount]',offerDataInt.offerAmount)
+      }
       if (productDetailsInt?.auctionState === "DRAFTED") {
       } else {
         formData.append("images", productDetailsInt.fileOne);
@@ -254,6 +262,7 @@ const ShippingDetails = () => {
           warrantyPolicyInt.description
         );
       }
+      
       if (productDetailsInt?.auctionState === "DRAFTED") {
         runCreatAuction(
           authAxios
