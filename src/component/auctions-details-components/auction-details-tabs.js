@@ -6,9 +6,10 @@ import { useLanguage } from "../../context/language-context";
 
 import ShippingPolicy from "./shipping-policy";
 import ReturnPolicy from "./return-policy";
+import WarrantyPolicy from "./warranty-policy";
 import ItemDetails from "./item-details";
 import Feedback from "./feedback";
-import Payment from "./payment";
+import DeliveryPolicy from "./delivery-policy";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
@@ -46,21 +47,32 @@ const AuctionDetailsTabs = ({
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full  animate-in">
-            <ReturnPolicy />
+            <ReturnPolicy dataTabs={dataTabs} />
           </Tab.Pane>
         </div>
       ),
     },
     {
-      menuItem: `${selectedContent[localizationKeys.payment]}`,
+      menuItem: `${selectedContent[localizationKeys.warrantyPolicy]}`,
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full  animate-in">
-            <Payment />
+            <WarrantyPolicy dataTabs={dataTabs} />
           </Tab.Pane>
         </div>
       ),
     },
+    {
+      menuItem: `${selectedContent[localizationKeys.deliveryPolicy]}`,
+      render: () => (
+        <div>
+          <Tab.Pane className="border-none w-full h-full  animate-in">
+            <DeliveryPolicy dataTabs={dataTabs} />
+          </Tab.Pane>
+        </div>
+      ),
+    },
+
     // {
     //   menuItem: `${selectedContent[localizationKeys.feedback]}`,
     //   render: () => (

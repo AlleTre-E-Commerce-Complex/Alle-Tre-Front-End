@@ -2,7 +2,18 @@ import React from "react";
 import footerImg from "../../../../src/assets/img/footer-img.png";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
 import useGetGatogry from "../../../hooks/use-get-category";
-import { FaInstagram, FaLinkedinIn, FaFacebookF } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaFacebookSquare,
+  FaYoutube,
+  FaTiktok,
+  FaSnapchatGhost,
+  FaWhatsapp,
+  FaWhatsappSquare,
+  FaTelegramPlane,
+} from "react-icons/fa";
+
 import { Link, useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import { useLanguage } from "../../../context/language-context";
@@ -35,7 +46,7 @@ const Footer = () => {
                 ]
               }
               {selectedContent[localizationKeys.Bysubscribingyounevermissbeat]}
-              <br></br>{" "}
+              <br></br>
               {
                 selectedContent[
                   localizationKeys
@@ -55,79 +66,171 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-gradient-to-t from-secondary to-[#001248] opacity-95 h-[376px] overflow-hidden">
-        <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[82px]">
+      <div className="bg-gradient-to-t from-secondary to-[#001248] opacity-95 h-[200] overflow-hidden">
+        <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[60px] ml-auto">
           <AllatreLogoWhite />
-          <div className="flex gap-x-14 mt-5 md:mt-0">
+
+          <div className="flex  gap-x-20 mt-5 md:mt-0 ml-auto">
             <div className="">
               <h1 className="text-white font-bold text-base">
-                {selectedContent[localizationKeys.categories]}
-              </h1>
-              {GatogryOptions.map((CategoryName,index) => (
-                <p
-                  key={index}
-                  className="cursor-pointer font-normal text-base text-gray-med py-0.5 w-fit"
-                >
-                  {CategoryName?.text}
-                </p>
-              ))}
-            </div>
-            <div className="">
-              <h1 className="text-white font-bold text-base">
-                {selectedContent[localizationKeys.sellingOnAllatre]}
+                {selectedContent[localizationKeys.address]}
               </h1>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.sellerCenter]}
-              </p>
-              <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.sellForCharity]}
-              </p>
-              <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.businessTools]}
-              </p>
-              <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.createAuction]}
+                Julphar Tower, Office Number: 504,
+                <br />
+                Ras Al Khaimah,
+                <br />
+                United Arab Emirates
               </p>
             </div>
             <div className="">
               <h1 className="text-white font-bold text-base">
-                {selectedContent[localizationKeys.myAccount]}
+                {selectedContent[localizationKeys.contactUs]}
               </h1>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.iamBiddingOn]}
+                {selectedContent[localizationKeys.eMail]}: info@alletre.com
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.iHaveBought]}
-              </p>
-              <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.bidsIHaveReceived]}
-              </p>
-              <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.iHaveSold]}
+                {selectedContent[localizationKeys.phoneNumber]}: +971 72663004
               </p>
             </div>
           </div>
         </div>
-        
-        <div className="relative ltr:-right-[685px] rtl:-left-[685px]">
-          <div className="relative -rotate-90 ">
-            <hr className="border-white" />
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-90 ">
-              <span className="text-gray-500 flex flex-col gap-y-5 bg-gradient-to-t from-secondary to-[#001248] ">
-                <FaInstagram
-                  className="bg-gradient-to-t from-secondary to-[#001248] mt-2 cursor-pointer"
-                  size={25}
-                />
-                <FaLinkedinIn
-                  className="bg-gradient-to-t from-secondary to-[#001248] cursor-pointer"
-                  size={25}
-                />
-                 <a href="https://www.facebook.com/profile.php?id=61566470938503">
-                <FaFacebookF
-                  className="bg-gradient-to-t from-secondary to-[#001248] mb-2 cursor-pointer"
-                  size={25}
-                /></a>
-              </span>
+
+        <div className="relative rtl:-left-[185px] h-[150px]">
+          <div className="relative h-[200px]">
+            {/* Horizontal Line */}
+            <div className="absolute inset-0 flex items-center">
+              <hr className="w-full border-t border-white" />
+            </div>
+
+            {/* Icons Container */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+              <div className="flex flex-row gap-x-8 bg-transparent p-4 bg-gradient-to-t from-secondary to-[#000515]">
+                {/* Facebook Page */}
+                <a
+                  href="https://www.facebook.com/alletr.ae"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook Page"
+                >
+                  <FaFacebookF
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="Facebook Page"
+                  />
+                </a>
+
+                {/* Facebook Group */}
+                <a
+                  href="https://www.facebook.com/groups/423508893775890"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook Group"
+                >
+                  <FaFacebookSquare
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="Facebook Group"
+                  />
+                </a>
+
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/alletr.ae/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <FaInstagram
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="Instagram"
+                  />
+                </a>
+
+                {/* YouTube */}
+                <a
+                  href="https://www.youtube.com/@Alletre_ae"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                >
+                  <FaYoutube
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="YouTube"
+                  />
+                </a>
+
+                {/* TikTok */}
+                <a
+                  href="https://www.tiktok.com/@alletre.ae"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok"
+                >
+                  <FaTiktok
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="TikTok"
+                  />
+                </a>
+
+                {/* Snapchat */}
+                <a
+                  href="https://www.snapchat.com/add/alletre"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Snapchat"
+                >
+                  <FaSnapchatGhost
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="Snapchat"
+                  />
+                </a>
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/97172663004"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                >
+                  <FaWhatsapp
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="WhatsApp"
+                  />
+                </a>
+                {/* WhatsApp Channel */}
+                <a
+                  href="https://whatsapp.com/channel/0029Valpc9dLI8YQT9VNDk1R"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp Channel"
+                >
+                  <FaWhatsappSquare
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="WhatsApp Channel"
+                  />
+                </a>
+                {/* Telegram */}
+                <a
+                  href="http://t.me/Alletre"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Telegram"
+                >
+                  <FaTelegramPlane
+                    className="cursor-pointer text-gray-500 hover:text-white"
+                    size={25}
+                    title="Telegram"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -57,7 +57,8 @@ const en = {
   [localizationKeys.sellingType]: "Selling Type",
   [localizationKeys.auction]: "Auction",
   [localizationKeys.buyNow]: "Buy Now",
-  [localizationKeys.DeliveryPolicy]: "Delivery policy",
+  [localizationKeys.deliveryPolicy]: "Delivery policy",
+  [localizationKeys.locatedIn]: "Located In ",
   [localizationKeys.returnPolicy]: "Return Policy",
   [localizationKeys.warrantyPolicy]: "Warranty Policy",
   [localizationKeys.auctionState]: "Auction State",
@@ -191,13 +192,15 @@ const en = {
     "Unless a start time and date are chosen, your listing becomes active immediately.",
   [localizationKeys.youCanGiveHereYourDeliveryRelatedPolicy]:
     "You can give your own delivery related policy here, ",
-    [localizationKeys.youCanGiveHereYourReturnRelatedPolicy]:
+  [localizationKeys.youCanGiveHereYourReturnRelatedPolicy]:
     "You can give your own return related policy here ",
-    [localizationKeys.youCanGiveHereYourWarrantyRelatedPolicy]:
+  [localizationKeys.youCanGiveHereYourWarrantyRelatedPolicy]:
     "You can give your own warranty related policy here ",
   [localizationKeys.startDate]: "Start Date",
-  [localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:'How many days will it take for the delivery after auction expired ?',
-  [localizationKeys.includingDeliveryDateAndOthers]: "Including delivery date and others..",
+  [localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:
+    "How many days will it take for the delivery after auction expired ?",
+  [localizationKeys.includingDeliveryDateAndOthers]:
+    "Including delivery date and others..",
   [localizationKeys.time]: "Time",
   [localizationKeys.NumberOfDays]: "Number of days",
   [localizationKeys.pricing]: "Pricing",
@@ -228,6 +231,7 @@ const en = {
   [localizationKeys.save]: "Save",
   [localizationKeys.selectAfile]: "Select a file",
   [localizationKeys.edit]: "Edit",
+  [localizationKeys.contactUs]: "ContactUs",
   [localizationKeys.editUserName]: "Edit User name",
   [localizationKeys.personalDetails]: "Personal Details",
   [localizationKeys.userName]: "User Name",
@@ -286,22 +290,26 @@ const en = {
   [localizationKeys.totalExpired]: "Total Expired Auctions...",
   [localizationKeys.opsExpired]: "Ops, there are no Expired auctions yet.",
   [localizationKeys.watingForPaymentAuctions]: "Wating For Payment Auctions...",
-  [localizationKeys.cancelTheAuction]:'Cancel the auction?',
-  [localizationKeys.Warning]:'Warning',
-  [localizationKeys.PaymentSelection]:'Payment selection',
-  [localizationKeys.walletPayment]:'Wallet Payment',
-  [localizationKeys.onlinePayment]:'Online Payment',
-  [localizationKeys.WhichPaymentMethodWouldYouLikeToSelect]:'Which payment method would you like to select?',
-  [localizationKeys.OK]:'OK',
-  [localizationKeys.didYouSendTheItemForDelivery]:'Did you send the item for delivery?',
-  [localizationKeys.sendMessageToBuyer]:'Send a message to buyer ',
-  [localizationKeys.Message]:'Message...',
+  [localizationKeys.cancelTheAuction]: "Cancel the auction?",
+  [localizationKeys.Warning]: "Warning",
+  [localizationKeys.PaymentSelection]: "Payment selection",
+  [localizationKeys.walletPayment]: "Wallet Payment",
+  [localizationKeys.onlinePayment]: "Online Payment",
+  [localizationKeys.WhichPaymentMethodWouldYouLikeToSelect]:
+    "Which payment method would you like to select?",
+  [localizationKeys.OK]: "OK",
+  [localizationKeys.didYouSendTheItemForDelivery]:
+    "Did you send the item for delivery?",
+  [localizationKeys.sendMessageToBuyer]: "Send a message to buyer ",
+  [localizationKeys.Message]: "Message...",
   [localizationKeys.CancellAuctionWarningMessage]:
-  'Cancelling the auction will cause to lose your security deposit..!',
-  [localizationKeys.ContinueToCancel]:'Continue to cancel ?',
-  [localizationKeys.discontinue]:'Discontinue',
-  [localizationKeys.YouSuccessfullyCancelledTheAuction]:"Succefully cancelled the auction..!",
-  [localizationKeys.YouHaveSuccessfullyNotifiedTheWinner]:"You have successfully notified the winner",
+    "Cancelling the auction will cause to lose your security deposit..!",
+  [localizationKeys.ContinueToCancel]: "Continue to cancel ?",
+  [localizationKeys.discontinue]: "Discontinue",
+  [localizationKeys.YouSuccessfullyCancelledTheAuction]:
+    "Succefully cancelled the auction..!",
+  [localizationKeys.YouHaveSuccessfullyNotifiedTheWinner]:
+    "You have successfully notified the winner",
   // mybids
   [localizationKeys.Youarenotbiddingonanyitems]:
     "You are not bidding on any items.",
@@ -320,29 +328,34 @@ const en = {
   [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
     "There is no bids yet on waiting for delivery auctions right now",
   [localizationKeys.confirmDelivery]: "Confirm delivery",
-  [localizationKeys.AnyIssueWithDelivery]:'Any issue with delivery?',
+  [localizationKeys.AnyIssueWithDelivery]: "Any issue with delivery?",
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "There is no bids yet expiredauctions right now",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
     "There is no bids yet completed auctions right now",
-    [localizationKeys.ThereIsNoBidsyetCancelledAuctionsRightNow]:
+  [localizationKeys.ThereIsNoBidsyetCancelledAuctionsRightNow]:
     "There is no bids yet cancelled auctions right now",
   [localizationKeys.submitNewBid]: "Submit New Bid",
-  [localizationKeys.AnyObjection]:"Any Objections?",
+  [localizationKeys.AnyObjection]: "Any Objections?",
   //delevery Issue Report Modal
-  [localizationKeys.NotDeliveredYet]:'Not Delivered yet?',
-  [localizationKeys.ProductIsNotAsShownInPicture]:'Product not as shown in picture?',
-  [localizationKeys.DoesProductHaveAnyIssueWhichIsNotMentionedInTheDescription]:'Does product have any issue which is not mentioned in the description?',
-  [localizationKeys.Others] :'Others?',
-  [localizationKeys.tellUsYourProblem]:'Tell us your problem..?',
-  [localizationKeys.Description]:'Description',
-  [localizationKeys.UploadYourImageshere]:'Upload Your Image here',
-  [localizationKeys.YouCanSelectMultipleImagestogether]:'You can select multiple images together',
-  [localizationKeys.Submit]:'Submit',
-  [localizationKeys.PleaseSelectAnyOption]:'Please Select any option..!',
-  [localizationKeys.PleaseGiveTheDescription]:'Please give the description..!',
-  [localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater]:'Sorry, Your submission has failed. please try again later..!',
-  [localizationKeys.ThankYouForYourSubmission]:'Thank you for your submission..!',
+  [localizationKeys.NotDeliveredYet]: "Not Delivered yet?",
+  [localizationKeys.ProductIsNotAsShownInPicture]:
+    "Product not as shown in picture?",
+  [localizationKeys.DoesProductHaveAnyIssueWhichIsNotMentionedInTheDescription]:
+    "Does product have any issue which is not mentioned in the description?",
+  [localizationKeys.Others]: "Others?",
+  [localizationKeys.tellUsYourProblem]: "Tell us your problem..?",
+  [localizationKeys.Description]: "Description",
+  [localizationKeys.UploadYourImageshere]: "Upload Your Image here",
+  [localizationKeys.YouCanSelectMultipleImagestogether]:
+    "You can select multiple images together",
+  [localizationKeys.Submit]: "Submit",
+  [localizationKeys.PleaseSelectAnyOption]: "Please Select any option..!",
+  [localizationKeys.PleaseGiveTheDescription]: "Please give the description..!",
+  [localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater]:
+    "Sorry, Your submission has failed. please try again later..!",
+  [localizationKeys.ThankYouForYourSubmission]:
+    "Thank you for your submission..!",
   //  Purchased
   [localizationKeys.Purchased]: "Purchases",
   [localizationKeys.yourPurchased]: "Your purchases",
@@ -369,7 +382,7 @@ const en = {
   [localizationKeys.congratulationsOnYourFirstBid]:
     "Congratulations On Your First Bid",
   [localizationKeys.editBid]: "Edit Bid",
-  [localizationKeys.pay]: "Pay", 
+  [localizationKeys.pay]: "Pay",
   [localizationKeys.deposit]: "Deposit",
   [localizationKeys.YouAreAboutToPlaceBidFor]:
     "You are about to place a Bid For",
@@ -415,31 +428,33 @@ const en = {
     "your Auction is Created success",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "Make sure that you choose the auction location or create another one",
-    //wallet
-   [localizationKeys.Wallet] : "Wallet", 
-   [localizationKeys.ThereAreNoTransactionYet] : "There are no transactions yet..!",
-   [localizationKeys.ThereAreNoBankAccountAddedYet] :"No bank account added yet..!",
-   [localizationKeys.accountHolderName] :"Account Holder Name :",
-   [localizationKeys.bankName] :"Bank Name :",
-   [localizationKeys.bankAccountNumber] : 'Bank Account Number :',
-   [localizationKeys.IBANnumber] : 'IBAN Number :',
-   [localizationKeys.WalletBalance] : "Wallet Balance ",
-   [localizationKeys.Withdraw] : "Withdraw",
-   [localizationKeys.Date] : "Date",
-   [localizationKeys.Description] : "Description",
-   [localizationKeys.Withdrawals] : "Withdrawals",
-   [localizationKeys.Deposits] : "Deposits",
-   [localizationKeys.Balance] : "Balance",
-   [localizationKeys.YourBankDetails] : "Your Bank Details",
-   [localizationKeys.AddNewBankAccount] : "Add new bank account",
-   [localizationKeys.EnterTheAmount] : "Enter the amount",
-   [localizationKeys.Amount] : "Amount",
-   [localizationKeys.AmountMustBeMoreThan1AED] : "Amount must be more than AED 1",
-   [localizationKeys.GoBack] : "Go back",
-   [localizationKeys.SubmitWithdrawalRequest] : "Submit withdrawal request",
-   [localizationKeys.AddAccount] : "Add Account",
-   [localizationKeys.WithDrawalSuccessMessage] : "Success! Your withdrawal request has been processed successfully. Your funds are on their way, and you’ll receive them shortly. Thank you for using our service!",
-   
+  //wallet
+  [localizationKeys.Wallet]: "Wallet",
+  [localizationKeys.ThereAreNoTransactionYet]:
+    "There are no transactions yet..!",
+  [localizationKeys.ThereAreNoBankAccountAddedYet]:
+    "No bank account added yet..!",
+  [localizationKeys.accountHolderName]: "Account Holder Name :",
+  [localizationKeys.bankName]: "Bank Name :",
+  [localizationKeys.bankAccountNumber]: "Bank Account Number :",
+  [localizationKeys.IBANnumber]: "IBAN Number :",
+  [localizationKeys.WalletBalance]: "Wallet Balance ",
+  [localizationKeys.Withdraw]: "Withdraw",
+  [localizationKeys.Date]: "Date",
+  [localizationKeys.Description]: "Description",
+  [localizationKeys.Withdrawals]: "Withdrawals",
+  [localizationKeys.Deposits]: "Deposits",
+  [localizationKeys.Balance]: "Balance",
+  [localizationKeys.YourBankDetails]: "Your Bank Details",
+  [localizationKeys.AddNewBankAccount]: "Add new bank account",
+  [localizationKeys.EnterTheAmount]: "Enter the amount",
+  [localizationKeys.Amount]: "Amount",
+  [localizationKeys.AmountMustBeMoreThan1AED]: "Amount must be more than AED 1",
+  [localizationKeys.GoBack]: "Go back",
+  [localizationKeys.SubmitWithdrawalRequest]: "Submit withdrawal request",
+  [localizationKeys.AddAccount]: "Add Account",
+  [localizationKeys.WithDrawalSuccessMessage]:
+    "Success! Your withdrawal request has been processed successfully. Your funds are on their way, and you’ll receive them shortly. Thank you for using our service!",
 };
 
 export default en;
