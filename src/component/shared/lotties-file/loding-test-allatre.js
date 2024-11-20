@@ -1,5 +1,6 @@
 import Lottie from "react-lottie";
-import lodingTestAllatre from "./loding-test-allatre.json";
+import lodingTestAllatre from "./loading-test2-alletre.json";
+
 
 const LodingTestAllatre = () => {
   const defaultOptions = {
@@ -17,7 +18,7 @@ const LodingTestAllatre = () => {
         className="cursor-wait"
         isClickToPauseDisabled={true}
         options={defaultOptions}
-        width={500}
+        width={150}
       />
     </div>
   );
