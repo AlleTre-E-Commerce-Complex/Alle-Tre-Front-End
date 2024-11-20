@@ -19,8 +19,8 @@ const AuctionFilterCardList = ({ title, seeAll, name, values, myRef }) => {
             : "group w-auto h-fit rounded-2xl shadow p-4 "
         }
       >
-        <div className="flex justify-between border-b-[1px] border-[#EEEEEE] mt-4 pb-4">
-          <h1 className="text-gray-dark text-base font-bold ">{title}</h1>
+        <div className="flex justify-center border-b-[1px] border-[#EEEEEE] mt-4 pb-4">
+          {/* <h1 className="text-gray-dark text-base font-bold ">{title}</h1> */}
           <p
             onClick={() => setSeeAll((p) => !p)}
             className={`${

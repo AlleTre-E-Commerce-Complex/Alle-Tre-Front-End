@@ -409,7 +409,7 @@ const AuctionDetails = () => {
                     <div>
                       <div className="flex mt-7">
                         <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
-                          {selectedContent[localizationKeys.DeliveryPolicy]}
+                          {selectedContent[localizationKeys.deliveryPolicy]}
                           <span className="text-gray-med text-base font-normal mx-2">
                             {selectedContent[localizationKeys.optional]}
                           </span>
