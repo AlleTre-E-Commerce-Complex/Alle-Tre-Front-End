@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
 import logOut from "../../../src/assets/icons/log_out_icon.png";
-
-import auth from "../../utils/auth";
 import routes from "../../routes";
-
 import { motion } from "framer-motion";
 import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
@@ -130,7 +126,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             }
             onClick={() => history.push(routes.app.profile.watchlist)}
           />
-          
+
           <NavLink
             title={selectedContent[localizationKeys.Purchased]}
             isActive={
@@ -139,7 +135,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             }
             onClick={() => history.push(routes.app.profile.purchased)}
           />
-            <NavLink
+          <NavLink
             title={selectedContent[localizationKeys.Wallet]}
             isActive={
               pathname.length === 1 ||
@@ -249,7 +245,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-               <NavLink
+              <NavLink
                 title={selectedContent[localizationKeys.Wallet]}
                 isActive={
                   pathname.length === 1 ||
