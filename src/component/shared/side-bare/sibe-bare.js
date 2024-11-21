@@ -14,6 +14,8 @@ import { useLanguage } from "../../../context/language-context";
 import { toast } from "react-hot-toast";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
+import { useSocket } from "context/socket-context";
+import logOut from "../../../../src/assets/icons/log_out_icon.png";
 
 const Sidebar = ({ SetSid, sid }) => {
   const history = useHistory();
@@ -66,6 +68,14 @@ const Sidebar = ({ SetSid, sid }) => {
       dispatch(Open());
       toast.error("You must log in first to show your profile");
     }
+  };
+  const { logout } = useAuthState();
+
+  const socket = useSocket();
+  const onLogout = () => {
+    history.push(routes.app.home);
+    socket.close();
+    logout();
   };
 
   const handelmyBids = () => {
@@ -179,6 +189,37 @@ const Sidebar = ({ SetSid, sid }) => {
                 SetSid(false);
               }}
             />
+            <NavLink
+              title={selectedContent[localizationKeys.Purchased]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.purchased)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.purchased);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.Wallet]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.wallet)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.wallet);
+                SetSid(false);
+              }}
+            />
+            <div
+              onClick={onLogout}
+              className="flex justify-center gap-x-2 mt-12  cursor-pointer"
+            >
+              <img className="w-4 h-4 mt-0.5" src={logOut} alt="logOut" />
+              <p className="text-gray-med text-sm font-normal underline">
+                {selectedContent[localizationKeys.logout]}
+              </p>
+            </div>
             <div className="mt-auto mb-5">
               <DropdownLang className={"text-white "} />
             </div>
