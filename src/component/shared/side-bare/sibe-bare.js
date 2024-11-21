@@ -126,6 +126,17 @@ const Sidebar = ({ SetSid, sid }) => {
           </div>
           <div className="flex flex-col flex-grow gap-y-8 mx-6 mt-10">
             <NavLink
+              title={selectedContent[localizationKeys.profile]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.default)
+              }
+              onClick={() => {
+                handelMyPfofile();
+                SetSid(false);
+              }}
+            />
+            <NavLink
               title={selectedContent[localizationKeys.myBids]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.myBides)
@@ -143,17 +154,6 @@ const Sidebar = ({ SetSid, sid }) => {
               }
               onClick={() => {
                 handelOnSell();
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.profile]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.default)
-              }
-              onClick={() => {
-                handelMyPfofile();
                 SetSid(false);
               }}
             />
