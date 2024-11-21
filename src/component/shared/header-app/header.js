@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
-import { RxMagnifyingGlass } from "react-icons/rx";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import PopupCategoriesModel from "./popup-categories-model";
@@ -19,13 +18,14 @@ import { useDebouncedCallback } from "use-debounce";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import { CgProfile } from "react-icons/cg";
+import { toast } from "react-hot-toast";
 
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
-  const { search } = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,8 +51,16 @@ const Header = ({ SetSid }) => {
 
   const { user } = useAuthState();
   const dispatch = useDispatch();
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+  // const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
+  const handelMyPfofile = () => {
+    if (user) {
+      history.push(routes.app.profile.profileSettings);
+    } else {
+      dispatch(Open());
+      toast.error("You must log in first to show your profile");
+    }
+  };
   const handelOnSell = () => {
     if (user) {
       history.push(routes.app.createAuction.default);
@@ -174,9 +182,12 @@ const Header = ({ SetSid }) => {
           onClick={() => setSerchShow((p) => !p)}
           className="my-auto md:hidden block"
         >
-          <RxMagnifyingGlass
+          <CgProfile
             className="text-primary cursor-pointer"
             size={30}
+            onClick={() => {
+              handelMyPfofile();
+            }}
           />
         </div>
       </div>
