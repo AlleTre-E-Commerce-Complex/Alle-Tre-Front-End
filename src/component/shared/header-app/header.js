@@ -138,6 +138,28 @@ const Header = ({ SetSid }) => {
               }
               onClick={() => history.push(routes.app.faqs)}
             />
+            <NavLinkHeader
+              title={selectedContent[localizationKeys.Purchased]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.purchased)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.purchased);
+                SetSid(false);
+              }}
+            />
+            <NavLinkHeader
+              title={selectedContent[localizationKeys.Wallet]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.wallet)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.wallet);
+                SetSid(false);
+              }}
+            />
             {/* <NavLinkHeader
               title={selectedContent[localizationKeys.support]}
               isActive={
