@@ -106,7 +106,7 @@ const Footer = () => {
 
             {/* Icons Container */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="flex flex-row gap-x-8 bg-transparent p-4 bg-gradient-to-t from-secondary to-[#000515]">
+              <div className="flex flex-row gap-x-4 sm:gap-x-8 bg-transparent p-2 sm:p-4 bg-gradient-to-t from-secondary to-[#000515]">
                 {/* Facebook Page */}
                 <a
                   href="https://www.facebook.com/alletr.ae"
