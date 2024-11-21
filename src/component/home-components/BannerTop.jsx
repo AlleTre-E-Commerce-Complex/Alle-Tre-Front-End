@@ -26,8 +26,8 @@ const BannerTop = () => {
     }, 700); // Animation duration
   };
 
-  const nextSlide = () => handleSlide("right");
-  const prevSlide = () => handleSlide("left");
+  const nextSlide = () => handleSlide("left");
+  const prevSlide = () => handleSlide("right");
 
   useEffect(() => {
     const interval = setInterval(nextSlide, autoSlideInterval);
