@@ -190,6 +190,8 @@ const en = {
   [localizationKeys.optional]: "(Optional)",
   [localizationKeys.unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately]:
     "Unless a start time and date are chosen, your listing becomes active immediately.",
+  [localizationKeys.amountThatYouCanSellWithoutAuction]:
+    "Amount that you can sell without auction",
   [localizationKeys.youCanGiveHereYourDeliveryRelatedPolicy]:
     "You can give your own delivery related policy here, ",
   [localizationKeys.youCanGiveHereYourReturnRelatedPolicy]:
@@ -197,14 +199,16 @@ const en = {
   [localizationKeys.youCanGiveHereYourWarrantyRelatedPolicy]:
     "You can give your own warranty related policy here ",
   [localizationKeys.startDate]: "Start Date",
-  [localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:
+  [localizationKeys.howManyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:
     "How many days will it take for the delivery after auction expired ?",
   [localizationKeys.includingDeliveryDateAndOthers]:
     "Including delivery date and others..",
   [localizationKeys.time]: "Time",
   [localizationKeys.NumberOfDays]: "Number of days",
+  [localizationKeys.DeliveryFees]: "Delivery Fees",
+  [localizationKeys.Amount]: "Amount",
   [localizationKeys.pricing]: "Pricing",
-  [localizationKeys.minimumPrice]: "Minimum Price",
+  [localizationKeys.startPrice]: "Start Price",
   [localizationKeys.purchasingPrice]: "Purchasing Price",
   [localizationKeys.PolicyDescription]: "Policy Description",
   [localizationKeys.PleaseGiveTheDescription]: "Please Give Your Description",
