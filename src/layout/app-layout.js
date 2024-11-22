@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import routes from "../routes";
 
 import Header from "../component/shared/header-app/header";
@@ -16,32 +15,45 @@ import ProductDetails from "../page/app/create-auction/product-details";
 import ShippingDetails from "../page/app/create-auction/shipping-details";
 
 import Sidebar from "../component/shared/side-bare/sibe-bare";
-
 import AuthModel from "../component/shared/auth-model/auth-model";
-
 import BuyNowPaymentPage from "../component/auctions-details-components/buy-now-payment-page";
 import PayDeposite from "../component/home-components/pay-deposite";
 import Footer from "../component/shared/footer/footer";
 import Win from "../component/shared/lotties-file/win";
 import PaymentSucsessModel from "../component/shared/payment-models/payment-sucsess-model";
-import useLocalStorage from "../hooks/use-localstorage";
+// import useLocalStorage from "../hooks/use-localstorage";
 import HomeAuctionDetails from "../page/app/auction-details/home-auction-details";
 import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-details";
 import ProfileLayouts from "../page/app/profile/profile-layouts";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SocketProvider } from "context/socket-context";
+import localizationKeys from "../localization/localization-keys";
+import { useLanguage } from "../context/language-context";
+import content from "../localization/content";
+import { useAuthState } from "../context/auth-context";
+import { Open } from "../redux-store/auth-model-slice";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname, auctionId } = useLocation();
-  const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
+  // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
 
   const socketauctionId = useSelector(
     (state) => state?.socketAuctionId?.socketAuctionId
   );
+  const { user } = useAuthState();
+  const history = useHistory();
+  const dispatch = useDispatch();
 
+  const handelOnSell = () => {
+    if (user) {
+      history.push(routes.app.createAuction.default);
+    } else dispatch(Open());
+  };
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <SocketProvider auctionId={socketauctionId}>
@@ -147,6 +159,14 @@ const AppLayouts = () => {
           {/* </SocketProvider> */}
         </div>
         <Footer />
+        {currentPath === routes.app.home && (
+          <button
+            onClick={handelOnSell}
+            className="fixed bottom-4 right-4 bg-gradient-to-r from-pink-700 to-[#681224] text-white hover:from-gray-600 hover:to-gray-800 font-semibold rounded-lg w-40 h-12 flex items-center justify-center shadow-2xl hover:shadow-md transform hover:scale-105 transition-all duration-300 ease-in-out md:hidden"
+          >
+            {selectedContent[localizationKeys.createAuction]}
+          </button>
+        )}
       </SocketProvider>
     </div>
   );
