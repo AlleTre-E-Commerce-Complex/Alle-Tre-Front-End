@@ -174,7 +174,7 @@ const Header = ({ SetSid }) => {
               onClick={handelOnSell}
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] ltr:font-serifEN rtl:font-serifAR"
             >
-              {selectedContent[localizationKeys.sellNow]}
+              {selectedContent[localizationKeys.createAuction]}
             </button>
           </div>
         </div>
