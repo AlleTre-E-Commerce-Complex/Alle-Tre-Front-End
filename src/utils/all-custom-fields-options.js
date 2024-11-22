@@ -53,4 +53,15 @@ export const allCustomFileOptions = {
     { key: "metal", text: "metal ", value: "metal" },
     { key: "silicon", text: "silicon ", value: "silicon" },
   ],
+  memory: [
+    { key: "4GB", text: "4GB ", value: "4GB" },
+    { key: "8GB", text: "8GB ", value: "8GB" },
+    { key: "16GB", text: "16GB ", value: "16GB" },
+    { key: "32GB", text: "32GB ", value: "32GB" },
+    { key: "64GB", text: "64GB ", value: "64GB" },
+    { key: "128GB", text: "128GB ", value: "128GB" },
+    { key: "256GB", text: "256GB ", value: "256GB" },
+    { key: "512GB", text: "512GB ", value: "512GB" },
+    { key: "1TB", text: "1TB ", value: "1TB" },
+  ],
 };
