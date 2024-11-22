@@ -90,14 +90,14 @@ const BuyNowAuctionsSlider = () => {
   };
   return (
     <div>
-      <div className="text-center">
+      {/* <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
           {selectedContent[localizationKeys.buyNow]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
           {selectedContent[localizationKeys.DontWaitBuyNow]}
         </p>
-      </div>
+      </div> */}
       {auctions?.length === 0 ? (
         <div>
           {/* <img
@@ -105,15 +105,15 @@ const BuyNowAuctionsSlider = () => {
             src={buyNowEmty}
             alt="buyNowEmty"
           /> */}
-          <BannerSingle />
+          {/* <BannerSingle /> */}
         </div>
       ) : (
         <div className="ezd-content relative">
-          <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
-            {/* <Loader active /> */}
+          {/* <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
+            <Loader active />
             <LodingTestAllatre />
-          </Dimmer>
-          <div className="ezd-snapslider pt-10">
+          </Dimmer> */}
+          {/* <div className="ezd-snapslider pt-10">
             <div className="snapslider-wrapper">
               <div ref={swiperRef2} className={`snapslider-overflow`}>
                 <div
@@ -163,7 +163,7 @@ const BuyNowAuctionsSlider = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

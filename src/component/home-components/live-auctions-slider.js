@@ -91,14 +91,14 @@ const LiveAuctionsSlider = ({ type }) => {
 
   return (
     <div>
-      <div className="text-center">
+      {/* <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
           {selectedContent[localizationKeys.liveAuction]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
           {selectedContent[localizationKeys.BidWinRepeat]}
         </p>
-      </div>
+      </div> */}
       {auctions?.length === 0 ? (
         <div>
           {/* <img
@@ -106,14 +106,14 @@ const LiveAuctionsSlider = ({ type }) => {
             src={liveEmty}
             alt="liveEmty"
           /> */}
-          <BannerSingle />  
+          {/* <BannerSingle />   */}
         </div>
       ) : (
         <div className="ezd-content  relative ">
-          <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
-            {/* <Loader active /> */}
+          {/* <Dimmer className=" bg-" active={isLoadingAuctions} inverted>
+            <Loader active />
             <LodingTestAllatre />
-          </Dimmer>
+          </Dimmer> */}
           <div className="ezd-snapslider pt-10">
             <div className="snapslider-wrapper">
               <div ref={swiperRef1} className={`snapslider-overflow `}>

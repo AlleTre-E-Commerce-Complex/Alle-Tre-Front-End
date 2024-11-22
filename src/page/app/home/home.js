@@ -239,9 +239,9 @@ const Home = () => {
         </div>
       </div>
       <div className="max-w-[1440px] mx-auto py-10">
-        <LiveAuctionsSlider />
+        {/* <LiveAuctionsSlider /> */}
       </div>
-      <div className="relative py-14 ">
+      {/* <div className="relative py-14 ">
         <img
           className="w-full h-[257px] object-cover md:block hidden "
           src={createAuctionimgBGfrom}
@@ -269,7 +269,7 @@ const Home = () => {
           src={CreaAuctionText}
           alt="CreaAuctionText"
         />
-      </div>
+      </div> */}
       <div className="max-w-[1440px] mx-auto py-10">
         <UpComingAuctionsSlider />
       </div>
