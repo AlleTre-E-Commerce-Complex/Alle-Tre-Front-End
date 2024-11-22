@@ -183,7 +183,7 @@ const Header = ({ SetSid }) => {
           className="my-auto md:hidden block"
         >
           <CgProfile
-            className="text-primary cursor-pointer"
+            className="text-primary cursor-pointer m-2"
             size={30}
             onClick={() => {
               handelMyPfofile();
