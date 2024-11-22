@@ -158,6 +158,7 @@ const ProductDetails = () => {
               )
             )
             .then((res) => {
+              console.log('test1 :,',res?.data?.data)
               setCustomFromData(res?.data?.data);
             })
         );
@@ -170,6 +171,7 @@ const ProductDetails = () => {
               )
             )
             .then((res) => {
+              console.log('test2 :,',res?.data?.data)
               setCustomFromData(res?.data?.data);
             })
         );
@@ -209,7 +211,7 @@ const ProductDetails = () => {
     itemDescription: Yup.string()
       .trim()
       .required(selectedContent[localizationKeys.required]),
-    ...regularCustomFieldsvalidations,
+    // ...regularCustomFieldsvalidations,
     ...arrayCustomFieldsvalidations,
     model: Yup.string().when([], {
       is: () => model,
