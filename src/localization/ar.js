@@ -188,10 +188,12 @@ const ar = {
   [localizationKeys.optional]: "(اختياري)",
   [localizationKeys.unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately]:
     "ما لم يتم اختيار وقت وتاريخ البدء ، تصبح قائمتك نشطة على الفور.",
+  [localizationKeys.amountThatYouCanSellWithoutAuction]:
+    "المبلغ الذي يمكنك بيعه دون مزاد",
   [localizationKeys.youCanGiveHereYourDeliveryRelatedPolicy]:
     "يمكنك تقديم سياسة التسليم الخاصة بك هنا, ",
   [localizationKeys.startDate]: "تاريخ البدء",
-  [localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:
+  [localizationKeys.howManyDaysWillItTakeForTheDeliveryAfterAuctionExpired]:
     "كم يوما سيستغرق التسليم بعد انتهاء المزاد؟",
   [localizationKeys.youCanGiveHereYourReturnRelatedPolicy]:
     "يمكنك تقديم سياسة الإرجاع الخاصة بك هنا ",
@@ -201,8 +203,10 @@ const ar = {
     "بما في ذلك تاريخ التسليم وغيرها...",
   [localizationKeys.time]: "الوقت",
   [localizationKeys.NumberOfDays]: "عدد الأيام",
+  [localizationKeys.DeliveryFees]: "رسوم التوصيل",
+  [localizationKeys.Amount]: "كمية",
   [localizationKeys.pricing]: "التسعير",
-  [localizationKeys.minimumPrice]: "سعر الحد الأدنى",
+  [localizationKeys.startPrice]: "سعر البداية",
   [localizationKeys.purchasingPrice]: "سعر الشراء",
   [localizationKeys.DeliveryDescription]: "وصف التسليم",
   [localizationKeys.PleaseGiveTheDescription]: "يرجى تقديم وصفك",

@@ -54,7 +54,7 @@ const AuctionDetails = () => {
   useEffect(() => {
     runPofile(
       authAxios.get(api.app.profile.default).then((res) => {
-        console.log('profile data in auction details:',res?.data?.data)
+        console.log("profile data in auction details:", res?.data?.data);
         setPofileData(res?.data?.data);
       })
     );
@@ -65,11 +65,11 @@ const AuctionDetails = () => {
   const [IsSchedule, setIsSchedule] = useState(auctionDetailsInt.IsSchedule);
   const [IsBuyNow, setIsBuyNow] = useState(auctionDetailsInt.IsBuyNow);
 
-  const [IsDelivery,setIsDelivery] = useState(false)
-  const [IsRetrunPolicy,setIsRetrunPolicy] = useState(false)
-  const [IsWaranty,setIsWaranty] = useState(false)
-  const [IsOfferPrice,setIsOfferPrice] = useState(false)
-  const [offerPrice,setOfferPrice] = useState(0)
+  const [IsDelivery, setIsDelivery] = useState(false);
+  const [IsRetrunPolicy, setIsRetrunPolicy] = useState(false);
+  const [IsWaranty, setIsWaranty] = useState(false);
+  const [IsOfferPrice, setIsOfferPrice] = useState(false);
+  const [offerPrice, setOfferPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -110,35 +110,39 @@ const AuctionDetails = () => {
                 .purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice
             ],
           test(value) {
-            return ( value >= parseFloat(this.parent.MinimumPrice + this.parent.MinimumPrice * 0.3)
+            return (
+              value >=
+              parseFloat(
+                this.parent.MinimumPrice + this.parent.MinimumPrice * 0.3
+              )
             );
           },
         }),
       otherwise: Yup.number().notRequired(),
     }),
-    numOfDaysOfExpecetdDelivery: Yup.number().when([],{
-      is:()=>IsDelivery,
-      then:Yup.number().required(selectedContent[localizationKeys.required]),
+    numOfDaysOfExpecetdDelivery: Yup.number().when([], {
+      is: () => IsDelivery,
+      then: Yup.number().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.number().notRequired(),
     }),
-    deliveryPolicyDescription: Yup.string().when([],{
-      is:()=>IsDelivery,
-      then:Yup.string().required(selectedContent[localizationKeys.required]),
+    deliveryPolicyDescription: Yup.string().when([], {
+      is: () => IsDelivery,
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
-    returnPolicyDescription: Yup.string().when([],{
-      is:()=>IsRetrunPolicy,
-      then:Yup.string().required(selectedContent[localizationKeys.required]),
+    returnPolicyDescription: Yup.string().when([], {
+      is: () => IsRetrunPolicy,
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
-    warantyPolicyDescription: Yup.string().when([],{
-      is:()=>IsWaranty,
-      then:Yup.string().required(selectedContent[localizationKeys.required]),
+    warantyPolicyDescription: Yup.string().when([], {
+      is: () => IsWaranty,
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
-    offerPrice: Yup.number().when([],{
-      is:()=>IsOfferPrice,
-      then:Yup.number().required(selectedContent[localizationKeys.required]),
+    offerPrice: Yup.number().when([], {
+      is: () => IsOfferPrice,
+      then: Yup.number().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.number().notRequired(),
     }),
   });
@@ -177,44 +181,44 @@ const AuctionDetails = () => {
       dispatch(isBuyNow(BuyNow));
     } else dispatch(isBuyNow({}));
 
-    const DeliveryPolicy ={
-      IsDelivery :IsDelivery,
-      description : values.deliveryPolicyDescription,
-      expectedNumOfDays : values.numOfDaysOfExpecetdDelivery
-    }
-    if(IsDelivery){
-      dispatch(deliveryPolicy(DeliveryPolicy))
-    }else{
-      dispatch(deliveryPolicy({}))
+    const DeliveryPolicy = {
+      IsDelivery: IsDelivery,
+      description: values.deliveryPolicyDescription,
+      expectedNumOfDays: values.numOfDaysOfExpecetdDelivery,
+    };
+    if (IsDelivery) {
+      dispatch(deliveryPolicy(DeliveryPolicy));
+    } else {
+      dispatch(deliveryPolicy({}));
     }
 
-    const ReturnPolicy ={
-      IsRetrunPolicy : IsRetrunPolicy,
-      description : values.returnPolicyDescription,
+    const ReturnPolicy = {
+      IsRetrunPolicy: IsRetrunPolicy,
+      description: values.returnPolicyDescription,
+    };
+    if (IsRetrunPolicy) {
+      dispatch(returnPolicy(ReturnPolicy));
+    } else {
+      dispatch(returnPolicy({}));
     }
-    if(IsRetrunPolicy){
-      dispatch(returnPolicy(ReturnPolicy))
-    }else{
-      dispatch(returnPolicy({}))
-    }
-    
-    const WarrantyPolicy ={
+
+    const WarrantyPolicy = {
       IsWaranty: IsWaranty,
-      description : values.warantyPolicyDescription,
+      description: values.warantyPolicyDescription,
+    };
+    if (IsWaranty) {
+      dispatch(warrantyPolicy(WarrantyPolicy));
+    } else {
+      dispatch(warrantyPolicy({}));
     }
-    if(IsWaranty){
-      dispatch(warrantyPolicy(WarrantyPolicy))
-    }else{
-      dispatch(warrantyPolicy({}))
-    }
-    const offer_Price ={
+    const offer_Price = {
       IsOfferPrice: IsOfferPrice,
-      offerAmount : values.offerPrice,
-    }
-    if(IsOfferPrice){
-      dispatch(OfferPrice(offer_Price))
-    }else{
-      dispatch(OfferPrice({}))
+      offerAmount: values.offerPrice,
+    };
+    if (IsOfferPrice) {
+      dispatch(OfferPrice(offer_Price));
+    } else {
+      dispatch(OfferPrice({}));
     }
 
     dispatch(
@@ -223,14 +227,14 @@ const AuctionDetails = () => {
         valueRadio: valueRadio,
         IsSchedule: IsSchedule,
         IsBuyNow: IsBuyNow,
-        IsDelivery:IsDelivery,
-        IsRetrunPolicy:IsRetrunPolicy,
-        IsWaranty:IsWaranty,
-        IsOfferPrice:IsOfferPrice
+        IsDelivery: IsDelivery,
+        IsRetrunPolicy: IsRetrunPolicy,
+        IsWaranty: IsWaranty,
+        IsOfferPrice: IsOfferPrice,
       })
     );
     history.push(routes.app.createAuction.shippingDetails);
-    console.log('auction details :',auctionDetails)
+    console.log("auction details :", auctionDetails);
   };
 
   return (
@@ -255,10 +259,14 @@ const AuctionDetails = () => {
               from: auctionDetailsInt.from || "",
               MinimumPrice: auctionDetailsInt.MinimumPrice || "",
               PurchasingPrice: auctionDetailsInt.PurchasingPrice || "",
-              numOfDaysOfExpecetdDelivery: auctionDetailsInt.numOfDaysOfExpecetdDelivery || "",
-              deliveryPolicyDescription:auctionDetailsInt.deliveryPolicyDescription || "",
-              returnPolicyDescription:auctionDetailsInt.returnPolicyDescription || "",
-              warantyPolicyDescription:auctionDetailsInt.warantyPolicyDescription || "",
+              numOfDaysOfExpecetdDelivery:
+                auctionDetailsInt.numOfDaysOfExpecetdDelivery || "",
+              deliveryPolicyDescription:
+                auctionDetailsInt.deliveryPolicyDescription || "",
+              returnPolicyDescription:
+                auctionDetailsInt.returnPolicyDescription || "",
+              warantyPolicyDescription:
+                auctionDetailsInt.warantyPolicyDescription || "",
             }}
             onSubmit={handelAuctionDetailsData}
             validationSchema={AuctionDetailsDataSchema}
@@ -347,8 +355,8 @@ const AuctionDetails = () => {
                         <FormikInput
                           min={0}
                           type="number"
-                          name="MinimumPrice"
-                          label={selectedContent[localizationKeys.minimumPrice]}
+                          name="StartPrice"
+                          label={selectedContent[localizationKeys.startPrice]}
                           placeholder="AEDXXX"
                         />
                       </div>
@@ -373,8 +381,7 @@ const AuctionDetails = () => {
                       <p className="text-gray-med text-xs font-normal pt-1">
                         {
                           selectedContent[
-                            localizationKeys
-                              .unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately
+                            localizationKeys.amountThatYouCanSellWithoutAuction
                           ]
                         }
                       </p>
@@ -424,10 +431,19 @@ const AuctionDetails = () => {
                         </div>
                       </div>
                       <p className="text-gray-med text-xs font-normal pt-1">
-                        {selectedContent[localizationKeys.youCanGiveHereYourDeliveryRelatedPolicy]}
-                        {selectedContent[localizationKeys.includingDeliveryDateAndOthers]}
+                        {
+                          selectedContent[
+                            localizationKeys
+                              .youCanGiveHereYourDeliveryRelatedPolicy
+                          ]
+                        }
+                        {
+                          selectedContent[
+                            localizationKeys.includingDeliveryDateAndOthers
+                          ]
+                        }
                       </p>
-                     
+
                       <div
                         className={
                           IsDelivery
@@ -435,24 +451,49 @@ const AuctionDetails = () => {
                             : "hidden"
                         }
                       >
-                         <div className="w-full my-10">
-                      <FormikInput
+                        <div className="w-full my-10">
+                          <FormikInput
                             min={0}
                             type="number"
                             name="numOfDaysOfExpecetdDelivery"
                             label={
-                              selectedContent[localizationKeys.HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired]
+                              selectedContent[
+                                localizationKeys
+                                  .howManyDaysWillItTakeForTheDeliveryAfterAuctionExpired
+                              ]
                             }
-                            placeholder={selectedContent[localizationKeys.NumberOfDays]}
+                            placeholder={
+                              selectedContent[localizationKeys.NumberOfDays]
+                            }
+                          />
+                        </div>
+                        <div className="w-full my-10">
+                          <FormikInput
+                            min={0}
+                            type="number"
+                            name="DeliveryFees"
+                            label={
+                              selectedContent[localizationKeys.DeliveryFees]
+                            }
+                            placeholder={
+                              selectedContent[localizationKeys.Amount]
+                            }
                           />
                         </div>
                         <div className="w-full">
                           <FormikTextArea
-                            label={selectedContent[localizationKeys.PolicyDescription]}
-                            name={'deliveryPolicyDescription'}
-                            placeholder={selectedContent[localizationKeys.PleaseGiveTheDescription]}
+                            label={
+                              selectedContent[
+                                localizationKeys.PolicyDescription
+                              ]
+                            }
+                            name={"deliveryPolicyDescription"}
+                            placeholder={
+                              selectedContent[
+                                localizationKeys.PleaseGiveTheDescription
+                              ]
+                            }
                           />
-                     
                         </div>
                       </div>
                     </div>
@@ -469,13 +510,20 @@ const AuctionDetails = () => {
                           <Radio
                             className="Edit_Radio_Toggle"
                             toggle
-                            onChange={() =>{ setIsRetrunPolicy((p) => !p);}}
+                            onChange={() => {
+                              setIsRetrunPolicy((p) => !p);
+                            }}
                             checked={IsRetrunPolicy}
                           />
                         </div>
                       </div>
                       <p className="text-gray-med text-xs font-normal pt-1">
-                        {selectedContent[localizationKeys.youCanGiveHereYourReturnRelatedPolicy]}
+                        {
+                          selectedContent[
+                            localizationKeys
+                              .youCanGiveHereYourReturnRelatedPolicy
+                          ]
+                        }
                       </p>
                       <div
                         className={
@@ -486,11 +534,18 @@ const AuctionDetails = () => {
                       >
                         <div className="w-full">
                           <FormikTextArea
-                            label={selectedContent[localizationKeys.PolicyDescription]}
-                            name={'returnPolicyDescription'}
-                            placeholder={selectedContent[localizationKeys.PleaseGiveTheDescription]}
+                            label={
+                              selectedContent[
+                                localizationKeys.PolicyDescription
+                              ]
+                            }
+                            name={"returnPolicyDescription"}
+                            placeholder={
+                              selectedContent[
+                                localizationKeys.PleaseGiveTheDescription
+                              ]
+                            }
                           />
-                     
                         </div>
                       </div>
                     </div>
@@ -507,13 +562,20 @@ const AuctionDetails = () => {
                           <Radio
                             className="Edit_Radio_Toggle"
                             toggle
-                            onChange={() => {setIsWaranty((p) => !p);}}
+                            onChange={() => {
+                              setIsWaranty((p) => !p);
+                            }}
                             checked={IsWaranty}
                           />
                         </div>
                       </div>
                       <p className="text-gray-med text-xs font-normal pt-1">
-                        {selectedContent[localizationKeys.youCanGiveHereYourReturnRelatedPolicy]}
+                        {
+                          selectedContent[
+                            localizationKeys
+                              .youCanGiveHereYourWarrantyRelatedPolicy
+                          ]
+                        }
                       </p>
                       <div
                         className={
@@ -524,52 +586,61 @@ const AuctionDetails = () => {
                       >
                         <div className="w-full">
                           <FormikTextArea
-                            label={selectedContent[localizationKeys.PolicyDescription]}
-                            name={'warantyPolicyDescription'}
-                            placeholder={selectedContent[localizationKeys.PleaseGiveTheDescription]}
+                            label={
+                              selectedContent[
+                                localizationKeys.PolicyDescription
+                              ]
+                            }
+                            name={"warantyPolicyDescription"}
+                            placeholder={
+                              selectedContent[
+                                localizationKeys.PleaseGiveTheDescription
+                              ]
+                            }
                           />
-                     
                         </div>
                       </div>
                     </div>
                     {/* =================== */}
 
                     {/* ============================  This is only if the use is admin */}
-                   {pofileData?.email === 'kamaru916@gmail.com'&&<div>
-                      <div className="flex mt-7">
-                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
-                          Offer Product
-                      
-                        </h1>
-                        <div className="mt-auto">
-                          <Radio
-                            className="Edit_Radio_Toggle"
-                            toggle
-                            onChange={() => {setIsOfferPrice((p) => !p);}}
-                            checked={IsOfferPrice}
-                          />
+                    {pofileData?.email === "kamaru916@gmail.com" && (
+                      <div>
+                        <div className="flex mt-7">
+                          <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                            Offer Product
+                          </h1>
+                          <div className="mt-auto">
+                            <Radio
+                              className="Edit_Radio_Toggle"
+                              toggle
+                              onChange={() => {
+                                setIsOfferPrice((p) => !p);
+                              }}
+                              checked={IsOfferPrice}
+                            />
+                          </div>
+                        </div>
+
+                        <div
+                          className={
+                            IsOfferPrice
+                              ? "mt-9 flex justify-between gap-x-4 "
+                              : "hidden"
+                          }
+                        >
+                          <div className="w-full">
+                            <FormikInput
+                              min={0}
+                              type="number"
+                              name="offerPrice"
+                              label={"Please enter the offer price"}
+                              placeholder={"Offer price"}
+                            />
+                          </div>
                         </div>
                       </div>
-            
-                      <div
-                        className={
-                          IsOfferPrice
-                            ? "mt-9 flex justify-between gap-x-4 "
-                            : "hidden"
-                        }
-                      >
-                        <div className="w-full">
-                        <FormikInput
-                            min={0}
-                            type="number"
-                            name="offerPrice"
-                            label={'Please enter the offer price'}
-                            placeholder={'Offer price'}
-                          />
-                     
-                        </div>
-                      </div>
-                    </div>}
+                    )}
                     {/* ============================ */}
                   </div>
                   {/* buttons */}

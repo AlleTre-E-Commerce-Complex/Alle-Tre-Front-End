@@ -47,7 +47,7 @@ const localizationKeys = {
   bidNow: "bidNow",
   buyNow: "buyNow",
   deliveryPolicy: "deliveryPolicy",
-  locatedIn:"locatedIn",
+  locatedIn: "locatedIn",
   popularCategories: "popularCategories",
   totalBids: "totalBids",
   endingTime: "endingTime",
@@ -174,20 +174,23 @@ const localizationKeys = {
   optional: "optional",
   unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately:
     "unlessStartTimeAndDateAreChosenYourListingBecomesActiveImmediately",
+  amountThatYouCanSellWithoutAuction: "AmountThatYouCanSellWithoutAuction",
   youCanGiveHereYourDeliveryRelatedPolicy:
     "youCanGiveHereYourDeliveryRelatedPolicy",
   youCanGiveHereYourReturnRelatedPolicy:
     "youCanGiveHereYourReturnRelatedPolicy",
   youCanGiveHereYourWarrantyRelatedPolicy:
-    "youCanGiveHereYourReturnRelatedPolicy",
+    "youCanGiveHereYourWarrantyRelatedPolicy",
   includingDeliveryDateAndOthers: "includingDeliveryDateAndOthers",
   startDate: "startDate",
-  HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired:
-    "HowmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired",
+  howManyDaysWillItTakeForTheDeliveryAfterAuctionExpired:
+    "howmanyDaysWillItTakeForTheDeliveryAfterAuctionExpired",
   time: "time",
-  NumberOfDays: "NumberOfDays",
+  NumberOfDays: "numberOfDays",
+  DeliveryFees: "deliveryFees",
+  Amount: "amount",
   pricing: "pricing",
-  minimumPrice: "minimumPrice",
+  startPrice: "startPrice",
   purchasingPrice: "purchasingPrice",
   PolicyDescription: "PolicyDescription",
   pleaseGiveYourDeliveryDescription: "pleaseGiveYourDeliveryDescription",
