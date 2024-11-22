@@ -69,7 +69,6 @@ const AuctionDetails = () => {
   const [IsRetrunPolicy, setIsRetrunPolicy] = useState(false);
   const [IsWaranty, setIsWaranty] = useState(false);
   const [IsOfferPrice, setIsOfferPrice] = useState(false);
-  const [offerPrice, setOfferPrice] = useState(0);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -355,7 +354,7 @@ const AuctionDetails = () => {
                         <FormikInput
                           min={0}
                           type="number"
-                          name="StartPrice"
+                          name="MinimumPrice"
                           label={selectedContent[localizationKeys.startPrice]}
                           placeholder="AEDXXX"
                         />
