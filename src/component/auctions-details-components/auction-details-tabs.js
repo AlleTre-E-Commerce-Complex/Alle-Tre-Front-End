@@ -4,11 +4,11 @@ import { Tab } from "semantic-ui-react";
 
 import { useLanguage } from "../../context/language-context";
 
-import ShippingPolicy from "./shipping-policy";
+// import ShippingPolicy from "./shipping-policy";
 import ReturnPolicy from "./return-policy";
 import WarrantyPolicy from "./warranty-policy";
 import ItemDetails from "./item-details";
-import Feedback from "./feedback";
+// import Feedback from "./feedback";
 import DeliveryPolicy from "./delivery-policy";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
@@ -32,16 +32,16 @@ const AuctionDetailsTabs = ({
         </div>
       ),
     },
-    {
-      menuItem: `${selectedContent[localizationKeys.shippingPolicy]}`,
-      render: () => (
-        <div>
-          <Tab.Pane className="border-none w-full h-full  animate-in">
-            <ShippingPolicy />
-          </Tab.Pane>
-        </div>
-      ),
-    },
+    // {
+    //   menuItem: `${selectedContent[localizationKeys.shippingPolicy]}`,
+    //   render: () => (
+    //     <div>
+    //       <Tab.Pane className="border-none w-full h-full  animate-in">
+    //         <ShippingPolicy />
+    //       </Tab.Pane>
+    //     </div>
+    //   ),
+    // },
     {
       menuItem: `${selectedContent[localizationKeys.returnPolicy]}`,
       render: () => (

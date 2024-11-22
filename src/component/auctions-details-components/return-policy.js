@@ -12,8 +12,7 @@ const ReturnPolicy = ({ dataTabs }) => {
       <div className=" mb-40">
         <div className={`flex bg-[#F2F2F2] drop-shadow  py-3 rounded ${""}`}>
           <p className="text-gray-med font-normal text-sm px-5 w-1/2">
-                      {selectedContent[localizationKeys.ReturnPolicy]}:
-:
+            {selectedContent[localizationKeys.returnPolicy]}: :
           </p>
           <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
             {dataTabs.returnPolicyDescription}
