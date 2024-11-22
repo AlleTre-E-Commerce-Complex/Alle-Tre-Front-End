@@ -58,7 +58,6 @@ const ar = {
   [localizationKeys.buyNow]: "اشتري الآن",
   [localizationKeys.deliveryPolicy]: "سياسة التسليم ",
   [localizationKeys.locatedIn]: "يقع في ",
-  [localizationKeys.returnPolicy]: "سياسة العائدات",
   [localizationKeys.PolicyDescription]: "وصف السياسة",
   [localizationKeys.auctionState]: "حالة المزاد",
   [localizationKeys.comingSoon]: "قريباً",
