@@ -185,13 +185,13 @@ const ProductDetails = () => {
     productDetailsint.subCategory,
     loadingImg,
   ]);
-  const regularCustomFieldsvalidations =
-    customFromData?.regularCustomFields?.reduce((acc, curr) => {
-      acc[curr.key] = Yup.string().required(
-        selectedContent[localizationKeys.required]
-      );
-      return acc;
-    }, {});
+  // const regularCustomFieldsvalidations =
+  //   customFromData?.regularCustomFields?.reduce((acc, curr) => {
+  //     acc[curr.key] = Yup.string().required(
+  //       selectedContent[localizationKeys.required]
+  //     );
+  //     return acc;
+  //   }, {});
   const arrayCustomFieldsvalidations =
     customFromData?.arrayCustomFields?.reduce((acc, curr) => {
       acc[curr.key] = Yup.string().required(
@@ -649,7 +649,7 @@ const ProductDetails = () => {
                         }`}
                       />
                     </div>
-                    {customFromData?.regularCustomFields?.map((e) => (
+                    {/* {customFromData?.regularCustomFields?.map((e) => (
                       <div className="w-full mt-1.5 col-span-2 sm:col-span-1">
                         <FormikInput
                           min={0}
@@ -661,7 +661,7 @@ const ProductDetails = () => {
                           }`}
                         />
                       </div>
-                    ))}
+                    ))} */}
                     <div className="col-span-2 col-start-1 mt-1">
                       <FormikTextArea
                         name="itemDescription"
