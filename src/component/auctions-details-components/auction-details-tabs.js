@@ -18,6 +18,7 @@ const AuctionDetailsTabs = ({
   activeIndexTab,
   setActiveIndexTab,
 }) => {
+  console.log('data tabs :',dataTabs)
   const [lang] = useLanguage();
   const selectedContent = content[lang];
 

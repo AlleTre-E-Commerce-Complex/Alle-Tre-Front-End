@@ -34,7 +34,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
     cityId: Yup.string().required(selectedContent[localizationKeys.required]),
     address: Yup.string().required(selectedContent[localizationKeys.required]),
     addressLabel: Yup.string().required(selectedContent[localizationKeys.required]),
-    zipCode: Yup.string().trim().required(selectedContent[localizationKeys.required]),
+    // zipCode: Yup.string().trim().required(selectedContent[localizationKeys.required]),
   });
 
   const { run, isLoading } = useAxios();
@@ -102,7 +102,7 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
               cityId: "",
               address: "",
               addressLabel: "",
-              zipCode: "",
+              // zipCode: "",
             }}
             onSubmit={handleAddLocation}
             validationSchema={AddLocationSchema}
@@ -144,14 +144,14 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                     placeholder={selectedContent[localizationKeys.exHome]}
                   />
                 </div>
-                <div className="w-full py-6">
+                {/* <div className="w-full py-6">
                   <FormikInput
                     name="zipCode"
                     type="text"
                     label={selectedContent[localizationKeys.zipCode]}
                     placeholder={selectedContent[localizationKeys.enterPostalZipCode]}
                   />
-                </div>
+                </div> */}
                 <div className="flex justify-end">
                   <Button
                     loading={isLoading}
