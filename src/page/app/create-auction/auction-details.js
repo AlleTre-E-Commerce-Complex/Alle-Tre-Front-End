@@ -290,6 +290,9 @@ const AuctionDetails = () => {
                             label={selectedContent[localizationKeys.Hrs]}
                             placeholder="23 hrs"
                             options={hoursOptions}
+                            inputProps={{
+                              readOnly: true,
+                            }}
                           />
                         </div>
                       ) : (
@@ -301,6 +304,9 @@ const AuctionDetails = () => {
                             }
                             placeholder="7 days"
                             options={daysOptions}
+                            inputProps={{
+                              readOnly: true,
+                            }}
                           />
                         </div>
                       )}

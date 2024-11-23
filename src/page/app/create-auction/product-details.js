@@ -613,6 +613,9 @@ const ProductDetails = () => {
                         placeholder={selectedContent[localizationKeys.category]}
                         options={GatogryOptions}
                         loading={loadingGatogry}
+                        inputProps={{
+                          readOnly: true,
+                        }}
                         onChange={(value) => {
                           setCategoryId(value);
                           const fieldOption = GatogryOptions.find(
@@ -646,6 +649,9 @@ const ProductDetails = () => {
                           selectedContent[localizationKeys.subCategory]
                         }
                         loading={loadingSubGatogry}
+                        inputProps={{
+                          readOnly: true,
+                        }}
                         options={SubGatogryOptions}
                         onChange={(e) => setSubCategoryId(e)}
                       />
@@ -673,6 +679,9 @@ const ProductDetails = () => {
                             loadingAllCountries ||
                             loadingCitiesOptions
                           }
+                          inputProps={{
+                            readOnly: true,
+                          }}
                         />
                       </div>
                     ))}
@@ -731,6 +740,19 @@ const ProductDetails = () => {
                         {selectedContent[localizationKeys.from3upto5photos]}
                       </span>
                     </h1>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileChange}
+                      style={{
+                        width: "100%",
+                        maxWidth: "680px",
+                        height: "50px",
+                        padding: "12px",
+                        boxSizing: "border-box",
+                      }}
+                    />
                     <div className="mt-6 w-full">
                       {auctionState === "DRAFTED" ||
                       productDetailsint?.auctionState === "DRAFTED" ? (
@@ -769,12 +791,6 @@ const ProductDetails = () => {
                         />
                       )}
                       {/* {renderImagePreviews()}  */}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onChange={handleFileChange}
-                      />
                     </div>
                   </div>
                   <div
