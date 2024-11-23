@@ -197,6 +197,7 @@ const localizationKeys = {
   minimum30MoreThanStartingBid: "minimum30MoreThanStartingBid",
   purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice:
     "purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice",
+  whyWaitingBuyItNowOnThisPrice: "whyWaitingBuyItNowOnThisPrice",
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",

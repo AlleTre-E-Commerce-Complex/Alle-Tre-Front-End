@@ -216,6 +216,8 @@ const en = {
     "Minimum: 30% more than starting bid",
   [localizationKeys.purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice]:
     "Purchasing price must be more than or equal 30% of minimum price",
+  [localizationKeys.whyWaitingBuyItNowOnThisPrice]:
+    "Why waiting? Buy it now on this price!",
   // shiping details
   [localizationKeys.locationDetails]: "Location Details",
   [localizationKeys.addAddress]: "Add Address",

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
-import RatingStare from "../shared/rating-star/rating-star"
 import { useDispatch } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
@@ -52,7 +51,7 @@ const SummaryHomeAuctionSections = ({
   onReload,
   isOffer,
 }) => {
-  console.log('isOffer',isOffer)
+  console.log("isOffer", isOffer);
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -66,7 +65,6 @@ const SummaryHomeAuctionSections = ({
 
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
 
-  
   const handelBuyNow = () => {
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
@@ -116,24 +114,22 @@ const SummaryHomeAuctionSections = ({
 
   const { run, isLoading } = useAxios();
 
-
   const handelSubmitBidButton = () => {
     const newValue = Number(submitBidValue);
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
-    
+
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
         if (validateBidAmount(newValue)) {
-
           if (isDepositPaid) {
             sendSubmitBid(newValue);
           } else {
             setSubmitBidValue(newValue);
-            if(isOffer){
-              submitBidWithoutSecurityDeposit()
-            }else{
+            if (isOffer) {
+              submitBidWithoutSecurityDeposit();
+            } else {
               setSubmitBidOpen(true);
             }
           }
@@ -150,31 +146,33 @@ const SummaryHomeAuctionSections = ({
     }
   };
 
-  const [isPaymentWithout_SD_Success,setIsPaymentWithout_SD_Success] = useState(null)
-  const submitBidWithoutSecurityDeposit = ()=>{
+  const [isPaymentWithout_SD_Success, setIsPaymentWithout_SD_Success] =
+    useState(null);
+  const submitBidWithoutSecurityDeposit = () => {
     const body = {
       auctionId,
-      amount:0,
-      submitBidValue
+      amount: 0,
+      submitBidValue,
     };
     run(
-      authAxios.post(api.app.auctions.walletPayDepositByBidder,body)
-      .then((res)=>{
-        setIsPaymentWithout_SD_Success(res?.data?.success)
-        if(res?.data?.success){
-          toast.success('Payment successful',{
-            position: 'top-center', // Position of the toast
+      authAxios
+        .post(api.app.auctions.walletPayDepositByBidder, body)
+        .then((res) => {
+          setIsPaymentWithout_SD_Success(res?.data?.success);
+          if (res?.data?.success) {
+            toast.success("Payment successful", {
+              position: "top-center", // Position of the toast
+            });
+            history.push(routes.app.profile.myBids.inPogress);
+          }
+        })
+        .catch((error) => {
+          toast.error("Payment Failed", {
+            position: "top-center",
           });
-          history.push(routes.app.profile.myBids.inPogress)
-        }
-      })
-      .catch((error)=>{
-        toast.error('Payment Failed', {
-          position: 'top-center',
-        });
-      })
-    )
-  }
+        })
+    );
+  };
   const validateBidAmount = (newValue) => {
     if (
       isNaN(newValue) ||
@@ -324,38 +322,55 @@ const SummaryHomeAuctionSections = ({
             <div className="my-auto"></div>
           </p>
         </div>
-        {
-  ( (Number(lastestBid?.bidAmount) || Number(CurrentBid)) < Number(acceptedAmount) || 
-    (lastestBid?.bidAmount === undefined && CurrentBid === undefined) ) && (
-    <div className={isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"}>
-      <button
-        disabled={
-          status === "SOLD" ||
-          status === "EXPIRED" ||
-          status === "IN_SCHEDULED"
-            ? true
-            : false
-        }
-        onClick={() => {
-          handelBuyNow();
-          dispatch(buyNow(acceptedAmount));
-        }}
-        className={`${
-          status === "SOLD" ||
-          status === "EXPIRED" ||
-          status === "IN_SCHEDULED"
-            ? "border-primary/50 text-primary/50"
-            : "border-primary text-primary"
-        } border-[1px] w-[304px] h-[48px] rounded-lg`}
-      >
-        {selectedContent[localizationKeys.buyNow]}
-        <span className="font-bold">FOR {` ${acceptedAmount} `} AED</span>
-      </button>
-    </div>
-  )
-}
+        {((Number(lastestBid?.bidAmount) || Number(CurrentBid)) <
+          Number(acceptedAmount) ||
+          (lastestBid?.bidAmount === undefined &&
+            CurrentBid === undefined)) && (
+          <div
+            className={
+              isBuyNowAllowed ? "block mt-auto pt-6 sm:pt-0" : "hidden"
+            }
+          >
+            <div className="relative inline-block">
+              <div className="relative inline-block group">
+                <button
+                  disabled={
+                    status === "SOLD" ||
+                    status === "EXPIRED" ||
+                    status === "IN_SCHEDULED"
+                      ? true
+                      : false
+                  }
+                  onClick={() => {
+                    handelBuyNow();
+                    dispatch(buyNow(acceptedAmount));
+                  }}
+                  className={`${
+                    status === "SOLD" ||
+                    status === "EXPIRED" ||
+                    status === "IN_SCHEDULED"
+                      ? "border-primary/50 text-primary/50 cursor-not-allowed"
+                      : "border-primary text-primary"
+                  } border-[1px] w-[304px] h-[48px] rounded-lg font-bold hover:bg-primary hover:text-white`}
+                >
+                  {selectedContent[localizationKeys.buyNow] + " "}
+                  <span className="font-bold">{`for ${acceptedAmount} AED`}</span>
+                </button>
 
+                {/* Message directly under the button */}
+                <p className="text-gray-500 text-base font-normal pt-2 text-left ml-2">
+                  {
+                    selectedContent[
+                      localizationKeys.whyWaitingBuyItNowOnThisPrice
+                    ]
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+
       {/* Submit Bid sections */}
       <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">
         <div>
