@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -46,11 +45,11 @@ export default function CheckoutPagePayDeposite() {
   const [clientSecret, setClientSecret] = useState("");
   const [hiddenMess, setHiddenMess] = useState(false);
   const [pendingAuctionData, setPendingAuctionData] = useState("");
-  const [walletBalance,setWalletBalance] = useState(0)
-  const [isWalletPayment,setIsWalletPayment] = useState(null)
-  const [showWalletPaymentMethod,setShowWalletPaymentMethod] = useState(null)
-  const [showStripePayment,setShowStripePayment] = useState(null)
-  const [showPaymentSelecton,setShwoPaymentSelection] = useState(null)
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [isWalletPayment, setIsWalletPayment] = useState(null);
+  const [showWalletPaymentMethod, setShowWalletPaymentMethod] = useState(null);
+  const [showStripePayment, setShowStripePayment] = useState(null);
+  const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
 
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
@@ -68,61 +67,69 @@ export default function CheckoutPagePayDeposite() {
     runPendingAuctionData(
       authAxios
         .get(api.app.auctions.getUserAuctionsDetails(auctionId))
-        .then(async(res) => {
+        .then(async (res) => {
           setPendingAuctionData(res?.data?.data);
-          const auctionData = res?.data?.data 
-          const amountToPay = auctionData.product.category.bidderDepositFixedAmount
-          if(auctionData){
-            const pendingPeymentData = 
-              await authAxios.get(`${api.app.auctions.isPendingPayment(auctionId,'BIDDER_DEPOSIT')}`)
-              if(!pendingPeymentData?.data?.isPendingPaymentData){
-                run(
-                  authAxios.get(`${api.app.Wallet.getBalance}`)
-                  .then((response)=>{ 
-                    const balance = response.data
-      
-                    if(balance && Number(balance) > Number(amountToPay)){
-                      setWalletBalance(balance)
-                      setShwoPaymentSelection(true)
-                    }else{
-                      stripePaymentApiCall()
+          const auctionData = res?.data?.data;
+          const amountToPay =
+            auctionData.product.category.bidderDepositFixedAmount;
+          if (auctionData) {
+            const pendingPeymentData = await authAxios.get(
+              `${api.app.auctions.isPendingPayment(
+                auctionId,
+                "BIDDER_DEPOSIT"
+              )}`
+            );
+            if (!pendingPeymentData?.data?.isPendingPaymentData) {
+              run(
+                authAxios
+                  .get(`${api.app.Wallet.getBalance}`)
+                  .then((response) => {
+                    const balance = response.data;
+
+                    if (balance && Number(balance) > Number(amountToPay)) {
+                      setWalletBalance(balance);
+                      setShwoPaymentSelection(true);
+                    } else {
+                      stripePaymentApiCall();
                     }
                   })
-                  
-                )
-              }else{
-                stripePaymentApiCall()
-              }
-           
+              );
+            } else {
+              stripePaymentApiCall();
+            }
           }
-
         })
     );
-  }, [auctionId, runPendingAuctionData, run, lang, bidAmountValue,selectedContent]);
-  
-  
-  const handleSubmitPayment = ()=>{
-    if(isWalletPayment=== null){
-      toast.error('Plese Select a payment method')
-      return
-    }
-    setShwoPaymentSelection(false)
-    if(!isWalletPayment){
-      setShowStripePayment(true)
-      setShowWalletPaymentMethod(false)
-      stripePaymentApiCall()
-    }else{
-      setShowStripePayment(false)
-      setShowWalletPaymentMethod(true)
-    }
-  }
+  }, [
+    auctionId,
+    runPendingAuctionData,
+    run,
+    lang,
+    bidAmountValue,
+    selectedContent,
+  ]);
 
+  const handleSubmitPayment = () => {
+    if (isWalletPayment === null) {
+      toast.error("Plese Select a payment method");
+      return;
+    }
+    setShwoPaymentSelection(false);
+    if (!isWalletPayment) {
+      setShowStripePayment(true);
+      setShowWalletPaymentMethod(false);
+      stripePaymentApiCall();
+    } else {
+      setShowStripePayment(false);
+      setShowWalletPaymentMethod(true);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  const stripePaymentApiCall = () =>{
+  const stripePaymentApiCall = () => {
     const body = {
       bidAmount: bidAmountValue,
     };
@@ -141,7 +148,7 @@ export default function CheckoutPagePayDeposite() {
           );
         })
     );
-  }
+  };
   return (
     <>
       <Dimmer
@@ -201,7 +208,13 @@ export default function CheckoutPagePayDeposite() {
                 />
                 <div>
                   <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
-                    <h1>Auctions fees</h1>
+                    <h1>
+                      Auctions fees{" "}
+                      <span class="text-gray-dark font-normal">
+                        (Fees refunded after auction completion)
+                      </span>
+                    </h1>
+
                     <p>
                       {formatCurrency(
                         pendingAuctionData?.product?.category
@@ -263,13 +276,27 @@ export default function CheckoutPagePayDeposite() {
               <h1 className="font-bold text-base text-black pt-4 pb-6">
                 Payment method
               </h1>
-             
-               {walletBalance ?showPaymentSelecton && <PaymentSelection 
-                isWalletPayment={isWalletPayment}
-                setIsWalletPayment={setIsWalletPayment}
-                handleSubmitPayment={handleSubmitPayment}
-              /> :
-              clientSecret && (
+
+              {walletBalance
+                ? showPaymentSelecton && (
+                    <PaymentSelection
+                      isWalletPayment={isWalletPayment}
+                      setIsWalletPayment={setIsWalletPayment}
+                      handleSubmitPayment={handleSubmitPayment}
+                    />
+                  )
+                : clientSecret && (
+                    <Elements options={options} stripe={stripePromise}>
+                      <CheckoutFormPayDeposite
+                        auctionId={auctionId}
+                        payPrice={
+                          pendingAuctionData?.product?.category
+                            ?.bidderDepositFixedAmount
+                        }
+                      />
+                    </Elements>
+                  )}
+              {clientSecret && showStripePayment && (
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutFormPayDeposite
                     auctionId={auctionId}
@@ -279,28 +306,19 @@ export default function CheckoutPagePayDeposite() {
                     }
                   />
                 </Elements>
-              )
-              }
-              {clientSecret  && showStripePayment && (
-                <Elements options={options} stripe={stripePromise}>
-                <CheckoutFormPayDeposite
+              )}
+              {showWalletPaymentMethod && (
+                <WalletPaymentForBiddingDeoposit
                   auctionId={auctionId}
-                  payPrice={
+                  amount={
                     pendingAuctionData?.product?.category
                       ?.bidderDepositFixedAmount
                   }
+                  walletBalance={walletBalance}
+                  paymentAPI={api.app.auctions.walletPayDepositByBidder}
+                  bidAmount={bidAmountValue}
                 />
-              </Elements>
               )}
-                {showWalletPaymentMethod && 
-              <WalletPaymentForBiddingDeoposit
-                auctionId={auctionId}
-                amount={pendingAuctionData?.product?.category?.bidderDepositFixedAmount}
-                walletBalance={walletBalance}
-                paymentAPI={api.app.auctions.walletPayDepositByBidder}
-                bidAmount={bidAmountValue}
-              />
-              }
             </div>
           </div>
         </div>
@@ -382,7 +400,6 @@ export const PandingRow = ({
     </div>
   );
 };
-
 
 // import React, { useState, useEffect } from "react";
 // import { loadStripe } from "@stripe/stripe-js";
