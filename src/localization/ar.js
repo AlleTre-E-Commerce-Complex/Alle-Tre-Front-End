@@ -143,6 +143,7 @@ const ar = {
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "هل أنت متأكد أنك تريد حذف هذه المسودة",
   [localizationKeys.cancel]: "إلغاء",
+  [localizationKeys.skip]: "يتخطى",
   [localizationKeys.YesISentIt]: "نعم لقد ارسلته",
   [localizationKeys.yesDelete]: "نعم ، احذف",
   [localizationKeys.locationIsRequired]: "الموقع مطلوب",

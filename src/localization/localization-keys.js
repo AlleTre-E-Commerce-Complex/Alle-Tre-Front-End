@@ -133,6 +133,7 @@ const localizationKeys = {
   errorDelete: "errorDelete",
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
   cancel: "cancel",
+  skip:"skip",
   YesISentIt: "YesIHaveSentIt",
   yesDelete: "yesDelete",
   locationIsRequired: "locationIsRequired",

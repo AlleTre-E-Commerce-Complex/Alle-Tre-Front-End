@@ -80,7 +80,7 @@ const ProfileSettings = () => {
 
   const handelCompleteProfle = () => {
     if (locationData.length <= 0 || pofileData?.imageLink) {
-      setImgModelOpen(true);
+      // setImgModelOpen(true);
       setOpen(true);
     }
   };
