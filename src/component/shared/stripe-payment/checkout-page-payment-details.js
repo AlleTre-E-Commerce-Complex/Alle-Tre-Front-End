@@ -43,49 +43,16 @@ export default function CheckoutPagePaymentDetails() {
   const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
   const [auctionId, setAuctionId] = useLocalStorage("auctionId", "");
 
+
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
+  
+
+ 
 
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
     useAxios([]);
-
-  // useEffect(()=>{
-  //   run(
-  //     authAxios.get(`${api.app.Wallet.getBalance}`)
-  //     .then((response)=>{
-  //       const balance = response.data
-  //       alert(balance)
-  //       if(balance && balance > categoryData.sellerDepositFixedAmount){
-  //         dispatch(setWalletBalance({balance: balance }));
-  //         setPaymentSelectModal(true)
-
-  //       }else{
-  //         alert('no wallet balance')
-  //       }
-  //     })
-
-  //   )
-  // },[run])
-  ///////////////////////////////////
-  // useEffect(() => {
-  //   const body = {
-  //     auctionId: auctionId,
-  //   };
-  //   if(!walletBalance){
-  //     run(
-  //       authAxios
-  //         .post(api.app.auctions.payForAuction, body)
-  //         .then((res) => {
-  //           setClientSecret(res?.data?.data.clientSecret);
-  //         })
-  //         .catch((err) => {
-  //           toast.error(err?.response?.data?.message[lang]);
-  //         })
-  //     );
-  //   }
-  // }, [auctionId, bidAmountValue, lang, run]);
-  //////////////////////////////////////////////
 
   const appearance = {
     theme: "flat",
@@ -162,19 +129,7 @@ export default function CheckoutPagePaymentDetails() {
       setShowStripePayment(true);
       setShowWalletPaymentMethod(false);
       stripePaymentApiCall();
-      // const body = {
-      //   auctionId: auctionId,
-      // };
-      //   run(
-      //     authAxios
-      //       .post(api.app.auctions.payForAuction, body)
-      //       .then((res) => {
-      //         setClientSecret(res?.data?.data.clientSecret);
-      //       })
-      //       .catch((err) => {
-      //         toast.error(err?.response?.data?.message[lang]);
-      //       })
-      //   );
+ 
     } else {
       setShowStripePayment(false);
       setShowWalletPaymentMethod(true);
@@ -183,6 +138,11 @@ export default function CheckoutPagePaymentDetails() {
 
   return (
     <>
+      {/* <Prompt when={!isPaymentCompleted}
+              message={'Do you really want to continiue ?'}>
+              
+      </Prompt> */}
+      
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading && isLoadingPendingAuctionData}
@@ -319,6 +279,7 @@ export default function CheckoutPagePaymentDetails() {
             <div></div>
           </div>
         </div>
+        
       </div>
     </>
   );
