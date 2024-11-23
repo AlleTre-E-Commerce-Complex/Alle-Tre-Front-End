@@ -146,6 +146,7 @@ const en = {
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "Are you sure you want to delete this draft",
   [localizationKeys.cancel]: "Cancel",
+  [localizationKeys.skip]: "Skip",
   [localizationKeys.YesISentIt]: "Yes, I  sent it",
   [localizationKeys.yesDelete]: "Yes,delete",
   [localizationKeys.locationIsRequired]: "Location is required",

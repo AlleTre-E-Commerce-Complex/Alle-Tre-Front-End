@@ -23,7 +23,8 @@ const UploadeImgModel = ({
   const [file, setFile] = useState(null);
   const [editor, setEditor] = useState(null);
   const [dropzoneActive, setDropzoneActive] = useState(true);
-
+  console.log('is image modal open:',IsImgModelOpen,open)
+  
   const handleDrop = (acceptedFiles) => {
     setFile(acceptedFiles[0]);
     setDropzoneActive(false);
@@ -143,9 +144,10 @@ const UploadeImgModel = ({
                       setOpen(false);
                       setFile(null);
                       setDropzoneActive(true);
+                      setImgModelOpen(false);
                     }}
                   >
-                    {selectedContent[localizationKeys.cancel]}
+                    {selectedContent[localizationKeys.skip]}
                   </button>
                 </div>
               </div>
