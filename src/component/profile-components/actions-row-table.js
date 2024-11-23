@@ -50,6 +50,7 @@ const ActionsRowTable = ({
   const [openDeliverySentModal,setDeliverySentModal] = useState(false)
   const [openSuccessModal,setSuccessModal] = useState(false)
   const [openCancelAuctionModal,setCancelAuctionModal]= useState(false)
+  const [cancelWarningMessage,setCancelWarningMessage] = useState('')
   const [openTotalBid, setOpenTotalBidsModel] = useState(false);
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
@@ -388,7 +389,10 @@ const ActionsRowTable = ({
 
             {status === "ACTIVE"  &&
             <button
-            onClick={()=>setCancelAuctionModal(true)}
+            onClick={()=>{setCancelAuctionModal(true);
+              Number(totalBids) > 0 ? 
+              setCancelWarningMessage(selectedContent[localizationKeys.CancellAuctionWarningMessageWithBidders]) :
+              setCancelWarningMessage(selectedContent[localizationKeys.CancellAuctionWarningMessageWithZeroBidders])}}
             className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
           > 
             {selectedContent[localizationKeys.cancelTheAuction]}
@@ -396,7 +400,7 @@ const ActionsRowTable = ({
           }
            {status ===  "WAITING_FOR_PAYMENT" &&
             <button
-            onClick={()=>setCancelAuctionModal(true)}
+            onClick={()=>{setCancelAuctionModal(true);setCancelWarningMessage(selectedContent[localizationKeys.CancellAuctionWarningMessageWithBidders])}}
             className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
           > 
             {selectedContent[localizationKeys.cancelTheAuction]}
@@ -446,7 +450,7 @@ const ActionsRowTable = ({
         open={openCancelAuctionModal} 
         setOpen={setCancelAuctionModal}
         setSuccessModal={setSuccessModal}
-        message={selectedContent[localizationKeys.CancellAuctionWarningMessage]}
+        message={cancelWarningMessage}
         />
         <SuccessModal 
           open={openSuccessModal}

@@ -311,8 +311,9 @@ const en = {
     "Did you send the item for delivery?",
   [localizationKeys.sendMessageToBuyer]: "Send a message to buyer ",
   [localizationKeys.Message]: "Message...",
-  [localizationKeys.CancellAuctionWarningMessage]:
+  [localizationKeys.CancellAuctionWarningMessageWithBidders]:
     "Cancelling the auction will cause to lose your security deposit..!",
+  [localizationKeys.CancellAuctionWarningMessageWithZeroBidders]:"Are you sure to cancel the auction..?",
   [localizationKeys.ContinueToCancel]: "Continue to cancel ?",
   [localizationKeys.discontinue]: "Discontinue",
   [localizationKeys.YouSuccessfullyCancelledTheAuction]:

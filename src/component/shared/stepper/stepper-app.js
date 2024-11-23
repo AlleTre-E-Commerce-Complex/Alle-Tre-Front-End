@@ -259,7 +259,7 @@ const StepperApp = () => {
                 }
                 className="bg-primary  w-8 h-8 rounded-full text-white text-center mx-2"
               >
-                3
+                4
               </button>
               <p
                 onClick={() =>
