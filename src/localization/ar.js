@@ -213,6 +213,8 @@ const ar = {
     "الحد الأدنى: 30٪ أكثر من عرض السعر المبدئي",
   [localizationKeys.purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice]:
     "يجب أن يكون سعر الشراء أكبر من أو يساوي 30٪ من الحد الأدنى للسعر",
+  [localizationKeys.whyWaitingBuyItNowOnThisPrice]:
+    "لماذا الانتظار؟ شرائه الآن على هذا السعر!",
   // shiping details
   [localizationKeys.locationDetails]: "تفاصيل الشحن",
   [localizationKeys.addAddress]: "إضافة عنوان",

@@ -18,7 +18,7 @@ import SummaryAuctionSections from "../../../component/auctions-details-componen
 import SummaryHomeAuctionSections from "../../../component/auctions-details-components/summary-home-auction-sections";
 import { useAuthState } from "../../../context/auth-context";
 import { authAxios, axios } from "../../../config/axios-config";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
@@ -48,7 +48,6 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
-            console.log('auction details authAxios : ',res?.data?.data)
           })
       );
     } else {
@@ -57,7 +56,6 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
-            console.log('auction details axios: ',res?.data?.data)
           })
       );
     }

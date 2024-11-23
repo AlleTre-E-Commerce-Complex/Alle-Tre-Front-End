@@ -189,7 +189,7 @@ const AuctionDetails = () => {
       IsDelivery: IsDelivery,
       description: values.deliveryPolicyDescription,
       expectedNumOfDays: values.numOfDaysOfExpecetdDelivery,
-      deliveryFees:values.DeliveryFees,
+      deliveryFees: values.DeliveryFees,
     };
     if (IsDelivery) {
       dispatch(deliveryPolicy(DeliveryPolicy));
@@ -266,7 +266,7 @@ const AuctionDetails = () => {
               PurchasingPrice: auctionDetailsInt.PurchasingPrice || "",
               numOfDaysOfExpecetdDelivery:
                 auctionDetailsInt.numOfDaysOfExpecetdDelivery || "",
-              DeliveryFees:auctionDetailsInt.DeliveryFees || "",
+              DeliveryFees: auctionDetailsInt.DeliveryFees || "",
               deliveryPolicyDescription:
                 auctionDetailsInt.deliveryPolicyDescription || "",
               returnPolicyDescription:
@@ -481,9 +481,7 @@ const AuctionDetails = () => {
                             label={
                               selectedContent[localizationKeys.DeliveryFees]
                             }
-                            placeholder={
-                              selectedContent[localizationKeys.Amount]
-                            }
+                            placeholder="AEDXXX"
                           />
                         </div>
                         <div className="w-full">
