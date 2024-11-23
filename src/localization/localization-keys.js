@@ -47,6 +47,8 @@ const localizationKeys = {
   bidNow: "bidNow",
   buyNow: "buyNow",
   deliveryPolicy: "deliveryPolicy",
+  expectedDeliveryDays: "expectedDeliveryDays",
+  deliveryFees: "deliveryFees",
   locatedIn: "locatedIn",
   popularCategories: "popularCategories",
   totalBids: "totalBids",
