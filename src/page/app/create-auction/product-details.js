@@ -82,6 +82,7 @@ const ProductDetails = () => {
               brandId: completeDraftValue?.product?.brandId,
               cameraType: completeDraftValue?.product?.cameraType,
               material: completeDraftValue?.product?.material,
+              memory: completeDraftValue?.product?.memory,
               age: completeDraftValue?.product?.age,
               totalArea: completeDraftValue?.product?.totalArea,
               numberOfRooms: completeDraftValue?.product?.numberOfRooms,
@@ -341,6 +342,12 @@ const ProductDetails = () => {
         draftValue.material || productDetailsint.material
       );
     }
+    if (draftValue.memory || productDetailsint.memory) {
+      formData.append(
+        "memory",
+        draftValue.memory || productDetailsint.memory
+      );
+    }
     if (draftValue.model || productDetailsint.model) {
       formData.append("model", draftValue.model || productDetailsint.model);
     }
@@ -529,6 +536,7 @@ const ProductDetails = () => {
                 brandId: productDetailsint.brandId || "",
                 cameraType: productDetailsint.cameraType || "",
                 material: productDetailsint.material || "",
+                memory: productDetailsint.memory || "",
                 age: productDetailsint.age || "",
                 totalArea: productDetailsint.totalArea || "",
                 numberOfRooms: productDetailsint.numberOfRooms || "",

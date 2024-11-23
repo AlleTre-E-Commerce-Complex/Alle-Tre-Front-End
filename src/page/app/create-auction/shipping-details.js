@@ -146,6 +146,9 @@ const ShippingDetails = () => {
       if (productDetailsInt.material) {
         formData.append("product[material]", productDetailsInt.material);
       }
+      if (productDetailsInt.memory) {
+        formData.append("product[memory]", productDetailsInt.memory);
+      }
       if (productDetailsInt.model) {
         formData.append("product[model]", productDetailsInt.model);
       }
