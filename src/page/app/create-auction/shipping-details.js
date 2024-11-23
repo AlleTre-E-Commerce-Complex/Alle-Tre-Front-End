@@ -250,6 +250,10 @@ const ShippingDetails = () => {
           "numOfDaysOfExpecetdDelivery",
           deliveryPolicyInt.expectedNumOfDays
         );
+        formData.append(
+          "DeliveryFees",
+          deliveryPolicyInt.deliveryFees
+        );
       }
       if (returnPolicyInt.IsRetrunPolicy) {
         formData.append("IsRetrunPolicy", returnPolicyInt.IsRetrunPolicy);

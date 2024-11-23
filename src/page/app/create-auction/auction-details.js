@@ -125,6 +125,11 @@ const AuctionDetails = () => {
       then: Yup.number().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.number().notRequired(),
     }),
+    DeliveryFees: Yup.number().when([], {
+      is: () => IsDelivery,
+      then: Yup.number().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.number().notRequired(),
+    }),
     deliveryPolicyDescription: Yup.string().when([], {
       is: () => IsDelivery,
       then: Yup.string().required(selectedContent[localizationKeys.required]),
@@ -185,6 +190,7 @@ const AuctionDetails = () => {
       IsDelivery: IsDelivery,
       description: values.deliveryPolicyDescription,
       expectedNumOfDays: values.numOfDaysOfExpecetdDelivery,
+      deliveryFees:values.DeliveryFees,
     };
     if (IsDelivery) {
       dispatch(deliveryPolicy(DeliveryPolicy));
@@ -261,6 +267,7 @@ const AuctionDetails = () => {
               PurchasingPrice: auctionDetailsInt.PurchasingPrice || "",
               numOfDaysOfExpecetdDelivery:
                 auctionDetailsInt.numOfDaysOfExpecetdDelivery || "",
+              DeliveryFees:auctionDetailsInt.DeliveryFees || "",
               deliveryPolicyDescription:
                 auctionDetailsInt.deliveryPolicyDescription || "",
               returnPolicyDescription:
@@ -355,7 +362,7 @@ const AuctionDetails = () => {
                         <FormikInput
                           min={0}
                           type="number"
-                          name="StartPrice"
+                          name="MinimumPrice"
                           label={selectedContent[localizationKeys.startPrice]}
                           placeholder="AEDXXX"
                         />
