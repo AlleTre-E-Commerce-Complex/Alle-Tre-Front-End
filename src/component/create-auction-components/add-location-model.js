@@ -117,6 +117,9 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                     options={AllCountriesOptions}
                     loading={loadingAllCountries}
                     onChange={(e) => setCountriesId(e)}
+                    inputProps={{
+                      readOnly: true,
+                    }}
                   />
                 </div>
                 <div className="w-full py-6">
@@ -126,6 +129,9 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                     placeholder={selectedContent[localizationKeys.city]}
                     options={AllCitiesOptions}
                     loading={loadingCitiesOptions}
+                    inputProps={{
+                      readOnly: true,
+                    }}
                   />
                 </div>
                 <div className="w-full py-6">
