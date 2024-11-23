@@ -307,8 +307,9 @@ const ar = {
   [localizationKeys.didYouSendTheItemForDelivery]: "هل أرسلت العنصر للتسليم؟",
   [localizationKeys.sendMessageToBuyer]: "إرسال رسالة إلى المشتري",
   [localizationKeys.Message]: "رسالة...",
-  [localizationKeys.CancellAuctionWarningMessage]:
+  [localizationKeys.CancellAuctionWarningMessageWithBidders]:
     "سيؤدي إلغاء المزاد إلى خسارة وديعة الضمان الخاصة بك",
+   [localizationKeys.CancellAuctionWarningMessageWithZeroBidders]:"هل أنت متأكد من إلغاء المزاد..؟",
   [localizationKeys.ContinueToCancel]: "متابعة الإلغاء؟",
   [localizationKeys.discontinue]: "توقف",
   [localizationKeys.YouSuccessfullyCancelledTheAuction]:
