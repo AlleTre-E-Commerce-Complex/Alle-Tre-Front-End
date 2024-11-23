@@ -106,7 +106,9 @@ const ProductDetails = () => {
   const [imgtest, setimgtest] = useState();
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
-  const [fileThree, setFileThree] = useState(productDetailsint.fileThree || null);
+  const [fileThree, setFileThree] = useState(
+    productDetailsint.fileThree || null
+  );
   const [fileFour, setFileFour] = useState(productDetailsint.fileFour || null);
   const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
 
@@ -128,7 +130,6 @@ const ProductDetails = () => {
   const [customFromData, setCustomFromData] = useState();
 
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
-  console.log('Gategory Options :',GatogryOptions)
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || productDetailsint.category
   );
@@ -141,6 +142,49 @@ const ProductDetails = () => {
     categoryId || productDetailsint.category
   );
 
+  // const renderImagePreviews = () => {
+  //   const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+  //   return files.map((file, index) => {
+  //     if (file) {
+  //       return (
+  //         <div key={index}>
+  //           <img src={URL.createObjectURL(file)} alt={`preview-${index}`} />
+  //         </div>
+  //       );
+  //     }
+  //     return null;
+  //   });
+  // };
+
+  const handleFileChange = (event) => {
+    const files = event.target.files; // This is a FileList object containing the selected files
+    const fileArray = Array.from(files); // Convert FileList to an array
+
+    // Limit the selection to 5 images (if desired)
+    if (fileArray.length > 5) {
+      toast.error("You can only select up to 5 images.");
+      return;
+    }
+
+    // Clear previous files before adding new ones
+    const newFiles = [null, null, null, null, null];
+
+    // Assign the selected files to the state
+    fileArray.forEach((file, index) => {
+      if (index === 0) newFiles[0] = file;
+      if (index === 1) newFiles[1] = file;
+      if (index === 2) newFiles[2] = file;
+      if (index === 3) newFiles[3] = file;
+      if (index === 4) newFiles[4] = file;
+    });
+
+    // Update the state with the new files
+    setFileOne(newFiles[0]);
+    setFileTwo(newFiles[1]);
+    setFileThree(newFiles[2]);
+    setFileFour(newFiles[3]);
+    setFileFive(newFiles[4]);
+  };
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
     if (
@@ -159,7 +203,7 @@ const ProductDetails = () => {
               )
             )
             .then((res) => {
-              console.log('test1 :,',res?.data?.data)
+              console.log("test1 :,", res?.data?.data);
               setCustomFromData(res?.data?.data);
             })
         );
@@ -172,7 +216,7 @@ const ProductDetails = () => {
               )
             )
             .then((res) => {
-              console.log('test2 :,',res?.data?.data)
+              console.log("test2 :,", res?.data?.data);
               setCustomFromData(res?.data?.data);
             })
         );
@@ -343,10 +387,7 @@ const ProductDetails = () => {
       );
     }
     if (draftValue.memory || productDetailsint.memory) {
-      formData.append(
-        "memory",
-        draftValue.memory || productDetailsint.memory
-      );
+      formData.append("memory", draftValue.memory || productDetailsint.memory);
     }
     if (draftValue.model || productDetailsint.model) {
       formData.append("model", draftValue.model || productDetailsint.model);
@@ -727,6 +768,13 @@ const ProductDetails = () => {
                           setFileFive={setFileFive}
                         />
                       )}
+                      {/* {renderImagePreviews()}  */}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleFileChange}
+                      />
                     </div>
                   </div>
                   <div
