@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
-import { RiArrowDownSFill } from "react-icons/ri";
+import { RiArrowDownSFill, RiHome2Line } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
 import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
@@ -96,8 +96,19 @@ const Header = ({ SetSid }) => {
             onClick={() => history.push(`${routes.app.home}?page=1&perPage=28`)}
           />
         </div>
-        <div onClick={() => SetSid(true)} className="my-auto md:hidden block">
-          <BiMenu className="text-primary cursor-pointer" size={30} />
+        <div className="flex items-center space-x-4 md:hidden block">
+          <BiMenu
+            onClick={() => SetSid(true)}
+            className="text-primary cursor-pointer"
+            size={30}
+          />
+          <RiHome2Line
+            onClick={() => {
+              history.push(routes.app.home);
+            }}
+            className="text-primary cursor-pointer m-2"
+            size={30}
+          />
         </div>
         <div className="flex">
           <div className="my-auto ">
@@ -179,7 +190,7 @@ const Header = ({ SetSid }) => {
           </div>
         </div>
         <div
-          onClick={() => setSerchShow((p) => !p)}
+          // onClick={() => setSerchShow((p) => !p)}
           className="my-auto md:hidden block"
         >
           <CgProfile
