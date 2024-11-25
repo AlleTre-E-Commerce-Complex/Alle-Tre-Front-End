@@ -30,10 +30,10 @@ function FormikMultiDropdown({
                 setFieldValue(name, value);
                 if (typeof onChange === "function") onChange(value);
               }}
-              multiple={multiple}
-              search
+              search={false}
               fluid
               selection
+              multiple={multiple}
             >
               {props.children}
             </Form.Dropdown>

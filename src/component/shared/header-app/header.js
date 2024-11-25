@@ -119,6 +119,13 @@ const Header = ({ SetSid }) => {
           </div>
           <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto">
             <NavLinkHeader
+              title={selectedContent[localizationKeys.home]}
+              isActive={
+                pathname.length === 1 || pathname.startsWith(routes.app.home)
+              }
+              onClick={() => history.push(routes.app.home)}
+            />
+            <NavLinkHeader
               title={selectedContent[localizationKeys.myAuctions]}
               isActive={
                 pathname.length === 1 ||
@@ -235,7 +242,7 @@ const Header = ({ SetSid }) => {
               <p className="pt-1">
                 {user
                   ? selectedContent[localizationKeys.profile]
-                  : selectedContent[localizationKeys.registerNow]}
+                  : selectedContent[localizationKeys.loginOrRegister]}
               </p>
             </button>
           </div>

@@ -2,6 +2,7 @@ const localizationKeys = {
   // auth
   login: "login",
   signup: "signup",
+  loginOrRegister: "loginOrRegister",
   loginWithApple: "loginWithApple",
   loginwithGoogle: "loginwithGoogle",
   loginwithFacebook: "loginwithFacebook",
@@ -133,7 +134,7 @@ const localizationKeys = {
   errorDelete: "errorDelete",
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
   cancel: "cancel",
-  skip:"skip",
+  skip: "skip",
   YesISentIt: "YesIHaveSentIt",
   yesDelete: "yesDelete",
   locationIsRequired: "locationIsRequired",
@@ -287,8 +288,10 @@ const localizationKeys = {
   didYouSendTheItemForDelivery: "didYouSendTheItemForDelivery",
   sendMessageToBuyer: "sendMessageToBuyer",
   Message: "Message",
-  CancellAuctionWarningMessageWithBidders: "CancellAuctionWarningMessageWithBidders",
-  CancellAuctionWarningMessageWithZeroBidders: "CancellAuctionWarningMessageWithZeroBidders",
+  CancellAuctionWarningMessageWithBidders:
+    "CancellAuctionWarningMessageWithBidders",
+  CancellAuctionWarningMessageWithZeroBidders:
+    "CancellAuctionWarningMessageWithZeroBidders",
   ContinueToCancel: "ContinueToCancel",
   discontinue: "discontinue",
   YouSuccessfullyCancelledTheAuction: "YouSuccessfullyCancelledTheAuction",

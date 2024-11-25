@@ -18,7 +18,7 @@ import { useDispatch } from "react-redux";
 import { completePaymentData } from "../../redux-store/complete-payment-slice";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 import useLocalStorage from "../../hooks/use-localstorage";
-import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
+// import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 
 const PendingBids = () => {
   const [lang] = useLanguage("");
@@ -33,9 +33,6 @@ const PendingBids = () => {
   const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);
-
-
-  
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
       run(

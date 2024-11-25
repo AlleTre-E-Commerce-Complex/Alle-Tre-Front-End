@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
+import { RiShareForwardFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "../../context/auth-context";
 import { formatCurrency } from "../../utils/format-currency";
@@ -64,7 +65,30 @@ const AuctionCard = ({
     if (WatshlistState) setWatshlist(WatshlistState);
   }, [WatshlistState]);
 
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+  const getDomain = () => {
+    const { protocol, hostname, port } = window.location;
+    return port
+      ? `${protocol}//${hostname}:${port}`
+      : `${protocol}//${hostname}`;
+  };
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title,
+          text: title,
+          // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
+          url: `${getDomain()}/home/${auctionId}/details`,
+        });
+        console.log("Post shared successfully!");
+      } catch (error) {
+        console.error("Error sharing post:", error);
+      }
+    } else {
+      alert("Sharing is not supported in this browser.");
+    }
+  };
 
   const handelAddNewWatshlist = (auctionId) => {
     if (user) {
@@ -136,21 +160,29 @@ const AuctionCard = ({
     <div className={className}>
       <div className="group lg:w-[272px] l:w-[367px]  md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
         <div className="lg:w-[240px] l:w-[335px]  md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden">
+          <div className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20  top-1 ltr:right-2 rtl:left-2">
+            <div
+              onClick={() => handleShare()}
+              className="h-full w-full flex justify-center items-center cursor-pointer"
+            >
+              <RiShareForwardFill className="text-primary text-2xl md:text-3xl" />
+            </div>
+          </div>
           <div
             className={
               isMyAuction || isPurchased
                 ? "hidden"
-                : "bg-white rounded-lg md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 top-2 ltr:right-2 rtl:left-2"
+                : "border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 top-16 ltr:right-2 rtl:left-2"
             }
           >
             <div
               onClick={() => handelAddNewWatshlist(auctionId)}
-              className="flex justify-center items-center md:mt-2.5 mt-1.5 cursor-pointer"
+              className="h-full w-full flex justify-center items-center cursor-pointer"
             >
               {watshlistForceState || isWatshlist ? (
                 <BsBookmarkFill className="text-primary text-2xl md:text-3xl" />
               ) : (
-                <BsBookmark className="text-gray-med text-2xl md:text-3xl " />
+                <BsBookmark className="text-primary text-2xl md:text-3xl" />
               )}
             </div>
           </div>
