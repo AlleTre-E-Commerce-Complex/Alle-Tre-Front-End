@@ -19,10 +19,12 @@ import { useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
 import CheckoutFormPaymentDetails from "./checkout-form-payment-details";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Prompt, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import routes from "../../../routes";
 import WalletPayment from "../WalletPayment/WalletPayment";
 import PaymentSelection from "../PaymentSelection/PaymentSelection";
+import { AiOutlineAlert  } from "react-icons/ai";
+
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -42,13 +44,30 @@ export default function CheckoutPagePaymentDetails() {
   const [showStripePayment, setShowStripePayment] = useState(null);
   const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
   const [auctionId, setAuctionId] = useLocalStorage("auctionId", "");
-
-
+  const [isPaymentCompleted,setIsPaymentCompleted] = useState(false)
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
-  
 
+
+  const [showModal, setShowModal] = useState(false);
+
+  
+  const handleConfirm = () => {
+    setShowModal(false);
+    history.push(routes.app.profile.myAuctions.pending);
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+  };
  
+  useEffect(()=>{
+    return()=>{
+      if(!isPaymentCompleted){
+        history.push(routes.app.profile.myAuctions.pending);
+      }
+    }
+  },[history])
 
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
@@ -136,13 +155,53 @@ export default function CheckoutPagePaymentDetails() {
     }
   };
 
+
+
   return (
     <>
-      {/* <Prompt when={!isPaymentCompleted}
-              message={'Do you really want to continiue ?'}>
-              
-      </Prompt> */}
-      
+     <Prompt
+        when={!isPaymentCompleted}
+        message={() => {
+           // Store the next location
+          history.goForward()
+          setShowModal(true); // Show the modal
+          return false; // Prevent navigation
+        }}
+      />
+
+        {/* Modal */}
+        {showModal && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-lg">
+    {/* Icon Container */}
+    <div className="flex justify-center items-center mb-4">
+      <AiOutlineAlert size={70} color="orange" />
+    </div>
+
+    {/* Message */}
+    <p className="text-lg font-semibold text-gray-800 mb-4 text-center">
+      Your payment details are saved.
+    </p>
+
+    {/* Buttons */}
+    <div className="flex justify-center space-x-4">
+      <button
+        className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition"
+        onClick={handleConfirm}
+      >
+        View Pending Payment
+      </button>
+      <button
+        className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition"
+        onClick={handleCancel}
+      >
+        Continue Payment
+      </button>
+    </div>
+  </div>
+</div>
+
+      )}
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading && isLoadingPendingAuctionData}
@@ -279,8 +338,9 @@ export default function CheckoutPagePaymentDetails() {
             <div></div>
           </div>
         </div>
-        
+     
       </div>
+
     </>
   );
 }
