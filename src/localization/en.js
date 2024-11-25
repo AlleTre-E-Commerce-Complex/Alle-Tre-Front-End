@@ -4,6 +4,7 @@ const en = {
   // auth
   [localizationKeys.login]: "Login",
   [localizationKeys.signup]: "Sign up",
+  [localizationKeys.loginOrRegister]: "Login/Register",
   [localizationKeys.loginWithApple]: "Login With Apple",
   [localizationKeys.loginwithGoogle]: "Login With Google",
   [localizationKeys.loginwithFacebook]: "Login With Facebook",
@@ -313,7 +314,8 @@ const en = {
   [localizationKeys.Message]: "Message...",
   [localizationKeys.CancellAuctionWarningMessageWithBidders]:
     "Cancelling the auction will cause to lose your security deposit..!",
-  [localizationKeys.CancellAuctionWarningMessageWithZeroBidders]:"Are you sure to cancel the auction..?",
+  [localizationKeys.CancellAuctionWarningMessageWithZeroBidders]:
+    "Are you sure to cancel the auction..?",
   [localizationKeys.ContinueToCancel]: "Continue to cancel ?",
   [localizationKeys.discontinue]: "Discontinue",
   [localizationKeys.YouSuccessfullyCancelledTheAuction]:

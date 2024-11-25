@@ -4,6 +4,7 @@ const ar = {
   // auth
   [localizationKeys.login]: "تسجيل الدخول",
   [localizationKeys.signup]: "إنشاء حساب جديد",
+  [localizationKeys.loginOrRegister]: "تسجيل الدخول/التسجيل",
   [localizationKeys.loginWithApple]: "تسجيل الدخول باستخدام Apple",
   [localizationKeys.loginwithGoogle]: "تسجيل الدخول باستخدام Google",
   [localizationKeys.loginwithFacebook]: "تسجيل الدخول باستخدام Facebook",
@@ -309,7 +310,8 @@ const ar = {
   [localizationKeys.Message]: "رسالة...",
   [localizationKeys.CancellAuctionWarningMessageWithBidders]:
     "سيؤدي إلغاء المزاد إلى خسارة وديعة الضمان الخاصة بك",
-   [localizationKeys.CancellAuctionWarningMessageWithZeroBidders]:"هل أنت متأكد من إلغاء المزاد..؟",
+  [localizationKeys.CancellAuctionWarningMessageWithZeroBidders]:
+    "هل أنت متأكد من إلغاء المزاد..؟",
   [localizationKeys.ContinueToCancel]: "متابعة الإلغاء؟",
   [localizationKeys.discontinue]: "توقف",
   [localizationKeys.YouSuccessfullyCancelledTheAuction]:

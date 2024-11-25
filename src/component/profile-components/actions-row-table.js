@@ -36,8 +36,7 @@ const ActionsRowTable = ({
   endingDate,
   goToDetails,
   filterJoinState,
-  isItemSendForDelivery
-
+  isItemSendForDelivery,
 }) => {
   // console.log('auction Id in auction row table:',auctionsId);
   // console.log('Props:',    goToDetails );
@@ -45,12 +44,12 @@ const ActionsRowTable = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-  const [openDeliveryIssueModal,setDeleveryIssueModal] = useState(false)
-  const [openBuyerObjectionModal,setBuyerObjectionModal] = useState(false)
-  const [openDeliverySentModal,setDeliverySentModal] = useState(false)
-  const [openSuccessModal,setSuccessModal] = useState(false)
-  const [openCancelAuctionModal,setCancelAuctionModal]= useState(false)
-  const [cancelWarningMessage,setCancelWarningMessage] = useState('')
+  const [openDeliveryIssueModal, setDeleveryIssueModal] = useState(false);
+  const [openBuyerObjectionModal, setBuyerObjectionModal] = useState(false);
+  const [openDeliverySentModal, setDeliverySentModal] = useState(false);
+  const [openSuccessModal, setSuccessModal] = useState(false);
+  const [openCancelAuctionModal, setCancelAuctionModal] = useState(false);
+  const [cancelWarningMessage, setCancelWarningMessage] = useState("");
   const [openTotalBid, setOpenTotalBidsModel] = useState(false);
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
@@ -213,7 +212,8 @@ const ActionsRowTable = ({
             ) : (
               ""
             )}
-            {status === "CANCELLED_AFTER_EXP_DATE" || status === "CANCELLED_BEFORE_EXP_DATE" ? (
+            {status === "CANCELLED_AFTER_EXP_DATE" ||
+            status === "CANCELLED_BEFORE_EXP_DATE" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
@@ -346,23 +346,25 @@ const ActionsRowTable = ({
 
         {isBidsButtons ? (
           <div className="flex gap-x-2">
-                   {status === "WAITING_FOR_DELIVERY" &&
-            <button
-            onClick={()=>setDeleveryIssueModal(true)}
-            className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-          > 
-            {selectedContent[localizationKeys.AnyIssueWithDelivery]}
-          </button>
-          }
+            {status === "WAITING_FOR_DELIVERY" && (
+              <button
+                onClick={() => setDeleveryIssueModal(true)}
+                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              >
+                {selectedContent[localizationKeys.AnyIssueWithDelivery]}
+              </button>
+            )}
             <button
               onClick={buttonActions}
-              disabled={status === 'WAITING_FOR_DELIVERY' && !isItemSendForDelivery}
+              disabled={
+                status === "WAITING_FOR_DELIVERY" && !isItemSendForDelivery
+              }
               className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 ${
-                status === 'WAITING_FOR_DELIVERY' 
-                  ? isItemSendForDelivery 
-                    ? ''  // When the item is sent for delivery, keep it in default enabled state
-                    : 'border-gray-300 text-gray-300 bg-gray-100 cursor-auto'  // When not sent, disable styling
-                  : 'cursor-pointer'  // Default styles for other statuses
+                status === "WAITING_FOR_DELIVERY"
+                  ? isItemSendForDelivery
+                    ? "" // When the item is sent for delivery, keep it in default enabled state
+                    : "border-gray-300 text-gray-300 bg-gray-100 cursor-auto" // When not sent, disable styling
+                  : "cursor-pointer" // Default styles for other statuses
               }`}
             >
               {textButton}
@@ -376,59 +378,86 @@ const ActionsRowTable = ({
             </button>
           </div>
         ) : (
-            <div >
-         
-           {status === "COMPLETED" &&
-            <button
-            onClick={()=>setBuyerObjectionModal(true)}
-            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-          > 
-            {selectedContent[localizationKeys.AnyObjection]}
-          </button>
-          }
+          <div>
+            {status === "COMPLETED" && (
+              <button
+                onClick={() => setBuyerObjectionModal(true)}
+                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              >
+                {selectedContent[localizationKeys.AnyObjection]}
+              </button>
+            )}
 
-            {status === "ACTIVE"  &&
+            {status === "ACTIVE" && (
+              <button
+                onClick={() => {
+                  setCancelAuctionModal(true);
+                  Number(totalBids) > 0
+                    ? setCancelWarningMessage(
+                        selectedContent[
+                          localizationKeys
+                            .CancellAuctionWarningMessageWithBidders
+                        ]
+                      )
+                    : setCancelWarningMessage(
+                        selectedContent[
+                          localizationKeys
+                            .CancellAuctionWarningMessageWithZeroBidders
+                        ]
+                      );
+                }}
+                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              >
+                {selectedContent[localizationKeys.cancelTheAuction]}
+              </button>
+            )}
+            {status === "WAITING_FOR_PAYMENT" && (
+              <button
+                onClick={() => {
+                  setCancelAuctionModal(true);
+                  setCancelWarningMessage(
+                    selectedContent[
+                      localizationKeys.CancellAuctionWarningMessageWithBidders
+                    ]
+                  );
+                }}
+                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              >
+                {selectedContent[localizationKeys.cancelTheAuction]}
+              </button>
+            )}
+            {status === "SOLD" && !isItemSendForDelivery && (
+              <button
+                onClick={() => setDeliverySentModal(true)}
+                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              >
+                {/* {selectedContent[localizationKeys.cancelTheAuction]} */}
+                Is Item Sent?
+              </button>
+            )}
+            {status === "SOLD" && isItemSendForDelivery && (
+              <button className="border-primary cursor-default border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 ">
+                You have sent the item.
+              </button>
+            )}
+            {status === "PENDING_OWNER_DEPOIST" && (
+              <button
+                onClick={() => {
+                  window.localStorage.setItem("auctionId", auctionsId);
+                  history.push(routes.app.createAuction.paymentDetails);
+                }}
+                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5"
+              >
+                {selectedContent[localizationKeys.completePayment]}
+              </button>
+            )}
             <button
-            onClick={()=>{setCancelAuctionModal(true);
-              Number(totalBids) > 0 ? 
-              setCancelWarningMessage(selectedContent[localizationKeys.CancellAuctionWarningMessageWithBidders]) :
-              setCancelWarningMessage(selectedContent[localizationKeys.CancellAuctionWarningMessageWithZeroBidders])}}
-            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-          > 
-            {selectedContent[localizationKeys.cancelTheAuction]}
-          </button>
-          }
-           {status ===  "WAITING_FOR_PAYMENT" &&
-            <button
-            onClick={()=>{setCancelAuctionModal(true);setCancelWarningMessage(selectedContent[localizationKeys.CancellAuctionWarningMessageWithBidders])}}
-            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-          > 
-            {selectedContent[localizationKeys.cancelTheAuction]}
-          </button>
-          }
-           {status ===  "SOLD" && !isItemSendForDelivery &&
-            <button
-            onClick={()=>setDeliverySentModal(true)}
-            className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-          > 
-            {/* {selectedContent[localizationKeys.cancelTheAuction]} */}
-            Is Item Sent?
-          </button>
-          }
-          {status ===  "SOLD" && isItemSendForDelivery &&
-            <button
-            className="border-primary cursor-default border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-          > 
-          You have sent the item.
-          </button>
-          }
-          <button
-            onClick={() => history.push(goToDetails)}
-            className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-          >
-            {selectedContent[localizationKeys.viewDetails]}
-          </button>
-            </div>
+              onClick={() => history.push(goToDetails)}
+              className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </button>
+          </div>
         )}
       </div>
       <TotalBidsTableModel
@@ -436,37 +465,40 @@ const ActionsRowTable = ({
         setOpen={setOpenTotalBidsModel}
         open={openTotalBid}
       />
-      <DeliveryIssueModal 
-          auctionId={auctionsId}
-          open={openDeliveryIssueModal} 
-          setOpen={setDeleveryIssueModal}/>
-
-       <BuyerObjectionModal
-          auctionId={auctionsId}
-          open={openBuyerObjectionModal} 
-          setOpen={setBuyerObjectionModal}/>
-        <WarningModal 
+      <DeliveryIssueModal
         auctionId={auctionsId}
-        open={openCancelAuctionModal} 
+        open={openDeliveryIssueModal}
+        setOpen={setDeleveryIssueModal}
+      />
+
+      <BuyerObjectionModal
+        auctionId={auctionsId}
+        open={openBuyerObjectionModal}
+        setOpen={setBuyerObjectionModal}
+      />
+      <WarningModal
+        auctionId={auctionsId}
+        open={openCancelAuctionModal}
         setOpen={setCancelAuctionModal}
         setSuccessModal={setSuccessModal}
         message={cancelWarningMessage}
-        />
-        <SuccessModal 
-          open={openSuccessModal}
-          setOpen={setSuccessModal}
-          message={selectedContent[localizationKeys.YouSuccessfullyCancelledTheAuction]}
-          returnUrl={routes.app.profile.myAuctions.active}
-        />
-        <DeliverysentModal 
-          auctionId={auctionsId}
-          open={openDeliverySentModal}
-          setOpen={setDeliverySentModal}
-          setSuccessModal={setSuccessModal}
-        />
-
+      />
+      <SuccessModal
+        open={openSuccessModal}
+        setOpen={setSuccessModal}
+        message={
+          selectedContent[localizationKeys.YouSuccessfullyCancelledTheAuction]
+        }
+        returnUrl={routes.app.profile.myAuctions.active}
+      />
+      <DeliverysentModal
+        auctionId={auctionsId}
+        open={openDeliverySentModal}
+        setOpen={setDeliverySentModal}
+        setSuccessModal={setSuccessModal}
+      />
     </div>
   );
 };
 
-  export default React.memo(ActionsRowTable);
+export default React.memo(ActionsRowTable);

@@ -24,16 +24,21 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   const history = useHistory();
   const [countriesId, setCountriesId] = useState();
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
-  const { AllCitiesOptions, loadingCitiesOptions } = useGetAllCities(countriesId);
+  const { AllCitiesOptions, loadingCitiesOptions } =
+    useGetAllCities(countriesId);
 
   const dispatch = useDispatch();
-  const isMounted = useRef(true);  // Track component mount status
+  const isMounted = useRef(true); // Track component mount status
 
   const AddLocationSchema = Yup.object({
-    countryId: Yup.string().required(selectedContent[localizationKeys.required]),
+    countryId: Yup.string().required(
+      selectedContent[localizationKeys.required]
+    ),
     cityId: Yup.string().required(selectedContent[localizationKeys.required]),
     address: Yup.string().required(selectedContent[localizationKeys.required]),
-    addressLabel: Yup.string().required(selectedContent[localizationKeys.required]),
+    addressLabel: Yup.string().required(
+      selectedContent[localizationKeys.required]
+    ),
     // zipCode: Yup.string().trim().required(selectedContent[localizationKeys.required]),
   });
 
@@ -49,7 +54,8 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
   const handleAddLocation = (values) => {
     run(authAxios.post(api.app.location.post, values))
       .then(({ data }) => {
-        if (isMounted.current) {  // Only update state if mounted
+        if (isMounted.current) {
+          // Only update state if mounted
           window.localStorage.setItem("hasCompletedProfile", true);
           if (TextButton === selectedContent[localizationKeys.proceed]) {
             history.push(routes.app.createAuction.productDetails);
@@ -61,9 +67,11 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
         }
       })
       .catch((err) => {
-        if (isMounted.current) {  // Only update state if mounted
+        if (isMounted.current) {
+          // Only update state if mounted
           toast.error(
-            err?.message?.map((e) => e) || selectedContent[localizationKeys.oops]
+            err?.message?.map((e) => e) ||
+              selectedContent[localizationKeys.oops]
           );
         }
       });
@@ -78,12 +86,21 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
       <div className="sm:w-[471px] w-full h-auto border-2 border-primary rounded-2xl bg-background p-6">
         <div className="ltr:text-left rtl:text-right">
           <h1 className="text-base font-bold">
-            {selectedContent[localizationKeys.locationIsRequired]} <span className="text-red-500">*</span>
+            {selectedContent[localizationKeys.locationIsRequired]}{" "}
+            <span className="text-red-500">*</span>
           </h1>
           <p className="text-gray-med text-xs font-normal pt-1 pb-2">
-            {selectedContent[localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo]}
+            {
+              selectedContent[
+                localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo
+              ]
+            }
             <br />
-            {selectedContent[localizationKeys.yourLocationYouCanManageThemLater]}
+            {
+              selectedContent[
+                localizationKeys.yourLocationYouCanManageThemLater
+              ]
+            }
             <span>
               <HashLink
                 smooth
@@ -113,13 +130,12 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                   <FormikMultiDropdown
                     name="countryId"
                     label={selectedContent[localizationKeys.country]}
-                    placeholder={selectedContent[localizationKeys.selectCountry]}
+                    placeholder={
+                      selectedContent[localizationKeys.selectCountry]
+                    }
                     options={AllCountriesOptions}
                     loading={loadingAllCountries}
                     onChange={(e) => setCountriesId(e)}
-                    inputProps={{
-                      readOnly: true,
-                    }}
                   />
                 </div>
                 <div className="w-full py-6">
@@ -129,9 +145,6 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                     placeholder={selectedContent[localizationKeys.city]}
                     options={AllCitiesOptions}
                     loading={loadingCitiesOptions}
-                    inputProps={{
-                      readOnly: true,
-                    }}
                   />
                 </div>
                 <div className="w-full py-6">
@@ -139,7 +152,9 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
                     name="address"
                     type="text"
                     label={selectedContent[localizationKeys.address]}
-                    placeholder={selectedContent[localizationKeys.wirteYourAddress]}
+                    placeholder={
+                      selectedContent[localizationKeys.wirteYourAddress]
+                    }
                   />
                 </div>
                 <div className="w-full py-6">

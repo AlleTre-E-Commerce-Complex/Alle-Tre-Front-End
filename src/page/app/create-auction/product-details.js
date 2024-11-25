@@ -157,14 +157,20 @@ const ProductDetails = () => {
   // };
 
   const handleFileChange = (event) => {
-    const files = event.target.files; // This is a FileList object containing the selected files
-    const fileArray = Array.from(files); // Convert FileList to an array
+    const files = event.target.files;
 
-    // Limit the selection to 5 images (if desired)
-    if (fileArray.length > 5) {
-      toast.error("You can only select up to 5 images.");
+    // Check if user selected more than 5 files
+    if (files.length > 5) {
+      toast.error(
+        selectedContent[localizationKeys.maxFiveImagesAllowed] ||
+          "You can only select up to 5 images"
+      );
+      // Clear the input
+      event.target.value = "";
       return;
     }
+
+    const fileArray = Array.from(files);
 
     // Clear previous files before adding new ones
     const newFiles = [null, null, null, null, null];
@@ -613,9 +619,6 @@ const ProductDetails = () => {
                         placeholder={selectedContent[localizationKeys.category]}
                         options={GatogryOptions}
                         loading={loadingGatogry}
-                        inputProps={{
-                          readOnly: true,
-                        }}
                         onChange={(value) => {
                           setCategoryId(value);
                           const fieldOption = GatogryOptions.find(
@@ -649,9 +652,6 @@ const ProductDetails = () => {
                           selectedContent[localizationKeys.subCategory]
                         }
                         loading={loadingSubGatogry}
-                        inputProps={{
-                          readOnly: true,
-                        }}
                         options={SubGatogryOptions}
                         onChange={(e) => setSubCategoryId(e)}
                       />
@@ -679,9 +679,6 @@ const ProductDetails = () => {
                             loadingAllCountries ||
                             loadingCitiesOptions
                           }
-                          inputProps={{
-                            readOnly: true,
-                          }}
                         />
                       </div>
                     ))}
@@ -744,6 +741,8 @@ const ProductDetails = () => {
                       type="file"
                       accept="image/*"
                       multiple
+                      max="5"
+                      maxLength="5"
                       onChange={handleFileChange}
                       style={{
                         width: "100%",
