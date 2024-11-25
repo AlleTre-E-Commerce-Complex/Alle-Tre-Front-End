@@ -11,7 +11,7 @@ import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function CheckoutFormPaymentDetails({ payPrice }) {
+export default function CheckoutFormPaymentDetails({ payPrice,setIsPaymentCompleted }) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
@@ -36,6 +36,7 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
       switch (paymentIntent.status) {
         case "succeeded":
           toast.success("Payment succeeded!");
+          setIsPaymentCompleted(true);
           break;
         case "processing":
           toast.loading("Your payment is processing.");
@@ -48,7 +49,7 @@ export default function CheckoutFormPaymentDetails({ payPrice }) {
           break;
       }
     });
-  }, [history, stripe]);
+  }, [history, stripe,setIsPaymentCompleted]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
