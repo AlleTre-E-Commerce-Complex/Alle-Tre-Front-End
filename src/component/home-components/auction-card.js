@@ -79,7 +79,7 @@ const AuctionCard = ({
           title,
           text: title,
           // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
-          url: `${getDomain()}/home/${auctionId}/details`,
+          url: `${getDomain()}/alletre/home/${auctionId}/details`,
         });
         console.log("Post shared successfully!");
       } catch (error) {
