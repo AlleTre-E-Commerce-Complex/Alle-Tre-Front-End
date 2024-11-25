@@ -77,9 +77,9 @@ const AuctionCard = ({
       try {
         await navigator.share({
           title,
-          text: title,
+          text: title,  
           // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
-          url: `${getDomain()}/alletre/home/${auctionId}/details`,
+          url: `${getDomain()}/public/auction/${auctionId}`,
         });
         console.log("Post shared successfully!");
       } catch (error) {
