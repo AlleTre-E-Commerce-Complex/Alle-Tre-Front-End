@@ -137,6 +137,17 @@ const Sidebar = ({ SetSid, sid }) => {
               }}
             />
             <NavLink
+              title={selectedContent[localizationKeys.myAuctions]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.myAuctions.default)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.myAuctions.default);
+                SetSid(false);
+              }}
+            />
+            <NavLink
               title={selectedContent[localizationKeys.myBids]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.myBides)
@@ -157,7 +168,6 @@ const Sidebar = ({ SetSid, sid }) => {
                 SetSid(false);
               }}
             />
-            <AccordionMenu />
             <NavLink
               title={selectedContent[localizationKeys.watchlist]}
               isActive={
@@ -166,26 +176,6 @@ const Sidebar = ({ SetSid, sid }) => {
               }
               onClick={() => {
                 handelWatchlist();
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.faqs]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.faqs)
-              }
-              onClick={() => {
-                history.push(routes.app.faqs);
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.support]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.support)
-              }
-              onClick={() => {
-                history.push(routes.app.support);
                 SetSid(false);
               }}
             />
@@ -211,9 +201,29 @@ const Sidebar = ({ SetSid, sid }) => {
                 SetSid(false);
               }}
             />
+            <NavLink
+              title={selectedContent[localizationKeys.faqs]}
+              isActive={
+                pathname.length === 1 || pathname.startsWith(routes.app.faqs)
+              }
+              onClick={() => {
+                history.push(routes.app.faqs);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.support]}
+              isActive={
+                pathname.length === 1 || pathname.startsWith(routes.app.support)
+              }
+              onClick={() => {
+                history.push(routes.app.support);
+                SetSid(false);
+              }}
+            />
             <div
               onClick={onLogout}
-              className="flex justify-center gap-x-2 mt-12  cursor-pointer"
+              className="flex  justify-center gap-x-2 mt-12  cursor-pointer"
             >
               <img className="w-4 h-4 mt-0.5" src={logOut} alt="logOut" />
               <p className="text-gray-med text-sm font-normal underline">
