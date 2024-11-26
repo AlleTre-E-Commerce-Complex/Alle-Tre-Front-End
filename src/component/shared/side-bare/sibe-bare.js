@@ -76,6 +76,7 @@ const Sidebar = ({ SetSid, sid }) => {
     history.push(routes.app.home);
     socket.close();
     logout();
+    SetSid(false);
   };
   const handelmyAuctions = () => {
     if (user) {
@@ -231,7 +232,7 @@ const Sidebar = ({ SetSid, sid }) => {
               />
               <div
                 onClick={onLogout}
-                className="flex  justify-center gap-x-2 mt-12  cursor-pointer"
+                className="flex justify-center gap-x-2 mt-12 cursor-pointer"
               >
                 <LogoutIcon />
                 <p className="text-red-600 text-sm font-normal underline">
