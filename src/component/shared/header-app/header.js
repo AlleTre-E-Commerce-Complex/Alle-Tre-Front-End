@@ -20,6 +20,8 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import { CgProfile } from "react-icons/cg";
 import { toast } from "react-hot-toast";
+import { Icon } from "semantic-ui-react";
+import { useSocket } from "../../../context/socket-context";
 
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
@@ -58,7 +60,6 @@ const Header = ({ SetSid }) => {
       history.push(routes.app.profile.profileSettings);
     } else {
       dispatch(Open());
-      toast.error("You must log in first to show your profile");
     }
   };
   const handelOnSell = () => {
@@ -85,6 +86,15 @@ const Header = ({ SetSid }) => {
     if (user) {
       history.push(routes.app.profile.watchlist);
     } else dispatch(Open());
+  };
+
+  const { logout } = useAuthState();
+  const socket = useSocket();
+
+  const onLogout = () => {
+    history.push(routes.app.home);
+    socket.close();
+    logout();
   };
 
   return (
@@ -210,9 +220,9 @@ const Header = ({ SetSid }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="py-[6px] flex gap-x-4  max-w-[1440px] lg:mx-3 md:mx-12 px-2 md:px-0 ">
+        <div className="py-[6px] flex gap-x-4 max-w-[1440px] lg:mx-3 md:mx-12 px-2 md:px-0">
           <Input
-            className="w-full border border-secondary rounded-md h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR "
+            className="w-full border border-secondary rounded-md h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR"
             icon="search"
             placeholder={selectedContent[localizationKeys.search]}
             onChange={(e, { value }) => {
@@ -221,7 +231,7 @@ const Header = ({ SetSid }) => {
           />
           <div className="md:block hidden">
             <button
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[304px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
+              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[250px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
               onClick={handleOpen}
             >
               {selectedContent[localizationKeys.categories]}
@@ -233,18 +243,40 @@ const Header = ({ SetSid }) => {
             setIsOpen={setIsOpen}
             onClose={handleClose}
           />
-          <div className="md:block hidden">
-            <button
-              onClick={handelRegister}
-              className="w-[136px] h-[48px] border-[1px] border-secondary text-secondary rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
-            >
-              <FaUser size={15} className="mt-1" />
-              <p className="pt-1">
-                {user
-                  ? selectedContent[localizationKeys.profile]
-                  : selectedContent[localizationKeys.loginOrRegister]}
-              </p>
-            </button>
+          <div className="md:flex hidden gap-x-4">
+            {user ? (
+              <>
+                <button
+                  onClick={handelRegister}
+                  className="w-[120px] h-[48px] border-[1px] border-secondary text-secondary rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
+                >
+                  <FaUser size={15} className="mt-1" />
+                  <p className="pt-1">
+                    {selectedContent[localizationKeys.profile]}
+                  </p>
+                </button>
+
+                <button
+                  onClick={onLogout}
+                  className="w-[120px] h-[48px] border-[1px] border-primary text-red-600 hover:bg-primary hover:text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal transition-all duration-300"
+                >
+                  <Icon name="sign-out" className="mt-1" />
+                  <p className="pt-1">
+                    {selectedContent[localizationKeys.logout]}
+                  </p>
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={handelRegister}
+                className="w-[120px] h-[48px] border-[1px] border-secondary text-secondary rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
+              >
+                <FaUser size={15} className="mt-1" />
+                <p className="pt-1">
+                  {selectedContent[localizationKeys.loginOrRegister]}
+                </p>
+              </button>
+            )}
           </div>
         </div>
       </div>
