@@ -232,10 +232,10 @@ const Sidebar = ({ SetSid, sid }) => {
               />
               <div
                 onClick={onLogout}
-                className="flex justify-center gap-x-2 mt-12 cursor-pointer"
+                className="flex justify-start items-center gap-x-2 mt-12 mb-6 cursor-pointer mx-10"
               >
                 <LogoutIcon />
-                <p className="text-red-600 text-sm font-normal underline">
+                <p className="text-red-600 text-base font-medium underline">
                   {selectedContent[localizationKeys.logout]}
                 </p>
               </div>
