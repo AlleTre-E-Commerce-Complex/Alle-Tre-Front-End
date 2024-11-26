@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { RiShareForwardFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../api";
 import { authAxios } from "../../../config/axios-config";
@@ -14,6 +15,7 @@ const ImgSlider = ({
   WatshlistState,
   onReload,
   isMyAuction,
+  title,
 }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
@@ -64,6 +66,29 @@ const ImgSlider = ({
       dispatch(Open());
     }
   };
+  const getDomain = () => {
+    const { protocol, hostname, port } = window.location;
+    return port
+      ? `${protocol}//${hostname}:${port}`
+      : `${protocol}//${hostname}`;
+  };
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title,
+          text: title,
+          url: `${getDomain()}/alletre/home/${auctionId}/details`,
+        });
+        console.log("Post shared successfully!");
+      } catch (error) {
+        console.error("Error sharing post:", error);
+      }
+    } else {
+      alert("Sharing is not supported in this browser.");
+    }
+  };
 
   return (
     <div className=" shadow rounded-2xl group overflow-hidden ">
@@ -89,18 +114,34 @@ const ImgSlider = ({
             className={
               isMyAuction
                 ? "hidden"
-                : "bg-white rounded-lg w-[38px] h-[44px] absolute top-5 right-5 z-50"
+                : "rounded-lg w-[38px] h-[88px] absolute top-5 right-5 z-50"
             }
           >
             <div
-              onClick={() => handelAddNewWatshlist()}
-              className="flex justify-center items-center mt-2.5 cursor-pointer relative z-50 "
+              onClick={() => handleShare()}
+              className="border-primary border-2 border-solid bg-white group/share rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer"
             >
-              {isWatshlist ? (
-                <BsBookmarkFill className="text-primary" size={25} />
-              ) : (
-                <BsBookmark className="text-gray-med" size={25} />
-              )}
+              <div className="h-full w-full flex justify-center items-center">
+                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
+              </div>
+            </div>
+            <div
+              onClick={() => handelAddNewWatshlist()}
+              className="border-primary border-2 border-solid bg-white group/bookmark rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] mt-4 hover:bg-primary transition-all duration-300 cursor-pointer"
+            >
+              <div className="h-full w-full flex justify-center items-center">
+                {isWatshlist ? (
+                  <BsBookmarkFill
+                    className="text-primary group-hover/bookmark:text-white"
+                    size={25}
+                  />
+                ) : (
+                  <BsBookmark
+                    className="text-primary group-hover/bookmark:text-white"
+                    size={25}
+                  />
+                )}
+              </div>
             </div>
           </div>
           <div className="flex absolute bottom-7 ltr:md:left-4 rtl:md:right-4 ltr:left-0 rtl:right-0 z-20">
