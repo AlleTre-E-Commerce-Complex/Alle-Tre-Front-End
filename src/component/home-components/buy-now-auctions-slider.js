@@ -39,7 +39,7 @@ const BuyNowAuctionsSlider = () => {
       if (user) {
         runAuctions(
           authAxios
-            .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
+            .get(`${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`)
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
@@ -90,30 +90,31 @@ const BuyNowAuctionsSlider = () => {
   };
   return (
     <div>
-      {/* <div className="text-center">
+      <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
-          {selectedContent[localizationKeys.buyNow]}
+          {/* {selectedContent[localizationKeys.buyNow]} */}
+          {selectedContent[localizationKeys.expiredAuctions]}
         </h1>
-        <p className="text-gray-med text-base font-normal pb-10">
+        {/* <p className="text-gray-med text-base font-normal pb-10">
           {selectedContent[localizationKeys.DontWaitBuyNow]}
-        </p>
-      </div> */}
+        </p> */}
+      </div>
       {auctions?.length === 0 ? (
         <div>
-          {/* <img
+          <img
             className="w-full h-full object-cover rounded-2xl  shadow"
             src={buyNowEmty}
             alt="buyNowEmty"
-          /> */}
+          />
           {/* <BannerSingle /> */}
         </div>
       ) : (
         <div className="ezd-content relative">
-          {/* <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
+          <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
             <Loader active />
             <LodingTestAllatre />
-          </Dimmer> */}
-          {/* <div className="ezd-snapslider pt-10">
+          </Dimmer>
+          <div className="ezd-snapslider pt-10">
             <div className="snapslider-wrapper">
               <div ref={swiperRef2} className={`snapslider-overflow`}>
                 <div
@@ -126,6 +127,7 @@ const BuyNowAuctionsSlider = () => {
                   {auctions?.map((e) => (
                     <div key={e?.id} className="snapslider-card swiper-slide">
                       <AuctionCard
+                        isExpired={e?.status === "EXPIRED"}
                         className="min-w-[272px]"
                         auctionId={e?.id}
                         price={e?.acceptedAmount || e?.startBidAmount}
@@ -163,7 +165,7 @@ const BuyNowAuctionsSlider = () => {
                 </button>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       )}
     </div>

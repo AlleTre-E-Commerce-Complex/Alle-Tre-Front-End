@@ -43,6 +43,7 @@ const api = {
       getLiveAuctions: "auctions/user/live",
       getUpComming: "/auctions/user/up-comming",
       getBuyNow: "/auctions/user/buy-now",
+      getExpiredAuctions: "/auctions/user/expired-auctions",
       sponsored: "/auctions/user/sponsored",
       totalBids: (auctionsId) => `/auctions/user/${auctionsId}/total-bids`,
       totalBidsDetails: (auctionsId, userId) =>
