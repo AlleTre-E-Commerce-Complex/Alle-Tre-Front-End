@@ -51,7 +51,7 @@ const SummaryHomeAuctionSections = ({
   onReload,
   isOffer,
 }) => {
-  console.log("isOffer", isOffer);
+
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];

@@ -33,11 +33,31 @@ function AuthProvider({ children }) {
     history.push(routes.app.home);
   };
 
+
+  const getDomain = () => {
+    const { protocol, hostname, port } = window.location;
+    return port
+      ? `${protocol}//${hostname}:${port}`
+      : `${protocol}//${hostname}`;
+  };
+  const getSharedUrl = (auctionId) => `${getDomain()}/alletre/home/${auctionId}/details`;
+
+
   React.useEffect(() => {
+    const pathname = window.location.pathname;  // /alletre/home/35/details
+     const segments = pathname.split('/');  // ["", "alletre", "home", "35", "details"]
+    const auctionId = segments[3];  // The auctionId is in the 4th segment (index 3)
+    console.log(auctionId);  // Output: 35
+
+
     Auth.getUser().then((user) => {
       if (!user) {
         if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
-          history.push(`${routes.app.home}?page=1&perPage=28`);
+          if(window.location.pathname.includes('details')){
+            history.push(window.location.pathname)
+          }else{
+            history.push(`${routes.app.home}?page=1&perPage=28`);
+          }
         }
       }
       setUser(user);
