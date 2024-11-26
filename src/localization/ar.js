@@ -90,6 +90,7 @@ const ar = {
   [localizationKeys.allRightsReserved]: "جميع الحقوق محفوظة.",
   [localizationKeys.upComingAuctions]: "المزادات القادمة",
   [localizationKeys.totalBids]: "إجمالي المزادات",
+  [localizationKeys.yourPendingPaymentsAreListedHere]:"تظهر مدفوعاتك المعلقة هنا",
   [localizationKeys.bid]: "مزاد",
   [localizationKeys.endingTime]: "نهاية الوقت",
   [localizationKeys.days]: "أيام",
