@@ -14,6 +14,7 @@
   position: relative;
   color: #707070;
   cursor: pointer;
+  
 }
 
 .hover-underline-animation:after {
@@ -21,8 +22,8 @@
   position: absolute;
   width: 100%;
   transform: scaleX(0);
-  height: 2.5px;
-  bottom: 0;
+  height: 2px;
+  bottom: -4px;
   left: 0;
   background-color: #821A4D;
   transform-origin: bottom left;
@@ -39,8 +40,8 @@
   position: absolute;
   width: 100%;
   transform: scaleX(1);
-  height: 3px;
-  bottom: 0;
+  height: 2px;
+  bottom: -4px;
   left: 0;
   background-color: #821A4D;
   transform-origin: bottom left;
