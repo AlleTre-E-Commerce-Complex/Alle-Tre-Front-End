@@ -138,10 +138,10 @@ const ProfileSideBare = ({ SetSid, sid }) => {
         {/* Fixed Footer */}
         <div
           onClick={onLogout}
-          className="h-[40px] flex justify-center gap-x-2 py-2 cursor-pointer bg-white"
+          className="h-[40px] fixed bottom-0 w-[250px] flex justify-center gap-x-2 py-2 cursor-pointer bg-white shadow-md border-t"
         >
           <LogoutIcon />
-          <p className="text-red-600 text-sm font-normal underline">
+          <p className="text-red-600 text-base font-medium underline">
             {selectedContent[localizationKeys.logout]}
           </p>
         </div>
@@ -257,7 +257,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             onClick={onLogout}
             className="flex justify-center gap-x-2 py-4 cursor-pointer"
           >
-            <p className="text-red-600 text-sm font-normal underline">
+            <p className="text-red-600 text-base font-medium underline">
               {selectedContent[localizationKeys.logout]}
             </p>
           </div>
@@ -291,7 +291,7 @@ export const NavLink = ({ title, onClick, isActive }) => {
 
 const LogoutIcon = () => (
   <svg
-    className="w-4 h-4 mt-0.5 text-red-600"
+    className="w-5 h-5 mt-0.5 text-red-600"
     fill="currentColor"
     viewBox="0 0 24 24"
   >
