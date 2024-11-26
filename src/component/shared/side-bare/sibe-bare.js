@@ -77,10 +77,15 @@ const Sidebar = ({ SetSid, sid }) => {
     socket.close();
     logout();
   };
+  const handelmyAuctions = () => {
+    if (user) {
+      history.push(routes.app.profile.myAuctions.default);
+    } else dispatch(Open());
+  };
 
   const handelmyBids = () => {
     if (user) {
-      history.push(routes.app.profile.myBids);
+      history.push(routes.app.profile.myBids.default);
     } else dispatch(Open());
   };
   const handelWatchlist = () => {
@@ -124,114 +129,118 @@ const Sidebar = ({ SetSid, sid }) => {
               className="w-28 mx-8"
             />
           </div>
-          <div className="flex flex-col flex-grow gap-y-8 mx-6 mt-10">
-            <NavLink
-              title={selectedContent[localizationKeys.profile]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.default)
-              }
-              onClick={() => {
-                handelMyPfofile();
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.myAuctions]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.myAuctions.default)
-              }
-              onClick={() => {
-                history.push(routes.app.profile.myAuctions.default);
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.myBids]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.myBides)
-              }
-              onClick={() => {
-                handelmyBids();
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.sellNow]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.createAuction.default)
-              }
-              onClick={() => {
-                handelOnSell();
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.watchlist]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.watchlist)
-              }
-              onClick={() => {
-                handelWatchlist();
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.Purchased]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.purchased)
-              }
-              onClick={() => {
-                history.push(routes.app.profile.purchased);
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.Wallet]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.wallet)
-              }
-              onClick={() => {
-                history.push(routes.app.profile.wallet);
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.faqs]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.faqs)
-              }
-              onClick={() => {
-                history.push(routes.app.faqs);
-                SetSid(false);
-              }}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.support]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.support)
-              }
-              onClick={() => {
-                history.push(routes.app.support);
-                SetSid(false);
-              }}
-            />
-            <div
-              onClick={onLogout}
-              className="flex  justify-center gap-x-2 mt-12  cursor-pointer"
-            >
-              <img className="w-4 h-4 mt-0.5" src={logOut} alt="logOut" />
-              <p className="text-gray-med text-sm font-normal underline">
-                {selectedContent[localizationKeys.logout]}
-              </p>
-            </div>
-            <div className="mt-auto mb-5">
-              <DropdownLang className={"text-white "} />
+          <div className="flex-grow overflow-y-auto">
+            <div className="flex flex-col gap-y-8 mx-6 mt-10 w-full">
+              <NavLink
+                title={selectedContent[localizationKeys.profile]}
+                isActive={
+                  pathname === routes.app.profile.profileSettings ||
+                  pathname === routes.app.profile.default
+                }
+                onClick={() => {
+                  handelMyPfofile();
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.myAuctions]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.myAuctions.default)
+                }
+                onClick={() => {
+                  handelmyAuctions();
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.myBids]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.myBids.default)
+                }
+                onClick={() => {
+                  handelmyBids();
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.sellNow]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.createAuction.default)
+                }
+                onClick={() => {
+                  handelOnSell();
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.watchlist]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.watchlist)
+                }
+                onClick={() => {
+                  handelWatchlist();
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.Purchased]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.purchased)
+                }
+                onClick={() => {
+                  history.push(routes.app.profile.purchased);
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.Wallet]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.wallet)
+                }
+                onClick={() => {
+                  history.push(routes.app.profile.wallet);
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.faqs]}
+                isActive={
+                  pathname.length === 1 || pathname.startsWith(routes.app.faqs)
+                }
+                onClick={() => {
+                  history.push(routes.app.faqs);
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.support]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.support)
+                }
+                onClick={() => {
+                  history.push(routes.app.support);
+                  SetSid(false);
+                }}
+              />
+              <div
+                onClick={onLogout}
+                className="flex  justify-center gap-x-2 mt-12  cursor-pointer"
+              >
+                <LogoutIcon />
+                <p className="text-red-600 text-sm font-normal underline">
+                  {selectedContent[localizationKeys.logout]}
+                </p>
+              </div>
+              <div className="mt-auto mb-5">
+                <DropdownLang className={"text-white "} />
+              </div>
             </div>
           </div>
         </div>
@@ -242,16 +251,27 @@ const Sidebar = ({ SetSid, sid }) => {
 
 export const NavLink = ({ title, onClick, isActive }) => {
   return (
-    <div>
+    <div className="w-full">
       <p
         onClick={onClick}
         className={`${
           isActive ? "active-underline-animation" : "hover-underline-animation"
-        } text-base text-white font-normal`}
+        } text-base text-white font-normal cursor-pointer`}
       >
         {title}
       </p>
     </div>
   );
 };
+
+const LogoutIcon = () => (
+  <svg
+    className="w-4 h-4 mt-0.5 text-red-600"
+    fill="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
+  </svg>
+);
+
 export default Sidebar;
