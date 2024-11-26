@@ -205,6 +205,11 @@ const localizationKeys = {
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",
+  confirmDeleteAddress: "are you sure you want to delete this address?",
+  addressDeletedSuccessfully: "address deleted successfully",
+  errorDeletingAddress: "error deleting address",
+  deleteAddress: "delete Address",
+  cannotDeleteMainAddress: "cannot delete main address",
   // paymemt details
   paymentMethod: "paymentMethod",
   // profile
