@@ -608,7 +608,7 @@ const AuctionDetails = () => {
                     {/* =================== */}
 
                     {/* ============================  This is only if the use is admin */}
-                    {pofileData?.email === "kamaru916@gmail.com" && (
+                    {pofileData?.email === "alletre.auctions@gmail.com" && (
                       <div>
                         <div className="flex mt-7">
                           <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">

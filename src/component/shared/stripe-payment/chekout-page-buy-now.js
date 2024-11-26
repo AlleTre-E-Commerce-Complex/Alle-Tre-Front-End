@@ -77,17 +77,6 @@ export default function CheckoutPageBuyNow() {
                     setWalletBalance(balance)
                     setShwoPaymentSelection(true)
                   }else{
-                    alert('insufient wallet money')
-                        // run(
-                        //   authAxios
-                        //     .post(api.app.auctions.buyNow(auctionId))
-                        //     .then((res) => {
-                        //       setClientSecret(res?.data?.data.clientSecret);
-                        //     })
-                        //     .catch((err) => {
-                        //       toast.error(err?.response?.data?.message[lang]);
-                        //     })
-                        // );
                       stripePaymentApiCall()
                         
                   }

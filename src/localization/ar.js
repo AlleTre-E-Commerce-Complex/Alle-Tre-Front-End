@@ -57,6 +57,7 @@ const ar = {
   [localizationKeys.sellingType]: "نوع البيع",
   [localizationKeys.auction]: "مزاد",
   [localizationKeys.buyNow]: "اشتري الآن",
+  [localizationKeys.expiredAuctions]: "المزادات المنتهية",
   [localizationKeys.deliveryPolicy]: "سياسة التسليم ",
   [localizationKeys.expectedDeliveryDays]: "أيام التسليم المتوقعة",
   [localizationKeys.deliveryFees]: "رسوم التوصيل",

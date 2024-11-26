@@ -38,6 +38,7 @@ export default function CheckoutPageCompletePayment() {
     (state) => state?.completePayment?.completePaymentData
   );
 
+  const payingAmount = Number(completedPaymentData?.lastPrice) + (Number(completedPaymentData?.lastPrice) * 0.5)/100
   const { auctionId } = useParams();
 
   const [clientSecret, setClientSecret] = useState("");
@@ -62,7 +63,7 @@ export default function CheckoutPageCompletePayment() {
         .then(async (res) => {
           setPendingAuctionData(res?.data?.data);
           const auctionData = res?.data?.data;
-          const amountToPay = completedPaymentData?.lastPrice;
+          const amountToPay = payingAmount;
           if (auctionData) {
             const pendingPeymentData = await authAxios.get(
               `${api.app.auctions.isPendingPayment(
@@ -280,7 +281,7 @@ export default function CheckoutPageCompletePayment() {
                     <Elements options={options} stripe={stripePromise}>
                       <CheckoutFromCompletePayment
                         auctionId={completedPaymentData?.auctionsId}
-                        payPrice={completedPaymentData?.lastPrice}
+                        payPrice={payingAmount}
                       />
                     </Elements>
                   )}
@@ -288,14 +289,14 @@ export default function CheckoutPageCompletePayment() {
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutFromCompletePayment
                     auctionId={completedPaymentData?.auctionsId}
-                    payPrice={completedPaymentData?.lastPrice}
+                    payPrice={payingAmount}
                   />
                 </Elements>
               )}
               {showWalletPaymentMethod && (
                 <WalletPaymentForBidderFullPayment
                   auctionId={completedPaymentData?.auctionsId}
-                  amount={completedPaymentData?.lastPrice}
+                  amount={payingAmount}
                   walletBalance={walletBalance}
                   //need to change the payment API
                   paymentAPI={api.app.auctions.WalletPayForBidderFullPayment(
