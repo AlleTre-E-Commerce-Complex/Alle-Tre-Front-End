@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import BannerTopImage1 from "../../assets/images/BannerTop1.jpg";
-import BannerTopImage2 from "../../assets/images/BannerTop2.jpg";
-import BannerTopImage3 from "../../assets/images/BannerTop3.jpg";
+import BannerTopImage1 from "../../assets/images/hero banner without button-02-1.jpg";
+import BannerTopImage2 from "../../assets/images/ecommerce banner1.jpg";
+import BannerTopImage3 from "../../assets/images/bannerTop-5.jpg";
 
 const BannerTop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
