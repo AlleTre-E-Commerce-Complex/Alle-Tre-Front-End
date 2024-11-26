@@ -109,25 +109,25 @@ const ImgSlider = ({
             />
           </div>
         )}
+        <div
+          onClick={() => handleShare()}
+          className="absolute top-5 right-5 z-50 border-primary border-2 border-solid bg-white group/share rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer"
+        >
+          <div className="h-full w-full flex justify-center items-center">
+            <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
+          </div>
+        </div>
         <div className="w-full h-full relative top-0 left-0 hover:bg-gradient-to-t group-hover:from-[#25252562] rounded-2xl z-10 cursor-pointer ">
           <div
             className={
               isMyAuction
                 ? "hidden"
-                : "rounded-lg w-[38px] h-[88px] absolute top-5 right-5 z-50"
+                : "rounded-lg w-[38px] h-[88px] absolute top-20 right-5 z-50"
             }
           >
             <div
-              onClick={() => handleShare()}
-              className="border-primary border-2 border-solid bg-white group/share rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer"
-            >
-              <div className="h-full w-full flex justify-center items-center">
-                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
-              </div>
-            </div>
-            <div
               onClick={() => handelAddNewWatshlist()}
-              className="border-primary border-2 border-solid bg-white group/bookmark rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] mt-4 hover:bg-primary transition-all duration-300 cursor-pointer"
+              className="border-primary border-2 border-solid bg-white group/bookmark rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer"
             >
               <div className="h-full w-full flex justify-center items-center">
                 {isWatshlist ? (
