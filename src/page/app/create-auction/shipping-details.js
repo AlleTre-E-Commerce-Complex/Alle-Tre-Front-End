@@ -33,6 +33,7 @@ import {
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import { MdDelete } from "react-icons/md";
 
 const ShippingDetails = () => {
   const [lang] = useLanguage("");
@@ -59,10 +60,8 @@ const ShippingDetails = () => {
     (state) => state.auctionDetails.warrantyPolicy
   );
 
-  const offerDataInt = useSelector(
-    (state) => state.auctionDetails.offerPrice
-  )
-  console.log('offer price data int : ',offerDataInt)
+  const offerDataInt = useSelector((state) => state.auctionDetails.offerPrice);
+  console.log("offer price data int : ", offerDataInt);
   const [locationId, setLocationId] = useFilter("locationId", "");
 
   const history = useHistory();
@@ -203,9 +202,9 @@ const ShippingDetails = () => {
       if (productDetailsInt.cityId) {
         formData.append("product[cityId]", productDetailsInt.cityId);
       }
-      if(offerDataInt.IsOfferPrice){
-        formData.append('product[isOffer]',offerDataInt.IsOfferPrice);
-        formData.append('product[offerAmount]',offerDataInt.offerAmount)
+      if (offerDataInt.IsOfferPrice) {
+        formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
+        formData.append("product[offerAmount]", offerDataInt.offerAmount);
       }
       if (productDetailsInt?.auctionState === "DRAFTED") {
       } else {
@@ -253,10 +252,7 @@ const ShippingDetails = () => {
           "numOfDaysOfExpecetdDelivery",
           deliveryPolicyInt.expectedNumOfDays
         );
-        formData.append(
-          "DeliveryFees",
-          deliveryPolicyInt.deliveryFees
-        );
+        formData.append("DeliveryFees", deliveryPolicyInt.deliveryFees);
       }
       if (returnPolicyInt.IsRetrunPolicy) {
         formData.append("IsRetrunPolicy", returnPolicyInt.IsRetrunPolicy);
@@ -269,7 +265,7 @@ const ShippingDetails = () => {
           warrantyPolicyInt.description
         );
       }
-      
+
       if (productDetailsInt?.auctionState === "DRAFTED") {
         runCreatAuction(
           authAxios
@@ -361,6 +357,7 @@ const ShippingDetails = () => {
                 City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
                 PostalCode={e?.zipCode}
                 isMain={e?.isMain}
+                onReload={onReload}
               />
             ))}
             <button
@@ -408,8 +405,52 @@ export const LocationDetailsCard = ({
   City,
   PostalCode,
   Id,
+  isMain,
+  onReload,
 }) => {
   const [locationId, setLocationId] = useFilter("locationId", "");
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
+
+  const { run: runDelete } = useAxios();
+
+  const handleDelete = (e) => {
+    e.stopPropagation();
+
+    if (!Id) {
+      console.error("Invalid location ID");
+      toast.error("Invalid location ID");
+      return;
+    }
+
+    if (isMain) {
+      toast.error(selectedContent[localizationKeys.cannotDeleteMainAddress]);
+      return;
+    }
+
+    if (
+      window.confirm(selectedContent[localizationKeys.confirmDeleteAddress])
+    ) {
+      runDelete(
+        authAxios
+          .delete(api.app.location.delete(Id))
+          .then((response) => {
+            console.log("Delete response:", response);
+            toast.success(
+              selectedContent[localizationKeys.addressDeletedSuccessfully]
+            );
+            onReload();
+          })
+          .catch((error) => {
+            toast.error(
+              error.response?.data?.message.en ||
+                selectedContent[localizationKeys.errorDeletingAddress]
+            );
+          })
+      );
+    }
+  };
+
   return (
     <div
       onClick={() => {
@@ -417,7 +458,7 @@ export const LocationDetailsCard = ({
       }}
       className={`${
         locationId === `${Id}` ? "border-primary" : "border-gray-med"
-      } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer`}
+      } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer relative`}
     >
       <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
       <p className="text-gray-med text-sm pt-2">{Address}</p>
@@ -425,6 +466,16 @@ export const LocationDetailsCard = ({
         {City}, {Country}
       </p>
       <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
+
+      {!isMain && (
+        <button
+          onClick={handleDelete}
+          className="absolute top-2 right-2 p-2 text-red-500 hover:text-red-700"
+          title={selectedContent[localizationKeys.deleteAddress]}
+        >
+          <MdDelete size={20} />
+        </button>
+      )}
     </div>
   );
 };

@@ -222,6 +222,12 @@ const ar = {
   // shiping details
   [localizationKeys.locationDetails]: "تفاصيل الشحن",
   [localizationKeys.addAddress]: "إضافة عنوان",
+  [localizationKeys.confirmDeleteAddress]:
+    "هل أنت متأكد من أنك تريد حذف هذا العنوان؟",
+  [localizationKeys.addressDeletedSuccessfully]: "تم حذف العنوان بنجاح",
+  [localizationKeys.errorDeletingAddress]: "خطأ في حذف العنوان",
+  [localizationKeys.deleteAddress]: "حذف العنوان",
+  [localizationKeys.cannotDeleteMainAddress]: "لا يمكن حذف العنوان الرئيسي",
   // profile
   [localizationKeys.online]: "متصل",
   [localizationKeys.logout]: "تسجيل الخروج",
