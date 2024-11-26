@@ -53,6 +53,7 @@ const localizationKeys = {
   locatedIn: "locatedIn",
   popularCategories: "popularCategories",
   totalBids: "totalBids",
+  yourPendingPaymentsAreListedHere: "yourPendingPaymentsAreListedHere",
   endingTime: "endingTime",
   bid: "bid",
   results: "results",

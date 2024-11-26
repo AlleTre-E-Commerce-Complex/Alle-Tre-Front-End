@@ -93,6 +93,8 @@ const en = {
   [localizationKeys.allRightsReserved]: "All rights reserved.",
   [localizationKeys.upComingAuctions]: "Up-coming Auctions",
   [localizationKeys.totalBids]: "Total Bids",
+  [localizationKeys.yourPendingPaymentsAreListedHere]:
+    "Your pending payments are listed here",
   [localizationKeys.bid]: "Bid",
   [localizationKeys.endingTime]: "Ending Time",
   [localizationKeys.days]: "days",
