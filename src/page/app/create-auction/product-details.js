@@ -45,6 +45,7 @@ const ProductDetails = () => {
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
+  const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(1);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const productDetailsint = useSelector(
@@ -107,7 +108,7 @@ const ProductDetails = () => {
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
-    productDetailsint.fileThree || null
+productDetailsint.fileThree || null
   );
   const [fileFour, setFileFour] = useState(productDetailsint.fileFour || null);
   const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
@@ -279,6 +280,38 @@ const ProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
+    if (selectedCoverPhoto !== 1) {
+      // Store the files in an array for easier access
+      const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+      
+      // Store the cover photo (selected image)
+      const coverPhoto = files[selectedCoverPhoto - 1];
+      
+      // Store the current first photo
+      const firstPhoto = fileOne;
+      
+      // Swap the files
+      setFileOne(coverPhoto);  // Set the selected photo as first
+      
+      // Set the first photo in the position of the selected cover
+      switch(selectedCoverPhoto) {
+        case 2:
+          setFileTwo(firstPhoto);
+          break;
+        case 3:
+          setFileThree(firstPhoto);
+          break;
+        case 4:
+          setFileFour(firstPhoto);
+          break;
+        case 5:
+          setFileFive(firstPhoto);
+          break;
+        default:
+          break;
+      }
+    }
+    
     if (fileThree || (imgtest && imgtest[2])) {
       if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
         dispatch(
@@ -787,6 +820,8 @@ const ProductDetails = () => {
                           setFileFour={setFileFour}
                           fileFive={fileFive}
                           setFileFive={setFileFive}
+                          selectedCover={selectedCoverPhoto}
+                          setSelectedCover={setSelectedCoverPhoto}
                         />
                       )}
                       {/* {renderImagePreviews()}  */}
