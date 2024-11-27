@@ -40,7 +40,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           Shop Sustainable: Choose Pre-Owned.
         </p>
       </Form.Field>
-      <Form.Field>
+      {/* <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
@@ -53,7 +53,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
         <p className="text-gray-med text-xs font-normal pt-3">
           Unwrap Incredible Savings with Open Box Items.
         </p>
-      </Form.Field>
+      </Form.Field> */}
     </Form>
   );
 };

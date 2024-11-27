@@ -17,7 +17,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 
-import buyNowEmty from "../../../src/assets/img/buy-now-emty-state.png";
+import buyNowEmty from "../../../src/assets/images/sell online.jpg";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import BannerSingle from "./BannerSingle";
 
@@ -48,7 +48,7 @@ const BuyNowAuctionsSlider = () => {
       } else {
         runAuctions(
           axios
-            .get(`${api.app.auctions.getBuyNow}?page=1&perPage=${page}`)
+            .get(`${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`)
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);

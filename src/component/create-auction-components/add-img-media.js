@@ -18,7 +18,10 @@ const AddImgMedia = ({
   setFileFour,
   fileFive,
   setFileFive,
+  selectedCover,
+  setSelectedCover,
 }) => {
+
   const compressImage = async (file) => {
     try {
       // For debugging
@@ -131,11 +134,26 @@ const AddImgMedia = ({
                     name={`file${index}`}
                   >
                     <img
-                      className="border-primary border-[1px] border-solid rounded-lg w-[154px] h-[139px] object-cover"
+                      className={`${
+                        selectedCover === index ? "border-[3px]" : "border-[1px]"
+                      } border-primary  border-solid rounded-lg w-[154px] h-[139px] object-cover`}
                       src={URL.createObjectURL(file)}
                       alt={`Uploaded ${index}`}
                     />
                   </FileUploader>
+                  <div className="flex items-center gap-2">
+                    <input 
+                      type="radio" 
+                      id={`coverPhoto${index}`} 
+                      name="selectCoverPhoto" 
+                      className="accent-primary mt-1"
+                      checked={selectedCover === index}
+                      onChange={() => setSelectedCover(index)}
+                    />
+                    {selectedCover === index && (
+                      <label htmlFor={`coverPhoto${index}`}>Cover Photo</label>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <FileUploader
@@ -147,6 +165,7 @@ const AddImgMedia = ({
                     <img className="w-6 h-6" src={addImage} alt="Add Icon" />
                   </div>
                 </FileUploader>
+                
               )}
             </div>
           );
