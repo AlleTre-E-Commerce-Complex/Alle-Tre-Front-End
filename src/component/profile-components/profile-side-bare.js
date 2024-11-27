@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
-import logOut from "../../../src/assets/icons/log_out_icon.png";
-
+import { MdLogout } from "react-icons/md";
 import routes from "../../routes";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../context/language-context";
@@ -15,6 +13,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useAuthState } from "context/auth-context";
 import { useSocket } from "context/socket-context";
+import LogoutModal from "../shared/logout-modal/logout-modal";
 
 const ProfileSideBare = ({ SetSid, sid }) => {
   const [lang] = useLanguage("");
@@ -61,6 +60,8 @@ const ProfileSideBare = ({ SetSid, sid }) => {
     },
   };
   const socket = useSocket();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
   const onLogout = () => {
     history.push(routes.app.home);
     socket.close();
@@ -137,10 +138,10 @@ const ProfileSideBare = ({ SetSid, sid }) => {
 
         {/* Fixed Footer */}
         <div
-          onClick={onLogout}
-          className="h-[40px] fixed bottom-0 w-[250px] flex justify-center gap-x-2 py-2 cursor-pointer bg-white shadow-md border-t"
+          onClick={() => setLogoutModalOpen(true)}
+          className="h-[40px] fixed bottom-0 w-[250px] flex justify-center gap-x-1 py-2 cursor-pointer bg-white shadow-md border-t"
         >
-          <LogoutIcon />
+          <MdLogout className="text-xl text-red-600 h-6 " />
           <p className="text-red-600 text-base font-medium underline">
             {selectedContent[localizationKeys.logout]}
           </p>
@@ -254,15 +255,21 @@ const ProfileSideBare = ({ SetSid, sid }) => {
 
           {/* Fixed Footer */}
           <div
-            onClick={onLogout}
-            className="flex justify-center gap-x-2 py-4 cursor-pointer"
+            onClick={() => setLogoutModalOpen(true)}
+            className="flex justify-center items-center  py-4 cursor-pointer"
           >
+            <MdLogout className="text-xl text-red-600 h-6" />
             <p className="text-red-600 text-base font-medium underline">
               {selectedContent[localizationKeys.logout]}
             </p>
           </div>
         </motion.div>
       </div>
+      <LogoutModal
+        open={logoutModalOpen}
+        setOpen={setLogoutModalOpen}
+        onLogout={onLogout}
+      />
     </>
   );
 };
@@ -288,15 +295,5 @@ export const NavLink = ({ title, onClick, isActive }) => {
     </div>
   );
 };
-
-const LogoutIcon = () => (
-  <svg
-    className="w-5 h-5 mt-0.5 text-red-600"
-    fill="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
-  </svg>
-);
 
 export default ProfileSideBare;

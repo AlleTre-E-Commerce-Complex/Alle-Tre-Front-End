@@ -1,13 +1,13 @@
 import routes from "../../../routes";
+import { useState } from "react";
 
 import { ReactComponent as CloseIcon } from "../../../../src/assets/icons/x_icon.svg";
 import { ReactComponent as Allatre } from "../../../../src/assets/logo/allatre-logo-color.svg";
-import AccordionMenu from "../accordion-menu/accordion-menu";
 import DropdownLang from "../header-app/dropdown-lang";
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuthState } from "../../../context/auth-context";
 import { Open } from "../../../redux-store/auth-model-slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import "../header-app/nav-link-header.css";
 import { motion } from "framer-motion";
 import { useLanguage } from "../../../context/language-context";
@@ -15,7 +15,8 @@ import { toast } from "react-hot-toast";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { useSocket } from "context/socket-context";
-import logOut from "../../../../src/assets/icons/log_out_icon.png";
+import { MdLogout } from "react-icons/md";
+import LogoutModal from "../logout-modal/logout-modal";
 
 const Sidebar = ({ SetSid, sid }) => {
   const history = useHistory();
@@ -48,8 +49,6 @@ const Sidebar = ({ SetSid, sid }) => {
     },
   };
 
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
-
   const { user } = useAuthState();
   const dispatch = useDispatch();
   const handelOnSell = () => {
@@ -72,7 +71,10 @@ const Sidebar = ({ SetSid, sid }) => {
   const { logout } = useAuthState();
 
   const socket = useSocket();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
   const onLogout = () => {
+    setLogoutModalOpen(false);
     history.push(routes.app.home);
     socket.close();
     logout();
@@ -230,16 +232,26 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-              <div
-                onClick={onLogout}
-                className="flex justify-start items-center gap-x-2 mt-12 mb-6 cursor-pointer mx-10"
-              >
-                <LogoutIcon />
-                <p className="text-red-600 text-base font-medium underline">
-                  {selectedContent[localizationKeys.logout]}
-                </p>
-              </div>
-              <div className="mt-auto mb-5">
+              {/* Only show logout button if user is logged in */}
+              {user && (
+                <>
+                  <div
+                    onClick={() => setLogoutModalOpen(true)}
+                    className="flex justify-start items-center gap-x-1 mt-12 mb-6 cursor-pointer mx-10"
+                  >
+                    <MdLogout className="text-xl text-red-600" />
+                    <p className="text-red-600 text-sm font-normal underline">
+                      {selectedContent[localizationKeys.logout]}
+                    </p>
+                  </div>
+                  <LogoutModal
+                    open={logoutModalOpen}
+                    setOpen={setLogoutModalOpen}
+                    onLogout={onLogout}
+                  />
+                </>
+              )}
+              <div className="mt-10 mb-5">
                 <DropdownLang className={"text-white "} />
               </div>
             </div>
@@ -264,15 +276,5 @@ export const NavLink = ({ title, onClick, isActive }) => {
     </div>
   );
 };
-
-const LogoutIcon = () => (
-  <svg
-    className="w-4 h-4 mt-0.5 text-red-600"
-    fill="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
-  </svg>
-);
 
 export default Sidebar;
