@@ -51,7 +51,6 @@ const Header = ({ SetSid }) => {
 
   const { user } = useAuthState();
   const dispatch = useDispatch();
-  // const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   const handelMyPfofile = () => {
     if (user) {
@@ -117,7 +116,7 @@ const Header = ({ SetSid }) => {
             onClick={() => {
               history.push(routes.app.home);
             }}
-            className="text-primary cursor-pointer m-2"
+            className="text-primary cursor-pointer"
             size={30}
           />
         </div>
@@ -196,7 +195,9 @@ const Header = ({ SetSid }) => {
               }
               onClick={() => history.push(routes.app.support)}
             /> */}
-            <DropdownLang />
+            <div className="my-auto flex items-center">
+              <DropdownLang className="text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
+            </div>
           </div>
           <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
             <button
@@ -207,12 +208,10 @@ const Header = ({ SetSid }) => {
             </button>
           </div>
         </div>
-        <div
-          // onClick={() => setSerchShow((p) => !p)}
-          className="my-auto md:hidden block"
-        >
+        <div className="flex items-center gap-x-2 md:hidden">
+          <DropdownLang className="text-black bg-white/90 hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
           <CgProfile
-            className="text-primary cursor-pointer m-2"
+            className="text-primary cursor-pointer"
             size={30}
             onClick={() => {
               handelMyPfofile();

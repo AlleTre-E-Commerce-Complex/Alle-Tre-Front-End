@@ -11,15 +11,15 @@ const DropdownLang = ({ className }) => {
   const langOptions = [
     {
       key: "English",
-      text: selectedContent[localizationKeys.english],
+      text: <span className="hidden sm:inline">{selectedContent[localizationKeys.english]}</span>,
       value: "en",
-      image: <img className="w-6 h-6 mt-[.5px] " src={En} alt="en" />,
+      image: <img className="w-6 h-6 mt-[.5px]" src={En} alt="en" />,
     },
     {
       key: "Arabic",
-      text: selectedContent[localizationKeys.arabic],
+      text: <span className="hidden sm:inline">{selectedContent[localizationKeys.arabic]}</span>,
       value: "ar",
-      image: <img className="w-6 h-6 mt-[.5px] " src={Ar} alt="en" />,
+      image: <img className="w-6 h-6 mt-[.5px]" src={Ar} alt="en" />,
     },
   ];
 
