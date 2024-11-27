@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/allatre-logo-color.svg";
 import routes from "../../../routes";
@@ -19,16 +18,15 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import { CgProfile } from "react-icons/cg";
-import { toast } from "react-hot-toast";
-import { Icon } from "semantic-ui-react";
+import { MdLogout } from "react-icons/md";
 import { useSocket } from "../../../context/socket-context";
+import LogoutModal from "../logout-modal/logout-modal";
 
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
-
   const [isOpen, setIsOpen] = useState(false);
 
   const [serchShow, setSerchShow] = useState(false);
@@ -91,7 +89,10 @@ const Header = ({ SetSid }) => {
   const { logout } = useAuthState();
   const socket = useSocket();
 
-  const onLogout = () => {
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const handleLogout = () => {
+    setLogoutModalOpen(false);
     history.push(routes.app.home);
     socket.close();
     logout();
@@ -255,16 +256,18 @@ const Header = ({ SetSid }) => {
                     {selectedContent[localizationKeys.profile]}
                   </p>
                 </button>
-
-                <button
-                  onClick={onLogout}
-                  className="w-[120px] h-[48px] border-[1px] border-primary text-red-600 hover:bg-primary hover:text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal transition-all duration-300"
+                <div
+                  onClick={() => setLogoutModalOpen(true)}
+                  className="group w-[120px] h-[48px] border-[1px] border-primary text-red-600 hover:bg-primary hover:text-white rounded-lg flex items-center justify-center gap-x-1 py-3 text-base font-normal transition-all duration-300 cursor-pointer"
                 >
-                  <Icon name="sign-out" className="mt-1" />
-                  <p className="pt-1">
-                    {selectedContent[localizationKeys.logout]}
-                  </p>
-                </button>
+                  <MdLogout className="text-xl" />
+                  <span>Log Out</span>
+                </div>
+                <LogoutModal
+                  open={logoutModalOpen}
+                  setOpen={setLogoutModalOpen}
+                  onLogout={handleLogout}
+                />
               </>
             ) : (
               <button
