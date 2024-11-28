@@ -6,9 +6,23 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "routes";
 import { Button } from "semantic-ui-react";
 
+<<<<<<< Updated upstream
 const WalletPayment = ({ amount, walletBalance, auctionId, paymentAPI }) => {
   const history = useHistory();
   const [isWalletPaymentSuccess, setIsWalletPaymentSuccess] = useState(null);
+=======
+import { authAxios } from 'config/axios-config';
+import useAxios from 'hooks/use-axios';
+import React, { useState } from 'react'
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import routes from 'routes';
+import { Button } from 'semantic-ui-react'
+
+const WalletPayment = ({amount,walletBalance,auctionId,paymentAPI,setIsPaymentCompleted}) => {
+  const history = useHistory()
+  const [isWalletPaymentSuccess,setIsWalletPaymentSuccess] = useState(null)
+>>>>>>> Stashed changes
   const { run, isLoading } = useAxios([]);
   const submitWalletPayment = () => {
     const body = {
@@ -16,6 +30,7 @@ const WalletPayment = ({ amount, walletBalance, auctionId, paymentAPI }) => {
       amount,
     };
     run(
+<<<<<<< Updated upstream
       authAxios
         .post(paymentAPI, body)
         .then((res) => {
@@ -34,6 +49,27 @@ const WalletPayment = ({ amount, walletBalance, auctionId, paymentAPI }) => {
         })
     );
   };
+=======
+      authAxios.post(paymentAPI,body)
+      .then((res)=>{
+        setIsWalletPaymentSuccess(res?.data?.success)
+        if(res?.data?.success){
+          setIsPaymentCompleted(true)
+          toast.success('Payment successful',{
+            position: 'top-center', // Position of the toast
+          });
+          history.push(routes.app.profile.myAuctions.active)
+        }
+      })
+      .catch((error)=>{
+        console.log('seller wallet payment deposi error***>',error)
+        toast.error('Payment Failed', {
+          position: 'top-center',
+        });
+      })
+    )
+  }
+>>>>>>> Stashed changes
   return (
     <div className="flex flex-col justify-center bg-gray-100  h-4/5 rounded-xl p-4 border">
       <h1 className="text-center text-xl font-bold mb-20">

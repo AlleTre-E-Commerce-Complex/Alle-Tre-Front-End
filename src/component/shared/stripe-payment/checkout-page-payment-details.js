@@ -87,9 +87,11 @@ export default function CheckoutPagePaymentDetails() {
 
   useEffect(() => {
     return () => {
-      history.push(routes.app.profile.myAuctions.pending)
+      if(!isPaymentCompleted){
+        history.push(routes.app.profile.myAuctions.pending)
+      }
     }
-  }, []);
+  }, [isPaymentCompleted]);
   // Modify your handle functions to control navigation
   const handleConfirm = () => {
     // Remove the beforeunload listener before navigating
@@ -362,6 +364,7 @@ export default function CheckoutPagePaymentDetails() {
               )}
               {showWalletPaymentMethod && (
                 <WalletPayment
+                  setIsPaymentCompleted={setIsPaymentCompleted}
                   auctionId={auctionId}
                   amount={
                     pendingAuctionData?.product?.category
