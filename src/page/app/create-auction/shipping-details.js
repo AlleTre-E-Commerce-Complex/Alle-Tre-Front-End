@@ -307,6 +307,8 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
+
+              console.log('auction create error***>',err);
               toast.error(
                 // err?.response?.data?.message.map((e) => e) ||
                 //   err?.message.map((e) => e) ||

@@ -16,6 +16,7 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import toast from "react-hot-toast";
 
 const PendingAuctions = () => {
   const [lang] = useLanguage("");
@@ -40,11 +41,12 @@ const PendingAuctions = () => {
           .then((res) => {
             setPendingAuctionsData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
+            toast.success(selectedContent[localizationKeys.yourPendingPaymentsAreListedHere])
           })
       );
     }
   }, [run, forceReload, search]);
-
+ 
   return (
     <div className="">
       <Dimmer

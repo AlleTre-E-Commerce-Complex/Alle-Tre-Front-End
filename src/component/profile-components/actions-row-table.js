@@ -16,7 +16,7 @@ import BuyerObjectionModal from "component/shared/BuyerObjectionModal/BuyerObjec
 import WarningModal from "component/shared/warningModal/WarningModal";
 import SuccessModal from "component/shared/successModal/SuccessModal";
 import DeliverysentModal from "component/shared/DeliveryModal/DeliveryModal";
-import { toast } from "react-hot-toast";
+
 const ActionsRowTable = ({
   isBidsButtons,
   buttonActions,
@@ -64,9 +64,7 @@ const ActionsRowTable = ({
     ending_Time.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
-useEffect(() => {
-  status === "PENDING_OWNER_DEPOIST" && toast.success(selectedContent[localizationKeys.yourPendingPaymentsAreListedHere])
-}, [])
+
  
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
@@ -393,7 +391,7 @@ useEffect(() => {
               </button>
             )}
 
-            {status === "ACTIVE" && (
+            {(status === "ACTIVE" ||status === "PENDING_OWNER_DEPOIST") && (
               <button
                 onClick={() => {
                   setCancelAuctionModal(true);
