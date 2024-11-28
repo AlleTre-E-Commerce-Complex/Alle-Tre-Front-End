@@ -55,12 +55,12 @@ const PendingAuctions = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div>
+      {/* <div>
         <p className="pb-5 text-gray-med text-xs font-normal">
           {pendingAuctionsData?.length}{" "}
           {selectedContent[localizationKeys.totalPending]}
         </p>
-      </div>
+      </div> */}
       {pendingAuctionsData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>

@@ -51,7 +51,6 @@ const SummaryHomeAuctionSections = ({
   onReload,
   isOffer,
 }) => {
-
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -161,14 +160,14 @@ const SummaryHomeAuctionSections = ({
           setIsPaymentWithout_SD_Success(res?.data?.success);
           if (res?.data?.success) {
             toast.success("Payment successful", {
-              position: "top-center", // Position of the toast
+              position: "top-right", // Position of the toast
             });
             history.push(routes.app.profile.myBids.inPogress);
           }
         })
         .catch((error) => {
           toast.error("Payment Failed", {
-            position: "top-center",
+            position: "top-right",
           });
         })
     );

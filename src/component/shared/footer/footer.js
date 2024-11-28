@@ -114,12 +114,8 @@ const Footer = () => {
                     link: "https://www.facebook.com/alletr.ae",
                   },
                   {
-                    icon: FaFacebookSquare,
-                    link: "https://www.facebook.com/groups/423508893775890",
-                  },
-                  {
                     icon: FaInstagram,
-                    link: "https://www.instagram.com/alletr.ae/",
+                    link: "https://www.instagram.com/alletre.ae/",
                   },
                   {
                     icon: FaYoutube,
