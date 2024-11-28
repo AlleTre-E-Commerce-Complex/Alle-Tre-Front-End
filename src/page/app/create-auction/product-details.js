@@ -35,6 +35,7 @@ import useGetAllCities from "../../../hooks/use-get-all-cities";
 import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import { IoCameraOutline } from "react-icons/io5";
 
 const ProductDetails = () => {
   const [lang] = useLanguage("");
@@ -748,21 +749,36 @@ const ProductDetails = () => {
                         {selectedContent[localizationKeys.from3upto5photos]}
                       </span>
                     </h1>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      max="5"
-                      maxLength="5"
-                      onChange={handleFileChange}
-                      style={{
-                        width: "100%",
-                        maxWidth: "680px",
-                        height: "50px",
-                        padding: "12px",
-                        boxSizing: "border-box",
-                      }}
-                    />
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        max="5"
+                        maxLength="5"
+                        onChange={handleFileChange}
+                        capture="environment"
+                        className="w-full max-w-[680px] h-[50px] px-4 py-3 box-border pr-12"
+                        style={{
+                          width: "100%",
+                          maxWidth: "680px",
+                          height: "50px",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                      <button
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const input = e.target
+                            .closest("div")
+                            .querySelector("input");
+                          input.click();
+                        }}
+                      >
+                        <IoCameraOutline className="w-6 h-6 text-primary" />
+                      </button>
+                    </div>
                     <div className="mt-6 w-full">
                       {auctionState === "DRAFTED" ||
                       productDetailsint?.auctionState === "DRAFTED" ? (
