@@ -8,7 +8,7 @@ import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/B
 import AddImgMedia from "../../../component/create-auction-components/add-img-media";
 import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
 import Stepper from "../../../component/shared/stepper/stepper-app";
-import { Dimmer, Loader, Form } from "semantic-ui-react";
+import { Dimmer, Form } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 
 import { ScrollToFieldError } from "../../../component/shared/formik/formik-scroll-to-field-error";
@@ -108,7 +108,7 @@ const ProductDetails = () => {
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
-productDetailsint.fileThree || null
+    productDetailsint.fileThree || null
   );
   const [fileFour, setFileFour] = useState(productDetailsint.fileFour || null);
   const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
@@ -142,20 +142,6 @@ productDetailsint.fileThree || null
   const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(
     categoryId || productDetailsint.category
   );
-
-  // const renderImagePreviews = () => {
-  //   const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-  //   return files.map((file, index) => {
-  //     if (file) {
-  //       return (
-  //         <div key={index}>
-  //           <img src={URL.createObjectURL(file)} alt={`preview-${index}`} />
-  //         </div>
-  //       );
-  //     }
-  //     return null;
-  //   });
-  // };
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -210,7 +196,6 @@ productDetailsint.fileThree || null
               )
             )
             .then((res) => {
-              console.log("test1 :,", res?.data?.data);
               setCustomFromData(res?.data?.data);
             })
         );
@@ -223,7 +208,6 @@ productDetailsint.fileThree || null
               )
             )
             .then((res) => {
-              console.log("test2 :,", res?.data?.data);
               setCustomFromData(res?.data?.data);
             })
         );
@@ -237,13 +221,7 @@ productDetailsint.fileThree || null
     productDetailsint.subCategory,
     loadingImg,
   ]);
-  // const regularCustomFieldsvalidations =
-  //   customFromData?.regularCustomFields?.reduce((acc, curr) => {
-  //     acc[curr.key] = Yup.string().required(
-  //       selectedContent[localizationKeys.required]
-  //     );
-  //     return acc;
-  //   }, {});
+
   const arrayCustomFieldsvalidations =
     customFromData?.arrayCustomFields?.reduce((acc, curr) => {
       acc[curr.key] = Yup.string().required(
@@ -283,18 +261,18 @@ productDetailsint.fileThree || null
     if (selectedCoverPhoto !== 1) {
       // Store the files in an array for easier access
       const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-      
+
       // Store the cover photo (selected image)
       const coverPhoto = files[selectedCoverPhoto - 1];
-      
+
       // Store the current first photo
       const firstPhoto = fileOne;
-      
+
       // Swap the files
-      setFileOne(coverPhoto);  // Set the selected photo as first
-      
+      setFileOne(coverPhoto); // Set the selected photo as first
+
       // Set the first photo in the position of the selected cover
-      switch(selectedCoverPhoto) {
+      switch (selectedCoverPhoto) {
         case 2:
           setFileTwo(firstPhoto);
           break;
@@ -311,7 +289,7 @@ productDetailsint.fileThree || null
           break;
       }
     }
-    
+
     if (fileThree || (imgtest && imgtest[2])) {
       if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
         dispatch(
@@ -824,7 +802,6 @@ productDetailsint.fileThree || null
                           setSelectedCover={setSelectedCoverPhoto}
                         />
                       )}
-                      {/* {renderImagePreviews()}  */}
                     </div>
                   </div>
                   <div

@@ -32,9 +32,11 @@ import { useLanguage } from "../context/language-context";
 import content from "../localization/content";
 import { useAuthState } from "../context/auth-context";
 import { Open } from "../redux-store/auth-model-slice";
+import RewardModal from "../component/shared/rewardModal/RewardModal";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
+  const [showRewardModal, setShowRewardModal] = useState(true);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname, auctionId } = useLocation();
@@ -59,6 +61,13 @@ const AppLayouts = () => {
       <SocketProvider auctionId={socketauctionId}>
         <Header SetSid={SetSid} sid={sid} />
         <Sidebar SetSid={SetSid} sid={sid} />
+        {showRewardModal && (
+          <RewardModal
+            open={showRewardModal}
+            setOpen={setShowRewardModal}
+            user={user}
+          />
+        )}
         <div className="p-0 m-0 border-none min-h-screen ">
           <Win />
           <AuthModel currentPAth={currentPath} />

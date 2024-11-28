@@ -6,19 +6,13 @@ import api from "../../../api";
 import AuctionCard from "../../../component/home-components/auction-card";
 import BuyNowAuctionsSlider from "../../../component/home-components/buy-now-auctions-slider";
 import FilterSections from "../../../component/home-components/filter-sections";
-
-import ImageSlider from "../../../component/home-components/image-slider";
-import LiveAuctionsSlider from "../../../component/home-components/live-auctions-slider";
 import SliderRow from "../../../component/shared/slider-categories/slider-row";
 import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
-import createAuctionimgBGfrom from "../../../../src/assets/img/create_auction_img_BG.png";
-import createAuctionimgSm from "../../../../src/assets/img/create_auction_img_SM.png";
 import routes from "../../../routes";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import useLocalStorage from "../../../hooks/use-localstorage";
-import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useDispatch } from "react-redux";
 import UpComingAuctionsSlider from "../../../component/home-components/up-coming-auctions";
@@ -32,7 +26,6 @@ import listicon from "../../../../src/assets/icons/list-icon.png";
 import menuicon from "../../../../src/assets/icons/menu-icon.png";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../component/home-components/auction-card-list";
-import bigSliderEmtyState from "../../../../src/assets/img/Allatre-banner.png";
 import BannerTop from "component/home-components/BannerTop";
 
 const Home = () => {
@@ -49,6 +42,7 @@ const Home = () => {
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
+  const [showRewardModal, setShowRewardModal] = useState(true);
 
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
