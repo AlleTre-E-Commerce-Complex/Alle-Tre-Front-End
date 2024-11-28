@@ -1,5 +1,5 @@
 import React from "react";
-import {  Modal } from "semantic-ui-react";
+import { Modal } from "semantic-ui-react";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "localization/localization-keys";
@@ -17,9 +17,9 @@ const PaymentSelectingModal = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const handleSubmitPayment = () => {
-    if(isWalletPayment){
-        dispatch(setWalletBalance({isWallet:true}))
-        creatAuction()
+    if (isWalletPayment) {
+      dispatch(setWalletBalance({ isWallet: true }));
+      creatAuction();
     }
     setOpen(false);
   };
@@ -52,7 +52,7 @@ const PaymentSelectingModal = ({
                   className=" mx-2 cursor-pointer accent-primary"
                   name="PaymentMethod"
                   id="walletPayment"
-                  onChange={()=>setIsWalletPayment(true)}
+                  onChange={() => setIsWalletPayment(true)}
                   checked={isWalletPayment === true}
                 />
                 <label htmlFor="walletPayment" className="cursor-pointer ">
@@ -65,7 +65,7 @@ const PaymentSelectingModal = ({
                   className=" mx-2 cursor-pointer accent-primary"
                   name="PaymentMethod"
                   id="onlinePayment"
-                  onChange={()=>setIsWalletPayment(false)}
+                  onChange={() => setIsWalletPayment(false)}
                   checked={isWalletPayment === false}
                 />
                 <label htmlFor="onlinePayment" className="cursor-pointer ">

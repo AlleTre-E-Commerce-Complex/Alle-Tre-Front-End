@@ -424,7 +424,7 @@ const en = {
   [localizationKeys.YouHaveToIncreaseTheBiddingRateNotingThatTheLastBiddingWasInValue]:
     "You have to increase the bidding rate noting that the last bidding was in value",
   [localizationKeys.makeSureThatYouChooseItemConditionValue]:
-    "Make sure that you choose Item Condition value",
+    "Make sure that you choose item condition value",
   [localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos]:
     "Make sure that you choose at least three or more photos",
   [localizationKeys.oops]:
@@ -433,7 +433,7 @@ const en = {
   [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
     "This auction delete from WatchList been successfully",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
-    "This auction add to WatchList been successfully",
+    "This auction add to watchList been successfully",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "he Password Has Been Edit Successfully",
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
@@ -444,9 +444,9 @@ const en = {
   [localizationKeys.nameHasBeenEditSuccessfully]:
     "Name has been edit successfully",
   [localizationKeys.yourAuctionSaveAsDraftedSuccess]:
-    "Your Auction Save As Draft Success",
+    "Your auction save as draft success",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
-    "your Auction is Created success",
+    "Your auction is created success",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "Make sure that you choose the auction location or create another one",
   //wallet
