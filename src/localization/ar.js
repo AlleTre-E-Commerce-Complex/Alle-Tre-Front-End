@@ -91,7 +91,8 @@ const ar = {
   [localizationKeys.allRightsReserved]: "جميع الحقوق محفوظة.",
   [localizationKeys.upComingAuctions]: "المزادات القادمة",
   [localizationKeys.totalBids]: "إجمالي المزادات",
-  [localizationKeys.yourPendingPaymentsAreListedHere]:"تظهر مدفوعاتك المعلقة هنا",
+  [localizationKeys.yourPendingPaymentsAreListedHere]:
+    "تظهر مدفوعاتك المعلقة هنا",
   [localizationKeys.bid]: "مزاد",
   [localizationKeys.endingTime]: "نهاية الوقت",
   [localizationKeys.days]: "أيام",
@@ -179,6 +180,8 @@ const ar = {
   [localizationKeys.itemCondition]: "حالة العنصر",
   [localizationKeys.saveAsDraft]: "حفظ كمسودة",
   [localizationKeys.next]: "التالي",
+  [localizationKeys.youCanOnlySelectUpToFiveImages]:
+    "يمكنك تحديد ما يصل إلى خمس صور فقط.",
   // auction details
   [localizationKeys.quickAuction]: "المزاد السريع",
   [localizationKeys.maximumDurationMustBeDay]:

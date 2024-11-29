@@ -150,8 +150,7 @@ const ProductDetails = () => {
     // Check if user selected more than 5 files
     if (files.length > 5) {
       toast.error(
-        selectedContent[localizationKeys.maxFiveImagesAllowed] ||
-          "You can only select up to 5 images"
+        selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
       );
       // Clear the input
       event.target.value = "";
@@ -548,6 +547,24 @@ const ProductDetails = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const handleCameraChange = (event) => {
+    const file = event.target.files[0]; // Get single captured photo
+    if (file) {
+      // Find first empty slot
+      if (!fileOne) setFileOne(file);
+      else if (!fileTwo) setFileTwo(file);
+      else if (!fileThree) setFileThree(file);
+      else if (!fileFour) setFileFour(file);
+      else if (!fileFive) setFileFive(file);
+      else
+        toast.error(
+          selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
+        );
+    }
+    // Reset input
+    event.target.value = "";
+  };
+
   return (
     <>
       <Dimmer
@@ -757,7 +774,6 @@ const ProductDetails = () => {
                         max="5"
                         maxLength="5"
                         onChange={handleFileChange}
-                        capture="environment"
                         className="w-full max-w-[680px] h-[50px] px-4 py-3 box-border pr-12"
                         style={{
                           width: "100%",
@@ -766,18 +782,21 @@ const ProductDetails = () => {
                           boxSizing: "border-box",
                         }}
                       />
-                      <button
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          const input = e.target
-                            .closest("div")
-                            .querySelector("input");
-                          input.click();
-                        }}
+                      <input
+                        id="camera-input-file"
+                        name="camera-input-file"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCameraChange}
+                        capture="environment"
+                        className="hidden"
+                      />
+                      <label
+                        htmlFor="camera-input-file"
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
                       >
-                        <IoCameraOutline className="w-6 h-6 text-primary" />
-                      </button>
+                        <IoCameraOutline className="w-7 h-7 text-primary" />
+                      </label>
                     </div>
                     <div className="mt-6 w-full">
                       {auctionState === "DRAFTED" ||
