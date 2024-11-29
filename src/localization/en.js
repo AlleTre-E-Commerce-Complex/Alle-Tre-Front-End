@@ -183,6 +183,8 @@ const en = {
   [localizationKeys.itemCondition]: "Item Condition",
   [localizationKeys.saveAsDraft]: "Save As Draft",
   [localizationKeys.next]: "Next",
+  [localizationKeys.youCanOnlySelectUpToFiveImages]:
+    "You can only select up to 5 images",
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",

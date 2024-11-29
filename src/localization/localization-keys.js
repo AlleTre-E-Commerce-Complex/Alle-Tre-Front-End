@@ -168,6 +168,7 @@ const localizationKeys = {
   itemCondition: "itemCondition",
   saveAsDraft: "saveAsDraft",
   next: "next",
+  youCanOnlySelectUpToFiveImages: "youCanOnlySelectUpTo5Images",
   // auction details
   quickAuction: "quickAuction",
   maximumDurationMustBeDay: "maximumDurationMustBeDay",

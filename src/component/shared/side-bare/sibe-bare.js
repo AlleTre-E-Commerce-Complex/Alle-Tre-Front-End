@@ -221,7 +221,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-              <NavLink
+              {/* <NavLink
                 title={selectedContent[localizationKeys.support]}
                 isActive={
                   pathname.length === 1 ||
@@ -231,7 +231,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   history.push(routes.app.support);
                   SetSid(false);
                 }}
-              />
+              /> */}
               {/* Only show logout button if user is logged in */}
               {user && (
                 <>
@@ -251,9 +251,9 @@ const Sidebar = ({ SetSid, sid }) => {
                   />
                 </>
               )}
-              <div className="mt-10 mb-5">
+              {/* <div className="mt-10 mb-5">
                 <DropdownLang className={"text-white "} />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
