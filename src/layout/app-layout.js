@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import routes from "../routes";
 
@@ -36,14 +36,21 @@ import RewardModal from "../component/shared/rewardModal/RewardModal";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
-  const [showRewardModal, setShowRewardModal] = useState(true);
+  const [showRewardModal, setShowRewardModal] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname, auctionId } = useLocation();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
-
+  useEffect(() => {
+    const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
+    console.log('hasSeenRewardModal***>',hasSeenRewardModal)
+    if (!hasSeenRewardModal) {
+      setShowRewardModal(true);
+      sessionStorage.setItem("hasSeenRewardModal", "true"); // Mark as shown
+    }
+  }, []);
   const socketauctionId = useSelector(
     (state) => state?.socketAuctionId?.socketAuctionId
   );
