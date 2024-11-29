@@ -133,6 +133,7 @@ const Wallet = () => {
            open={withdrawalOpen}
            setOpen={setWithdrawalOpen}
            setSuccessModal={setSuccessModalOpen}
+           accountBalance={walletBalance}
           />
            
           }

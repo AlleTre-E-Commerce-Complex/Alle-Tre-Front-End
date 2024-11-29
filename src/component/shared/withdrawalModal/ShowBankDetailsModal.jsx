@@ -11,9 +11,12 @@ import toast from 'react-hot-toast';
 
 import api from 'api';
 import AddNewBankModal from './AddNewBankModal';
+import { useAuthState } from 'context/auth-context';
 
 
-const ShowBankDetailsModal = ({open,setOpen,setSuccessModal}) => {
+const ShowBankDetailsModal = ({open,setOpen,setSuccessModal,accountBalance}) => {
+  const { user } = useAuthState();
+  console.log('user***>',user)
     const [lang] = useLanguage(""); 
     const selectedContent = content[lang];
     const {run,isLoading,} = useAxios([]);
@@ -39,14 +42,21 @@ const ShowBankDetailsModal = ({open,setOpen,setSuccessModal}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if(user.id <= 100 && (Number(accountBalance) - Number(amount) ) < 100 ){
+      if (Number(accountBalance) <= 100) {
+        toast.error(`Sorry. You can't withdraw the amount of ${amount} AED. AED 100 is reserved as a welcome bonus.`);
+      } else {
+        toast.error(`You can only withdraw up to ${accountBalance - 100} AED. AED 100 is reserved as a welcome bonus.`);
+      }
+      return
+    }
     if(selectedBankAccountId === ''){
       toast.error('Please Select an account')
     }else if (amount === ''){
         toast.error('The withdrawal amount must not be empty')
     }else if(amount === 0){
       toast.error('The withdrawal amount must be greater than zero')
-  }
+    }
     
     try {
         run(
@@ -100,7 +110,7 @@ return (
         {accountData.map((data) =>
             <div
                 key={data.id}
-                className={`${selectedBankAccountId == data.id ? 'shadow-md shadow-primary' : ''} 
+                className={`${selectedBankAccountId === data.id ? 'shadow-md shadow-primary' : ''} 
                             cursor-pointer border p-2 rounded-md text-gray-500 transform 
                             transition-transform duration-300 hover:scale-95`}
                 onClick={() => HandleSelectBankAccount(data.id)}
