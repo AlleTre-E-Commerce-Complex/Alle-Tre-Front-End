@@ -44,8 +44,11 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
     setEmail(values.email);
     run(axios.post(api.auth.login, values))
       .then((res) => {
-        const { accessToken, refreshToken, hasCompletedProfile } =
+        const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
           res.data.data;
+          if(isAddedBonus){
+            alert('bonus added')
+          }
         login({
           accessToken: accessToken,
           refreshToken: refreshToken,

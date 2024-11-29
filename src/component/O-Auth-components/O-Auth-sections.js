@@ -58,8 +58,11 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken, hasCompletedProfile } =
+            const { accessToken, refreshToken, hasCompletedProfile,isAddedBonus } =
               res.data.data;
+              if(isAddedBonus){
+                alert('bonus added')
+              }
             login({
               accessToken: accessToken,
               refreshToken: refreshToken,
@@ -107,8 +110,11 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           })
         )
           .then((res) => {
-            const { accessToken, refreshToken, hasCompletedProfile } =
+            const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
               res.data.data;
+              if(isAddedBonus){
+                alert('bonus added')
+              }
             login({
               accessToken: accessToken,
               refreshToken: refreshToken,
