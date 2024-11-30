@@ -21,7 +21,6 @@ const AddImgMedia = ({
   selectedCover,
   setSelectedCover,
 }) => {
-
   const compressImage = async (file) => {
     try {
       // For debugging
@@ -121,7 +120,7 @@ const AddImgMedia = ({
             <div key={index} className="relative">
               {file ? (
                 <div className="relative">
-                  <div className="absolute top-0 right-0 z-10">
+                  <div className="absolute top-2 right-2 z-10">
                     <button
                       className="bg-white p-2 rounded-full shadow hover:shadow-lg"
                       onClick={() => setFile(null)}
@@ -135,17 +134,19 @@ const AddImgMedia = ({
                   >
                     <img
                       className={`${
-                        selectedCover === index ? "border-[3px]" : "border-[1px]"
+                        selectedCover === index
+                          ? "border-[3px]"
+                          : "border-[1px]"
                       } border-primary  border-solid rounded-lg w-[154px] h-[139px] object-cover`}
                       src={URL.createObjectURL(file)}
                       alt={`Uploaded ${index}`}
                     />
                   </FileUploader>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="radio" 
-                      id={`coverPhoto${index}`} 
-                      name="selectCoverPhoto" 
+                    <input
+                      type="radio"
+                      id={`coverPhoto${index}`}
+                      name="selectCoverPhoto"
                       className="accent-primary mt-1"
                       checked={selectedCover === index}
                       onChange={() => setSelectedCover(index)}
@@ -165,7 +166,6 @@ const AddImgMedia = ({
                     <img className="w-6 h-6" src={addImage} alt="Add Icon" />
                   </div>
                 </FileUploader>
-                
               )}
             </div>
           );

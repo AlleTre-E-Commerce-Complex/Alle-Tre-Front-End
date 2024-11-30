@@ -41,12 +41,19 @@ const PendingAuctions = () => {
           .then((res) => {
             setPendingAuctionsData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
-            toast.success(selectedContent[localizationKeys.yourPendingPaymentsAreListedHere])
+            toast.success(
+              selectedContent[
+                localizationKeys.yourPendingPaymentsAreListedHere
+              ],
+              {
+                duration: 2000,
+              }
+            );
           })
       );
     }
   }, [run, forceReload, search]);
- 
+
   return (
     <div className="">
       <Dimmer
