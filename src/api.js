@@ -12,6 +12,9 @@ const api = {
     allHomecategory: {
       default: "/categories/home",
     },
+    subscribers:{
+      create:"/users/subscribers/create"
+    },
     category: {
       default: "/categories/all",
       getParticularCatergory:(categoryId) =>

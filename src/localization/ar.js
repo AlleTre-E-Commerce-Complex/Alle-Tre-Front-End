@@ -36,6 +36,7 @@ const ar = {
   [localizationKeys.backToLogin]: "الرجوع إلى تسجيل الدخول",
   [localizationKeys.sentVerification]: "إرسال التحقق",
   // home
+  [localizationKeys.subscribedSuccessfully]: "تم الاشتراك بنجاح",
   [localizationKeys.myBids]: "مزاياداتي",
   [localizationKeys.categories]: "الفئات",
   [localizationKeys.watchlist]: "قائمة المراقبة",
