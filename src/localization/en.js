@@ -37,6 +37,7 @@ const en = {
   [localizationKeys.backToLogin]: "Back to Login",
   [localizationKeys.sentVerification]: "send verification",
   // home
+  [localizationKeys.subscribedSuccessfully]: "subscribed successfully",
   [localizationKeys.myBids]: "My Bids",
   [localizationKeys.categories]: "Categories",
   [localizationKeys.watchlist]: "Watchlist",

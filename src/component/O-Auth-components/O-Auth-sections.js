@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   signInWithPopup,
@@ -33,8 +33,11 @@ import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
 import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
+import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 
 const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
+  const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
+
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
@@ -61,7 +64,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             const { accessToken, refreshToken, hasCompletedProfile,isAddedBonus } =
               res.data.data;
               if(isAddedBonus){
-                alert('bonus added')
+                setOpenWelcomeBonusModal(true)
               }
             login({
               accessToken: accessToken,
@@ -113,7 +116,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
               res.data.data;
               if(isAddedBonus){
-                alert('bonus added')
+                setOpenWelcomeBonusModal(true)
               }
             login({
               accessToken: accessToken,
@@ -241,6 +244,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
       >
         <img src={allatreLogoColor} alt="allatreLogoColor" />
       </div>
+      <WelcomeBonusModal open={openWelcomeBonusModal} setOpen={setOpenWelcomeBonusModal} />
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import footerImg from "../../../../src/assets/img/footer-img.png";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
 import {
@@ -17,17 +18,54 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import routes from "../../../routes";
+import useAxios from "hooks/use-axios";
+import api from "api";
+import { Dimmer } from "semantic-ui-react";
+import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import toast from "react-hot-toast";
 
 const Footer = () => {
+
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
-
+  const [email,setEmail] = useState('')
+  const {
+    run: runNewSubscriber,
+    isLoading: isLoadingrunNewSubscriber,
+  } = useAxios([]);
+  const HandleSubscribe = () => {
+    runNewSubscriber(
+      axios.post(`${api.app.subscribers.create}`,{email})
+    )
+    .then((res)=>{
+      if(res.data.success){
+        toast.success(selectedContent[localizationKeys.subscribedSuccessfully])
+      }
+      console.log('response of runNewSubscriber',res)
+    })
+    .catch((err)=>{
+      console.log('error of runNewSubscriber',err)
+      if(lang === 'en'){
+        toast.error(err.message.en)
+      }else{
+        toast.error(err.message.ar)
+      }
+    })
+  }
   // Hide footer for non-home routes
   if (!pathname.startsWith(routes.app.home)) return null;
 
   return (
     <div className="mt-10">
+       <Dimmer
+        className="fixed w-full h-full top-0 bg-white/50"
+        active={isLoadingrunNewSubscriber}
+        inverted
+      >
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
+      </Dimmer>
       {/* Banner Section */}
       <div className="relative">
         <img
@@ -57,11 +95,16 @@ const Footer = () => {
         </div>
         <div className="absolute flex gap-5 bottom-5 right-4 lg:bottom-20 lg:ltr:right-24">
           <input
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
             className="sm:w-[400px] w-[200px] md:h-[48px] h-[32px] rounded-lg px-4 outline-none"
             placeholder={selectedContent[localizationKeys.writeYourMail]}
           />
-          <button className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] md:h-[48px] h-[32px] text-white">
+          <button 
+          onClick={HandleSubscribe}
+          className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] md:h-[48px] h-[32px] text-white">
             {selectedContent[localizationKeys.subscribe]}
+            
           </button>
         </div>
       </div>

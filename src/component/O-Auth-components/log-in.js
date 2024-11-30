@@ -24,6 +24,7 @@ import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
 import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
+import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 
 const LogIn = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
@@ -32,6 +33,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
   const selectedContent = content[lang];
 
   const [isHidden, setIsHidden] = useState(false);
+  const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const [email, setEmail] = useState("");
 
   const { run, isLoading } = useAxios();
@@ -47,7 +49,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
         const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
           res.data.data;
           if(isAddedBonus){
-            alert('bonus added')
+            setOpenWelcomeBonusModal(true)
           }
         login({
           accessToken: accessToken,
@@ -262,6 +264,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
           </Formik>
         </div>
       </div>
+      <WelcomeBonusModal open={openWelcomeBonusModal} setOpen={setOpenWelcomeBonusModal} />
     </div>
   );
 };

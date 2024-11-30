@@ -33,6 +33,7 @@ const localizationKeys = {
   backToLogin: "backToLogin",
   sentVerification: "sentVerification",
   // home
+  subscribedSuccessfully: "subscribedSuccessfully",
   myBids: "myBids",
   categories: "categories",
   watchlist: "watchlist",
