@@ -2,13 +2,23 @@ import React, { useState, useEffect } from "react";
 import BannerTopImage1 from "../../assets/images/hero banner without button-02-1.jpg";
 import BannerTopImage2 from "../../assets/images/ecommerce banner1.jpg";
 import BannerTopImage3 from "../../assets/images/bannerTop-5.jpg";
+import BannerMobImage1 from "../../assets/images/mobile version-02.jpg";
+import BannerMobImage2 from "../../assets/images/mobile version-03.jpg";
+import BannerMobImage3 from "../../assets/images/mobile version-05.jpg";
+
+
+
 
 const BannerTop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState("right");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
-  const images = [BannerTopImage1, BannerTopImage2, BannerTopImage3];
+  const images = isMobile ? 
+    [BannerMobImage1, BannerMobImage2, BannerMobImage3] : 
+    [BannerTopImage1, BannerTopImage2, BannerTopImage3];
+
   const autoSlideInterval = 6000; // Slide every 6 seconds
 
   const handleSlide = (newDirection) => {
@@ -33,6 +43,15 @@ const BannerTop = () => {
     const interval = setInterval(nextSlide, autoSlideInterval);
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []); // Only runs once when the component mounts
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const goToSlide = (index) => {
     if (index !== currentIndex) {
