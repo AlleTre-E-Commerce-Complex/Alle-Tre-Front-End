@@ -84,9 +84,11 @@ export default function CheckoutPagePayDeposite() {
                 authAxios
                   .get(`${api.app.Wallet.getBalance}`)
                   .then((response) => {
+                    console.log('response',response)
                     const balance = response.data;
-
-                    if (balance && Number(balance) > Number(amountToPay)) {
+                    console.log('balance',balance)
+                    console.log('amountToPay',amountToPay)
+                    if (balance && Number(balance) >= Number(amountToPay)) {
                       setWalletBalance(balance);
                       setShwoPaymentSelection(true);
                     } else {
