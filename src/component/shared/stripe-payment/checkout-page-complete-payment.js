@@ -78,7 +78,7 @@ export default function CheckoutPageCompletePayment() {
                   .then((response) => {
                     const balance = response.data;
 
-                    if (balance && Number(balance) > Number(amountToPay)) {
+                    if (balance && Number(balance) >= Number(amountToPay)) {
                       setWalletBalance(balance);
                       setShwoPaymentSelection(true);
                     } else {

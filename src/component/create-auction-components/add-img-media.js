@@ -142,7 +142,7 @@ const AddImgMedia = ({
                       alt={`Uploaded ${index}`}
                     />
                   </FileUploader>
-                  <div className="flex items-center gap-2">
+                  {/* <div className="flex items-center gap-2">
                     <input
                       type="radio"
                       id={`coverPhoto${index}`}
@@ -154,7 +154,7 @@ const AddImgMedia = ({
                     {selectedCover === index && (
                       <label htmlFor={`coverPhoto${index}`}>Cover Photo</label>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               ) : (
                 <FileUploader

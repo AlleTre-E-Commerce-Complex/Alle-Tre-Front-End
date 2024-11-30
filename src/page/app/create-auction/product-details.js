@@ -259,19 +259,25 @@ const ProductDetails = () => {
 
   const handelProductDetailsdata = (values) => {
     if (selectedCoverPhoto !== 1) {
+      console.log('selected cover index', selectedCoverPhoto);
+  
       // Store the files in an array for easier access
       const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-
+  
       // Store the cover photo (selected image)
-      const coverPhoto = files[selectedCoverPhoto - 1];
-
+      var coverPhoto = files[selectedCoverPhoto - 1];
+  
       // Store the current first photo
       const firstPhoto = fileOne;
-
+  
+      console.log('coverPhoto', coverPhoto);
+      console.log('first photo', firstPhoto);
+  
       // Swap the files
       setFileOne(coverPhoto); // Set the selected photo as first
-
-      // Set the first photo in the position of the selected cover
+      console.log('Updated fileOne (use coverPhoto for further logic)', coverPhoto);
+  
+      // Update the position of the first photo in the selected slot
       switch (selectedCoverPhoto) {
         case 2:
           setFileTwo(firstPhoto);
@@ -289,7 +295,10 @@ const ProductDetails = () => {
           break;
       }
     }
-
+  
+    // Updated state values will not be immediately available here,
+    // so rely on the updated variable `coverPhoto` and other inputs.
+  
     if (fileThree || (imgtest && imgtest[2])) {
       if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
         dispatch(
@@ -297,7 +306,7 @@ const ProductDetails = () => {
             ...values,
             hasUsageCondition: hasUsageCondition,
             valueRadio: valueRadio,
-            fileOne: fileOne,
+            fileOne: coverPhoto, // Use updated coverPhoto here
             fileTwo: fileTwo,
             fileThree: fileThree,
             fileFour: fileFour,
@@ -322,7 +331,7 @@ const ProductDetails = () => {
             ...values,
             hasUsageCondition: hasUsageCondition,
             valueRadio: valueRadio,
-            fileOne: fileOne,
+            fileOne: coverPhoto, // Use updated coverPhoto here
             fileTwo: fileTwo,
             fileThree: fileThree,
             fileFour: fileFour,
@@ -341,6 +350,7 @@ const ProductDetails = () => {
       );
     }
   };
+  
 
   const {
     run: runSaveAuctionAsDraft,
