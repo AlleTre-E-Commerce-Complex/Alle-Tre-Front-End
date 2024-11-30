@@ -18,7 +18,14 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
-const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
+const AddLocationModel = ({
+  open,
+  setOpen,
+  TextButton,
+  onReload,
+  isEditing = false,
+  editData = null,
+}) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -51,30 +58,61 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
     };
   }, []);
 
-  const handleAddLocation = (values) => {
-    run(authAxios.post(api.app.location.post, values))
-      .then(({ data }) => {
-        if (isMounted.current) {
-          // Only update state if mounted
-          window.localStorage.setItem("hasCompletedProfile", true);
-          if (TextButton === selectedContent[localizationKeys.proceed]) {
-            history.push(routes.app.createAuction.productDetails);
-            toast.success(selectedContent[localizationKeys.successAddLocatons]);
-          } else {
-            setOpen(false);
-            onReload();
-          }
-        }
-      })
-      .catch((err) => {
-        if (isMounted.current) {
-          // Only update state if mounted
+  const initialValues = isEditing
+    ? {
+        addressLabel: editData.addressLabel || "",
+        address: editData.address || "",
+        countryId: editData.country || "",
+        cityId: editData.city || "",
+        // zipCode: editData.postalCode || "",
+      }
+    : {
+        addressLabel: "",
+        address: "",
+        countryId: "",
+        cityId: "",
+        // zipCode: "",
+      };
+
+  const handleSubmit = (values) => {
+    if (isEditing) {
+      const locationData = {
+        addressLabel: values.addressLabel,
+        address: values.address,
+        countryId: values.countryId,
+        cityId: values.cityId,
+        // postalCode: values.zipCode,
+      };
+
+      run(authAxios.put(`/users/locations/${editData.addressId}`, locationData))
+        .then(() => {
+          setOpen(false);
+          onReload();
+          toast.success(
+            selectedContent[localizationKeys.successUpdateLocation]
+          );
+        })
+        .catch((err) => {
+          console.log("12345", err);
           toast.error(
-            err?.message?.map((e) => e) ||
+            err?.message?.[lang] || selectedContent[localizationKeys.oops]
+          );
+        });
+    } else {
+      // Existing add location logic
+      run(authAxios.post(api.app.location.post, values))
+        .then(() => {
+          setOpen(false);
+          onReload();
+          toast.success(selectedContent[localizationKeys.successAddLocatons]);
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message?.[lang] ||
               selectedContent[localizationKeys.oops]
           );
-        }
-      });
+        });
+    }
   };
 
   return (
@@ -86,7 +124,9 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
       <div className="sm:w-[471px] w-full h-auto border-2 border-primary rounded-2xl bg-background p-6">
         <div className="ltr:text-left rtl:text-right">
           <h1 className="text-base font-bold">
-            {selectedContent[localizationKeys.locationIsRequired]}{" "}
+            {isEditing
+              ? selectedContent[localizationKeys.editLocation]
+              : selectedContent[localizationKeys.locationIsRequired]}{" "}
             <span className="text-red-500">*</span>
           </h1>
           <p className="text-gray-med text-xs font-normal pt-1 pb-2">
@@ -114,15 +154,10 @@ const AddLocationModel = ({ open, setOpen, TextButton, onReload }) => {
         </div>
         <div>
           <Formik
-            initialValues={{
-              countryId: "",
-              cityId: "",
-              address: "",
-              addressLabel: "",
-              // zipCode: "",
-            }}
-            onSubmit={handleAddLocation}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
             validationSchema={AddLocationSchema}
+            enableReinitialize
           >
             {(formik) => (
               <Form onSubmit={formik.handleSubmit}>

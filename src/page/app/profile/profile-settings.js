@@ -21,7 +21,7 @@ import EditPhoneNumberModel from "../../../component/profile-components/edit-pho
 import useFilter from "../../../hooks/use-filter";
 import useAxios from "../../../hooks/use-axios";
 
-import { Dimmer, Popup } from "semantic-ui-react";
+import { Dimmer, Popup, Modal } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 
 import api from "../../../api";
@@ -34,6 +34,8 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import useLocalStorage from "../../../hooks/use-localstorage";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage("");
@@ -58,7 +60,7 @@ const ProfileSettings = () => {
           PofileData({
             name: res?.data?.data?.userName,
             img: res?.data?.data?.imageLink,
-            email:res?.data?.data?.email
+            email: res?.data?.data?.email,
           })
         );
       })
@@ -342,7 +344,7 @@ const ProfileSettings = () => {
                       lang === "en" ? e?.country?.nameEn : e?.country.nameAn
                     }
                     City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
-                    PostalCode={e?.zipCode}
+                    // PostalCode={e?.zipCode}
                     isMain={e?.isMain}
                     onReload={onReload}
                   />
@@ -391,33 +393,25 @@ export const LocationDetailsCard = ({
   Address,
   Country,
   City,
-  PostalCode,
+  // PostalCode,
   Id,
-
   isMain,
-  setOpenMakeDefultLocations,
   onReload,
 }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
-
   const [open, setOpen] = useState(false);
-  const [locationId, setLocationId] = useFilter("locationId", "");
-  const { run: runDelete, isLoading: isLoadingDelete } = useAxios([]);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const { run: runDelete } = useAxios();
+  const { run: runMakeDefault } = useAxios();
 
-  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
-    "hasCompletedProfile",
-    ""
-  );
   const handelDelete = (id) => {
     runDelete(
       authAxios
         .delete(api.app.location.delete(id))
-        .then((res) => {
+        .then(() => {
           toast.success(
-            `${selectedContent[localizationKeys.the]} ` +
-              AddressLable +
-              ` ${selectedContent[localizationKeys.hasBeenDeleteSuccessfully]}`
+            selectedContent[localizationKeys.addressDeletedSuccessfully]
           );
           setOpen(false);
           onReload();
@@ -425,34 +419,24 @@ export const LocationDetailsCard = ({
         .catch((err) => {
           toast.error(
             err?.response?.data?.message?.[lang] ||
-              err?.response?.data?.message?.[0] ||
               selectedContent[localizationKeys.oops]
           );
         })
     );
   };
 
-  const { run: runMakeDefault, isLoading: isLoadingMakeDefault } = useAxios([]);
   const handelMakeDefault = (id) => {
     runMakeDefault(
       authAxios
-        .patch(api.app.location.edit(id))
-        .then((res) => {
-          toast.success(
-            `${selectedContent[localizationKeys.the]} ` +
-              AddressLable +
-              ` ${
-                selectedContent[localizationKeys.hasBeenMakeDefaultSuccessfully]
-              }`
-          );
+        .patch(api.app.location.makeDefault(id))
+        .then(() => {
+          toast.success(selectedContent[localizationKeys.addressSetAsDefault]);
           setOpen(false);
           onReload();
-          window.localStorage.setItem("hasCompletedProfile", true);
         })
         .catch((err) => {
           toast.error(
             err?.response?.data?.message?.[lang] ||
-              err?.response?.data?.message?.[0] ||
               selectedContent[localizationKeys.oops]
           );
         })
@@ -460,70 +444,78 @@ export const LocationDetailsCard = ({
   };
 
   return (
-    <div
-
-      onClick={() => {
-        setLocationId(Id);
-      }}
-      className={`${
-        locationId === `${Id}` || isMain
-          ? "border-primary-dark"
-          : "border-gray-med"
-      } border-[1px] rounded-lg  w-full p-5 cursor-pointer`}
-    >
+    <div className="border-[1px] rounded-lg w-full p-5">
       <div className="flex justify-between">
         <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
         <Popup
           onOpen={() => setOpen(true)}
           onClose={() => setOpen(false)}
           open={open}
-          className="bg-white w-auto h-auto  rounded-lg border-none  relative"
-          trigger={<BsThreeDots size={20} className="text-gray-med mb-auto" />}
-          on="click"
-          pinned
-          basic
-          position="bottom right"
-          content={
-            isMain ? (
-              <p
-                onClick={() => handelDelete(Id)}
-                className="text-red-500 text-center py-2 cursor-pointer  text-base font-normal ltr:font-serifEN rtl:font-serifAR px-2"
-              >
-                {selectedContent[localizationKeys.delete]}
-              </p>
-            ) : (
-              <div>
-                <p
-                  onClick={() => handelMakeDefault(Id)}
-                  className="text-gray-med text-center py-2 cursor-pointer  border-b-[1px] text-base font-normal ltr:font-serifEN rtl:font-serifAR"
-                >
-                  {selectedContent[localizationKeys.makeDefault]}
-                </p>
-                <p
-                  onClick={() => handelDelete(Id)}
-                  className="text-red-500 text-center py-2 cursor-pointer  text-base font-normal ltr:font-serifEN rtl:font-serifAR"
-                >
-                  {selectedContent[localizationKeys.delete]}
-                </p>
-              </div>
-            )
+          className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
+          trigger={
+            <div className="cursor-pointer hover:text-primary">
+              <BsThreeDots size={20} className="text-gray-med mb-auto" />
+            </div>
           }
-        />
+          on="click"
+          position="bottom right"
+        >
+          <div className="py-2 min-w-[150px]">
+            {!isMain && (
+              <div
+                onClick={() => handelMakeDefault(Id)}
+                className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+              >
+                {selectedContent[localizationKeys.makeDefault]}
+              </div>
+            )}
+            <div
+              onClick={() => {
+                setEditModalOpen(true);
+                setOpen(false);
+              }}
+              className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+            >
+              {selectedContent[localizationKeys.edit]}
+            </div>
+            <div
+              onClick={() => handelDelete(Id)}
+              className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+            >
+              {selectedContent[localizationKeys.delete]}
+            </div>
+          </div>
+        </Popup>
       </div>
+
       <p className="text-gray-med text-sm pt-2">{Address}</p>
       <p className="text-gray-med text-sm pt-1">
         {City}, {Country}
       </p>
       <div className="flex justify-between">
-        <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
-        <p
-          className={
-            isMain ? "text-primary-dark underline text-sm pt-1" : "hidden"
-          }
-        >
-          {selectedContent[localizationKeys.default]}
-        </p>
+        {/* <p className="text-gray-med text-sm pt-1">{PostalCode}</p> */}
+        {isMain && (
+          <p className="text-primary-dark underline text-sm pt-1">
+            {selectedContent[localizationKeys.default]}
+          </p>
+        )}
       </div>
+
+      <AddLocationModel
+        open={editModalOpen}
+        setOpen={setEditModalOpen}
+        TextButton={selectedContent[localizationKeys.save]}
+        onReload={onReload}
+        isEditing={true}
+        editData={{
+          addressId: Id,
+          addressLabel: AddressLable,
+          address: Address,
+          countryId: Country,
+          cityId: City,
+          // postalCode: PostalCode
+        }}
+      />
     </div>
   );
 };

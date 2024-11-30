@@ -151,6 +151,7 @@ const localizationKeys = {
   addressLabel: "addressLabel",
   zipCode: "zipCode",
   successAddLocatons: "successAddLocatons",
+  successUpdateLocation: "successUpdateLocation",
   add: "add",
   selectCountry: "selectCountry",
   selectCity: "selectCity",

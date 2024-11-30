@@ -228,6 +228,7 @@ const ar = {
   // shiping details
   [localizationKeys.locationDetails]: "تفاصيل الشحن",
   [localizationKeys.addAddress]: "إضافة عنوان",
+  [localizationKeys.successUpdateLocation]: "تم تحديث الموقع بنجاح.",
   [localizationKeys.confirmDeleteAddress]:
     "هل أنت متأكد من أنك تريد حذف هذا العنوان؟",
   [localizationKeys.addressDeletedSuccessfully]: "تم حذف العنوان بنجاح",
