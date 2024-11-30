@@ -9,7 +9,7 @@ import ReturnPolicy from "./return-policy";
 import WarrantyPolicy from "./warranty-policy";
 import ItemDetails from "./item-details";
 // import Feedback from "./feedback";
-import DeliveryPolicy from "./delivery-policy";
+// import DeliveryPolicy from "./delivery-policy";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
@@ -18,7 +18,6 @@ const AuctionDetailsTabs = ({
   activeIndexTab,
   setActiveIndexTab,
 }) => {
-  console.log('data tabs :',dataTabs)
   const [lang] = useLanguage();
   const selectedContent = content[lang];
 
@@ -63,16 +62,16 @@ const AuctionDetailsTabs = ({
         </div>
       ),
     },
-    {
-      menuItem: `${selectedContent[localizationKeys.deliveryPolicy]}`,
-      render: () => (
-        <div>
-          <Tab.Pane className="border-none w-full h-full  animate-in">
-            <DeliveryPolicy dataTabs={dataTabs} />
-          </Tab.Pane>
-        </div>
-      ),
-    },
+    // {
+    //   menuItem: `${selectedContent[localizationKeys.deliveryPolicy]}`,
+    //   render: () => (
+    //     <div>
+    //       <Tab.Pane className="border-none w-full h-full  animate-in">
+    //         <DeliveryPolicy dataTabs={dataTabs} />
+    //       </Tab.Pane>
+    //     </div>
+    //   ),
+    // },
 
     // {
     //   menuItem: `${selectedContent[localizationKeys.feedback]}`,

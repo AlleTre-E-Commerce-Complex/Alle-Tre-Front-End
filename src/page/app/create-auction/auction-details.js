@@ -129,11 +129,11 @@ const AuctionDetails = () => {
       then: Yup.number().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.number().notRequired(),
     }),
-    deliveryPolicyDescription: Yup.string().when([], {
-      is: () => IsDelivery,
-      then: Yup.string().required(selectedContent[localizationKeys.required]),
-      otherwise: Yup.string().notRequired(),
-    }),
+    // deliveryPolicyDescription: Yup.string().when([], {
+    //   is: () => IsDelivery,
+    //   then: Yup.string().required(selectedContent[localizationKeys.required]),
+    //   otherwise: Yup.string().notRequired(),
+    // }),
     returnPolicyDescription: Yup.string().when([], {
       is: () => IsRetrunPolicy,
       then: Yup.string().required(selectedContent[localizationKeys.required]),
@@ -185,17 +185,17 @@ const AuctionDetails = () => {
       dispatch(isBuyNow(BuyNow));
     } else dispatch(isBuyNow({}));
 
-    const DeliveryPolicy = {
-      IsDelivery: IsDelivery,
-      description: values.deliveryPolicyDescription,
-      expectedNumOfDays: values.numOfDaysOfExpecetdDelivery,
-      deliveryFees: values.DeliveryFees,
-    };
-    if (IsDelivery) {
-      dispatch(deliveryPolicy(DeliveryPolicy));
-    } else {
-      dispatch(deliveryPolicy({}));
-    }
+    // const DeliveryPolicy = {
+    //   IsDelivery: IsDelivery,
+    //   description: values.deliveryPolicyDescription,
+    //   expectedNumOfDays: values.numOfDaysOfExpecetdDelivery,
+    //   deliveryFees: values.DeliveryFees,
+    // };
+    // if (IsDelivery) {
+    //   dispatch(deliveryPolicy(DeliveryPolicy));
+    // } else {
+    //   dispatch(deliveryPolicy({}));
+    // }
 
     const ReturnPolicy = {
       IsRetrunPolicy: IsRetrunPolicy,
@@ -264,11 +264,11 @@ const AuctionDetails = () => {
               from: auctionDetailsInt.from || "",
               MinimumPrice: auctionDetailsInt.MinimumPrice || "",
               PurchasingPrice: auctionDetailsInt.PurchasingPrice || "",
-              numOfDaysOfExpecetdDelivery:
-                auctionDetailsInt.numOfDaysOfExpecetdDelivery || "",
-              DeliveryFees: auctionDetailsInt.DeliveryFees || "",
-              deliveryPolicyDescription:
-                auctionDetailsInt.deliveryPolicyDescription || "",
+              // numOfDaysOfExpecetdDelivery:
+              //   auctionDetailsInt.numOfDaysOfExpecetdDelivery || "",
+              // DeliveryFees: auctionDetailsInt.DeliveryFees || "",
+              // deliveryPolicyDescription:
+              //   auctionDetailsInt.deliveryPolicyDescription || "",
               returnPolicyDescription:
                 auctionDetailsInt.returnPolicyDescription || "",
               warantyPolicyDescription:
@@ -420,7 +420,7 @@ const AuctionDetails = () => {
                     </div>
                     {/* =============================================== */}
                     <div>
-                      <div className="flex mt-7">
+                      {/* <div className="flex mt-7">
                         <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
                           {selectedContent[localizationKeys.deliveryPolicy]}
                           <span className="text-gray-med text-base font-normal mx-2">
@@ -435,8 +435,8 @@ const AuctionDetails = () => {
                             checked={IsDelivery}
                           />
                         </div>
-                      </div>
-                      <p className="text-gray-med text-xs font-normal pt-1">
+                      </div> */}
+                      {/* <p className="text-gray-med text-xs font-normal pt-1">
                         {
                           selectedContent[
                             localizationKeys
@@ -448,16 +448,16 @@ const AuctionDetails = () => {
                             localizationKeys.includingDeliveryDateAndOthers
                           ]
                         }
-                      </p>
+                      </p> */}
 
-                      <div
+                      {/* <div
                         className={
                           IsDelivery
                             ? "mt-9 flex flex-col justify-between gap-x-4 "
                             : "hidden"
                         }
-                      >
-                        <div className="w-full my-10">
+                      > */}
+                      {/* <div className="w-full my-10">
                           <FormikInput
                             min={0}
                             type="number"
@@ -483,8 +483,8 @@ const AuctionDetails = () => {
                             }
                             placeholder="AEDXXX"
                           />
-                        </div>
-                        <div className="w-full">
+                        </div> */}
+                      {/* <div className="w-full">
                           <FormikTextArea
                             label={
                               selectedContent[
@@ -498,8 +498,8 @@ const AuctionDetails = () => {
                               ]
                             }
                           />
-                        </div>
-                      </div>
+                        </div> */}
+                      {/* </div> */}
                     </div>
                     {/* ================= */}
                     <div>
