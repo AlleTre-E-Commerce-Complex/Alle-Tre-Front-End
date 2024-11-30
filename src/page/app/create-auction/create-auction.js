@@ -112,7 +112,7 @@ const CreateAuction = () => {
           />
         </div>
         <div className="max-w-[1366px] mx-auto px-2">
-          <h1 className="text-black py-5 text-base font-normal">
+          <h1 className="text-gray-dark py-5 text-3xl font-medium text-center mt-5">
             {selectedContent[localizationKeys.drafts]}
           </h1>
           <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
