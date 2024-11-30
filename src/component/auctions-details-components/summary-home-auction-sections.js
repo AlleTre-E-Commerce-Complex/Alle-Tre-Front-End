@@ -25,6 +25,7 @@ import { Open } from "../../redux-store/auth-model-slice";
 import { buyNow } from "../../redux-store/bid-amount-slice";
 import routes from "../../routes";
 import AddLocationModel from "../create-auction-components/add-location-model";
+import { FiPlus, FiMinus } from "react-icons/fi";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -211,6 +212,24 @@ const SummaryHomeAuctionSections = ({
     }
   };
 
+  const handleIncrement = () => {
+    const currentBidValue =
+      Number(submitBidValue) ||
+      Number(lastestBid?.bidAmount || CurrentBid || startBidAmount);
+    setSubmitBidValue(currentBidValue + 50);
+  };
+
+  const handleDecrement = () => {
+    const minBidValue = Number(
+      lastestBid?.bidAmount || CurrentBid || startBidAmount
+    );
+    const currentBidValue = Number(submitBidValue) || minBidValue;
+
+    if (currentBidValue > minBidValue) {
+      setSubmitBidValue(currentBidValue - 50);
+    }
+  };
+
   return (
     <div>
       {/* rating */}
@@ -372,9 +391,26 @@ const SummaryHomeAuctionSections = ({
 
       {/* Submit Bid sections */}
       <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">
-        <div>
+        <div className="flex items-center space-x-2 w-full">
+          <button
+            type="button"
+            onClick={handleDecrement}
+            disabled={
+              Number(submitBidValue) <=
+              Number(lastestBid?.bidAmount || CurrentBid || startBidAmount)
+            }
+            className={`h-[48px] min-w-[48px] flex items-center justify-center rounded-lg transition-all duration-200 ${
+              Number(submitBidValue) <=
+              Number(lastestBid?.bidAmount || CurrentBid || startBidAmount)
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-primary/10 text-primary hover:bg-primary hover:text-white active:scale-95"
+            }`}
+          >
+            <FiMinus size={20} className="stroke-[2.5]" />
+          </button>
+
           <input
-            className="border-[1px] border-veryLight h-[48px] w-[304px] rounded-lg px-4 outline-none"
+            className="flex-1 h-[48px] px-4 rounded-lg border-2 border-gray-200 focus:border-primary outline-none transition-colors duration-200"
             type="number"
             value={submitBidValue}
             onChange={(e) => setSubmitBidValue(e?.target?.value)}
@@ -382,6 +418,14 @@ const SummaryHomeAuctionSections = ({
               lastestBid?.bidAmount || CurrentBid || startBidAmount
             )}`}
           />
+
+          <button
+            type="button"
+            onClick={handleIncrement}
+            className="h-[48px] min-w-[48px] flex items-center justify-center bg-primary/10 text-primary hover:bg-primary hover:text-white rounded-lg transition-all duration-200 active:scale-95 "
+          >
+            <FiPlus size={20} className="stroke-[2.5] " />
+          </button>
         </div>
         <div>
           <Button
@@ -394,7 +438,8 @@ const SummaryHomeAuctionSections = ({
             }
             loading={isLoading}
             onClick={handelSubmitBidButton}
-            className="bg-primary hover:bg-primary-dark text-white w-[304px] h-[48px] rounded-lg mt-6 sm:mt-0 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base"
+            className="w-full md:w-[304px] h-[48px] bg-primary hover:bg-primary-dark text-white rounded-lg 
+            mt-6 md:mt-0 md:ml-3 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base"
           >
             {selectedContent[localizationKeys.submitBid]}
           </Button>
