@@ -12,13 +12,13 @@ const api = {
     allHomecategory: {
       default: "/categories/home",
     },
-    subscribers:{
-      create:"/users/subscribers/create"
+    subscribers: {
+      create: "/users/subscribers/create",
     },
     category: {
       default: "/categories/all",
-      getParticularCatergory:(categoryId) =>
-        `/categories/getParticularCatergory?categoryId=${categoryId}`
+      getParticularCatergory: (categoryId) =>
+        `/categories/getParticularCatergory?categoryId=${categoryId}`,
     },
     subCategory: {
       default: (categoryId) =>
@@ -39,7 +39,7 @@ const api = {
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       getUserAuctionsDetails: (auctionsId) =>
         `/auctions/user/${auctionsId}/details`,
-      isPendingPayment :(auctionId,paymentType)=>
+      isPendingPayment: (auctionId, paymentType) =>
         `/auctions/user/pendingPayment?auctionId=${auctionId}&paymentType=${paymentType}`,
       delete: (auctionsId) => `/auctions/user/${auctionsId}`,
       getMain: "/auctions/user/main",
@@ -53,10 +53,10 @@ const api = {
         `/auctions/user/${auctionsId}/bids-history?userId=${userId}`,
       submitBid: (auctionsId) => `/auctions/user/${auctionsId}/submit-bid`,
       payForAuction: "/auctions/user/pay",
-      walletPayForAuction:"/auctions/user/walletPay",
+      walletPayForAuction: "/auctions/user/walletPay",
       PayDepositByBidder: (auctionsId) =>
         `/auctions/user/${auctionsId}/bidder-deposit`,
-      walletPayDepositByBidder:'auctions/user/bidder-walletDeposit',
+      walletPayDepositByBidder: "auctions/user/bidder-walletDeposit",
       auctionPurchaseByBidder: (auctionsId) =>
         `/auctions/user/${auctionsId}/bidder-purchase`,
       WalletPayForBidderFullPayment: (auctionsId) =>
@@ -67,10 +67,11 @@ const api = {
       ConfirmDelivery: (auctionsId) =>
         `/auctions/user/${auctionsId}/confirm-delivery`,
       buyNow: (auctionsId) => `/auctions/user/${auctionsId}/buy-now`,
-      buyNowThroughWallet: (auctionsId) => `/auctions/user/${auctionsId}/buy-now-through-wallet`,
+      buyNowThroughWallet: (auctionsId) =>
+        `/auctions/user/${auctionsId}/buy-now-through-wallet`,
       SimilarAuctions: (auctionsId) =>
         `/auctions/user/similar?auctionId=${auctionsId}`,
-      deliveryIssue:"/auctions/user/auction-complaints",
+      deliveryIssue: "/auctions/user/auction-complaints",
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
@@ -93,6 +94,7 @@ const api = {
       get: "/users/my-locations",
       edit: (locationsId) => `/users/locations/${locationsId}/set-main`,
       delete: (locationsId) => `/users/locations/${locationsId}`,
+      makeDefault: (locationsId) => `/users/locations/${locationsId}/make-default`,
     },
     countries: {
       default: "/regions/countries",
@@ -112,14 +114,14 @@ const api = {
       add: "/watch-lists/save",
       delete: (auctionsId) => `/watch-lists/un-save?auctionId=${auctionsId}`,
     },
-    Wallet:{
-      get:"/wallet/get_from_wallet",
-      getBalance:"/wallet/get_balance",
-      post:"/wallet/add_to_wallet",
-      withdrawalRequest:'/auctions/user/withdrawalRequest',
-      getAccountData:'/auctions/user/getAccountData',
-      addBankAccount: '/auctions/user/addBankAccount',
-    }
+    Wallet: {
+      get: "/wallet/get_from_wallet",
+      getBalance: "/wallet/get_balance",
+      post: "/wallet/add_to_wallet",
+      withdrawalRequest: "/auctions/user/withdrawalRequest",
+      getAccountData: "/auctions/user/getAccountData",
+      addBankAccount: "/auctions/user/addBankAccount",
+    },
   },
 };
 

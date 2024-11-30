@@ -231,6 +231,7 @@ const en = {
   // shiping details
   [localizationKeys.locationDetails]: "Location Details",
   [localizationKeys.addAddress]: "Add Address",
+  [localizationKeys.successUpdateLocation]: "Location updated successfully",
   [localizationKeys.confirmDeleteAddress]:
     "Are you sure you want to delete this address?",
   [localizationKeys.addressDeletedSuccessfully]: "Address deleted successfully",
