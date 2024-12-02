@@ -18,12 +18,16 @@ import { useDispatch } from "react-redux";
 import { completePaymentData } from "../../redux-store/complete-payment-slice";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 import useLocalStorage from "../../hooks/use-localstorage";
+import DeleverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
 // import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 
 const PendingBids = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
+  const [openDeliverySelectingModal, setOpenDeliverySelectingModal] = useState(false)
+  const [auctionId, setAuctionId] = useState()
+  const [lastPrice, setLastPrice] = useState()
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [activeAuctionData, setActiveAuctionData] = useState();
@@ -56,18 +60,28 @@ const PendingBids = () => {
 
   const handelCompletePayment = (auctionsId, lastPrice) => {
     if (JSON.parse(hasCompletedProfile)) {
-      history.push(routes.app.profile.myBids.completePayment);
-      dispatch(
-        completePaymentData({
-          auctionsId,
-          lastPrice,
-        })
-      );
+      console.log('openDeliverySelectingModal')
+      setOpenDeliverySelectingModal(true)
+      setAuctionId(auctionsId)
+      setLastPrice(lastPrice)
+      // history.push(routes.app.profile.myBids.completePayment);
+      // dispatch(
+      //   completePaymentData({
+      //     auctionsId,
+      //     lastPrice,
+      //   })
+      // );
     }
   };
 
   return (
     <div className="">
+        <DeleverySelectingModal 
+        open={openDeliverySelectingModal}
+        setOpen={setOpenDeliverySelectingModal}
+        auctionId={auctionId}
+        lastPrice={lastPrice}
+      />
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading}
@@ -125,6 +139,7 @@ const PendingBids = () => {
           </div>
         </div>
       )}
+      
     </div>
   );
 };

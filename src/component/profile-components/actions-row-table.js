@@ -451,7 +451,7 @@ const ActionsRowTable = ({
                 }}
                 className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5"
               >
-                {selectedContent[localizationKeys.completePayment]}
+                {selectedContent[localizationKeys.completePayment]}sdljn;l
               </button>
             )}
             <button
