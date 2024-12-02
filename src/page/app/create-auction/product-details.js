@@ -46,7 +46,7 @@ const ProductDetails = () => {
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
-  const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(1);
+  
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const productDetailsint = useSelector(
@@ -258,47 +258,6 @@ const ProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
-    if (selectedCoverPhoto !== 1) {
-      console.log('selected cover index', selectedCoverPhoto);
-  
-      // Store the files in an array for easier access
-      const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-  
-      // Store the cover photo (selected image)
-      var coverPhoto = files[selectedCoverPhoto - 1];
-  
-      // Store the current first photo
-      const firstPhoto = fileOne;
-  
-      console.log('coverPhoto', coverPhoto);
-      console.log('first photo', firstPhoto);
-  
-      // Swap the files
-      setFileOne(coverPhoto); // Set the selected photo as first
-      console.log('Updated fileOne (use coverPhoto for further logic)', coverPhoto);
-  
-      // Update the position of the first photo in the selected slot
-      switch (selectedCoverPhoto) {
-        case 2:
-          setFileTwo(firstPhoto);
-          break;
-        case 3:
-          setFileThree(firstPhoto);
-          break;
-        case 4:
-          setFileFour(firstPhoto);
-          break;
-        case 5:
-          setFileFive(firstPhoto);
-          break;
-        default:
-          break;
-      }
-    }
-  
-    // Updated state values will not be immediately available here,
-    // so rely on the updated variable `coverPhoto` and other inputs.
-  
     if (fileThree || (imgtest && imgtest[2])) {
       if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
         dispatch(
@@ -306,7 +265,7 @@ const ProductDetails = () => {
             ...values,
             hasUsageCondition: hasUsageCondition,
             valueRadio: valueRadio,
-            fileOne: coverPhoto, // Use updated coverPhoto here
+            fileOne: fileOne, 
             fileTwo: fileTwo,
             fileThree: fileThree,
             fileFour: fileFour,
@@ -331,7 +290,7 @@ const ProductDetails = () => {
             ...values,
             hasUsageCondition: hasUsageCondition,
             valueRadio: valueRadio,
-            fileOne: coverPhoto, // Use updated coverPhoto here
+            fileOne: fileOne, 
             fileTwo: fileTwo,
             fileThree: fileThree,
             fileFour: fileFour,
@@ -843,8 +802,6 @@ const ProductDetails = () => {
                           setFileFour={setFileFour}
                           fileFive={fileFive}
                           setFileFive={setFileFive}
-                          selectedCover={selectedCoverPhoto}
-                          setSelectedCover={setSelectedCoverPhoto}
                         />
                       )}
                     </div>

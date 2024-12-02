@@ -26,6 +26,7 @@ const api = {
     },
     auctions: {
       default: "/auctions",
+      setDeliveryType: (auctionId) => `/auctions/user/${auctionId}/set-delivery-type`,
       setAssdraft: "/auctions/save-draft",
       setUpdatedraft: (auctionsId) => `auctions/user/${auctionsId}/details`,
       completeUpdatedraft: (auctionsId) =>
