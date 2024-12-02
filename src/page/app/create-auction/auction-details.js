@@ -24,7 +24,7 @@ import {
   type,
   auctionDetails,
   isBuyNow,
-  deliveryPolicy,
+  // deliveryPolicy,
   returnPolicy,
   warrantyPolicy,
   OfferPrice,
@@ -239,7 +239,6 @@ const AuctionDetails = () => {
       })
     );
     history.push(routes.app.createAuction.shippingDetails);
-    console.log("auction details :", auctionDetails);
   };
 
   return (

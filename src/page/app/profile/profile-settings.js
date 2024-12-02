@@ -18,10 +18,10 @@ import EditUserNameModel from "../../../component/profile-components/edit-user-n
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import EditPhoneNumberModel from "../../../component/profile-components/edit-phone-number-model";
 
-import useFilter from "../../../hooks/use-filter";
+
 import useAxios from "../../../hooks/use-axios";
 
-import { Dimmer, Popup, Modal } from "semantic-ui-react";
+import { Dimmer, Popup } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 
 import api from "../../../api";
@@ -33,9 +33,6 @@ import { useDispatch } from "react-redux";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
-import useLocalStorage from "../../../hooks/use-localstorage";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage("");
@@ -495,7 +492,7 @@ export const LocationDetailsCard = ({
       <div className="flex justify-between">
         {/* <p className="text-gray-med text-sm pt-1">{PostalCode}</p> */}
         {isMain && (
-          <p className="text-primary-dark underline text-sm pt-1">
+          <p className="text-primary-dark underline text-sm pt-1 ml-auto">
             {selectedContent[localizationKeys.default]}
           </p>
         )}
