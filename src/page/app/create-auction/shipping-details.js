@@ -2,26 +2,18 @@ import React, { useEffect, useState } from "react";
 
 import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
-
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
 import Stepper from "../../../component/shared/stepper/stepper-app";
-
 import { GoPlus } from "react-icons/go";
 import { Dimmer } from "semantic-ui-react";
-
 import api from "../../../api";
 import useAxios from "../../../hooks/use-axios";
 import { authAxios } from "../../../config/axios-config";
-
 import moment from "moment";
-
 import { useLanguage } from "../../../context/language-context";
-
 import useFilter from "../../../hooks/use-filter";
-
 import { toast } from "react-hot-toast";
-
 import { useDispatch, useSelector } from "react-redux";
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import {
@@ -33,9 +25,9 @@ import {
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
-
 import { BsThreeDots } from "react-icons/bs";
 import { Popup } from "semantic-ui-react";
+import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
 
 const ShippingDetails = () => {
   const [lang] = useLanguage("");
@@ -314,7 +306,6 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
-              console.log("auction create error***>", err);
               toast.error(
                 // err?.response?.data?.message.map((e) => e) ||
                 //   err?.message.map((e) => e) ||
@@ -421,14 +412,13 @@ export const LocationDetailsCard = ({
   const selectedContent = content[lang];
   const [open, setOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const { run: runDelete } = useAxios();
   const { run: runMakeDefault } = useAxios();
 
-  const handleDelete = (e) => {
-    e.stopPropagation();
+  const handleDelete = () => {
     if (!Id) {
-      console.error("Invalid location ID");
-      toast.error("Invalid location ID");
+      toast.error(selectedContent[localizationKeys.invalidLocationId]);
       return;
     }
 
@@ -437,27 +427,23 @@ export const LocationDetailsCard = ({
       return;
     }
 
-    if (
-      window.confirm(selectedContent[localizationKeys.confirmDeleteAddress])
-    ) {
-      runDelete(
-        authAxios
-          .delete(api.app.location.delete(Id))
-          .then(() => {
-            toast.success(
-              selectedContent[localizationKeys.addressDeletedSuccessfully]
-            );
-            setOpen(false);
-            onReload();
-          })
-          .catch((error) => {
-            toast.error(
-              error.response?.data?.message?.[lang] ||
-                selectedContent[localizationKeys.errorDeletingAddress]
-            );
-          })
-      );
-    }
+    runDelete(
+      authAxios
+        .delete(api.app.location.delete(Id))
+        .then(() => {
+          toast.success(
+            selectedContent[localizationKeys.addressDeletedSuccessfully]
+          );
+          setOpen(false);
+          onReload();
+        })
+        .catch((error) => {
+          toast.error(
+            error.response?.data?.message?.[lang] ||
+              selectedContent[localizationKeys.errorDeletingAddress]
+          );
+        })
+    );
   };
 
   const handleMakeDefault = (e) => {
@@ -466,7 +452,9 @@ export const LocationDetailsCard = ({
       authAxios
         .patch(api.app.location.makeDefault(Id))
         .then(() => {
-          toast.success(selectedContent[localizationKeys.addressSetAsDefault]);
+          toast.success(
+            selectedContent[localizationKeys.ChangedDefaultAdrress]
+          );
           setOpen(false);
           onReload();
         })
@@ -480,86 +468,101 @@ export const LocationDetailsCard = ({
   };
 
   return (
-    <div
-      onClick={() => {
-        setLocationId(Id);
-      }}
-      className={`${
-        locationId === `${Id}` ? "border-primary" : "border-gray-med"
-      } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer relative`}
-    >
-      <div className="flex justify-between">
-        <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
-        <Popup
-          onOpen={() => setOpen(true)}
-          onClose={() => setOpen(false)}
-          open={open}
-          className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
-          trigger={
-            <div className="cursor-pointer hover:text-primary">
-              <BsThreeDots size={20} className="text-gray-med mb-auto" />
-            </div>
-          }
-          on="click"
-          position="bottom right"
-        >
-          <div className="py-2 min-w-[150px]">
-            {!isMain && (
+    <>
+      <div
+        onClick={() => {
+          setLocationId(Id);
+        }}
+        className={`${
+          locationId === `${Id}` ? "border-primary" : "border-gray-med"
+        } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer relative`}
+      >
+        <div className="flex justify-between">
+          <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
+          <Popup
+            onOpen={() => setOpen(true)}
+            onClose={() => setOpen(false)}
+            open={open}
+            className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
+            trigger={
+              <div className="cursor-pointer hover:text-primary">
+                <BsThreeDots size={20} className="text-gray-med mb-auto" />
+              </div>
+            }
+            on="click"
+            position="bottom right"
+          >
+            <div className="py-2 min-w-[150px]">
+              {!isMain && (
+                <div
+                  onClick={handleMakeDefault}
+                  className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                >
+                  {selectedContent[localizationKeys.makeDefault]}
+                </div>
+              )}
               <div
-                onClick={handleMakeDefault}
+                onClick={() => {
+                  setEditModalOpen(true);
+                  setOpen(false);
+                }}
                 className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
               >
-                {selectedContent[localizationKeys.makeDefault]}
+                {selectedContent[localizationKeys.edit]}
               </div>
-            )}
-            <div
-              onClick={() => {
-                setEditModalOpen(true);
-                setOpen(false);
-              }}
-              className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
-            >
-              {selectedContent[localizationKeys.edit]}
+              {!isMain && (
+                <div
+                  onClick={() => {
+                    setDeleteModalOpen(true);
+                    setOpen(false);
+                  }}
+                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                >
+                  {selectedContent[localizationKeys.delete]}
+                </div>
+              )}
             </div>
-            {!isMain && (
-              <div
-                onClick={handleDelete}
-                className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
-              >
-                {selectedContent[localizationKeys.delete]}
-              </div>
-            )}
-          </div>
-        </Popup>
-      </div>
+          </Popup>
+        </div>
 
-      <p className="text-gray-med text-sm pt-2">{Address}</p>
-      <p className="text-gray-med text-sm pt-1">
-        {City}, {Country}
-      </p>
-      <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
-      {isMain && (
-        <p className="text-primary-dark underline text-md absolute bottom-2 right-2">
-          {selectedContent[localizationKeys.default]}
+        <p className="text-gray-med text-sm pt-2">{Address}</p>
+        <p className="text-gray-med text-sm pt-1">
+          {City}, {Country}
         </p>
-      )}
+        <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
+        {isMain && (
+          <p className="text-primary-dark underline text-md absolute bottom-2 right-2">
+            {selectedContent[localizationKeys.default]}
+          </p>
+        )}
 
-      <AddLocationModel
-        open={editModalOpen}
-        setOpen={setEditModalOpen}
-        TextButton={selectedContent[localizationKeys.save]}
-        onReload={onReload}
-        isEditing={true}
-        editData={{
-          addressId: Id,
-          addressLabel: AddressLable,
-          address: Address,
-          countryId: Country,
-          cityId: City,
-          postalCode: PostalCode,
-        }}
-      />
-    </div>
+        <AddLocationModel
+          open={editModalOpen}
+          setOpen={setEditModalOpen}
+          TextButton={selectedContent[localizationKeys.save]}
+          onReload={onReload}
+          isEditing={true}
+          editData={{
+            addressId: Id,
+            addressLabel: AddressLable,
+            address: Address,
+            countryId: Country,
+            cityId: City,
+            postalCode: PostalCode,
+          }}
+        />
+
+        <ConfirmationModal
+          open={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={() => {
+            handleDelete();
+            setDeleteModalOpen(false);
+          }}
+          message={selectedContent[localizationKeys.confirmDeleteAddress]}
+        />
+      </div>
+    </>
   );
 };
 

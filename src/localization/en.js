@@ -282,6 +282,8 @@ const en = {
   [localizationKeys.the]: " The",
   [localizationKeys.yourWatchlist]: " Your Watchlist",
   [localizationKeys.thereAreNoWatchlistYet]: "  There are no Watchlist yet.",
+  [localizationKeys.ChangedDefaultAdrress]: " Changed Default Adrress",
+  [localizationKeys.invalidLocationId]: "Invalid location ID",
   // myauctions
   [localizationKeys.createNow]: "Create Now",
   [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:
