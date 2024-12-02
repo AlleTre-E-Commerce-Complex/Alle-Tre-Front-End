@@ -245,7 +245,9 @@ const AuctionCard = ({
           {isMyAuction ? (
             <div
               className={
-                isPurchased||isExpired ? "hidden" : "mt-4 flex gap-x-3 justify-end"
+                isPurchased || isExpired
+                  ? "hidden"
+                  : "mt-4 flex gap-x-3 justify-end"
               }
             >
               <button
@@ -258,7 +260,9 @@ const AuctionCard = ({
           ) : (
             <div
               className={` ${
-                isPurchased||isExpired ? "hidden" : "mt-4 flex gap-x-3 justify-end"
+                isPurchased || isExpired
+                  ? "hidden"
+                  : "mt-4 flex gap-x-3 justify-end"
               }  ${
                 isBuyNowAllowed ? "justify-between" : "justify-end"
               } mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3`}

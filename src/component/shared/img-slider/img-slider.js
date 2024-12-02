@@ -122,7 +122,7 @@ const ImgSlider = ({
             className={
               isMyAuction
                 ? "hidden"
-                : "rounded-lg w-[38px] h-[88px] absolute top-20 right-5 z-50"
+                : "rounded-lg w-[38px] h-[88px] absolute top-20 right-2 md:right-5 z-50"
             }
           >
             <div
@@ -131,15 +131,9 @@ const ImgSlider = ({
             >
               <div className="h-full w-full flex justify-center items-center">
                 {isWatshlist ? (
-                  <BsBookmarkFill
-                    className="text-primary group-hover/bookmark:text-white"
-                    size={25}
-                  />
+                  <BsBookmarkFill className="text-primary group-hover/bookmark:text-white transition-all duration-300 text-2xl md:text-3xl" />
                 ) : (
-                  <BsBookmark
-                    className="text-primary group-hover/bookmark:text-white"
-                    size={25}
-                  />
+                  <BsBookmark className="text-primary group-hover/bookmark:text-white transition-all duration-300 text-2xl md:text-3xl" />
                 )}
               </div>
             </div>
