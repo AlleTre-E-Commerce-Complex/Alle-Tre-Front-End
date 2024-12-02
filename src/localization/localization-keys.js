@@ -257,6 +257,7 @@ const localizationKeys = {
   default: "default",
   yourWatchlist: "yourWatchlist",
   thereAreNoWatchlistYet: " thereAreNoWatchlistYet",
+  invalidLocationId: "invalidLocationId",
   // myauctions
   createNow: "createNow",
   thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway:
@@ -329,6 +330,7 @@ const localizationKeys = {
     "ThereIsNoBidsyetCompletedAuctionsRightNow",
   ThereIsNoBidsyetCancelledAuctionsRightNow:
     "ThereIsNoBidsyetCancelledAuctionsRightNow",
+  ChangedDefaultAdrress: "changedDefaultAdrress",
   AnyObjection: "AnyObjection",
   //deleveryIssueReportModal
   NotDeliveredYet: "NotDeliveredYet",

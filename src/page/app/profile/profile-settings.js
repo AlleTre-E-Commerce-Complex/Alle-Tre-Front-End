@@ -18,7 +18,6 @@ import EditUserNameModel from "../../../component/profile-components/edit-user-n
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import EditPhoneNumberModel from "../../../component/profile-components/edit-phone-number-model";
 
-
 import useAxios from "../../../hooks/use-axios";
 
 import { Dimmer, Popup } from "semantic-ui-react";
@@ -33,6 +32,7 @@ import { useDispatch } from "react-redux";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage("");
@@ -399,6 +399,7 @@ export const LocationDetailsCard = ({
   const selectedContent = content[lang];
   const [open, setOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const { run: runDelete } = useAxios();
   const { run: runMakeDefault } = useAxios();
 
@@ -427,7 +428,9 @@ export const LocationDetailsCard = ({
       authAxios
         .patch(api.app.location.makeDefault(id))
         .then(() => {
-          toast.success(selectedContent[localizationKeys.addressSetAsDefault]);
+          toast.success(
+            selectedContent[localizationKeys.ChangedDefaultAdrress]
+          );
           setOpen(false);
           onReload();
         })
@@ -441,79 +444,94 @@ export const LocationDetailsCard = ({
   };
 
   return (
-    <div className="border-[1px] rounded-lg w-full p-5">
-      <div className="flex justify-between">
-        <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
-        <Popup
-          onOpen={() => setOpen(true)}
-          onClose={() => setOpen(false)}
-          open={open}
-          className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
-          trigger={
-            <div className="cursor-pointer hover:text-primary">
-              <BsThreeDots size={20} className="text-gray-med mb-auto" />
-            </div>
-          }
-          on="click"
-          position="bottom right"
-        >
-          <div className="py-2 min-w-[150px]">
-            {!isMain && (
+    <>
+      <div className="border-[1px] rounded-lg w-full p-5">
+        <div className="flex justify-between">
+          <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
+          <Popup
+            onOpen={() => setOpen(true)}
+            onClose={() => setOpen(false)}
+            open={open}
+            className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
+            trigger={
+              <div className="cursor-pointer hover:text-primary">
+                <BsThreeDots size={20} className="text-gray-med mb-auto" />
+              </div>
+            }
+            on="click"
+            position="bottom right"
+          >
+            <div className="py-2 min-w-[150px]">
+              {!isMain && (
+                <div
+                  onClick={() => handelMakeDefault(Id)}
+                  className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                >
+                  {selectedContent[localizationKeys.makeDefault]}
+                </div>
+              )}
               <div
-                onClick={() => handelMakeDefault(Id)}
+                onClick={() => {
+                  setEditModalOpen(true);
+                  setOpen(false);
+                }}
                 className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
               >
-                {selectedContent[localizationKeys.makeDefault]}
+                {selectedContent[localizationKeys.edit]}
               </div>
-            )}
-            <div
-              onClick={() => {
-                setEditModalOpen(true);
-                setOpen(false);
-              }}
-              className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
-            >
-              {selectedContent[localizationKeys.edit]}
+              {!isMain && (
+                <div
+                  onClick={() => {
+                    setDeleteModalOpen(true);
+                    setOpen(false);
+                  }}
+                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                >
+                  {selectedContent[localizationKeys.delete]}
+                </div>
+              )}
             </div>
-            <div
-              onClick={() => handelDelete(Id)}
-              className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
-            >
-              {selectedContent[localizationKeys.delete]}
-            </div>
-          </div>
-        </Popup>
-      </div>
+          </Popup>
+        </div>
 
-      <p className="text-gray-med text-sm pt-2">{Address}</p>
-      <p className="text-gray-med text-sm pt-1">
-        {City}, {Country}
-      </p>
-      <div className="flex justify-between">
-        {/* <p className="text-gray-med text-sm pt-1">{PostalCode}</p> */}
-        {isMain && (
-          <p className="text-primary-dark underline text-sm pt-1 ml-auto">
-            {selectedContent[localizationKeys.default]}
-          </p>
-        )}
-      </div>
+        <p className="text-gray-med text-sm pt-2">{Address}</p>
+        <p className="text-gray-med text-sm pt-1">
+          {City}, {Country}
+        </p>
+        <div className="flex justify-between">
+          {isMain && (
+            <p className="text-primary-dark underline text-sm pt-1 ml-auto">
+              {selectedContent[localizationKeys.default]}
+            </p>
+          )}
+        </div>
 
-      <AddLocationModel
-        open={editModalOpen}
-        setOpen={setEditModalOpen}
-        TextButton={selectedContent[localizationKeys.save]}
-        onReload={onReload}
-        isEditing={true}
-        editData={{
-          addressId: Id,
-          addressLabel: AddressLable,
-          address: Address,
-          countryId: Country,
-          cityId: City,
-          // postalCode: PostalCode
-        }}
-      />
-    </div>
+        <AddLocationModel
+          open={editModalOpen}
+          setOpen={setEditModalOpen}
+          TextButton={selectedContent[localizationKeys.save]}
+          onReload={onReload}
+          isEditing={true}
+          editData={{
+            addressId: Id,
+            addressLabel: AddressLable,
+            address: Address,
+            countryId: Country,
+            cityId: City,
+          }}
+        />
+
+        <ConfirmationModal
+          open={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={() => {
+            handelDelete(Id);
+            setDeleteModalOpen(false);
+          }}
+          message={selectedContent[localizationKeys.confirmDeleteAddress]}
+        />
+      </div>
+    </>
   );
 };
 

@@ -279,6 +279,8 @@ const ar = {
   [localizationKeys.the]: " ال",
   [localizationKeys.yourWatchlist]: "قائمة المراقبة الخاصة بك",
   [localizationKeys.thereAreNoWatchlistYet]: "لا توجد قائمة المراقبة حتى الآن.",
+  [localizationKeys.ChangedDefaultAdrress]: " تغيير العنوان الافتراضي",
+  [localizationKeys.invalidLocationId]: "معرف الموقع غير صالح",
   // myauctions
   [localizationKeys.createNow]: "أنشئ الآن",
   [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:
