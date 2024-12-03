@@ -410,7 +410,7 @@ const SummaryHomeAuctionSections = ({
           </button>
 
           <input
-            className="flex-1 h-[48px] px-4 rounded-lg border-2 border-gray-200 focus:border-primary outline-none transition-colors duration-200"
+            className="min-w-[0px] flex-1 h-[48px] px-4 rounded-lg border-2 border-gray-200 focus:border-primary outline-none transition-colors duration-200"
             type="number"
             value={submitBidValue}
             onChange={(e) => setSubmitBidValue(e?.target?.value)}
@@ -427,23 +427,22 @@ const SummaryHomeAuctionSections = ({
             <FiPlus size={20} className="stroke-[2.5] " />
           </button>
         </div>
-        <div>
-          <Button
-            disabled={
-              status === "SOLD" ||
-              status === "EXPIRED" ||
-              status === "IN_SCHEDULED"
-                ? true
-                : false
-            }
-            loading={isLoading}
-            onClick={handelSubmitBidButton}
-            className="w-full md:w-[304px] h-[48px] bg-primary hover:bg-primary-dark text-white rounded-lg 
+
+        <Button
+          disabled={
+            status === "SOLD" ||
+            status === "EXPIRED" ||
+            status === "IN_SCHEDULED"
+              ? true
+              : false
+          }
+          loading={isLoading}
+          onClick={handelSubmitBidButton}
+          className="w-full h-[48px] bg-primary hover:bg-primary-dark text-white rounded-lg 
             mt-6 md:mt-0 md:ml-3 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base"
-          >
-            {selectedContent[localizationKeys.submitBid]}
-          </Button>
-        </div>
+        >
+          {selectedContent[localizationKeys.submitBid]}
+        </Button>
       </div>
       <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
       <SubmitBidModel
