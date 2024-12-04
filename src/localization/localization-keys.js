@@ -172,6 +172,8 @@ const localizationKeys = {
   saveAsDraft: "saveAsDraft",
   next: "next",
   youCanOnlySelectUpToFiveImages: "youCanOnlySelectUpTo5Images",
+  setAsCover: "setAsCover",
+  cover: "cover",
   // auction details
   quickAuction: "quickAuction",
   maximumDurationMustBeDay: "maximumDurationMustBeDay",

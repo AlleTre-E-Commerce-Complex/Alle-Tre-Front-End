@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import imageCompression from "browser-image-compression";
-
+import { MdOutlineImage } from "react-icons/md";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
 import addImage from "../../../src/assets/icons/add-image.svg";
 import TrashIcon from "../../../src/assets/icons/trash-Icon.png";
 
@@ -21,6 +24,8 @@ const AddImgMedia = ({
 }) => {
   const [coverPhotoIndex, setCoverPhotoIndex] = React.useState(1);
 
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   // Reorder files when cover photo changes
   useEffect(() => {
     const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
@@ -42,7 +47,8 @@ const AddImgMedia = ({
       ...files.slice(0, coverPhotoIndex - 1),
       ...files.slice(coverPhotoIndex).filter(Boolean),
     ];
-  
+
+
     reorderedFiles.forEach((file, idx) => {
       setters[idx](file || null);
     });
@@ -52,12 +58,26 @@ const AddImgMedia = ({
     }
 
     setCoverPhotoIndex(1);
-     }, [coverPhotoIndex, fileOne, fileTwo, fileThree, fileFour, fileFive, 
-      setFileOne, setFileTwo, setFileThree, setFileFour, setFileFive]);
+  }, [
+    coverPhotoIndex,
+    fileOne,
+    fileTwo,
+    fileThree,
+    fileFour,
+    fileFive,
+    setFileOne,
+    setFileTwo,
+    setFileThree,
+    setFileFour,
+    setFileFive,
+  ]);
+  
+
 
   const compressImage = async (file) => {
     try {
-        // For debugging
+      // For debugging
+      // For debugging
       console.log("Input file:", file.type, file.size / 1024 / 1024, "MB");
 
       // Convert HEIC/HEIF to JPEG if needed
@@ -87,9 +107,11 @@ const AddImgMedia = ({
       };
 
       let compressedFile = await imageCompression(file, options);
-        // If compression wasn't effective, try one more time with more aggressive settings
+      // If compression wasn't effective, try one more time with more aggressive settings
+      // If compression wasn't effective, try one more time with more aggressive settings
       if (compressedFile.size > file.size * 0.9) {
-               options.maxSizeMB = 0.5;
+        options.maxSizeMB = 0.5;
+        options.maxSizeMB = 0.5;
         options.initialQuality = 0.6;
         compressedFile = await imageCompression(file, options);
       }
@@ -99,16 +121,17 @@ const AddImgMedia = ({
         type: "image/jpeg",
         lastModified: new Date().getTime(),
       });
-        return finalFile;
+      return finalFile;
+      return finalFile;
     } catch (error) {
-           return file;
+      return file;
+      return file;
     }
   };
 
   const handleChange = async (file, setFile, index) => {
     if (file) {
       try {
-      
         const compressedFile = await compressImage(file);
         console.log("Original size:", file.size / 1024 / 1024, "MB");
         console.log(
@@ -117,7 +140,6 @@ const AddImgMedia = ({
           "MB"
         );
         setFile(compressedFile);
-       
       } catch (error) {
         console.error("Error handling file:", error);
         setFile(file);
@@ -126,7 +148,6 @@ const AddImgMedia = ({
   };
 
   const handleSetCover = (index) => {
-   
     setCoverPhotoIndex(index);
   };
 
@@ -155,10 +176,10 @@ const AddImgMedia = ({
           return (
             <div key={index} className="relative">
               {file ? (
-                <div className="relative">
-                  <div className="absolute top-2 right-2 z-10 flex gap-2">
+                <div className="relative group">
+                  <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <button
-                      className="bg-white p-2 rounded-full shadow hover:shadow-lg"
+                      className="bg-white hover:bg-red-500 hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
                       onClick={() => setFile(null)}
                     >
                       <img className="w-4 h-4" src={TrashIcon} alt="Remove" />
@@ -167,7 +188,7 @@ const AddImgMedia = ({
                   {isCoverPhoto && (
                     <div className="absolute top-2 left-2 z-10">
                       <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
-                        Cover
+                        {selectedContent[localizationKeys.cover]}
                       </span>
                     </div>
                   )}
@@ -184,12 +205,15 @@ const AddImgMedia = ({
                     />
                   </FileUploader>
                   {!isCoverPhoto && (
-                    <button
-                      onClick={() => handleSetCover(index)}
-                      className="absolute bottom-2 left-2 bg-white text-xs px-2 py-1 rounded-full shadow hover:shadow-lg"
-                    >
-                      Set as cover
-                    </button>
+                    <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <button
+                        onClick={() => handleSetCover(index)}
+                        className="bg-primary hover:bg-white/90 text-white hover:text-primary px-3 py-1 rounded-full text-sm shadow hover:shadow-lg transition-all duration-300 flex items-center gap-1 mx-auto"
+                      >
+                        <MdOutlineImage className="w-4 h-4" />
+                        {selectedContent[localizationKeys.setAsCover]}
+                      </button>
+                    </div>
                   )}
                 </div>
               ) : (

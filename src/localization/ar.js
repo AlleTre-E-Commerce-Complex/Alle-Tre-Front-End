@@ -184,6 +184,8 @@ const ar = {
   [localizationKeys.next]: "التالي",
   [localizationKeys.youCanOnlySelectUpToFiveImages]:
     "يمكنك تحديد ما يصل إلى خمس صور فقط.",
+  [localizationKeys.setAsCover]: "تعيين كصورة غلاف",
+  [localizationKeys.cover]: "صورة غلاف",
   // auction details
   [localizationKeys.quickAuction]: "المزاد السريع",
   [localizationKeys.maximumDurationMustBeDay]:
