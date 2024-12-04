@@ -37,6 +37,7 @@ const ActionsRowTable = ({
   goToDetails,
   filterJoinState,
   isItemSendForDelivery,
+  deliveryType,
 }) => {
   // console.log('auction Id in auction row table:',auctionsId);
   // console.log('Props:',    goToDetails );
@@ -346,7 +347,13 @@ const ActionsRowTable = ({
             )}
           </div>
         </div>
-
+        <div className="flex flex-col gap-y-2 gap-x-4">
+        {status === "SOLD"  && (
+              <h1 className="cursor-default  text-primary mx-3 text-sm font-normal sm:w-[145px] w-full  sm:mt-14 mt-5 ">
+               <b>Delivery Type</b> : {deliveryType === "DELIVERY" ? "Delivery Will be handled by company" : deliveryType === "PICKUP" ? "The buyer will pick up the item" : "Not selected"}
+              </h1>
+            )}
+        </div>
         {isBidsButtons ? (
           <div className="flex gap-x-2">
             {status === "WAITING_FOR_DELIVERY" && (
@@ -443,6 +450,7 @@ const ActionsRowTable = ({
                 You have sent the item.
               </button>
             )}
+           
             {status === "PENDING_OWNER_DEPOIST" && (
               <button
                 onClick={() => {

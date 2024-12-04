@@ -456,7 +456,7 @@ const SummaryHomeAuctionSections = ({
       <AddLocationModel
         open={openMakeDefultLocations}
         setOpen={setOpenMakeDefultLocations}
-        TextButton={selectedContent[localizationKeys.add]}
+        TextButton={selectedContent[localizationKeys.proceed]}
         onReload={onReload}
       />
     </div>

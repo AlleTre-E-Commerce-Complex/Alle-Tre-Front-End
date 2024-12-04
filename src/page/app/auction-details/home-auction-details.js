@@ -34,8 +34,8 @@ const HomeAuctionDetails = () => {
   const { run, isLoading } = useAxios([]);
   const { pathname } = useLocation();
 
-  // const [forceReload, setForceReload] = useState(false);
-  // const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
     ""
@@ -152,7 +152,7 @@ const HomeAuctionDetails = () => {
                     acceptedAmount={auctionsDetailsData?.acceptedAmount}
                     latestBidAmount={auctionsDetailsData?.latestBidAmount}
                     isOffer={auctionsDetailsData?.product?.isOffer}
-                    // onReload={onReload}
+                    onReload={onReload}
                     // TODO add PurchasedTime
                     PurchasedTime={""}
                   />

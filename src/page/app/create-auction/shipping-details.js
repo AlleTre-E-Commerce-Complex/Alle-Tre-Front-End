@@ -398,12 +398,13 @@ const ShippingDetails = () => {
 };
 
 export const LocationDetailsCard = ({
+  key,
+  Id,
   AddressLable,
   Address,
   Country,
   City,
   PostalCode,
-  Id,
   isMain,
   onReload,
 }) => {

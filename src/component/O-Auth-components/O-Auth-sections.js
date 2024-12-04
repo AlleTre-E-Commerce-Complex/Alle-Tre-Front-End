@@ -63,6 +63,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
             const { accessToken, refreshToken, hasCompletedProfile,isAddedBonus } =
               res.data.data;
+              console.log('res.data.data',res.data.data)
               if(isAddedBonus){
                 setOpenWelcomeBonusModal(true)
               }

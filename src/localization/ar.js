@@ -152,6 +152,7 @@ const ar = {
   [localizationKeys.YesISentIt]: "نعم لقد ارسلته",
   [localizationKeys.yesDelete]: "نعم ، احذف",
   [localizationKeys.locationIsRequired]: "الموقع مطلوب",
+  [localizationKeys.editLocation]: "تعديل الموقع",
   [localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo]:
     "من أجل إنهاء الإجراء ، علينا الوصول إلى",
   [localizationKeys.yourLocationYouCanManageThemLater]:
