@@ -7,6 +7,7 @@ import bidAmountSlice from "./bid-amount-slice";
 import completePaymentSlice from "./complete-payment-slice";
 import socketAuctionIdSlice from "./socket-auctionId-slice";
 import walletBalanceSlice from "./wallet-balance-slice";
+import welcomeBonusSlice from "./welcom-bonus-slice";
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
     completePayment: completePaymentSlice,
     socketAuctionId: socketAuctionIdSlice,
     walletBalance:walletBalanceSlice,
+    welcomeBonus:welcomeBonusSlice,
   },
 });

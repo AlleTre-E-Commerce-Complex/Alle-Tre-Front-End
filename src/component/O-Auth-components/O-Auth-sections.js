@@ -31,12 +31,11 @@ import routes from "../../routes";
 
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
+import { welcomeBonus } from "../../redux-store/welcom-bonus-slice";
 import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
-import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 
 const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
-  const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
 
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -46,7 +45,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   const dispatch = useDispatch();
   const { login } = useAuthState();
 
-  const { run } = useAxios();
+  const { run, isLoading } = useAxios();
   const signInWithApple = () => {
     const provider = new OAuthProvider("apple.com");
     signInWithPopup(authentications, provider)
@@ -65,7 +64,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               res.data.data;
               console.log('res.data.data',res.data.data)
               if(isAddedBonus){
-                setOpenWelcomeBonusModal(true)
+                dispatch(welcomeBonus(true))
               }
             login({
               accessToken: accessToken,
@@ -116,8 +115,9 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
             const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
               res.data.data;
+              console.log('isAddedBonus',isAddedBonus)
               if(isAddedBonus){
-                setOpenWelcomeBonusModal(true)
+                dispatch(welcomeBonus(true))
               }
             login({
               accessToken: accessToken,
@@ -169,8 +169,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
         console.log('face book auth test 3')
             
-            const { accessToken, refreshToken, hasCompletedProfile } =
+            const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
               res.data.data;
+              console.log('isAddedBonus',isAddedBonus)
+              if(isAddedBonus){
+                dispatch(welcomeBonus(true))
+              }
             login({
               accessToken: accessToken,
               refreshToken: refreshToken,
@@ -245,7 +249,6 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
       >
         <img src={allatreLogoColor} alt="allatreLogoColor" />
       </div>
-      <WelcomeBonusModal open={openWelcomeBonusModal} setOpen={setOpenWelcomeBonusModal} />
     </div>
   );
 };

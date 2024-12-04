@@ -24,11 +24,15 @@ const Wallet = () => {
   const [successModalOpen,setSuccessModalOpen] = useState(false)
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+  
+  useEffect(() => {
     const fetchWalletData = async () => {
       try {
         const [historyResponse, balanceResponse] = await Promise.all([
-          authAxios.get(`${api.app.Wallet.get}`),
-          authAxios.get(`${api.app.Wallet.getBalance}`)
+          runWallet(authAxios.get(`${api.app.Wallet.get}`)),
+          runWallet(authAxios.get(`${api.app.Wallet.getBalance}`))
         ]);
   
         setWalletHistory(historyResponse.data);

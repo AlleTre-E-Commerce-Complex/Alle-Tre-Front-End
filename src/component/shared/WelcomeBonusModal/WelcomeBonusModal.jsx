@@ -5,16 +5,21 @@ import useAxios from 'hooks/use-axios';
 
 import { useLanguage } from 'context/language-context';
 import content from 'localization/content';
+import { useDispatch } from 'react-redux';
+import { welcomeBonus } from 'redux-store/welcom-bonus-slice';
+import { useHistory } from 'react-router-dom';
+import routes from 'routes';
 
-const WelcomeBonusModal = ({open,setOpen}) => {
+const WelcomeBonusModal = ({open,setOpen,isLoading}) => {
     const [lang] = useLanguage(""); 
     const selectedContent = content[lang];
-    const {
-        run,
-        isLoading,
-        // error: errorDeleveryIssueAuction,
-        // isError: isErrorDeleveryIssueAuction,
-      } = useAxios([]);
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const handleClick = () => {
+      dispatch(welcomeBonus(false))
+      setOpen(false)
+      history.push(routes.app.profile.wallet)
+    }
   return (
     <div>
        <Modal
@@ -33,13 +38,10 @@ const WelcomeBonusModal = ({open,setOpen}) => {
           {/* <Loader active /> */}
           <LodingTestAllatre />
         </Dimmer>
-        <div className="bg-primary text-white text-center font-semibold py-2 text-xl">
-           
-        </div> 
         
-        <div className='px-3 py-2 mt-5 text-center font-semibold text-lg' >
+        <div onClick={handleClick} className='cursor-pointer px-3 py-2 mt-5 text-center font-semibold text-lg' >
             <h1>Congratulations! You have received a welcome bonus of 100 AED.</h1>
-            <h1>Click on the button below to see your account balance.</h1>
+            <h1>Click on the here to see your account balance.</h1>
         </div>
         
 
