@@ -141,6 +141,7 @@ const localizationKeys = {
   YesISentIt: "YesIHaveSentIt",
   yesDelete: "yesDelete",
   locationIsRequired: "locationIsRequired",
+  editLocation: "editLocation",
   inOrderToFinishTheProcedureWeHaveToGetAccessTo:
     "inOrderToFinishTheProcedureWeHaveToGetAccessTo",
   yourLocationYouCanManageThemLater: "yourLocationYouCanManageThemLater",

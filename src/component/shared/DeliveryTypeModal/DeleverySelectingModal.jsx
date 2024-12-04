@@ -23,8 +23,8 @@ const DeliverySelectingModal = ({ open, setOpen, auctionId,lastPrice }) => {
 
   // Descriptions for each delivery type
   const deliveryDescriptions = {
-    pickup: 'The customer is responsible for the delivery, and there is no fee for delivery.',
-    companyDelivery: 'The company will handle the delivery, and the buyer needs to pay the delivery fee.',
+    PICKUP: 'The customer is responsible for the delivery, and there is no fee for delivery.',
+    DELIVERY: 'The company will handle the delivery, and the buyer needs to pay the delivery fee.',
   };
 
   const handleDropdownChange = (e, { value }) => {

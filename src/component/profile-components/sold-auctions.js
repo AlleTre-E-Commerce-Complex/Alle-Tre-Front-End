@@ -84,6 +84,7 @@ const SoldAuctions = () => {
               key={e?.id}
               status={e?.status}
               isItemSendForDelivery={e?.isItemSendForDelivery}
+              deliveryType={e?.deliveryType}
               auctionsId={e?.id}
               title={e?.product?.title}
               description={e?.product?.description}

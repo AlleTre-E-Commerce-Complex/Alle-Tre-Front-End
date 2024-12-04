@@ -85,7 +85,7 @@ const AddLocationModel = ({
       };
 
       run(authAxios.put(`/users/locations/${editData.addressId}`, locationData))
-        .then(() => {
+        .then((res) => {
           setOpen(false);
           onReload();
           toast.success(
@@ -101,12 +101,20 @@ const AddLocationModel = ({
     } else {
       // Existing add location logic
       run(authAxios.post(api.app.location.post, values))
-        .then(() => {
-          setOpen(false);
-          onReload();
-          toast.success(selectedContent[localizationKeys.successAddLocatons]);
+        .then((res) => {
+          if (isMounted.current) {  // Only update state if mounted
+            window.localStorage.setItem("hasCompletedProfile", true);
+            if (TextButton === selectedContent[localizationKeys.proceed]) {
+              history.push(routes.app.createAuction.productDetails);
+              toast.success(selectedContent[localizationKeys.successAddLocatons]);
+            } else {
+              setOpen(false);
+              onReload();
+            }
+          }
         })
         .catch((err) => {
+          console.log("add location error", err);
           toast.error(
             err?.response?.data?.message?.[lang] ||
               selectedContent[localizationKeys.oops]

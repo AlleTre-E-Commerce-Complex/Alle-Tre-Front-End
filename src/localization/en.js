@@ -155,6 +155,7 @@ const en = {
   [localizationKeys.YesISentIt]: "Yes, I  sent it",
   [localizationKeys.yesDelete]: "Yes,delete",
   [localizationKeys.locationIsRequired]: "Location is required",
+  [localizationKeys.editLocation]: "Edit Location",
   [localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo]:
     "In order to finish the procedure, we have to get access to",
   [localizationKeys.yourLocationYouCanManageThemLater]:
