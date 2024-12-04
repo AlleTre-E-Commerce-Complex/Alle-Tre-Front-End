@@ -187,6 +187,8 @@ const en = {
   [localizationKeys.next]: "Next",
   [localizationKeys.youCanOnlySelectUpToFiveImages]:
     "You can only select up to 5 images",
+  [localizationKeys.setAsCover]: "Set as cover",
+  [localizationKeys.cover]: "Cover",
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",

@@ -178,7 +178,7 @@ const AppLayouts = () => {
         {currentPath === routes.app.home && (
           <button
             onClick={handelOnSell}
-            className="fixed bottom-4 right-4 bg-gradient-to-r from-pink-700 to-[#681224] text-white hover:from-gray-600 hover:to-gray-800 font-semibold rounded-lg w-40 h-12 flex items-center justify-center shadow-2xl hover:shadow-md transform hover:scale-105 transition-all duration-300 ease-in-out md:hidden"
+            className="fixed bottom-4 right-4 bg-gradient-to-r from-pink-700 to-[#681224] text-white hover:from-gray-600 hover:to-gray-800 font-semibold rounded-lg w-40 h-12 flex items-center justify-center shadow-2xl hover:shadow-md transform hover:scale-105 transition-all duration-300 ease-in-out md:hidden z-[9999]"
           >
             {selectedContent[localizationKeys.createAuction]}
           </button>
