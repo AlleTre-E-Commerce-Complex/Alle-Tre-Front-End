@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Dimmer, Loader } from "semantic-ui-react";
 import api from "../../../api";
 import AuctionCard from "../../../component/home-components/auction-card";
@@ -27,6 +28,7 @@ import menuicon from "../../../../src/assets/icons/menu-icon.png";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../component/home-components/auction-card-list";
 import BannerTop from "component/home-components/BannerTop";
+import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -36,14 +38,14 @@ const Home = () => {
   const { user } = useAuthState();
   const myRef = useRef();
   const dispatch = useDispatch();
-
+  const isWelcomeBonus = useSelector((state) => state.welcomeBonus.welcomeBonus);
   const [isGrid, setIsGrid] = useState(true);
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
   const [showRewardModal, setShowRewardModal] = useState(true);
-
+  const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
   );
@@ -52,6 +54,9 @@ const Home = () => {
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
   useEffect(() => {
+    if (isWelcomeBonus) {
+      setOpenWelcomeBonusModal(true)
+    }
     if (search.includes("page") && search.includes("perPage"))
       if (!user) {
         runMainAuctions(
@@ -276,7 +281,9 @@ const Home = () => {
         setOpen={setOpen}
         TextButton={selectedContent[localizationKeys.proceed]}
       />
+      <WelcomeBonusModal open={openWelcomeBonusModal} setOpen={setOpenWelcomeBonusModal} />
     </div>
+
   );
 };
 

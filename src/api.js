@@ -92,6 +92,7 @@ const api = {
     },
     location: {
       post: "/users/locations",
+      put:"/users/locations",
       get: "/users/my-locations",
       edit: (locationsId) => `/users/locations/${locationsId}/set-main`,
       delete: (locationsId) => `/users/locations/${locationsId}`,
