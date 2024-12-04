@@ -46,7 +46,7 @@ const ProductDetails = () => {
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
-  
+
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const productDetailsint = useSelector(
@@ -265,7 +265,7 @@ const ProductDetails = () => {
             ...values,
             hasUsageCondition: hasUsageCondition,
             valueRadio: valueRadio,
-            fileOne: fileOne, 
+            fileOne: fileOne,
             fileTwo: fileTwo,
             fileThree: fileThree,
             fileFour: fileFour,
@@ -290,7 +290,7 @@ const ProductDetails = () => {
             ...values,
             hasUsageCondition: hasUsageCondition,
             valueRadio: valueRadio,
-            fileOne: fileOne, 
+            fileOne: fileOne,
             fileTwo: fileTwo,
             fileThree: fileThree,
             fileFour: fileFour,
@@ -309,7 +309,6 @@ const ProductDetails = () => {
       );
     }
   };
-  
 
   const {
     run: runSaveAuctionAsDraft,
