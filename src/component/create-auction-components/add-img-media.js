@@ -42,7 +42,7 @@ const AddImgMedia = ({
       ...files.slice(0, coverPhotoIndex - 1),
       ...files.slice(coverPhotoIndex).filter(Boolean),
     ];
-  
+
     reorderedFiles.forEach((file, idx) => {
       setters[idx](file || null);
     });
@@ -52,12 +52,23 @@ const AddImgMedia = ({
     }
 
     setCoverPhotoIndex(1);
-     }, [coverPhotoIndex, fileOne, fileTwo, fileThree, fileFour, fileFive, 
-      setFileOne, setFileTwo, setFileThree, setFileFour, setFileFive]);
+  }, [
+    coverPhotoIndex,
+    fileOne,
+    fileTwo,
+    fileThree,
+    fileFour,
+    fileFive,
+    setFileOne,
+    setFileTwo,
+    setFileThree,
+    setFileFour,
+    setFileFive,
+  ]);
 
   const compressImage = async (file) => {
     try {
-        // For debugging
+      // For debugging
       console.log("Input file:", file.type, file.size / 1024 / 1024, "MB");
 
       // Convert HEIC/HEIF to JPEG if needed
@@ -87,9 +98,9 @@ const AddImgMedia = ({
       };
 
       let compressedFile = await imageCompression(file, options);
-        // If compression wasn't effective, try one more time with more aggressive settings
+      // If compression wasn't effective, try one more time with more aggressive settings
       if (compressedFile.size > file.size * 0.9) {
-               options.maxSizeMB = 0.5;
+        options.maxSizeMB = 0.5;
         options.initialQuality = 0.6;
         compressedFile = await imageCompression(file, options);
       }
@@ -99,16 +110,15 @@ const AddImgMedia = ({
         type: "image/jpeg",
         lastModified: new Date().getTime(),
       });
-        return finalFile;
+      return finalFile;
     } catch (error) {
-           return file;
+      return file;
     }
   };
 
   const handleChange = async (file, setFile, index) => {
     if (file) {
       try {
-      
         const compressedFile = await compressImage(file);
         console.log("Original size:", file.size / 1024 / 1024, "MB");
         console.log(
@@ -117,7 +127,6 @@ const AddImgMedia = ({
           "MB"
         );
         setFile(compressedFile);
-       
       } catch (error) {
         console.error("Error handling file:", error);
         setFile(file);
@@ -126,7 +135,6 @@ const AddImgMedia = ({
   };
 
   const handleSetCover = (index) => {
-   
     setCoverPhotoIndex(index);
   };
 
@@ -186,7 +194,7 @@ const AddImgMedia = ({
                   {!isCoverPhoto && (
                     <button
                       onClick={() => handleSetCover(index)}
-                      className="absolute bottom-2 left-2 bg-white text-xs px-2 py-1 rounded-full shadow hover:shadow-lg"
+                      className="absolute bottom-2 left-2 bg-primary  text-white text-xs px-2 py-1 rounded-full shadow hover:shadow-lg"
                     >
                       Set as cover
                     </button>
