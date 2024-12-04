@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import imageCompression from "browser-image-compression";
 
@@ -19,9 +19,45 @@ const AddImgMedia = ({
   fileFive,
   setFileFive,
 }) => {
+  const [coverPhotoIndex, setCoverPhotoIndex] = React.useState(1);
+
+  // Reorder files when cover photo changes
+  useEffect(() => {
+    const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+    const setters = [
+      setFileOne,
+      setFileTwo,
+      setFileThree,
+      setFileFour,
+      setFileFive,
+    ];
+
+    // Skip if cover photo is already first or no files
+    if (coverPhotoIndex === 1 || !files[coverPhotoIndex - 1]) return;
+
+    // Create new order with cover photo first
+    const coverPhoto = files[coverPhotoIndex - 1];
+    const reorderedFiles = [
+      coverPhoto,
+      ...files.slice(0, coverPhotoIndex - 1),
+      ...files.slice(coverPhotoIndex).filter(Boolean),
+    ];
+  
+    reorderedFiles.forEach((file, idx) => {
+      setters[idx](file || null);
+    });
+
+    for (let i = reorderedFiles.length; i < 5; i++) {
+      setters[i](null);
+    }
+
+    setCoverPhotoIndex(1);
+     }, [coverPhotoIndex, fileOne, fileTwo, fileThree, fileFour, fileFive, 
+      setFileOne, setFileTwo, setFileThree, setFileFour, setFileFive]);
+
   const compressImage = async (file) => {
     try {
-      // For debugging
+        // For debugging
       console.log("Input file:", file.type, file.size / 1024 / 1024, "MB");
 
       // Convert HEIC/HEIF to JPEG if needed
@@ -40,25 +76,20 @@ const AddImgMedia = ({
       }
 
       const options = {
-        maxSizeMB: 0.8, // Reduced target size
+        maxSizeMB: 0.8,
         maxWidthOrHeight: 1920,
-        initialQuality: 0.7, // Slightly more aggressive compression
+        initialQuality: 0.7,
         useWebWorker: true,
-        fileType: "image/jpeg", // Force JPEG output for consistency
+        fileType: "image/jpeg",
         preserveExif: true,
-        alwaysKeepResolution: true, // Maintain resolution for high-quality photos
-        exifOrientation: true, // Handle image orientation correctly
+        alwaysKeepResolution: true,
+        exifOrientation: true,
       };
 
       let compressedFile = await imageCompression(file, options);
-
-      // If compression wasn't effective, try one more time with more aggressive settings
+        // If compression wasn't effective, try one more time with more aggressive settings
       if (compressedFile.size > file.size * 0.9) {
-        // If saved less than 10%
-        console.log(
-          "First compression not effective, trying again with more aggressive settings"
-        );
-        options.maxSizeMB = 0.5;
+               options.maxSizeMB = 0.5;
         options.initialQuality = 0.6;
         compressedFile = await imageCompression(file, options);
       }
@@ -68,17 +99,16 @@ const AddImgMedia = ({
         type: "image/jpeg",
         lastModified: new Date().getTime(),
       });
-
-      return finalFile;
+        return finalFile;
     } catch (error) {
-      console.error("Error compressing image:", error);
-      return file;
+           return file;
     }
   };
 
-  const handleChange = async (file, setFile) => {
+  const handleChange = async (file, setFile, index) => {
     if (file) {
       try {
+      
         const compressedFile = await compressImage(file);
         console.log("Original size:", file.size / 1024 / 1024, "MB");
         console.log(
@@ -87,11 +117,17 @@ const AddImgMedia = ({
           "MB"
         );
         setFile(compressedFile);
+       
       } catch (error) {
         console.error("Error handling file:", error);
         setFile(file);
       }
     }
+  };
+
+  const handleSetCover = (index) => {
+   
+    setCoverPhotoIndex(index);
   };
 
   return (
@@ -114,11 +150,13 @@ const AddImgMedia = ({
             5: setFileFive,
           }[index];
 
+          const isCoverPhoto = index === coverPhotoIndex;
+
           return (
             <div key={index} className="relative">
               {file ? (
                 <div className="relative">
-                  <div className="absolute top-2 right-2 z-10">
+                  <div className="absolute top-2 right-2 z-10 flex gap-2">
                     <button
                       className="bg-white p-2 rounded-full shadow hover:shadow-lg"
                       onClick={() => setFile(null)}
@@ -126,21 +164,37 @@ const AddImgMedia = ({
                       <img className="w-4 h-4" src={TrashIcon} alt="Remove" />
                     </button>
                   </div>
+                  {isCoverPhoto && (
+                    <div className="absolute top-2 left-2 z-10">
+                      <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
+                        Cover
+                      </span>
+                    </div>
+                  )}
                   <FileUploader
-                    handleChange={(file) => handleChange(file, setFile)}
+                    handleChange={(file) => handleChange(file, setFile, index)}
                     name={`file${index}`}
                   >
                     <img
-                      className={` border-primary  border-solid rounded-lg w-[154px] h-[139px] object-cover`}
+                      className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
+                        isCoverPhoto ? "ring-2 ring-primary" : ""
+                      }`}
                       src={URL.createObjectURL(file)}
                       alt={`Uploaded ${index}`}
                     />
                   </FileUploader>
-                  
+                  {!isCoverPhoto && (
+                    <button
+                      onClick={() => handleSetCover(index)}
+                      className="absolute bottom-2 left-2 bg-white text-xs px-2 py-1 rounded-full shadow hover:shadow-lg"
+                    >
+                      Set as cover
+                    </button>
+                  )}
                 </div>
               ) : (
                 <FileUploader
-                  handleChange={(file) => handleChange(file, setFile)}
+                  handleChange={(file) => handleChange(file, setFile, index)}
                   name={`file${index}`}
                   types={fileTypes}
                 >

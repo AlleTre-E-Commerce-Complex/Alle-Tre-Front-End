@@ -1,8 +1,8 @@
-import React, {  useEffect, useState } from "react";
+import React, { useState } from "react";
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
-import { useHistory, } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { formatCurrency } from "../../utils/format-currency";
 import moment from "moment";
 import useCountdown from "../../hooks/use-countdown";
@@ -65,8 +65,6 @@ const ActionsRowTable = ({
     ending_Time.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
-
- 
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
       <div className="flex flex-wrap justify-between overflow-clip ">
@@ -348,11 +346,16 @@ const ActionsRowTable = ({
           </div>
         </div>
         <div className="flex flex-col gap-y-2 gap-x-4">
-        {status === "SOLD"  && (
-              <h1 className="cursor-default  text-primary mx-3 text-sm font-normal sm:w-[145px] w-full  sm:mt-14 mt-5 ">
-               <b>Delivery Type</b> : {deliveryType === "DELIVERY" ? "Delivery Will be handled by company" : deliveryType === "PICKUP" ? "The buyer will pick up the item" : "Not selected"}
-              </h1>
-            )}
+          {status === "SOLD" && (
+            <h1 className="cursor-default  text-primary mx-3 text-sm font-normal sm:w-[145px] w-full  sm:mt-14 mt-5 ">
+              <b>Delivery Type</b> :{" "}
+              {deliveryType === "DELIVERY"
+                ? "Delivery Will be handled by company"
+                : deliveryType === "PICKUP"
+                ? "The buyer will pick up the item"
+                : "Not selected"}
+            </h1>
+          )}
         </div>
         {isBidsButtons ? (
           <div className="flex gap-x-2">
@@ -398,7 +401,7 @@ const ActionsRowTable = ({
               </button>
             )}
 
-            {(status === "ACTIVE" ||status === "PENDING_OWNER_DEPOIST") && (
+            {(status === "ACTIVE" || status === "PENDING_OWNER_DEPOIST") && (
               <button
                 onClick={() => {
                   setCancelAuctionModal(true);
@@ -450,7 +453,7 @@ const ActionsRowTable = ({
                 You have sent the item.
               </button>
             )}
-           
+
             {status === "PENDING_OWNER_DEPOIST" && (
               <button
                 onClick={() => {
@@ -459,7 +462,7 @@ const ActionsRowTable = ({
                 }}
                 className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5"
               >
-                {selectedContent[localizationKeys.completePayment]}sdljn;l
+                {selectedContent[localizationKeys.completePayment]}
               </button>
             )}
             <button
