@@ -8,7 +8,8 @@ import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
 import { Open } from "../../../redux-store/auth-model-slice";
-
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { MdNavigateNext } from "react-icons/md";
 const ImgSlider = ({
   images,
   auctionId,
@@ -19,20 +20,32 @@ const ImgSlider = ({
 }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
-  const [selectedImg, setSelectedImg] = useState(null);
+  const [selectedImgIndex, setSelectedImgIndex] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
+
   useEffect(() => {
-    if (images) setSelectedImg(images && images[0]?.imageLink);
+    if (images && images.length > 0) setSelectedImgIndex(0);
   }, [images]);
 
-  const onImageClick = (image) => {
-    setSelectedImg(image?.imageLink);
-    setTimeout(() => setIsClicked(false), 300);
+  const handleNext = () => {
+    setSelectedImgIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handlePrevious = () => {
+    setSelectedImgIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleThumbnailClick = (index) => {
+    setSelectedImgIndex(index);
   };
 
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
-
   const [isWatshlist, setWatshlist] = useState(false);
+
   useEffect(() => {
     setWatshlist(WatshlistState);
   }, [WatshlistState]);
@@ -46,7 +59,7 @@ const ImgSlider = ({
       if (!isWatshlist) {
         run(
           authAxios.post(api.app.WatchList.add, body).then((res) => {
-            toast.success("This auction add to WatchList been successfully");
+            toast.success("This auction added to WatchList successfully");
             setWatshlist(true);
             onReload();
           })
@@ -54,9 +67,7 @@ const ImgSlider = ({
       } else {
         run(
           authAxios.delete(api.app.WatchList.delete(auctionId)).then((res) => {
-            toast.success(
-              "This auction delete from WatchList been successfully"
-            );
+            toast.success("This auction removed from WatchList successfully");
             setWatshlist(false);
             onReload();
           })
@@ -66,6 +77,7 @@ const ImgSlider = ({
       dispatch(Open());
     }
   };
+
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
     return port
@@ -91,65 +103,77 @@ const ImgSlider = ({
   };
 
   return (
-    <div className=" shadow rounded-2xl group overflow-hidden ">
-      <div
-        className={`w-full h-[480px] relative rounded-2xl ${
-          isClicked ? "" : ""
-        }`}
-        onClick={() => setIsClicked(true)}
-      >
-        {selectedImg && (
-          <div className="w-full h-full absolute rounded-2xl z-10">
-            <img
-              className={`absolute -z-10 w-full h-full object-contain p-2  ${
-                isClicked ? "animate-in" : ""
-              }`}
-              src={selectedImg}
-              alt=""
+    <div className="shadow rounded-2xl group overflow-hidden relative flex flex-col h-[480px]">
+      {/* Main Image Section */}
+      <div className="relative w-full h-[85%]">
+        {images && images.length > 0 && (
+          <img
+            className="w-full h-full object-contain"
+            src={images[selectedImgIndex]?.imageLink}
+            alt=""
+          />
+        )}
+        <div className="absolute top-1/2 w-full flex justify-between px-2 transform -translate-y-1/2 z-20">
+          <button
+            onClick={handlePrevious}
+            className="bg-primary/40 hover:bg-primary p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 group/btn"
+          >
+            <BsChevronLeft
+              style={{ stroke: "currentColor", strokeWidth: 1 }}
+              className="text-primary group-hover/btn:text-white text-xl transition-colors duration-300"
             />
+          </button>
+          <button
+            onClick={handleNext}
+            className="bg-primary/40 hover:bg-primary p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 group/btn"
+          >
+            <BsChevronRight
+              style={{ stroke: "currentColor", strokeWidth: 1 }}
+              className="text-primary group-hover/btn:text-white text-xl transition-colors duration-300"
+            />
+          </button>
+        </div>
+        <div
+          onClick={handleShare}
+          className="absolute top-5 right-5 z-50 border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+        >
+          <RiShareForwardFill className="text-primary hover:text-white transition-all duration-300 text-2xl md:text-3xl" />
+        </div>
+        {!isMyAuction && (
+          <div className="absolute top-20 right-2 md:right-5">
+            <button
+              onClick={handelAddNewWatshlist}
+              className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+            >
+              {isWatshlist ? (
+                <BsBookmarkFill className="text-primary hover:text-white text-2xl md:text-3xl" />
+              ) : (
+                <BsBookmark className="text-primary hover:text-white text-2xl md:text-3xl" />
+              )}
+            </button>
           </div>
         )}
-        <div
-          onClick={() => handleShare()}
-          className="absolute top-5 right-5 z-50 border-primary border-2 border-solid bg-white group/share rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer"
-        >
-          <div className="h-full w-full flex justify-center items-center">
-            <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
-          </div>
-        </div>
-        <div className="w-full h-full relative top-0 left-0 hover:bg-gradient-to-t group-hover:from-[#25252562] rounded-2xl z-10 cursor-pointer ">
-          <div
-            className={
-              isMyAuction
-                ? "hidden"
-                : "rounded-lg w-[38px] h-[88px] absolute top-20 right-2 md:right-5 z-50"
-            }
-          >
-            <div
-              onClick={() => handelAddNewWatshlist()}
-              className="border-primary border-2 border-solid bg-white group/bookmark rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer"
-            >
-              <div className="h-full w-full flex justify-center items-center">
-                {isWatshlist ? (
-                  <BsBookmarkFill className="text-primary group-hover/bookmark:text-white transition-all duration-300 text-2xl md:text-3xl" />
-                ) : (
-                  <BsBookmark className="text-primary group-hover/bookmark:text-white transition-all duration-300 text-2xl md:text-3xl" />
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="flex absolute bottom-7 ltr:md:left-4 rtl:md:right-4 ltr:left-0 rtl:right-0 z-20">
+        {/* Thumbnail Section */}
+        <div className="h-[18%] w-full flex justify-center items-center bg-secondary/10">
+          <div className="bg-opacity-70 p-2  flex gap-2 overflow-x-auto">
             {images?.map((image, index) => (
               <div
-                className="w-full md:w-[89px] sm:h-[89px] h-[60px] rounded-2xl sm:mx-2.5 mx-1 object-contain cursor-pointer bg-background  "
                 key={index}
-                onClick={() => onImageClick(image)}
+                className={`w-[70px] h-[70px] rounded-lg cursor-pointer border-2 relative ${
+                  index === selectedImgIndex
+                    ? "border-primary border-4"
+                    : "border-transparent"
+                }`}
+                onClick={() => handleThumbnailClick(index)}
               >
                 <img
-                  className="w-full md:w-[89px] sm:h-[89px] h-[60px] object-contain rounded-2xl"
                   src={image.imageLink}
                   alt=""
+                  className="w-full h-full object-cover "
                 />
+                {index === selectedImgIndex && (
+                  <div className="absolute inset-0 bg-gray-500/50 rounded-lg transition-all duration-300" />
+                )}
               </div>
             ))}
           </div>
