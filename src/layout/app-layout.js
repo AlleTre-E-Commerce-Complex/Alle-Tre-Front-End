@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import routes from "../routes";
 
@@ -45,7 +45,7 @@ const AppLayouts = () => {
   // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
   useEffect(() => {
     const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
-    console.log('hasSeenRewardModal***>',hasSeenRewardModal)
+    console.log("hasSeenRewardModal***>", hasSeenRewardModal);
     if (!hasSeenRewardModal) {
       setShowRewardModal(true);
       sessionStorage.setItem("hasSeenRewardModal", "true"); // Mark as shown
@@ -60,7 +60,7 @@ const AppLayouts = () => {
 
   const handelOnSell = () => {
     if (user) {
-      history.push(routes.app.createAuction.default);
+      history.push(routes.app.createAuction.productDetails);
     } else dispatch(Open());
   };
   return (
