@@ -61,7 +61,7 @@ const Header = ({ SetSid }) => {
   };
   const handelOnSell = () => {
     if (user) {
-      history.push(routes.app.createAuction.default);
+      history.push(routes.app.createAuction.productDetails);
     } else dispatch(Open());
   };
   const handelRegister = () => {
@@ -160,13 +160,6 @@ const Header = ({ SetSid }) => {
               onClick={() => handelWatchlist()}
             />
             <NavLinkHeader
-              title={selectedContent[localizationKeys.faqs]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.faqs)
-              }
-              onClick={() => history.push(routes.app.faqs)}
-            />
-            <NavLinkHeader
               title={selectedContent[localizationKeys.Purchased]}
               isActive={
                 pathname.length === 1 ||
@@ -187,6 +180,13 @@ const Header = ({ SetSid }) => {
                 history.push(routes.app.profile.wallet);
                 SetSid(false);
               }}
+            />
+            <NavLinkHeader
+              title={selectedContent[localizationKeys.faqs]}
+              isActive={
+                pathname.length === 1 || pathname.startsWith(routes.app.faqs)
+              }
+              onClick={() => history.push(routes.app.faqs)}
             />
             {/* <NavLinkHeader
               title={selectedContent[localizationKeys.support]}
