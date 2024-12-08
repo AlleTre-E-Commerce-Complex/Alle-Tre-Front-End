@@ -241,6 +241,19 @@ const en = {
   [localizationKeys.errorDeletingAddress]: "Error deleting address",
   [localizationKeys.deleteAddress]: "Delete Address",
   [localizationKeys.cannotDeleteMainAddress]: "Cannot delete main address",
+  // payment details
+  [localizationKeys.paymentMethod]: "Payment Method",
+  [localizationKeys.backToHome]: "Back to home",
+  [localizationKeys.yourPurchaseHasBeenSuccessfullyCompleted]:
+    "Your purchase has been successfully completed",
+  [localizationKeys.yourDepositHasBeenSuccessfullyTransferredAndYourAuctionIsActiveNow]:
+    "Your deposit has been successfully transferred and your auction is active now",
+  [localizationKeys.paymentSuccess]: "Payment success",
+  [localizationKeys.yourBidHasBeenSuccessfullyPlaced]:
+    "Your bid has been successfully placed",
+  [localizationKeys.viewBids]: "View Bids",
+  [localizationKeys.viewPurchased]: "View Purchased",
+  [localizationKeys.viewAuction]: "View Auction",
   // profile
   [localizationKeys.online]: "Online",
   [localizationKeys.logout]: "Logout",

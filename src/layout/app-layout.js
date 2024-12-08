@@ -39,7 +39,7 @@ const AppLayouts = () => {
   const [showRewardModal, setShowRewardModal] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
-  const { pathname, auctionId } = useLocation();
+  const { pathname } = useLocation();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
