@@ -23,8 +23,7 @@ import { Prompt, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import routes from "../../../routes";
 import WalletPayment from "../WalletPayment/WalletPayment";
 import PaymentSelection from "../PaymentSelection/PaymentSelection";
-import { AiOutlineAlert  } from "react-icons/ai";
-
+import { AiOutlineAlert } from "react-icons/ai";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -44,11 +43,10 @@ export default function CheckoutPagePaymentDetails() {
   const [showStripePayment, setShowStripePayment] = useState(null);
   const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
   const [auctionId, setAuctionId] = useLocalStorage("auctionId", "");
-  const [isPaymentCompleted,setIsPaymentCompleted] = useState(false)
+  const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
-  const [leavePage,setLeavePage] = useState(false)
-
+  const [leavePage, setLeavePage] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -58,7 +56,6 @@ export default function CheckoutPagePaymentDetails() {
   // };
   //  useEffect(() => {
   //   // Block navigation and show modal
-   
 
   //   // Handle back button
   //   const handlePopState = () => {
@@ -87,10 +84,10 @@ export default function CheckoutPagePaymentDetails() {
 
   useEffect(() => {
     return () => {
-      if(!isPaymentCompleted){
-        history.push(routes.app.profile.myAuctions.pending)
+      if (!isPaymentCompleted) {
+        history.push(routes.app.profile.myAuctions.pending);
       }
-    }
+    };
   }, [isPaymentCompleted]);
   // Modify your handle functions to control navigation
   const handleConfirm = () => {
@@ -104,7 +101,6 @@ export default function CheckoutPagePaymentDetails() {
     setShowModal(false);
     // Continue with payment process
   };
-
 
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
@@ -185,18 +181,15 @@ export default function CheckoutPagePaymentDetails() {
       setShowStripePayment(true);
       setShowWalletPaymentMethod(false);
       stripePaymentApiCall();
- 
     } else {
       setShowStripePayment(false);
       setShowWalletPaymentMethod(true);
     }
   };
 
-
-
   return (
     <>
-     {/* <Prompt
+      {/* <Prompt
         when={!isPaymentCompleted}
         message={() => {
            // Store the next location
@@ -206,38 +199,37 @@ export default function CheckoutPagePaymentDetails() {
         }}
       /> */}
 
-        {/* Modal */}
-        {showModal && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-  <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-lg">
-    {/* Icon Container */}
-    <div className="flex justify-center items-center mb-4">
-      <AiOutlineAlert size={70} color="orange" />
-    </div>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-lg">
+            {/* Icon Container */}
+            <div className="flex justify-center items-center mb-4">
+              <AiOutlineAlert size={70} color="orange" />
+            </div>
 
-    {/* Message */}
-    <p className="text-lg font-semibold text-gray-800 mb-4 text-center">
-      Your payment details are saved.
-    </p>
+            {/* Message */}
+            <p className="text-lg font-semibold text-gray-800 mb-4 text-center">
+              Your payment details are saved.
+            </p>
 
-    {/* Buttons */}
-    <div className="flex justify-center space-x-4">
-      <button
-        className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition"
-        onClick={handleConfirm}
-      >
-        View Pending Payment
-      </button>
-      <button
-        className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition"
-        onClick={handleCancel}
-      >
-        Continue Payment
-      </button>
-    </div>
-  </div>
-</div>
-
+            {/* Buttons */}
+            <div className="flex justify-center space-x-4">
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition"
+                onClick={handleConfirm}
+              >
+                View Pending Payment
+              </button>
+              <button
+                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition"
+                onClick={handleCancel}
+              >
+                Continue Payment
+              </button>
+            </div>
+          </div>
+        </div>
       )}
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
@@ -339,9 +331,9 @@ export default function CheckoutPagePaymentDetails() {
                 : clientSecret && (
                     <Elements options={options} stripe={stripePromise}>
                       <CheckoutFormPaymentDetails
-                      setIsPaymentCompleted={setIsPaymentCompleted}
-                        payDeposite
                         auctionId={auctionId}
+                        setIsPaymentCompleted={setIsPaymentCompleted}
+                        payDeposite
                         payPrice={
                           pendingAuctionData?.product?.category
                             ?.bidderDepositFixedAmount
@@ -352,9 +344,9 @@ export default function CheckoutPagePaymentDetails() {
               {clientSecret && showStripePayment && (
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutFormPaymentDetails
-                   setIsPaymentCompleted={setIsPaymentCompleted}
-                    payDeposite
                     auctionId={auctionId}
+                    setIsPaymentCompleted={setIsPaymentCompleted}
+                    payDeposite
                     payPrice={
                       pendingAuctionData?.product?.category
                         ?.bidderDepositFixedAmount
@@ -378,9 +370,7 @@ export default function CheckoutPagePaymentDetails() {
             <div></div>
           </div>
         </div>
-     
       </div>
-
     </>
   );
 }

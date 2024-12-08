@@ -9,14 +9,18 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+// import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function CheckoutFormPaymentDetails({ payPrice,setIsPaymentCompleted }) {
+export default function CheckoutFormPaymentDetails({
+  auctionId,
+  payPrice,
+  setIsPaymentCompleted,
+}) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
-  const { pathname, auctionId } = useLocation();
-
+  // const { pathname, auctionId } = useLocation();
+ 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -49,7 +53,7 @@ export default function CheckoutFormPaymentDetails({ payPrice,setIsPaymentComple
           break;
       }
     });
-  }, [history, stripe,setIsPaymentCompleted]);
+  }, [history, stripe, setIsPaymentCompleted]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +69,7 @@ export default function CheckoutFormPaymentDetails({ payPrice,setIsPaymentComple
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails`,
+        return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`,
       },
     });
 
@@ -74,9 +78,9 @@ export default function CheckoutFormPaymentDetails({ payPrice,setIsPaymentComple
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    
+
     if (error.type === "card_error" || error.type === "validation_error") {
-      console.log('stripe error :', error);
+      console.log("stripe error :", error);
       toast.error(error.message);
     } else {
       toast.error("An unexpected error occurred.");

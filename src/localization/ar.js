@@ -238,6 +238,18 @@ const ar = {
   [localizationKeys.errorDeletingAddress]: "خطأ في حذف العنوان",
   [localizationKeys.deleteAddress]: "حذف العنوان",
   [localizationKeys.cannotDeleteMainAddress]: "لا يمكن حذف العنوان الرئيسي",
+  // payment details
+  [localizationKeys.paymentMethod]: "طريقة الدفع",
+  [localizationKeys.backToHome]: "العودة للرئيسية",
+  [localizationKeys.yourPurchaseHasBeenSuccessfullyCompleted]:
+    "لقد تم إتمام عملية الشراء الخاصة بك بنجاح",
+  [localizationKeys.yourDepositHasBeenSuccessfullyTransferredAndYourAuctionIsActiveNow]:
+    "إيداعك تم نقله بنجاح ومزادك مفعل الآن",
+  [localizationKeys.paymentSuccess]: "نجاح الدفع",
+  [localizationKeys.yourBidHasBeenSuccessfullyPlaced]: "لقد تم وضع عرضك بنجاح",
+  [localizationKeys.viewBids]: "عرض العطاءات",
+  [localizationKeys.viewPurchased]: "عرض المشتريات",
+  [localizationKeys.viewAuction]: "عرض المزادات",
   // profile
   [localizationKeys.online]: "متصل",
   [localizationKeys.logout]: "تسجيل الخروج",

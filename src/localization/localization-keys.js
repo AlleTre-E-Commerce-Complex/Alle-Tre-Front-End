@@ -22,7 +22,6 @@ const localizationKeys = {
   aVerificationMailHasBeenSent: "aVerificationMailHasBeenSent",
   thePasswordHasBeenSuccessfullyChanged:
     "thePasswordHasBeenSuccessfullyChanged",
-  backToHome: "backToHome",
   resetPassword: "resetPassword",
   newPassword: "newPassword",
   reEnterPassword: "reEnterPassword",
@@ -127,7 +126,6 @@ const localizationKeys = {
   scheduledAuctions: "scheduledAuctions",
   soldAuctions: "soldAuctions",
   pendingAuctions: "pendingAuctions",
-  expiredAuctions: "expiredAuctions",
   payDeposite: "payDeposite",
 
   // create auctions
@@ -200,8 +198,7 @@ const localizationKeys = {
   time: "time",
   NumberOfDays: "numberOfDays",
   DeliveryFees: "deliveryFees",
-  Amount: "amount",
-  pricing: "pricing",
+   pricing: "pricing",
   startPrice: "startPrice",
   purchasingPrice: "purchasingPrice",
   PolicyDescription: "PolicyDescription",
@@ -220,6 +217,17 @@ const localizationKeys = {
   cannotDeleteMainAddress: "cannot delete main address",
   // paymemt details
   paymentMethod: "paymentMethod",
+  backToHome: "backToHome",
+  yourPurchaseHasBeenSuccessfullyCompleted:
+    "yourPurchaseHasBeenSuccessfullyCompleted",
+  yourDepositHasBeenSuccessfullyTransferredAndYourAuctionIsActiveNow:
+    "yourDepositHasBeenSuccessfullyTransferredAndYourAuctionIsActiveNow",
+  paymentSuccess: "paymentSuccess",
+  yourBidHasBeenSuccessfullyPlaced: "yourBidHasBeenSuccessfullyPlaced",
+  viewBids: "viewBids",
+  viewPurchased: "viewPurchased",
+  viewAuction: "viewAuction",
+
   // profile
   online: "online",
   profileSettings: "profileSettings",
