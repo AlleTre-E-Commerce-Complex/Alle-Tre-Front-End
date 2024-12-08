@@ -421,6 +421,7 @@ const localizationKeys = {
     "makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne",
   //wallet
   Wallet: "Wallet",
+  notifications: "notifications",
   ThereAreNoTransactionYet: "ThereAreNoTransactionYet",
   WalletBalance: "WalletBalance",
   Withdraw: "Withdraw",

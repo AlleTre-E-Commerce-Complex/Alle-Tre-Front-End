@@ -9,7 +9,7 @@ import MyBids from "./my-bids";
 import MyBidsCompletePayment from "../../../component/profile-components/my-bids-complete-payment";
 import Purchased from "./purchased";
 import Wallet from "./Wallet";
-
+import Notifications from "./Notifications";
 const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
 
@@ -36,6 +36,7 @@ const ProfileLayouts = () => {
           <Route path={routes.app.profile.watchlist} component={Watshlist} />
           <Route path={routes.app.profile.purchased} component={Purchased} />
           <Route path={routes.app.profile.wallet} component={Wallet} />
+          <Route path={routes.app.profile.notifications} component={Notifications} />
         </Switch>
       </div>
     </div>

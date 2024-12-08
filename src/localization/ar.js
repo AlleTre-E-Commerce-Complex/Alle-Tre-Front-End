@@ -449,6 +449,7 @@ const ar = {
     "تأكد من اختيار موقع المزاد أو إنشاء موقع آخر",
   //wallet
   [localizationKeys.Wallet]: "محفظة",
+  [localizationKeys.notifications]: "الإشعارات",
   [localizationKeys.ThereAreNoTransactionYet]: "لا توجد معاملات بعد",
   [localizationKeys.ThereAreNoBankAccountAddedYet]:
     "لم يتم إضافة حساب بنكي بعد..!",
