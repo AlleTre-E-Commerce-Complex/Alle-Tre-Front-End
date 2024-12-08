@@ -460,6 +460,7 @@ const en = {
     "Make sure that you choose the auction location or create another one",
   //wallet
   [localizationKeys.Wallet]: "Wallet",
+  [localizationKeys.notifications]: "Notifications",
   [localizationKeys.ThereAreNoTransactionYet]:
     "There are no transactions yet..!",
   [localizationKeys.ThereAreNoBankAccountAddedYet]:

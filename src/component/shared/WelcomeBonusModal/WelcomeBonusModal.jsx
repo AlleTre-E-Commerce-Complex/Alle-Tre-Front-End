@@ -1,18 +1,18 @@
 import React from 'react'
 import { Dimmer, Modal } from 'semantic-ui-react'
 import LodingTestAllatre from '../lotties-file/loding-test-allatre'
-import useAxios from 'hooks/use-axios';
-
-import { useLanguage } from 'context/language-context';
-import content from 'localization/content';
+import welcomeBonusImage from '../../../assets/images/welcomeBonusImage.png'
+// import { useLanguage } from 'context/language-context';
+// import content from 'localization/content';
 import { useDispatch } from 'react-redux';
 import { welcomeBonus } from 'redux-store/welcom-bonus-slice';
 import { useHistory } from 'react-router-dom';
 import routes from 'routes';
+import { IoClose } from 'react-icons/io5';
 
 const WelcomeBonusModal = ({open,setOpen,isLoading}) => {
-    const [lang] = useLanguage(""); 
-    const selectedContent = content[lang];
+    // const [lang] = useLanguage(""); 
+    // const selectedContent = content[lang];
     const dispatch = useDispatch()
     const history = useHistory()
     const handleClick = () => {
@@ -23,13 +23,13 @@ const WelcomeBonusModal = ({open,setOpen,isLoading}) => {
   return (
     <div>
        <Modal
-    className="sm:w-[506px] w-full h-auto bg-transparent scale-in"
+    className="sm:w-[400px] w-full rounded-2xl h-auto bg-transparent scale-in"
     onClose={() => setOpen(false)}
     onOpen={() => setOpen(true)}
     open={open}
     >
 
-    <div className='sm:w-[500px] h-auto rounded-2xl bg-white border-2 border-primary'>
+    <div className='sm:w-[400px] h-auto rounded-2xl '>
     <Dimmer
           className="fixed w-full h-full top-0 bg-white/50"
           active={isLoading}
@@ -39,10 +39,20 @@ const WelcomeBonusModal = ({open,setOpen,isLoading}) => {
           <LodingTestAllatre />
         </Dimmer>
         
-        <div onClick={handleClick} className='cursor-pointer px-3 py-2 mt-5 text-center font-semibold text-lg' >
-            <h1>Congratulations! You have received a welcome bonus of 100 AED.</h1>
-            <h1>Click on the here to see your account balance.</h1>
-        </div>
+        <div className="relative">
+        <button
+          onClick={() => setOpen(false)}
+          className="absolute top-2 right-2 bg-white rounded-full w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-500 hover:text-primary"
+        >
+          <IoClose size={20} />
+        </button>
+        <img
+          src={welcomeBonusImage}
+          alt="Reward"
+          className="w-full h-auto cursor-pointer rounded-2xl"
+          onClick={handleClick}
+        />
+      </div>
         
 
     </div>

@@ -95,7 +95,8 @@ const routes = {
         `/alletre/profile/watchlist/${auctionId}/details`,
 
       purchased: `/alletre/profile/purchased`,
-      wallet: `/alletre/profile/wallet`
+      wallet: `/alletre/profile/wallet`,
+      notifications: `/alletre/profile/notifications`
     },
   },
 };

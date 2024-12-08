@@ -132,6 +132,11 @@ const ProfileSideBare = ({ SetSid, sid }) => {
               isActive={pathname.startsWith(routes.app.profile.wallet)}
               onClick={() => history.push(routes.app.profile.wallet)}
             />
+              <NavLink
+              title={selectedContent[localizationKeys.notifications]}
+              isActive={pathname.startsWith(routes.app.profile.notifications)}
+              onClick={() => history.push(routes.app.profile.notifications)}
+            />
             <div className="h-[100px]"></div>
           </div>
         </div>
