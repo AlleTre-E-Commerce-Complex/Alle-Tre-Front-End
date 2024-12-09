@@ -21,7 +21,6 @@ import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
-import useLocalStorage from "../../../hooks/use-localstorage";
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 
@@ -100,7 +99,23 @@ const Header = ({ SetSid }) => {
       history.push(routes.app.profile.watchlist);
     } else dispatch(Open());
   };
+  const handelPurchased = () => {
+    if (user) {
+      history.push(routes.app.profile.purchased);
+    } else dispatch(Open());
+  };
 
+  const handelWallet = () => {
+    if (user) {
+      history.push(routes.app.profile.wallet);
+    } else dispatch(Open());
+  };
+
+  const handelFaqs = () => {
+    if (user) {
+      history.push(routes.app.faqs);
+    } else dispatch(Open());
+  };
   const { logout } = useAuthState();
   const socket = useSocket();
 
@@ -181,10 +196,7 @@ const Header = ({ SetSid }) => {
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.purchased)
               }
-              onClick={() => {
-                history.push(routes.app.profile.purchased);
-                SetSid(false);
-              }}
+              onClick={() => handelPurchased()}
             />
             <NavLinkHeader
               title={selectedContent[localizationKeys.Wallet]}
@@ -192,17 +204,14 @@ const Header = ({ SetSid }) => {
                 pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.wallet)
               }
-              onClick={() => {
-                history.push(routes.app.profile.wallet);
-                SetSid(false);
-              }}
+              onClick={() => handelWallet()}
             />
             <NavLinkHeader
               title={selectedContent[localizationKeys.faqs]}
               isActive={
                 pathname.length === 1 || pathname.startsWith(routes.app.faqs)
               }
-              onClick={() => history.push(routes.app.faqs)}
+              onClick={() => handelFaqs()}
             />
             {/* <NavLinkHeader
               title={selectedContent[localizationKeys.support]}

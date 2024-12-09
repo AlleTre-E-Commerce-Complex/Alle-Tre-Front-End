@@ -56,7 +56,7 @@ const Sidebar = ({ SetSid, sid }) => {
       history.push(routes.app.createAuction.default);
     } else {
       dispatch(Open());
-      toast.error("You must log in first to add new ads");
+      toast.error("You must log in first to add new auction");
     }
   };
 
@@ -68,6 +68,22 @@ const Sidebar = ({ SetSid, sid }) => {
       toast.error("You must log in first to show your profile");
     }
   };
+  const handelPurchased = () => {
+    if (user) {
+      history.push(routes.app.profile.purchased);
+    } else dispatch(Open());
+  };
+  const handelWallet = () => {
+    if (user) {
+      history.push(routes.app.profile.wallet);
+    } else dispatch(Open());
+  };
+  const handelFaq = () => {
+    if (user) {
+      history.push(routes.app.faqs);
+    } else dispatch(Open());
+  };
+
   const { logout } = useAuthState();
 
   const socket = useSocket();
@@ -196,7 +212,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   pathname.startsWith(routes.app.profile.purchased)
                 }
                 onClick={() => {
-                  history.push(routes.app.profile.purchased);
+                  handelPurchased();
                   SetSid(false);
                 }}
               />
@@ -207,7 +223,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   pathname.startsWith(routes.app.profile.wallet)
                 }
                 onClick={() => {
-                  history.push(routes.app.profile.wallet);
+                  handelWallet();
                   SetSid(false);
                 }}
               />
@@ -217,7 +233,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   pathname.length === 1 || pathname.startsWith(routes.app.faqs)
                 }
                 onClick={() => {
-                  history.push(routes.app.faqs);
+                  handelFaq();
                   SetSid(false);
                 }}
               />

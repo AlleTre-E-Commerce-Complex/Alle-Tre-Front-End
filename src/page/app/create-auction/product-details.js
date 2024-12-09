@@ -540,10 +540,6 @@ const ProductDetails = () => {
     event.target.value = "";
   };
 
-  const handleSearchBrand = () => {
-    // Implement the search logic for available brand names based on the user's input
-  };
-
   return (
     <>
       <Dimmer
