@@ -21,6 +21,9 @@ import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
+import useLocalStorage from "../../../hooks/use-localstorage";
+import { productDetails } from "../../../redux-store/product-details-Slice";
+import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
@@ -30,6 +33,7 @@ const Header = ({ SetSid }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [serchShow, setSerchShow] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [name, setTitle] = useFilter("title", "");
   const debounced = useDebouncedCallback((value) => {
@@ -59,11 +63,23 @@ const Header = ({ SetSid }) => {
       dispatch(Open());
     }
   };
-  const handelOnSell = () => {
+  const handleOnSell = () => {
     if (user) {
-      history.push(routes.app.createAuction.productDetails);
-    } else dispatch(Open());
+      const hasCompletedProfile = window.localStorage.getItem(
+        "hasCompletedProfile"
+      );
+      console.log("isProfileComplete", hasCompletedProfile);
+      if (JSON.parse(hasCompletedProfile)) {
+        history.push(routes.app.createAuction.productDetails);
+        dispatch(productDetails({}));
+      } else {
+        setOpen(true);
+      }
+    } else {
+      dispatch(Open());
+    }
   };
+
   const handelRegister = () => {
     if (user) {
       history.push(routes.app.profile.profileSettings);
@@ -201,7 +217,7 @@ const Header = ({ SetSid }) => {
           </div>
           <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
             <button
-              onClick={handelOnSell}
+              onClick={handleOnSell}
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] ltr:font-serifEN rtl:font-serifAR"
             >
               {selectedContent[localizationKeys.createAuction]}
@@ -282,6 +298,11 @@ const Header = ({ SetSid }) => {
           </div>
         </div>
       </div>
+      <AddLocationModel
+        open={open}
+        setOpen={setOpen}
+        TextButton={selectedContent[localizationKeys.proceed]}
+      />
     </div>
   );
 };

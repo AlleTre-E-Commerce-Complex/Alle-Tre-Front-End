@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
 import Trash from "../../../component/shared/lotties-file/trash-lotifile";
-import { Button, Dimmer, Loader, Modal } from "semantic-ui-react";
+import { Button, Dimmer,  Modal } from "semantic-ui-react";
 import moment from "moment";
 
 import createAuctionimgBGfrom from "../../../../src/assets/img/create_auction_img_BG.png";

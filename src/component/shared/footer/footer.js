@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import footerImg from "../../../../src/assets/img/footer-img.png";
+import footerImg from "../../../../src/assets/images/footerImg2.jpg";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
 import {
   FaInstagram,
   FaFacebookF,
-  FaFacebookSquare,
   FaYoutube,
   FaTiktok,
   FaSnapchatGhost,
@@ -71,26 +70,6 @@ const Footer = () => {
           src={footerImg}
           alt="Footer Banner"
         />
-        <div className="absolute top-8 left-4 lg:top-auto lg:bottom-9 lg:ltr:left-24">
-          <h1 className="md:text-2xl text-base text-white font-medium">
-            {selectedContent[localizationKeys.weAreAlwaysHereToHelpYou]}
-          </h1>
-          <p className="md:text-base text-sm text-white font-normal pt-4">
-            {
-              selectedContent[
-                localizationKeys.subscribeNowToGetNewOffersAndUpdates
-              ]
-            }
-            {selectedContent[localizationKeys.Bysubscribingyounevermissbeat]}
-            <br />
-            {
-              selectedContent[
-                localizationKeys
-                  .Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales
-              ]
-            }
-          </p>
-        </div>
         <div className="absolute flex gap-5 bottom-5 right-4 lg:bottom-20 lg:ltr:right-24">
           <input
             value={email}

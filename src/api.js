@@ -94,7 +94,7 @@ const api = {
       post: "/users/locations",
       put:"/users/locations",
       get: "/users/my-locations",
-      edit: (locationsId) => `/users/locations/${locationsId}/set-main`,
+      edit: (locationsId) => `/users/locations/${locationsId}`,
       delete: (locationsId) => `/users/locations/${locationsId}`,
       makeDefault: (locationsId) => `/users/locations/${locationsId}/make-default`,
     },

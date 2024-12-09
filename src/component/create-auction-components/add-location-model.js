@@ -84,29 +84,37 @@ const AddLocationModel = ({
         // postalCode: values.zipCode,
       };
 
-      run(authAxios.put(`/users/locations/${editData.addressId}`, locationData))
+      run(
+        authAxios.put(api.app.location.edit(editData.addressId), locationData)
+      )
         .then((res) => {
-          setOpen(false);
-          onReload();
-          toast.success(
-            selectedContent[localizationKeys.successUpdateLocation]
-          );
+          if (isMounted.current) {
+            // Only update state if mounted
+            window.localStorage.setItem("hasCompletedProfile", "true");
+            toast.success(
+              selectedContent[localizationKeys.successUpdateLocation]
+            );
+            setOpen(false);
+            onReload();
+          }
         })
         .catch((err) => {
-          console.log("12345", err);
-          toast.error(
-            err?.message?.[lang] || selectedContent[localizationKeys.oops]
-          );
+          console.error("Error updating location:", err);
+          toast.error(selectedContent[localizationKeys.oops]);
         });
     } else {
-      // Existing add location logic
+      // Logic for adding a new location
       run(authAxios.post(api.app.location.post, values))
         .then((res) => {
-          if (isMounted.current) {  // Only update state if mounted
-            window.localStorage.setItem("hasCompletedProfile", true);
+          if (isMounted.current) {
+            // Only update state if mounted
+            window.localStorage.setItem("hasCompletedProfile", "true");
             if (TextButton === selectedContent[localizationKeys.proceed]) {
               history.push(routes.app.createAuction.productDetails);
-              toast.success(selectedContent[localizationKeys.successAddLocatons]);
+              toast.success(
+                selectedContent[localizationKeys.successAddLocatons]
+              );
+              setOpen(false);
             } else {
               setOpen(false);
               onReload();
@@ -114,11 +122,8 @@ const AddLocationModel = ({
           }
         })
         .catch((err) => {
-          console.log("add location error", err);
-          toast.error(
-            err?.response?.data?.message?.[lang] ||
-              selectedContent[localizationKeys.oops]
-          );
+          console.error("Error adding location:", err);
+          toast.error(selectedContent[localizationKeys.oops]);
         });
     }
   };
