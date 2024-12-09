@@ -148,14 +148,20 @@ const ProductDetails = () => {
     const files = event.target.files;
 
     // Check if user selected more than 5 files
-    const totalFiles = (fileOne ? 1 : 0) + (fileTwo ? 1 : 0) + (fileThree ? 1 : 0) + (fileFour ? 1 : 0) + (fileFive ? 1 : 0) + files.length;
+    const totalFiles =
+      (fileOne ? 1 : 0) +
+      (fileTwo ? 1 : 0) +
+      (fileThree ? 1 : 0) +
+      (fileFour ? 1 : 0) +
+      (fileFive ? 1 : 0) +
+      files.length;
     if (totalFiles > 5) {
-        toast.error(
-            selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
-        );
-        // Clear the input
-        event.target.value = "";
-        return;
+      toast.error(
+        selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
+      );
+      // Clear the input
+      event.target.value = "";
+      return;
     }
 
     const fileArray = Array.from(files);
@@ -164,12 +170,12 @@ const ProductDetails = () => {
     // Add new files to the existing files
     let index = 0;
     for (const file of fileArray) {
-        while (index < newFiles.length && newFiles[index]) {
-            index++;
-        }
-        if (index < newFiles.length) {
-            newFiles[index] = file; // Add new file to the first empty slot
-        }
+      while (index < newFiles.length && newFiles[index]) {
+        index++;
+      }
+      if (index < newFiles.length) {
+        newFiles[index] = file; // Add new file to the first empty slot
+      }
     }
 
     // Set the updated files back to state
@@ -532,6 +538,10 @@ const ProductDetails = () => {
     }
     // Reset input
     event.target.value = "";
+  };
+
+  const handleSearchBrand = () => {
+    // Implement the search logic for available brand names based on the user's input
   };
 
   return (
