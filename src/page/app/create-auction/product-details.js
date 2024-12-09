@@ -148,30 +148,31 @@ const ProductDetails = () => {
     const files = event.target.files;
 
     // Check if user selected more than 5 files
-    if (files.length > 5) {
-      toast.error(
-        selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
-      );
-      // Clear the input
-      event.target.value = "";
-      return;
+    const totalFiles = (fileOne ? 1 : 0) + (fileTwo ? 1 : 0) + (fileThree ? 1 : 0) + (fileFour ? 1 : 0) + (fileFive ? 1 : 0) + files.length;
+    if (totalFiles > 5) {
+        toast.error(
+            selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
+        );
+        // Clear the input
+        event.target.value = "";
+        return;
     }
 
     const fileArray = Array.from(files);
+    const newFiles = [fileOne, fileTwo, fileThree, fileFour, fileFive];
 
-    // Clear previous files before adding new ones
-    const newFiles = [null, null, null, null, null];
+    // Add new files to the existing files
+    let index = 0;
+    for (const file of fileArray) {
+        while (index < newFiles.length && newFiles[index]) {
+            index++;
+        }
+        if (index < newFiles.length) {
+            newFiles[index] = file; // Add new file to the first empty slot
+        }
+    }
 
-    // Assign the selected files to the state
-    fileArray.forEach((file, index) => {
-      if (index === 0) newFiles[0] = file;
-      if (index === 1) newFiles[1] = file;
-      if (index === 2) newFiles[2] = file;
-      if (index === 3) newFiles[3] = file;
-      if (index === 4) newFiles[4] = file;
-    });
-
-    // Update the state with the new files
+    // Set the updated files back to state
     setFileOne(newFiles[0]);
     setFileTwo(newFiles[1]);
     setFileThree(newFiles[2]);
