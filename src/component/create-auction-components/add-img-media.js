@@ -48,7 +48,6 @@ const AddImgMedia = ({
       ...files.slice(coverPhotoIndex).filter(Boolean),
     ];
 
-
     reorderedFiles.forEach((file, idx) => {
       setters[idx](file || null);
     });
@@ -71,8 +70,6 @@ const AddImgMedia = ({
     setFileFour,
     setFileFive,
   ]);
-  
-
 
   const compressImage = async (file) => {
     try {
@@ -101,16 +98,14 @@ const AddImgMedia = ({
         initialQuality: 0.7,
         useWebWorker: true,
         fileType: "image/jpeg",
-        preserveExif: true,
+        preserveExif: false,
         alwaysKeepResolution: true,
         exifOrientation: true,
       };
 
       let compressedFile = await imageCompression(file, options);
       // If compression wasn't effective, try one more time with more aggressive settings
-      // If compression wasn't effective, try one more time with more aggressive settings
       if (compressedFile.size > file.size * 0.9) {
-        options.maxSizeMB = 0.5;
         options.maxSizeMB = 0.5;
         options.initialQuality = 0.6;
         compressedFile = await imageCompression(file, options);
@@ -122,9 +117,7 @@ const AddImgMedia = ({
         lastModified: new Date().getTime(),
       });
       return finalFile;
-      return finalFile;
     } catch (error) {
-      return file;
       return file;
     }
   };

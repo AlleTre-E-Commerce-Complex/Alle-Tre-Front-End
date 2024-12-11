@@ -161,30 +161,24 @@ const AuctionCard = ({
     <div className={className}>
       <div className="group lg:w-[272px] l:w-[367px]  md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
         <div className="lg:w-[240px] l:w-[335px]  md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden">
-          <div
-            onClick={() => handleShare()}
-            className="border-primary border-2 border-solid bg-white group/share rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 top-1 ltr:right-2 rtl:left-2 hover:bg-primary transition-all duration-300 cursor-pointer"
-          >
-            <div className="h-full w-full flex justify-center items-center">
-              <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
-            </div>
-          </div>
-          <div
-            className={
-              isMyAuction || isPurchased
-                ? "hidden"
-                : "border-primary border-2 border-solid bg-white group/watchlist rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] absolute z-20 md:top-16 top-12 ltr:right-2 rtl:left-2 hover:bg-primary transition-all duration-300 cursor-pointer"
-            }
-          >
+          <div className="absolute top-3 right-1 z-50 flex items-center space-x-2">
+            {!isMyAuction && (
+              <button
+                onClick={() => handelAddNewWatshlist(auctionId)}
+                className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+              >
+                {isWatshlist ? (
+                  <BsBookmarkFill className="text-primary hover:text-white text-2xl md:text-3xl" />
+                ) : (
+                  <BsBookmark className="text-primary hover:text-white text-2xl md:text-3xl" />
+                )}
+              </button>
+            )}
             <div
-              onClick={() => handelAddNewWatshlist(auctionId)}
-              className="h-full w-full flex justify-center items-center"
+              onClick={handleShare}
+              className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
             >
-              {watshlistForceState || isWatshlist ? (
-                <BsBookmarkFill className="text-primary group-hover/watchlist:text-white transition-all duration-300 text-2xl md:text-3xl" />
-              ) : (
-                <BsBookmark className="text-primary group-hover/watchlist:text-white transition-all duration-300 text-2xl md:text-3xl" />
-              )}
+              <RiShareForwardFill className="text-primary hover:text-white transition-all duration-300 text-2xl md:text-3xl" />
             </div>
           </div>
           <img

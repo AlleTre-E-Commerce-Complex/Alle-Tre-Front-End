@@ -330,7 +330,8 @@ const en = {
   [localizationKeys.opsPending]: "Ops, there are no sold pending yet.",
   [localizationKeys.totalExpired]: "Total Expired Auctions...",
   [localizationKeys.opsExpired]: "Ops, there are no Expired auctions yet.",
-  [localizationKeys.watingForPaymentAuctions]: "Wating For Payment Auctions...",
+  [localizationKeys.watingForPaymentAuctions]:
+    "Waiting For Payment Auctions...",
   [localizationKeys.cancelTheAuction]: "Cancel the auction?",
   [localizationKeys.Warning]: "Warning",
   [localizationKeys.PaymentSelection]: "Payment selection",
@@ -380,6 +381,11 @@ const en = {
     "There is no bids yet cancelled auctions right now",
   [localizationKeys.submitNewBid]: "Submit New Bid",
   [localizationKeys.AnyObjection]: "Any Objections?",
+  [localizationKeys.AllMyBids]: "All My Bids",
+  [localizationKeys.InProgress]: "In Progress",
+  [localizationKeys.Pending]: "Pending",
+  [localizationKeys.completedAuction]: "Completed Auction",
+  [localizationKeys.cancelledAuctions]: "Cancelled Auctions",
   //delevery Issue Report Modal
   [localizationKeys.NotDeliveredYet]: "Not Delivered yet?",
   [localizationKeys.ProductIsNotAsShownInPicture]:
