@@ -463,6 +463,7 @@ const ar = {
   [localizationKeys.Wallet]: "محفظة",
   [localizationKeys.notifications]: "الإشعارات",
   [localizationKeys.ThereAreNoTransactionYet]: "لا توجد معاملات بعد",
+  [localizationKeys.ThereAreNoNotificationsYet]: "لا توجد إشعارات بعد",
   [localizationKeys.ThereAreNoBankAccountAddedYet]:
     "لم يتم إضافة حساب بنكي بعد..!",
   [localizationKeys.accountHolderName]: "اسم صاحب الحساب :",

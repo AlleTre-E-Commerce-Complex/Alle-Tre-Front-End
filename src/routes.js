@@ -97,6 +97,7 @@ const routes = {
       purchased: `/alletre/profile/purchased`,
       wallet: `/alletre/profile/wallet`,
       notifications: `/alletre/profile/notifications`
+
     },
   },
 };

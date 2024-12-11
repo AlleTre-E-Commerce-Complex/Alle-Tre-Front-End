@@ -431,6 +431,7 @@ const localizationKeys = {
   Wallet: "Wallet",
   notifications: "notifications",
   ThereAreNoTransactionYet: "ThereAreNoTransactionYet",
+  ThereAreNoNotificationsYet: "ThereAreNoNotificationsYet",
   WalletBalance: "WalletBalance",
   Withdraw: "Withdraw",
   Date: "Date",

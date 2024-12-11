@@ -342,7 +342,7 @@ const en = {
   [localizationKeys.didYouSendTheItemForDelivery]:
     "Did you send the item for delivery?",
   [localizationKeys.sendMessageToBuyer]: "Send a message to buyer ",
-  [localizationKeys.Message]: "Message...",
+  [localizationKeys.Message]: "Message",
   [localizationKeys.CancellAuctionWarningMessageWithBidders]:
     "Cancelling the auction will cause to lose your security deposit..!",
   [localizationKeys.CancellAuctionWarningMessageWithZeroBidders]:
@@ -476,6 +476,8 @@ const en = {
   [localizationKeys.notifications]: "Notifications",
   [localizationKeys.ThereAreNoTransactionYet]:
     "There are no transactions yet..!",
+  [localizationKeys.ThereAreNoNotificationsYet]:
+    "There are no notifications yet..!",
   [localizationKeys.ThereAreNoBankAccountAddedYet]:
     "No bank account added yet..!",
   [localizationKeys.accountHolderName]: "Account Holder Name :",

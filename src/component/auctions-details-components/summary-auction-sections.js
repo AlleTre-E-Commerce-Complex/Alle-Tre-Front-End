@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 
-import RatingStare from "../shared/rating-star/rating-star";
+// import RatingStare from "../shared/rating-star/rating-star";
 
 import AnglesRight from "../../../src/assets/icons/angles-right-wihte.png";
 

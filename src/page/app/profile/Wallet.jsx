@@ -5,11 +5,11 @@ import content from "localization/content";
 import localizationKeys from "localization/localization-keys";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
-import toast from 'react-hot-toast';
+
 import api from "api";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-import AddNewBankModal from "component/shared/withdrawalModal/AddNewBankModal";
+// import AddNewBankModal from "component/shared/withdrawalModal/AddNewBankModal";
 import SuccessModal from "component/shared/successModal/SuccessModal";
 import ShowBankDetailsModal from "component/shared/withdrawalModal/ShowBankDetailsModal";
 import routes from "routes";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/allatre-logo-color.svg";
 import routes from "../../../routes";
@@ -21,20 +21,89 @@ import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
+<<<<<<< Updated upstream
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 
+=======
+import { IoNotifications } from "react-icons/io5";
+import { io } from "socket.io-client";
+>>>>>>> Stashed changes
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-
+  const [notificationCount, setNotificationCount] = useState(0);
   const [serchShow, setSerchShow] = useState(false);
+<<<<<<< Updated upstream
   const [open, setOpen] = useState(false);
 
+=======
+  const { user } = useAuthState();
+>>>>>>> Stashed changes
   const [name, setTitle] = useFilter("title", "");
+
+  const [pushEnabled, setPushEnabled] = useState(false);
+  const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+  const socket_ = io(socketUrl, { query: { userId: user?.id } });
+
+  useEffect(() => {
+    if ("Notification" in window) {
+      console.log("Notification in window");
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          setPushEnabled(true);
+        } else {
+          console.log("Notification permission denied");
+        }
+      });
+    }
+  }, []);
+
+  // Listen for notifications from the socket
+  useEffect(() => {
+    if (user?.id) {
+      socket_.on("notification", (data) => {
+        console.log("New notification:", data);
+        // Increment notification count in the UI
+        setNotificationCount((prevCount) => prevCount + 1);
+        
+        // Display push notification if permission is granted
+        if (pushEnabled && Notification.permission === "granted") {
+          const { message, auctionId } = data;
+          new Notification("New Notification", {
+            body: message,
+            icon: "https://firebasestorage.googleapis.com/v0/b/allatre-2e988.appspot.com/o/1.png?alt=media&token=3d538116-bf6d-45d9-83e0-7f0076c43077", // Add your app's icon here
+          });
+        }
+      });
+
+      return () => {
+        // Cleanup when component unmounts
+        socket_.off("notification");
+      };
+    }
+  }, [socket_, user?.id, pushEnabled]);
+
+
+  // useEffect(() => {
+  //   // Listen for notifications
+  //   socket_.on('notification', (data) => {
+  //     console.log('New notification:', data);
+  //     // Display the notification in your UI
+  //     setNotificationCount((prevCount) => prevCount + 1);
+  //   });
+
+  //   return () => {
+  //     // Clean up on component unmount
+  //     socket_.off('notification');
+  //   };
+  // }, [socket_,user?.id]);
+
+
+
   const debounced = useDebouncedCallback((value) => {
     setTitle(value);
     history.push(`${routes.app.home}?page=1&perPage=28&title=${value}`);
@@ -52,7 +121,6 @@ const Header = ({ SetSid }) => {
     setIsOpen(false);
   };
 
-  const { user } = useAuthState();
   const dispatch = useDispatch();
 
   const handelMyPfofile = () => {
@@ -128,6 +196,8 @@ const Header = ({ SetSid }) => {
     logout();
   };
 
+
+
   return (
     <div className=" w-full fixed top-0 z-50 bg-white/30 backdrop-blur-md  ">
       <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4  max-w-[1440px] lg:mx-auto md:mx-12 px-2 md:px-0">
@@ -150,6 +220,24 @@ const Header = ({ SetSid }) => {
             className="text-primary cursor-pointer"
             size={30}
           />
+          <div className="relative">
+             <NavLinkHeader
+                title={
+                  <>
+                    <IoNotifications size={20} />
+                    {notificationCount > 0 && (
+                      <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                        {notificationCount > 99 ? '99+' : notificationCount}
+                      </span>
+                    )}
+                  </>
+                }
+                isActive={
+                  pathname.length === 1 || pathname.startsWith(routes.app.profile.notifications)
+                }
+                onClick={() => history.push(routes.app.profile.notifications)}
+              />
+           </div>
         </div>
         <div className="flex">
           <div className="my-auto ">
@@ -213,6 +301,24 @@ const Header = ({ SetSid }) => {
               }
               onClick={() => handelFaqs()}
             />
+           <div className="relative">
+             <NavLinkHeader
+                title={
+                  <>
+                    <IoNotifications size={20} />
+                    {notificationCount > 0 && (
+                      <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                        {notificationCount > 99 ? '99+' : notificationCount}
+                      </span>
+                    )}
+                  </>
+                }
+                isActive={
+                  pathname.length === 1 || pathname.startsWith(routes.app.profile.notifications)
+                }
+                onClick={() => history.push(routes.app.profile.notifications)}
+              />
+           </div>
             {/* <NavLinkHeader
               title={selectedContent[localizationKeys.support]}
               isActive={

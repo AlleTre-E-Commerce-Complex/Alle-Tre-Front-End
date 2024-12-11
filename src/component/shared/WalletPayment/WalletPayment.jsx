@@ -1,14 +1,13 @@
 import { authAxios } from "config/axios-config";
 import useAxios from "hooks/use-axios";
-import React, { useState } from "react";
+import React from "react";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "routes";
 import { Button } from "semantic-ui-react";
 
-const WalletPayment = ({ amount, walletBalance, auctionId, paymentAPI }) => {
+const WalletPayment = ({ setIsPaymentCompleted, amount, walletBalance, auctionId, paymentAPI }) => {
   const history = useHistory();
-  const [isWalletPaymentSuccess, setIsWalletPaymentSuccess] = useState(null);
   const { run, isLoading } = useAxios([]);
   const submitWalletPayment = () => {
     const body = {
@@ -19,12 +18,13 @@ const WalletPayment = ({ amount, walletBalance, auctionId, paymentAPI }) => {
       authAxios
         .post(paymentAPI, body)
         .then((res) => {
-          setIsWalletPaymentSuccess(res?.data?.success);
+          console.log('',res)
           if (res?.data?.success) {
             toast.success("Payment successful", {
               position: "top-right", // Position of the toast
             });
-            history.push(routes.app.profile.myAuctions.active);
+            setIsPaymentCompleted(true);
+            // history.push(routes.app.profile.myAuctions.active);
           }
         })
         .catch((error) => {
