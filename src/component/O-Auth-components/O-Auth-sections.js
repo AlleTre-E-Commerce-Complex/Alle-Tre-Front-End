@@ -115,7 +115,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
             const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
               res.data.data;
-              console.log('isAddedBonus',isAddedBonus)
+              console.log('hasCompletedProfile :',JSON.stringify(hasCompletedProfile))
               if(isAddedBonus){
                 dispatch(welcomeBonus(true))
               }

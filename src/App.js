@@ -6,10 +6,57 @@ import routes from "./routes";
 import CredentialsuUpdateLayout from "./layout/credentials-update-layout";
 import AuthLayouts from "./layout/auth-layout";
 import AppLayouts from "./layout/app-layout";
-import { SocketProvider } from "context/socket-context";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import useAxios from "hooks/use-axios";
+import { authAxios } from "config/axios-config";
+import { useAuthState } from "context/auth-context";
+import api from "api";
+
+const subscribeUser = async (run) => {
+  const registration = await navigator.serviceWorker.ready;
+
+  const subscription = await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: process.env.REACT_APP_VAPID_PUBLIC_KEY,
+  });
+
+  console.log('Push Subscription:', subscription);
+
+  // Send subscription to your backend
+  await run(authAxios.post(api.app.notifications.subscribe, {
+    subscription: subscription,
+  }));
+};
 
 function App() { 
+  const {run} = useAxios([])
+  const {user} = useAuthState()
+
+ 
+  
+  // useEffect(() => {
+  //   if (Notification.permission === 'default') {
+  //     Notification.requestPermission().then((permission) => {
+  //       if (permission === 'granted') {
+  //         subscribeUser(run);
+  //       }
+  //     });
+  //   }
+  // }, [run]);
+  
+
+  // useEffect(() => {
+  //   if ('serviceWorker' in navigator) {
+  //     navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+  //       console.log('Service Worker registered:', registration);
+  //     }).catch((error) => {
+  //       console.error('Service Worker registration failed:', error);
+  //     });
+  //   }
+  // }, []);
+
+
+
   return (
     <div className="App">
       <Switch>

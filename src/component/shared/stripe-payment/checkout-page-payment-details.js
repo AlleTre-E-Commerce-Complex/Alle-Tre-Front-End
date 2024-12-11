@@ -46,55 +46,27 @@ export default function CheckoutPagePaymentDetails() {
   const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
-  const [leavePage, setLeavePage] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
 
-  // const handleBeforeUnload = (e) => {
-  //   e.preventDefault();
-  //   e.returnValue = ''; // This is required for Chrome
-  // };
-  //  useEffect(() => {
-  //   // Block navigation and show modal
-
-  //   // Handle back button
-  //   const handlePopState = () => {
-  //     // Prevent the default back action
-  //     window.history.pushState(null, '', window.location.pathname);
-  //     window.onpopstate= (e) => {
-  //      window.history.go(1)
-  //     }
-  //   };
-
-  //   handlePopState()
-  //   // // Add initial history state
-  //   // window.history.pushState(null, null, window.location.pathname);
-
-  //   // // Add event listeners
-  //   // window.addEventListener('popstate', handlePopState);
-  //   // window.addEventListener('beforeunload', handleBeforeUnload);
-
-  //   // Cleanup
-  //   return () => {
-  //       // window.removeEventListener('popstate', handlePopState);
-  //       // window.removeEventListener('beforeunload', handleBeforeUnload);
-  //       window.onpopstate= null
-  //   };
-  // }, []);
-
   useEffect(() => {
+    let isNavigating = false;
+
+    if (isPaymentCompleted && auctionId) {
+      isNavigating = true;
+      history.push(`${routes.app.home}/paymentdetails?auctionId=${auctionId}`);
+    }
+
     return () => {
-      if (!isPaymentCompleted) {
+      // Only redirect to pending if we're not already navigating to payment details
+      if (!isNavigating && !isPaymentCompleted) {
         history.push(routes.app.profile.myAuctions.pending);
       }
     };
-  }, [isPaymentCompleted]);
+  }, [isPaymentCompleted, auctionId, history]);
   // Modify your handle functions to control navigation
   const handleConfirm = () => {
-    // Remove the beforeunload listener before navigating
-    // window.removeEventListener('beforeunload', handleBeforeUnload);
-    // Navigate to pending payment page
-    window.location.href = routes.app.profile.myAuctions.pending; // Replace with your actual path
+    window.location.href = routes.app.profile.myAuctions.pending; 
   };
 
   const handleCancel = () => {

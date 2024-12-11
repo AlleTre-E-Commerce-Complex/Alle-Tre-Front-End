@@ -124,6 +124,10 @@ const api = {
       getAccountData: "/auctions/user/getAccountData",
       addBankAccount: "/auctions/user/addBankAccount",
     },
+    notifications: {
+      get: "/notifications/get/all",
+      subscribe: "/notifications/subscribe",
+    },
   },
 };
 

@@ -9,14 +9,15 @@ import routes from "../../../routes";
 import PaymentSucsess from "../lotties-file/payment-sucsess";
 import { useEffect } from "react";
 import localizationKeys from "../../../localization/localization-keys";
-
+import { io } from "socket.io-client";
+import { useAuthState } from "context/auth-context";
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
   const location = useLocation();
-
+  const { user } = useAuthState();
   // Get auctionId from URL search params
   const searchParams = new URLSearchParams(location.search);
   const auctionId = searchParams.get("auctionId");
@@ -31,6 +32,11 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, [history]);
+
+  
+  const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+  const socket_ = io(socketUrl, { query: { userId: user?.id } });
+
 
   return (
     <Modal
