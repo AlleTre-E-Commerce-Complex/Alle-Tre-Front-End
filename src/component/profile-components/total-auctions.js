@@ -107,7 +107,7 @@ const TotalAuctions = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-gray-med"></p>
             <p className="text-base font-normal text-gray-med">
               {" "}
-              Wating For Payment
+              {selectedContent[localizationKeys.waitingForDelivery]}
             </p>
           </div>
           <p className="text-gray-verydark">

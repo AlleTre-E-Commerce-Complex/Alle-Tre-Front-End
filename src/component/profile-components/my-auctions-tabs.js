@@ -78,7 +78,7 @@ const MyAuctionsTabs = () => {
       ),
     },
     {
-      menuItem: `wating for payment`,
+      menuItem: `${selectedContent[localizationKeys.waitingForDelivery]}`,
       route: routes.app.profile.myAuctions.watingForPayment,
       render: () => (
         <div>

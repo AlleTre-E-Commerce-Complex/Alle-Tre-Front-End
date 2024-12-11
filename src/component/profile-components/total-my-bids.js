@@ -19,7 +19,7 @@ const TotalMyBids = ({
   return (
     <div className="bg-gray-veryLight/20 rounded-lg drop-shadow-complete-profile shadow-sm flex flex-wrap gap-x-20 sm:ltr:pr-28 sm:rtl:pl-28 ltr:pr-8 rtl:pl-8 overflow-hidden ">
       <h1 className="text-gray-dark font-semibold text-base ltr:pl-6 rtl:pr-6 pt-6  ">
-        All My Bids
+        {selectedContent[localizationKeys.AllMyBids]}
       </h1>
       <div className="ltr:pl-6 rtl:pr-6 ltr:md:pl-0 rtl:md:pr-0">
         <DonutChart
@@ -37,7 +37,7 @@ const TotalMyBids = ({
           <div className="flex gap-x-2">
             <p className="w-4 h-4 rounded-full mt-1 bg-green"></p>
             <p className="text-base font-normal text-gray-med">
-              In Progress Auction
+              {selectedContent[localizationKeys.inProgress]}
             </p>
           </div>
           <p className="text-gray-verydark">
@@ -53,7 +53,7 @@ const TotalMyBids = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-cyan"></p>
             <p className="text-base font-normal text-gray-med">
               {" "}
-              Pending Auction
+              {selectedContent[localizationKeys.pending]}
             </p>
           </div>
           <p className="text-gray-verydark">
@@ -69,7 +69,7 @@ const TotalMyBids = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-primary-light"></p>
             <p className="text-base font-normal text-gray-med">
               {" "}
-              Completed Auction
+              {selectedContent[localizationKeys.completedAuction]}
             </p>
           </div>
           <p className="text-gray-verydark">
@@ -87,7 +87,7 @@ const TotalMyBids = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-gray-med"></p>
             <p className="text-base font-normal text-gray-med">
               {" "}
-              Expired Auctions
+              {selectedContent[localizationKeys.expiredAuctions]}
             </p>
           </div>
           <p className="text-gray-verydark">
@@ -103,7 +103,7 @@ const TotalMyBids = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-yellow"></p>
             <p className="text-base font-normal text-gray-med">
               {" "}
-              Waiting For Delivery Auctions
+              {selectedContent[localizationKeys.waitingForDelivery]}
             </p>
           </div>
           <p className="text-gray-verydark">
@@ -119,7 +119,7 @@ const TotalMyBids = ({
             <p className="w-4 h-4 rounded-full mt-1 bg-red-600"></p>
             <p className="text-base font-normal text-gray-med">
               {" "}
-              Cancelled Auctions
+              {selectedContent[localizationKeys.cancelledAuctions]}
             </p>
           </div>
           <p className="text-gray-verydark">

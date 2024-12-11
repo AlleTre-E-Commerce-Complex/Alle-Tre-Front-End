@@ -40,7 +40,7 @@ const ar = {
   [localizationKeys.myBids]: "مزاياداتي",
   [localizationKeys.categories]: "الفئات",
   [localizationKeys.watchlist]: "قائمة المراقبة",
-  [localizationKeys.faqs]: "FAQs",
+  [localizationKeys.faqs]: "الأسئلة الشائعة",
   [localizationKeys.support]: "الدعم",
   [localizationKeys.arabic]: "عربي",
   [localizationKeys.english]: "إنجليزي",
@@ -376,6 +376,11 @@ const ar = {
     "لا يوجد عروض حتى الآن تم إلغاء المزادات الآن",
   [localizationKeys.submitNewBid]: "تقديم مزايدة جديد",
   [localizationKeys.AnyObjection]: "أي اعتراضات؟",
+  [localizationKeys.AllMyBids]: "كل عرضي",
+  [localizationKeys.InProgress]: "قيد التنفيذ",
+  [localizationKeys.Pending]: "المعلقه",
+  [localizationKeys.completedAuction]: "المزاد المكتمل",
+  [localizationKeys.cancelledAuctions]: "المزادات الملغية",
   //deleveryIssueReportModal
   [localizationKeys.NotDeliveredYet]: "لم يتم التسليم بعد؟",
   [localizationKeys.ProductIsNotAsShownInPicture]:

@@ -10,6 +10,7 @@ import useAxios from "../../../hooks/use-axios";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { MdNavigateNext } from "react-icons/md";
+
 const ImgSlider = ({
   images,
   auctionId,
@@ -21,11 +22,40 @@ const ImgSlider = ({
   const { user } = useAuthState();
   const dispatch = useDispatch();
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false); // State to track if the image is zoomed
+  const [isWatshlist, setWatshlist] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   useEffect(() => {
     if (images && images.length > 0) setSelectedImgIndex(0);
   }, [images]);
+
+  useEffect(() => {
+    setWatshlist(WatshlistState);
+  }, [WatshlistState]);
+
+  // New useEffect to handle scroll event when zoomed
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isZoomed) {
+        toggleZoom(); // Close the zoom when scrolling
+      }
+    };
+
+    const handleScrollEvent = () => {
+      requestAnimationFrame(handleScroll); // Use requestAnimationFrame for better performance
+    };
+
+    if (isZoomed) {
+      window.addEventListener("scroll", handleScrollEvent);
+    } else {
+      window.removeEventListener("scroll", handleScrollEvent);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollEvent); // Cleanup on unmount
+    };
+  }, [isZoomed]);
 
   const handleNext = () => {
     setSelectedImgIndex((prevIndex) =>
@@ -42,13 +72,6 @@ const ImgSlider = ({
   const handleThumbnailClick = (index) => {
     setSelectedImgIndex(index);
   };
-
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
-  const [isWatshlist, setWatshlist] = useState(false);
-
-  useEffect(() => {
-    setWatshlist(WatshlistState);
-  }, [WatshlistState]);
 
   const { run, isLoading } = useAxios([]);
   const handelAddNewWatshlist = () => {
@@ -102,15 +125,22 @@ const ImgSlider = ({
     }
   };
 
+  // Function to toggle the zoom state
+  const toggleZoom = () => {
+    setIsZoomed(!isZoomed);
+  };
+
   return (
     <div className="shadow rounded-2xl group overflow-hidden relative flex flex-col h-[480px]">
       {/* Main Image Section */}
-      <div className="relative w-full h-[85%]">
+      <div className="relative w-full h-[85%] cursor-pointer">
         {images && images.length > 0 && (
           <img
             className="w-full h-full object-contain"
             src={images[selectedImgIndex]?.imageLink}
             alt=""
+            onLoad={() => setIsImageLoaded(true)}
+            onClick={isImageLoaded ? toggleZoom : null}
           />
         )}
         <div className="absolute top-1/2 w-full flex justify-between px-2 transform -translate-y-1/2 z-20">
@@ -133,14 +163,8 @@ const ImgSlider = ({
             />
           </button>
         </div>
-        <div
-          onClick={handleShare}
-          className="absolute top-5 right-5 z-50 border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
-        >
-          <RiShareForwardFill className="text-primary hover:text-white transition-all duration-300 text-2xl md:text-3xl" />
-        </div>
-        {!isMyAuction && (
-          <div className="absolute top-20 right-2 md:right-5">
+        <div className="absolute top-5 right-5 z-50 flex items-center space-x-2">
+          {!isMyAuction && (
             <button
               onClick={handelAddNewWatshlist}
               className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
@@ -151,8 +175,14 @@ const ImgSlider = ({
                 <BsBookmark className="text-primary hover:text-white text-2xl md:text-3xl" />
               )}
             </button>
+          )}
+          <div
+            onClick={handleShare}
+            className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+          >
+            <RiShareForwardFill className="text-primary hover:text-white transition-all duration-300 text-2xl md:text-3xl" />
           </div>
-        )}
+        </div>
         {/* Thumbnail Section */}
         <div className="h-[18%] w-full flex justify-center items-center bg-secondary/10">
           <div className="bg-opacity-70 p-2  flex gap-2 overflow-x-auto">
@@ -179,6 +209,54 @@ const ImgSlider = ({
           </div>
         </div>
       </div>
+
+      {/* Zoomed Image Overlay */}
+      {isZoomed && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={toggleZoom}
+          style={{
+            cursor: "zoom-out",
+            height: "80vh", // Ensure the dimmer covers the full viewport height
+          }}
+        >
+          <img
+            src={images[selectedImgIndex]?.imageLink}
+            alt=""
+            className="object-contain"
+            style={{
+              width: "90vw",
+              height: "80vh",
+              objectFit: "contain", // Ensures the image scales proportionally
+            }}
+          />
+          {/* Navigation Buttons for Zoomed Image */}
+          <button
+            onClick={(event) => {
+              event.stopPropagation(); // Prevent closing the zoom
+              handlePrevious();
+            }}
+            className="absolute left-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
+          >
+            <BsChevronLeft
+              style={{ stroke: "currentColor", strokeWidth: 1 }}
+              className="text-white text-xl transition-colors duration-300"
+            />
+          </button>
+          <button
+            onClick={(event) => {
+              event.stopPropagation(); // Prevent closing the zoom
+              handleNext();
+            }}
+            className="absolute right-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
+          >
+            <BsChevronRight
+              style={{ stroke: "currentColor", strokeWidth: 1 }}
+              className="text-white text-xl transition-colors duration-300"
+            />
+          </button>
+        </div>
+      )}
     </div>
   );
 };
