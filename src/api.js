@@ -26,7 +26,8 @@ const api = {
     },
     auctions: {
       default: "/auctions",
-      setDeliveryType: (auctionId) => `/auctions/user/${auctionId}/set-delivery-type`,
+      setDeliveryType: (auctionId) =>
+        `/auctions/user/${auctionId}/set-delivery-type`,
       setAssdraft: "/auctions/save-draft",
       setUpdatedraft: (auctionsId) => `auctions/user/${auctionsId}/details`,
       completeUpdatedraft: (auctionsId) =>
@@ -92,11 +93,12 @@ const api = {
     },
     location: {
       post: "/users/locations",
-      put:"/users/locations",
+      put: "/users/locations",
       get: "/users/my-locations",
       edit: (locationsId) => `/users/locations/${locationsId}`,
       delete: (locationsId) => `/users/locations/${locationsId}`,
-      makeDefault: (locationsId) => `/users/locations/${locationsId}/make-default`,
+      makeDefault: (locationsId) =>
+        `/users/locations/${locationsId}/make-default`,
     },
     countries: {
       default: "/regions/countries",
