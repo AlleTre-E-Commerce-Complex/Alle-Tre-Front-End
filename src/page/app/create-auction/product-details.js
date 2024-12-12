@@ -660,85 +660,86 @@ const ProductDetails = () => {
                         options={SubGatogryOptions}
                         onChange={(e) => setSubCategoryId(e)}
                       />
-                      <FormikInput
-                        name="brand"
-                        type="text"
-                        label={"brand"}
-                        placeholder={"brand"}
-                      />
                     </div>
-                    {customFromData?.arrayCustomFields?.map((e) => (
-                      <div className="w-full col-span-2 sm:col-span-1 ">
-                        {e.key === "brandId" ? (
+                    {formik.values.subCategory && (
+                      <>
+                        {customFromData?.arrayCustomFields?.map((e) => (
+                          <div
+                            key={e.key}
+                            className="w-full col-span-2 sm:col-span-1 md:col-span-2"
+                          >
+                            {e.key === "brandId" ? (
+                              <FormikInput
+                                name="brand"
+                                type="text"
+                                label={`${
+                                  lang === "en" ? e?.labelEn : e?.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en" ? e?.labelEn : e?.labelAr
+                                }`}
+                              />
+                            ) : (
+                              <FormikMultiDropdown
+                                name={e?.key}
+                                label={`${
+                                  lang === "en" ? e?.labelEn : e?.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en" ? e?.labelEn : e?.labelAr
+                                }`}
+                                options={
+                                  e?.key === "brandId"
+                                    ? NotAllBranOptions
+                                    : e?.key === "countryId"
+                                    ? AllCountriesOptions
+                                    : e?.key === "cityId"
+                                    ? AllCitiesOptions
+                                    : allCustomFileOptions[e?.key]
+                                }
+                                onChange={(e) => setCountriesId(e)}
+                                loading={
+                                  loadingAllBranOptions ||
+                                  loadingAllCountries ||
+                                  loadingCitiesOptions
+                                }
+                              />
+                            )}
+                          </div>
+                        ))}
+                      </>
+                    )}
+                    {formik.values.subCategory && (
+                      <>
+                        <div className="col-span-2 sm:col-span-1  md:col-span-2">
                           <FormikInput
                             name="brand"
                             type="text"
-                            label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
-                            placeholder={`${
-                              lang === "en" ? e?.labelEn : e?.labelAr
-                            }`}
-                          />
-                        ) : (
-                          <FormikMultiDropdown
-                            name={e?.key}
-                            label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
-                            placeholder={`${
-                              lang === "en" ? e?.labelEn : e?.labelAr
-                            }`}
-                            options={
-                              e?.key === "brandId"
-                                ? NotAllBranOptions
-                                : e?.key === "countryId"
-                                ? AllCountriesOptions
-                                : e?.key === "cityId"
-                                ? AllCitiesOptions
-                                : allCustomFileOptions[e?.key]
-                            }
-                            onChange={(e) => setCountriesId(e)}
-                            loading={
-                              loadingAllBranOptions ||
-                              loadingAllCountries ||
-                              loadingCitiesOptions
+                            label={selectedContent[localizationKeys.brand]}
+                            placeholder={
+                              selectedContent[localizationKeys.brand]
                             }
                           />
-                        )}
-                      </div>
-                    ))}
-                    <div
-                      className={
-                        customFromData?.model?.key
-                          ? "w-full mt-1.5 col-span-2 sm:col-span-1"
-                          : "hidden"
-                      }
-                    >
-                      <FormikInput
-                        min={0}
-                        name={`${customFromData?.model?.key}`}
-                        label={`${
-                          lang === "en"
-                            ? customFromData?.model?.labelEn
-                            : customFromData?.model?.labelAr
-                        }`}
-                        placeholder={`${
-                          lang === "en"
-                            ? customFromData?.model?.labelEn
-                            : customFromData?.model?.labelAr
-                        }`}
-                      />
-                    </div>
-                    {/* {customFromData?.regularCustomFields?.map((e) => (
-                      <div className="w-full mt-1.5 col-span-2 sm:col-span-1">
-                        <FormikInput
-                          min={0}
-                          name={e?.key}
-                          type={e?.type}
-                          label={lang === "en" ? e?.labelEn : e?.labelAr}
-                          placeholder={`${
-                            lang === "en" ? e?.labelEn : e?.labelAr
-                          }`}
-                        />
-                      </div>
-                    ))} */}
+                        </div>
+                        <div className="col-span-2 sm:col-span-1  md:col-span-2">
+                          <FormikInput
+                            min={0}
+                            name={`${customFromData?.model?.key}`}
+                            label={`${
+                              lang === "en"
+                                ? customFromData?.model?.labelEn
+                                : customFromData?.model?.labelAr
+                            }`}
+                            placeholder={`${
+                              lang === "en"
+                                ? customFromData?.model?.labelEn
+                                : customFromData?.model?.labelAr
+                            }`}
+                          />
+                        </div>
+                      </>
+                    )}
+
                     <div className="col-span-2 col-start-1 mt-1">
                       <FormikTextArea
                         name="itemDescription"

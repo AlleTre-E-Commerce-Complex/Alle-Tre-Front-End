@@ -270,7 +270,7 @@ const en = {
   [localizationKeys.save]: "Save",
   [localizationKeys.selectAfile]: "Select a file",
   [localizationKeys.edit]: "Edit",
-  [localizationKeys.contactUs]: "ContactUs",
+  [localizationKeys.contactUs]: "Contact Us",
   [localizationKeys.editUserName]: "Edit User name",
   [localizationKeys.personalDetails]: "Personal Details",
   [localizationKeys.userName]: "User Name",
