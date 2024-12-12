@@ -120,8 +120,8 @@ const ShippingDetails = () => {
           productDetailsInt.subCategory
         );
       }
-      if (productDetailsInt.brandId) {
-        formData.append("product[brandId]", productDetailsInt.brandId);
+      if (productDetailsInt.brand) {
+        formData.append("product[brand]", productDetailsInt.brand);
       }
       if (productDetailsInt.valueRadio) {
         formData.append("product[usageStatus]", productDetailsInt.valueRadio);

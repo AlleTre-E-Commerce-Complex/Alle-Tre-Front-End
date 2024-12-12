@@ -81,7 +81,7 @@ const ProductDetails = () => {
               screenSize: completeDraftValue?.product?.screenSize,
               model: completeDraftValue?.product?.model,
               color: completeDraftValue?.product?.color,
-              brandId: completeDraftValue?.product?.brandId,
+              brand: completeDraftValue?.product?.brand,
               cameraType: completeDraftValue?.product?.cameraType,
               material: completeDraftValue?.product?.material,
               memory: completeDraftValue?.product?.memory,
@@ -130,7 +130,7 @@ const ProductDetails = () => {
       true
   );
   const [customFromData, setCustomFromData] = useState();
-
+  console.log("custom", customFromData);
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || productDetailsint.category
@@ -238,7 +238,7 @@ const ProductDetails = () => {
     }, {});
 
   const model = customFromData?.model?.key;
-  
+
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
@@ -262,6 +262,9 @@ const ProductDetails = () => {
       otherwise: Yup.string().required(
         selectedContent[localizationKeys.required]
       ),
+      brand: Yup.string()
+        .trim()
+        .required(selectedContent[localizationKeys.required]),
     }),
   });
 
@@ -335,11 +338,8 @@ const ProductDetails = () => {
         draftValue.subCategory || productDetailsint.subCategory
       );
     }
-    if (draftValue.brandId || productDetailsint.brandId) {
-      formData.append(
-        "brandId",
-        draftValue.brandId || productDetailsint.brandId
-      );
+    if (draftValue.brand || productDetailsint.brand) {
+      formData.append("brand", draftValue.brand || productDetailsint.brand);
     }
     // if (hasUsageCondition) {
     if (valueRadio || productDetailsint.valueRadio) {
@@ -585,7 +585,7 @@ const ProductDetails = () => {
                 screenSize: productDetailsint.screenSize || "",
                 model: productDetailsint.model || "",
                 color: productDetailsint.color || "",
-                brandId: productDetailsint.brandId || "",
+                brand: productDetailsint.brand || "",
                 cameraType: productDetailsint.cameraType || "",
                 material: productDetailsint.material || "",
                 memory: productDetailsint.memory || "",
@@ -660,31 +660,48 @@ const ProductDetails = () => {
                         options={SubGatogryOptions}
                         onChange={(e) => setSubCategoryId(e)}
                       />
+                      <FormikInput
+                        name="brand"
+                        type="text"
+                        label={"brand"}
+                        placeholder={"brand"}
+                      />
                     </div>
                     {customFromData?.arrayCustomFields?.map((e) => (
                       <div className="w-full col-span-2 sm:col-span-1 ">
-                        <FormikMultiDropdown
-                          name={e?.key}
-                          label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
-                          placeholder={`${
-                            lang === "en" ? e?.labelEn : e?.labelAr
-                          }`}
-                          options={
-                            e?.key === "brandId"
-                              ? NotAllBranOptions
-                              : e?.key === "countryId"
-                              ? AllCountriesOptions
-                              : e?.key === "cityId"
-                              ? AllCitiesOptions
-                              : allCustomFileOptions[e?.key]
-                          }
-                          onChange={(e) => setCountriesId(e)}
-                          loading={
-                            loadingAllBranOptions ||
-                            loadingAllCountries ||
-                            loadingCitiesOptions
-                          }
-                        />
+                        {e.key === "brandId" ? (
+                          <FormikInput
+                            name="brand"
+                            type="text"
+                            label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
+                            placeholder={`${
+                              lang === "en" ? e?.labelEn : e?.labelAr
+                            }`}
+                          />
+                        ) : (
+                          <FormikMultiDropdown
+                            name={e?.key}
+                            label={`${lang === "en" ? e?.labelEn : e?.labelAr}`}
+                            placeholder={`${
+                              lang === "en" ? e?.labelEn : e?.labelAr
+                            }`}
+                            options={
+                              e?.key === "brandId"
+                                ? NotAllBranOptions
+                                : e?.key === "countryId"
+                                ? AllCountriesOptions
+                                : e?.key === "cityId"
+                                ? AllCitiesOptions
+                                : allCustomFileOptions[e?.key]
+                            }
+                            onChange={(e) => setCountriesId(e)}
+                            loading={
+                              loadingAllBranOptions ||
+                              loadingAllCountries ||
+                              loadingCitiesOptions
+                            }
+                          />
+                        )}
                       </div>
                     ))}
                     <div
