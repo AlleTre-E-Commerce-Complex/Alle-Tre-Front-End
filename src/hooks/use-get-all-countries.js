@@ -32,10 +32,9 @@ const useGetAllCountries = () => {
   //   .catch(err=>{console.error('Error fetching countries:', err);})
   // }, [lang, run]);
   useEffect(() => {
-    console.log('Fetching countries...');
+ 
     run(axios.get(api.app.countries.default))
       .then(({ data }) => {
-        console.log('API Response:', data);
         const AllCountriesOptions = data.data;
         const options = [];
   

@@ -34,8 +34,8 @@ class Auth {
 
   async refreshToken() {
     const localStorageToken = localStorage.getItem("token");
-    console.log('localStorageToken :', localStorageToken) 
-    console.log('accessToken :', accessToken)
+    
+    
     if (!localStorageToken && accessToken) {
       window.location = routes.app.home;
       return false;
