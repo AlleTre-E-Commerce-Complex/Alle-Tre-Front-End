@@ -668,43 +668,28 @@ const ProductDetails = () => {
                             key={e.key}
                             className="w-full col-span-2 sm:col-span-1 md:col-span-2"
                           >
-                            {e.key === "brandId" ? (
-                              <FormikInput
-                                name="brand"
-                                type="text"
-                                label={`${
-                                  lang === "en" ? e?.labelEn : e?.labelAr
-                                }`}
-                                placeholder={`${
-                                  lang === "en" ? e?.labelEn : e?.labelAr
-                                }`}
-                              />
-                            ) : (
-                              <FormikMultiDropdown
-                                name={e?.key}
-                                label={`${
-                                  lang === "en" ? e?.labelEn : e?.labelAr
-                                }`}
-                                placeholder={`${
-                                  lang === "en" ? e?.labelEn : e?.labelAr
-                                }`}
-                                options={
-                                  e?.key === "brandId"
-                                    ? NotAllBranOptions
-                                    : e?.key === "countryId"
-                                    ? AllCountriesOptions
-                                    : e?.key === "cityId"
-                                    ? AllCitiesOptions
-                                    : allCustomFileOptions[e?.key]
-                                }
-                                onChange={(e) => setCountriesId(e)}
-                                loading={
-                                  loadingAllBranOptions ||
-                                  loadingAllCountries ||
-                                  loadingCitiesOptions
-                                }
-                              />
-                            )}
+                            <FormikMultiDropdown
+                              name={e?.key}
+                              label={`${
+                                lang === "en" ? e?.labelEn : e?.labelAr
+                              }`}
+                              placeholder={`${
+                                lang === "en" ? e?.labelEn : e?.labelAr
+                              }`}
+                              options={
+                                e?.key === "countryId"
+                                  ? AllCountriesOptions
+                                  : e?.key === "cityId"
+                                  ? AllCitiesOptions
+                                  : allCustomFileOptions[e?.key]
+                              }
+                              onChange={(e) => setCountriesId(e)}
+                              loading={
+                                loadingAllBranOptions ||
+                                loadingAllCountries ||
+                                loadingCitiesOptions
+                              }
+                            />
                           </div>
                         ))}
                       </>
