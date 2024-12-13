@@ -36,6 +36,7 @@ const Header = ({ SetSid }) => {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
+  const [notificationData, setNotificationData] = useState(null);
   const [serchShow, setSerchShow] = useState(false);
   const [open, setOpen] = useState(false);
   const { run } = useAxios();
@@ -52,7 +53,7 @@ const Header = ({ SetSid }) => {
          // Set up socket listener
          socket_.on("notification", (data) => {
           console.log("notification data *************",data);
-          // setNotificationCount(prev => prev + 1);
+          setNotificationData(data);
           
           // // Play notification sound if needed
           // const audio = new Audio('/audios/notification-sound.mp3');
