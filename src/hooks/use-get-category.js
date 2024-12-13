@@ -13,7 +13,7 @@ const useGetGatogry = () => {
   useEffect(() => {
     run(axios.get(api.app.category.default)).then(({ data }) => {
       const GatogryOptions = data.data;
-      console.log('**--->',data.data)
+  
       const options = [];
 
       GatogryOptions.forEach((d) =>{

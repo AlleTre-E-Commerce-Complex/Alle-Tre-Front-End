@@ -23,9 +23,12 @@ import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
-
 import { IoNotifications } from "react-icons/io5";
 import { io } from "socket.io-client";
+import { authAxios } from "../../../config/axios-config";
+import useAxios from "hooks/use-axios";
+import { getFCMToken } from '../../../config/firebase-config';
+import { getMessaging, onMessage } from 'firebase/messaging';
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -35,7 +38,7 @@ const Header = ({ SetSid }) => {
   const [notificationCount, setNotificationCount] = useState(0);
   const [serchShow, setSerchShow] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const { run } = useAxios();
   const { user } = useAuthState();
   const [name, setTitle] = useFilter("title", "");
 
@@ -43,57 +46,85 @@ const Header = ({ SetSid }) => {
   const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   const socket_ = io(socketUrl, { query: { userId: user?.id } });
 
+
   useEffect(() => {
-    if ("Notification" in window) {
-      console.log("Notification in window");
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          setPushEnabled(true);
-        } else {
-          console.log("Notification permission denied");
-        }
-      });
-    }
-  }, []);
+  
+         // Set up socket listener
+         socket_.on("notification", (data) => {
+          console.log("notification data *************",data);
+          // setNotificationCount(prev => prev + 1);
+          
+          // // Play notification sound if needed
+          // const audio = new Audio('/audios/notification-sound.mp3');
+          // audio.play().catch(e => console.log('Audio play failed:', e));
+        });
+  }, [socket_]);
 
-  // Listen for notifications from the socket
+  // Combined notification initialization and FCM setup
   useEffect(() => {
-    if (user?.id) {
-      socket_.on("notification", (data) => {
-        console.log("New notification:", data);
-        // Increment notification count in the UI
-        setNotificationCount((prevCount) => prevCount + 1);
+    console.log("user?.id *************", user?.id);
+    const initializeNotifications = async () => {
+      try {
+        if (!user?.id) return;
 
-        // Display push notification if permission is granted
-        if (pushEnabled && Notification.permission === "granted") {
-          const { message, auctionId } = data;
-          new Notification("New Notification", {
-            body: message,
-            icon: "https://firebasestorage.googleapis.com/v0/b/allatre-2e988.appspot.com/o/1.png?alt=media&token=3d538116-bf6d-45d9-83e0-7f0076c43077", // Add your app's icon here
-          });
+        if ("Notification" in window && "serviceWorker" in navigator) {
+          // Register service worker first
+          const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+          console.log('Service Worker registered:', registration);
+
+          const permission = await Notification.requestPermission();
+          console.log("Permission:", permission);
+
+          if (permission === "granted") {
+            // Get FCM token after service worker is registered
+            const fcmToken = await getFCMToken();
+            console.log("FCM Token:", fcmToken);
+
+            if (fcmToken) {
+              await run(authAxios.post('/notifications/save-token', {
+                userId: user.id,
+                fcmToken
+              }));
+              setPushEnabled(true);
+
+              // Set up FCM message handling
+              const messaging = getMessaging();
+              onMessage(messaging, (payload) => {
+                console.log('Foreground message received:', payload);
+                setNotificationCount(prev => prev + 1);
+              });
+            }
+          }
         }
-      });
 
-      return () => {
-        // Cleanup when component unmounts
+        // Fetch initial unread count
+        const response = await authAxios.get('/notifications/unread-count');
+        console.log("response count*************",response.data.count);
+        if (response.data.success) {
+          setNotificationCount(response.data.count);
+        }
+      } catch (error) {
+        console.error('Error initializing notifications:', error);
+      }
+    };
+
+    initializeNotifications();
+
+    // Cleanup
+    return () => {
+      if (socket_) {
         socket_.off("notification");
-      };
-    }
-  }, [socket_, user?.id, pushEnabled]);
+      }
+    };
+  }, [user?.id]);
 
-  // useEffect(() => {
-  //   // Listen for notifications
-  //   socket_.on('notification', (data) => {
-  //     console.log('New notification:', data);
-  //     // Display the notification in your UI
-  //     setNotificationCount((prevCount) => prevCount + 1);
-  //   });
-
-  //   return () => {
-  //     // Clean up on component unmount
-  //     socket_.off('notification');
-  //   };
-  // }, [socket_,user?.id]);
+  // Handle notification click
+  const handleNotificationClick = async () => {
+    setNotificationCount(0); // Reset count when viewing notifications
+    history.push(routes.app.profile.notifications);
+    const response = await run(authAxios.put('/notifications/mark-read'));
+    console.log("response *************",response);
+  };
 
   const debounced = useDebouncedCallback((value) => {
     setTitle(value);
@@ -210,24 +241,23 @@ const Header = ({ SetSid }) => {
             size={30}
           />
           <div className="relative">
-            <NavLinkHeader
-              title={
-                <>
-                  <IoNotifications size={20} />
-                  {notificationCount > 0 && (
-                    <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                      {notificationCount > 99 ? "99+" : notificationCount}
-                    </span>
-                  )}
-                </>
-              }
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.notifications)
-              }
-              onClick={() => history.push(routes.app.profile.notifications)}
-            />
-          </div>
+             <NavLinkHeader
+                title={
+                  <>
+                    <IoNotifications size={20} />
+                    {notificationCount > 0 && (
+                      <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                        {notificationCount > 99 ? '99+' : notificationCount}
+                      </span>
+                    )}
+                  </>
+                }
+                isActive={
+                  pathname.length === 1 || pathname.startsWith(routes.app.profile.notifications)
+                }
+                onClick={handleNotificationClick}
+              />
+           </div>
         </div>
         <div className="flex">
           <div className="my-auto ">
@@ -307,7 +337,7 @@ const Header = ({ SetSid }) => {
                   pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.notifications)
                 }
-                onClick={() => history.push(routes.app.profile.notifications)}
+                onClick={handleNotificationClick}
               />
             </div>
             {/* <NavLinkHeader

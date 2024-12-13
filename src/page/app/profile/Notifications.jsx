@@ -40,10 +40,6 @@ const Notifications = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  function containsHTML(message) {
-    const htmlRegex = /<\/?[a-z][\s\S]*>/i;
-    return htmlRegex.test(message);
-  }
   const handleViewDetails = (auctionId) => {
     history.push(routes.app.homeDetails(auctionId))
   }
@@ -69,7 +65,7 @@ const Notifications = () => {
                    <th scope="col" className="px-6 py-3">
                    {selectedContent[localizationKeys.Message]}
                    </th>
-                   <th scope="col" className="px-6 py-3">
+                   <th scope="col" className="px-6 py-3 text-right">
                    {selectedContent[localizationKeys.viewDetails]}
                    </th>
                  </tr>
@@ -90,7 +86,7 @@ const Notifications = () => {
                        <div dangerouslySetInnerHTML={{ __html: data.html }} />
                     </td>
 
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 text-right">
                         <button 
                         onClick={() => handleViewDetails(data.auctionId)}
                         className="bg-primary text-white px-4 py-2 rounded-md">

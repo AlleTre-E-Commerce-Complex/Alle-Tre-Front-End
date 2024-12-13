@@ -130,7 +130,6 @@ const ProductDetails = () => {
       true
   );
   const [customFromData, setCustomFromData] = useState();
-  console.log("custom", customFromData);
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || productDetailsint.category

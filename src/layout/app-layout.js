@@ -45,7 +45,6 @@ const AppLayouts = () => {
   // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
   useEffect(() => {
     const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
-    console.log("hasSeenRewardModal***>", hasSeenRewardModal);
     if (!hasSeenRewardModal) {
       setShowRewardModal(true);
       sessionStorage.setItem("hasSeenRewardModal", "true"); // Mark as shown
