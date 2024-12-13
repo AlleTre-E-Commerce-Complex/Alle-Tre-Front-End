@@ -140,9 +140,9 @@ const ProductDetails = () => {
     countriesId || productDetailsint.countriesId
   );
 
-  const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(
-    categoryId || productDetailsint.category
-  );
+  // const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(
+  //   categoryId || productDetailsint.category
+  // );
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -215,6 +215,7 @@ const ProductDetails = () => {
               )
             )
             .then((res) => {
+              console.log("ressssssss", res);
               setCustomFromData(res?.data?.data);
             })
         );
@@ -685,9 +686,7 @@ const ProductDetails = () => {
                               }
                               onChange={(e) => setCountriesId(e)}
                               loading={
-                                loadingAllBranOptions ||
-                                loadingAllCountries ||
-                                loadingCitiesOptions
+                                loadingAllCountries || loadingCitiesOptions
                               }
                             />
                           </div>
