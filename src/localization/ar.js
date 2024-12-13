@@ -4,7 +4,7 @@ const ar = {
   // auth
   [localizationKeys.login]: "تسجيل الدخول",
   [localizationKeys.signup]: "إنشاء حساب جديد",
-  [localizationKeys.loginOrRegister]: "تسجيل الدخول/التسجيل",
+  [localizationKeys.loginOrRegister]: "سجل",
   [localizationKeys.loginWithApple]: "تسجيل الدخول باستخدام Apple",
   [localizationKeys.loginwithGoogle]: "تسجيل الدخول باستخدام Google",
   [localizationKeys.loginwithFacebook]: "تسجيل الدخول باستخدام Facebook",

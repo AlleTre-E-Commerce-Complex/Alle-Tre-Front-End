@@ -70,7 +70,7 @@ const FilterSections = ({ myRef, hiddenGatogry, categoryId }) => {
           </h3>
         </div>
         {expandedSections.brands && (
-          <>
+          <div className="mt-2 p-4 rounded-lg">
             {categoryId ? (
               NotAllBranOptions?.length > 0 && (
                 <AuctionFilterCardList
@@ -96,7 +96,7 @@ const FilterSections = ({ myRef, hiddenGatogry, categoryId }) => {
                 myRef={myRef}
               />
             )}
-          </>
+          </div>
         )}
       </div>
 
