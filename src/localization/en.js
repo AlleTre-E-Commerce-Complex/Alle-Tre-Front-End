@@ -427,7 +427,7 @@ const en = {
   [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
     "Submit value is required and must be bigger than current Bid",
   [localizationKeys.yourAddNewSubmitValueSuccessfully]:
-    "Your add new submit value successfully",
+    "New bid submitted successfully",
   [localizationKeys.congratulationsOnYourFirstBid]:
     "Congratulations On Your First Bid",
   [localizationKeys.editBid]: "Edit Bid",

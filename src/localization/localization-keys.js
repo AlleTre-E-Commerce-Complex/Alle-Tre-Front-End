@@ -385,7 +385,7 @@ const localizationKeys = {
   currentBid: "currentBid",
   submitValueIsRequiredAndMustBeBiggerThanCurrentBid:
     "submitValueIsRequiredAndMustBeBiggerThanCurrentBid",
-  yourAddNewSubmitValueSuccessfully: "yourAddNewSubmitValueSuccessfully",
+  yourAddNewSubmitValueSuccessfully: " NewBidSubmittedSuccessfully",
   congratulationsOnYourFirstBid: "congratulationsOnYourFirstBid",
   editBid: "editBid",
   pay: "pay",

@@ -38,7 +38,9 @@ const Home = () => {
   const { user } = useAuthState();
   const myRef = useRef();
   const dispatch = useDispatch();
-  const isWelcomeBonus = useSelector((state) => state.welcomeBonus.welcomeBonus);
+  const isWelcomeBonus = useSelector(
+    (state) => state.welcomeBonus.welcomeBonus
+  );
   const [isGrid, setIsGrid] = useState(true);
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState();
@@ -55,7 +57,7 @@ const Home = () => {
   } = useAxios([]);
   useEffect(() => {
     if (isWelcomeBonus) {
-      setOpenWelcomeBonusModal(true)
+      setOpenWelcomeBonusModal(true);
     }
     if (search.includes("page") && search.includes("perPage"))
       if (!user) {
@@ -80,7 +82,6 @@ const Home = () => {
             console.log("response of runMainAuctions when user have", res);
             setMainAuctions(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
-            console.log("main Auctions ====>", mainAuctions);
           })
         );
         runSponsoredAuctions(
@@ -208,6 +209,9 @@ const Home = () => {
                       StartDate={e?.startDate}
                       isBuyNowAllowed={e?.isBuyNowAllowed}
                       isMyAuction={e?.isMyAuction}
+                      latestBidAmount={e?.bids[0]?.amount}
+                      CurrentBid={e?.currentBid?.bidAmount}
+                      startBidAmount={e?.startBidAmount}
                     />
                   ))}
                 </div>
@@ -281,9 +285,11 @@ const Home = () => {
         setOpen={setOpen}
         TextButton={selectedContent[localizationKeys.proceed]}
       />
-      <WelcomeBonusModal open={openWelcomeBonusModal} setOpen={setOpenWelcomeBonusModal} />
+      <WelcomeBonusModal
+        open={openWelcomeBonusModal}
+        setOpen={setOpenWelcomeBonusModal}
+      />
     </div>
-
   );
 };
 

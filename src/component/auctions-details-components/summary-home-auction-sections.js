@@ -62,8 +62,10 @@ const SummaryHomeAuctionSections = ({
   const [submitBidValue, setSubmitBidValue] = useState();
   const [lastestBid, setLastestBid] = useState(latestBidAmount);
   const [openTotaltBid, setTotalBidOpen] = useState(false);
-
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
+  
+  const dispatch = useDispatch();
+  dispatch(socketAuctionId(auctionId));
 
   const handelBuyNow = () => {
     const isCompletedProfile = window.localStorage.getItem(
@@ -80,13 +82,11 @@ const SummaryHomeAuctionSections = ({
 
   const socket = useSocket();
 
-  const dispatch = useDispatch();
-  dispatch(socketAuctionId(auctionId));
 
   useEffect(() => {
     if (socket) {
       socket.on("bid:submitted", (data) => {
-        setLastestBid(data);
+               setLastestBid(data);
       });
     }
 
@@ -332,7 +332,7 @@ const SummaryHomeAuctionSections = ({
               : selectedContent[localizationKeys.currentBid]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl flex flex-wrap gap-12">
-            <p>
+          <p>
               {formatCurrency(
                 lastestBid?.bidAmount || CurrentBid || startBidAmount
               )}

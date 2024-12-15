@@ -163,24 +163,24 @@ const ImgSlider = ({
             />
           </button>
         </div>
-        <div className="absolute top-5 right-5 z-50 flex items-center space-x-2">
+        <div className="absolute top-5 right-5 z-20 flex items-center space-x-2">
           {!isMyAuction && (
             <button
               onClick={handelAddNewWatshlist}
-              className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+              className="border-primary border-2 border-solid bg-white  group/watchlist rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
             >
               {isWatshlist ? (
-                <BsBookmarkFill className="text-primary hover:text-white text-2xl md:text-3xl" />
+                <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-2xl md:text-3xl" />
               ) : (
-                <BsBookmark className="text-primary hover:text-white text-2xl md:text-3xl" />
+                <BsBookmark className="text-primary  group-hover/watchlist:text-white text-2xl md:text-3xl" />
               )}
             </button>
           )}
           <div
             onClick={handleShare}
-            className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+            className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
           >
-            <RiShareForwardFill className="text-primary hover:text-white transition-all duration-300 text-2xl md:text-3xl" />
+            <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
           </div>
         </div>
         {/* Thumbnail Section */}
