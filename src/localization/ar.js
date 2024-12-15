@@ -420,7 +420,7 @@ const ar = {
   [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
     "إرسال القيمة مطلوبة ويجب أن تكون أكبر من المزايدة الحالي",
   [localizationKeys.yourAddNewSubmitValueSuccessfully]:
-    "إضافة قيمة إرسال جديدة بنجاح",
+    "إتم تقديم العطاء الجديد بنجاح",
   [localizationKeys.congratulationsOnYourFirstBid]: "مبروك على عرضك الأول",
   [localizationKeys.editBid]: "تحرير المزايدة",
   [localizationKeys.pay]: "الدفع",

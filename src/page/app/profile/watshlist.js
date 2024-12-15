@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Dimmer, 
-  // Loader 
+import {
+  Dimmer,
+  // Loader
 } from "semantic-ui-react";
 import api from "../../../api";
 import { authAxios } from "../../../config/axios-config";
@@ -66,7 +67,7 @@ const Watshlist = () => {
               title={e?.auction?.product?.title}
               status={e?.auction?.status}
               adsImg={e?.auction?.product?.images[0].imageLink}
-              totalBods={e?._count?.bids}
+              totalBods={e?.auction?._count?.bids}
               WatshlistState={true}
               watshlistForceState={true}
               endingTime={e?.auction?.expiryDate}
@@ -75,6 +76,8 @@ const Watshlist = () => {
               isMyAuction={e?.auction?.isMyAuction}
               onReload={onReload}
               className=""
+              startBidAmount={e?.auction?.startBidAmount}
+              latestBidAmount={e?.auction?.bids[0]?.amount}
             />
           ))}
         </div>
