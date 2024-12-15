@@ -36,6 +36,7 @@ import EditImgeMedia from "../../../component/create-auction-components/edit-img
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import { IoCameraOutline } from "react-icons/io5";
+import { MdArrowDropDown } from "react-icons/md";
 
 const ProductDetails = () => {
   const [lang] = useLanguage("");
@@ -139,9 +140,21 @@ const ProductDetails = () => {
     countriesId || productDetailsint.countriesId
   );
 
-  // const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(
-  //   categoryId || productDetailsint.category
-  // );
+  const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(
+    categoryId || productDetailsint.category
+  );
+
+  const [brandInput, setBrandInput] = useState("");
+  const [brandSuggestions, setBrandSuggestions] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleBrandInputChange = (value) => {
+    setBrandInput(value);
+    const filteredBrands = NotAllBranOptions.filter((brand) =>
+      brand.text.toLowerCase().includes(value.toLowerCase())
+    );
+    setBrandSuggestions(filteredBrands);
+  };
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -269,7 +282,11 @@ const ProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
-    if (fileThree || (imgtest && imgtest[2])) {
+    const filesCount = [fileOne, fileTwo, fileThree, fileFour, fileFive].filter(
+      Boolean
+    ).length;
+
+    if (filesCount >= 3) {
       if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
         dispatch(
           productDetails({
@@ -694,7 +711,7 @@ const ProductDetails = () => {
                     )}
                     {formik.values.subCategory && (
                       <>
-                        <div className="col-span-2 sm:col-span-1  md:col-span-2">
+                        <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                           <FormikInput
                             name="brand"
                             type="text"
@@ -702,7 +719,45 @@ const ProductDetails = () => {
                             placeholder={
                               selectedContent[localizationKeys.brand]
                             }
+                            value={brandInput}
+                            onChange={(e) => {
+                              handleBrandInputChange(e.target.value);
+                              formik.handleChange(e);
+                            }}
+                            onFocus={() => setIsDropdownOpen(true)}
                           />
+                          <button
+                            onClick={() => setIsDropdownOpen((prev) => !prev)}
+                            className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70" // Button to toggle dropdown
+                            aria-label="Toggle Dropdown"
+                          >
+                            {isDropdownOpen && brandSuggestions.length > 0 && (
+                              <MdArrowDropDown className="w-5 h-5" /> // Show icon only when dropdown is open
+                            )}
+                          </button>
+                          {isDropdownOpen && brandSuggestions.length > 0 && (
+                            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+                              <ul>
+                                {brandSuggestions.map((suggestion, index) => (
+                                  <li
+                                    key={index}
+                                    onClick={() => {
+                                      formik.setFieldValue(
+                                        "brand",
+                                        suggestion.text
+                                      );
+                                      setBrandInput(suggestion.text);
+                                      setBrandSuggestions([]);
+                                      setIsDropdownOpen(false);
+                                    }}
+                                    className="cursor-pointer hover:bg-gray-200 px-4 py-2"
+                                  >
+                                    {suggestion.text}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
                         </div>
                         <div className="col-span-2 sm:col-span-1  md:col-span-2">
                           <FormikInput
