@@ -112,7 +112,7 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
                   <AuctionCard
                     className="min-w-[272px]"
                     auctionId={e?.id}
-                    price={e?.acceptedAmount || e?.startBidAmount}
+                    startBidAmount={e?.acceptedAmount || e?.startBidAmount}
                     title={e?.product?.title}
                     status={e?.status}
                     adsImg={e?.product?.images[0].imageLink}
@@ -121,6 +121,7 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
                     endingTime={e?.expiryDate}
                     isBuyNowAllowed={e?.isBuyNowAllowed}
                     isMyAuction={e?.isMyAuction}
+                    latestBidAmount={e?.bids[0]?.amount}
                   />
                 </div>
               ))}

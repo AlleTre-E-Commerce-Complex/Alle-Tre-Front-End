@@ -39,8 +39,11 @@ const BuyNowAuctionsSlider = () => {
       if (user) {
         runAuctions(
           authAxios
-            .get(`${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`)
+            .get(
+              `${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`
+            )
             .then((res) => {
+              console.log("res?.data?.data11111111", res?.data?.data);
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
             })
@@ -48,7 +51,9 @@ const BuyNowAuctionsSlider = () => {
       } else {
         runAuctions(
           axios
-            .get(`${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`)
+            .get(
+              `${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`
+            )
             .then((res) => {
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
@@ -139,6 +144,8 @@ const BuyNowAuctionsSlider = () => {
                         endingTime={e?.expiryDate}
                         isBuyNowAllowed={e?.isBuyNowAllowed}
                         isMyAuction={e?.isMyAuction}
+                        latestBidAmount={e?.bids[0]?.amount}
+                        startBidAmount={e?.startBidAmount}
                       />
                     </div>
                   ))}

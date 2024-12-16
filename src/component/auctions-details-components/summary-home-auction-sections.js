@@ -63,7 +63,7 @@ const SummaryHomeAuctionSections = ({
   const [lastestBid, setLastestBid] = useState(latestBidAmount);
   const [openTotaltBid, setTotalBidOpen] = useState(false);
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
-  
+
   const dispatch = useDispatch();
   dispatch(socketAuctionId(auctionId));
 
@@ -82,11 +82,10 @@ const SummaryHomeAuctionSections = ({
 
   const socket = useSocket();
 
-
   useEffect(() => {
     if (socket) {
       socket.on("bid:submitted", (data) => {
-               setLastestBid(data);
+        setLastestBid(data);
       });
     }
 
@@ -332,7 +331,7 @@ const SummaryHomeAuctionSections = ({
               : selectedContent[localizationKeys.currentBid]}
           </p>
           <p className="text-gray-verydark cursor-default text-2xl flex flex-wrap gap-12">
-          <p>
+            <p>
               {formatCurrency(
                 lastestBid?.bidAmount || CurrentBid || startBidAmount
               )}
@@ -456,7 +455,7 @@ const SummaryHomeAuctionSections = ({
       <AddLocationModel
         open={openMakeDefultLocations}
         setOpen={setOpenMakeDefultLocations}
-        TextButton={selectedContent[localizationKeys.proceed]}
+        TextButton={selectedContent[localizationKeys.add]}
         onReload={onReload}
       />
     </div>

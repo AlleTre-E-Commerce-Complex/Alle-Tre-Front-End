@@ -32,7 +32,7 @@ const WalletPaymentForBiddingDeoposit = ({
             toast.success("Payment successful", {
               position: "top-right", // Position of the toast
             });
-            history.push(routes.app.profile.myBids.inPogress);
+            history.push(routes.app.homeDetails(auctionId));
           }
         })
         .catch((error) => {
