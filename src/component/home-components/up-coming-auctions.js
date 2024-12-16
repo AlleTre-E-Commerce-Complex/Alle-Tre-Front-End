@@ -131,7 +131,7 @@ const UpComingAuctionsSlider = () => {
                       <AuctionCard
                         className="min-w-[272px]"
                         auctionId={e?.id}
-                        price={e?.startBidAmount || e?.acceptedAmount}
+                        startBidAmount={e?.startBidAmount || e?.acceptedAmount}
                         title={e?.product?.title}
                         status={e?.status}
                         adsImg={e?.product?.images[0].imageLink}
