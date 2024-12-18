@@ -31,6 +31,7 @@ import BannerTop from "component/home-components/BannerTop";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 
 const Home = () => {
+  console.log("Home");
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { search } = useLocation();
@@ -293,4 +294,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

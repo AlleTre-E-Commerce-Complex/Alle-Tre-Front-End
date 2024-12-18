@@ -64,7 +64,7 @@ const AppLayouts = () => {
   };
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
-      <SocketProvider auctionId={socketauctionId}>
+      <SocketProvider auctionId={socketauctionId} userId={user?.id}>
         <Header SetSid={SetSid} sid={sid} />
         <Sidebar SetSid={SetSid} sid={sid} />
         {showRewardModal && (

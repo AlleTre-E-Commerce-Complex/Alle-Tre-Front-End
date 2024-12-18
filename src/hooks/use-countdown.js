@@ -5,6 +5,7 @@ function useCountdown(date) {
   const dateWithoutTimeZone = moment(date)
     .local()
     .format("YYYY-MM-DDTHH:mm:ss.SSS");
+    
   const [timeLeft, setTimeLeft] = useState(getTimeLeft(dateWithoutTimeZone));
 
   useEffect(() => {
