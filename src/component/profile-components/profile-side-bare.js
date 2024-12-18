@@ -63,9 +63,9 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const onLogout = () => {
+    logout();
     history.push(routes.app.home);
     socket.close();
-    logout();
   };
 
   const ProfileData = useSelector((state) => state.profileData.PofileData);

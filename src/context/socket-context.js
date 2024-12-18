@@ -8,7 +8,7 @@ export function useSocket() {
   return React.useContext(SocketContext);
 }
 
-export function SocketProvider({ auctionId, children }) {
+export function SocketProvider({ auctionId, children, userId }) {
   const [socket, setSocket] = useState();
 
   useEffect(() => {
@@ -18,12 +18,12 @@ export function SocketProvider({ auctionId, children }) {
       };
       const newSocket = io(URL, {
         extraHeaders: headers,
-        query: { auctionId: auctionId },
+        query: { auctionId: auctionId, userId:userId },
         path: "/socket.io",
       });
       setSocket(newSocket);
     });
-  }, [auctionId]);
+  }, [auctionId,userId]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

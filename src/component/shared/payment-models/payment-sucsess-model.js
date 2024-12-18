@@ -9,7 +9,7 @@ import routes from "../../../routes";
 import PaymentSucsess from "../lotties-file/payment-sucsess";
 import { useEffect } from "react";
 import localizationKeys from "../../../localization/localization-keys";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { useAuthState } from "context/auth-context";
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
@@ -34,8 +34,8 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   }, [history]);
 
   
-  const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
-  const socket_ = io(socketUrl, { query: { userId: user?.id } });
+  // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+  // const socket_ = io(socketUrl, { query: { userId: user?.id } });
 
 
   return (

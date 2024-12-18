@@ -20,11 +20,12 @@ import { useParams } from "react-router-dom/cjs/react-router-dom";
 const SilmilarProductsSlider = ({ categoriesId }) => {
   const [lang] = useLanguage("");
   const { auctionId } = useParams();
-
+  
   const selectedContent = content[lang];
   const { search } = useLocation();
   const { user } = useAuthState();
-
+  
+  // console.log("SilmilarProductsSlider", auctionId,user);
   const { run: runAuctions, isLoading: isLoadingAuctions } = useAxios([]);
 
   const [auctions, setAuctions] = useState();

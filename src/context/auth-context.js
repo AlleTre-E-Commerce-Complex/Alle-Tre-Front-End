@@ -20,7 +20,7 @@ function AuthProvider({ children }) {
 
   const login = ({ accessToken, refreshToken }) => {
     setUser(Auth._decodeToken(accessToken));
-
+ 
     Auth.setToken({
       newAccessToken: accessToken,
       newRefreshToken: refreshToken,
@@ -28,28 +28,56 @@ function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
+    // Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
+    Auth.logout();
     setUser(null);
     history.push(routes.app.home);
   };
 
-  React.useEffect(() => {
+  // React.useEffect(() => {
    
-    Auth.getUser().then((user) => {
-      if (!user) {
-        if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
-          if(window.location.pathname.includes('details')){
-            history.push(window.location.pathname)
-          }else{
-            history.push(`${routes.app.home}?page=1&perPage=28`);
-          }
-        }
-      }
-      setUser(user);
-      setIsLoading(false);
-    });
-  }, []);
+  //   Auth.getUser().then((user) => {
+  //     if (!user) {
+  //       if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
+  //         if(window.location.pathname.includes('details')){
+  //           history.push(window.location.pathname)
+  //         }else{
+  //           history.push(`${routes.app.home}?page=1&perPage=28`);
+  //         }
+  //       }
+  //     }
+  //     setUser(user);
+  //     setIsLoading(false);
+  //   });
+  // }, []);
+//=========================================================
 
+  React.useEffect(() => {
+    async function fetchUser() {
+      try {
+        const user = await Auth.getUser();
+        if (!user) {
+          if (!WHITE_LIST.some((route) => pathname.startsWith(route))) {
+            const redirectPath = window.location.pathname.includes("details")
+              ? window.location.pathname
+              : `${routes.app.home}?page=1&perPage=28`;
+            history.push(redirectPath);
+          }
+          setUser(null);
+        } else {
+          setUser(user);
+        }
+      } catch (error) {
+        setUser(null);
+        console.error("Error fetching user:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  
+    fetchUser();
+  }, [pathname, history]);
+  
   return (
     <AuthContext.Provider
       value={{

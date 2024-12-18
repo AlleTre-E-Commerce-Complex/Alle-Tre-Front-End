@@ -24,7 +24,6 @@ import LogoutModal from "../logout-modal/logout-modal";
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import { IoNotifications } from "react-icons/io5";
-import { io } from "socket.io-client";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
 import { getFCMToken } from '../../../config/firebase-config';
@@ -44,82 +43,109 @@ const Header = ({ SetSid }) => {
   const [name, setTitle] = useFilter("title", "");
 
   const [pushEnabled, setPushEnabled] = useState(false);
-  const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
-  const socket_ = io(socketUrl, { query: { userId: user?.id } });
-
+  // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+  const { logout } = useAuthState();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);// Use ref to persist socket instance
+  const socket = useSocket();
 
   useEffect(() => {
-  
-         // Set up socket listener
-         socket_.on("notification", (data) => {
-          console.log("notification data *************",data);
-          setNotificationData(data);
-          
-          // // Play notification sound if needed
-          // const audio = new Audio('/audios/notification-sound.mp3');
-          // audio.play().catch(e => console.log('Audio play failed:', e));
-        });
-  }, [socket_]);
+    console.log('soket useEffect test')
+    if (!socket) return;  // Ensure socket is available
+
+    const handleNotification = (data) => {
+      console.log("notification data *************", data);
+
+      if (data.status === "ON_SELLING") {
+        console.log("listing message");
+        setNotificationCount((prev) => prev + 1);
+      } else if (data.status === "ON_BIDDING" && data.userType === "FOR_SELLER" && data.usersId === user?.id) {
+        console.log("seller message");
+        setNotificationCount((prev) => prev + 1);
+      } else if (data.status === "ON_BIDDING" && data.userType === "CURRENT_BIDDER" && data.usersId === user?.id) {
+        console.log("bidder message");
+        setNotificationCount((prev) => prev + 1);
+      } else if (data.status === "ON_BIDDING" && data.userType === "OTHER_BIDDERS" && data.usersId.includes(String(user?.id))) {
+        console.log("other bidders message");
+        setNotificationCount((prev) => prev + 1);
+      } else if (data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" && data.userType === "FOR_SELLER" && data.usersId === user?.id) {
+        console.log("ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER");
+        setNotificationCount((prev) => prev + 1);
+      } else if (data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" && data.usersId === user?.id) {
+        console.log("ON_AUCTION_EXPIRE_WITH_BIDDER");
+        setNotificationCount((prev) => prev +1)
+      }
+    };
+
+    // Register the event listener
+    socket.on("notification", handleNotification);
+
+    // Clean up listener on unmount
+    return () => {
+      socket.off("notification", handleNotification);
+    };
+  }, [socket, user?.id]); 
 
   // Combined notification initialization and FCM setup
-  useEffect(() => {
-    console.log("user?.id *************", user?.id);
-    const initializeNotifications = async () => {
-      try {
-        if (!user?.id) return;
+  // useEffect(() => {
+  //   console.log("user?.id *************", user?.id);
+  //   const initializeNotifications = async () => {
+  //     try {
+  //       if (!user?.id) return;
 
-        if ("Notification" in window && "serviceWorker" in navigator) {
-          // Register service worker first
-          const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-          console.log('Service Worker registered:', registration);
+  //       if ("Notification" in window && "serviceWorker" in navigator) {
+  //         // Register service worker first
+  //         const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+  //         console.log('Service Worker registered:', registration);
 
-          const permission = await Notification.requestPermission();
-          console.log("Permission:", permission);
+  //         const permission = await Notification.requestPermission();
+  //         console.log("Permission:", permission);
 
-          if (permission === "granted") {
-            // Get FCM token after service worker is registered
-            const fcmToken = await getFCMToken();
-            console.log("FCM Token:", fcmToken);
+  //         if (permission === "granted") {
+  //           // Get FCM token after service worker is registered
+  //           const fcmToken = await getFCMToken();
+  //           console.log("FCM Token:", fcmToken);
 
-            if (fcmToken) {
-              await run(authAxios.post('/notifications/save-token', {
-                userId: user.id,
-                fcmToken
-              }));
-              setPushEnabled(true);
+  //           if (fcmToken) {
+  //             await run(authAxios.post('/notifications/save-token', {
+  //               userId: user.id,
+  //               fcmToken
+  //             }));
+  //             setPushEnabled(true);
 
-              // Set up FCM message handling
-              const messaging = getMessaging();
-              onMessage(messaging, (payload) => {
-                console.log('Foreground message received:', payload);
-                setNotificationCount(prev => prev + 1);
-              });
-            }
-          }
-        }
+  //             // Set up FCM message handling
+  //             const messaging = getMessaging();
+  //             onMessage(messaging, (payload) => {
+  //               console.log('Foreground message received:', payload);
+  //               // setNotificationCount(prev => prev + 1);
+  //             });
+  //           }
+  //         }
+  //       }
 
-        // Fetch initial unread count
-        const response = await authAxios.get('/notifications/unread-count');
-        console.log("response count*************",response.data.count);
-        if (response.data.success) {
-          setNotificationCount(response.data.count);
-        }
-      } catch (error) {
-        console.error('Error initializing notifications:', error);
-      }
-    };
+  //       // Fetch initial unread count
+  //       const response = await authAxios.get('/notifications/unread-count');
+  //       console.log("response count*************",response.data.count);
+  //       if (response.data.success) {
+  //         setNotificationCount(response.data.count);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error initializing notifications:', error);
+  //     }
+  //   };
 
-    initializeNotifications();
+  //   initializeNotifications();
 
-    // Cleanup
-    return () => {
-      if (socket_) {
-        socket_.off("notification");
-      }
-    };
-  }, [user?.id]);
+  //   // Cleanup
+  //   return () => {
+  //     if (socket_) {
+  //       socket_.off("notification");
+  //     }
+  //   };
+  // }, [user?.id]);
 
   // Handle notification click
+
+
   const handleNotificationClick = async () => {
     setNotificationCount(0); // Reset count when viewing notifications
     history.push(routes.app.profile.notifications);
@@ -207,10 +233,7 @@ const Header = ({ SetSid }) => {
       history.push(routes.app.faqs);
     } else dispatch(Open());
   };
-  const { logout } = useAuthState();
-  const socket = useSocket();
-
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  
 
   const handleLogout = () => {
     setLogoutModalOpen(false);

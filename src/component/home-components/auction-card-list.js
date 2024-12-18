@@ -31,22 +31,23 @@ const AuctionCardList = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-
+  
   const timeLeft = useCountdown(endingTime);
   const formattedTimeLeft = `${timeLeft.days} ${
     selectedContent[localizationKeys.days]
   } :
   ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
   ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
-
+  
   const startDate = useCountdown(StartDate);
-
+  
   const formattedstartDate = `${startDate.days} ${
     selectedContent[localizationKeys.days]
   } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
     startDate.minutes
   } ${selectedContent[localizationKeys.min]}`;
-
+  
+  console.log("auction-card-list---***---");
   const handelGoDetails = (id) => {
     if (isMyAuction) {
       if (status === "ACTIVE") {

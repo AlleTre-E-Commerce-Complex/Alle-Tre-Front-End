@@ -26,6 +26,7 @@ import SilmilarProductsSlider from "../../../component/auctions-details-componen
 import useLocalStorage from "../../../hooks/use-localstorage";
 
 const HomeAuctionDetails = () => {
+  console.log('home acution detaisl***')
   const { user } = useAuthState();
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
@@ -179,4 +180,4 @@ const HomeAuctionDetails = () => {
   );
 };
 
-export default HomeAuctionDetails;
+export default React.memo(HomeAuctionDetails);
