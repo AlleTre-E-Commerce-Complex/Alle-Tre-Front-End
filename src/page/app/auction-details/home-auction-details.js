@@ -49,6 +49,7 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
+            console.log('HomeAuctionDetails authAxios', res?.data?.data)
           })
       );
     } else {
@@ -57,6 +58,7 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
+            console.log('HomeAuctionDetails axios', res?.data?.data)
           })
       );
     }

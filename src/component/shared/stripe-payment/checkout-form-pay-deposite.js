@@ -11,11 +11,11 @@ import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function CheckoutFormPayDeposite({ payPrice }) {
+export default function CheckoutFormPayDeposite({ payPrice, auctionId }) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
-  const { pathname, auctionId } = useLocation();
+  // const { pathname, auctionId } = useLocation();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -65,7 +65,7 @@ export default function CheckoutFormPayDeposite({ payPrice }) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite`,
+        return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`,
       },
     });
 
