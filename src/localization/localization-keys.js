@@ -55,6 +55,7 @@ const localizationKeys = {
   popularCategories: "popularCategories",
   totalBids: "totalBids",
   yourPendingPaymentsAreListedHere: "yourPendingPaymentsAreListedHere",
+  startingTime: "startingTime",
   endingTime: "endingTime",
   bid: "bid",
   results: "results",

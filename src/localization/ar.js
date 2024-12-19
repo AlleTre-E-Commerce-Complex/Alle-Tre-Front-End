@@ -95,6 +95,7 @@ const ar = {
   [localizationKeys.yourPendingPaymentsAreListedHere]:
     "تظهر مدفوعاتك المعلقة هنا",
   [localizationKeys.bid]: "مزاد",
+  [localizationKeys.startingTime]: "وقت البدء",
   [localizationKeys.endingTime]: "نهاية الوقت",
   [localizationKeys.days]: "أيام",
   [localizationKeys.hrs]: "ساعة",
