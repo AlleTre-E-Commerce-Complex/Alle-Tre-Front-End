@@ -65,7 +65,7 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
           <button
             onClick={() => {
               pathname.endsWith(`${routes.app.home}/payDeposite`)
-                ? history.goBack(history.goBack())
+                ? history.push(routes.app.homeDetails(auctionId))
                 : pathname.endsWith(`${routes.app.home}/complete-pay`)
                 ? history.push(routes.app.profile.myBids.default)
                 : pathname.endsWith(`${routes.app.home}/buyNow`)
