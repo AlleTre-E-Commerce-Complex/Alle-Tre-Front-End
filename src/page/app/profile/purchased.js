@@ -68,6 +68,8 @@ const Purchased = () => {
               isPurchased
               PurchasedTime={e?.Payment[0]?.createdAt}
               onReload={onReload}
+              latestBidAmount={e?.bids[0]?.amount}
+              startBidAmount={e?.startBidAmount}
             />
           ))}
         </div>

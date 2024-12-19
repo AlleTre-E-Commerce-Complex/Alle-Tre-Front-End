@@ -28,6 +28,7 @@ const SummaryAuctionSections = ({
   endingPrice,
   totalBids,
   endingTime,
+  startingTime,
   setActiveIndexTab,
   status,
 }) => {
@@ -103,58 +104,69 @@ const SummaryAuctionSections = ({
         </div>
       </div>
       {/* Prices  sections */}
-      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1  ">
-        <div>
-          <p className="text-gray-med text-base font-normal pb-2">
-            {selectedContent[localizationKeys.startingPrice]}
-          </p>
-          <p className="text-gray-verydark cursor-default text-2xl">
-            {formatCurrency(startingPrice)}
-          </p>
-        </div>
-        <div>
-          <p className="text-gray-med text-base font-normal pb-2">
-            {selectedContent[localizationKeys.endingPrice]}
-          </p>
-          <p className="text-gray-verydark cursor-default text-2xl">
-            {formatCurrency(lastestBid?.bidAmount) ||
-              formatCurrency(endingPrice) ||
-              "--"}
-          </p>
-        </div>
-      </div>
-      {/* Bids  sections */}
-      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 ">
-        <div>
-          <p className="text-gray-med text-base font-normal pb-2">
-            {selectedContent[localizationKeys.totalBids]}
-          </p>
-          <p className="text-gray-verydark cursor-default text-2xl flex gap-12">
-            <p>{lastestBid?.totalBids || totalBids}</p>
-            <div className="my-auto">
-              <button
-                onClick={() => setTotalBidOpen(true)}
-                className="w-20 h-6 text-xs font-normal bg-primary rounded text-white flex justify-center gap-x-2 pt-1 "
-              >
-                <p> {selectedContent[localizationKeys.viewAll]}</p>
-                <img
-                  className="w-2.5 h-2.5 mt-[2px]"
-                  src={AnglesRight}
-                  alt="AnglesRight"
-                />
-              </button>
-            </div>
-          </p>
-        </div>
-        <div>
-          <p className="text-gray-med text-base font-normal pb-2">
-            {selectedContent[localizationKeys.endingTime]}
-          </p>
-          <p className="text-gray-verydark cursor-default text-2xl">
-            {moment(endingTime).format("hh:mmA DD MMM YYYY")}
-          </p>
-        </div>
-      </div>
+     <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 gap-6">
+  {/* Price Section */}
+  <div className="space-y-2">
+    <p className="text-gray-med text-base font-normal">
+      {selectedContent[localizationKeys.startingPrice]}
+    </p>
+    <p className="text-gray-verydark cursor-default text-2xl font-semibold">
+      {formatCurrency(startingPrice)}
+    </p>
+  </div>
+  <div className="space-y-2">
+    <p className="text-gray-med text-base font-normal">
+      {selectedContent[localizationKeys.endingPrice]}
+    </p>
+    <p className="text-gray-verydark cursor-default text-2xl font-semibold">
+      {formatCurrency(lastestBid?.bidAmount) || formatCurrency(endingPrice) || "--"}
+    </p>
+  </div>
+
+  {/* Bids Section */}
+  <div className="space-y-4">
+    <p className="text-gray-med text-base font-normal">
+      {selectedContent[localizationKeys.totalBids]}
+    </p>
+    <div className="flex items-center gap-4">
+      <p className="text-gray-verydark text-2xl font-semibold">
+        {lastestBid?.totalBids || totalBids}
+      </p>
+      <button
+        onClick={() => setTotalBidOpen(true)}
+        className="w-24 h-8 text-xs font-medium bg-primary rounded text-white flex items-center justify-center gap-x-2 px-2"
+      >
+        <span>{selectedContent[localizationKeys.viewAll]}</span>
+        <img
+          className="w-2.5 h-2.5"
+          src={AnglesRight}
+          alt="AnglesRight"
+        />
+      </button>
+    </div>
+  </div>
+
+  {/* Time Section */}
+  <div className="space-y-4">
+    <div className="space-y-2">
+      <p className="text-gray-med text-base font-normal">
+        {selectedContent[localizationKeys.startingTime]}
+      </p>
+      <p className="text-gray-verydark text-2xl font-semibold">
+        {moment(startingTime).format("hh:mm A · DD MMM YYYY")}
+      </p>
+    </div>
+    <div className="space-y-2">
+      <p className="text-gray-med text-base font-normal">
+        {selectedContent[localizationKeys.endingTime]}
+      </p>
+      <p className="text-gray-verydark text-2xl font-semibold">
+        {moment(endingTime).format("hh:mm A · DD MMM YYYY")}
+      </p>
+    </div>
+  </div>
+</div>
+
       <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
     </div>
   );

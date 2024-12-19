@@ -439,6 +439,7 @@ const en = {
     "in this auction please notice that you will need to pay a ",
   [localizationKeys.ofThePriceAsADepositOnlyOnceSoYouCanFreelyEnjoyBidding]:
     " of the price as a deposit only once so you can freely enjoy bidding",
+  [localizationKeys.startingTime]: "Starting Time",
   [localizationKeys.endingPrice]: "Ending Price",
   [localizationKeys.viewAll]: "View All",
   // tab details
