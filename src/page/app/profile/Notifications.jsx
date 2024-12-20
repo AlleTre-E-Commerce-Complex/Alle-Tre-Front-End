@@ -25,7 +25,7 @@ const Notifications = () => {
     const fetchNotifications = async () => {
       try {
         const response = await run(authAxios.get(`${api.app.notifications.get}`))
-        console.log(response.data)
+        console.log('*****----------->',response.data)
         setNotifications(response.data.data);
       } catch (error) {
         console.error('Error fetching wallet data:', error);
