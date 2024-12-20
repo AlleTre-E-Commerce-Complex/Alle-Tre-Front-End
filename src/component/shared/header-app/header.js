@@ -48,6 +48,14 @@ const Header = ({ SetSid }) => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);// Use ref to persist socket instance
   const socket = useSocket();
 
+  async function getNotificationCount() {
+    const response = await run(authAxios.get('/notifications/unread-count'));
+    console.log("response count*************",response.data.count);
+    if (response.data.success) {
+      setNotificationCount(response.data.count);
+    }
+  }
+
   useEffect(() => {
     console.log('soket useEffect test')
     if (!socket) return;  // Ensure socket is available
@@ -72,12 +80,22 @@ const Header = ({ SetSid }) => {
         setNotificationCount((prev) => prev + 1);
       } else if (data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" && data.usersId === user?.id) {
         console.log("ON_AUCTION_EXPIRE_WITH_BIDDER");
-        setNotificationCount((prev) => prev +1)
+        setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" && data.usersId === user?.id){
+        console.log("ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER");
+        setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" && data.usersId === user?.id){
+        console.log("ON_AUCTION_CANCELLED_WITH_BIDDER");
+        setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_AUCTION_PURCHASE_SUCCESS" && data.usersId === user?.id){
+        console.log("ON_AUCTION_PURCHASE_SUCCESS");
+        setNotificationCount((prev) => prev + 1);
       }
     };
 
     // Register the event listener
     socket.on("notification", handleNotification);
+    getNotificationCount();
 
     // Clean up listener on unmount
     return () => {
