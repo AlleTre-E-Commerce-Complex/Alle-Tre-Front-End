@@ -83,7 +83,35 @@ const Notifications = () => {
                     </th>
                     <td className="px-6 py-4">
                        <div>{data.message}</div>
-                       <div dangerouslySetInnerHTML={{ __html: data.html }} />
+                       <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '0px 10px',
+                          }}
+                        >
+                          <h1
+                            style={{
+                              fontSize: '16px',
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            {data.productTitle}
+                          </h1>
+                          <img
+                            src={data.imageLink}
+                            alt="Product"
+                            style={{
+                              width: '100%',
+                              maxWidth: '100px',
+                              height: 'auto',
+                              borderRadius: '8px',
+                              display: 'inline-block',
+                            }}
+                          />
+                        </div>
+
                     </td>
 
                     <td className="px-6 py-4 text-right">

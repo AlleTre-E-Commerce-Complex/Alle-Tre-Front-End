@@ -90,6 +90,21 @@ const Header = ({ SetSid }) => {
       }else if(data.status === "ON_AUCTION_PURCHASE_SUCCESS" && data.usersId === user?.id){
         console.log("ON_AUCTION_PURCHASE_SUCCESS");
         setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_PENDING_PAYMENT_OF_WINNER" && data.usersId === user?.id){
+        console.log("ON_PENDING_PAYMENT_OF_WINNER");
+        setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_DELIVERY_DELAY" && data.usersId === user?.id){
+        console.log("ON_DELIVERY_DELAY");
+        setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" && data.usersId === user?.id){
+        console.log("ON_PENDING_PAYMENT_TIME_EXPIRED");
+        setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_ITEM_SEND_FOR_DELIVERY" && data.usersId === user?.id){
+        console.log("ON_ITEM_SEND_FOR_DELIVERY");
+        setNotificationCount((prev) => prev + 1);
+      }else if(data.status === "ON_ITEM_BUY_NOW" && data.usersId === user?.id){
+        console.log("ON_ITEM_BUY_NOW");
+        setNotificationCount((prev) => prev + 1);
       }
     };
 
