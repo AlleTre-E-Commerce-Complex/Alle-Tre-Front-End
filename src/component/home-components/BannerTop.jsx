@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import BannerTopImage1 from "../../assets/images/HEROBANNER2.jpg";
 import BannerTopImage2 from "../../assets/images/HEROBANNER1.jpg";
-import BannerTopImage3 from "../../assets/images/bannerTop-5.jpg";
-import BannerMobImage1 from "../../assets/images/mobile version-02.jpg";
-import BannerMobImage2 from "../../assets/images/mobile version-03.jpg";
-import BannerMobImage3 from "../../assets/images/mobile version-05.jpg";
+import BannerTopImage3 from "../../assets/images/electronics banner 2.jpg";
+import BannerMobImage1 from "../../assets/images/mobile version3.jpg";
+import BannerMobImage2 from "../../assets/images/mobile version2.jpg";
+import BannerMobImage3 from "../../assets/images/mobile version1.jpg";
 
 const BannerTop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

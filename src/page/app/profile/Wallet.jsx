@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EmtyWatchlist from "../../../../src/assets/icons/emty-watchlist.png";
+import EmtyWatchlist from "../../../../src/assets/icons/empty-watch-list.svg";
 import { useLanguage } from "context/language-context";
 import content from "localization/content";
 import localizationKeys from "localization/localization-keys";
