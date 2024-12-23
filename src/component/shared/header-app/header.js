@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/allatre-logo-color.svg";
+// import { ReactComponent as AllatreLogoMobile } from "../../../../src/assets/logo/1.svg";
+
 import routes from "../../../routes";
 import DropdownLang from "./dropdown-lang";
 import NavLinkHeader from "./nav-link-header";
@@ -23,11 +25,11 @@ import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
-import { IoNotifications } from "react-icons/io5";
+import { MdOutlineNotifications } from "react-icons/md";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
-import { getFCMToken } from '../../../config/firebase-config';
-import { getMessaging, onMessage } from 'firebase/messaging';
+import { getFCMToken } from "../../../config/firebase-config";
+import { getMessaging, onMessage } from "firebase/messaging";
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -45,7 +47,7 @@ const Header = ({ SetSid }) => {
   const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   const { logout } = useAuthState();
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);// Use ref to persist socket instance
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false); // Use ref to persist socket instance
   const socket = useSocket();
 
   async function getNotificationCount() {
@@ -57,8 +59,8 @@ const Header = ({ SetSid }) => {
   }
 
   useEffect(() => {
-    console.log('soket useEffect test')
-    if (!socket) return;  // Ensure socket is available
+    console.log("soket useEffect test");
+    if (!socket) return; // Ensure socket is available
 
     const handleNotification = (data) => {
       console.log("notification data *************", data);
@@ -66,19 +68,38 @@ const Header = ({ SetSid }) => {
       if (data.status === "ON_SELLING") {
         console.log("listing message");
         setNotificationCount((prev) => prev + 1);
-      } else if (data.status === "ON_BIDDING" && data.userType === "FOR_SELLER" && data.usersId === user?.id) {
+      } else if (
+        data.status === "ON_BIDDING" &&
+        data.userType === "FOR_SELLER" &&
+        data.usersId === user?.id
+      ) {
         console.log("seller message");
         setNotificationCount((prev) => prev + 1);
-      } else if (data.status === "ON_BIDDING" && data.userType === "CURRENT_BIDDER" && data.usersId === user?.id) {
+      } else if (
+        data.status === "ON_BIDDING" &&
+        data.userType === "CURRENT_BIDDER" &&
+        data.usersId === user?.id
+      ) {
         console.log("bidder message");
         setNotificationCount((prev) => prev + 1);
-      } else if (data.status === "ON_BIDDING" && data.userType === "OTHER_BIDDERS" && data.usersId.includes(String(user?.id))) {
+      } else if (
+        data.status === "ON_BIDDING" &&
+        data.userType === "OTHER_BIDDERS" &&
+        data.usersId.includes(String(user?.id))
+      ) {
         console.log("other bidders message");
         setNotificationCount((prev) => prev + 1);
-      } else if (data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" && data.userType === "FOR_SELLER" && data.usersId === user?.id) {
+      } else if (
+        data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" &&
+        data.userType === "FOR_SELLER" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER");
         setNotificationCount((prev) => prev + 1);
-      } else if (data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" && data.usersId === user?.id) {
+      } else if (
+        data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_AUCTION_EXPIRE_WITH_BIDDER");
         setNotificationCount((prev) => prev + 1);
       }else if(data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" && data.usersId === user?.id){
@@ -116,7 +137,7 @@ const Header = ({ SetSid }) => {
     return () => {
       socket.off("notification", handleNotification);
     };
-  }, [socket, user?.id]); 
+  }, [socket, user?.id]);
 
   // Combined notification initialization and FCM setup
   // useEffect(() => {
@@ -178,12 +199,11 @@ const Header = ({ SetSid }) => {
 
   // Handle notification click
 
-
   const handleNotificationClick = async () => {
     setNotificationCount(0); // Reset count when viewing notifications
     history.push(routes.app.profile.notifications);
-    const response = await run(authAxios.put('/notifications/mark-read'));
-    console.log("response *************",response);
+    const response = await run(authAxios.put("/notifications/mark-read"));
+    console.log("response *************", response);
   };
 
   const debounced = useDebouncedCallback((value) => {
@@ -266,7 +286,6 @@ const Header = ({ SetSid }) => {
       history.push(routes.app.faqs);
     } else dispatch(Open());
   };
-  
 
   const handleLogout = () => {
     setLogoutModalOpen(false);
@@ -284,42 +303,25 @@ const Header = ({ SetSid }) => {
             onClick={() => history.push(`${routes.app.home}?page=1&perPage=28`)}
           />
         </div>
-        <div className="flex items-center space-x-4 md:hidden ">
+        <div className="flex items-center space-x-3 md:hidden ">
           <BiMenu
             onClick={() => SetSid(true)}
             className="text-primary cursor-pointer"
             size={30}
           />
+
           <RiHome2Line
             onClick={() => {
               history.push(routes.app.home);
             }}
             className="text-primary cursor-pointer"
-            size={30}
+            size={25}
           />
-          <div className="relative">
-             <NavLinkHeader
-                title={
-                  <>
-                    <IoNotifications size={20} />
-                    {notificationCount > 0 && (
-                      <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                        {notificationCount > 99 ? '99+' : notificationCount}
-                      </span>
-                    )}
-                  </>
-                }
-                isActive={
-                  pathname.length === 1 || pathname.startsWith(routes.app.profile.notifications)
-                }
-                onClick={handleNotificationClick}
-              />
-           </div>
         </div>
         <div className="flex">
           <div className="my-auto ">
             <AllatreLogo
-              className="cursor-pointer w-[100px] block md:hidden"
+              className="cursor-pointer w-[100px] block md:hidden text-primary"
               onClick={() => history.push(routes.app.home)}
             />
           </div>
@@ -382,7 +384,7 @@ const Header = ({ SetSid }) => {
               <NavLinkHeader
                 title={
                   <>
-                    <IoNotifications size={20} />
+                    {selectedContent[localizationKeys.notifications]}
                     {notificationCount > 0 && (
                       <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                         {notificationCount > 99 ? "99+" : notificationCount}
@@ -405,7 +407,7 @@ const Header = ({ SetSid }) => {
               onClick={() => history.push(routes.app.support)}
             /> */}
             <div className="my-auto flex items-center">
-              <DropdownLang className="text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
+              <DropdownLang className="text-gray-dark Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
             </div>
           </div>
           <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
@@ -419,13 +421,38 @@ const Header = ({ SetSid }) => {
         </div>
         <div className="flex items-center gap-x-2 md:hidden">
           <DropdownLang className="text-black bg-white/90 hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
-          <CgProfile
-            className="text-primary cursor-pointer"
-            size={30}
-            onClick={() => {
-              handelMyPfofile();
-            }}
-          />
+          <div className="flex items-center gap-x-3">
+            <div className="relative">
+              <NavLinkHeader
+                title={
+                  <>
+                    <MdOutlineNotifications
+                      size={25}
+                      className="text-primary cursor-pointer"
+                      style={{ marginTop: "4px" }}
+                    />
+                    {notificationCount > 0 && (
+                      <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                        {notificationCount > 99 ? "99+" : notificationCount}
+                      </span>
+                    )}
+                  </>
+                }
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.notifications)
+                }
+                onClick={handleNotificationClick}
+              />
+            </div>
+            <CgProfile
+              className="text-primary cursor-pointer"
+              size={25}
+              onClick={() => {
+                handelMyPfofile();
+              }}
+            />
+          </div>
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>

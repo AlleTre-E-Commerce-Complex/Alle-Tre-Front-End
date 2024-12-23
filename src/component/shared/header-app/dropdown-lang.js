@@ -26,7 +26,7 @@ const DropdownLang = ({ className }) => {
   return (
     <div dir="ltr">
       <Dropdown
-        className={`${className} text-gray-dark Edit_Lang_Dropdown`}
+        className={`${className} `}
         inline
         options={langOptions}
         defaultValue={

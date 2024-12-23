@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 102 73">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #c73659;
+      }
+
+      .cls-2 {
+        isolation: isolate;
+        opacity: .1;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.6.0, SVG Export Plug-In . SVG Version: 1.2.0 Build 709)  -->
+  <g>
+    <g id="Layer_1">
+      <g id="Layer_1-2" data-name="Layer_1">
+        <g id="Bids_icon">
+          <g id="Group_885">
+            <path id="Path_907" class="cls-2" d="M55.1,28.4c25.8,0,42.5-33.7,42.5-7.9s-20.9,46.7-46.7,46.7S4.2,46.3,4.2,20.5s25,7.9,50.8,7.9h.1Z"/>
+            <ellipse id="Ellipse_179" class="cls-2" cx="36.5" cy="5" rx="5.5" ry="5"/>
+            <circle id="Ellipse_182" class="cls-2" cx="70.5" cy="8.5" r="1.5"/>
+            <ellipse id="Ellipse_183" class="cls-2" cx="27.5" cy="12" rx="1.5" ry="2"/>
+            <ellipse id="Ellipse_181" class="cls-2" cx="96.5" cy="61" rx="5.5" ry="5"/>
+            <ellipse id="Ellipse_180" class="cls-2" cx="5.5" cy="62" rx="5.5" ry="5"/>
+          </g>
+        </g>
+      </g>
+      <path class="cls-1" d="M36.9,72.5c-.5,0-.9-.1-1.4-.3-1-.5-1.7-1.6-1.7-2.7V31.4c0-2.2,1.8-4,4.1-4h26.3c2.2,0,4.1,1.8,4.1,4v37.9c0,1.1-.6,2.2-1.7,2.7-1,.5-2.3.4-3.2-.3l-12.2-9.1-12.4,9.3c-.5.4-1.2.6-1.8.6ZM37.9,29.8c-.9,0-1.6.7-1.6,1.5v38.1c0,.3.2.4.3.5,0,0,.3.1.6,0l13.2-9.8c.4-.3,1.1-.3,1.5,0l12.9,9.7s0,0,0,0c.3.2.5.1.6,0,.1,0,.3-.2.3-.5V31.4c0-.8-.7-1.5-1.6-1.5h-26.3Z"/>
+    </g>
+  </g>
+</svg>

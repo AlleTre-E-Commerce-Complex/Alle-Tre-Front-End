@@ -7,7 +7,7 @@ import api from "../../../api";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "../../../hooks/use-axios";
 import AuctionCard from "../../../component/home-components/auction-card";
-import EmtyWatchlist from "../../../../src/assets/icons/emty-watchlist.png";
+import EmtyWatchlist from "../../../../src/assets/icons/empty-watch-list.svg";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";

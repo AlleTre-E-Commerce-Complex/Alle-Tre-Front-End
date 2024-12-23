@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Dimmer, Modal } from 'semantic-ui-react';
 import LodingTestAllatre from '../lotties-file/loding-test-allatre';
 import { authAxios } from 'config/axios-config';
-import EmtyWatchlist from "../../../../src/assets/icons/emty-watchlist.png";
+import EmtyWatchlist from "../../../../src/assets/icons/empty-watch-list.svg";
 import localizationKeys from "../../../localization/localization-keys";
 import toast from 'react-hot-toast';
 
