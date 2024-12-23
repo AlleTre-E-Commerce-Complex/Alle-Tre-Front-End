@@ -53,7 +53,7 @@ const Notifications = () => {
     };
     return new Date(dateString).toLocaleString(undefined, options); // Changed to toLocaleString
   };
-
+  console.log("dddddd", formatTime);
   return (
     <div>
       <Dimmer className=" bg-white/50" active={isLoading} inverted>
@@ -65,7 +65,7 @@ const Notifications = () => {
         <div className="p-4">
           <div className="transactions">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 hidden sm:table">
                 <thead className="text-xs uppercase bg-primary text-white dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
@@ -74,7 +74,6 @@ const Notifications = () => {
                     <th scope="col" className="px-6 py-3">
                       {selectedContent[localizationKeys.Date]}
                     </th>
-                    
                     <th scope="col" className="px-6 py-3 text-right">
                       {selectedContent[localizationKeys.viewDetails]}
                     </th>
@@ -84,59 +83,80 @@ const Notifications = () => {
                   {[...notifications].reverse().map((data, index) => (
                     <tr
                       key={index}
-                      className={`border-b ${
+                      className={`border-b transition duration-300 ease-in-out ${
                         index % 2 !== 0
                           ? "bg-gray-100 dark:bg-gray-800"
                           : "bg-white dark:bg-gray-900"
                       } hover:bg-gray-200 dark:hover:bg-gray-700`}
                     >
-                    <th scope="row" className="px-6 py-4">
-                        {formatDate(data.createdAt)}
-                    </th>
-                    <td className="px-6 py-4">
-                       <div>{data.message}</div>
-                       <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            padding: '0px 10px',
-                          }}
-                        >
-                          <h1
-                            style={{
-                              fontSize: '16px',
-                              fontWeight: 'bold',
-                            }}
-                          >
-                            {data.productTitle}
-                          </h1>
+                      <td className="px-16 py-4">
+                        <h1 className="text-lg font-bold">
+                          {data.productTitle}
+                        </h1>
+                        <div className="flex items-center justify-between p-2 gap-4">
+                          <div className="text-lg">{data.message}</div>
                           <img
                             src={data.imageLink}
-                            alt="Product"
-                            style={{
-                              width: '100%',
-                              maxWidth: '100px',
-                              height: 'auto',
-                              borderRadius: '8px',
-                              display: 'inline-block',
-                            }}
+                            alt="ProductImage"
+                            className="w-24 h-auto rounded-lg hidden sm:block"
                           />
                         </div>
-
-                    </td>
-
-                    <td className="px-6 py-4 text-right">
-                        <button 
-                        onClick={() => handleViewDetails(data.auctionId)}
-                        className="bg-primary text-white px-4 py-2 rounded-md">
-                            {selectedContent[localizationKeys.viewDetails]}
+                      </td>
+                      <td className="text-gray-600 space-y-2">
+                        <div className="text-lg">
+                          {formatTime(data.createdAt)}
+                        </div>
+                        <div className="inline text-sm text-gray-500">
+                          {formatDate(data.createdAt)}
+                        </div>
+                      </td>
+                      <td className="px-8 py-4 text-right">
+                        <button
+                          onClick={() => handleViewDetails(data.auctionId)}
+                          className="bg-primary hover:bg-primary-dark text-white text-sm px-4 py-2 rounded-md transition duration-300"
+                        >
+                          {selectedContent[localizationKeys.viewDetails]}
                         </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              {/* Mobile Cards */}
+              <div className="sm:hidden">
+                {[...notifications].reverse().map((data, index) => (
+                  <div
+                    key={index}
+                    className={`border rounded-lg mb-4 p-4 ${
+                      index % 2 !== 0 ? "bg-gray-100" : "bg-white"
+                    }`}
+                  >
+                    <h1 className="text-lg font-bold flex items-center">
+                      {data.productTitle}
+                    </h1>
+                    <p className="text-gray-500 text-md mb-2">{data.message}</p>
+                    <img
+                      src={data.imageLink}
+                      alt="ProductImage"
+                      className="w-16 sm:w-24 h-auto rounded-lg mb-4"
+                    />
+                    <div className="flex justify-between text-sm">
+                      <div className="text-gray-600">
+                        <div>{formatTime(data.createdAt)}</div>
+                        <div className="text-gray-500">
+                          {formatDate(data.createdAt)}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => handleViewDetails(data.auctionId)}
+                        className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-md transition"
+                      >
+                        {selectedContent[localizationKeys.viewDetails]}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
