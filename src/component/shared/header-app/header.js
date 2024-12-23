@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/allatre-logo-color.svg";
+import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/ALLETRE LOGO-03-01.svg";
+import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/ALLETRE LOGO-03-02.svg";
+import { ReactComponent as AllatreLogoFull } from "../../../../src/assets/logo/allatre-logo-color.svg";
+
 // import { ReactComponent as AllatreLogoMobile } from "../../../../src/assets/logo/1.svg";
 
 import routes from "../../../routes";
@@ -50,9 +53,23 @@ const Header = ({ SetSid }) => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false); // Use ref to persist socket instance
   const socket = useSocket();
 
+  const [showLogo, setShowLogo] = useState(false);
+  const [showIcon, setShowIcon] = useState(true); // State to control the visibility of the icon
+
+  useEffect(() => {
+    // Show the AllatreLogo after a delay
+    const timer = setTimeout(() => {
+      setShowIcon(false); // Hide the icon after 1 second
+      setShowLogo(true); // Show the logo
+    }, 1000); // Adjust the delay as needed (1000ms = 1 second)
+
+    // Cleanup timer on unmount
+    return () => clearTimeout(timer);
+  }, []);
+
   async function getNotificationCount() {
-    const response = await run(authAxios.get('/notifications/unread-count'));
-    console.log("response count*************",response.data.count);
+    const response = await run(authAxios.get("/notifications/unread-count"));
+    console.log("response count*************", response.data.count);
     if (response.data.success) {
       setNotificationCount(response.data.count);
     }
@@ -102,28 +119,52 @@ const Header = ({ SetSid }) => {
       ) {
         console.log("ON_AUCTION_EXPIRE_WITH_BIDDER");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_AUCTION_CANCELLED_WITH_BIDDER");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_AUCTION_PURCHASE_SUCCESS" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_AUCTION_PURCHASE_SUCCESS" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_AUCTION_PURCHASE_SUCCESS");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_PENDING_PAYMENT_OF_WINNER" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_PENDING_PAYMENT_OF_WINNER" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_PENDING_PAYMENT_OF_WINNER");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_DELIVERY_DELAY" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_DELIVERY_DELAY" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_DELIVERY_DELAY");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_PENDING_PAYMENT_TIME_EXPIRED");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_ITEM_SEND_FOR_DELIVERY" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_ITEM_SEND_FOR_DELIVERY" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_ITEM_SEND_FOR_DELIVERY");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_ITEM_BUY_NOW" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_ITEM_BUY_NOW" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_ITEM_BUY_NOW");
         setNotificationCount((prev) => prev + 1);
       }
@@ -298,7 +339,7 @@ const Header = ({ SetSid }) => {
     <div className=" w-full fixed top-0 z-50 bg-white/30 backdrop-blur-md  ">
       <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4  max-w-[1440px] lg:mx-auto md:mx-12 px-2 md:px-0">
         <div className="my-auto hidden md:block">
-          <AllatreLogo
+          <AllatreLogoFull
             className="cursor-pointer hidden md:block"
             onClick={() => history.push(`${routes.app.home}?page=1&perPage=28`)}
           />
@@ -319,78 +360,73 @@ const Header = ({ SetSid }) => {
           />
         </div>
         <div className="flex">
-          <div className="my-auto ">
-            <AllatreLogo
-              className="cursor-pointer w-[100px] block md:hidden text-primary"
-              onClick={() => history.push(routes.app.home)}
-            />
+          <div className="flex justify-center items-center my-auto">
+            {showIcon && (
+              <AllatreLogoIcon className="cursor-pointer w-[35px] block md:hidden text-primary" />
+            )}
+            {showLogo && (
+              <AllatreLogo
+                style={{
+                  opacity: showLogo ? 1 : 0,
+                  transition: "opacity 0.5s ease-in-out",
+                }}
+                className="cursor-pointer w-[100px] block md:hidden text-primary"
+                onClick={() => history.push(routes.app.home)}
+              />
+            )}
           </div>
           <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto">
-            <NavLinkHeader
-              title={selectedContent[localizationKeys.home]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.home)
-              }
-              onClick={() => history.push(routes.app.home)}
-            />
-            <NavLinkHeader
-              title={selectedContent[localizationKeys.myAuctions]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.myAuctions.default)
-              }
-              onClick={() => handelmyAuctions()}
-            />
-            <NavLinkHeader
-              title={selectedContent[localizationKeys.myBids]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.myBids.default)
-              }
-              onClick={() => handelmyBids()}
-            />
-            <NavLinkHeader
-              title={selectedContent[localizationKeys.watchlist]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.watchlist)
-              }
-              onClick={() => handelWatchlist()}
-            />
-            <NavLinkHeader
-              title={selectedContent[localizationKeys.Purchased]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.purchased)
-              }
-              onClick={() => handelPurchased()}
-            />
-            <NavLinkHeader
-              title={selectedContent[localizationKeys.Wallet]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.wallet)
-              }
-              onClick={() => handelWallet()}
-            />
-            <NavLinkHeader
-              title={selectedContent[localizationKeys.faqs]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.faqs)
-              }
-              onClick={() => handelFaqs()}
-            />
+            {[
+              { key: localizationKeys.home, path: routes.app.home },
+              {
+                key: localizationKeys.myAuctions,
+                path: routes.app.profile.myAuctions.default,
+                handler: handelmyAuctions,
+              },
+              {
+                key: localizationKeys.myBids,
+                path: routes.app.profile.myBids.default,
+                handler: handelmyBids,
+              },
+              {
+                key: localizationKeys.watchlist,
+                path: routes.app.profile.watchlist,
+                handler: handelWatchlist,
+              },
+              {
+                key: localizationKeys.Purchased,
+                path: routes.app.profile.purchased,
+                handler: handelPurchased,
+              },
+              {
+                key: localizationKeys.Wallet,
+                path: routes.app.profile.wallet,
+                handler: handelWallet,
+              },
+              {
+                key: localizationKeys.faqs,
+                path: routes.app.faqs,
+                handler: handelFaqs,
+              },
+            ].map(({ key, path, handler }) => (
+              <NavLinkHeader
+                key={key}
+                title={selectedContent[key]}
+                isActive={pathname.length === 1 || pathname.startsWith(path)}
+                onClick={handler || (() => history.push(path))}
+              />
+            ))}
             <div className="relative">
               <NavLinkHeader
                 title={
-                  <>
+                  <div className="flex items-center relative">
                     {selectedContent[localizationKeys.notifications]}
                     {notificationCount > 0 && (
-                      <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                      <span className="absolute -top-2 -right-3 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
                         {notificationCount > 99 ? "99+" : notificationCount}
                       </span>
                     )}
-                  </>
+                  </div>
                 }
                 isActive={
                   pathname.length === 1 ||
@@ -406,7 +442,7 @@ const Header = ({ SetSid }) => {
               }
               onClick={() => history.push(routes.app.support)}
             /> */}
-            <div className="my-auto flex items-center">
+            <div className="my-auto flex items-center -mt-3">
               <DropdownLang className="text-gray-dark Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
             </div>
           </div>
@@ -419,32 +455,29 @@ const Header = ({ SetSid }) => {
             </button>
           </div>
         </div>
-        <div className="flex items-center gap-x-2 md:hidden">
-          <DropdownLang className="text-black bg-white/90 hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
+        <div className="flex items-center  md:hidden">
           <div className="flex items-center gap-x-3">
-            <div className="relative">
-              <NavLinkHeader
-                title={
-                  <>
-                    <MdOutlineNotifications
-                      size={25}
-                      className="text-primary cursor-pointer"
-                      style={{ marginTop: "4px" }}
-                    />
-                    {notificationCount > 0 && (
-                      <span className="absolute -top-2 -right-2 font-bold bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                        {notificationCount > 99 ? "99+" : notificationCount}
-                      </span>
-                    )}
-                  </>
-                }
-                isActive={
-                  pathname.length === 1 ||
-                  pathname.startsWith(routes.app.profile.notifications)
-                }
-                onClick={handleNotificationClick}
-              />
-            </div>
+            <NavLinkHeader
+              title={
+                <div className="relative">
+                  <MdOutlineNotifications
+                    size={25}
+                    className="text-primary cursor-pointer"
+                    style={{ marginTop: "4px" }}
+                  />
+                  {notificationCount > 0 && (
+                    <span className="absolute -top-2 -right-2 font-medium bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center border-2 border-white ">
+                      {notificationCount > 99 ? "99+" : notificationCount}
+                    </span>
+                  )}
+                </div>
+              }
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.notifications)
+              }
+              onClick={handleNotificationClick}
+            />
             <CgProfile
               className="text-primary cursor-pointer"
               size={25}
@@ -456,15 +489,17 @@ const Header = ({ SetSid }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="py-[6px] flex gap-x-4 max-w-[1440px] lg:mx-auto md:mx-12 px-2 md:px-0">
+        <div className="py-[6px] flex gap-x-10 max-w-[1440px] lg:mx-auto md:mx-12 px-2 md:px-0">
           <Input
-            className="w-full border border-secondary rounded-md h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR"
+            className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR"
             icon="search"
             placeholder={selectedContent[localizationKeys.search]}
             onChange={(e, { value }) => {
               debounced(value);
             }}
           />
+          <DropdownLang className="text-black  md:hidden bg-white/90  hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
+
           <div className="md:block hidden">
             <button
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[250px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"

@@ -2,8 +2,10 @@ import routes from "../../../routes";
 import { useState } from "react";
 
 import { ReactComponent as CloseIcon } from "../../../../src/assets/icons/x_icon.svg";
+import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/ALLETRE LOGO-03-01.svg";
+
 import { ReactComponent as Allatre } from "../../../../src/assets/logo/allatre-logo-color.svg";
-import DropdownLang from "../header-app/dropdown-lang";
+// import DropdownLang from "../header-app/dropdown-lang";
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuthState } from "../../../context/auth-context";
 import { Open } from "../../../redux-store/auth-model-slice";
@@ -136,16 +138,17 @@ const Sidebar = ({ SetSid, sid }) => {
         {/* Sidebar content */}
         <div className="w-full mx-auto h-screen flex flex-col justify-between ">
           <div className="flex justify-between pt-5">
-            <CloseIcon
-              onClick={() => SetSid(false)}
-              className="mx-4 mt-2 cursor-pointer"
-            />
-            <Allatre
+            
+            <AllatreLogo
               onClick={() => {
                 history.push(routes.app.home);
                 SetSid(false);
               }}
-              className="w-28 mx-8"
+              className="w-28 mx-4"
+            />
+            <CloseIcon
+              onClick={() => SetSid(false)}
+              className="mx-4 mt-2 cursor-pointer"
             />
           </div>
           <div className="flex-grow overflow-y-auto">
