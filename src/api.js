@@ -74,6 +74,10 @@ const api = {
       SimilarAuctions: (auctionsId) =>
         `/auctions/user/similar?auctionId=${auctionsId}`,
       deliveryIssue: "/auctions/user/auction-complaints",
+      getSellerLocation: (auctionId) =>
+        `/auctions/user/${auctionId}/location`,
+      getBuyerLocation: (auctionId) =>
+        `auctions/user/${auctionId}/buyer-location-details`,
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
@@ -99,6 +103,8 @@ const api = {
       delete: (locationsId) => `/users/locations/${locationsId}`,
       makeDefault: (locationsId) =>
         `/users/locations/${locationsId}/make-default`,
+     
+   
     },
     countries: {
       default: "/regions/countries",

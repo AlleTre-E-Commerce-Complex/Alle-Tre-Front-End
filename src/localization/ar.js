@@ -369,6 +369,8 @@ const ar = {
     "لا توجد عروض حتى الآن في انتظار مزادات التسليم في الوقت الحالي",
   [localizationKeys.confirmDelivery]: "تأكيد التسليم",
   [localizationKeys.AnyIssueWithDelivery]: "هل هناك أي مشكلة مع التسليم؟",
+  [localizationKeys.sellerContactDetails]: "تفاصيل الاتصال بالبائع",
+  [localizationKeys.buyerContactDetails]: "تفاصيل الاتصال بالمشتري",
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "لا توجد عروض حتى الآن مزادات منتهية الصلاحية",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:

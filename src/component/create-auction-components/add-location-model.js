@@ -46,7 +46,7 @@ const AddLocationModel = ({
     addressLabel: Yup.string().required(
       selectedContent[localizationKeys.required]
     ),
-    // zipCode: Yup.string().trim().required(selectedContent[localizationKeys.required]),
+    phone: Yup.number().required(selectedContent[localizationKeys.required]),
   });
 
   const { run, isLoading } = useAxios();
@@ -64,14 +64,14 @@ const AddLocationModel = ({
         address: editData.address || "",
         countryId: editData.country || "",
         cityId: editData.city || "",
-        // zipCode: editData.postalCode || "",
+        phone: editData.phone || "",
       }
     : {
         addressLabel: "",
         address: "",
         countryId: "",
         cityId: "",
-        // zipCode: "",
+        phone: "",
       };
 
   const handleSubmit = (values) => {
@@ -81,7 +81,7 @@ const AddLocationModel = ({
         address: values.address,
         countryId: values.countryId,
         cityId: values.cityId,
-        // postalCode: values.zipCode,
+        phone: values.phone,
       };
 
       run(
@@ -203,6 +203,14 @@ const AddLocationModel = ({
                     placeholder={
                       selectedContent[localizationKeys.wirteYourAddress]
                     }
+                  />
+                </div>
+                <div className="w-full py-6">
+                  <FormikInput
+                    name="phone"
+                    type="number"
+                    label={selectedContent[localizationKeys.phone]}
+                    placeholder={selectedContent[localizationKeys.phoneNumber]}
                   />
                 </div>
                 <div className="w-full py-6">

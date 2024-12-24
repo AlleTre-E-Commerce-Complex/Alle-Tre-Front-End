@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
@@ -16,6 +16,11 @@ import BuyerObjectionModal from "component/shared/BuyerObjectionModal/BuyerObjec
 import WarningModal from "component/shared/warningModal/WarningModal";
 import SuccessModal from "component/shared/successModal/SuccessModal";
 import DeliverysentModal from "component/shared/DeliveryModal/DeliveryModal";
+// import ContactDetails from "component/shared/contactDetailsModal/ContactDetails";
+const ContactDetails = lazy(() =>
+  import("component/shared/contactDetailsModal/ContactDetails")
+);
+
 
 const ActionsRowTable = ({
   isBidsButtons,
@@ -45,6 +50,8 @@ const ActionsRowTable = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
+  const [openContactDetailsModal, setContactDetailsModal] = useState(false);
+  const [userType,setUserType] = useState('')
   const [openDeliveryIssueModal, setDeleveryIssueModal] = useState(false);
   const [openBuyerObjectionModal, setBuyerObjectionModal] = useState(false);
   const [openDeliverySentModal, setDeliverySentModal] = useState(false);
@@ -65,6 +72,11 @@ const ActionsRowTable = ({
     ending_Time.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
+  const handleContactDetailsModal = (userType)=>{
+    console.log('userType at actions row table: ',userType)
+    setUserType(userType)
+    setContactDetailsModal(true)
+  }
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
       <div className="flex flex-wrap justify-between overflow-clip ">
@@ -367,6 +379,15 @@ const ActionsRowTable = ({
                 {selectedContent[localizationKeys.AnyIssueWithDelivery]}
               </button>
             )}
+            {status === "WAITING_FOR_DELIVERY" && (
+              <button
+                onClick={()=>handleContactDetailsModal('SELLER')}
+                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              >
+                {selectedContent[localizationKeys.sellerContactDetails]}
+              </button>
+            )}
+           
             <button
               onClick={buttonActions}
               disabled={
@@ -437,6 +458,14 @@ const ActionsRowTable = ({
                 className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
               >
                 {selectedContent[localizationKeys.cancelTheAuction]}
+              </button>
+            )}
+              {status === "SOLD" && (
+              <button
+                onClick={()=>handleContactDetailsModal('BUYER')}
+                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              >
+                {selectedContent[localizationKeys.buyerContactDetails]}
               </button>
             )}
             {status === "SOLD" && !isItemSendForDelivery && (
@@ -511,6 +540,20 @@ const ActionsRowTable = ({
         setOpen={setDeliverySentModal}
         setSuccessModal={setSuccessModal}
       />
+      {/* <ContactDetails
+        open={openContactDetailsModal}
+        onClose={() => setContactDetailsModal(false)}
+        userType={userType}
+        auctionId={auctionsId}
+      /> */}
+      <Suspense fallback={<div>Loading...</div>}>
+      <ContactDetails
+        open={openContactDetailsModal}
+        onClose={() => setContactDetailsModal(false)}
+        userType={userType}
+        auctionId={auctionsId}
+      />
+        </Suspense>
     </div>
   );
 };

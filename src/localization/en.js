@@ -373,6 +373,8 @@ const en = {
     "There is no bids yet on waiting for delivery auctions right now",
   [localizationKeys.confirmDelivery]: "Confirm delivery",
   [localizationKeys.AnyIssueWithDelivery]: "Any issue with delivery?",
+  [localizationKeys.sellerContactDetails]: "Seller contact details",
+  [localizationKeys.buyerContactDetails]: "Buyer contact details",
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "There is no bids yet expiredauctions right now",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
