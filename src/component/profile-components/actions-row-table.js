@@ -16,10 +16,10 @@ import BuyerObjectionModal from "component/shared/BuyerObjectionModal/BuyerObjec
 import WarningModal from "component/shared/warningModal/WarningModal";
 import SuccessModal from "component/shared/successModal/SuccessModal";
 import DeliverysentModal from "component/shared/DeliveryModal/DeliveryModal";
-// import ContactDetails from "component/shared/contactDetailsModal/ContactDetails";
-const ContactDetails = lazy(() =>
-  import("component/shared/contactDetailsModal/ContactDetails")
-);
+import ContactDetails from "component/shared/contactDetailsModal/ContactDetails";
+// const ContactDetails = lazy(() =>
+//   import("component/shared/contactDetailsModal/ContactDetails")
+// );
 
 
 const ActionsRowTable = ({
@@ -540,20 +540,20 @@ const ActionsRowTable = ({
         setOpen={setDeliverySentModal}
         setSuccessModal={setSuccessModal}
       />
-      {/* <ContactDetails
-        open={openContactDetailsModal}
-        onClose={() => setContactDetailsModal(false)}
-        userType={userType}
-        auctionId={auctionsId}
-      /> */}
-      <Suspense fallback={<div>Loading...</div>}>
       <ContactDetails
         open={openContactDetailsModal}
         onClose={() => setContactDetailsModal(false)}
         userType={userType}
         auctionId={auctionsId}
       />
-        </Suspense>
+      {/* <Suspense fallback={<div>Loading...</div>}>
+      <ContactDetails
+        open={openContactDetailsModal}
+        onClose={() => setContactDetailsModal(false)}
+        userType={userType}
+        auctionId={auctionsId}
+      />
+        </Suspense> */}
     </div>
   );
 };

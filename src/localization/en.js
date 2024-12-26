@@ -38,6 +38,8 @@ const en = {
   [localizationKeys.sentVerification]: "send verification",
   // home
   [localizationKeys.subscribedSuccessfully]: "subscribed successfully",
+  [localizationKeys.unsubscribedSuccessfully]: "You have been successfully unsubscribed.",
+  [localizationKeys.unsubscriptionFailed]: "Unsubscribe failed.",
   [localizationKeys.myBids]: "My Bids",
   [localizationKeys.categories]: "Categories",
   [localizationKeys.watchlist]: "Watchlist",
@@ -375,6 +377,7 @@ const en = {
   [localizationKeys.AnyIssueWithDelivery]: "Any issue with delivery?",
   [localizationKeys.sellerContactDetails]: "Seller contact details",
   [localizationKeys.buyerContactDetails]: "Buyer contact details",
+  [localizationKeys.unSubscribe]:'Unsubscribe',
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "There is no bids yet expiredauctions right now",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:

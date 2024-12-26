@@ -12,6 +12,7 @@ const routes = {
   },
   app: {
     default: `/alletre`,
+    unSubscribeUser : "/alletre/unSubscribeUser",
     home: "/alletre/home",
     homeDetails: (auctionId = ":auctionId") =>
       `/alletre/home/${auctionId}/details`,
