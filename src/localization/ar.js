@@ -37,6 +37,8 @@ const ar = {
   [localizationKeys.sentVerification]: "إرسال التحقق",
   // home
   [localizationKeys.subscribedSuccessfully]: "تم الاشتراك بنجاح",
+  [localizationKeys.unsubscribedSuccessfully]: 'لقد تم إلغاء اشتراكك بنجاح',
+  [localizationKeys.unsubscriptionFailed]: "فشل إلغاء الاشتراك",
   [localizationKeys.myBids]: "مزاياداتي",
   [localizationKeys.categories]: "الفئات",
   [localizationKeys.watchlist]: "قائمة المراقبة",
@@ -371,6 +373,7 @@ const ar = {
   [localizationKeys.AnyIssueWithDelivery]: "هل هناك أي مشكلة مع التسليم؟",
   [localizationKeys.sellerContactDetails]: "تفاصيل الاتصال بالبائع",
   [localizationKeys.buyerContactDetails]: "تفاصيل الاتصال بالمشتري",
+  [localizationKeys.unSubscribe]:'الغاء الاشتراك',
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "لا توجد عروض حتى الآن مزادات منتهية الصلاحية",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:

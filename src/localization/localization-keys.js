@@ -33,6 +33,8 @@ const localizationKeys = {
   sentVerification: "sentVerification",
   // home
   subscribedSuccessfully: "subscribedSuccessfully",
+  unsubscribedSuccessfully: "unsubscribedSuccessfully",
+  unsubscriptionFailed:'unsubscriptionFailed',
   myBids: "myBids",
   categories: "categories",
   watchlist: "watchlist",
@@ -337,6 +339,7 @@ const localizationKeys = {
   confirmDelivery: "confirmDelivery",
   AnyIssueWithDelivery: "AnyIssueWithDelivery",
   sellerContactDetails:'sellerContactDetails',
+  unSubscribe : 'unSubscribe',
   buyerContactDetails:'buyerContactDetails',
   
   ThereIsNoBidsYetExpiredAuctionsRightNow:

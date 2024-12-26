@@ -29,6 +29,7 @@ import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-ho
 import AuctionCardList from "../../../component/home-components/auction-card-list";
 import BannerTop from "component/home-components/BannerTop";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
+import { welcomeBonus } from 'redux-store/welcom-bonus-slice';
 
 const Home = () => {
   console.log("Home");
@@ -47,7 +48,7 @@ const Home = () => {
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState();
-  const [showRewardModal, setShowRewardModal] = useState(true);
+  // const [showRewardModal, setShowRewardModal] = useState(true);
   const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
@@ -56,10 +57,15 @@ const Home = () => {
     run: runSponsoredAuctions,
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
-  useEffect(() => {
+
+  useEffect(()=>{
     if (isWelcomeBonus) {
       setOpenWelcomeBonusModal(true);
+      dispatch(welcomeBonus(false))
     }
+  },[isWelcomeBonus])
+  useEffect(() => {
+    
     if (search.includes("page") && search.includes("perPage"))
       if (!user) {
         runMainAuctions(

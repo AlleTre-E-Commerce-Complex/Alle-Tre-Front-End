@@ -46,9 +46,10 @@ const AddNewBankModal = ({open, setOpen}) => {
         // Validate accountNumber: must be exactly 16 digits
         if (!accountNumber) {
             newErrors.accountNumber = 'Account number is required';
-        } else if (!/^\d{16}$/.test(accountNumber)) {
-            newErrors.accountNumber = 'Account number must be exactly 16 digits';
-        }
+        } 
+        // else if (!/^\d{16}$/.test(accountNumber)) {
+        //     newErrors.accountNumber = 'Account number must be exactly 16 digits';
+        // }
 
         // Validate routingNumber: must start with "AE" and be 21 characters
         if (!routingNumber) {

@@ -33,10 +33,12 @@ import content from "../localization/content";
 import { useAuthState } from "../context/auth-context";
 import { Open } from "../redux-store/auth-model-slice";
 import RewardModal from "../component/shared/rewardModal/RewardModal";
+import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
   const [showRewardModal, setShowRewardModal] = useState(false);
+  const [showUnSubscribeModal,setUnSubscribeModal] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname } = useLocation();
@@ -45,11 +47,20 @@ const AppLayouts = () => {
   // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
   useEffect(() => {
     const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
-    if (!hasSeenRewardModal) {
+    console.log('hasSeenRewardModal :',hasSeenRewardModal)
+    if (hasSeenRewardModal!=="true") {
       setShowRewardModal(true);
       sessionStorage.setItem("hasSeenRewardModal", "true"); // Mark as shown
     }
   }, []);
+  const searchParams = new URLSearchParams(location.search);
+  const unSubscribe = searchParams.get("unSubscribe") === "true";
+
+  useEffect(() => {
+    if (unSubscribe) {
+      setUnSubscribeModal(true); // Show the modal if `unSubscribe` is true
+    }
+  }, [searchParams]);
   const socketauctionId = useSelector(
     (state) => state?.socketAuctionId?.socketAuctionId
   );
@@ -74,6 +85,10 @@ const AppLayouts = () => {
             user={user}
           />
         )}
+        {showUnSubscribeModal &&  <UnSubscribeModal
+        onClose={() =>setUnSubscribeModal(false)}
+        open={showUnSubscribeModal}
+         />}
         <div className="p-0 m-0 border-none min-h-screen ">
           <Win />
           <AuthModel currentPAth={currentPath} />
@@ -167,6 +182,7 @@ const AppLayouts = () => {
             />
 
             <Route path={routes.app.home} component={Home} />
+            <Route path={routes.app.unSubscribeUser} component={Home} />
             <Route path={routes.app.categories()} component={Categories} />
             <Route path={routes.app.faqs} component={FAQs} />
             <Route path={routes.app.support} component={Support} />
@@ -182,6 +198,7 @@ const AppLayouts = () => {
             {selectedContent[localizationKeys.createAuction]}
           </button>
         )}
+       
       </SocketProvider>
     </div>
   );

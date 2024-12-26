@@ -14,6 +14,7 @@ const api = {
     },
     subscribers: {
       create: "/users/subscribers/create",
+      unsubscribeUser:'/users/subscribers/unSubscribe'
     },
     category: {
       default: "/categories/all",

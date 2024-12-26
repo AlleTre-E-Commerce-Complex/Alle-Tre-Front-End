@@ -14,7 +14,7 @@ function AuthProvider({ children }) {
   const [user, setUser] = React.useState(null);
 
   const history = useHistory();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   const { run, isError } = useAxios();
 
@@ -34,23 +34,7 @@ function AuthProvider({ children }) {
     history.push(routes.app.home);
   };
 
-  // React.useEffect(() => {
-   
-  //   Auth.getUser().then((user) => {
-  //     if (!user) {
-  //       if (WHITE_LIST.filter((w) => pathname.startsWith(w)).length === 0) {
-  //         if(window.location.pathname.includes('details')){
-  //           history.push(window.location.pathname)
-  //         }else{
-  //           history.push(`${routes.app.home}?page=1&perPage=28`);
-  //         }
-  //       }
-  //     }
-  //     setUser(user);
-  //     setIsLoading(false);
-  //   });
-  // }, []);
-//=========================================================
+const searchParams = new URLSearchParams(search).toString()
 
   React.useEffect(() => {
     async function fetchUser() {
@@ -60,7 +44,7 @@ function AuthProvider({ children }) {
           if (!WHITE_LIST.some((route) => pathname.startsWith(route))) {
             const redirectPath = window.location.pathname.includes("details")
               ? window.location.pathname
-              : `${routes.app.home}?page=1&perPage=28`;
+              : `${routes.app.home}?${searchParams.toString()}&page=1&perPage=28`;
             history.push(redirectPath);
           }
           setUser(null);
