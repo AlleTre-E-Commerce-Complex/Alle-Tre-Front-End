@@ -388,18 +388,21 @@ const ActionsRowTable = ({
               </button>
             )}
            
-            <button
+            {/* <button
               onClick={buttonActions}
               disabled={
                 status === "WAITING_FOR_DELIVERY" && !isItemSendForDelivery
               }
-              className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 ${
-                status === "WAITING_FOR_DELIVERY"
-                  ? isItemSendForDelivery
-                    ? "" // When the item is sent for delivery, keep it in default enabled state
-                    : "border-gray-300 text-gray-300 bg-gray-100 cursor-auto" // When not sent, disable styling
-                  : "cursor-pointer" // Default styles for other statuses
-              }`}
+              className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 
+                ${ status === "WAITING_FOR_DELIVERY" ? isItemSendForDelivery ? "" : "border-gray-300 text-gray-300 bg-gray-100 cursor-auto" : "cursor-pointer" }
+              `}
+            >
+              {textButton}
+            </button> */}
+
+            <button
+              onClick={buttonActions}
+              className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 cursor-pointer`}
             >
               {textButton}
             </button>
@@ -468,20 +471,19 @@ const ActionsRowTable = ({
                 {selectedContent[localizationKeys.buyerContactDetails]}
               </button>
             )}
-            {status === "SOLD" && !isItemSendForDelivery && (
+            {/* {status === "SOLD" && !isItemSendForDelivery && (
               <button
                 onClick={() => setDeliverySentModal(true)}
                 className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
               >
-                {/* {selectedContent[localizationKeys.cancelTheAuction]} */}
                 Is Item Sent?
               </button>
-            )}
-            {status === "SOLD" && isItemSendForDelivery && (
+            )} */}
+            {/* {status === "SOLD" && isItemSendForDelivery && (
               <button className="border-primary cursor-default border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 ">
                 You have sent the item.
               </button>
-            )}
+            )} */}
 
             {status === "PENDING_OWNER_DEPOIST" && (
               <button

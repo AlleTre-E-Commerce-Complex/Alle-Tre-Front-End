@@ -30,6 +30,8 @@ import AuctionCardList from "../../../component/home-components/auction-card-lis
 import BannerTop from "component/home-components/BannerTop";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 import { welcomeBonus } from 'redux-store/welcom-bonus-slice';
+// import { useSocket } from "context/socket-context";
+import { useSocket } from "context/socket-context";
 
 const Home = () => {
   console.log("Home");
@@ -44,6 +46,7 @@ const Home = () => {
     (state) => state.welcomeBonus.welcomeBonus
   );
   const [isGrid, setIsGrid] = useState(true);
+  const socket = useSocket()
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState();
   const [totalPages, setTotalPages] = useState();
@@ -57,6 +60,25 @@ const Home = () => {
     run: runSponsoredAuctions,
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
+
+
+  //socket listening for new auction 
+  useEffect(() => {
+    if(!socket) return
+    socket.on('auction:newAuctionListed', (data) => {
+      console.log('new auction listed ...',data)
+      setMainAuctions((prev) => [
+        ...prev, // Spread the previous state
+        data.auction, // Add the new auction
+      ]);
+    });
+  
+    // Clean up the socket listener to avoid memory leaks
+    return () => {
+      socket.off('auction:newAuctionListed');
+    };
+  }, [socket]);
+  
 
   useEffect(()=>{
     if (isWelcomeBonus) {

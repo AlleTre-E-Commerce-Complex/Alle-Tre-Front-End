@@ -67,7 +67,7 @@ const ContactDetails = ({ open, onClose, userType,auctionId }) => {
                <h1>{selectedContent[userType === 'SELLER' ? localizationKeys.sellerContactDetails : localizationKeys.buyerContactDetails]}</h1>
             </div>
             <p className="text-gray-dark  mx-8 text-base font-normal pt-4">  
-               {selectedContent[localizationKeys.userName]} : {selectedContent[localizationKeys.userName]} : {location.userName}
+                {selectedContent[localizationKeys.userName]} : {location.userName}
             </p>
             <p className="text-gray-dark  mx-8 text-base font-normal pt-4">  
                 {selectedContent[localizationKeys.email]} : {location.email}
