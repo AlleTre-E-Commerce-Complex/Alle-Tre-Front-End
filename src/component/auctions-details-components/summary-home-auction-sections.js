@@ -26,6 +26,7 @@ import { buyNow } from "../../redux-store/bid-amount-slice";
 import routes from "../../routes";
 import AddLocationModel from "../create-auction-components/add-location-model";
 import { FiPlus, FiMinus } from "react-icons/fi";
+import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -64,6 +65,8 @@ const SummaryHomeAuctionSections = ({
   const [lastestBid, setLastestBid] = useState(latestBidAmount);
   const [openTotaltBid, setTotalBidOpen] = useState(false);
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
+  const [openDeliverySelectingModal, setOpenDeliverySelectingModal] = useState(false)
+
 
   const dispatch = useDispatch();
   dispatch(socketAuctionId(auctionId));
@@ -74,7 +77,8 @@ const SummaryHomeAuctionSections = ({
     );
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
-        history.push(routes.app.buyNow(auctionId));
+        // history.push(routes.app.buyNow(auctionId));
+        setOpenDeliverySelectingModal(true)
       } else setOpenMakeDefultLocations(true);
     } else {
       dispatch(Open());
@@ -458,6 +462,13 @@ const SummaryHomeAuctionSections = ({
         setOpen={setOpenMakeDefultLocations}
         TextButton={selectedContent[localizationKeys.add]}
         onReload={onReload}
+      />
+      <DeliverySelectingModal 
+        open={openDeliverySelectingModal}
+        setOpen={setOpenDeliverySelectingModal}
+        auctionId={auctionId}
+        paymentType={'BUY_NOW'}
+        // lastPrice={lastPrice}
       />
     </div>
   );

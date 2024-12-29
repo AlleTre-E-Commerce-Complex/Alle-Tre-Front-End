@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import { completePaymentData } from 'redux-store/complete-payment-slice';
 import routes from 'routes';
-const DeliverySelectingModal = ({ open, setOpen, auctionId,lastPrice }) => {
+const DeliverySelectingModal = ({ open, setOpen, auctionId, paymentType,lastPrice }) => {
   const [selectedOption, setSelectedOption] = useState(null); // Track selected option
   const { run, isLoading } = useAxios([]);
   const dispatch = useDispatch();
@@ -46,13 +46,18 @@ const DeliverySelectingModal = ({ open, setOpen, auctionId,lastPrice }) => {
       if(res.data.success){ 
         toast.success('Delivery type updated successfully')
         setOpen(false); // Close modal on success
-        history.push(routes.app.profile.myBids.completePayment);
-         dispatch(
-        completePaymentData({
-          auctionsId:auctionId,
-          lastPrice:lastPrice,
-        })
-      );
+        if(paymentType === 'PENDING_BIDDING'){
+           history.push(routes.app.profile.myBids.completePayment);
+           dispatch(
+            completePaymentData({
+              auctionsId:auctionId,
+              lastPrice:lastPrice,
+            })
+          );
+        }else if(paymentType === 'BUY_NOW'){
+          history.push(routes.app.buyNow(auctionId));
+        }
+       
       }
     })
     .catch((err)=>{
