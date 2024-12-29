@@ -41,15 +41,20 @@ const AddNewBankModal = ({open, setOpen}) => {
         }
 
         // Validate bankName: cannot be empty
-        if (!bankName) newErrors.bankName = 'Bank name is required';
+        if (!bankName) {
+            newErrors.bankName = 'Bank name is required';
+        } else if (!/^[A-Za-z\s]+$/.test(bankName)) {
+            newErrors.bankName = 'Bank name can only contain letters and spaces';
+        }
+        
 
         // Validate accountNumber: must be exactly 16 digits
         if (!accountNumber) {
             newErrors.accountNumber = 'Account number is required';
-        } 
-        // else if (!/^\d{16}$/.test(accountNumber)) {
-        //     newErrors.accountNumber = 'Account number must be exactly 16 digits';
-        // }
+        }  else if (!/^\d{8,}$/.test(accountNumber)) {
+            newErrors.accountNumber = 'Account number must be at least 8 digits';
+        }
+        
 
         // Validate routingNumber: must start with "AE" and be 21 characters
         if (!routingNumber) {

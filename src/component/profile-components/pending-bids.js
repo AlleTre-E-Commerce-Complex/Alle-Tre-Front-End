@@ -19,6 +19,7 @@ import { completePaymentData } from "../../redux-store/complete-payment-slice";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 import useLocalStorage from "../../hooks/use-localstorage";
 import DeleverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
+import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
 // import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 
 const PendingBids = () => {
@@ -76,10 +77,11 @@ const PendingBids = () => {
 
   return (
     <div className="">
-        <DeleverySelectingModal 
+        <DeliverySelectingModal 
         open={openDeliverySelectingModal}
         setOpen={setOpenDeliverySelectingModal}
         auctionId={auctionId}
+        paymentType={'PENDING_BIDDING'}
         lastPrice={lastPrice}
       />
       <Dimmer
