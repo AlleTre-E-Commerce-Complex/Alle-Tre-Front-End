@@ -47,7 +47,9 @@ const Categories = () => {
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
+      
       if (user) {
+        console.log('category search when not user:',search)
         runCategories(
           authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -56,6 +58,7 @@ const Categories = () => {
           })
         );
       } else {
+        console.log('category search when user:',search)
         runCategories(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);

@@ -90,6 +90,7 @@ const Home = () => {
     
     if (search.includes("page") && search.includes("perPage"))
       if (!user) {
+        console.log('search when not user:',search)
         runMainAuctions(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -108,6 +109,7 @@ const Home = () => {
       } else {
         runMainAuctions(
           authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
+            console.log('search when user:',search)
             console.log("response of runMainAuctions when user have", res);
             setMainAuctions(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
