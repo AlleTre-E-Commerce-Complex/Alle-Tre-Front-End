@@ -37,7 +37,7 @@ const ar = {
   [localizationKeys.sentVerification]: "إرسال التحقق",
   // home
   [localizationKeys.subscribedSuccessfully]: "تم الاشتراك بنجاح",
-  [localizationKeys.unsubscribedSuccessfully]: 'لقد تم إلغاء اشتراكك بنجاح',
+  [localizationKeys.unsubscribedSuccessfully]: "لقد تم إلغاء اشتراكك بنجاح",
   [localizationKeys.unsubscriptionFailed]: "فشل إلغاء الاشتراك",
   [localizationKeys.myBids]: "مزاياداتي",
   [localizationKeys.categories]: "الفئات",
@@ -45,7 +45,7 @@ const ar = {
   [localizationKeys.faqs]: "الأسئلة الشائعة",
   [localizationKeys.support]: "الدعم",
   [localizationKeys.arabic]: "عربي",
-  [localizationKeys.english]: "إنجليزي",
+  [localizationKeys.english]: "English",
   [localizationKeys.sellNow]: "بيع الآن",
   [localizationKeys.search]: "بحث ...",
   [localizationKeys.registerNow]: "سجل الآن",
@@ -373,7 +373,7 @@ const ar = {
   [localizationKeys.AnyIssueWithDelivery]: "هل هناك أي مشكلة مع التسليم؟",
   [localizationKeys.sellerContactDetails]: "تفاصيل الاتصال بالبائع",
   [localizationKeys.buyerContactDetails]: "تفاصيل الاتصال بالمشتري",
-  [localizationKeys.unSubscribe]:'الغاء الاشتراك',
+  [localizationKeys.unSubscribe]: "الغاء الاشتراك",
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "لا توجد عروض حتى الآن مزادات منتهية الصلاحية",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:
