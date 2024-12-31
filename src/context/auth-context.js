@@ -40,6 +40,7 @@ const searchParams = new URLSearchParams(search).toString()
     async function fetchUser() {
       try {
         const user = await Auth.getUser();
+        console.log(user)
         if (!user) {
           if (!WHITE_LIST.some((route) => pathname.startsWith(route))) {
             const redirectPath = window.location.pathname.includes("details")

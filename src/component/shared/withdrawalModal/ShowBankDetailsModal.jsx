@@ -56,9 +56,8 @@ const ShowBankDetailsModal = ({open,setOpen,setSuccessModal,accountBalance}) => 
         toast.error('The withdrawal amount must not be empty')
     }else if(amount === 0){
       toast.error('The withdrawal amount must be greater than zero')
-    }
-    
-    try {
+    }else{
+      try {
         run(
             authAxios.post(api.app.Wallet.withdrawalRequest,{
                 amount: Number(amount),
@@ -78,6 +77,9 @@ const ShowBankDetailsModal = ({open,setOpen,setSuccessModal,accountBalance}) => 
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to process withdrawal');
     }
+    }
+    
+    
   };
   const HandleSelectBankAccount = (id)=>{
     setBankAccountId(id)

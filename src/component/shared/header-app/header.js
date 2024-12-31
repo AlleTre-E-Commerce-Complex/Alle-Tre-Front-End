@@ -446,7 +446,7 @@ const Header = ({ SetSid }) => {
               onClick={() => history.push(routes.app.support)}
             /> */}
             <div className="my-auto flex items-center -mt-3">
-              <DropdownLang className="text-gray-dark Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
+              <DropdownLang className=" Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
             </div>
           </div>
           <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
