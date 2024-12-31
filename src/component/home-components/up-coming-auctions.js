@@ -94,14 +94,16 @@ const UpComingAuctionsSlider = () => {
 
   return (
     <div>
-      <div className="text-center">
-        <h1 className="text-gray-dark text-base font-bold">
-          {selectedContent[localizationKeys.upComingAuctions]}
-        </h1>
-        <p className="text-gray-med text-base font-normal pb-10">
-          {selectedContent[localizationKeys.ComingSoonGetReadytoBid]}
-        </p>
-      </div>
+      {auctions?.length > 0 && (
+        <div className="text-center">
+          <h1 className="text-gray-dark text-base font-bold">
+            {selectedContent[localizationKeys.upComingAuctions]}
+          </h1>
+          <p className="text-gray-med text-base font-normal pb-10">
+            {selectedContent[localizationKeys.ComingSoonGetReadytoBid]}
+          </p>
+        </div>
+      )}
       {auctions?.length === 0 ? (
         <div>
           {/* <img

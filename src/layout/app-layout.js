@@ -38,7 +38,7 @@ import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
   const [showRewardModal, setShowRewardModal] = useState(false);
-  const [showUnSubscribeModal,setUnSubscribeModal] = useState(false);
+  const [showUnSubscribeModal, setUnSubscribeModal] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname } = useLocation();
@@ -47,8 +47,8 @@ const AppLayouts = () => {
   // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
   useEffect(() => {
     const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
-    console.log('hasSeenRewardModal :',hasSeenRewardModal)
-    if (hasSeenRewardModal!=="true") {
+    console.log("hasSeenRewardModal :", hasSeenRewardModal);
+    if (hasSeenRewardModal !== "true") {
       setShowRewardModal(true);
       sessionStorage.setItem("hasSeenRewardModal", "true"); // Mark as shown
     }
@@ -85,10 +85,12 @@ const AppLayouts = () => {
             user={user}
           />
         )}
-        {showUnSubscribeModal &&  <UnSubscribeModal
-        onClose={() =>setUnSubscribeModal(false)}
-        open={showUnSubscribeModal}
-         />}
+        {showUnSubscribeModal && (
+          <UnSubscribeModal
+            onClose={() => setUnSubscribeModal(false)}
+            open={showUnSubscribeModal}
+          />
+        )}
         <div className="p-0 m-0 border-none min-h-screen ">
           <Win />
           <AuthModel currentPAth={currentPath} />
@@ -198,7 +200,6 @@ const AppLayouts = () => {
             {selectedContent[localizationKeys.createAuction]}
           </button>
         )}
-       
       </SocketProvider>
     </div>
   );
