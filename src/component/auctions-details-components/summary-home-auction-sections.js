@@ -33,6 +33,7 @@ const SummaryHomeAuctionSections = ({
   isDepositPaid,
   numberStare,
   totalReviews,
+  title,
   description,
   category,
   subCategory,
@@ -65,8 +66,8 @@ const SummaryHomeAuctionSections = ({
   const [lastestBid, setLastestBid] = useState(latestBidAmount);
   const [openTotaltBid, setTotalBidOpen] = useState(false);
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
-  const [openDeliverySelectingModal, setOpenDeliverySelectingModal] = useState(false)
-
+  const [openDeliverySelectingModal, setOpenDeliverySelectingModal] =
+    useState(false);
 
   const dispatch = useDispatch();
   dispatch(socketAuctionId(auctionId));
@@ -78,13 +79,12 @@ const SummaryHomeAuctionSections = ({
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
         // history.push(routes.app.buyNow(auctionId));
-        setOpenDeliverySelectingModal(true)
+        setOpenDeliverySelectingModal(true);
       } else setOpenMakeDefultLocations(true);
     } else {
       dispatch(Open());
     }
   };
-
   const socket = useSocket();
 
   useEffect(() => {
@@ -106,7 +106,9 @@ const SummaryHomeAuctionSections = ({
     selectedContent[localizationKeys.days]
   } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : ${
     timeLeft.minutes
-  } ${selectedContent[localizationKeys.min]}`;
+  } ${selectedContent[localizationKeys.min]} : ${timeLeft.seconds} ${
+    selectedContent[localizationKeys.sec]
+  }`;
 
   const startDate = useCountdown(StartDate);
 
@@ -114,7 +116,9 @@ const SummaryHomeAuctionSections = ({
     selectedContent[localizationKeys.days]
   } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
     startDate.minutes
-  } ${selectedContent[localizationKeys.min]}`;
+  } ${selectedContent[localizationKeys.min]} : ${startDate.seconds} ${
+    selectedContent[localizationKeys.sec]
+  }`;
 
   const { run, isLoading } = useAxios();
 
@@ -233,24 +237,29 @@ const SummaryHomeAuctionSections = ({
       setSubmitBidValue(currentBidValue - 50);
     }
   };
-
   return (
     <div>
-      {/* rating */}
-      <div className="flex  gap-x-5">
+      {/* Title Section */}
+      <h1 className="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
+
+      {/* Status and Rating Section */}
+      <div className="flex items-center gap-x-5">
         <AuctionsStatus status={status} big />
-        {/* <RatingStare max={numberStare} size="huge" />
-        <p className="text-gray-dark text-base font-normal">
-          ( {totalReviews} {selectedContent[localizationKeys.reviews]} )
-        </p> */}
+        {/* Rating Section (uncomment when needed) */}
+        {/* <div className="flex items-center gap-x-2">
+      <RatingStare max={numberStare} size="huge" />
+      <p className="text-sm text-gray-600">
+        ({totalReviews} {selectedContent[localizationKeys.reviews]})
+      </p>
+    </div> */}
       </div>
+
       {/* Description */}
       <div className="pt-8 overflow-clip">
-        <h3 className="text-gray-dark text-base font-normal">
-          {" "}
+        <h3 className="text-base font-light text-gray-600 mb-2">
           {selectedContent[localizationKeys.description]}
         </h3>
-        <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
+        <p className="text-lg text-gray-700 mb-4">
           {truncateString(description, 80)}
         </p>
         <HashLink
@@ -263,24 +272,25 @@ const SummaryHomeAuctionSections = ({
         </HashLink>
       </div>
       {/* Category sections */}
-      <div className="pt-6 flex flex-wrap gap-x-3">
-        {/* Category left */}
+      <div className="pt-6 mb-8 flex flex-wrap gap-4">
         <div>
-          <p className="text-gray-med text-base font-normal pb-2">
+          <p className="text-sm text-gray-500 mb-2">
             {selectedContent[localizationKeys.category]}
           </p>
-          <button className="border-[1px] border-gray-dark rounded-lg text-gray-dark px-12 py-1 cursor-default">
+          <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
             {category}
           </button>
         </div>
-        <div className={subCategory ? "block " : "hidden"}>
-          <p className="text-gray-med text-base font-normal pb-2">
-            {selectedContent[localizationKeys.subCategory]}
-          </p>
-          <button className="border-[1px] border-gray-dark rounded-lg text-gray-dark px-12 py-1 cursor-default">
-            {subCategory}
-          </button>
-        </div>
+        {subCategory && (
+          <div>
+            <p className="text-sm text-gray-500 mb-2">
+              {selectedContent[localizationKeys.subCategory]}
+            </p>
+            <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+              {subCategory}
+            </button>
+          </div>
+        )}
       </div>
       {/* Time Left and  Total Bids sections */}
       <div className="pt-6 grid grid-cols-2  ">
@@ -398,11 +408,17 @@ const SummaryHomeAuctionSections = ({
         <div className="flex items-center space-x-2 w-full">
           <button
             type="button"
-            onClick={handleDecrement}
             disabled={
               Number(submitBidValue) <=
-              Number(lastestBid?.bidAmount || CurrentBid || startBidAmount)
+                Number(lastestBid?.bidAmount || CurrentBid || startBidAmount) ||
+              [
+                "SOLD",
+                "EXPIRED",
+                "IN_SCHEDULED",
+                "WAITING_FOR_PAYMENT",
+              ].includes(status)
             }
+            onClick={handleDecrement}
             className={`h-[48px] min-w-[48px] flex items-center justify-center rounded-lg transition-all duration-200 ${
               Number(submitBidValue) <=
               Number(lastestBid?.bidAmount || CurrentBid || startBidAmount)
@@ -424,6 +440,14 @@ const SummaryHomeAuctionSections = ({
           />
 
           <button
+            disabled={
+              status === "SOLD" ||
+              status === "EXPIRED" ||
+              status === "IN_SCHEDULED" ||
+              status === "WAITING_FOR_PAYMENT"
+                ? true
+                : false
+            }
             type="button"
             onClick={handleIncrement}
             className="h-[48px] min-w-[48px] flex items-center justify-center bg-primary/10 text-primary hover:bg-primary hover:text-white rounded-lg transition-all duration-200 active:scale-95 "
@@ -436,7 +460,8 @@ const SummaryHomeAuctionSections = ({
           disabled={
             status === "SOLD" ||
             status === "EXPIRED" ||
-            status === "IN_SCHEDULED"
+            status === "IN_SCHEDULED" ||
+            status === "WAITING_FOR_PAYMENT"
               ? true
               : false
           }
@@ -463,11 +488,11 @@ const SummaryHomeAuctionSections = ({
         TextButton={selectedContent[localizationKeys.add]}
         onReload={onReload}
       />
-      <DeliverySelectingModal 
+      <DeliverySelectingModal
         open={openDeliverySelectingModal}
         setOpen={setOpenDeliverySelectingModal}
         auctionId={auctionId}
-        paymentType={'BUY_NOW'}
+        paymentType={"BUY_NOW"}
         // lastPrice={lastPrice}
       />
     </div>

@@ -102,6 +102,7 @@ const ar = {
   [localizationKeys.days]: "أيام",
   [localizationKeys.hrs]: "ساعة",
   [localizationKeys.min]: "دقيقة",
+  [localizationKeys.sec]: "ثانية",
   [localizationKeys.achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily]:
     "حقق مزادًا مثيرًا للإعجاب من الناحية المرئية وجذب المزايدين بسهولة أكبر.",
   [localizationKeys.YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder]:
@@ -128,6 +129,8 @@ const ar = {
   [localizationKeys.Scheduled]: "  مجدولة",
   [localizationKeys.sold]: "مباع",
   [localizationKeys.pending]: "معلق",
+  [localizationKeys.waitingForPayment]: "في انتظار الدفع",
+  [localizationKeys.soldOut]: "نفذ",
   [localizationKeys.expired]: "منتهي",
   // Breadcrumb
   [localizationKeys.home]: "الصفحة الرئيسية",

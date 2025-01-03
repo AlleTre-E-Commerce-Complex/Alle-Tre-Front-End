@@ -25,9 +25,9 @@ const CountdownDisplay = memo(
   ({ timeLeft, status, formattedstartDate, selectedContent }) => {
     const formattedTimeLeft = `${timeLeft.days} ${
       selectedContent[localizationKeys.days]
-    } :
-  ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
-  ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
+    } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+    ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} : 
+    ${timeLeft.seconds} ${selectedContent[localizationKeys.sec]}`;
 
     return (
       <p
@@ -63,6 +63,7 @@ const AuctionCard = ({
   CurrentBid,
   startBidAmount,
   latestBidAmount,
+  hideButton,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -73,12 +74,12 @@ const AuctionCard = ({
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const [latestBid, setlatestBid] = useState(latestBidAmount);
   const socket = useSocket();
-
+  console.log("status1111", status);
   const timeLeft = useCountdown(endingTime);
   // const formattedTimeLeft = `${timeLeft.days} ${
   //   selectedContent[localizationKeys.days]
   // } :
-  // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+  // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
   // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
   const formattedBid = formatCurrency(
@@ -91,7 +92,9 @@ const AuctionCard = ({
     selectedContent[localizationKeys.days]
   } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
     startDate.minutes
-  } ${selectedContent[localizationKeys.min]}`;
+  } ${selectedContent[localizationKeys.min]}: ${startDate.seconds} ${
+    selectedContent[localizationKeys.sec]
+  }`;
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
   }, [WatshlistState]);
@@ -103,12 +106,12 @@ const AuctionCard = ({
 
   useEffect(() => {
     if (socket) {
-           const handleBidSubmitted = (data) => {
+      const handleBidSubmitted = (data) => {
         if (data && data.bidAmount && data.bidAmount !== latestBid) {
-          setlatestBid(data.bidAmount); // Update state only if the new bid is different
+          setlatestBid(data.bidAmount);
         }
       };
-     
+
       return () => {
         socket.off("bid:submitted", handleBidSubmitted);
       };
@@ -254,7 +257,7 @@ const AuctionCard = ({
           <AuctionsStatus status={status} small />
           <div className="flex justify-between mt-2 ">
             <div>
-              <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
+              <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                 {selectedContent[localizationKeys.totalBids]}
               </h6>
               <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
@@ -262,7 +265,7 @@ const AuctionCard = ({
               </p>
             </div>
             <div>
-              <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
+              <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                 {status === "IN_SCHEDULED"
                   ? selectedContent[localizationKeys.startDate]
                   : status === "SOLD"
@@ -291,12 +294,14 @@ const AuctionCard = ({
                   : "mt-4 flex gap-x-3 justify-end"
               }
             >
-              <button
-                onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
-              >
-                {selectedContent[localizationKeys.viewDetails]}
-              </button>
+              {!hideButton && (
+                <button
+                  onClick={() => handelGoDetails(auctionId)}
+                  className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
+                >
+                  {selectedContent[localizationKeys.viewDetails]}
+                </button>
+              )}
             </div>
           ) : (
             <div
@@ -308,7 +313,7 @@ const AuctionCard = ({
                 isBuyNowAllowed ? "justify-between" : "justify-end"
               } mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3`}
             >
-              {isBuyNowAllowed && (
+              {!hideButton && isBuyNowAllowed && (
                 <button
                   onClick={() => handelGoDetails(auctionId)}
                   className="border-primary border-[1px] text-primary md:w-[128px] w-full h-[32px] rounded-lg"
@@ -316,12 +321,14 @@ const AuctionCard = ({
                   {selectedContent[localizationKeys.buyNow]}
                 </button>
               )}
-              <button
-                onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
-              >
-                {selectedContent[localizationKeys.bidNow]}
-              </button>
+              {!hideButton && (
+                <button
+                  onClick={() => handelGoDetails(auctionId)}
+                  className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
+                >
+                  {selectedContent[localizationKeys.bidNow]}
+                </button>
+              )}
             </div>
           )}
         </div>

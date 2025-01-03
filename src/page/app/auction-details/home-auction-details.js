@@ -26,7 +26,6 @@ import SilmilarProductsSlider from "../../../component/auctions-details-componen
 import useLocalStorage from "../../../hooks/use-localstorage";
 
 const HomeAuctionDetails = () => {
-  console.log('home acution detaisl***')
   const { user } = useAuthState();
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
@@ -49,7 +48,6 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
-            console.log('HomeAuctionDetails authAxios', res?.data?.data)
           })
       );
     } else {
@@ -58,7 +56,6 @@ const HomeAuctionDetails = () => {
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
-            console.log('HomeAuctionDetails axios', res?.data?.data)
           })
       );
     }
@@ -88,9 +85,6 @@ const HomeAuctionDetails = () => {
           </div>
           {/* up sections */}
           <div>
-            <h1 className="text-black font-medium text-2xl py-4">
-              {auctionsDetailsData?.product?.title}
-            </h1>
             <div className="grid md:grid-cols-2 grid-cols-1">
               <div className="">
                 <ImgSlider
@@ -105,6 +99,7 @@ const HomeAuctionDetails = () => {
                   <SummaryAuctionSections
                     numberStare={3}
                     totalReviews={20}
+                    title={auctionsDetailsData?.product?.title}
                     description={auctionsDetailsData?.product?.description}
                     category={
                       lang === "en"
@@ -133,6 +128,7 @@ const HomeAuctionDetails = () => {
                     isDepositPaid={auctionsDetailsData?.isDepositPaid || false}
                     numberStare={3}
                     totalReviews={20}
+                    title={auctionsDetailsData?.product?.title}
                     description={auctionsDetailsData?.product?.description}
                     category={
                       lang === "en"

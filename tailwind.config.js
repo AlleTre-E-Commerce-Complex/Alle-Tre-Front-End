@@ -58,6 +58,7 @@ module.exports = {
         red: {
           DEFAULT: "#E40909",
           dark: "#731C1C",
+          light: "#f84444",
         },
         green: {
           DEFAULT: "#45BF55",
@@ -81,5 +82,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
-  
 };
