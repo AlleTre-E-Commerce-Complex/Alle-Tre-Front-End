@@ -95,6 +95,7 @@ const localizationKeys = {
   days: "days",
   hrs: "hrs",
   min: "min",
+  sec: "sec",
   achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily:
     "achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily",
   YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder:
@@ -117,6 +118,8 @@ const localizationKeys = {
   Scheduled: "Scheduled",
   sold: "sold",
   pending: "pending",
+  waitingForPayment: "waitingForPayment",
+  soldOut: "soldOut",
   expired: "expired",
   // Breadcrumb
   home: "home",

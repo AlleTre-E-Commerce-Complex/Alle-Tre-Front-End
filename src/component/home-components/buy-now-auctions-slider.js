@@ -95,15 +95,17 @@ const BuyNowAuctionsSlider = () => {
   };
   return (
     <div>
-      <div className="text-center">
-        <h1 className="text-gray-dark text-base font-bold">
-          {/* {selectedContent[localizationKeys.buyNow]} */}
-          {selectedContent[localizationKeys.expiredAuctions]}
-        </h1>
-        {/* <p className="text-gray-med text-base font-normal pb-10">
+      {auctions?.length > 0 && (
+        <div className="text-center">
+          <h1 className="text-gray-dark text-base font-bold">
+            {/* {selectedContent[localizationKeys.buyNow]} */}
+            {selectedContent[localizationKeys.expiredAuctions]}
+          </h1>
+          {/* <p className="text-gray-med text-base font-normal pb-10">
           {selectedContent[localizationKeys.DontWaitBuyNow]}
         </p> */}
-      </div>
+        </div>
+      )}
       {auctions?.length === 0 ? (
         <div>
           <img
@@ -130,7 +132,11 @@ const BuyNowAuctionsSlider = () => {
                   } snapslider-scroll swiper-wrapper py-2`}
                 >
                   {auctions?.map((e) => (
-                    <div key={e?.id} className="snapslider-card swiper-slide">
+                    <div
+                      key={e?.id}
+                      className="snapslider-card swiper-slide flex items-center justify-center"
+                      style={{ width: "272px", height: "300px" }}
+                    >
                       <AuctionCard
                         isExpired={e?.status === "EXPIRED"}
                         className="min-w-[272px]"
@@ -146,6 +152,7 @@ const BuyNowAuctionsSlider = () => {
                         isMyAuction={e?.isMyAuction}
                         latestBidAmount={e?.bids[0]?.amount}
                         startBidAmount={e?.startBidAmount}
+                        hideButton={true}
                       />
                     </div>
                   ))}

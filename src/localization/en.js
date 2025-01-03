@@ -38,7 +38,8 @@ const en = {
   [localizationKeys.sentVerification]: "send verification",
   // home
   [localizationKeys.subscribedSuccessfully]: "subscribed successfully",
-  [localizationKeys.unsubscribedSuccessfully]: "You have been successfully unsubscribed.",
+  [localizationKeys.unsubscribedSuccessfully]:
+    "You have been successfully unsubscribed.",
   [localizationKeys.unsubscriptionFailed]: "Unsubscribe failed.",
   [localizationKeys.myBids]: "My Bids",
   [localizationKeys.categories]: "Categories",
@@ -104,6 +105,7 @@ const en = {
   [localizationKeys.days]: "days",
   [localizationKeys.hrs]: "hrs",
   [localizationKeys.min]: "min",
+  [localizationKeys.sec]: "sec",
   [localizationKeys.achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily]:
     "Achieve a visually impressive auction & attract bidders more easily.",
   [localizationKeys.YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder]:
@@ -129,6 +131,8 @@ const en = {
   [localizationKeys.Scheduled]: "  Scheduled",
   [localizationKeys.sold]: "Sold",
   [localizationKeys.pending]: "Pending",
+  [localizationKeys.waitingForPayment]: "Waiting For Payment",
+  [localizationKeys.soldOut]: "Sold Out",
   [localizationKeys.expired]: "Expired",
   // Breadcrumb
   [localizationKeys.home]: "Home",
@@ -377,7 +381,7 @@ const en = {
   [localizationKeys.AnyIssueWithDelivery]: "Any issue with delivery?",
   [localizationKeys.sellerContactDetails]: "Seller contact details",
   [localizationKeys.buyerContactDetails]: "Buyer contact details",
-  [localizationKeys.unSubscribe]:'Unsubscribe',
+  [localizationKeys.unSubscribe]: "Unsubscribe",
   [localizationKeys.ThereIsNoBidsYetExpiredAuctionsRightNow]:
     "There is no bids yet expiredauctions right now",
   [localizationKeys.ThereIsNoBidsyetCompletedAuctionsRightNow]:

@@ -33,7 +33,6 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
         authAxios
           .get(api.app.auctions.getAuctionsDetails(auctionId))
           .then((res) => {
-            console.log("res *************", res);
             setAuctionsDetailsData(res?.data?.data);
           })
       );
@@ -93,6 +92,7 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
                       : auctionsDetailsData?.product?.subCategory?.nameAr
                   }
                   startingPrice={auctionsDetailsData?.startBidAmount}
+                  startingTime={auctionsDetailsData?.startDate}
                   endingPrice={auctionsDetailsData?.latestBidAmount}
                   totalBids={auctionsDetailsData?._count?.bids}
                   endingTime={auctionsDetailsData?.expiryDate}

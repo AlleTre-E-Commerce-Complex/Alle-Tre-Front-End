@@ -88,6 +88,17 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           {selectedContent[localizationKeys.pending]}
         </button>
       )}
+      {status === "WAITING_FOR_PAYMENT" && (
+        <button
+          className={`state-button 
+          ${small && "w-14 h-4 text-[0.5rem]"}
+          ${big && "w-24 h-7 text-base"}
+          ${absolute && "absolute"}
+          font-normal text-secondary bg-red-light top-0`}
+        >
+          {selectedContent[localizationKeys.soldOut]}
+        </button>
+      )}
     </div>
   );
 };
