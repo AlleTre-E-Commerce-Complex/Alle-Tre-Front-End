@@ -17,6 +17,9 @@ import { toast } from "react-hot-toast";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { PiWarningCircle } from "react-icons/pi";
 
 const AddLocationModel = ({
   open,
@@ -34,6 +37,7 @@ const AddLocationModel = ({
   const { AllCitiesOptions, loadingCitiesOptions } =
     useGetAllCities(countriesId);
 
+  const isArabic = lang === "ar";
   const dispatch = useDispatch();
   const isMounted = useRef(true); // Track component mount status
 
@@ -46,7 +50,12 @@ const AddLocationModel = ({
     addressLabel: Yup.string().required(
       selectedContent[localizationKeys.required]
     ),
-    phone: Yup.number().required(selectedContent[localizationKeys.required]),
+    phone: Yup.string()
+      .required(selectedContent[localizationKeys.required])
+      .matches(
+        /^[+][0-9]+$/,
+        selectedContent[localizationKeys.invalidPhoneNumber]
+      ),
   });
 
   const { run, isLoading } = useAxios();
@@ -122,8 +131,7 @@ const AddLocationModel = ({
           }
         })
         .catch((err) => {
-          console.error("Error adding location:", err);
-          toast.error(selectedContent[localizationKeys.oops]);
+                toast.error(err.message[0]||selectedContent[localizationKeys.oops]);
         });
     }
   };
@@ -172,8 +180,8 @@ const AddLocationModel = ({
             validationSchema={AddLocationSchema}
             enableReinitialize
           >
-            {(formik) => (
-              <Form onSubmit={formik.handleSubmit}>
+            {({ values, setFieldValue, errors, touched, handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
                 <div className="w-full py-6">
                   <FormikMultiDropdown
                     name="countryId"
@@ -205,15 +213,47 @@ const AddLocationModel = ({
                     }
                   />
                 </div>
-                <div className="w-full py-6">
-                  <FormikInput
+
+                <div className="float-container" lang={lang}>
+                  <label
+                    htmlFor="phone"
+                    className="label_Input_Form phone-label"
+                    style={{
+                      [isArabic ? "right" : "left"]: 18,
+                      textAlign: isArabic ? "right" : "left",
+                    }}
+                  >
+                    {selectedContent[localizationKeys.phone]}
+                  </label>
+                  <PhoneInput
+                    id="phone"
                     name="phone"
-                    type="number"
-                    label={selectedContent[localizationKeys.phone]}
+                    international
+                    defaultCountry="AE"
+                    value={values.phone || ""}
+                    onChange={(value) => setFieldValue("phone", value)}
+                    className={`input_Input_Form phone_Input_Form ${
+                      isArabic ? "rtl" : "ltr"
+                    }`}
+                 
                     placeholder={selectedContent[localizationKeys.phoneNumber]}
                   />
+                  <div
+                    className={`${
+                      touched.phone && errors.phone ? "visible" : "invisible"
+                    } text-red-700 text-md mt-1 absolute flex items-center`}
+                    style={{
+                      position: "absolute",
+                      top: "100%",
+                      [isArabic ? "right" : "left"]: 8,
+                    }}
+                  >
+                    <PiWarningCircle className="mr-2" />
+                    {errors.phone}
+                  </div>
                 </div>
-                <div className="w-full py-6">
+
+                <div className="w-full py-11">
                   <FormikInput
                     name="addressLabel"
                     type="text"

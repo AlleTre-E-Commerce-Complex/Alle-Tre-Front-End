@@ -74,7 +74,6 @@ const AuctionCard = ({
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const [latestBid, setlatestBid] = useState(latestBidAmount);
   const socket = useSocket();
-  console.log("status1111", status);
   const timeLeft = useCountdown(endingTime);
   // const formattedTimeLeft = `${timeLeft.days} ${
   //   selectedContent[localizationKeys.days]
@@ -134,7 +133,7 @@ const AuctionCard = ({
           // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
           url: `${getDomain()}/alletre/home/${auctionId}/details`,
         });
-        console.log("Post shared successfully!");
+      
       } catch (error) {
         console.error("Error sharing post:", error);
       }

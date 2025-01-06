@@ -16,12 +16,15 @@ import { axios } from "../../config/axios-config";
 import api from "../../api";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { PiWarningCircle } from "react-icons/pi";
 
 const SignUp = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-
+  const isArabic = lang === "ar";
   const { run, isLoading } = useAxios();
   const signUp = (values) => {
     run(axios.post(api.auth.signup, values))
@@ -42,7 +45,12 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
   const signUpSchema = Yup.object({
     userName: Yup.string().min(3).max(20).required("Required field"),
     email: Yup.string().min(3).required("Required field"),
-    phone: Yup.string().min(3).max(20).required("Required field"),
+    phone: Yup.string()
+      .required(selectedContent[localizationKeys.required])
+      .matches(
+        /^[+][0-9]+$/,
+        selectedContent[localizationKeys.invalidPhoneNumber]
+      ),
     password: Yup.string()
       .min(8)
       .max(20)
@@ -85,8 +93,15 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
             onSubmit={signUp}
             validationSchema={signUpSchema}
           >
-            {(formik) => (
-              <Form onSubmit={formik.handleSubmit}>
+            {({
+              values,
+              setFieldValue,
+              errors,
+              touched,
+              handleSubmit,
+              handleBlur,
+            }) => (
+              <Form onSubmit={handleSubmit}>
                 <div className="md:mx-6 mx-0 sm:w-[304px] w-full">
                   <div className="mt-10 mx-auto ">
                     <FormikInput
@@ -104,13 +119,67 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
                       placeholder={selectedContent[localizationKeys.email]}
                     />
                   </div>
-                  <div className="mt-10 mx-auto ">
-                    <FormikInput
-                      name="phone"
-                      type={"text"}
-                      label={selectedContent[localizationKeys.phone]}
-                      placeholder={selectedContent[localizationKeys.phone]}
-                    />
+                  <div className="w-full">
+                    <div className="mt-10 mx-auto">
+                      <div
+                        className="float-container"
+                        lang={lang}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <label
+                          htmlFor="phone"
+                          className="label_Input_Form phone-label"
+                          style={{
+                            [isArabic ? "right" : "left"]: 58,
+                            textAlign: isArabic ? "right" : "left",
+                          }}
+                        >
+                          {selectedContent[localizationKeys.phone]}
+                        </label>
+                        <PhoneInput
+                          id="phone"
+                          name="phone"
+                          international
+                          defaultCountry="AE"
+                          value={values.phoneNumber || ""}
+                          onChange={(value) =>
+                            setFieldValue("phone", value)
+                          }
+                          onBlur={handleBlur}
+                          className={`input_Input_Form phone_Input_Form ${
+                            isArabic ? "rtl" : "ltr"
+                          }`}
+                          placeholder={
+                            selectedContent[localizationKeys.phoneNumber]
+                          }
+                          style={{
+                            border: "none",
+                            boxShadow: "none",
+                            outline: "none",
+                            flex: 1,
+                            paddingLeft: isArabic ? "10px" : "50px",
+                            paddingRight: isArabic ? "50px" : "10px",
+                          }}
+                        />
+                        {/* Error Message */}
+                        {touched.phone && errors.phone && (
+                          <div
+                            className="text-red-700 text-md mt-1 absolute flex items-center"
+                            style={{
+                              position: "absolute",
+                              top: "100%",
+                              [isArabic ? "right" : "left"]: 8,
+                            }}
+                          >
+                            <PiWarningCircle className="mr-2" />
+                            {errors.phone}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                   <div className="mt-10 mx-auto ">
                     <FormikInput
