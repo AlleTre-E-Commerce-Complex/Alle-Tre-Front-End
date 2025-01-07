@@ -34,7 +34,7 @@ const localizationKeys = {
   // home
   subscribedSuccessfully: "subscribedSuccessfully",
   unsubscribedSuccessfully: "unsubscribedSuccessfully",
-  unsubscriptionFailed:'unsubscriptionFailed',
+  unsubscriptionFailed: "unsubscriptionFailed",
   myBids: "myBids",
   categories: "categories",
   watchlist: "watchlist",
@@ -134,7 +134,24 @@ const localizationKeys = {
   soldAuctions: "soldAuctions",
   pendingAuctions: "pendingAuctions",
   payDeposite: "payDeposite",
-
+  inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately:
+    "inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately",
+  adPreview: "adPreview",
+  auctionFee: "auctionFee",
+  feesRefundedAfterAuctionCompletion: "feesRefundedAfterAuctionCompletion",
+  ifYouWantToCheckAuctionsPolicyYouCanCheck:
+    "ifYouWantToCheckAuctionsPolicyYouCanCheck",
+  paymentMethod: "paymentMethod",
+  viewPendingPayments: "viewPendingPayments",
+  continuePayment: "continuePayment",
+  yourPaymentDetailsAreSaved: "yourPaymentDetailsAreSaved",
+  auctionStartingPrice: "auctionStartingPrice",
+  auctionStartingDate: "auctionStartingDate",
+  auctionEndingDate: "auctionEndingDate",
+  inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction:
+    "inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction",
+    pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit:
+    "pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit",
   // create auctions
   drafts: "drafts",
   proceed: "proceed",
@@ -342,10 +359,9 @@ const localizationKeys = {
     "ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow",
   confirmDelivery: "confirmDelivery",
   AnyIssueWithDelivery: "AnyIssueWithDelivery",
-  sellerContactDetails:'sellerContactDetails',
-  unSubscribe : 'unSubscribe',
-  buyerContactDetails:'buyerContactDetails',
-  
+  sellerContactDetails: "sellerContactDetails",
+  unSubscribe: "unSubscribe",
+  buyerContactDetails: "buyerContactDetails",
   ThereIsNoBidsYetExpiredAuctionsRightNow:
     "ThereIsNoBidsYetExpiredAuctionsRightNow",
   ThereIsNoBidsyetCompletedAuctionsRightNow:

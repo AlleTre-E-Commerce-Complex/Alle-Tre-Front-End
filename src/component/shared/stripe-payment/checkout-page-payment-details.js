@@ -66,7 +66,7 @@ export default function CheckoutPagePaymentDetails() {
   }, [isPaymentCompleted, auctionId, history]);
   // Modify your handle functions to control navigation
   const handleConfirm = () => {
-    window.location.href = routes.app.profile.myAuctions.pending; 
+    window.location.href = routes.app.profile.myAuctions.pending;
   };
 
   const handleCancel = () => {
@@ -182,7 +182,7 @@ export default function CheckoutPagePaymentDetails() {
 
             {/* Message */}
             <p className="text-lg font-semibold text-gray-800 mb-4 text-center">
-              Your payment details are saved.
+              {selectedContent[localizationKeys.yourPaymentDetailsAreSaved]}
             </p>
 
             {/* Buttons */}
@@ -191,13 +191,13 @@ export default function CheckoutPagePaymentDetails() {
                 className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition"
                 onClick={handleConfirm}
               >
-                View Pending Payment
+                {selectedContent[localizationKeys.viewPendingPayments]}
               </button>
               <button
                 className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition"
                 onClick={handleCancel}
               >
-                Continue Payment
+                {selectedContent[localizationKeys.continuePayment]}
               </button>
             </div>
           </div>
@@ -224,15 +224,19 @@ export default function CheckoutPagePaymentDetails() {
               {selectedContent[localizationKeys.paymentDetails]}
             </h1>
             <p className="text-gray-dark font-normal text-base py-4">
-              In order to complete publishing your ad successfully, please pay
-              the ad fee and start receiving bids immediately
+              {
+                selectedContent[
+                  localizationKeys
+                    .inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately
+                ]
+              }
             </p>
           </div>
           <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
             <div className="w-full ">
               <div className="bg-gray-light rounded-2xl px-8 py-5">
                 <h1 className="font-bold text-base text-black pb-4 ">
-                  Ad preview
+                  {selectedContent[localizationKeys.adPreview]}
                 </h1>
                 <PandingRow
                   payDeposite
@@ -245,9 +249,17 @@ export default function CheckoutPagePaymentDetails() {
                 <div>
                   <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
                     <h1>
-                      Auctions fees{" "}
+                      {selectedContent[localizationKeys.auctionFee]}
+
                       <span class="text-gray-dark font-normal">
-                        (Fees refunded after auction completion)
+                        {" "}
+                        (
+                        {
+                          selectedContent[
+                            localizationKeys.feesRefundedAfterAuctionCompletion
+                          ]
+                        }
+                        )
                       </span>
                     </h1>
 
@@ -260,7 +272,7 @@ export default function CheckoutPagePaymentDetails() {
                   </p>
                   <p className="flex justify-between px-4 py-1.5">
                     <h1 className="text-gray-dark font-medium text-sm">
-                      Category
+                      {selectedContent[localizationKeys.category]}
                     </h1>
                     <p className="text-gray-med font-normal text-base">
                       {lang === "en"
@@ -270,7 +282,7 @@ export default function CheckoutPagePaymentDetails() {
                   </p>
                   <p className="flex justify-between px-4 py-1.5">
                     <h1 className="text-gray-dark font-medium text-sm">
-                      Auction starting price
+                      {selectedContent[localizationKeys.auctionStartingPrice]}
                     </h1>
                     <p className="text-gray-med font-normal text-base">
                       {formatCurrency(pendingAuctionData?.startBidAmount)}
@@ -278,19 +290,24 @@ export default function CheckoutPagePaymentDetails() {
                   </p>
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
-                  If you want to check Auctions policy you can check{" "}
+                  {
+                    selectedContent[
+                      localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck
+                    ]
+                  }
+
                   <span
                     onClick={() => history.push(routes.app.faqs)}
                     className="text-primary underline cursor-pointer"
                   >
-                    FAQs
+                    {selectedContent[localizationKeys.faqs]}
                   </span>
                 </p>
               </div>
             </div>
             <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
               <h1 className="font-bold text-base text-black pt-4 pb-6">
-                Payment method
+                {selectedContent[localizationKeys.paymentMethod]}
               </h1>
               {walletBalance
                 ? showPaymentSelecton && (

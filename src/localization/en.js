@@ -148,6 +148,26 @@ const en = {
   [localizationKeys.pendingAuctions]: "Pending Auctions",
   [localizationKeys.expiredAuctions]: "Expired Auctions",
   [localizationKeys.payDeposite]: "Pay Deposite",
+  [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
+    "In order to complete publishing your ad successfully, please pay the ad fee and start receiving bids immediately.",
+  [localizationKeys.adPreview]: "Ad Preview",
+  [localizationKeys.auctionFee]: "Auction Fee",
+  [localizationKeys.feesRefundedAfterAuctionCompletion]:
+    "Fees refunded after auction completion",
+  [localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck]:
+    "If you want to check auction's policy, you can check",
+  [localizationKeys.paymentMethod]: "Payment Method",
+  [localizationKeys.viewPendingPayments]: "View Pending Payments",
+  [localizationKeys.continuePayment]: "Continue Payment",
+  [localizationKeys.yourPaymentDetailsAreSaved]:
+    "Your payment details are saved",
+  [localizationKeys.auctionStartingPrice]: "Auction Starting Price",
+  [localizationKeys.auctionStartingDate]: "Auction Starting Date",
+  [localizationKeys.auctionEndingDate]: "Auction Ending Date",
+  [localizationKeys.inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction]:
+    "In order to complete the bidding process, please pay the auction deposit.",
+  [localizationKeys.pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit]:
+    "Please notice that The bidding deposit will be captured until the auction is completed within 3 working days. if you wins the auction, the website will withdraw the deposit.",
   // create auctions
   [localizationKeys.drafts]: "Drafts",
   [localizationKeys.proceed]: "Proceed",

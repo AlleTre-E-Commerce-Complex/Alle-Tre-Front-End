@@ -146,6 +146,27 @@ const ar = {
   [localizationKeys.pendingAuctions]: "المزادات المعلقة",
   [localizationKeys.expiredAuctions]: "المزادات المنتهية",
   [localizationKeys.payDeposite]: "إيداع الدفع",
+  [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
+    "لكي تتمكن من إتمام نشر إعلانك بنجاح، يرجى دفع رسوم الإعلان والبدء في تلقي العروض على الفور.",
+  [localizationKeys.adPreview]: "معاينة الإعلان",
+  [localizationKeys.auctionFee]: "رسوم المزاد",
+  [localizationKeys.feesRefundedAfterAuctionCompletion]:
+    "يتم استرداد الرسوم بعد انتهاء المزاد",
+  [localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck]:
+    "إذا كنت تريد التحقق من سياسة المزاد، يمكنك التحقق",
+  [localizationKeys.paymentMethod]: "طريقة الدفع",
+  [localizationKeys.viewPendingPayments]: "عرض المدفوعات المعلقة",
+  [localizationKeys.continuePayment]: "متابعة الدفع",
+  [localizationKeys.yourPaymentDetailsAreSaved]:
+    "تم حفظ تفاصيل الدفع الخاصة بك",
+  [localizationKeys.auctionStartingPrice]: "سعر بداية المزاد",
+  [localizationKeys.auctionStartingDate]: "تاريخ بدء المزاد",
+  [localizationKeys.auctionEndingDate]: "تاريخ انتهاء المزاد",
+  [localizationKeys.inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction]:
+    "من أجل إكمال عملية المزايدة، يرجى دفع وديعة المزاد",
+  [localizationKeys.pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit]:
+    "يرجى ملاحظة أن وديعة المزايدة سيتم حجزها حتى اكتمال المزاد في غضون ثلاثة أيام عمل. إذا فزت بالمزاد، فسوف يقوم الموقع بسحب الوديعة.",
+
   // create auctions
   [localizationKeys.drafts]: "المسودات",
   [localizationKeys.proceed]: "متابعة",

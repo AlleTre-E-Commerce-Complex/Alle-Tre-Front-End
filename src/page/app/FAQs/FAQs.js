@@ -13,8 +13,8 @@ const FQAsDate = [
         <div>
           <li>Website : www.alletre.com</li>
           <li>
-            Owner : Al Atari LLC, a limited liability company located in Dubai -
-            United Arab Emirates.
+            Owner : AlleTre E-commerce complex LLC, a limited liability company
+            located in Ras Al Khaima - United Arab Emirates.
           </li>
           <li>
             User : Anyone who accesses the Atri website, whether for the purpose
@@ -50,8 +50,8 @@ const FQAsDate = [
         <div>
           <li>الموقع : موقع www.alletre.com</li>
           <li>
-            المالك : شركة الاتري ذ م م شركة ذات مسؤولية محدودة مقدرها دبي – دولة
-            الامارات العربية المتحدة.
+            المالك : شركة الاتري ذ م م شركة ذات مسؤولية محدودة مقرها رأس الخيمة
+            – دولة الامارات العربية المتحدة.
           </li>
           <li>
             المستخدم: كل من يدخل الى موقع الاتري سواء لغرض المشاهدة أو البيع أو
@@ -446,20 +446,18 @@ const FQAsDate = [
         <div>
           <li>
             These terms and conditions shall be governed by and construed in
-            accordance with the laws of the Emirate of Dubai and the federal
-            laws of the United Arab Emirates as applicable in the Emirate of
-            Dubai. Any dispute arising out of or in connection with these terms
-            and conditions, the parties shall resort to resolve the dispute
-            through arbitration.
+            accordance with the laws and federal laws of the United
+            Arab Emirates. Any dispute arising out of or in connection with
+            these terms and conditions, the parties shall resort to resolve the
+            dispute through arbitration.
           </li>
         </div>
       ),
       ar: (
         <div>
           <li>
-            المتحدة حسب مقتضى الحال في إمارة دبي, و أي نزاع ينشأ عن أو فيما
-            يتعلق بهذه الشروط والأحكام ، يلجأ الأطراف لحل النزاع عن طريق
-            التحكيم.
+            قانون دولة الإمارات العربية المتحدة, و أي نزاع ينشأ عن أو فيما يتعلق
+            بهذه الشروط والأحكام ، يلجأ الأطراف لحل النزاع عن طريق التحكيم.
           </li>
         </div>
       ),

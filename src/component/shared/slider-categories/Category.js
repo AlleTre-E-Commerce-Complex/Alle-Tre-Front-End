@@ -90,7 +90,7 @@ const Category = ({ img, title, id, view }) => {
               className={`${
                 !isDisabled
                   ? "opacity-50 "
-                  : "group:scale-100 group-hover:scale-125 duration-300 ease-in-out transform flex justify-center items-center"
+                  : "group-hover:scale-125 duration-300 ease-in-out transform flex justify-center items-center"
               }`}
               src={img || addImage}
               alt={title}
