@@ -299,13 +299,14 @@ const SummaryHomeAuctionSections = ({
             {status === "IN_SCHEDULED"
               ? selectedContent[localizationKeys.startDate]
               : status === "SOLD"
-              ? "Purchased Time"
+              // ? "Purchased Time"
+              ? ""
               : selectedContent[localizationKeys.timeLeft]}
           </p>
 
           {status === "SOLD" ? (
             <p className="cursor-default text-base font-bold text-gray-verydark">
-              {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
+              {/* {moment(PurchasedTime).local().format("MMMM, DD YYYY")} */}
             </p>
           ) : (
             <p
