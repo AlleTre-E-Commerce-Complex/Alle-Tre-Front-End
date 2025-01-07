@@ -48,9 +48,9 @@ const Home = () => {
   const [isGrid, setIsGrid] = useState(true);
   const socket = useSocket()
   const [open, setOpen] = useState(false);
-  const [mainAuctions, setMainAuctions] = useState();
+  const [mainAuctions, setMainAuctions] = useState([]);
   const [totalPages, setTotalPages] = useState();
-  const [sponsoredAuctions, SetSponsoredAuctions] = useState();
+  const [sponsoredAuctions, SetSponsoredAuctions] = useState([]);
   // const [showRewardModal, setShowRewardModal] = useState(true);
   const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
