@@ -41,6 +41,7 @@ import FormikTextArea from "component/shared/formik/formik-text-area";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import api from "api";
+import DateTimePicker from "component/shared/dateTimePicker/DateTimePicker";
 
 const AuctionDetails = () => {
   const [lang] = useLanguage("");
@@ -69,11 +70,15 @@ const AuctionDetails = () => {
   const [IsRetrunPolicy, setIsRetrunPolicy] = useState(false);
   const [IsWaranty, setIsWaranty] = useState(false);
   const [IsOfferPrice, setIsOfferPrice] = useState(false);
+  const [selectedDateTime, setSelectedDateTime] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const handleDateTimeChange = (date) => {
+    setSelectedDateTime(date);
+  };
   const AuctionDetailsDataSchema = Yup.object({
     Hrs: Yup.string().when([], {
       is: () => valueRadio === "Quick Auction",
@@ -332,24 +337,17 @@ const AuctionDetails = () => {
                       <div
                         className={
                           IsSchedule
-                            ? "mt-9 flex sm:flex-row flex-col justify-between gap-x-4 gap-y-10 sm:gap-y-0 "
+                            ? "mt-9 flex sm:flex-row flex-col justify-between gap-x-4 gap-y-10 sm:gap-y-0"
                             : "hidden"
                         }
                       >
-                        <div className="w-full">
-                          <FormikDate
-                            name="date"
-                            label={selectedContent[localizationKeys.startDate]}
-                            placeholder="DD/MM/YYYY"
-                          />
-                        </div>
-                        <div className="w-full">
-                          <FormikTimePicker
-                            name="from"
-                            label={selectedContent[localizationKeys.time]}
-                            placeholder="HH:MM"
-                          />
-                        </div>
+                        <DateTimePicker
+                          name="dateTime"
+                          label={selectedContent[localizationKeys.startDate]}
+                          placeholder="DD/MM/YYYY HH:MM"
+                          value={selectedDateTime}
+                          onChange={handleDateTimeChange}
+                        />
                       </div>
                     </div>
                     <div>
