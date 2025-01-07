@@ -83,11 +83,8 @@ export default function CheckoutPagePayDeposite() {
               run(
                 authAxios
                   .get(`${api.app.Wallet.getBalance}`)
-                  .then((response) => {
-                    console.log('response',response)
-                    const balance = response.data;
-                    console.log('balance',balance)
-                    console.log('amountToPay',amountToPay)
+                  .then((response) => {   
+                    const balance = response.data;                
                     if (balance && Number(balance) >= Number(amountToPay)) {
                       setWalletBalance(balance);
                       setShwoPaymentSelection(true);
@@ -171,8 +168,12 @@ export default function CheckoutPagePayDeposite() {
               {selectedContent[localizationKeys.paymentDetails]}
             </h1>
             <p className="text-gray-dark font-normal text-base py-4">
-              In order to complete submitting your bid , please pay the deposite
-              for the auction
+              {
+                selectedContent[
+                  localizationKeys
+                    .inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction
+                ]
+              }
             </p>
           </div>
           <div
@@ -188,16 +189,14 @@ export default function CheckoutPagePayDeposite() {
             />
             <MoneyINHand />
             <p className="text-gray-dark my-auto">
-              Please notice that The bidding deposit will be captured until the
-              auction is completed within 6 days. if you wins the auction, the
-              website will withdraw the deposit.
+            {selectedContent[localizationKeys.pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit]}
             </p>
           </div>
           <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
             <div className="w-full ">
               <div className="bg-gray-light rounded-2xl px-8 py-5">
                 <h1 className="font-bold text-base text-black pb-4 ">
-                  Ad preview
+                  {selectedContent[localizationKeys.adPreview]}
                 </h1>
                 <PandingRow
                   payDeposite
@@ -211,9 +210,16 @@ export default function CheckoutPagePayDeposite() {
                 <div>
                   <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
                     <h1>
-                      Auctions fees{" "}
+                      {selectedContent[localizationKeys.auctionFee]}
                       <span class="text-gray-dark font-normal">
-                        (Fees refunded after auction completion)
+                        {" "}
+                        (
+                        {
+                          selectedContent[
+                            localizationKeys.feesRefundedAfterAuctionCompletion
+                          ]
+                        }
+                        )
                       </span>
                     </h1>
 
@@ -226,7 +232,7 @@ export default function CheckoutPagePayDeposite() {
                   </p>
                   <p className="flex justify-between px-4 py-1.5">
                     <h1 className="text-gray-dark font-medium text-sm">
-                      Category
+                      {selectedContent[localizationKeys.category]}
                     </h1>
                     <p className="text-gray-med font-normal text-base">
                       {lang === "en"
@@ -236,7 +242,7 @@ export default function CheckoutPagePayDeposite() {
                   </p>
                   <p className="flex justify-between px-4 py-1.5 ">
                     <h1 className="text-gray-dark font-medium text-sm">
-                      Auction starting date
+                      {selectedContent[localizationKeys.auctionStartingDate]}
                     </h1>
                     <p className="text-gray-med font-normal text-base">
                       {moment(pendingAuctionData?.startDate).format(
@@ -246,7 +252,7 @@ export default function CheckoutPagePayDeposite() {
                   </p>
                   <p className="flex justify-between px-4 py-1.5">
                     <h1 className="text-gray-dark font-medium text-sm">
-                      Auction Ending date
+                      {selectedContent[localizationKeys.auctionEndingDate]}
                     </h1>
                     <p className="text-gray-med font-normal text-base">
                       {moment(pendingAuctionData?.expiryDate).format(
@@ -256,7 +262,7 @@ export default function CheckoutPagePayDeposite() {
                   </p>
                   <p className="flex justify-between px-4 py-1.5">
                     <h1 className="text-gray-dark font-medium text-sm">
-                      Auction starting price
+                      {selectedContent[localizationKeys.auctionStartingPrice]}
                     </h1>
                     <p className="text-gray-med font-normal text-base">
                       {formatCurrency(pendingAuctionData?.startBidAmount)}
@@ -264,19 +270,23 @@ export default function CheckoutPagePayDeposite() {
                   </p>
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
-                  If you want to check Auctions policy you can check{" "}
+                {
+                    selectedContent[
+                      localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck
+                    ]
+                  }
                   <span
                     onClick={() => history.push(routes.app.faqs)}
                     className="text-primary underline cursor-pointer"
                   >
-                    FAQs
+                    {selectedContent[localizationKeys.faqs]}
                   </span>
                 </p>
               </div>
             </div>
             <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
               <h1 className="font-bold text-base text-black pt-4 pb-6">
-                Payment method
+                {selectedContent[localizationKeys.paymentMethod]}
               </h1>
 
               {walletBalance
