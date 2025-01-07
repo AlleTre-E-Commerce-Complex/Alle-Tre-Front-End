@@ -387,7 +387,7 @@ const SummaryHomeAuctionSections = ({
                   } border-[1px] w-[304px] h-[48px] rounded-lg font-bold hover:bg-primary hover:text-white`}
                 >
                   {selectedContent[localizationKeys.buyNow] + " "}
-                  <span className="font-bold">{`for ${acceptedAmount} AED`}</span>
+                  <span className="font-bold">{`${acceptedAmount} AED`}</span>
                 </button>
 
                 {/* Message directly under the button */}

@@ -121,6 +121,7 @@ const localizationKeys = {
   waitingForPayment: "waitingForPayment",
   soldOut: "soldOut",
   expired: "expired",
+  inProgress: "inProgress",
   // Breadcrumb
   home: "home",
   productDetails: "productDetails",

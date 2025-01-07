@@ -33,7 +33,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           {selectedContent[localizationKeys.Scheduled]}
         </button>
       )}
-      {status === "SOLD" && (
+      {(status === "SOLD" || status === "WAITING_FOR_PAYMENT") && (
         <button
           className={`state-button  
           ${small && "w-14 h-4 text-[0.5rem]"}
@@ -74,7 +74,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           ${absolute && "absolute"}
           font-normal text-green bg-green-light top-0`}
         >
-          in progress
+         {selectedContent[localizationKeys.inProgress]}
         </button>
       )}
       {status === "PENDING_PAYMENT" && (
@@ -86,17 +86,6 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
           font-normal text-secondary bg-secondary-light top-0`}
         >
           {selectedContent[localizationKeys.pending]}
-        </button>
-      )}
-      {status === "WAITING_FOR_PAYMENT" && (
-        <button
-          className={`state-button 
-          ${small && "w-14 h-4 text-[0.5rem]"}
-          ${big && "w-24 h-7 text-base"}
-          ${absolute && "absolute"}
-          font-normal text-secondary bg-red-light top-0`}
-        >
-          {selectedContent[localizationKeys.soldOut]}
         </button>
       )}
     </div>

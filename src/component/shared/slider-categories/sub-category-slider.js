@@ -50,10 +50,12 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
               >
                 {/* slider */}
                 {SubGatogryOptions.map((e, index) => (
-                  <div className="snapslider-card swiper-slide">
+                  <div
+                    key={index}
+                    className="snapslider-card swiper-slide "
+                  >
                     <Category
                       view
-                      key={index}
                       img={e?.imageLink}
                       title={e?.text}
                       id={e?.id}

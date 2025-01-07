@@ -346,7 +346,11 @@ const AuctionDetails = () => {
                           label={selectedContent[localizationKeys.startDate]}
                           placeholder="DD/MM/YYYY HH:MM"
                           value={selectedDateTime}
-                          onChange={handleDateTimeChange}
+                          onChange={(newValue) => {
+                            formik.setFieldValue("date", newValue);
+                            formik.setFieldValue("from", newValue); 
+
+                          }}
                         />
                       </div>
                     </div>
