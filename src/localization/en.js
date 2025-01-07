@@ -134,6 +134,7 @@ const en = {
   [localizationKeys.waitingForPayment]: "Waiting For Payment",
   [localizationKeys.soldOut]: "Sold Out",
   [localizationKeys.expired]: "Expired",
+  [localizationKeys.inProgress]: "In Progress",
   // Breadcrumb
   [localizationKeys.home]: "Home",
   [localizationKeys.productDetails]: "product Details",

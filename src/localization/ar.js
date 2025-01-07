@@ -93,7 +93,7 @@ const ar = {
   [localizationKeys.iHaveSold]: "لقد بعت",
   [localizationKeys.allRightsReserved]: "جميع الحقوق محفوظة.",
   [localizationKeys.upComingAuctions]: "المزادات القادمة",
-  [localizationKeys.totalBids]: "إجمالي المزادات",
+  [localizationKeys.totalBids]: "إجمالي المزايدات",
   [localizationKeys.yourPendingPaymentsAreListedHere]:
     "تظهر مدفوعاتك المعلقة هنا",
   [localizationKeys.bid]: "مزاد",
@@ -132,6 +132,7 @@ const ar = {
   [localizationKeys.waitingForPayment]: "في انتظار الدفع",
   [localizationKeys.soldOut]: "نفذ",
   [localizationKeys.expired]: "منتهي",
+  [localizationKeys.inProgress]: "في تَقَدم",
   // Breadcrumb
   [localizationKeys.home]: "الصفحة الرئيسية",
   [localizationKeys.productDetails]: "تفاصيل المنتج",
@@ -177,7 +178,7 @@ const ar = {
   [localizationKeys.exHome]: "مثال:  المنزل",
   [localizationKeys.enterPostalZipCode]: "أدخل الرمز البريدي",
   // product details
-  [localizationKeys.itemDetails]: "تفاصيل العنصر",
+  [localizationKeys.itemDetails]: "تفاصيل السلعة",
   [localizationKeys.itemName]: "اسم العنصر",
   [localizationKeys.category]: "الفئة",
   [localizationKeys.subCategory]: "فئة فرعية",
@@ -233,7 +234,7 @@ const ar = {
   [localizationKeys.purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice]:
     "يجب أن يكون سعر الشراء أكبر من أو يساوي 30٪ من الحد الأدنى للسعر",
   [localizationKeys.whyWaitingBuyItNowOnThisPrice]:
-    "لماذا الانتظار؟ شرائه الآن على هذا السعر!",
+    "لماذا الانتظار؟ اشتري الآن على هذا السعر!",
   // shiping details
   [localizationKeys.locationDetails]: "تفاصيل الشحن",
   [localizationKeys.addAddress]: "إضافة عنوان",
@@ -474,7 +475,7 @@ const ar = {
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "تأكد من اختيار موقع المزاد أو إنشاء موقع آخر",
   //wallet
-  [localizationKeys.Wallet]: "محفظة",
+  [localizationKeys.Wallet]: "المحفظة",
   [localizationKeys.notifications]: "الإشعارات",
   [localizationKeys.ThereAreNoTransactionYet]: "لا توجد معاملات بعد",
   [localizationKeys.ThereAreNoNotificationsYet]: "لا توجد إشعارات بعد",

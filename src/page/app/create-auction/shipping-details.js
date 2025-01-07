@@ -224,10 +224,9 @@ const ShippingDetails = () => {
       }
       if (typeInt.type === "SCHEDULED") {
         const date = moment(
-          typeInt.date + " " + typeInt.from,
+          typeInt.date,
           "DD-MM-YYYY hh:mm A"
         ).toLocaleString();
-
         formData.append("type", typeInt.type);
         formData.append("startDate", date);
       } else {
