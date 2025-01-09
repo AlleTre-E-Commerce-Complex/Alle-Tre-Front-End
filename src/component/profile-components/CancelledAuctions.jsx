@@ -55,15 +55,29 @@ const CancelledAuctions = () => {
                   // Combine data from both API calls
                   allCancelledAuctions = [...allCancelledAuctions, ...afterExpAuctions];
   
-                  // Update state with the combined data
-                  setCancelledAuctionData(allCancelledAuctions);
+                    // Run the second API call
+            run(
+              authAxios
+                .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=CANCELLED_BY_ADMIN`)
+                .then((res) => {
+                  const afterExpAuctions = res?.data?.data || [];
+                  
   
-                  // Set the total pages based on pagination of both calls
-                  const totalPages = Math.max(
-                    res?.data?.pagination?.totalPages || 1,
-                    beforeExpAuctions.length ? 1 : 0
-                  );
-                  setTotalPages(totalPages);
+                  // Combine data from both API calls
+                  allCancelledAuctions = [...allCancelledAuctions, ...afterExpAuctions];
+                   // Update state with the combined data
+                   setCancelledAuctionData(allCancelledAuctions);
+  
+                   // Set the total pages based on pagination of both calls
+                   const totalPages = Math.max(
+                     res?.data?.pagination?.totalPages || 1,
+                     beforeExpAuctions.length ? 1 : 0
+                   );
+                   setTotalPages(totalPages);
+  
+                  
+                })
+            );
                 })
             );
           })
