@@ -143,6 +143,8 @@ export default function CheckoutPageBuyNow() {
     appearance,
   };
 
+  const baseValue = Number(buyNowValue ?? pendingAuctionData?.acceptedAmount);
+const payingAmount = baseValue + (baseValue * 0.5) / 100;
 
 
   return (
@@ -259,7 +261,7 @@ export default function CheckoutPageBuyNow() {
                   <CheckoutFormBuyNow
                     payDeposite
                     auctionId={auctionId}
-                    payPrice={buyNowValue || pendingAuctionData?.acceptedAmount}
+                    payPrice={payingAmount}
                   />
                 </Elements>
               )
@@ -269,14 +271,14 @@ export default function CheckoutPageBuyNow() {
                   <CheckoutFormBuyNow
                     payDeposite
                     auctionId={auctionId}
-                    payPrice={buyNowValue || pendingAuctionData?.acceptedAmount}
+                    payPrice={payingAmount}
                   />
                 </Elements>
               )}
               {showWalletPaymentMethod && 
               <WalletPaymentBuyNow
                 auctionId={auctionId}
-                amount={buyNowValue || pendingAuctionData?.acceptedAmount}
+                amount={payingAmount}
                 walletBalance={walletBalance}
                 paymentAPI={api.app.auctions.buyNowThroughWallet(auctionId)}
               />
