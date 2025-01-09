@@ -64,20 +64,34 @@ const Home = () => {
 
   //socket listening for new auction 
   useEffect(() => {
-    if(!socket) return
-    socket.on('auction:newAuctionListed', (data) => {
-      console.log('new auction listed ...',data)
+    if (!socket) return;
+  
+    const handleNewAuction = (data) => {
+      console.log('New auction listed...', data);
       setMainAuctions((prev) => [
         ...prev, // Spread the previous state
         data.auction, // Add the new auction
       ]);
-    });
+    };
   
-    // Clean up the socket listener to avoid memory leaks
+    const handleAuctionCancelled = (data) => {
+      console.log('Auction cancelled...', data);
+      setMainAuctions((prev) =>
+        prev.filter((auction) => auction.id !== data.auctionId)
+      );
+    };
+  
+    // Register socket listeners
+    socket.on('auction:newAuctionListed', handleNewAuction);
+    socket.on('auction:cancelled', handleAuctionCancelled);
+  
+    // Cleanup to avoid memory leaks
     return () => {
-      socket.off('auction:newAuctionListed');
+      socket.off('auction:newAuctionListed', handleNewAuction);
+      socket.off('auction:cancelled', handleAuctionCancelled);
     };
   }, [socket]);
+  
   
 
   useEffect(()=>{

@@ -80,13 +80,13 @@ const AuctionCard = ({
   // } :
   // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
   // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
-
+  
   const formattedBid = formatCurrency(
     latestBid || CurrentBid || startBidAmount
   );
-
+  
   const startDate = useCountdown(StartDate);
-
+ 
   const formattedstartDate = `${startDate.days} ${
     selectedContent[localizationKeys.days]
   } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
@@ -110,7 +110,7 @@ const AuctionCard = ({
           setlatestBid(data.bidAmount);
         }
       };
-
+      socket.on('bid:submitted',handleBidSubmitted)
       return () => {
         socket.off("bid:submitted", handleBidSubmitted);
       };
@@ -208,6 +208,25 @@ const AuctionCard = ({
       }
     } else history.push(routes.app.homeDetails(id));
   };
+
+    // Check if startDate has reached zero
+    const isStartDateZero =
+    startDate.days === 0 &&
+    startDate.hours === 0 &&
+    startDate.minutes === 0 &&
+    startDate.seconds === 0;
+
+    const isEndDateZero =
+    timeLeft.days === 0 &&
+    timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 &&
+    timeLeft.seconds === 0;
+  // Prevent rendering if startDate is zero
+  if (status === 'IN_SCHEDULED' && isStartDateZero) {
+    return null;
+  } else if (status === 'ACTIVE' && isEndDateZero) {
+    return null
+  }
 
   return (
     <div className={className}>

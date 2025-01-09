@@ -365,6 +365,7 @@ const AuctionDetails = () => {
                           name="MinimumPrice"
                           label={selectedContent[localizationKeys.startPrice]}
                           placeholder="AEDXXX"
+                          onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
                         />
                       </div>
                     </div>
@@ -408,6 +409,7 @@ const AuctionDetails = () => {
                               selectedContent[localizationKeys.purchasingPrice]
                             }
                             placeholder="AEDXXX"
+                            onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
                           />
                           <p className="text-gray-dark text-xs font-normal px-2">
                             {

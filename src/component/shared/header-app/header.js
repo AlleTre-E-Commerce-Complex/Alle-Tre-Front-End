@@ -167,8 +167,11 @@ const Header = ({ SetSid }) => {
       ) {
         console.log("ON_ITEM_BUY_NOW");
         setNotificationCount((prev) => prev + 1);
-      }else if(data.status === "ON_CONFIRM_DELIVERY" && data.usersId === user?.id){
+      } else if(data.status === "ON_CONFIRM_DELIVERY" && data.usersId === user?.id){
         console.log("ON_CONFIRM_DELIVERY");
+        setNotificationCount((prev) => prev + 1);
+      } else if(data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" && data.usersId === user?.id){
+        console.log("ON_AUCTION_CANCELLED_BY_ADMIN");
         setNotificationCount((prev) => prev + 1);
       }
     };
