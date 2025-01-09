@@ -62,29 +62,29 @@
 /* .phone_Input_Form .PhoneInputInput {
   padding-left: 30px;
 } */
-/* For Arabic language: Right-to-Left (RTL) support */
-.phone_Input_Form:lang(ar) {
-  direction: rtl; /* Ensure RTL direction for Arabic */
-  text-align: right; /* Align text to the right */
-}
 
-/* Adjustments for the input field inside phone input */
+/* .phone_Input_Form:lang(ar) {
+  direction: rtl; 
+  text-align: right; 
+} */
+
+
 .phone_Input_Form input {
-  border: none; /* Remove inner border */
-  outline: none; /* Remove focus outline */
-  box-shadow: none; /* Remove any shadow */
+  border: none; 
+  outline: none; 
+  box-shadow: none; 
   width: 100%;
-  padding-left: 44px; /* Adjust left padding for flag space */
-  padding-right: 10px; /* Add space for the flag in RTL */
-  text-align: inherit; /* Match parent alignment */
-  direction: inherit; /* Match parent direction */
+  padding-left: 44px; 
+  padding-right: 10px; 
+  text-align: inherit; 
+  direction: inherit; 
 }
-.phone_Input_Form:lang(ar) input {
-  padding-left: 14px; /* Space for the flag in RTL */
-  padding-right: 44px; /* Adjust padding for RTL */
-  text-align: right; /* Align text to the right */
-  direction: rtl; /* Right-to-left direction */
-}
+/* .phone_Input_Form:lang(ar) input {
+  padding-left: 14px; 
+  padding-right: 44px; 
+  text-align: right; 
+  direction: rtl; 
+} */
 
 /* Adjust for PhoneInputCountry and dropdown */
 .phone_Input_Form .PhoneInputCountry {
@@ -99,7 +99,5 @@
 .phone_Input_Form:lang(ar) .PhoneInputCountry {
   left: auto; /* Disable left for Arabic */
   right: 8px; /* Move to the right */
+  margin-right: -4px; 
 }
-
-
-

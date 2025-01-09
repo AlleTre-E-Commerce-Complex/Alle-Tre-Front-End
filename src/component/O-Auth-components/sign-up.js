@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import OAuthSections from "./O-Auth-sections";
-
 import routes from "../../routes";
 import { useHistory } from "react-router-dom";
-
 import * as Yup from "yup";
 import { Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
-
 import { Button, Form } from "semantic-ui-react";
 import useAxios from "../../hooks/use-axios";
 import { toast } from "react-hot-toast";
@@ -19,6 +16,7 @@ import localizationKeys from "../../localization/localization-keys";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { PiWarningCircle } from "react-icons/pi";
+import TermsAndConditions from "component/shared/terms-and-condition/TermsAndCondition";
 
 const SignUp = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
@@ -26,6 +24,7 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
   const selectedContent = content[lang];
   const isArabic = lang === "ar";
   const { run, isLoading } = useAxios();
+
   const signUp = (values) => {
     run(axios.post(api.auth.signup, values))
       .then((res) => {
@@ -145,13 +144,9 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
                           international
                           defaultCountry="AE"
                           value={values.phoneNumber || ""}
-                          onChange={(value) =>
-                            setFieldValue("phone", value)
-                          }
+                          onChange={(value) => setFieldValue("phone", value)}
                           onBlur={handleBlur}
-                          className={`input_Input_Form phone_Input_Form ${
-                            isArabic ? "rtl" : "ltr"
-                          }`}
+                          className={"input_Input_Form phone_Input_Form"}
                           placeholder={
                             selectedContent[localizationKeys.phoneNumber]
                           }
@@ -189,22 +184,9 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
                       placeholder={selectedContent[localizationKeys.password]}
                     />
                   </div>
-                  <div className="mt-4 mx-1 flex justify-start">
-                    <div className="mt-2">
-                      <label className="text-gray-med text-sm font-normal cursor-pointer  ">
-                        <input
-                          className="mt-0.5 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
-                          type="checkbox"
-                          required
-                        />
-                        {
-                          selectedContent[
-                            localizationKeys.iAgreetotheTermsConditions
-                          ]
-                        }
-                      </label>
-                    </div>
-                  </div>
+                  <TermsAndConditions
+                    isFooter={false}
+                  />
                   <div className="">
                     <Button
                       loading={isLoading}

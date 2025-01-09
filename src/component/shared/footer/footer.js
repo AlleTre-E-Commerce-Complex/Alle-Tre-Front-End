@@ -22,12 +22,14 @@ import api from "api";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import toast from "react-hot-toast";
+import TermsAndConditions from "../terms-and-condition/TermsAndCondition";
 
 const Footer = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
   const [email, setEmail] = useState("");
+
   const { run: runNewSubscriber, isLoading: isLoadingrunNewSubscriber } =
     useAxios([]);
   const HandleSubscribe = () => {
@@ -172,8 +174,11 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-[#6e1f30] h-[28px] text-gray-med/50 flex justify-center items-center">
-        {selectedContent[localizationKeys.allRightsReserved]}
+      <div className="bg-[#6e1f30] h-[20x] text-gray-med/50 flex justify-center items-center">
+       
+        <TermsAndConditions
+          isFooter={true} 
+        />
       </div>
     </div>
   );

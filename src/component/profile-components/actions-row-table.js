@@ -372,12 +372,13 @@ const ActionsRowTable = ({
         {isBidsButtons ? (
           <div className="flex gap-x-2">
             {status === "WAITING_FOR_DELIVERY" && (
-              <button
-                onClick={() => setDeleveryIssueModal(true)}
-                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-              >
-                {selectedContent[localizationKeys.AnyIssueWithDelivery]}
-              </button>
+             <button
+             onClick={() => setDeleveryIssueModal(true)}
+             className="border-primary border-[1px] text-primary text-sm font-normal sm:w-auto w-full sm:h-8 h-10 min-w-[145px] max-w-full rounded-lg sm:mt-14 mt-5"
+           >
+             {selectedContent[localizationKeys.AnyIssueWithDelivery]}
+           </button>
+           
             )}
             {status === "WAITING_FOR_DELIVERY" && (
               <button

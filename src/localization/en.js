@@ -126,6 +126,8 @@ const en = {
     "By subscribing, you'll never miss a beat.",
   [localizationKeys.Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales]:
     "Stay informed about our latest product arrivals, special promotions, and seasonal sales.",
+  [localizationKeys.termsAndCondition]: "Terms and Condition",
+  [localizationKeys.iAcceptThe]: "I accept the",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
@@ -178,6 +180,9 @@ const en = {
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "Are you sure you want to delete this draft",
   [localizationKeys.cancel]: "Cancel",
+  [localizationKeys.logOut]: "Log Out",
+  [localizationKeys.areYouSureYouWantToLogOut]: "Are you sure you want to log out?",
+  [localizationKeys.confirmLogout]: "Confirm Logout",
   [localizationKeys.skip]: "Skip",
   [localizationKeys.YesISentIt]: "Yes, I  sent it",
   [localizationKeys.yesDelete]: "Yes,delete",
