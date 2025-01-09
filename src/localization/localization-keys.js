@@ -113,6 +113,8 @@ const localizationKeys = {
   Bysubscribingyounevermissbeat: "Bysubscribingyounevermissbeat",
   Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales:
     "Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales",
+    termsAndCondition: "termsAndCondition",
+    iAcceptThe: "iAcceptThe",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -159,6 +161,9 @@ const localizationKeys = {
   errorDelete: "errorDelete",
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
   cancel: "cancel",
+  logOut: "logOut",
+  areYouSureYouWantToLogOut: "areYouSureYouWantToLogOut",
+  confirmLogout: "confirmLogout",
   skip: "skip",
   YesISentIt: "YesIHaveSentIt",
   yesDelete: "yesDelete",

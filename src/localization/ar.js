@@ -124,6 +124,9 @@ const ar = {
     "من خلال الاشتراك ، لن يفوتك أي شيء أبدًا.",
   [localizationKeys.Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales]:
     "ابق على اطلاع بأحدث المنتجات التي وصلتنا ، والعروض الترويجية الخاصة ، والمبيعات الموسمية.",
+  [localizationKeys.termsAndCondition]: "الشروط والأحكام",
+  [localizationKeys.iAcceptThe]: "انا اقبل",
+
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
@@ -176,6 +179,10 @@ const ar = {
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "هل أنت متأكد أنك تريد حذف هذه المسودة",
   [localizationKeys.cancel]: "إلغاء",
+  [localizationKeys.logOut]: "تسجيل الخروج",
+  [localizationKeys.areYouSureYouWantToLogOut]:
+    "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  [localizationKeys.confirmLogout]: "تأكيد تسجيل الخروج",
   [localizationKeys.skip]: "يتخطى",
   [localizationKeys.YesISentIt]: "نعم لقد ارسلته",
   [localizationKeys.yesDelete]: "نعم ، احذف",
@@ -330,7 +337,7 @@ const ar = {
     "لا توجد مزادات حاليًا. قم بإجراء مزادك الأول على الفور.",
   [localizationKeys.totalAuctions]: "إجمالي المزادات",
   [localizationKeys.active]: "نشط",
-  [localizationKeys.cancelled]: "تم الإلغاء",
+  [localizationKeys.cancelled]: "ملغي",
   [localizationKeys.total]: "إجمالي",
   [localizationKeys.totalActive]: "إجمالي المزادات النشطة ..",
   [localizationKeys.totalCancel]: "إجمالي إلغاء المزادات.",
@@ -394,7 +401,7 @@ const ar = {
   [localizationKeys.completePayment]: "إتمام الدفع",
   [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
     "لا توجد عروض حتى الآن في انتظار مزادات التسليم في الوقت الحالي",
-  [localizationKeys.confirmDelivery]: "تأكيد التسليم",
+  [localizationKeys.confirmDelivery]: "تأكيد الاستلام",
   [localizationKeys.AnyIssueWithDelivery]: "هل هناك أي مشكلة مع التسليم؟",
   [localizationKeys.sellerContactDetails]: "تفاصيل الاتصال بالبائع",
   [localizationKeys.buyerContactDetails]: "تفاصيل الاتصال بالمشتري",
