@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Swiper from "swiper";
-import AnglesRight from "../../../src/assets/icons/angles-right-icon.png";
-import AnglesLeft from "../../../src/assets/icons/angles-left-icon.png";
+import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
+import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
 import "./auctions-slider.scss";
 import AuctionCard from "./auction-card";
 import { useLocation } from "react-router-dom";
@@ -15,7 +15,6 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
-import upCompingEmty from "../../../src/assets/img/up-comping-emty-state.png";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import BannerSingle from "./BannerSingle";
 

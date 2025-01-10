@@ -136,6 +136,7 @@ const ar = {
   [localizationKeys.soldOut]: "نفذ",
   [localizationKeys.expired]: "منتهي",
   [localizationKeys.inProgress]: "في تَقَدم",
+  [localizationKeys.close]: "يغلق",
   // Breadcrumb
   [localizationKeys.home]: "الصفحة الرئيسية",
   [localizationKeys.productDetails]: "تفاصيل المنتج",
@@ -394,6 +395,11 @@ const ar = {
   [localizationKeys.completed]: "مكتمل",
   [localizationKeys.ThereIsNoBidsYetInProgressAuctionsRightNow]:
     "لا توجد عطاءات حتى الآن مزادات قيد التقدم في الوقت الحالي",
+  [localizationKeys.youHaveNotPlacedAnyBidsAtThisTime]:
+    "لم تقم بوضع أي عروض في هذا الوقت",
+  [localizationKeys.startBidding]: "بدء المزايدة",
+  [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:
+    "لا توجد عروض نشطة في الوقت الحالي. قم بتقديم عرضك الأول الآن!",
   [localizationKeys.increaseBid]: "زيادة العطاء",
   [localizationKeys.inPrsubmitNewBidogress]: "تقديم عطاء جديد",
   [localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow]:
@@ -402,7 +408,7 @@ const ar = {
   [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
     "لا توجد عروض حتى الآن في انتظار مزادات التسليم في الوقت الحالي",
   [localizationKeys.confirmDelivery]: "تأكيد الاستلام",
-  [localizationKeys.AnyIssueWithDelivery]: "هل هناك أي مشكلة مع التسليم؟",
+  [localizationKeys.AnyCompliants]: "أي شكاوى؟",
   [localizationKeys.sellerContactDetails]: "تفاصيل الاتصال بالبائع",
   [localizationKeys.buyerContactDetails]: "تفاصيل الاتصال بالمشتري",
   [localizationKeys.unSubscribe]: "الغاء الاشتراك",
@@ -428,7 +434,7 @@ const ar = {
   [localizationKeys.Others]: "آحرون؟",
   [localizationKeys.tellUsYourProblem]: "أخبرنا مشكلتك..؟",
   [localizationKeys.Description]: "وصف",
-  [localizationKeys.UploadYourImageshere]: "قم بتحميل صورتك هنا",
+  [localizationKeys.uploadImages]: "تحميل الصور",
   [localizationKeys.YouCanSelectMultipleImagestogether]:
     "يمكنك تحديد صور متعددة معًا",
   [localizationKeys.Submit]: "يُقدِّم",

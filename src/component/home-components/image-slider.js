@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import anglesRightIcon from "../../../src/assets/icons/angles-right-icon.png";
-import anglesLeftIcon from "../../../src/assets/icons/angles-left-icon.png";
+import anglesRightIcon from "../../../src/assets/icons/arrow-right.svg";
+import anglesLeftIcon from "../../../src/assets/icons/arrow-left.svg";
 import { ReactComponent as ScrollingIcon } from "../../../src/assets/icons/scrolling-icon.svg";
 
 import "./image-slider.css";

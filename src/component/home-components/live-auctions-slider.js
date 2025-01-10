@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Swiper from "swiper";
-import AnglesRight from "../../../src/assets/icons/angles-right-icon.png";
-import AnglesLeft from "../../../src/assets/icons/angles-left-icon.png";
+import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
+import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
 import "./auctions-slider.scss";
 import AuctionCard from "./auction-card";
 import { useLocation } from "react-router-dom";
@@ -11,18 +11,13 @@ import { useState } from "react";
 import { authAxios } from "../../config/axios-config";
 import axios from "axios";
 import api from "../../api";
-import { Dimmer, Loader } from "semantic-ui-react";
-import { useLanguage } from "../../context/language-context";
-import content from "../../localization/content";
-import localizationKeys from "../../localization/localization-keys";
+
 import { useSelector } from "react-redux";
-import liveEmty from "../../../src/assets/img/live-emty-state.png";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-import BannerSingle from "./BannerSingle";
+
 
 const LiveAuctionsSlider = ({ type }) => {
-  const [lang] = useLanguage("");
-  const selectedContent = content[lang];
+
+ 
   const { search } = useLocation();
   const { user } = useAuthState();
 

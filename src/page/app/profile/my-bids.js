@@ -9,7 +9,7 @@ import TotalMyBids from "../../../component/profile-components/total-my-bids";
 import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
 
-import { ReactComponent as BidIcon } from "../../../../src/assets/icons/no-Bids-icon.svg";
+import { ReactComponent as BidIcon } from "../../../../src/assets/icons/Bids-icon.svg";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
@@ -82,7 +82,7 @@ const MyBids = () => {
             <div>
               <BidIcon className="mx-auto" />
               <p className="text-gray-dark text-center mt-12 ">
-                {selectedContent[localizationKeys.Youarenotbiddingonanyitems]}
+                {selectedContent[localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]}
               </p>
               <div className="flex justify-center mt-8">
                 <button
@@ -91,7 +91,7 @@ const MyBids = () => {
                 >
                   {
                     selectedContent[
-                      localizationKeys.Checkactiveauctionstostartbidding
+                      localizationKeys.startBidding
                     ]
                   }
                 </button>

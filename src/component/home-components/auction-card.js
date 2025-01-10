@@ -80,13 +80,13 @@ const AuctionCard = ({
   // } :
   // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
   // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
-  
+
   const formattedBid = formatCurrency(
     latestBid || CurrentBid || startBidAmount
   );
-  
+
   const startDate = useCountdown(StartDate);
- 
+
   const formattedstartDate = `${startDate.days} ${
     selectedContent[localizationKeys.days]
   } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
@@ -110,7 +110,7 @@ const AuctionCard = ({
           setlatestBid(data.bidAmount);
         }
       };
-      socket.on('bid:submitted',handleBidSubmitted)
+      socket.on("bid:submitted", handleBidSubmitted);
       return () => {
         socket.off("bid:submitted", handleBidSubmitted);
       };
@@ -133,7 +133,6 @@ const AuctionCard = ({
           // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
           url: `${getDomain()}/alletre/home/${auctionId}/details`,
         });
-      
       } catch (error) {
         console.error("Error sharing post:", error);
       }
@@ -209,49 +208,53 @@ const AuctionCard = ({
     } else history.push(routes.app.homeDetails(id));
   };
 
-    // Check if startDate has reached zero
-    const isStartDateZero =
+  // Check if startDate has reached zero
+  const isStartDateZero =
     startDate.days === 0 &&
     startDate.hours === 0 &&
     startDate.minutes === 0 &&
     startDate.seconds === 0;
 
-    const isEndDateZero =
+  const isEndDateZero =
     timeLeft.days === 0 &&
     timeLeft.hours === 0 &&
     timeLeft.minutes === 0 &&
     timeLeft.seconds === 0;
   // Prevent rendering if startDate is zero
-  if (status === 'IN_SCHEDULED' && isStartDateZero) {
+  if (status === "IN_SCHEDULED" && isStartDateZero) {
     return null;
-  } else if (status === 'ACTIVE' && isEndDateZero) {
-    return null
+  } else if (status === "ACTIVE" && isEndDateZero) {
+    return null;
   }
 
   return (
     <div className={className}>
       <div className="group lg:w-[272px] l:w-[367px]  md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
         <div className="lg:w-[240px] l:w-[335px]  md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden">
-          <div className="absolute top-3 right-1 z-20 flex items-center space-x-2">
-            {!isMyAuction && (
-              <button
-                onClick={() => handelAddNewWatshlist(auctionId)}
-                className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+          <div className="relative group">
+            {/* Card Content */}
+            <div className="absolute top-3 right-1 z-20 flex items-center space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {!isMyAuction && (
+                <button
+                  onClick={() => handelAddNewWatshlist(auctionId)}
+                  className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl w-10 h-10 md:w-12 md:h-12 hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+                >
+                  {isWatshlist ? (
+                    <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-2xl md:text-2xl" />
+                  ) : (
+                    <BsBookmark className="text-primary group-hover/watchlist:text-white text-2xl md:text-2xl" />
+                  )}
+                </button>
+              )}
+              <div
+                onClick={handleShare}
+                className="border-primary border-2 border-solid bg-white rounded-xl w-10 h-10 md:w-12 md:h-12 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
               >
-                {isWatshlist ? (
-                  <BsBookmarkFill className="text-primary  group-hover/watchlist:text-white text-2xl md:text-3xl" />
-                ) : (
-                  <BsBookmark className="text-primary  group-hover/watchlist:text-white text-2xl md:text-3xl" />
-                )}
-              </button>
-            )}
-            <div
-              onClick={handleShare}
-              className="border-primary border-2 border-solid bg-white rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary  group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
-            >
-              <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
+                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-2xl" />
+              </div>
             </div>
           </div>
+
           <img
             onClick={() => handelGoDetails(auctionId)}
             className="w-full h-full mx-auto  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
