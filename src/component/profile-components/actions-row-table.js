@@ -21,7 +21,6 @@ import ContactDetails from "component/shared/contactDetailsModal/ContactDetails"
 //   import("component/shared/contactDetailsModal/ContactDetails")
 // );
 
-
 const ActionsRowTable = ({
   isBidsButtons,
   buttonActions,
@@ -51,7 +50,7 @@ const ActionsRowTable = ({
   const selectedContent = content[lang];
   const history = useHistory();
   const [openContactDetailsModal, setContactDetailsModal] = useState(false);
-  const [userType,setUserType] = useState('')
+  const [userType, setUserType] = useState("");
   const [openDeliveryIssueModal, setDeleveryIssueModal] = useState(false);
   const [openBuyerObjectionModal, setBuyerObjectionModal] = useState(false);
   const [openDeliverySentModal, setDeliverySentModal] = useState(false);
@@ -72,11 +71,10 @@ const ActionsRowTable = ({
     ending_Time.minutes
   } ${selectedContent[localizationKeys.min]}`;
 
-  const handleContactDetailsModal = (userType)=>{
-    console.log('userType at actions row table: ',userType)
-    setUserType(userType)
-    setContactDetailsModal(true)
-  }
+  const handleContactDetailsModal = (userType) => {
+    setUserType(userType);
+    setContactDetailsModal(true);
+  };
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
       <div className="flex flex-wrap justify-between overflow-clip ">
@@ -372,23 +370,22 @@ const ActionsRowTable = ({
         {isBidsButtons ? (
           <div className="flex gap-x-2">
             {status === "WAITING_FOR_DELIVERY" && (
-             <button
-             onClick={() => setDeleveryIssueModal(true)}
-             className="border-primary border-[1px] text-primary text-sm font-normal sm:w-auto w-full sm:h-8 h-10 min-w-[145px] max-w-full rounded-lg sm:mt-14 mt-5"
-           >
-             {selectedContent[localizationKeys.AnyIssueWithDelivery]}
-           </button>
-           
+              <button
+                onClick={() => setDeleveryIssueModal(true)}
+                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5"
+              >
+                {selectedContent[localizationKeys.AnyCompliants]}
+              </button>
             )}
             {status === "WAITING_FOR_DELIVERY" && (
               <button
-                onClick={()=>handleContactDetailsModal('SELLER')}
+                onClick={() => handleContactDetailsModal("SELLER")}
                 className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
               >
                 {selectedContent[localizationKeys.sellerContactDetails]}
               </button>
             )}
-           
+
             {/* <button
               onClick={buttonActions}
               disabled={
@@ -464,9 +461,9 @@ const ActionsRowTable = ({
                 {selectedContent[localizationKeys.cancelTheAuction]}
               </button>
             )}
-              {status === "SOLD" && (
+            {status === "SOLD" && (
               <button
-                onClick={()=>handleContactDetailsModal('BUYER')}
+                onClick={() => handleContactDetailsModal("BUYER")}
                 className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
               >
                 {selectedContent[localizationKeys.buyerContactDetails]}

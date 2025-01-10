@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Swiper from "swiper";
-import AnglesRight from "../../../src/assets/icons/angles-right-icon.png";
-import AnglesLeft from "../../../src/assets/icons/angles-left-icon.png";
+import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
+import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
 import "./auctions-slider.scss";
 import AuctionCard from "./auction-card";
 import { useLocation } from "react-router-dom";

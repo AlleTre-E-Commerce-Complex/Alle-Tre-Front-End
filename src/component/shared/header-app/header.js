@@ -31,8 +31,8 @@ import AddLocationModel from "../../../component/create-auction-components/add-l
 import { MdOutlineNotifications } from "react-icons/md";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
-import { getFCMToken } from "../../../config/firebase-config";
-import { getMessaging, onMessage } from "firebase/messaging";
+// import { getFCMToken } from "../../../config/firebase-config";
+// import { getMessaging, onMessage } from "firebase/messaging";
 const Header = ({ SetSid }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -40,14 +40,14 @@ const Header = ({ SetSid }) => {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
-  const [notificationData, setNotificationData] = useState(null);
+  // const [notificationData, setNotificationData] = useState(null);
   const [serchShow, setSerchShow] = useState(false);
   const [open, setOpen] = useState(false);
   const { run } = useAxios();
   const { user } = useAuthState();
   const [name, setTitle] = useFilter("title", "");
 
-  const [pushEnabled, setPushEnabled] = useState(false);
+  // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   const { logout } = useAuthState();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false); // Use ref to persist socket instance
@@ -167,10 +167,16 @@ const Header = ({ SetSid }) => {
       ) {
         console.log("ON_ITEM_BUY_NOW");
         setNotificationCount((prev) => prev + 1);
-      } else if(data.status === "ON_CONFIRM_DELIVERY" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_CONFIRM_DELIVERY" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_CONFIRM_DELIVERY");
         setNotificationCount((prev) => prev + 1);
-      } else if(data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" && data.usersId === user?.id){
+      } else if (
+        data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" &&
+        data.usersId === user?.id
+      ) {
         console.log("ON_AUCTION_CANCELLED_BY_ADMIN");
         setNotificationCount((prev) => prev + 1);
       }
@@ -449,7 +455,7 @@ const Header = ({ SetSid }) => {
               onClick={() => history.push(routes.app.support)}
             /> */}
             <div className="my-auto flex items-center -mt-3">
-              <DropdownLang className=" Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
+              <DropdownLang className=" Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 min-w-[100px]" />
             </div>
           </div>
           <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">

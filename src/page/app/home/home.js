@@ -23,13 +23,13 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import ShowFilterSections from "../../../component/home-components/show-filter-sections";
-import listicon from "../../../../src/assets/icons/list-icon.png";
-import menuicon from "../../../../src/assets/icons/menu-icon.png";
+import listicon from "../../../../src/assets/icons/bullet.svg";
+import menuicon from "../../../../src/assets/icons/grid-06.svg";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../component/home-components/auction-card-list";
 import BannerTop from "component/home-components/BannerTop";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
-import { welcomeBonus } from 'redux-store/welcom-bonus-slice';
+import { welcomeBonus } from "redux-store/welcom-bonus-slice";
 // import { useSocket } from "context/socket-context";
 import { useSocket } from "context/socket-context";
 
@@ -46,7 +46,7 @@ const Home = () => {
     (state) => state.welcomeBonus.welcomeBonus
   );
   const [isGrid, setIsGrid] = useState(true);
-  const socket = useSocket()
+  const socket = useSocket();
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState([]);
   const [totalPages, setTotalPages] = useState();
@@ -61,50 +61,43 @@ const Home = () => {
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
 
-
-  //socket listening for new auction 
+  //socket listening for new auction
   useEffect(() => {
     if (!socket) return;
-  
+
     const handleNewAuction = (data) => {
-      console.log('New auction listed...', data);
       setMainAuctions((prev) => [
         ...prev, // Spread the previous state
         data.auction, // Add the new auction
       ]);
     };
-  
+
     const handleAuctionCancelled = (data) => {
-      console.log('Auction cancelled...', data);
       setMainAuctions((prev) =>
         prev.filter((auction) => auction.id !== data.auctionId)
       );
     };
-  
+
     // Register socket listeners
-    socket.on('auction:newAuctionListed', handleNewAuction);
-    socket.on('auction:cancelled', handleAuctionCancelled);
-  
+    socket.on("auction:newAuctionListed", handleNewAuction);
+    socket.on("auction:cancelled", handleAuctionCancelled);
+
     // Cleanup to avoid memory leaks
     return () => {
-      socket.off('auction:newAuctionListed', handleNewAuction);
-      socket.off('auction:cancelled', handleAuctionCancelled);
+      socket.off("auction:newAuctionListed", handleNewAuction);
+      socket.off("auction:cancelled", handleAuctionCancelled);
     };
   }, [socket]);
-  
-  
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isWelcomeBonus) {
       setOpenWelcomeBonusModal(true);
-      dispatch(welcomeBonus(false))
+      dispatch(welcomeBonus(false));
     }
-  },[isWelcomeBonus])
+  }, [isWelcomeBonus]);
   useEffect(() => {
-    
     if (search.includes("page") && search.includes("perPage"))
       if (!user) {
-        console.log('search when not user:',search)
         runMainAuctions(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -123,8 +116,6 @@ const Home = () => {
       } else {
         runMainAuctions(
           authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-            console.log('search when user:',search)
-            console.log("response of runMainAuctions when user have", res);
             setMainAuctions(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
@@ -132,7 +123,6 @@ const Home = () => {
         runSponsoredAuctions(
           authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
             SetSponsoredAuctions(res?.data?.data);
-            console.log("response of SetSponsoredAuctions when user have", res);
           })
         );
       }
@@ -194,18 +184,24 @@ const Home = () => {
           {isGrid ? (
             <button
               onClick={() => setIsGrid((p) => !p)}
-              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
               <img src={menuicon} alt="menuiconicon" />
-              <p> {selectedContent[localizationKeys.Grid]}</p>
+              <p className="flex items-center">
+                {" "}
+                {selectedContent[localizationKeys.Grid]}
+              </p>
             </button>
           ) : (
             <button
               onClick={() => setIsGrid((p) => !p)}
-              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
               <img src={listicon} alt="listicon" />
-              <p> {selectedContent[localizationKeys.List]}</p>
+              <p className="flex items-center">
+                {" "}
+                {selectedContent[localizationKeys.List]}
+              </p>
             </button>
           )}
         </div>

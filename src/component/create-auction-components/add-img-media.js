@@ -172,7 +172,7 @@ const AddImgMedia = ({
                 <div className="relative group">
                   <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <button
-                      className="bg-white hover:bg-red-500 hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
+                      className="bg-white hover:bg-gray-med hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
                       onClick={() => setFile(null)}
                     >
                       <img className="w-4 h-4" src={TrashIcon} alt="Remove" />

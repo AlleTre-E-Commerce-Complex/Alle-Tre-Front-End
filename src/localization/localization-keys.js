@@ -113,8 +113,9 @@ const localizationKeys = {
   Bysubscribingyounevermissbeat: "Bysubscribingyounevermissbeat",
   Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales:
     "Stayinformedaboutourlatestproductarrivalsspecialpromotionsandseasonalsales",
-    termsAndCondition: "termsAndCondition",
-    iAcceptThe: "iAcceptThe",
+  termsAndCondition: "termsAndCondition",
+  iAcceptThe: "iAcceptThe",
+  close: "close",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -143,7 +144,6 @@ const localizationKeys = {
   feesRefundedAfterAuctionCompletion: "feesRefundedAfterAuctionCompletion",
   ifYouWantToCheckAuctionsPolicyYouCanCheck:
     "ifYouWantToCheckAuctionsPolicyYouCanCheck",
-  paymentMethod: "paymentMethod",
   viewPendingPayments: "viewPendingPayments",
   continuePayment: "continuePayment",
   yourPaymentDetailsAreSaved: "yourPaymentDetailsAreSaved",
@@ -152,7 +152,7 @@ const localizationKeys = {
   auctionEndingDate: "auctionEndingDate",
   inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction:
     "inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction",
-    pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit:
+  pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit:
     "pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit",
   // create auctions
   drafts: "drafts",
@@ -350,11 +350,13 @@ const localizationKeys = {
   // mybids
   Youarenotbiddingonanyitems: "Youarenotbiddingonanyitems",
   Checkactiveauctionstostartbidding: "Checkactiveauctionstostartbidding",
-  inProgress: "inProgress",
   waitingForDelivery: "waitingForDelivery",
   completed: "completed",
   ThereIsNoBidsYetInProgressAuctionsRightNow:
     "ThereIsNoBidsYetInProgressAuctionsRightNow",
+  youHaveNotPlacedAnyBidsAtThisTime: "youHaveNotPlacedAnyBidsAtThisTime",
+  startBidding: "startBidding",
+  thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow:"thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow",
   increaseBid: "increaseBid",
   submitNewBid: " submitNewBid",
   ThereIsNoBidsYetPendingAuctionsRightNow:
@@ -363,7 +365,7 @@ const localizationKeys = {
   ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow:
     "ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow",
   confirmDelivery: "confirmDelivery",
-  AnyIssueWithDelivery: "AnyIssueWithDelivery",
+  AnyCompliants: "AnyCompliantsen",
   sellerContactDetails: "sellerContactDetails",
   unSubscribe: "unSubscribe",
   buyerContactDetails: "buyerContactDetails",
@@ -388,7 +390,7 @@ const localizationKeys = {
   Others: "Others",
   tellUsYourProblem: "tellUsYourProblem",
   Description: "Description",
-  UploadYourImageshere: "UploadYourImageshere",
+  uploadImages: "uploadImages",
   YouCanSelectMultipleImagestogether: "YouCanSelectMultipleImagestogether",
   Submit: "Submit",
   PleaseSelectAnyOption: "PleaseSelectAnyOption",

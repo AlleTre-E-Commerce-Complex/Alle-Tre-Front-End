@@ -128,6 +128,7 @@ const en = {
     "Stay informed about our latest product arrivals, special promotions, and seasonal sales.",
   [localizationKeys.termsAndCondition]: "Terms and Condition",
   [localizationKeys.iAcceptThe]: "I accept the",
+  [localizationKeys.close]: "Close",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
@@ -181,7 +182,8 @@ const en = {
     "Are you sure you want to delete this draft",
   [localizationKeys.cancel]: "Cancel",
   [localizationKeys.logOut]: "Log Out",
-  [localizationKeys.areYouSureYouWantToLogOut]: "Are you sure you want to log out?",
+  [localizationKeys.areYouSureYouWantToLogOut]:
+    "Are you sure you want to log out?",
   [localizationKeys.confirmLogout]: "Confirm Logout",
   [localizationKeys.skip]: "Skip",
   [localizationKeys.YesISentIt]: "Yes, I  sent it",
@@ -396,6 +398,10 @@ const en = {
   [localizationKeys.completed]: "Completed",
   [localizationKeys.ThereIsNoBidsYetInProgressAuctionsRightNow]:
     "There is no bids yet in progress auctions right now",
+  [localizationKeys.youHaveNotPlacedAnyBidsAtThisTime]:
+    "You have not placed any bids at this time",
+  [localizationKeys.startBidding]: "Starting bidding",
+  [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:"There are no active bids at the moment. Place your first bid now!",
   [localizationKeys.increaseBid]: "Increase Bid",
   [localizationKeys.inPrsubmitNewBidogress]: "Submit new bid",
   [localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow]:
@@ -404,7 +410,7 @@ const en = {
   [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
     "There is no bids yet on waiting for delivery auctions right now",
   [localizationKeys.confirmDelivery]: "Confirm delivery",
-  [localizationKeys.AnyIssueWithDelivery]: "Any issue with delivery?",
+  [localizationKeys.AnyCompliants]: "Any complaints ?",
   [localizationKeys.sellerContactDetails]: "Seller contact details",
   [localizationKeys.buyerContactDetails]: "Buyer contact details",
   [localizationKeys.unSubscribe]: "Unsubscribe",
@@ -430,7 +436,7 @@ const en = {
   [localizationKeys.Others]: "Others?",
   [localizationKeys.tellUsYourProblem]: "Tell us your problem..?",
   [localizationKeys.Description]: "Description",
-  [localizationKeys.UploadYourImageshere]: "Upload Your Image here",
+  [localizationKeys.uploadImages]: "Upload Images",
   [localizationKeys.YouCanSelectMultipleImagestogether]:
     "You can select multiple images together",
   [localizationKeys.Submit]: "Submit",

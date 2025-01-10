@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  useHistory,
-  useLocation,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Bids-icon.svg";
 import routes from "../../routes";
 import ActionsRowTable from "./actions-row-table";
@@ -26,7 +23,6 @@ const InProgressBids = () => {
   const [activeAuctionData, setActiveAuctionData] = useState();
   const [totalPages, setTotalPages] = useState();
 
-  const history = useHistory();
   const { search } = useLocation();
 
   const [openIncreaseModel, setOpenIncreaseModel] = useState(false);
@@ -68,7 +64,7 @@ const InProgressBids = () => {
             <p className="text-gray-dark text-center mt-8 ">
               {
                 selectedContent[
-                  localizationKeys.ThereIsNoBidsYetInProgressAuctionsRightNow
+                  localizationKeys.youHaveNotPlacedAnyBidsAtThisTime
                 ]
               }
             </p>

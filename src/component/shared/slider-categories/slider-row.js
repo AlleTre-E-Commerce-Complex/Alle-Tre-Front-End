@@ -1,15 +1,11 @@
-import { React, useEffect, useRef, useState } from "react";
-import AnglesRight from "../../../../src/assets/icons/angles-right-icon.png";
-import AnglesLeft from "../../../../src/assets/icons/angles-left-icon.png";
+import { React, useEffect, useRef } from "react";
+import AnglesRight from "../../../../src/assets/icons/arrow-right.svg";
+import AnglesLeft from "../../../../src/assets/icons/arrow-left.svg";
 import Category from "./Category";
 import Swiper from "swiper";
 import useGetGatogry from "../../../hooks/use-get-category";
-import { useLanguage } from "../../../context/language-context";
-import content from "../../../localization/content";
 
 const SliderRow = () => {
-  const [lang] = useLanguage();
-  const selectedContent = content[lang];
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const swiperOptions = {
     cssMode: true,

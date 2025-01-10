@@ -5,8 +5,8 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Dimmer } from "semantic-ui-react";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
-import listicon from "../../../../src/assets/icons/list-icon.png";
-import menuicon from "../../../../src/assets/icons/menu-icon.png";
+import listicon from "../../../../src/assets/icons/bullet.svg";
+import menuicon from "../../../../src/assets/icons/grid-06.svg";
 import api from "../../../api";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import AuctionCard from "../../../component/home-components/auction-card";
@@ -47,9 +47,7 @@ const Categories = () => {
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
-      
       if (user) {
-        console.log('category search when not user:',search)
         runCategories(
           authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -58,7 +56,6 @@ const Categories = () => {
           })
         );
       } else {
-        console.log('category search when user:',search)
         runCategories(
           axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
             setMainAuctions(res?.data?.data);
@@ -132,18 +129,22 @@ const Categories = () => {
           {isGrid ? (
             <button
               onClick={() => setIsGrid((p) => !p)}
-              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
-              <img src={menuicon} alt="menuiconicon" />
-              <p> {selectedContent[localizationKeys.Grid]}</p>
+              <img src={menuicon} alt="menuicon" className="h-full" />
+              <p className="flex items-center">
+                {selectedContent[localizationKeys.Grid]}
+              </p>
             </button>
           ) : (
             <button
               onClick={() => setIsGrid((p) => !p)}
-              className="flex gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
             >
               <img src={listicon} alt="listicon" />
-              <p> {selectedContent[localizationKeys.List]}</p>
+              <p className="flex items-center">
+                {selectedContent[localizationKeys.List]}
+              </p>
             </button>
           )}
         </div>

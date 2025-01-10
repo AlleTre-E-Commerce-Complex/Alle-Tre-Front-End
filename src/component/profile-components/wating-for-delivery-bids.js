@@ -5,7 +5,7 @@ import {
 } from "react-router-dom/cjs/react-router-dom.min";
 import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Bids-icon.svg";
 import routes from "../../routes";
 import ActionsRowTable from "./actions-row-table";

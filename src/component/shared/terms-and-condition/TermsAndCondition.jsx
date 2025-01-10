@@ -1049,7 +1049,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
             <div className="p-6 border-t flex justify-end bg-gray-50">
               {Footer ? (
                 <button
-                  className="px-4 py-2 text-sm font-bold text-primary bg-primary-veryLight border border-primary shadow hover:bg-primary hover:text-white transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+                  className="px-4 py-2 text-sm font-bold text-white rounded-lg bg-primary border border-primary shadow hover:bg-primary-dark hover:text-white  "
                   onClick={closeModal}
                 >
                   {selectedContent[localizationKeys.close]}
