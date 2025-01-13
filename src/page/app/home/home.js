@@ -34,7 +34,6 @@ import { welcomeBonus } from "redux-store/welcom-bonus-slice";
 import { useSocket } from "context/socket-context";
 
 const Home = () => {
-  console.log("Home");
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { search } = useLocation();
