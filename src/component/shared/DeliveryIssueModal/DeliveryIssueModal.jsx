@@ -9,6 +9,9 @@ import localizationKeys from "../../../localization/localization-keys";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import api from "api";
+import imageCompression from "browser-image-compression";
+import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import { Dimmer } from "semantic-ui-react";
 
 const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
   const [lang] = useLanguage("");
@@ -48,39 +51,48 @@ const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
     },
   ];
 
-  const { run: runDeleveryIssue } = useAxios([]);
+  const { run, isLoading } = useAxios([]);
 
-  const submitDeleveryIssueHandler = () => {
-    if (issue === "" || description === "") {
-      toast.error(
-        issue === ""
-          ? selectedContent[localizationKeys.PleaseSelectAnyOption]
-          : selectedContent[localizationKeys.PleaseGiveTheDescription]
-      );
-    } else {
-      const formData = new FormData();
-      images.forEach((image) => formData.append("images", image));
-      formData.append("message", `${issue} - Description: ${description}`);
-      formData.append("auctionId", auctionId);
-      formData.append("auctionStatus", "WAITING_FOR_DELIVERY");
+  const submitDeleveryIssueHandler = async () => {
+    if (!issue || !description) {
+      const errorMessage = !issue
+        ? selectedContent[localizationKeys.PleaseSelectAnyOption]
+        : selectedContent[localizationKeys.PleaseGiveTheDescription];
+      toast.error(errorMessage);
+      return;
+    }
 
-      runDeleveryIssue(
-        authAxios.post(api.app.auctions.deliveryIssue, formData).then((res) => {
+    const formData = new FormData();
+    images.forEach((image) => formData.append("images", image));
+    formData.append("message", `${issue} - Description: ${description}`);
+    formData.append("auctionId", auctionId);
+    formData.append("auctionStatus", "WAITING_FOR_DELIVERY");
+    run(
+      authAxios
+        .post(api.app.auctions.deliveryIssue, formData)
+        .then((res) => {
           if (res?.data?.success) {
             toast.success(
               selectedContent[localizationKeys.ThankYouForYourSubmission]
             );
             onCancelHandler();
           } else {
-            toast.error(
+            throw new Error(
               selectedContent[
                 localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater
               ]
             );
           }
         })
-      );
-    }
+        .catch((error) => {
+          toast.error(
+            error.message ||
+              selectedContent[
+                localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater
+              ]
+          );
+        })
+    );
   };
 
   const onCancelHandler = () => {
@@ -99,16 +111,31 @@ const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
     setShowSelecImageInput(value !== "other");
   };
 
-  const handleSelectImage = (e) => {
+  const handleSelectImage = async (e) => {
     try {
       const files = Array.from(e.target.files);
       if (files.length + images.length > 5) {
         toast.error("You can upload a maximum of 5 images.");
-      } else {
-        setImages((prevImages) => [...prevImages, ...files]);
+        return;
       }
+
+      const compressedFiles = await Promise.all(
+        files.map(async (file) => {
+          const compressed = await compressImage(file);
+          // console.log(
+          //   `Original size: ${(file.size / 1024 / 1024).toFixed(
+          //     2
+          //   )} MB, Compressed size: ${(compressed.size / 1024 / 1024).toFixed(
+          //     2
+          //   )} MB`
+          // );
+          return compressed;
+        })
+      );
+
+      setImages((prevImages) => [...prevImages, ...compressedFiles]);
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Error while uploading images. Please try again.");
     }
   };
 
@@ -119,12 +146,52 @@ const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
   const handleTextareaChange = (e) => {
     setDescription(e.target.value);
   };
+
+  const compressImage = async (file) => {
+    try {
+      if (file.size <= 800 * 1024) {
+        return file;
+      }
+
+      const options = {
+        maxSizeMB: 0.8,
+        maxWidthOrHeight: 1920,
+        initialQuality: 0.7,
+        useWebWorker: true,
+        fileType: "image/jpeg",
+      };
+
+      let compressedFile = await imageCompression(file, options);
+      if (compressedFile.size > file.size * 0.9) {
+        options.maxSizeMB = 0.5;
+        options.initialQuality = 0.6;
+        compressedFile = await imageCompression(file, options);
+      }
+
+      return new File([compressedFile], file.name, {
+        type: "image/jpeg",
+        lastModified: Date.now(),
+      });
+    } catch (error) {
+      return file;
+    }
+  };
+
+  const { isLoading: isLoadingSubmit } = useAxios([]);
   return (
     <Modal
       className="sm:w-[90%] w-full h-auto bg-transparent scale-in"
       onClose={onCancelHandler}
       open={open}
     >
+      <Dimmer
+        className="fixed w-full h-full top-0 bg-black/10"
+        active={isLoading || isLoadingSubmit}
+        inverted
+      >
+        {/* <Loader active /> */}
+        <LodingTestAllatre />
+      </Dimmer>
       <div className="w-full max-w-[500px] h-auto mx-auto rounded-2xl bg-white border-2 border-primary p-4">
         <div
           className={`text-black font-semibold text-xl mb-4 ${
@@ -227,6 +294,7 @@ const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
           <button
             className="bg-primary hover:bg-primary-dark border border-primary-light text-white py-2 px-3 rounded-md my-2 w-32 h-[40px]"
             onClick={submitDeleveryIssueHandler}
+            loading={isLoadingSubmit}
           >
             {selectedContent[localizationKeys.Submit]}
           </button>
