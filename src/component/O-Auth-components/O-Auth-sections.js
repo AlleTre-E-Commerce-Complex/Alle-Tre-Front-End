@@ -34,6 +34,8 @@ import { Close } from "../../redux-store/auth-model-slice";
 import { welcomeBonus } from "../../redux-store/welcom-bonus-slice";
 import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
+import { store } from "redux-store/store";
+import { setBlockedUser } from "redux-store/blocked-user-slice";
 
 const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
 
@@ -80,6 +82,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             dispatch(Close());
           })
           .catch((err) => {
+            console.log('google auth error --->',err)
+            // Check if the error is a 401 unauthorized
+                if (err?.message?.en === 'You are not authorized') {
+                   // Dispatch the action to show the modal
+                    store.dispatch(setBlockedUser(true));
+                }
             toast.error(
               selectedContent[
                 localizationKeys.somethingWentWrongPleaseTryAgainLater
@@ -133,6 +141,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             dispatch(Close());
           })
           .catch((err) => {
+            console.log('google auth error --->',err)
+            // Check if the error is a 401 unauthorized
+                if (err?.message?.en === 'You are not authorized') {
+                   // Dispatch the action to show the modal
+                    store.dispatch(setBlockedUser(true));
+                }
             toast.error(
               selectedContent[
                 localizationKeys.somethingWentWrongPleaseTryAgainLater
