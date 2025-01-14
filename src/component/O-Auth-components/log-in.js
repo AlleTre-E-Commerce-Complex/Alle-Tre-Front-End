@@ -25,6 +25,8 @@ import { Close } from "../../redux-store/auth-model-slice";
 import { welcomeBonus } from "../../redux-store/welcom-bonus-slice";
 import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
+import { store } from "redux-store/store";
+import { setBlockedUser } from "redux-store/blocked-user-slice";
 
 const LogIn = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
@@ -97,7 +99,13 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
               </span>
             </p>
           );
-        } else
+        }else  console.log('google auth error --->',err)
+        // Check if the error is a 401 unauthorized
+            if (err?.message?.en === 'You are not authorized') {
+               // Dispatch the action to show the modal
+                store.dispatch(setBlockedUser(true));
+            }
+         else
           toast.error(
             lang === "en"
               ? err.message.en || err.message

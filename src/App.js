@@ -8,6 +8,7 @@ import AuthLayouts from "./layout/auth-layout";
 import AppLayouts from "./layout/app-layout";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import BlockedModal from "component/shared/UserBlockedModal/BlockedModal";
 
 
 function App() { 
@@ -35,11 +36,9 @@ function App() {
           component={CredentialsuUpdateLayout}
         />
         <Redirect to={`${routes.app.home}?page=1&perPage=28`} />
-      
-
-
       </Switch>
-
+        {/* Blocked Modal */}
+        <BlockedModal />
       <Toaster
         position="top-right"
         reverseOrder={true}
