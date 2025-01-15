@@ -472,7 +472,7 @@ const FAQs = () => {
   }, []);
 
   return (
-    <div className="mt-44 max-w-[1440px] mx-auto">
+    <div className="mt-44 px-4 mx-auto">
       <FAQsBreadcrumb />
       <div className="pt-9">
         {FQAsDate.map((e) => (

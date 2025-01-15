@@ -55,7 +55,7 @@ const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
 
   if (!Array.isArray(images) || images?.length <= 0) {
     return (
-      <section className="mt-7 relative max-w-[1440px] md:h-[541px] h-[200px] mx-auto">
+      <section className="mt-7 relative md:h-[541px] h-[200px] mx-auto">
         <div className="relative hidden lg:block ">
           <img
             className="object-cover absolute -right-0 lg:-top-6 md:-top-2 w-1/2 md:h-[541px] h-[200px] rounded-r-[32px] shadow-md drop-shadow-md blur-[0.1px] opacity-40 brightness-90  "
@@ -176,7 +176,7 @@ const ImageSlider = ({ myRef, images, slidesData, emtystateImg }) => {
   };
 
   return (
-    <section className="mt-7 relative max-w-[1440px] md:h-[541px] h-[200px] mx-auto">
+    <section className="mt-7 relative md:h-[541px] h-[200px] mx-auto">
       <div className="relative hidden lg:block ">
         <img
           className="object-cover absolute -right-8 lg:-top-6 md:-top-2 w-1/2 md:h-[541px] h-[200px] rounded-r-[32px] drop-shadow-home-img blur-[0.1px] opacity-30  "

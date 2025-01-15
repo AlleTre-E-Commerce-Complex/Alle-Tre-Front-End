@@ -14,7 +14,7 @@ const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
 
   return (
-    <div className="mt-44 max-w-[1440px] mx-auto ">
+    <div className="mt-44 px-4 mx-auto ">
       <ProfileSideBare SetSid={SetSid} sid={sid} />
 
       <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0 ">

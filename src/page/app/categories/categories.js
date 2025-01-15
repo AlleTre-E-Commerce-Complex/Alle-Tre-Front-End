@@ -95,7 +95,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-[120px] sm:mt-[132px] ">
+    <div className="px-4 mx-auto mt-[120px] sm:mt-[132px] ">
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={loadingSubGatogry || isLoadingCategories || loadingGatogry}
@@ -119,7 +119,7 @@ const Categories = () => {
       <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
         <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
       </div>
-      <div className="flex justify-between max-w-[1440px] lg:mx-auto mx-2 px-2 pb-4 ">
+      <div className="flex justify-between px-4 lg:mx-auto mx-2 px-2 pb-4 ">
         <div className="flex  gap-x-60">
           <h6 className=" text-gray-med text-base font-normal pt-3 ">
             {mainAuctions?.length} {selectedContent[localizationKeys.results]}
@@ -149,7 +149,7 @@ const Categories = () => {
           )}
         </div>
       </div>
-      <div className="flex gap-3 max-w-[1440px] lg:mx-auto md:mx-12 ">
+      <div className="flex gap-3 px-4 lg:mx-auto md:mx-12 ">
         {/* left filter sections */}
         <FilterSections myRef={myRef} categoryId={categoryId} hiddenGatogry />
         {/* right card sections */}
@@ -214,7 +214,7 @@ const Categories = () => {
           </div>
         )}
       </div>
-      <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 max-w-[1440px] mx-auto ">
+      <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 px-4 mx-auto ">
         <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div>
       <AddLocationModel

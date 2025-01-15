@@ -36,7 +36,7 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
     swiper?.slidePrev();
   };
   return (
-    <div className="max-w-[1440px] mx-auto">
+    <div className="px-4 mx-auto">
       <div className="ezd-content relative tr:ml-2 rtl:mr-2 ">
         <div className="ezd-snapslider pt-10">
           <div className="snapslider-wrapper">

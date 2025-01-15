@@ -46,7 +46,7 @@ const en = {
   [localizationKeys.watchlist]: "Watchlist",
   [localizationKeys.faqs]: "FAQs",
   [localizationKeys.support]: "Support",
-  [localizationKeys.arabic]: "Arabic",
+  [localizationKeys.arabic]: "عربي",
   [localizationKeys.english]: "English",
   [localizationKeys.sellNow]: "Sell Now",
   [localizationKeys.search]: "Search...",
