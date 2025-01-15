@@ -150,7 +150,7 @@ const Home = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="z-20 md:h-[464px] w-full h-[200px] max-w-[1440px] mx-auto py-10 ">
+      <div className="z-20 md:h-[464px] w-full h-[200px] px-4 mx-auto py-10 ">
         {/* <ImageSlider
           myRef={myRef}
           images={sponsoredAuctions?.map((img) => img?.product?.images)}
@@ -170,7 +170,7 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <div className="flex justify-between max-w-[1440px] lg:mx-auto mx-2 px-2 pb-4 ">
+      <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-4 ">
         <div className="flex  gap-x-60">
           <h6 className=" text-gray-med text-base font-normal pt-3 ">
             {mainAuctions?.length} {selectedContent[localizationKeys.results]}
@@ -205,8 +205,8 @@ const Home = () => {
           )}
         </div>
       </div>
-      <div className="max-w-[1440px] lg:mx-auto mx-2">
-        <div className="flex gap-5 max-w-[1440px] lg:mx-auto mx-2">
+      <div className="px-4 lg:mx-auto mx-2">
+        <div className="flex gap-5 px-4 lg:mx-auto mx-2">
           {/* left filter sections */}
           <FilterSections myRef={myRef} />
           {/* right card sections */}
@@ -281,7 +281,7 @@ const Home = () => {
           <PaginationApp totalPages={totalPages} perPage={28} myRef={myRef} />
         </div>
       </div>
-      <div className="max-w-[1440px] mx-auto py-10">
+      <div className="px-4 mx-auto py-10">
         {/* <LiveAuctionsSlider /> */}
       </div>
       {/* <div className="relative py-14 ">
@@ -313,10 +313,10 @@ const Home = () => {
           alt="CreaAuctionText"
         />
       </div> */}
-      <div className="max-w-[1440px] mx-auto py-10">
+      <div className="px-4 mx-auto py-10">
         <UpComingAuctionsSlider />
       </div>
-      <div className="max-w-[1440px] mx-auto py-10">
+      <div className="px-4 mx-auto py-10">
         <BuyNowAuctionsSlider />
       </div>
 

@@ -42,7 +42,7 @@ const SliderRow = () => {
     swiper4?.slidePrev();
   };
   return (
-    <div className="max-w-[1440px] mx-auto   ">
+    <div className="px-4 mx-auto   ">
       <div className="ezd-content relative ltr:ml-2 rtl:mr-2">
         <div className="ezd-snapslider">
           <div className="snapslider-wrapper">

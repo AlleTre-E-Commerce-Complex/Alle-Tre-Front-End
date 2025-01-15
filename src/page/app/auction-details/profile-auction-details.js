@@ -58,8 +58,8 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
         <LodingTestAllatre />
       </Dimmer>
       <div className="mt-44 animate-in mx-5 ">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="max-w-[1440px] mx-auto h-14 px-4 py-4 sm:block hidden ">
+        <div className="px-4 mx-auto">
+          <div className="px-4 mx-auto h-14 px-4 py-4 sm:block hidden ">
             <AuctionDetailsBreadcrumb details={auctionId} />
           </div>
           {/* up sections */}
