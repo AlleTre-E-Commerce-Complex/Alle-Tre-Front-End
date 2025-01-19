@@ -14,6 +14,7 @@ import Swiper from 'swiper';
 import { Dimmer, Loader } from 'semantic-ui-react';
 import LodingTestAllatre from 'component/shared/lotties-file/loding-test-allatre';
 import AuctionCard from './auction-card';
+import ProductCard from './ProductCard';
 
 const ListedProducts = () => {
     
@@ -49,7 +50,7 @@ const ListedProducts = () => {
           authAxios
             .get(`${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`)
             .then((res) => {
-                console.log('listed products :', res)
+                console.log('listed products :', res.data.data)
               setListedProducts(res?.data?.data);
               setPagination(res?.data?.pagination);
             })
@@ -122,7 +123,7 @@ const ListedProducts = () => {
                       : "md:justify-center justify-start"
                   } snapslider-scroll swiper-wrapper py-2`}
                 >
-                  {listedProducts?.map((e) => (
+                  {/* {listedProducts?.map((e) => (
                     <div className="snapslider-card swiper-slide">
                       <AuctionCard
                         className="min-w-[272px]"
@@ -136,6 +137,16 @@ const ListedProducts = () => {
                         endingTime={e?.expiryDate}
                         isBuyNowAllowed={e?.isBuyNowAllowed}
                         isMyAuction={e?.isMyAuction}
+                      />
+                    </div>
+                  ))} */}
+                   {listedProducts?.map((product) => (
+                    <div className="snapslider-card swiper-slide">
+                      <ProductCard
+                        className="min-w-[272px]"
+                        price={product?.ProductListingPrice}
+                        title={product?.title}
+                        imageLink={product?.images[0].imageLink}
                       />
                     </div>
                   ))}
