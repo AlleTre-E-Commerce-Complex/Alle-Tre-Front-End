@@ -1,28 +1,22 @@
-import React, { useEffect, useRef } from "react";
-import Swiper from "swiper";
+import api from 'api';
+import axios from 'axios';
+import { authAxios } from 'config/axios-config';
+import { useAuthState } from 'context/auth-context';
+import { useLanguage } from 'context/language-context';
+import useAxios from 'hooks/use-axios';
+import content from 'localization/content';
+import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom';
 import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
 import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
-import "./auctions-slider.scss";
-import AuctionCard from "./auction-card";
-import { useLocation } from "react-router-dom";
-import { useAuthState } from "../../context/auth-context";
-import useAxios from "../../hooks/use-axios";
-import { useState } from "react";
-import { authAxios } from "../../config/axios-config";
-import axios from "axios";
-import api from "../../api";
+import Swiper from 'swiper';
+import { Dimmer, Loader } from 'semantic-ui-react';
+import LodingTestAllatre from 'component/shared/lotties-file/loding-test-allatre';
+import AuctionCard from './auction-card';
 
-import { useSelector } from "react-redux";
-import content from "localization/content";
-import { useLanguage } from "context/language-context";
-import localizationKeys from "localization/localization-keys";
-import { Dimmer, Loader } from "semantic-ui-react";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-
-
-const LiveAuctionsSlider = ({ type }) => {
-
- 
+const ListedProducts = () => {
+    
   const { search } = useLocation();
   const { user } = useAuthState();
   const [lang] = useLanguage("");
@@ -31,7 +25,7 @@ const LiveAuctionsSlider = ({ type }) => {
  
   const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios([]);
 
-  const [auctions, setAuctions] = useState([]);
+  const [listedProducts, setListedProducts] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(20);
 
@@ -48,7 +42,6 @@ const LiveAuctionsSlider = ({ type }) => {
   };
 
   const loginData = useSelector((state) => state?.loginDate?.loginDate);
-
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
       if (user) {
@@ -56,7 +49,8 @@ const LiveAuctionsSlider = ({ type }) => {
           authAxios
             .get(`${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`)
             .then((res) => {
-              setAuctions(res?.data?.data);
+                console.log('listed products :', res)
+              setListedProducts(res?.data?.data);
               setPagination(res?.data?.pagination);
             })
         );
@@ -65,13 +59,12 @@ const LiveAuctionsSlider = ({ type }) => {
           axios
             .get(`${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`)
             .then((res) => {
-              setAuctions(res?.data?.data);
+              setListedProducts(res?.data?.data);
               setPagination(res?.data?.pagination);
             })
         );
       }
-  }, [page, runListedProduct, search, type, user]);
-
+  }, [page, runListedProduct, search, user]);
   const swiperRef1 = useRef(null);
   const swiper1 = new Swiper(swiperRef1?.current, { ...swiperOptions });
 
@@ -104,7 +97,7 @@ const LiveAuctionsSlider = ({ type }) => {
           Find and Reach the Product
         </p>
       </div>
-      {auctions?.length === 0 ? (
+      {listedProducts?.length === 0 ? (
         <div>
           {/* <img
             className="w-full h-full object-cover rounded-2xl shadow"
@@ -124,12 +117,12 @@ const LiveAuctionsSlider = ({ type }) => {
               <div ref={swiperRef1} className={`snapslider-overflow `}>
                 <div
                   className={`${
-                    auctions?.length > 4
+                    listedProducts?.length > 4
                       ? ""
                       : "md:justify-center justify-start"
                   } snapslider-scroll swiper-wrapper py-2`}
                 >
-                  {auctions?.map((e) => (
+                  {listedProducts?.map((e) => (
                     <div className="snapslider-card swiper-slide">
                       <AuctionCard
                         className="min-w-[272px]"
@@ -174,6 +167,6 @@ const LiveAuctionsSlider = ({ type }) => {
       )}
     </div>
   );
-};
+}
 
-export default LiveAuctionsSlider;
+export default ListedProducts

@@ -85,6 +85,10 @@ const api = {
       delete: (auctionsId, imageId) =>
         `/auctions/user/${auctionsId}/remove-image?imageId=${imageId}`,
     },
+    productListing: {
+      listNewProduct: `auctions/product-listing`,
+      getAllListedProducts: `auctions/getAllListed-products`
+    },
     customField: {
       ByCategoryId: (categoryId) =>
         `/categories/custom-fields?categoryId=${categoryId}`,

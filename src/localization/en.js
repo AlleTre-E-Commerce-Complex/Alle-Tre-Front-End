@@ -90,6 +90,7 @@ const en = {
   [localizationKeys.sellForCharity]: "Sell for charity",
   [localizationKeys.businessTools]: "Business tools",
   [localizationKeys.createAuction]: "Create Auction",
+  [localizationKeys.listProduct]: "List Products",
   [localizationKeys.myAccount]: "My Account",
   [localizationKeys.iamBiddingOn]: "I'm Bidding On",
   [localizationKeys.iHaveBought]: "I've Bought",
@@ -517,6 +518,8 @@ const en = {
     "Your auction save as draft success",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
     "Your auction is created success",
+    [localizationKeys.yourProductIsSuccessfullyListed]:
+    "Your product is successfully listed",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "Make sure that you choose the auction location or create another one",
   //wallet

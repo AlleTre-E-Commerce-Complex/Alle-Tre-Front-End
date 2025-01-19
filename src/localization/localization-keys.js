@@ -85,6 +85,7 @@ const localizationKeys = {
   sellForCharity: "sellForCharity",
   businessTools: "businessTools",
   createAuction: "createAuction",
+  listProduct:"listProduct",
   myAccount: "myAccount",
   iamBiddingOn: "iamBiddingOn",
   iHaveBought: "iHaveBought",
@@ -464,6 +465,7 @@ const localizationKeys = {
   uploadImageHasbeenSuccessfully: "uploadImageHasbeenSuccessfully",
   yourAuctionSaveAsDraftedSuccess: "yourAuctionSaveAsDraftedSuccess",
   yourAuctionIsCreatedSuccess: "yourAuctionIsCreatedSuccess",
+  yourProductIsSuccessfullyListed:"yourProductIsSuccessfullyListed",
   makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne:
     "makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne",
   //wallet

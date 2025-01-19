@@ -86,6 +86,7 @@ const ar = {
   [localizationKeys.sellForCharity]: "بيع للجمعيات الخيرية",
   [localizationKeys.businessTools]: "أدوات العمل",
   [localizationKeys.createAuction]: "إنشاء مزاد",
+  [localizationKeys.createAuction]: "قائمة المنتجات",
   [localizationKeys.myAccount]: "حسابي",
   [localizationKeys.iamBiddingOn]: "أنا أقوم بالمزايدة على",
   [localizationKeys.iHaveBought]: "لقد اشتريت",
@@ -506,6 +507,7 @@ const ar = {
   [localizationKeys.nameHasBeenEditSuccessfully]: "تم تحرير الاسم بنجاح",
   [localizationKeys.yourAuctionSaveAsDraftedSuccess]: "مزادك حفظ كمسودة نجاح",
   [localizationKeys.yourAuctionIsCreatedSuccess]: "تم إنشاء مزادك بنجاح",
+  [localizationKeys.yourProductIsSuccessfullyListed]: "تم إدراج منتجك بنجاح",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "تأكد من اختيار موقع المزاد أو إنشاء موقع آخر",
   //wallet

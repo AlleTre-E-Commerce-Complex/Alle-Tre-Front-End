@@ -32,6 +32,8 @@ import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusMo
 import { welcomeBonus } from "redux-store/welcom-bonus-slice";
 // import { useSocket } from "context/socket-context";
 import { useSocket } from "context/socket-context";
+import LiveAuctionsSlider from "component/home-components/live-auctions-slider";
+import ListedProducts from "component/home-components/ListedProducts";
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -283,6 +285,7 @@ const Home = () => {
       </div>
       <div className="px-4 mx-auto py-10">
         {/* <LiveAuctionsSlider /> */}
+        <ListedProducts />
       </div>
       {/* <div className="relative py-14 ">
         <img
