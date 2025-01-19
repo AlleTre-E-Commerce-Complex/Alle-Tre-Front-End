@@ -302,6 +302,22 @@ const Header = ({ SetSid }) => {
     }
   };
 
+  const handleListProduct = () =>{
+    if (user) {
+      const hasCompletedProfile = window.localStorage.getItem(
+        "hasCompletedProfile"
+      );
+      if (JSON.parse(hasCompletedProfile)) {
+        history.push(routes.app.listProduct.default);
+        // dispatch(productDetails({}));
+      } else {
+        setOpen(true);
+      }
+    } else {
+      dispatch(Open());
+    }
+  }
+
   const handelRegister = () => {
     if (user) {
       history.push(routes.app.profile.profileSettings);
@@ -464,6 +480,12 @@ const Header = ({ SetSid }) => {
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] ltr:font-serifEN rtl:font-serifAR"
             >
               {selectedContent[localizationKeys.createAuction]}
+            </button>
+            <button
+              onClick={handleListProduct}
+              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] ltr:font-serifEN rtl:font-serifAR"
+            >
+              {selectedContent[localizationKeys.listProduct]}
             </button>
           </div>
         </div>

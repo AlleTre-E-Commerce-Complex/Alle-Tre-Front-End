@@ -34,6 +34,7 @@ import { useAuthState } from "../context/auth-context";
 import { Open } from "../redux-store/auth-model-slice";
 import RewardModal from "../component/shared/rewardModal/RewardModal";
 import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal";
+import ListProductDetails from "page/app/ListProduct/List-product-details";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -173,6 +174,10 @@ const AppLayouts = () => {
             <Route
               path={routes.app.createAuction.default}
               component={CreateAuction}
+            />
+            <Route
+              path={routes.app.listProduct.default}
+              component={ListProductDetails}
             />
 
             <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />

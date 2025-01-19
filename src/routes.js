@@ -39,7 +39,9 @@ const routes = {
       paymentSucsess: `/alletre/home/create-auction/product-details/auction-details/shipping-details/payment-details/Sucsess`,
       paymentFaild: `/alletre/home/create-auction/product-details/auction-details/shipping-details/payment-details/Faild`,
     },
-
+    listProduct: {
+      default: `/alletre/home/list-product`,
+    },
     profile: {
       default: `/alletre/profile`,
       profileSettings: `/alletre/profile/settings`,

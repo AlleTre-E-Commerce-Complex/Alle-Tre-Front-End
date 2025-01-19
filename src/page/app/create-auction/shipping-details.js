@@ -288,7 +288,9 @@ const ShippingDetails = () => {
             })
         );
       } else {
-        console.log("form data form create acuction", formData);
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}: ${value}`);
+        }
         runCreatAuction(
           authAxios
             .post(api.app.auctions.default, formData)
