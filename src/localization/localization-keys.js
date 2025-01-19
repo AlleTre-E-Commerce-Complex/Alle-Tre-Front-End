@@ -86,6 +86,7 @@ const localizationKeys = {
   businessTools: "businessTools",
   createAuction: "createAuction",
   listProduct:"listProduct",
+  price:"Price",
   myAccount: "myAccount",
   iamBiddingOn: "iamBiddingOn",
   iHaveBought: "iHaveBought",

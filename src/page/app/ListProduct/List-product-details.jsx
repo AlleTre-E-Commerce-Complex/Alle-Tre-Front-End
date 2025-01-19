@@ -27,9 +27,7 @@ import useGetSubGatogry from "../../../hooks/use-get-sub-category";
 
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
-
-import { productDetails } from "../../../redux-store/product-details-Slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
@@ -58,52 +56,8 @@ const ListProductDetails = () => {
 
   const history = useHistory();
 
-  const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
-//   useEffect(() => {
-//     const id = productDetailsint?.auctionId || state?.auctionId;
-//     if (id)
-//       runAuctionById(
-//         authAxios.get(api.app.auctions.getAuctionsDetails(id)).then((res) => {
-//           const completeDraftValue = res?.data?.data;
-//           setAuctionState(res?.data?.data?.status);
-//           setimgtest(completeDraftValue?.product?.images);
-//           setCompleteDraftValue(res?.data?.data);
-//           dispatch(
-//             productDetails({
-//               itemName: completeDraftValue?.product?.title,
-//               category: completeDraftValue?.product.categoryId,
-//               subCategory: completeDraftValue?.product?.subCategoryId,
-//               operatingSystem: completeDraftValue?.product?.operatingSystem,
-//               releaseYear: completeDraftValue?.product?.releaseYear,
-//               regionOfManufacture:
-//                 completeDraftValue?.product?.regionOfManufacture,
-//               ramSize: completeDraftValue?.product?.ramSize,
-//               processor: completeDraftValue?.product?.processor,
-//               screenSize: completeDraftValue?.product?.screenSize,
-//               model: completeDraftValue?.product?.model,
-//               color: completeDraftValue?.product?.color,
-//               brand: completeDraftValue?.product?.brand,
-//               cameraType: completeDraftValue?.product?.cameraType,
-//               material: completeDraftValue?.product?.material,
-//               memory: completeDraftValue?.product?.memory,
-//               age: completeDraftValue?.product?.age,
-//               totalArea: completeDraftValue?.product?.totalArea,
-//               numberOfRooms: completeDraftValue?.product?.numberOfRooms,
-//               numberOfFloors: completeDraftValue?.product?.numberOfFloors,
-//               landType: completeDraftValue?.product?.landType,
-//               carType: completeDraftValue?.product?.carType,
-//               cityId: completeDraftValue?.product?.cityId,
-//               countryId: completeDraftValue?.product?.countryId,
-//               itemDescription: completeDraftValue?.product?.description,
-//               hasUsageCondition:
-//                 completeDraftValue?.product?.category?.hasUsageCondition,
-//               valueRadio: completeDraftValue?.product?.usageStatus,
-//             })
-//           );
-//           setRadioValue(completeDraftValue?.product?.usageStatus);
-//         })
-//       );
-//   }, [runAuctionById, state?.auctionId, productDetailsint?.id]);
+  
+
 
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
@@ -237,6 +191,9 @@ const ListProductDetails = () => {
     itemName: Yup.string()
       .trim()
       .required(selectedContent[localizationKeys.required]),
+      itemPrice: Yup.number().required(
+        selectedContent[localizationKeys.required]
+      ),
     category: Yup.string()
       .trim()
       .required(selectedContent[localizationKeys.required]),
@@ -266,12 +223,12 @@ const ListProductDetails = () => {
     const filesCount = [fileOne, fileTwo, fileThree, fileFour, fileFive].filter(
       Boolean
     ).length;
-    console.log('values :', values.itemName)
     if (filesCount >= 3) {
    
       if (valueRadio ) {
         const formData = new FormData();
         formData.append("product[title]", values.itemName);
+        formData.append('product[ProductListingPrice]', values.itemPrice)
         formData.append("product[categoryId]", values.category);
         if (values.subCategory) {
           formData.append(
@@ -464,9 +421,7 @@ const ListProductDetails = () => {
         className="fixed w-full h-full top-0 bg-white/50"
         active={
           isLoading ||
-          loadingSubGatogry ||
-        //   isLoadingCSaveAuctionAsDraft ||
-          isLoadingAuctionById
+          loadingSubGatogry 
         }
         inverted
       >
@@ -491,6 +446,7 @@ const ListProductDetails = () => {
             <Formik
               initialValues={{
                 itemName:  "",
+                itemPrice: "",
                 category:  "",
                 subCategory:  "",
                 operatingSystem:  "",
@@ -533,6 +489,17 @@ const ListProductDetails = () => {
                       />
                     </div>
                     <div className="col-span-2 hidden md:block"></div>
+                    <div className="col-span-2">
+                        <FormikInput
+                          min={0}
+                          type="number"
+                          name="itemPrice"
+                          label={selectedContent[localizationKeys.price]}
+                          placeholder="AEDXXX"
+                          onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
+                        />
+                      </div>
+                    <div className="col-span-2 hidden md:block"></div>
                     <div className="col-span-2 ">
                       <FormikMultiDropdown
                         name="category"
@@ -549,13 +516,6 @@ const ListProductDetails = () => {
                           setCustomFromData([]);
                           setSubCategoryId(undefined);
                           formik.setFieldValue("subCategory", "");
-                        //   setHasUsageCondition(fieldOption?.hasUsageCondition);
-                          dispatch(
-                            productDetails({
-                              category: value,
-                              itemName: draftValue.itemName,
-                            })
-                          );
                         }}
                       />
                     </div>

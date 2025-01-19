@@ -91,6 +91,7 @@ const en = {
   [localizationKeys.businessTools]: "Business tools",
   [localizationKeys.createAuction]: "Create Auction",
   [localizationKeys.listProduct]: "List Products",
+  [localizationKeys.price]: "Price",
   [localizationKeys.myAccount]: "My Account",
   [localizationKeys.iamBiddingOn]: "I'm Bidding On",
   [localizationKeys.iHaveBought]: "I've Bought",
