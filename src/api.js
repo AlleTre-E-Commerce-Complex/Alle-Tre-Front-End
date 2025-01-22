@@ -14,7 +14,7 @@ const api = {
     },
     subscribers: {
       create: "/users/subscribers/create",
-      unsubscribeUser:'/users/subscribers/unSubscribe'
+      unsubscribeUser: "/users/subscribers/unSubscribe",
     },
     category: {
       default: "/categories/all",
@@ -75,8 +75,7 @@ const api = {
       SimilarAuctions: (auctionsId) =>
         `/auctions/user/similar?auctionId=${auctionsId}`,
       deliveryIssue: "/auctions/user/auction-complaints",
-      getSellerLocation: (auctionId) =>
-        `/auctions/user/${auctionId}/location`,
+      getSellerLocation: (auctionId) => `/auctions/user/${auctionId}/location`,
       getBuyerLocation: (auctionId) =>
         `auctions/user/${auctionId}/buyer-location-details`,
     },
@@ -87,7 +86,8 @@ const api = {
     },
     productListing: {
       listNewProduct: `auctions/product-listing`,
-      getAllListedProducts: `auctions/getAllListed-products`
+      getAllListedProducts: `auctions/getAllListed-products`,
+      listedProduct: (productId) => `auctions/${productId}/details`,
     },
     customField: {
       ByCategoryId: (categoryId) =>
@@ -108,8 +108,6 @@ const api = {
       delete: (locationsId) => `/users/locations/${locationsId}`,
       makeDefault: (locationsId) =>
         `/users/locations/${locationsId}/make-default`,
-     
-   
     },
     countries: {
       default: "/regions/countries",

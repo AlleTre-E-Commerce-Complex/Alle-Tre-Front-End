@@ -35,6 +35,8 @@ import { Open } from "../redux-store/auth-model-slice";
 import RewardModal from "../component/shared/rewardModal/RewardModal";
 import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal";
 import ListProductDetails from "page/app/ListProduct/List-product-details";
+import { FaPlus } from "react-icons/fa6";
+import SummaryListedSection from "component/home-components/summary-listed-section";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -45,7 +47,8 @@ const AppLayouts = () => {
   const { pathname } = useLocation();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  // const [auctionIdLocal, setAuctionId] = useLocalStorage("auctionId", "");
+  const [isExpanded, setIsExpanded] = useState(false);
+
   useEffect(() => {
     const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
     console.log("hasSeenRewardModal :", hasSeenRewardModal);
@@ -59,7 +62,7 @@ const AppLayouts = () => {
 
   useEffect(() => {
     if (unSubscribe) {
-      setUnSubscribeModal(true); // Show the modal if `unSubscribe` is true
+      setUnSubscribeModal(true); 
     }
   }, [searchParams]);
   const socketauctionId = useSelector(
@@ -68,12 +71,30 @@ const AppLayouts = () => {
   const { user } = useAuthState();
   const history = useHistory();
   const dispatch = useDispatch();
+  const toggleExpand = () => setIsExpanded(!isExpanded);
 
-  const handelOnSell = () => {
+  const handleOnSell = () => {
+    setIsExpanded(!isExpanded);
     if (user) {
       history.push(routes.app.createAuction.productDetails);
     } else dispatch(Open());
   };
+
+  const handleListProduct = () => {
+    setIsExpanded(!isExpanded);
+    if (user) {
+      const hasCompletedProfile = window.localStorage.getItem(
+        "hasCompletedProfile"
+      );
+      if (JSON.parse(hasCompletedProfile)) {
+        history.push(routes.app.listProduct.default);
+        // dispatch(productDetails({}));
+      }
+    } else {
+      dispatch(Open());
+    }
+  };
+
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <SocketProvider auctionId={socketauctionId} userId={user?.id}>
@@ -179,6 +200,10 @@ const AppLayouts = () => {
               path={routes.app.listProduct.default}
               component={ListProductDetails}
             />
+            <Route
+              path={routes.app.listProduct.details()}
+              component={SummaryListedSection}
+            />
 
             <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />
             <Route path={routes.app.payDeposite()} component={PayDeposite} />
@@ -197,14 +222,62 @@ const AppLayouts = () => {
           {/* </SocketProvider> */}
         </div>
         <Footer />
-        {currentPath === routes.app.home && (
-          <button
-            onClick={handelOnSell}
-            className="fixed bottom-4 right-4 bg-gradient-to-r from-pink-700 to-[#681224] text-white hover:from-gray-600 hover:to-gray-800 font-semibold rounded-lg w-40 h-12 flex items-center justify-center shadow-2xl hover:shadow-md transform hover:scale-105 transition-all duration-300 ease-in-out md:hidden z-[9999]"
-          >
-            {selectedContent[localizationKeys.createAuction]}
-          </button>
-        )}
+        <div className="relative z-max">
+          {currentPath === routes.app.home && (
+            <>
+              <button
+                onClick={toggleExpand}
+                className={`fixed bottom-4 right-4 bg-primary text-white font-semibold rounded-full w-12 h-12 flex items-center justify-center shadow-2xl transform transition-all duration-300 ease-in-out md:hidden  ${
+                  isExpanded
+                    ? "rotate-45 bg-primary-dark"
+                    : "rotate-0 bg-primary"
+                }`}
+              >
+                <span
+                  className="text-2xl font-bold transform transition-transform duration-300 ease-in-out"
+                  style={{
+                    transform: isExpanded ? "rotate(135deg)" : "rotate(0)",
+                  }}
+                >
+                  <FaPlus />
+                </span>
+              </button>
+
+              <div
+                className={`fixed right-4 transition-all duration-300 ease-in-out ${
+                  isExpanded
+                    ? "bottom-20 opacity-100"
+                    : "bottom-4 opacity-0 pointer-events-none"
+                }`}
+              >
+                <button
+                  onClick={handleOnSell}
+                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg "
+                  style={{
+                    transform: isExpanded
+                      ? "translateY(-1px) translateX(135px)"
+                      : "translateY(0,0)",
+                    transition: "transform 0.3s ease-in-out",
+                  }}
+                >
+                  {selectedContent[localizationKeys.createAuction]}
+                </button>
+                <button
+                  onClick={handleListProduct}
+                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
+                  style={{
+                    transform: isExpanded
+                      ? "translateY(-60px) "
+                      : "translateY(0,0)",
+                    transition: "transform 0.3s ease-in-out",
+                  }}
+                >
+                  {selectedContent[localizationKeys.listProduct]}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </SocketProvider>
     </div>
   );

@@ -12,7 +12,7 @@ const routes = {
   },
   app: {
     default: `/alletre`,
-    unSubscribeUser : "/alletre/unSubscribeUser",
+    unSubscribeUser: "/alletre/unSubscribeUser",
     home: "/alletre/home",
     homeDetails: (auctionId = ":auctionId") =>
       `/alletre/home/${auctionId}/details`,
@@ -41,6 +41,8 @@ const routes = {
     },
     listProduct: {
       default: `/alletre/home/list-product`,
+      details: (productId = ":productId") =>
+        `/alletre/my-product/${productId}/details`,
     },
     profile: {
       default: `/alletre/profile`,
@@ -54,7 +56,7 @@ const routes = {
         pending: `/alletre/profile/my-auctions/pending`,
         watingForPayment: `/alletre/profile/my-auctions/wating-for-payment`,
         expired: `/alletre/profile/my-auctions/expired`,
-        cancelled:`/alletre/profile/my-auctions/cancelled`,
+        cancelled: `/alletre/profile/my-auctions/cancelled`,
 
         activeDetails: (auctionId = ":auctionId") =>
           `/alletre/profile/my-auctions/active/${auctionId}/details`,
@@ -99,8 +101,7 @@ const routes = {
 
       purchased: `/alletre/profile/purchased`,
       wallet: `/alletre/profile/wallet`,
-      notifications: `/alletre/profile/notifications`
-
+      notifications: `/alletre/profile/notifications`,
     },
   },
 };

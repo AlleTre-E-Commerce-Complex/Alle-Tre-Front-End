@@ -3,9 +3,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/ALLETRE LOGO-03-01.svg";
 import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/ALLETRE LOGO-03-02.svg";
 import { ReactComponent as AllatreLogoFull } from "../../../../src/assets/logo/allatre-logo-color.svg";
-
-// import { ReactComponent as AllatreLogoMobile } from "../../../../src/assets/logo/1.svg";
-
 import routes from "../../../routes";
 import DropdownLang from "./dropdown-lang";
 import NavLinkHeader from "./nav-link-header";
@@ -31,6 +28,7 @@ import AddLocationModel from "../../../component/create-auction-components/add-l
 import { MdOutlineNotifications } from "react-icons/md";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
+import { FaPlus } from "react-icons/fa6";
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
 const Header = ({ SetSid }) => {
@@ -40,6 +38,7 @@ const Header = ({ SetSid }) => {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
+  const [isDropdownOpen, setisDropdownOpen] = useState(false);
   // const [notificationData, setNotificationData] = useState(null);
   const [serchShow, setSerchShow] = useState(false);
   const [open, setOpen] = useState(false);
@@ -50,26 +49,26 @@ const Header = ({ SetSid }) => {
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   const { logout } = useAuthState();
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false); // Use ref to persist socket instance
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const socket = useSocket();
 
   const [showLogo, setShowLogo] = useState(false);
-  const [showIcon, setShowIcon] = useState(true); // State to control the visibility of the icon
+  const [showIcon, setShowIcon] = useState(true);
 
+  // Show the AllatreLogo after a delay
   useEffect(() => {
-    // Show the AllatreLogo after a delay
     const timer = setTimeout(() => {
-      setShowIcon(false); // Hide the icon after 1 second
-      setShowLogo(true); // Show the logo
-    }, 1000); // Adjust the delay as needed (1000ms = 1 second)
-
-    // Cleanup timer on unmount
+      setShowIcon(false);
+      setShowLogo(true);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
+  const toggleDropdown = () => {
+    setisDropdownOpen(!isDropdownOpen);
+  };
   async function getNotificationCount() {
     const response = await run(authAxios.get("/notifications/unread-count"));
-    console.log("response count*************", response.data.count);
     if (response.data.success) {
       setNotificationCount(response.data.count);
     }
@@ -77,11 +76,9 @@ const Header = ({ SetSid }) => {
 
   useEffect(() => {
     console.log("soket useEffect test");
-    if (!socket) return; // Ensure socket is available
+    if (!socket) return;
 
     const handleNotification = (data) => {
-      console.log("notification data *************", data);
-
       if (data.status === "ON_SELLING") {
         console.log("listing message");
         setNotificationCount((prev) => prev + 1);
@@ -286,6 +283,7 @@ const Header = ({ SetSid }) => {
     }
   };
   const handleOnSell = () => {
+    setisDropdownOpen(false);
     if (user) {
       const hasCompletedProfile = window.localStorage.getItem(
         "hasCompletedProfile"
@@ -301,8 +299,22 @@ const Header = ({ SetSid }) => {
       dispatch(Open());
     }
   };
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       setisDropdownOpen(false); // Close dropdown
+  //     }
+  //   };
 
-  const handleListProduct = () =>{
+  //   document.addEventListener("mousedown", handleClickOutside);
+
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
+
+  const handleListProduct = () => {
+    setisDropdownOpen(false);
     if (user) {
       const hasCompletedProfile = window.localStorage.getItem(
         "hasCompletedProfile"
@@ -316,7 +328,7 @@ const Header = ({ SetSid }) => {
     } else {
       dispatch(Open());
     }
-  }
+  };
 
   const handelRegister = () => {
     if (user) {
@@ -403,7 +415,7 @@ const Header = ({ SetSid }) => {
               />
             )}
           </div>
-          <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto">
+          <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto justify-center items-center">
             {[
               { key: localizationKeys.home, path: routes.app.home },
               {
@@ -463,30 +475,51 @@ const Header = ({ SetSid }) => {
                 onClick={handleNotificationClick}
               />
             </div>
-            {/* <NavLinkHeader
-              title={selectedContent[localizationKeys.support]}
-              isActive={
-                pathname.length === 1 || pathname.startsWith(routes.app.support)
-              }
-              onClick={() => history.push(routes.app.support)}
-            /> */}
-            <div className="my-auto flex items-center -mt-3">
-              <DropdownLang className=" Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 min-w-[100px]" />
+            <div className="my-auto flex items-center ">
+              <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 min-w-[100px]" />
             </div>
-          </div>
-          <div className="my-auto ltr:ml-16 rtl:mr-16 md:flex hidden">
-            <button
-              onClick={handleOnSell}
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] ltr:font-serifEN rtl:font-serifAR"
-            >
-              {selectedContent[localizationKeys.createAuction]}
-            </button>
-            <button
-              onClick={handleListProduct}
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] ltr:font-serifEN rtl:font-serifAR"
-            >
-              {selectedContent[localizationKeys.listProduct]}
-            </button>
+            <div className="relative inline-block text-left">
+              <div>
+                <button
+                  type="button"
+                  className="hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg w-auto h-[40px] px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ltr:font-serifEN rtl:font-serifAR items-center justify-center sm:ml-6 md:ml-8 lg:ml-10"
+                  id="menu-button"
+                  aria-expanded={isDropdownOpen ? "true" : "false"}
+                  aria-haspopup="true"
+                  onClick={toggleDropdown}
+                >
+                  Sell
+                  <FaPlus className="ml-2 text-lg" />
+                </button>
+              </div>
+
+              {isDropdownOpen && (
+                <div
+                  className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                  tabindex="-1"
+                >
+                  <div className="bg-gray-med rounded-lg py-2 " role="none">
+                    <div className="my-auto space-y-3 px-4 py-2">
+                      <button
+                        onClick={handleOnSell}
+                        className="w-full bg-primary hover:bg-primary-dark text-white font-medium rounded-lg h-[48px] transition-all duration-200 ease-in-out transform hover:scale-105 shadow-sm hover:shadow-md"
+                      >
+                        {selectedContent[localizationKeys.createAuction]}
+                      </button>
+                      <button
+                        onClick={handleListProduct}
+                        className="w-full bg-primary hover:bg-primary-dark text-white font-medium rounded-lg h-[48px] transition-all duration-200 ease-in-out transform hover:scale-105 shadow-sm hover:shadow-md"
+                      >
+                        {selectedContent[localizationKeys.listProduct]}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex items-center  md:hidden">
