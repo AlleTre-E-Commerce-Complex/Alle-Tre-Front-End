@@ -572,7 +572,7 @@ const ProductDetails = () => {
       >
         <LodingTestAllatre />
       </Dimmer>
-      <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
+      <div className="mt-44 animate-in max-w-[1366px] md:mx-auto  px-4 ">
         {/* <Loader active /> */}
         <div className=" h-14 my-7 py-4 sm:block hidden">
           {/* Breadcrumb  */}

@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 
 import buyNowEmty from "../../../src/assets/images/sell online.jpg";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-import BannerSingle from "./BannerSingle";
+
 
 const BuyNowAuctionsSlider = () => {
   const [lang] = useLanguage("");
@@ -135,7 +135,6 @@ const BuyNowAuctionsSlider = () => {
                     <div
                       key={e?.id}
                       className="snapslider-card swiper-slide flex items-center justify-center"
-                      style={{ width: "272px", height: "300px" }}
                     >
                       <AuctionCard
                         isExpired={e?.status === "EXPIRED"}

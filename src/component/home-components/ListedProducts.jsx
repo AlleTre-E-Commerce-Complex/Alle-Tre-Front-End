@@ -1,34 +1,34 @@
-import api from 'api';
-import axios from 'axios';
-import { authAxios } from 'config/axios-config';
-import { useAuthState } from 'context/auth-context';
-import { useLanguage } from 'context/language-context';
-import useAxios from 'hooks/use-axios';
-import content from 'localization/content';
-import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom';
+import api from "api";
+import axios from "axios";
+import { authAxios } from "config/axios-config";
+import { useAuthState } from "context/auth-context";
+import { useLanguage } from "context/language-context";
+import useAxios from "hooks/use-axios";
+import content from "localization/content";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
 import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
-import Swiper from 'swiper';
-import { Dimmer, Loader } from 'semantic-ui-react';
-import LodingTestAllatre from 'component/shared/lotties-file/loding-test-allatre';
-import AuctionCard from './auction-card';
-import ProductCard from './ProductCard';
+import Swiper from "swiper";
+import { Dimmer, Loader } from "semantic-ui-react";
+import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import ProductCard from "./ProductCard";
+import { useHistory } from "react-router-dom";
 
 const ListedProducts = () => {
-    
-  const { search } = useLocation();
-  const { user } = useAuthState();
-  const [lang] = useLanguage("");
-
-  const selectedContent = content[lang];
- 
-  const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios([]);
-
   const [listedProducts, setListedProducts] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(20);
+
+  const { search } = useLocation();
+  const { user } = useAuthState();
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
+  const history = useHistory();
+  const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
+    []
+  );
 
   const swiperOptions = {
     cssMode: true,
@@ -42,15 +42,17 @@ const ListedProducts = () => {
     keyboard: true,
   };
 
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+  // const loginData = useSelector((state) => state?.loginDate?.loginDate);
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
       if (user) {
         runListedProduct(
           authAxios
-            .get(`${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`)
+            .get(
+              `${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`
+            )
             .then((res) => {
-                console.log('listed products :', res.data.data)
+              console.log("listed products :", res.data.data);
               setListedProducts(res?.data?.data);
               setPagination(res?.data?.pagination);
             })
@@ -58,7 +60,9 @@ const ListedProducts = () => {
       } else {
         runListedProduct(
           axios
-            .get(`${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`)
+            .get(
+              `${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`
+            )
             .then((res) => {
               setListedProducts(res?.data?.data);
               setPagination(res?.data?.pagination);
@@ -123,30 +127,20 @@ const ListedProducts = () => {
                       : "md:justify-center justify-start"
                   } snapslider-scroll swiper-wrapper py-2`}
                 >
-                  {/* {listedProducts?.map((e) => (
-                    <div className="snapslider-card swiper-slide">
-                      <AuctionCard
-                        className="min-w-[272px]"
-                        auctionId={e?.id}
-                        price={e?.startBidAmount || e?.acceptedAmount}
-                        title={e?.product?.title}
-                        status={e?.status}
-                        adsImg={e?.product?.images[0].imageLink}
-                        totalBods={e?._count?.bids}
-                        WatshlistState={e?.isSaved}
-                        endingTime={e?.expiryDate}
-                        isBuyNowAllowed={e?.isBuyNowAllowed}
-                        isMyAuction={e?.isMyAuction}
-                      />
-                    </div>
-                  ))} */}
-                   {listedProducts?.map((product) => (
-                    <div className="snapslider-card swiper-slide">
+                  {listedProducts?.map((product) => (
+                    <div
+                      className="snapslider-card swiper-slide"
+                      // onClick={handelGoDetails(product.id)}
+                    >
                       <ProductCard
                         className="min-w-[272px]"
                         price={product?.ProductListingPrice}
                         title={product?.title}
                         imageLink={product?.images[0].imageLink}
+                        id={product?.id}
+                        location={product?.user?.locations[0]?.address}
+                        createdAt={product?.user?.createdAt}
+                        // WatshlistState={product?.isSaved}
                       />
                     </div>
                   ))}
@@ -178,6 +172,6 @@ const ListedProducts = () => {
       )}
     </div>
   );
-}
+};
 
-export default ListedProducts
+export default ListedProducts;

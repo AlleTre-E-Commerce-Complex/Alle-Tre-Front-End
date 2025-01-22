@@ -299,8 +299,8 @@ const SummaryHomeAuctionSections = ({
             {status === "IN_SCHEDULED"
               ? selectedContent[localizationKeys.startDate]
               : status === "SOLD"
-              // ? "Purchased Time"
-              ? ""
+              ? // ? "Purchased Time"
+                ""
               : selectedContent[localizationKeys.timeLeft]}
           </p>
 

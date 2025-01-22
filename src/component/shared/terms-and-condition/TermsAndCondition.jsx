@@ -270,38 +270,6 @@ const TermAndConditionData = [
     },
   },
   {
-    title: {
-      en: "4- License and limited use ",
-      ar: "٤-الترخيص والاستخدام المحدود : ",
-    },
-    parag: {
-      en: (
-        <div className="ml-4">
-          <li>
-            ALLE TRE" grants you a limited license to use the platform for
-            personal purposes. You may not:
-            <ul className="list-disc pl-5">
-              <li>Copy or publish content without permission.</li>
-              <li>
-                Use malicious software that aims to negatively affect the
-                performance of the platform.
-              </li>
-            </ul>
-          </li>
-        </div>
-      ),
-      ar: (
-        <div className="ml-4">
-          <li>
-            منصة “ألي تري” هي سوق إلكتروني توفر للمستخدمين إمكانية المشاركة في
-            المزادات الخاصة بالمنتجات الإلكترونية. تقدم المنصة للمستخدمين فرص
-            شراء وبيع المنتجات بطريقة آمنة وسهلة الاستخدام .
-          </li>
-        </div>
-      ),
-    },
-  },
-  {
     title: { en: "5-Content provided", ar: " ٥-المحتوى المقدّم :" },
     parag: {
       en: (
@@ -983,7 +951,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
       <div className="mt-2">
         {Footer ? (
           <div>
-             {selectedContent[localizationKeys.allRightsReserved]}
+            {selectedContent[localizationKeys.allRightsReserved]}
             <span
               className="text-blue-500 underline cursor-pointer"
               onClick={openModal}
@@ -1000,7 +968,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
               checked={isTermsAccepted}
               onChange={openModal}
             />
-              {selectedContent[localizationKeys.iAcceptThe]}
+            {selectedContent[localizationKeys.iAcceptThe]}
             <span
               className="text-blue-500 underline cursor-pointer"
               onClick={openModal}
@@ -1027,7 +995,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
                   {selectedContent[localizationKeys.termsAndCondition]}
                 </h2>
                 <button
-                  className="text-primary hover:text-red-500"
+                  className="text-primary hover:text-red"
                   onClick={closeModal}
                 >
                   <IoClose size={20} />
@@ -1063,7 +1031,6 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
                     onChange={handleAcceptTerms}
                   />
                   <span>
-                    {" "}
                     {
                       selectedContent[
                         localizationKeys.iAgreetotheTermsConditions
