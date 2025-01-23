@@ -88,6 +88,8 @@ const api = {
       listNewProduct: `auctions/product-listing`,
       getAllListedProducts: `auctions/getAllListed-products`,
       listedProduct: (productId) => `auctions/${productId}/details`,
+      SimilarProduct: (productId) =>
+        `auctions/product/similar?productId=${productId}`,
     },
     customField: {
       ByCategoryId: (categoryId) =>
