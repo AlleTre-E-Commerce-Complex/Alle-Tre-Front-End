@@ -16,24 +16,26 @@ import AuctionCard from "../home-components/auction-card";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 import "./auctions-slider.scss";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
+import ProductCard from "component/home-components/ProductCard";
 
-const SilmilarProductsSlider = ({ categoriesId }) => {
+const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   const [lang] = useLanguage("");
   const { auctionId } = useParams();
-  
+  const { productId } = useParams();
+
   const selectedContent = content[lang];
-  const { search } = useLocation();
+  // const { search } = useLocation();
   const { user } = useAuthState();
-  
-  // console.log("SilmilarProductsSlider", auctionId,user);
+
   const { run: runAuctions, isLoading: isLoadingAuctions } = useAxios([]);
 
   const [auctions, setAuctions] = useState();
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(20);
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+  // const loginData = useSelector((state) => state?.loginDate?.loginDate);
+
   useEffect(() => {
-    if (categoriesId)
+    if (!isListProduct && categoriesId) {
       if (user) {
         runAuctions(
           authAxios
@@ -53,6 +55,16 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
             })
         );
       }
+    } else {
+      runAuctions(
+        authAxios
+          .get(`${api.app.productListing.SimilarProduct(productId)}`)
+          .then((res) => {
+            setAuctions(res?.data?.data);
+            setpagination(res?.data?.pagination);
+          })
+      );
+    }
   }, [categoriesId, page, runAuctions, user]);
 
   const swiperOptions = {
@@ -110,20 +122,32 @@ const SilmilarProductsSlider = ({ categoriesId }) => {
             >
               {auctions?.map((e) => (
                 <div className="snapslider-card swiper-slide">
-                  <AuctionCard
-                    className="min-w-[272px]"
-                    auctionId={e?.id}
-                    startBidAmount={e?.acceptedAmount || e?.startBidAmount}
-                    title={e?.product?.title}
-                    status={e?.status}
-                    adsImg={e?.product?.images[0].imageLink}
-                    totalBods={e?._count?.bids}
-                    WatshlistState={e?.isSaved}
-                    endingTime={e?.expiryDate}
-                    isBuyNowAllowed={e?.isBuyNowAllowed}
-                    isMyAuction={e?.isMyAuction}
-                    latestBidAmount={e?.bids[0]?.amount}
-                  />
+                  {isListProduct ? (
+                    <ProductCard
+                      className="min-w-[272px]"
+                      price={e?.ProductListingPrice}
+                      title={e?.title}
+                      imageLink={e?.images[0].imageLink}
+                      id={e?.id}
+                      location={e?.user?.locations[0]?.address}
+                      createdAt={e?.user?.createdAt}
+                    />
+                  ) : (
+                    <AuctionCard
+                      className="min-w-[272px]"
+                      auctionId={e?.id}
+                      startBidAmount={e?.acceptedAmount || e?.startBidAmount}
+                      title={e?.product?.title}
+                      status={e?.status}
+                      adsImg={e?.product?.images[0].imageLink}
+                      totalBods={e?._count?.bids}
+                      WatshlistState={e?.isSaved}
+                      endingTime={e?.expiryDate}
+                      isBuyNowAllowed={e?.isBuyNowAllowed}
+                      isMyAuction={e?.isMyAuction}
+                      latestBidAmount={e?.bids[0]?.amount || 0}
+                    />
+                  )}
                 </div>
               ))}
             </div>

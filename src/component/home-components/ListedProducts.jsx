@@ -14,7 +14,7 @@ import Swiper from "swiper";
 import { Dimmer, Loader } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import ProductCard from "./ProductCard";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 const ListedProducts = () => {
   const [listedProducts, setListedProducts] = useState([]);
@@ -24,8 +24,8 @@ const ListedProducts = () => {
   const { search } = useLocation();
   const { user } = useAuthState();
   const [lang] = useLanguage("");
-  const selectedContent = content[lang];
-  const history = useHistory();
+  // const selectedContent = content[lang];
+  // const history = useHistory();
   const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
     []
   );

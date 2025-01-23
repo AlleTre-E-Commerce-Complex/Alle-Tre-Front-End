@@ -172,6 +172,7 @@ const HomeAuctionDetails = () => {
         <div className="px-4 mx-auto ">
           <SilmilarProductsSlider
             categoriesId={auctionsDetailsData?.product?.category?.id}
+            isListProduct={false}
           />
         </div>
       </div>

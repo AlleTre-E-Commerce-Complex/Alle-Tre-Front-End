@@ -11,7 +11,6 @@ import useAxios from "../../hooks/use-axios";
 import localizationKeys from "../../localization/localization-keys";
 import { useDispatch } from "react-redux";
 
-
 const ProductCard = ({
   imageLink,
   title,
@@ -213,7 +212,7 @@ const ProductCard = ({
             <div>
               <button
                 onClick={() => handelGoDetails(id)}
-                className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[35px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center"
               >
                 {selectedContent[localizationKeys.buyNow]}
               </button>
