@@ -53,12 +53,7 @@ const ListProductDetails = () => {
 //   );
 
   const dispatch = useDispatch();
-
   const history = useHistory();
-
-  
-
-
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
   const [fileOne, setFileOne] = useState( null);
@@ -765,8 +760,7 @@ const ListProductDetails = () => {
                       </div>
                     </div> */}
                     <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                      {/* {selectedContent[localizationKeys.next]} */}
-                      List
+                      {selectedContent[localizationKeys.List]}
                     </button>
                   </div>
                 </Form>

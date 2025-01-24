@@ -17,9 +17,16 @@ import PhoneNumberModal from "component/shared/phone-number-modal/phone-number-m
 import SilmilarProductsSlider from "component/auctions-details-components/silmilar-products-slider";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import routes from "../../routes";
+import {
+  AuctionHomeDetailsBreadcrumb,
+  MyBidsBreadcrumb,
+} from "../../component/shared/bread-crumb/Breadcrumb";
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
+  console.log("listedPdroduct", listedProductsData);
+  console.log("listedPdroductNAmem", listedProductsData?.subCategory?.nameEn);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [lang] = useLanguage("");
@@ -47,15 +54,22 @@ const SummaryListedSection = () => {
         active={isLoadingListedProduct}
         inverted
       >
-   
         <LodingTestAllatre />
       </Dimmer>
       <div className="grid md:grid-cols-2 grid-cols-1 mt-44 animate-in mx-5 mx-auto px-4">
         <div className="w-full md:w-auto">
+          <div className="px-4 mx-auto h-14 px-4 py-4 sm:block  ">
+            {pathname.startsWith(routes.app.home) ? (
+              <AuctionHomeDetailsBreadcrumb details={productId} />
+            ) : (
+              <MyBidsBreadcrumb details={productId} />
+            )}
+          </div>
           <ImgSlider
             images={listedProductsData?.images}
-            productId={listedProductsData?.id}
+            auctionId={listedProductsData?.id}
             isMyAuction={true}
+            isListProduct={true}
           />
         </div>
         <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0 md:order-none order-last">
@@ -71,14 +85,14 @@ const SummaryListedSection = () => {
               {truncateString(listedProductsData.description, 250)}
             </p>
 
-            <HashLink
+            {/* <HashLink
               className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"
               smooth
               to={`${pathname}#itemDescription`}
               onClick={() => setActiveIndexTab(0)}
             >
               {selectedContent[localizationKeys.viewDetails]}
-            </HashLink>
+            </HashLink> */}
           </div>
           {/* Category sections */}
           <div className="pt-6 mb-8 flex flex-wrap gap-4">
@@ -87,30 +101,31 @@ const SummaryListedSection = () => {
                 {selectedContent[localizationKeys.category]}
               </span>
               <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
-                {/* {lang === "en"
-                ? listedProductsData.category.nameEn || "N/A"
-                : listedProductsData.category.nameAr || "N/A"} */}
+                {lang === "en"
+                  ? listedProductsData?.category?.nameEn
+                  : listedProductsData?.category?.nameAr}
               </div>
             </div>
-            {/* {(listedProductsData.subCategory.nameEn || "NA") && ( */}
-            <div>
-              <span className="text-sm text-gray-500 mb-2">
-                {selectedContent[localizationKeys.subCategory]}
-              </span>
-              <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
-                {/* {lang === "en"
-                  ? listedProductsData.subCategory.nameEn || "N/A"
-                  : listedProductsData.subCategory.nameAr || "N/A"} */}
+            {(listedProductsData?.subCategory?.nameEn ||
+              listedProductsData?.subCategory?.nameAr) && (
+              <div>
+                <span className="text-sm text-gray-500 mb-2">
+                  {selectedContent[localizationKeys.subCategory]}
+                </span>
+                <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+                  {lang === "en"
+                    ? listedProductsData?.subCategory?.nameEn
+                    : listedProductsData?.subCategory?.nameAr}
+                </div>
               </div>
-            </div>
-            {/* )} */}
+            )}
           </div>
 
           {/* Prices  sections */}
           <div className="pt-6  gap-6">
             <div className="space-y-2">
               <p className="text-gray-med text-base font-normal">
-                Selling Price
+                {selectedContent[localizationKeys.sellingPrice]}
               </p>
               <p className="text-gray-verydark cursor-default text-2xl font-semibold">
                 {formatCurrency(listedProductsData.ProductListingPrice)}
@@ -120,7 +135,7 @@ const SummaryListedSection = () => {
           <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 gap-6">
             <div className="space-y-2">
               <div className="text-gray-med text-base font-normal">
-                Location
+                {selectedContent[localizationKeys.location]}
               </div>
               <div className="text-gray-verydark cursor-default text-2xl font-normal">
                 {listedProductsData?.user?.locations?.find(
@@ -133,15 +148,15 @@ const SummaryListedSection = () => {
             <button
               onClick={() => {
                 const message = encodeURIComponent(
-                  "Hello, I would like to inquire about your product."
+                  "Hello, I would like to inquire about your product listed on Alletre."
                 );
                 const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
                 window.open(whatsappUrl, "_blank");
               }}
-              className="border-primary border-[1px] text-primary md:w-[128px] w-full h-[32px] rounded-lg flex items-center justify-center space-x-2"
+              className="border-primary border-[1px] text-primary md:w-[128px] w-full h-[32px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
             >
               <FaWhatsapp />
-              <span>Chat</span>
+              <span>{selectedContent[localizationKeys.chat]}</span>
             </button>
 
             <button
@@ -149,7 +164,7 @@ const SummaryListedSection = () => {
               className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg flex items-center justify-center space-x-2"
             >
               <IoCall />
-              <span>Call</span>
+              <span> {selectedContent[localizationKeys.call]}</span>
             </button>
             <PhoneNumberModal
               openModal={isModalOpen}
@@ -167,7 +182,10 @@ const SummaryListedSection = () => {
       // </div> */}
       </div>
       <div className="mt-16">
-        <SilmilarProductsSlider categoriesId={listedProductsData?.categoryId} isListProduct={true} />
+        <SilmilarProductsSlider
+          categoriesId={listedProductsData?.categoryId}
+          isListProduct={true}
+        />
       </div>
     </div>
   );

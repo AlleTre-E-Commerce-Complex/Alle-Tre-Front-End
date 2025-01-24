@@ -6,7 +6,6 @@ import { useLanguage } from "context/language-context";
 import useAxios from "hooks/use-axios";
 import content from "localization/content";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
 import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
@@ -14,7 +13,7 @@ import Swiper from "swiper";
 import { Dimmer, Loader } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import ProductCard from "./ProductCard";
-// import { useHistory } from "react-router-dom";
+import localizationKeys from "../../localization/localization-keys";
 
 const ListedProducts = () => {
   const [listedProducts, setListedProducts] = useState([]);
@@ -24,8 +23,7 @@ const ListedProducts = () => {
   const { search } = useLocation();
   const { user } = useAuthState();
   const [lang] = useLanguage("");
-  // const selectedContent = content[lang];
-  // const history = useHistory();
+  const selectedContent = content[lang];
   const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
     []
   );
@@ -52,7 +50,6 @@ const ListedProducts = () => {
               `${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`
             )
             .then((res) => {
-              console.log("listed products :", res.data.data);
               setListedProducts(res?.data?.data);
               setPagination(res?.data?.pagination);
             })
@@ -94,12 +91,10 @@ const ListedProducts = () => {
     <div>
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
-          {/* {selectedContent[localizationKeys.liveAuction]} */}
-          Listed Product
+          {selectedContent[localizationKeys.listedProduct]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
-          {/* {selectedContent[localizationKeys.BidWinRepeat]} */}
-          Find and Reach the Product
+          {selectedContent[localizationKeys.findAndReachTheProduct]}
         </p>
       </div>
       {listedProducts?.length === 0 ? (

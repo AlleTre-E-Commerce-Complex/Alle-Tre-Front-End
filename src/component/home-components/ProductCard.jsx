@@ -1,23 +1,18 @@
 import { useLanguage } from "context/language-context";
 import content from "localization/content";
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { truncateString } from "utils/truncate-string";
 import routes from "../../routes";
 // import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
-import { useAuthState } from "../../context/auth-context";
-import useAxios from "../../hooks/use-axios";
 import localizationKeys from "../../localization/localization-keys";
-import { useDispatch } from "react-redux";
 
 const ProductCard = ({
   imageLink,
   title,
   price,
-  WatshlistState,
   className,
-  auctionId,
   location,
   id,
   createdAt,
@@ -44,7 +39,7 @@ const ProductCard = ({
           title,
           text: title,
           // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
-          url: `${getDomain()}/alletre/home/${auctionId}/details`,
+          url: `${getDomain()}/alletre/my-product/${id}/details`,
         });
       } catch (error) {
         console.error("Error sharing post:", error);
@@ -176,8 +171,7 @@ const ProductCard = ({
         <div className="mt-2" onClick={() => handelGoDetails(id)}>
           <div>
             <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-              {/* {selectedContent[localizationKeys.totalBids]} */}
-              Location
+              {selectedContent[localizationKeys.location]}
             </h6>
             <p
               className="text-gray-dark font-medium md:text-[10px] text-[8px]"
@@ -189,8 +183,8 @@ const ProductCard = ({
           <div className="flex justify-between mt-2">
             <div>
               <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-                {/* {selectedContent[localizationKeys.totalBids]} */}
-                Listed
+                {selectedContent[localizationKeys.listed]}
+              
               </h6>
               <p
                 className="text-gray-dark font-medium md:text-[10px] text-[8px]"

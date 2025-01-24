@@ -224,6 +224,13 @@ const ar = {
     "يمكنك تحديد ما يصل إلى خمس صور فقط.",
   [localizationKeys.setAsCover]: "تعيين كصورة غلاف",
   [localizationKeys.cover]: "صورة غلاف",
+  //List product
+  [localizationKeys.call]: "يتصل",
+  [localizationKeys.chat]: "محادثة",
+  [localizationKeys.sellingPrice]: "سعر البيع",
+  [localizationKeys.listed]: "مُدرج",
+  [localizationKeys.listedProduct]: "المنتج المدرج",
+  [localizationKeys.findAndReachTheProduct]: "البحث عن المنتج والوصول إليه",
   // auction details
   [localizationKeys.quickAuction]: "المزاد السريع",
   [localizationKeys.maximumDurationMustBeDay]:
@@ -266,6 +273,8 @@ const ar = {
     "يجب أن يكون سعر الشراء أكبر من أو يساوي 30٪ من الحد الأدنى للسعر",
   [localizationKeys.whyWaitingBuyItNowOnThisPrice]:
     "لماذا الانتظار؟ اشتري الآن على هذا السعر!",
+  [localizationKeys.similarProducts]: "منتجات مماثلة",
+  [localizationKeys.exploreRelatedFind]: "استكشاف البحث عن ذات الصلة",
   // shiping details
   [localizationKeys.locationDetails]: "تفاصيل الشحن",
   [localizationKeys.addAddress]: "إضافة عنوان",
