@@ -277,18 +277,18 @@ const SummaryHomeAuctionSections = ({
           <p className="text-sm text-gray-500 mb-2">
             {selectedContent[localizationKeys.category]}
           </p>
-          <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+          <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
             {category}
-          </button>
+          </div>
         </div>
         {subCategory && (
           <div>
             <p className="text-sm text-gray-500 mb-2">
               {selectedContent[localizationKeys.subCategory]}
             </p>
-            <button className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+            <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
               {subCategory}
-            </button>
+            </div>
           </div>
         )}
       </div>

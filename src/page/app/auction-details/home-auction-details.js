@@ -92,6 +92,7 @@ const HomeAuctionDetails = () => {
                   auctionId={auctionsDetailsData?.id}
                   WatshlistState={auctionsDetailsData?.isSaved}
                   isMyAuction={auctionsDetailsData?.isMyAuction}
+                  isListProduct={false}
                 />
               </div>
               <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">

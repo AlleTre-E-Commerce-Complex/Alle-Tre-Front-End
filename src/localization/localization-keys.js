@@ -74,7 +74,6 @@ const localizationKeys = {
   new: "new",
   used: "used",
   openBox: "openBox",
-  price: "price",
   createAuctionNow: "createAuctionNow",
   weAreAlwaysHereToHelpYou: "weAreAlwaysHereToHelpYou",
   subscribeNowToGetNewOffersAndUpdates: "subscribeNowToGetNewOffersAndUpdates",
@@ -85,8 +84,8 @@ const localizationKeys = {
   sellForCharity: "sellForCharity",
   businessTools: "businessTools",
   createAuction: "createAuction",
-  listProduct:"listProduct",
-  price:"Price",
+  listProduct: "listProduct",
+  price: "Price",
   myAccount: "myAccount",
   iamBiddingOn: "iamBiddingOn",
   iHaveBought: "iHaveBought",
@@ -203,6 +202,13 @@ const localizationKeys = {
   youCanOnlySelectUpToFiveImages: "youCanOnlySelectUpTo5Images",
   setAsCover: "setAsCover",
   cover: "cover",
+  //List product
+  call: "call",
+  chat: "chat",
+  sellingPrice: "sellingPrice",
+  listed: "Listed",
+  listedProduct: "listedProduct",
+  findAndReachTheProduct: "findAndReachTheProduct",
   // auction details
   quickAuction: "quickAuction",
   maximumDurationMustBeDay: "maximumDurationMustBeDay",
@@ -238,6 +244,8 @@ const localizationKeys = {
   purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice:
     "purchasingPriceMustBeMoreThanOrEqual30OfMinimumPrice",
   whyWaitingBuyItNowOnThisPrice: "whyWaitingBuyItNowOnThisPrice",
+  similarProducts: "similarProducts",
+  exploreRelatedFind: "exploreRelatedFind",
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",
@@ -358,7 +366,8 @@ const localizationKeys = {
     "ThereIsNoBidsYetInProgressAuctionsRightNow",
   youHaveNotPlacedAnyBidsAtThisTime: "youHaveNotPlacedAnyBidsAtThisTime",
   startBidding: "startBidding",
-  thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow:"thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow",
+  thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow:
+    "thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow",
   increaseBid: "increaseBid",
   submitNewBid: " submitNewBid",
   ThereIsNoBidsYetPendingAuctionsRightNow:
@@ -466,7 +475,7 @@ const localizationKeys = {
   uploadImageHasbeenSuccessfully: "uploadImageHasbeenSuccessfully",
   yourAuctionSaveAsDraftedSuccess: "yourAuctionSaveAsDraftedSuccess",
   yourAuctionIsCreatedSuccess: "yourAuctionIsCreatedSuccess",
-  yourProductIsSuccessfullyListed:"yourProductIsSuccessfullyListed",
+  yourProductIsSuccessfullyListed: "yourProductIsSuccessfullyListed",
   makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne:
     "makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne",
   //wallet

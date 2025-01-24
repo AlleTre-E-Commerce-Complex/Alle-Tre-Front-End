@@ -225,6 +225,13 @@ const en = {
     "You can only select up to 5 images",
   [localizationKeys.setAsCover]: "Set as cover",
   [localizationKeys.cover]: "Cover",
+  //List product
+  [localizationKeys.call]: "Call",
+  [localizationKeys.chat]: "Chat",
+  [localizationKeys.sellingPrice]: "Selling Price",
+  [localizationKeys.listed]: "Listed",
+  [localizationKeys.listedProduct]: "Listed Product",
+  [localizationKeys.findAndReachTheProduct]: "Find and reach the product",
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",
@@ -267,6 +274,8 @@ const en = {
     "Purchasing price must be more than or equal 30% of minimum price",
   [localizationKeys.whyWaitingBuyItNowOnThisPrice]:
     "Why waiting? Buy it now on this price!",
+  [localizationKeys.similarProducts]: "Similar Products",
+  [localizationKeys.exploreRelatedFind]: "Explore Related Find",
   // shiping details
   [localizationKeys.locationDetails]: "Location Details",
   [localizationKeys.addAddress]: "Add Address",
@@ -403,7 +412,8 @@ const en = {
   [localizationKeys.youHaveNotPlacedAnyBidsAtThisTime]:
     "You have not placed any bids at this time",
   [localizationKeys.startBidding]: "Starting bidding",
-  [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:"There are no active bids at the moment. Place your first bid now!",
+  [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:
+    "There are no active bids at the moment. Place your first bid now!",
   [localizationKeys.increaseBid]: "Increase Bid",
   [localizationKeys.inPrsubmitNewBidogress]: "Submit new bid",
   [localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow]:
@@ -519,7 +529,7 @@ const en = {
     "Your auction save as draft success",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
     "Your auction is created success",
-    [localizationKeys.yourProductIsSuccessfullyListed]:
+  [localizationKeys.yourProductIsSuccessfullyListed]:
     "Your product is successfully listed",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "Make sure that you choose the auction location or create another one",

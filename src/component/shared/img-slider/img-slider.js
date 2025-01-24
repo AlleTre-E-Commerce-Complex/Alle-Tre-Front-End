@@ -18,6 +18,7 @@ const ImgSlider = ({
   onReload,
   isMyAuction,
   title,
+  isListProduct,
 }) => {
   const { user } = useAuthState();
   const dispatch = useDispatch();
@@ -109,12 +110,16 @@ const ImgSlider = ({
   };
 
   const handleShare = async () => {
+    const shareUrl = isListProduct
+      ? `${getDomain()}/alletre/my-product/${auctionId}/details`
+      : `${getDomain()}/alletre/home/${auctionId}/details`;
+
     if (navigator.share) {
       try {
         await navigator.share({
           title,
           text: title,
-          url: `${getDomain()}/alletre/home/${auctionId}/details`,
+          url: shareUrl,
         });
         console.log("Post shared successfully!");
       } catch (error) {

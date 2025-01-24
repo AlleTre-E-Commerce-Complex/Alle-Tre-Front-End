@@ -17,6 +17,7 @@ import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
 import "./auctions-slider.scss";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import ProductCard from "component/home-components/ProductCard";
+import localizationKeys from "../../localization/localization-keys";
 
 const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   const [lang] = useLanguage("");
@@ -88,6 +89,10 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
     };
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
       swiper6?.slideNext();
@@ -103,9 +108,11 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
       className={auctions?.length === 0 ? "hidden" : "ezd-content relative  "}
     >
       <div className="text-center">
-        <h1 className="text-gray-dark text-base font-bold">Similar Products</h1>
+        <h1 className="text-gray-dark text-base font-bold">
+          {selectedContent[localizationKeys.similarProducts]}
+        </h1>
         <p className="text-gray-med text-base font-normal">
-          Explore Related Find
+          {selectedContent[localizationKeys.exploreRelatedFind]}
         </p>
       </div>
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>

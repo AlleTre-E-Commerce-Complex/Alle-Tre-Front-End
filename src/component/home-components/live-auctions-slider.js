@@ -96,12 +96,10 @@ const LiveAuctionsSlider = ({ type }) => {
     <div>
       <div className="text-center">
         <h1 className="text-gray-dark text-base font-bold">
-          {/* {selectedContent[localizationKeys.liveAuction]} */}
-          Listed Product
+          {selectedContent[localizationKeys.listedProduct]}
         </h1>
         <p className="text-gray-med text-base font-normal pb-10">
-          {/* {selectedContent[localizationKeys.BidWinRepeat]} */}
-          Find and Reach the Product
+          {selectedContent[localizationKeys.findAndReachTheProduct]}
         </p>
       </div>
       {auctions?.length === 0 ? (
