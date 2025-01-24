@@ -131,6 +131,7 @@ const en = {
   [localizationKeys.termsAndCondition]: "Terms and Condition",
   [localizationKeys.iAcceptThe]: "I accept the",
   [localizationKeys.close]: "Close",
+  [localizationKeys.sell]: "Sell",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
@@ -345,6 +346,9 @@ const en = {
   [localizationKeys.thereAreNoWatchlistYet]: "  There are no Watchlist yet.",
   [localizationKeys.ChangedDefaultAdrress]: " Changed Default Adrress",
   [localizationKeys.invalidLocationId]: "Invalid location ID",
+  [localizationKeys.accessBlocked]: "Access Blocked",
+  [localizationKeys.yourAccountIsBlockedByAdminPleaseContactSupport]:
+    "Your account is blocked by admin.Please contact support.",
   // myauctions
   [localizationKeys.createNow]: "Create Now",
   [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:

@@ -41,6 +41,7 @@ const Header = ({ SetSid }) => {
   const [isDropdownOpen, setisDropdownOpen] = useState(false);
   // const [notificationData, setNotificationData] = useState(null);
   const [serchShow, setSerchShow] = useState(false);
+  const [isListing, setIsListing] = useState(false);
   const [open, setOpen] = useState(false);
   const { run } = useAxios();
   const { user } = useAuthState();
@@ -323,6 +324,7 @@ const Header = ({ SetSid }) => {
         history.push(routes.app.listProduct.default);
         // dispatch(productDetails({}));
       } else {
+        setIsListing(true);
         setOpen(true);
       }
     } else {
@@ -475,21 +477,21 @@ const Header = ({ SetSid }) => {
                 onClick={handleNotificationClick}
               />
             </div>
-            <div className="my-auto flex items-center ">
-              <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 min-w-[100px]" />
+            <div className="my-auto ">
+              <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 w-[120px] h-[48px] flex items-center justify-center " />
             </div>
             <div className="relative inline-block text-left">
               <div>
                 <button
                   type="button"
-                  className="hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg w-auto h-[40px] px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ltr:font-serifEN rtl:font-serifAR items-center justify-center sm:ml-6 md:ml-8 lg:ml-10"
+                  className="-ml-7 w-[120px] h-[48px] hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-bold rounded-lg px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ltr:font-serifEN rtl:font-serifAR items-center justify-center "
                   id="menu-button"
                   aria-expanded={isDropdownOpen ? "true" : "false"}
                   aria-haspopup="true"
                   onClick={toggleDropdown}
                 >
-                  Sell
-                  <FaPlus className="ml-2 text-lg" />
+                  <FaPlus className="mr-1 ml-1 text-md" />
+                  {selectedContent[localizationKeys.sell]}
                 </button>
               </div>
 
@@ -624,6 +626,8 @@ const Header = ({ SetSid }) => {
         open={open}
         setOpen={setOpen}
         TextButton={selectedContent[localizationKeys.proceed]}
+        isListing={isListing}
+        setIsListing={setIsListing}
       />
     </div>
   );

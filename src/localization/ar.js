@@ -128,7 +128,7 @@ const ar = {
     "ابق على اطلاع بأحدث المنتجات التي وصلتنا ، والعروض الترويجية الخاصة ، والمبيعات الموسمية.",
   [localizationKeys.termsAndCondition]: "الشروط والأحكام",
   [localizationKeys.iAcceptThe]: "انا اقبل",
-
+  [localizationKeys.sell]: "يبيع",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
@@ -343,6 +343,9 @@ const ar = {
   [localizationKeys.thereAreNoWatchlistYet]: "لا توجد قائمة المراقبة حتى الآن.",
   [localizationKeys.ChangedDefaultAdrress]: " تغيير العنوان الافتراضي",
   [localizationKeys.invalidLocationId]: "معرف الموقع غير صالح",
+  [localizationKeys.accessBlocked]: "تم حظر الوصول",
+  [localizationKeys.yourAccountIsBlockedByAdminPleaseContactSupport]:
+    "تم حظر حسابك من قبل المسؤول. يرجى الاتصال بالدعم.",
   // myauctions
   [localizationKeys.createNow]: "أنشئ الآن",
   [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:

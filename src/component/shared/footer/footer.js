@@ -123,13 +123,13 @@ const Footer = () => {
         </div>
 
         {/* Social Media Icons Section */}
-        <div className="relative rtl:-left-[185px] h-[150px]">
+        <div className="relative rtl:left-[10px] h-[150px]">
           <div className="relative h-[200px]">
             <div className="absolute inset-0 flex items-center">
               <hr className="w-full border-t border-white" />
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="flex flex-row rounded-lg gap-x-4 sm:gap-x-8 bg-[#3c0b11] p-4 opacity-95">
+              <div className="flex flex-row-reverse rtl:flex-row rounded-lg gap-x-4 sm:gap-x-8 bg-[#3c0b11] p-4 opacity-95">
                 {[
                   {
                     icon: FaFacebookF,
@@ -175,10 +175,7 @@ const Footer = () => {
       </div>
 
       <div className="bg-[#6e1f30] h-[20x] text-gray-med/50 flex justify-center items-center">
-       
-        <TermsAndConditions
-          isFooter={true} 
-        />
+        <TermsAndConditions isFooter={true} />
       </div>
     </div>
   );
