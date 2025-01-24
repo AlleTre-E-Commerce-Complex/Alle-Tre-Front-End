@@ -13,7 +13,10 @@ const DropdownLang = ({ className }) => {
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
-    <div dir="ltr" className={`relative ${className}`}>
+    <div
+      dir="ltr"
+      className={`relative flex items-center justify-center ${className}`}
+    >
       <div
         className="flex items-center cursor-pointer"
         onClick={toggleDropdown}
@@ -34,7 +37,11 @@ const DropdownLang = ({ className }) => {
       {isOpen && (
         <div
           className="absolute bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10 
-                     right-0 sm:left-0 sm:right-auto w-40"
+                     right-0 sm:left-0 sm:right-auto w-32 lg:w-40"
+          style={{
+            [lang === "ar" ? "left" : "right"]: "auto",
+            [lang === "en" ? "right" : "left"]: "0",
+          }}
         >
           <div
             className="flex items-center p-2 hover:bg-gray-200 cursor-pointer"

@@ -117,6 +117,7 @@ const localizationKeys = {
   termsAndCondition: "termsAndCondition",
   iAcceptThe: "iAcceptThe",
   close: "close",
+  sell: "sell",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -308,6 +309,9 @@ const localizationKeys = {
   yourWatchlist: "yourWatchlist",
   thereAreNoWatchlistYet: " thereAreNoWatchlistYet",
   invalidLocationId: "invalidLocationId",
+  accessBlocked: "accessBlocked",
+  yourAccountIsBlockedByAdminPleaseContactSupport:
+    "yourAccountIsBlockedByAdminPleaseContactSupport",
   // myauctions
   createNow: "createNow",
   thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway:

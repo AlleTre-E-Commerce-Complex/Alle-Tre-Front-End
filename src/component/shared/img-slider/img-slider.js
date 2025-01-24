@@ -10,6 +10,7 @@ import useAxios from "../../../hooks/use-axios";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { MdNavigateNext } from "react-icons/md";
+import { useLanguage } from "../../../context/language-context";
 
 const ImgSlider = ({
   images,
@@ -20,12 +21,15 @@ const ImgSlider = ({
   title,
   isListProduct,
 }) => {
-  const { user } = useAuthState();
-  const dispatch = useDispatch();
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false); // State to track if the image is zoomed
   const [isWatshlist, setWatshlist] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  const [lang] = useLanguage("");
+  const isArabic = lang === "ar";
+  const { user } = useAuthState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (images && images.length > 0) setSelectedImgIndex(0);
@@ -148,9 +152,13 @@ const ImgSlider = ({
             onClick={isImageLoaded ? toggleZoom : null}
           />
         )}
-        <div className="absolute top-1/2 w-full flex justify-between px-2 transform -translate-y-1/2 z-20">
+        <div
+          className={`absolute top-1/2 w-full flex ${
+            isArabic ? "justify-between flex-row-reverse" : "justify-between"
+          } px-2 transform -translate-y-1/2 z-20`}
+        >
           <button
-            onClick={handlePrevious}
+            onClick={isArabic ? handleNext : handlePrevious} 
             className="bg-primary/40 hover:bg-primary p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 group/btn"
           >
             <BsChevronLeft
@@ -159,7 +167,7 @@ const ImgSlider = ({
             />
           </button>
           <button
-            onClick={handleNext}
+            onClick={isArabic ? handlePrevious : handleNext}
             className="bg-primary/40 hover:bg-primary p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 group/btn"
           >
             <BsChevronRight
@@ -168,16 +176,21 @@ const ImgSlider = ({
             />
           </button>
         </div>
-        <div className="absolute top-5 right-5 z-20 flex items-center space-x-2">
+
+        <div
+          className={`absolute top-5 z-20 flex items-center ${
+            isArabic ? "left-5 space-x-reverse" : "right-5"
+          } space-x-2`}
+        >
           {!isMyAuction && (
             <button
               onClick={handelAddNewWatshlist}
-              className="border-primary border-2 border-solid bg-white  group/watchlist rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+              className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
             >
               {isWatshlist ? (
                 <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-2xl md:text-3xl" />
               ) : (
-                <BsBookmark className="text-primary  group-hover/watchlist:text-white text-2xl md:text-3xl" />
+                <BsBookmark className="text-primary group-hover/watchlist:text-white text-2xl md:text-3xl" />
               )}
             </button>
           )}
@@ -188,6 +201,7 @@ const ImgSlider = ({
             <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-3xl" />
           </div>
         </div>
+
         {/* Thumbnail Section */}
         <div className="h-[18%] w-full flex justify-center items-center bg-secondary/10">
           <div className="bg-opacity-70 p-2  flex gap-2 overflow-x-auto">

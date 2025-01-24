@@ -13,7 +13,7 @@ const LogoutModal = ({ open, setOpen, onLogout }) => {
       onClose={() => setOpen(false)}
       open={open}
     >
-      <div className="sm:w-[400px] w-full h-auto  rounded-2xl bg-background pb-6 pt-4">
+      <div className="sm:w-[400px] w-full h-auto border-2 border-primary rounded-2xl bg-background pb-6 pt-4">
         <h1 className="text-black font-semibold text-lg text-center">
         {selectedContent[localizationKeys.confirmLogout]}
          

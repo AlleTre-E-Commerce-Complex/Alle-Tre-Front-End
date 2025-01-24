@@ -28,6 +28,8 @@ const AddLocationModel = ({
   onReload,
   isEditing = false,
   editData = null,
+  isListing,
+  setIsListing,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -119,7 +121,11 @@ const AddLocationModel = ({
             // Only update state if mounted
             window.localStorage.setItem("hasCompletedProfile", "true");
             if (TextButton === selectedContent[localizationKeys.proceed]) {
-              history.push(routes.app.createAuction.productDetails);
+              if (isListing) {
+                history.push(routes.app.listProduct.default);
+              } else {
+                history.push(routes.app.createAuction.productDetails);
+              }
               toast.success(
                 selectedContent[localizationKeys.successAddLocatons]
               );
@@ -131,7 +137,7 @@ const AddLocationModel = ({
           }
         })
         .catch((err) => {
-                toast.error(err.message[0]||selectedContent[localizationKeys.oops]);
+          toast.error(err.message[0] || selectedContent[localizationKeys.oops]);
         });
     }
   };
@@ -139,7 +145,10 @@ const AddLocationModel = ({
   return (
     <Modal
       className="sm:w-[471px] w-full h-auto bg-transparent scale-in"
-      onClose={() => setOpen(false)}
+      onClose={() => {
+        setOpen(false);
+        setIsListing(false);
+      }}
       open={open}
     >
       <div className="sm:w-[471px] w-full h-auto border-2 border-primary rounded-2xl bg-background p-6">
@@ -235,7 +244,6 @@ const AddLocationModel = ({
                     className={`input_Input_Form phone_Input_Form ${
                       isArabic ? "rtl" : "ltr"
                     }`}
-                 
                     placeholder={selectedContent[localizationKeys.phoneNumber]}
                   />
                   <div
