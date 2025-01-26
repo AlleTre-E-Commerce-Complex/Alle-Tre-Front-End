@@ -78,6 +78,7 @@ const api = {
       getSellerLocation: (auctionId) => `/auctions/user/${auctionId}/location`,
       getBuyerLocation: (auctionId) =>
         `auctions/user/${auctionId}/buyer-location-details`,
+      payByBank_uploadBankStatement : "/auctions/user/pay-by-banck/upload-bank-statement"
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,

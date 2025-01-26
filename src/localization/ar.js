@@ -381,6 +381,8 @@ const ar = {
   [localizationKeys.Warning]: "تحذير",
   [localizationKeys.PaymentSelection]: "اختيار الدفع",
   [localizationKeys.walletPayment]: "الدفع عن طريق المحفظة",
+  [localizationKeys.BankTransfer]: "التحويل البنكي",
+  [localizationKeys.BankTransferDetails]: "تفاصيل التحويل البنكي",
   [localizationKeys.onlinePayment]: "الدفع عبر الإنترنت",
   [localizationKeys.WhichPaymentMethodWouldYouLikeToSelect]:
     "ما هي طريقة الدفع التي ترغب في اختيارها؟",
@@ -493,7 +495,9 @@ const ar = {
   // tab details
   [localizationKeys.shippingPolicy]: "سياسة الشحن",
   [localizationKeys.returnPolicy]: " سياسة الإرجاع",
+  [localizationKeys.noReturnPolicy]: "لا توجد سياسة إرجاع",
   [localizationKeys.warrantyPolicy]: "سياسة الضمان",
+  [localizationKeys.noWarrantyPolicy]: "لا يوجد سياسة ضمان",
   [localizationKeys.payment]: "الدفع",
   [localizationKeys.feedback]: "الملاحظات",
   [localizationKeys.aboutTheBrand]: "حول العلامة التجارية",

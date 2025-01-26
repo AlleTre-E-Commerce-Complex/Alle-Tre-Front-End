@@ -26,6 +26,8 @@ import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import routes from "../../../routes";
 import WalletPaymentForBidderFullPayment from "../WalletPayment/WalletPaymentForBidderFullPayment";
 import PaymentSelection from "../PaymentSelection/PaymentSelection";
+import BankTransferPayment from "../BankTransferPayment/BankTransferPayment";
+import PaymentSelectionOnAuctionPurchase from "../PaymentSelection/PaymentSelectionOnAuctionPurchase";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
@@ -38,16 +40,22 @@ export default function CheckoutPageCompletePayment() {
     (state) => state?.completePayment?.completePaymentData
   );
 
-  const payingAmount = Number(completedPaymentData?.lastPrice) + (Number(completedPaymentData?.lastPrice) * 0.5)/100
+  // const payingAmount = Number(completedPaymentData?.lastPrice) + (Number(completedPaymentData?.lastPrice) * 0.5)/100
+const baseAmount = Number(completedPaymentData?.lastPrice) || 0; // Default to 0 if undefined
+const feePercentage = 0.5 / 100; // 0.5%
+const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
+
   const { auctionId } = useParams();
 
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
-  const [walletBalance, setWalletBalance] = useState(0);
+  const [walletBalance, setWalletBalance] = useState(null);
   const [isWalletPayment, setIsWalletPayment] = useState(null);
   const [showWalletPaymentMethod, setShowWalletPaymentMethod] = useState(null);
+  const [showBankDetails, setShowBankDetails] = useState(false)
+  const [isBankTransfer, setIsBankTransfer] = useState(false)
   const [showStripePayment, setShowStripePayment] = useState(null);
-  const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
+  const [showPaymentSelecton, setShwoPaymentSelection] = useState(true);
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
     useAxios([]);
@@ -80,7 +88,7 @@ export default function CheckoutPageCompletePayment() {
 
                     if (balance && Number(balance) >= Number(amountToPay)) {
                       setWalletBalance(balance);
-                      setShwoPaymentSelection(true);
+                      // setShwoPaymentSelection(true);
                     } else {
                       stripePaymentApiCall();
                     }
@@ -124,35 +132,18 @@ export default function CheckoutPageCompletePayment() {
   };
 
   const handleSubmitPayment = () => {
-    if (isWalletPayment === null) {
+    if (isWalletPayment === null && !showBankDetails) {
       toast.error("Plese Select a payment method");
       return;
     }
     setShwoPaymentSelection(false);
-    if (!isWalletPayment) {
+    if (isBankTransfer && !isWalletPayment) {
+       setShowBankDetails(true);
+    } else if (!isWalletPayment && !isBankTransfer) {
       setShowStripePayment(true);
       setShowWalletPaymentMethod(false);
-      // run(
-      //   authAxios
-      //     .post(
-      //       api.app.auctions.auctionPurchaseByBidder(
-      //         completedPaymentData?.auctionsId
-      //       )
-      //     )
-      //     .then((res) => {
-      //       setClientSecret(res?.data?.data.clientSecret);
-      //     })
-      //     .catch((err) => {
-      //       toast.error(
-      //         err?.response?.data?.message[lang] ||
-      //           selectedContent[
-      //             localizationKeys.somethingWentWrongPleaseTryAgainLater
-      //           ]
-      //       );
-      //     })
-      // );
       stripePaymentApiCall();
-    } else {
+    } else if(isWalletPayment && !isBankTransfer) {
       setShowStripePayment(false);
       setShowWalletPaymentMethod(true);
     }
@@ -269,22 +260,29 @@ export default function CheckoutPageCompletePayment() {
                 Payment method
               </h1>
 
-              {walletBalance
-                ? showPaymentSelecton && (
-                    <PaymentSelection
+              {
+              // walletBalance?
+               showPaymentSelecton && (
+                    <PaymentSelectionOnAuctionPurchase
                       isWalletPayment={isWalletPayment}
+                      isLoading={isLoading || isLoadingPendingAuctionData}
                       setIsWalletPayment={setIsWalletPayment}
                       handleSubmitPayment={handleSubmitPayment}
+                      walletBalance= {walletBalance}
+                      isAUCTION_PURCHASE={true}
+                      setIsBankTransfer={setIsBankTransfer}
+                      isBankTransfer = {isBankTransfer}
                     />
                   )
-                : clientSecret && (
-                    <Elements options={options} stripe={stripePromise}>
-                      <CheckoutFromCompletePayment
-                        auctionId={completedPaymentData?.auctionsId}
-                        payPrice={payingAmount}
-                      />
-                    </Elements>
-                  )}
+                // : clientSecret && (
+                //     <Elements options={options} stripe={stripePromise}>
+                //       <CheckoutFromCompletePayment
+                //         auctionId={completedPaymentData?.auctionsId}
+                //         payPrice={payingAmount}
+                //       />
+                //     </Elements>
+                //   )
+                  }
               {clientSecret && showStripePayment && (
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutFromCompletePayment
@@ -292,6 +290,7 @@ export default function CheckoutPageCompletePayment() {
                     payPrice={payingAmount}
                   />
                 </Elements>
+
               )}
               {showWalletPaymentMethod && (
                 <WalletPaymentForBidderFullPayment
@@ -302,8 +301,18 @@ export default function CheckoutPageCompletePayment() {
                   paymentAPI={api.app.auctions.WalletPayForBidderFullPayment(
                     completedPaymentData?.auctionsId
                   )}
+                setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
+                setShowWalletPaymentMethod={ ()=>(setShowWalletPaymentMethod(false))}
                 />
               )}
+              {showBankDetails &&
+              <BankTransferPayment
+                setShowBankDetails={()=>setShowBankDetails(false)}
+                setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
+                auctionId={completedPaymentData?.auctionsId}
+                amount={payingAmount}
+              />
+            }
             </div>
           </div>
         </div>

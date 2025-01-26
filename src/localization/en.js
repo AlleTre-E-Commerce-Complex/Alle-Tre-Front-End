@@ -68,7 +68,9 @@ const en = {
   [localizationKeys.deliveryFees]: "Delivery Fees",
   [localizationKeys.locatedIn]: "Located In ",
   [localizationKeys.returnPolicy]: "Return Policy",
+  [localizationKeys.noReturnPolicy]: "No Return Policy",
   [localizationKeys.warrantyPolicy]: "Warranty Policy",
+  [localizationKeys.noWarrantyPolicy]: "No Warranty Policy",
   [localizationKeys.auctionState]: "Auction State",
   [localizationKeys.comingSoon]: "Coming Soon",
   [localizationKeys.liveAuction]: "Live Auction",
@@ -385,6 +387,8 @@ const en = {
   [localizationKeys.Warning]: "Warning",
   [localizationKeys.PaymentSelection]: "Payment selection",
   [localizationKeys.walletPayment]: "Wallet Payment",
+  [localizationKeys.BankTransfer]: "Bank Transfer",
+  [localizationKeys.BankTransferDetails]: "Bank Transfer Details",
   [localizationKeys.onlinePayment]: "Online Payment",
   [localizationKeys.WhichPaymentMethodWouldYouLikeToSelect]:
     "Which payment method would you like to select?",
