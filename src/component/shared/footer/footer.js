@@ -129,7 +129,7 @@ const Footer = () => {
               <hr className="w-full border-t border-white" />
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="flex flex-row-reverse rtl:flex-row rounded-lg gap-x-4 sm:gap-x-8 bg-[#3c0b11] p-4 opacity-95">
+              <div   className="flex flex-row-reverse rtl:flex-row rounded-lg gap-x-4 sm:gap-x-8 bg-gradient-to-t from-[#3c0b11] to-[#1a090a] p-4 opacity-97">
                 {[
                   {
                     icon: FaFacebookF,

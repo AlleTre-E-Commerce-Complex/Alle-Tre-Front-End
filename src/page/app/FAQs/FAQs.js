@@ -17,7 +17,7 @@ const FQAsDate = [
             located in Ras Al Khaima - United Arab Emirates.
           </li>
           <li>
-            User : Anyone who accesses the Atri website, whether for the purpose
+            User : Anyone who accesses the Alletre website, whether for the purpose
             of viewing, selling, bidding, or buying without limitation.
           </li>
           <li>
