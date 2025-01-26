@@ -19,7 +19,7 @@ import { PiWarningCircle } from "react-icons/pi";
 import TermsAndConditions from "component/shared/terms-and-condition/TermsAndCondition";
 
 const SignUp = ({ currentPAth, isAuthModel }) => {
-  const history = useHistory();
+  // const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const isArabic = lang === "ar";

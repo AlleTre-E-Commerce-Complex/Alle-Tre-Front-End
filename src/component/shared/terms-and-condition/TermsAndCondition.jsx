@@ -732,31 +732,41 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div className="ml-4">
-          <li>
+          <span className="text-lg font-bold text-gray-verydark">11-</span>
+          <span>
             External links The platform may contain links to external sites.
             ALLE TRE is not responsible for the content of these links or any
             damages that may result from their use.
-          </li>
-          <li className="mt-4">
-            Protection of intellectual property rights ALLE TRE respects
-            intellectual property rights. Please contact us if you have a
-            complaint regarding intellectual property rights infringement on the
-            platform.
-          </li>
+          </span>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">12-</span>
+            <span>
+              Protection of intellectual property rights ALLE TRE respects
+              intellectual property rights. Please contact us if you have a
+              complaint regarding intellectual property rights infringement on
+              the platform.
+            </span>
+          </div>
         </div>
       ),
       ar: (
         <div className="ml-4">
-          <li>
-            الروابط الخارجية قد تحتوي المنصة على روابط لمواقع خارجية. لا تتحمل
-            “ألي تري” مسؤولية محتوى هذه الروابط أو أي أضرار قد تنتج عن
-            استخدامها.
-          </li>
-          <li className="mt-4">
-            حماية حقوق الملكية الفكرية تحترم “ألي تري” حقوق الملكية الفكرية
-            يُرجى التواصل معنا إذا كانت لديك شكوى تتعلق بانتهاك حقوق الملكية
-            الفكرية على المنصة.
-          </li>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١١- </span>
+            <span>
+              الروابط الخارجية قد تحتوي المنصة على روابط لمواقع خارجية. لا تتحمل
+              “ألي تري” مسؤولية محتوى هذه الروابط أو أي أضرار قد تنتج عن
+              استخدامها.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٢- </span>
+            <span>
+              حماية حقوق الملكية الفكرية تحترم “ألي تري” حقوق الملكية الفكرية
+              يُرجى التواصل معنا إذا كانت لديك شكوى تتعلق بانتهاك حقوق الملكية
+              الفكرية على المنصة.
+            </span>
+          </div>
         </div>
       ),
     },
@@ -766,11 +776,12 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div className="ml-4 -mt-5">
-          <li>
+          <span className="text-lg font-bold text-gray-verydark">13- </span>
+          <span>
             Laws and jurisdiction These terms and conditions are subject to and
             construed in accordance with the laws of [the Emirates] . This
             country is considered the legal seat for resolving disputes.
-          </li>
+          </span>
           <ul className="list-disc ml-6 ">
             <li>
               <span className="font-semibold">Arbitration Condition:</span>
@@ -804,12 +815,13 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
-          <li>
+        <div className="ml-4 -mt-5">
+          <span className="text-lg font-bold text-gray-verydark">١٣- </span>
+          <span>
             القوانين والاختصاص القضائي تخضع هذه الشروط والأحكام لقوانين
             [الامارات ] وتُفسر وفقًا لها. تُعتبر هذه الدولة مقرًا قانونيًا لفض
             النزاعات.
-          </li>
+          </span>
           <ul className="list-disc ml-6 ">
             <li>
               <span className="font-semibold">شرط التحكيم :</span>
@@ -843,64 +855,174 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div className="ml-4 -mt-8">
-          <li>
-            Amendments and Notifications ALLE TRE reserves the right to amend
-            the terms and conditions at any time. You will be notified of the
-            amendments via email or via a notice on the site, and your continued
-            use of the site constitutes acceptance of the new terms.
-          </li>
-          <li className="mt-4">
-            Termination of Service ALLE TRE reserves the right to suspend or
-            terminate users' accounts in the event that they violate any of the
-            terms and conditions, or in the event that they behave in a manner
-            that is harmful to the platform or other users.
-          </li>
-          <li className="mt-4">
-            Electronic Communication By using the platform, you agree to receive
-            notices from ALLE TRE via email or via notices on the site. Any
-            notice issued by ALLE TRE shall be considered an official notice.
-          </li>
-          <li className="mt-4">
-            The headquarters of the company ALLE TRE is one of the properties of
-            ALLE TRE E-COMMERCE COMPLEX LLC OPC.
-          </li>
-          <li className="mt-4">
-            Inquiries In the event of any questions or inquiries regarding these
-            terms and conditions, please contact us via email [About Technical
-            Support and Customer Service] under the title Inquiries about the
-            terms and conditions". Please ensure that you agree to these terms
-            before starting to use the ALLE TRE platform.
-          </li>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">14- </span>
+            <span>
+              Amendments and Notifications: ALLE TRE reserves the right to amend
+              the terms and conditions at any time. You will be notified of the
+              amendments via email or via a notice on the site, and your
+              continued use of the site constitutes acceptance of the new terms.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">15- </span>
+            <span>
+              Termination of Service: ALLE TRE reserves the right to suspend or
+              terminate users' accounts in the event that they violate any of
+              the terms and conditions, or in the event that they behave in a
+              manner that is harmful to the platform or other users.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">16- </span>
+            <span>
+              Electronic Communication: By using the platform, you agree to
+              receive notices from ALLE TRE via email or via notices on the
+              site. Any notice issued by ALLE TRE shall be considered an
+              official notice.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">17- </span>
+            <span>
+              Headquarters: The headquarters of the company ALLE TRE is one of
+              the properties of ALLE TRE E-COMMERCE COMPLEX LLC OPC.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">18- </span>
+            <span>
+              Inquiries: In the event of any questions or inquiries regarding
+              these terms and conditions, please contact us via email under the
+              title "Inquiries about the terms and conditions". Please ensure
+              that you agree to these terms before starting to use the ALLE TRE
+              platform.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-black">19- </span>
+            <span>
+              Value Added Tax Compliance: The ALLE TRE E-COMMERCE COMPLEX LLC
+              OPC confirms that all transactions conducted through the platform
+              are subject to the provisions of Federal Decree-Law No. (8) of
+              2017 regarding Value Added Tax and its executive regulations, if
+              the tax registration conditions apply to the seller.
+              <h3 class="text-md mt-2 font-bold">
+                Seller's Responsibility for Value Added Tax
+              </h3>
+              <ul className="mt-2 list-disc list-inside">
+                <li>
+                  The prices offered by the seller include value added tax.
+                </li>
+                <li>
+                  The ALLE TRE E-COMMERCE COMPLEX LLC OPC acts as an electronic
+                  intermediary to facilitate auctions between sellers and
+                  buyers, and the platform does not bear any legal or financial
+                  responsibility related to issuing tax invoices, collecting
+                  value added tax, or any other tax obligations of sellers.
+                </li>
+                <li>
+                  The VAT registered seller must fully comply with all
+                  applicable tax laws and regulations in the United Arab
+                  Emirates, including issuing correct and complete tax invoices
+                  that include VAT when completing any sale through the
+                  platform.
+                </li>
+                <li>
+                  The ALLE TRE E-COMMERCE COMPLEX LLC OPC fully disclaims any
+                  liability for any failure by the seller to meet its tax
+                  obligations, including failure to issue tax invoices or
+                  failure to collect or pay value added tax. The seller is
+                  exclusively responsible for any legal or financial
+                  consequences arising from non-compliance with tax laws and
+                  regulations within the United Arab Emirates.
+                </li>
+              </ul>
+            </span>
+          </div>
         </div>
       ),
       ar: (
         <div className="ml-4 -mt-8">
-          <li>
-            التعديلات والإخطارات تحتفظ “ألي تري” بحقها في تعديل الشروط والأحكام
-            في أي وقت. سيتم إخطاركم بالتعديلات عبر البريد الإلكتروني أو عبر
-            إشعار على الموقع، ويُعد استمراركم في استخدام الموقع قبولًا للشروط
-            الجديدة.
-          </li>
-          <li className="mt-4">
-            إنهاء الخدمة تحتفظ “ألي تري” بالحق في تعليق أو إنهاء حساب المستخدمين
-            في حال انتهاكهم لأي من الشروط والأحكام، أو في حال سلوكهم بشكل ضار
-            بالمنصة أو المستخدمين الآخرين.
-          </li>
-          <li className="mt-4">
-            التواصل الإلكتروني باستخدامكم للمنصة، فإنكم توافقون على استقبال
-            الإشعارات من “ألي تري” عبر البريد الإلكتروني أو عن طريق الإشعارات
-            على الموقع. يُعتبر أي إشعار صادر عن “ألي تري” بمثابة إشعار رسمي.
-          </li>
-          <li className="mt-4">
-            - مقر الشركة “ألي تري” هي من ممتلكات [ألي تري مجمع للتعامل
-            الالكتروني].
-          </li>
-          <li className="mt-4">
-            - الاستفسارات في حال وجود أي أسئلة أو استفسارات بخصوص هذه الشروط
-            والأحكام، يُرجى التواصل معنا عبر البريد الإلكتروني [ الدعم الفني و
-            خدمة العملاء ] بعنوان “استفسارات حول الشروط والأحكام”. يُرجى التأكد
-            من موافقتك على هذه الشروط قبل البدء في استخدام منصة “ألي تري.
-          </li>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٤- </span>
+            <span>
+              التعديلات والإخطارات تحتفظ “ألي تري” بحقها في تعديل الشروط
+              والأحكام في أي وقت. سيتم إخطاركم بالتعديلات عبر البريد الإلكتروني
+              أو عبر إشعار على الموقع، ويُعد استمراركم في استخدام الموقع قبولًا
+              للشروط الجديدة.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٥- </span>
+            <span>
+              إنهاء الخدمة تحتفظ “ألي تري” بالحق في تعليق أو إنهاء حساب
+              المستخدمين في حال انتهاكهم لأي من الشروط والأحكام، أو في حال
+              سلوكهم بشكل ضار بالمنصة أو المستخدمين الآخرين.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٦- </span>
+            <span>
+              التواصل الإلكتروني باستخدامكم للمنصة، فإنكم توافقون على استقبال
+              الإشعارات من “ألي تري” عبر البريد الإلكتروني أو عن طريق الإشعارات
+              على الموقع. يُعتبر أي إشعار صادر عن “ألي تري” بمثابة إشعار رسمي.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٧- </span>
+            <span>
+              - مقر الشركة “ألي تري” هي من ممتلكات [ألي تري مجمع للتعامل
+              الالكتروني].
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٨- </span>
+            <span>
+              - الاستفسارات في حال وجود أي أسئلة أو استفسارات بخصوص هذه الشروط
+              والأحكام، يُرجى التواصل معنا عبر البريد الإلكتروني [ الدعم الفني و
+              خدمة العملاء ] بعنوان “استفسارات حول الشروط والأحكام”. يُرجى
+              التأكد من موافقتك على هذه الشروط قبل البدء في استخدام منصة “ألي
+              تري.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-black">١٩- </span>
+            <span>
+              الامتثال لضريبة القيمة المضافة: تؤكد منصة الي تري أن جميع
+              المعاملات التي تتم عبر المنصة تخضع لأحكام مرسوم بقانون اتحادي رقم
+              (8) لسنة 2017 بشأن ضريبة القيمة المضافة ولائحته التنفيذية، إذا
+              انطبقت شروط التسجيل الضريبي على البائع.
+              <h3 class="text-md mt-2 font-bold">
+                مسؤولية البائع بشأن ضريبة القيمة المضافة
+              </h3>
+              <ul className="mt-2 list-disc list-inside">
+                <li>
+                  ان الأسعار المعروضة من قبل البائع تشمل ضريبة القيمة المضافة .
+                </li>
+                <li>
+                  تعمل منصة الي تري كوسيط إلكتروني لتسهيل عمليات المزادات بين
+                  البائعين والمشترين، ولا تتحمل المنصة أي مسؤولية قانونية أو
+                  مالية تتعلق بإصدار الفواتير الضريبية أو تحصيل ضريبة القيمة
+                  المضافة أو أي التزامات ضريبية أخرى تخص البائعين .
+                </li>
+                <li>
+                  يتوجب على البائع المسجل في ضريبة القيمة المضافة الامتثال التام
+                  لجميع القوانين واللوائح الضريبية المطبقة في الدولة الامارات
+                  العربية المتحدة ، بما في ذلك إصدار فواتير ضريبية صحيحة ومكتملة
+                  تشمل ضريبة القيمة المضافة عند إتمام أي عملية بيع عبر المنصة.
+                </li>
+                <li>
+                  تخلي منصة الي تري مسؤوليتها بشكل كامل عن أي إخفاق من قِبل
+                  البائع في الوفاء بالتزاماته الضريبية، بما في ذلك عدم إصدار
+                  فواتير ضريبية أو التقصير في تحصيل أو سداد ضريبة القيمة
+                  المضافة. ويُعتبر البائع مسؤولاً بشكل حصري عن أي عواقب قانونية
+                  أو مالية تترتب على عدم الالتزام بالقوانين والأنظمة الضريبية
+                  داخل دولة الامارات العربية المتحدة .
+                </li>
+              </ul>
+            </span>
+          </div>
         </div>
       ),
     },
@@ -964,7 +1086,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
             <input
               className="mt-0.5 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox transition-all group-hover:scale-110"
               type="checkbox"
-              required
+              required={!isModalOpen}
               checked={isTermsAccepted}
               onChange={openModal}
             />
@@ -981,12 +1103,12 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
 
       {isModalOpen && (
         <div
-          className=" fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 overflow-visible"
           role="dialog"
           onClick={closeModal}
         >
           <div
-            className="border-primary border-2 border-solid bg-white rounded-lg shadow-lg w-11/12 max-w-lg"
+            className="border-primary border-2 border-solid bg-white rounded-2xl shadow-2xl w-11/12 max-w-lg overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6 text-sm">

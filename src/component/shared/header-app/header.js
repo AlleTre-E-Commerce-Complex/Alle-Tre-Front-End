@@ -249,12 +249,25 @@ const Header = ({ SetSid }) => {
   // }, [user?.id]);
 
   // Handle notification click
-
   const handleNotificationClick = async () => {
-    setNotificationCount(0); // Reset count when viewing notifications
-    history.push(routes.app.profile.notifications);
-    const response = await run(authAxios.put("/notifications/mark-read"));
-    console.log("response *************", response);
+    try {
+      setNotificationCount(0);
+      if (user) {
+        const hasCompletedProfile = window.localStorage.getItem(
+          "hasCompletedProfile"
+        );
+
+        if (hasCompletedProfile && JSON.parse(hasCompletedProfile)) {
+          history.push(routes.app.profile.notifications);
+        } else {
+          setOpen(true);
+        }
+      } else {
+        dispatch(Open());
+      }
+    } catch (error) {
+      console.error("Error handling notification click:", error);
+    }
   };
 
   const debounced = useDebouncedCallback((value) => {
