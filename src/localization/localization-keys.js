@@ -348,6 +348,8 @@ const localizationKeys = {
   WhichPaymentMethodWouldYouLikeToSelect:
     "WhichPaymentMethodWouldYouLikeToSelect",
   walletPayment: "walletPayment",
+  BankTransfer: "BankTransfer",
+  BankTransferDetails: "BankTransferDetails",
   onlinePayment: "onlinePayment",
   OK: "OK",
   didYouSendTheItemForDelivery: "didYouSendTheItemForDelivery",
@@ -449,7 +451,9 @@ const localizationKeys = {
   // tab details
   shippingPolicy: "shippingPolicy",
   returnPolicy: "returnPolicy",
+  noReturnPolicy:'noReturnPolicy',
   warrantyPolicy: "warrantyPolicy",
+  noWarrantyPolicy: "noWarrantyPolicy",
   payment: "payment",
   feedback: "feedback",
   aboutTheBrand: "aboutTheBrand",

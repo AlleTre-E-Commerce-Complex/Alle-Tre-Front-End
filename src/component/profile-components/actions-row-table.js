@@ -42,9 +42,10 @@ const ActionsRowTable = ({
   filterJoinState,
   isItemSendForDelivery,
   deliveryType,
+  isBankStatementUploaded,
 }) => {
   // console.log('auction Id in auction row table:',auctionsId);
-  // console.log('Props:',    goToDetails );
+  // console.log('Props:',    isBankStatementUploaded.status );
 
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -386,24 +387,19 @@ const ActionsRowTable = ({
               </button>
             )}
 
-            {/* <button
-              onClick={buttonActions}
-              disabled={
-                status === "WAITING_FOR_DELIVERY" && !isItemSendForDelivery
-              }
-              className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 
-                ${ status === "WAITING_FOR_DELIVERY" ? isItemSendForDelivery ? "" : "border-gray-300 text-gray-300 bg-gray-100 cursor-auto" : "cursor-pointer" }
-              `}
-            >
-              {textButton}
-            </button> */}
-
+            {status === "PENDING_PAYMENT" && isBankStatementUploaded && 
             <button
+              className={`border-primary border-[1px] text-primary text-sm font-normal font-si sm:w-[228px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
+            >
+              Status : Bank statement submitted
+            </button>}
+
+           { !isBankStatementUploaded && <button
               onClick={buttonActions}
               className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 cursor-pointer`}
             >
               {textButton}
-            </button>
+            </button>}
 
             <button
               onClick={() => history.push(goToDetails)}

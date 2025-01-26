@@ -15,7 +15,7 @@ const WarrantyPolicy = ({ dataTabs }) => {
             {selectedContent[localizationKeys.warrantyPolicy]}:
           </p>
           <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
-            {dataTabs.warrantyPolicyDescription}
+            {dataTabs.warrantyPolicyDescription ?  dataTabs.warrantyPolicyDescription : selectedContent[localizationKeys.noWarrantyPolicy]}
           </p>
         </div>
       </div>

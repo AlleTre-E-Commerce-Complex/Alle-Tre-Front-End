@@ -341,6 +341,7 @@ const ProfileSettings = () => {
                       lang === "en" ? e?.country?.nameEn : e?.country.nameAn
                     }
                     City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
+                    phone={e?.phone ? e.phone:"No phone number"}
                     // PostalCode={e?.zipCode}
                     isMain={e?.isMain}
                     onReload={onReload}
@@ -391,6 +392,7 @@ export const LocationDetailsCard = ({
   Country,
   City,
   // PostalCode,
+  phone,
   Id,
   isMain,
   onReload,
@@ -498,6 +500,7 @@ export const LocationDetailsCard = ({
         <p className="text-gray-med text-sm pt-1">
           {City}, {Country}
         </p>
+        <p className="text-gray-med text-sm pt-2">{phone}</p>
         <div className="flex justify-between">
           {isMain && (
             <p className="text-primary-dark underline text-sm pt-1 ml-auto">

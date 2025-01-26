@@ -46,6 +46,7 @@ const PendingBids = () => {
             `${api.app.auctions.getAllMyBids}${search}&status=PENDING_PAYMENT`
           )
           .then((res) => {
+            console.log('res***>',res?.data?.data)
             setActiveAuctionData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
@@ -125,6 +126,7 @@ const PendingBids = () => {
                 );
               }}
               status={"PENDING_PAYMENT"}
+              isBankStatementUploaded={e?.auction?.Payment[0]?.status === "BANK_STATEMENT_UPLOADED" }
               title={e?.auction?.product?.title}
               description={e?.auction?.product?.description}
               img={e?.auction?.product?.images[0]?.imageLink}
