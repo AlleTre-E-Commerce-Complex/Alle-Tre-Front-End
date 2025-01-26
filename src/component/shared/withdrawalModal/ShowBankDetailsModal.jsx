@@ -8,6 +8,7 @@ import { authAxios } from "config/axios-config";
 import EmtyWatchlist from "../../../../src/assets/icons/empty-watch-list.svg";
 import localizationKeys from "../../../localization/localization-keys";
 import toast from "react-hot-toast";
+import { GoPlus } from "react-icons/go";
 
 import api from "api";
 import AddNewBankModal from "./AddNewBankModal";
@@ -105,35 +106,35 @@ const ShowBankDetailsModal = ({
 
   return (
     <Modal
-      className="md:w-[950px] w-full h-auto bg-transparent scale-in"
+      className="md:w-[980px] w-full h-auto bg-transparent scale-in"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
     >
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <Dimmer
-          className="fixed w-full h-full top-0 bg-white/50"
+          className="fixed w-full h-full top-0 "
           active={isLoading}
           inverted
         >
           {/* <Loader active /> */}
           <LodingTestAllatre />
         </Dimmer>
-        <div className="bg-white  rounded shadow-md w-full">
-          <h2 className="text-lg font-semibold mb-8 bg-primary text-white text-center  ">
+        <div className="bg-white h-auto  border-2 border-primary rounded-2xl shadow-md w-full">
+          <h1 className="text-black font-semibold text-lg text-center my-6">
             {selectedContent[localizationKeys.YourBankDetails]}
-          </h2>
+          </h1>
           <div className="flex flex-wrap p-6 gap-2">
             {accountData.map((data) => (
               <div
                 key={data.id}
                 className={`${
                   selectedBankAccountId === data.id
-                    ? "shadow-md shadow-primary"
-                    : ""
+                    ? "border-primary"
+                    : "border-gray-med"
                 } 
                             cursor-pointer border p-2 rounded-md text-gray-500 transform 
-                            transition-transform duration-300 hover:scale-95`}
+                            transition-transform duration-300 `}
                 onClick={() => HandleSelectBankAccount(data.id)}
               >
                 <h1>
@@ -154,9 +155,17 @@ const ShowBankDetailsModal = ({
                 </h1>
               </div>
             ))}
-
+            <button
+              onClick={handleAddNewBanck}
+              className="border-gray-med hover:border-primary border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med hover:text-primary flex justify-center gap-x-2 "
+            >
+              <GoPlus className="my-auto" size={16} />
+              <p className="my-auto">
+                {selectedContent[localizationKeys.addAccount]}
+              </p>
+            </button>
             {!accountData.length && (
-              <div className=" ifNoBankAccount flex justify-center items-center pt-36 w-full ">
+              <div className=" ifNoBankAccount flex justify-center items-center pt-12 w-full ">
                 <div>
                   <img
                     className="w-28 mx-auto"
@@ -173,43 +182,49 @@ const ShowBankDetailsModal = ({
                 </div>
               </div>
             )}
-
-            <button
-              onClick={handleAddNewBanck}
-              className="mt-4 hover:bg-primary-dark w-full bg-primary rounded-md text-white px-3 py-2  "
-            >
-              {selectedContent[localizationKeys.AddNewBankAccount]}
-            </button>
-            <div className="w-full my-5">
-              <label htmlFor="">
-                {selectedContent[localizationKeys.EnterTheAmount]} :
+            <div className="w-full my-5" dir={lang === "ar" ? "rtl" : "ltr"}>
+              <label
+                htmlFor="withdrawalAmount"
+                className={`text-lg font-semibold block ${
+                  lang === "ar" ? "text-right" : "text-left"
+                }`}
+              >
+                {selectedContent[localizationKeys.EnterTheAmount]}:
               </label>
               <input
                 onChange={(e) => setAmount(e.target.value)}
-                className="border w-full rounded-md p-3 mt-2 outline-none "
+                className={`border w-full rounded-md  p-4 mt-2 outline-none focus:ring-2 focus:ring-primary transition ${
+                  lang === "ar" ? "text-right" : "text-left"
+                }`}
                 placeholder={selectedContent[localizationKeys.Amount]}
                 type="number"
                 min={1}
                 name="withdrawalAmount"
                 id="withdrawalAmount"
               />
-              <span className="text-gray-400 text-xs m-1">
+              <span
+                className={`text-gray-500 text-xs mt-1 block ${
+                  lang === "ar" ? "text-right mr-1" : "text-left"
+                }`}
+              >
                 {selectedContent[localizationKeys.AmountMustBeMoreThan1AED]}
               </span>
             </div>
           </div>
-          <div className="flex justify-evenly">
-            <button
-              onClick={handleSubmit}
-              className="mb-7 hover:bg-primary-dark  bg-primary rounded-md text-white px-3 py-2  "
-            >
-              {selectedContent[localizationKeys.SubmitWithdrawalRequest]}
-            </button>
+          <div className="flex justify-end gap-x-6 rounded-lg mb-7">
             <button
               onClick={() => setOpen(false)}
-              className="mb-7 hover:bg-primary-dark  bg-primary rounded-md text-white px-3 py-2  "
+              className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
             >
               {selectedContent[localizationKeys.GoBack]}
+            </button>
+            <button
+              onClick={handleSubmit}
+              className={`h-[40px] hover:bg-primary-dark bg-primary rounded-md text-white px-3 py-2 ${
+                lang === "ar" ? "ml-6" : "mr-6"
+              }`}
+            >
+              {selectedContent[localizationKeys.SubmitWithdrawalRequest]}
             </button>
           </div>
         </div>

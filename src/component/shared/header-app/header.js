@@ -510,13 +510,17 @@ const Header = ({ SetSid }) => {
 
               {isDropdownOpen && (
                 <div
-                  className=" absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100"
+                  className={`absolute ${
+                    lang === "ar" ? "left-0 -translate-x-7" : "right-0"
+                  } z-10 mt-1 w-56 origin-top-${
+                    lang === "ar" ? "left" : "right"
+                  } rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100`}
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
-                  tabindex="-1"
+                  tabIndex="-1"
                 >
-                  <div className="bg-gray-med rounded-lg py-2 " role="none">
+                  <div className="bg-gray-med rounded-lg py-2" role="none">
                     <div className="my-auto space-y-3 px-4 py-2">
                       <button
                         onClick={handleOnSell}

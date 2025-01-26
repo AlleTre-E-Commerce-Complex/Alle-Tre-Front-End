@@ -15,7 +15,7 @@ const ReturnPolicy = ({ dataTabs }) => {
             {selectedContent[localizationKeys.returnPolicy]}: 
           </p>
           <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
-            {dataTabs.returnPolicyDescription === '' ? dataTabs.returnPolicyDescription : selectedContent[localizationKeys.noReturnPolicy]}
+            {dataTabs.returnPolicyDescription ? dataTabs.returnPolicyDescription : selectedContent[localizationKeys.noReturnPolicy]}
           </p>
         </div>
       </div>

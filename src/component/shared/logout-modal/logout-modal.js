@@ -25,7 +25,7 @@ const LogoutModal = ({ open, setOpen, onLogout }) => {
         <div className="flex justify-center gap-x-6 pt-6">
           <button
             onClick={() => setOpen(false)}
-            className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-red-600 hover:text-red-600"
+            className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
           >
             {selectedContent[localizationKeys.cancel]}
           </button>

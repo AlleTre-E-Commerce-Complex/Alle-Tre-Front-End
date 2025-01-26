@@ -35,7 +35,7 @@ const en = {
   [localizationKeys.resendMailAgain]: "Resend mail again",
   [localizationKeys.or]: "OR",
   [localizationKeys.backToLogin]: "Back to Login",
-  [localizationKeys.sentVerification]: "send verification",
+  [localizationKeys.sentVerification]: "Send verification",
   // home
   [localizationKeys.subscribedSuccessfully]: "subscribed successfully",
   [localizationKeys.unsubscribedSuccessfully]:
@@ -235,6 +235,14 @@ const en = {
   [localizationKeys.listed]: "Listed",
   [localizationKeys.listedProduct]: "Listed Product",
   [localizationKeys.findAndReachTheProduct]: "Find and reach the product",
+  [localizationKeys.theBestDealsYouMissed]: "The best deals you missed",
+  [localizationKeys.callNow]: "Call now",
+  [localizationKeys.contactNumber]: "Contact number",
+  [localizationKeys.youCanConnectOn]: "You can connect on:",
+  [localizationKeys.DontForgetToMention]: "Don't forget to mention",
+  [localizationKeys.alletre]: "Alletre",
+  [localizationKeys.whenYouCall]: "When you call!",
+  
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",
@@ -289,6 +297,7 @@ const en = {
   [localizationKeys.errorDeletingAddress]: "Error deleting address",
   [localizationKeys.deleteAddress]: "Delete Address",
   [localizationKeys.cannotDeleteMainAddress]: "Cannot delete main address",
+  [localizationKeys.confirmDeleteAddressHeading]:" Confirm delete address",
   // payment details
   [localizationKeys.paymentMethod]: "Payment Method",
   [localizationKeys.backToHome]: "Back to home",
@@ -571,6 +580,7 @@ const en = {
   [localizationKeys.AddAccount]: "Add Account",
   [localizationKeys.WithDrawalSuccessMessage]:
     "Success! Your withdrawal request has been processed successfully. Your funds are on their way, and you’ll receive them shortly. Thank you for using our service!",
+  [localizationKeys.addAccount]: "Add account",
 };
 
 export default en;

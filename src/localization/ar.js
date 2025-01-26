@@ -231,6 +231,13 @@ const ar = {
   [localizationKeys.listed]: "مُدرج",
   [localizationKeys.listedProduct]: "المنتج المدرج",
   [localizationKeys.findAndReachTheProduct]: "البحث عن المنتج والوصول إليه",
+  [localizationKeys.theBestDealsYouMissed]: "أفضل الصفقات التي فاتتك",
+  [localizationKeys.callNow]: "اتصل الان",
+  [localizationKeys.contactNumber]: "رقم التواصل",
+  [localizationKeys.youCanConnectOn]: "يمكنك الاتصال على:",
+  [localizationKeys.DontForgetToMention]: "لا تنسى أن تذكر",
+  [localizationKeys.alletre]: "آلي تري",
+  [localizationKeys.whenYouCall]: "عندما تتصل!",
   // auction details
   [localizationKeys.quickAuction]: "المزاد السريع",
   [localizationKeys.maximumDurationMustBeDay]:
@@ -285,6 +292,7 @@ const ar = {
   [localizationKeys.errorDeletingAddress]: "خطأ في حذف العنوان",
   [localizationKeys.deleteAddress]: "حذف العنوان",
   [localizationKeys.cannotDeleteMainAddress]: "لا يمكن حذف العنوان الرئيسي",
+  [localizationKeys.confirmDeleteAddressHeading]: " تأكيد حذف العنوان",
   // payment details
   [localizationKeys.paymentMethod]: "طريقة الدفع",
   [localizationKeys.backToHome]: "العودة للرئيسية",
@@ -556,6 +564,7 @@ const ar = {
   [localizationKeys.AddAccount]: "إضافة حساب",
   [localizationKeys.WithDrawalSuccessMessage]:
     "تم بنجاح! لقد تمت معالجة طلب السحب الخاص بك بنجاح. أموالك في طريقها إليك، وستصلك قريبًا. شكرًا لك على استخدام خدمتنا!",
+  [localizationKeys.addAccount]: "إضافة حساب",
 };
 
 export default ar;

@@ -341,7 +341,7 @@ const ProfileSettings = () => {
                       lang === "en" ? e?.country?.nameEn : e?.country.nameAn
                     }
                     City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
-                    phone={e?.phone ? e.phone:"No phone number"}
+                    phone={e?.phone ? e.phone : "No phone number"}
                     // PostalCode={e?.zipCode}
                     isMain={e?.isMain}
                     onReload={onReload}
@@ -350,7 +350,7 @@ const ProfileSettings = () => {
               })}
               <button
                 onClick={() => setOpen(true)}
-                className="border-gray-med border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex justify-center gap-x-2 "
+                className="border-gray-med hover:border-primary border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex hover:text-primary justify-center gap-x-2 "
               >
                 <GoPlus className="my-auto" size={16} />
                 <p className="my-auto">

@@ -176,6 +176,7 @@ const AddLocationModel = ({
                 smooth
                 to={`${routes.app.profile.profileSettings}#AddressBook`}
                 className="text-primary underline cursor-pointer"
+                onClick={() => setOpen(false)}
               >
                 {selectedContent[localizationKeys.manageYouAddresses]}
               </HashLink>

@@ -62,7 +62,7 @@ const AppLayouts = () => {
 
   useEffect(() => {
     if (unSubscribe) {
-      setUnSubscribeModal(true); 
+      setUnSubscribeModal(true);
     }
   }, [searchParams]);
   const socketauctionId = useSelector(
@@ -227,7 +227,9 @@ const AppLayouts = () => {
             <>
               <button
                 onClick={toggleExpand}
-                className={`fixed bottom-4 right-4 bg-primary text-white font-semibold rounded-full w-12 h-12 flex items-center justify-center shadow-2xl transform transition-all duration-300 ease-in-out md:hidden  ${
+                className={`fixed bottom-4 ${
+                  lang === "ar" ? "left-4" : "right-4"
+                } bg-primary text-white font-semibold rounded-full w-12 h-12 flex items-center justify-center shadow-2xl transform transition-all duration-300 ease-in-out md:hidden ${
                   isExpanded
                     ? "rotate-45 bg-primary-dark"
                     : "rotate-0 bg-primary"
@@ -244,7 +246,9 @@ const AppLayouts = () => {
               </button>
 
               <div
-                className={`fixed right-4 transition-all duration-300 ease-in-out ${
+                className={`fixed ${
+                  lang === "ar" ? "left-4" : "right-4"
+                } transition-all duration-300 ease-in-out ${
                   isExpanded
                     ? "bottom-20 opacity-100"
                     : "bottom-4 opacity-0 pointer-events-none"
@@ -252,10 +256,12 @@ const AppLayouts = () => {
               >
                 <button
                   onClick={handleOnSell}
-                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg "
+                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
                   style={{
                     transform: isExpanded
-                      ? "translateY(-1px) translateX(135px)"
+                      ? lang === "ar"
+                        ? "translateY(-1px) translateX(-135px)"
+                        : "translateY(-1px) translateX(135px)"
                       : "translateY(0,0)",
                     transition: "transform 0.3s ease-in-out",
                   }}
@@ -267,7 +273,9 @@ const AppLayouts = () => {
                   className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
                   style={{
                     transform: isExpanded
-                      ? "translateY(-60px) "
+                      ? lang === "ar"
+                        ? "translateY(-60px) translateX(-0)"
+                        : "translateY(-60px) translateX(0)"
                       : "translateY(0,0)",
                     transition: "transform 0.3s ease-in-out",
                   }}
