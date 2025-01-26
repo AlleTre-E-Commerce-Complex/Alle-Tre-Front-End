@@ -210,6 +210,13 @@ const localizationKeys = {
   listed: "Listed",
   listedProduct: "listedProduct",
   findAndReachTheProduct: "findAndReachTheProduct",
+  theBestDealsYouMissed: "theBestDealsYouMissed",
+  callNow: "callNow",
+  contactNumber: "contactNumber",
+  youCanConnectOn: "youCanConnectOn",
+  DontForgetToMention: "DontForgetToMention",
+  alletre: "Alletre",
+  whenYouCall: "whenYouCall",
   // auction details
   quickAuction: "quickAuction",
   maximumDurationMustBeDay: "maximumDurationMustBeDay",
@@ -255,6 +262,7 @@ const localizationKeys = {
   errorDeletingAddress: "error deleting address",
   deleteAddress: "delete Address",
   cannotDeleteMainAddress: "cannot delete main address",
+  confirmDeleteAddressHeading:"confirmDeleteAddress",
   // paymemt details
   paymentMethod: "paymentMethod",
   backToHome: "backToHome",
@@ -451,7 +459,7 @@ const localizationKeys = {
   // tab details
   shippingPolicy: "shippingPolicy",
   returnPolicy: "returnPolicy",
-  noReturnPolicy:'noReturnPolicy',
+  noReturnPolicy: "noReturnPolicy",
   warrantyPolicy: "warrantyPolicy",
   noWarrantyPolicy: "noWarrantyPolicy",
   payment: "payment",
@@ -511,6 +519,7 @@ const localizationKeys = {
   SubmitWithdrawalRequest: "SubmitWithdrawalRequest",
   AddAccount: "AddAccount",
   WithDrawalSuccessMessage: "WithDrawalSuccessMessage",
+  addAccount: "addAccount",
 };
 
 export default localizationKeys;

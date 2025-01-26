@@ -362,7 +362,7 @@ const ShippingDetails = () => {
             ))}
             <button
               onClick={() => setOpen(true)}
-              className="border-gray-med border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex justify-center gap-x-2 "
+              className="border-gray-med hover:border-primary border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med hover:text-primary flex justify-center gap-x-2 "
             >
               <GoPlus className="my-auto" size={16} />
               <p className="my-auto">

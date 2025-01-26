@@ -1,10 +1,9 @@
 import React from "react";
 
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import routes from "../routes";
 
 import OAuthpage from "../page/auth/O-Auth-page";
-import ResetPasswordPage from "page/auth/rest-password-page";
 
 const AuthLayouts = () => {
   return (

@@ -15,11 +15,10 @@ import { Dimmer, Loader } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import buyNowEmty from "../../../src/assets/images/sell online.jpg";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-
 
 const BuyNowAuctionsSlider = () => {
   const [lang] = useLanguage("");
@@ -32,7 +31,7 @@ const BuyNowAuctionsSlider = () => {
   const [auctions, setAuctions] = useState();
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(20);
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
+  // const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
@@ -60,7 +59,7 @@ const BuyNowAuctionsSlider = () => {
             })
         );
       }
-  }, [page, runAuctions, search]);
+  }, [page, runAuctions, search, user]);
 
   const swiperOptions = {
     cssMode: true,
@@ -101,9 +100,9 @@ const BuyNowAuctionsSlider = () => {
             {/* {selectedContent[localizationKeys.buyNow]} */}
             {selectedContent[localizationKeys.expiredAuctions]}
           </h1>
-          {/* <p className="text-gray-med text-base font-normal pb-10">
-          {selectedContent[localizationKeys.DontWaitBuyNow]}
-        </p> */}
+          <p className="text-gray-med text-base font-normal pb-10">
+            {selectedContent[localizationKeys.theBestDealsYouMissed]}
+          </p>
         </div>
       )}
       {auctions?.length === 0 ? (
