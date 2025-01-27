@@ -265,7 +265,7 @@ const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
                showPaymentSelecton && (
                     <PaymentSelectionOnAuctionPurchase
                       isWalletPayment={isWalletPayment}
-                      isLoading={isLoading || isLoadingPendingAuctionData}
+                      isLoading={isLoading && isLoadingPendingAuctionData}
                       setIsWalletPayment={setIsWalletPayment}
                       handleSubmitPayment={handleSubmitPayment}
                       walletBalance= {walletBalance}

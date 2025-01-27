@@ -299,7 +299,7 @@ const ProfileSettings = () => {
                   </p>
                 </div>
               </div>
-              <div className="md:flex block ">
+              {/* <div className="md:flex block ">
                 <Loginbutton
                   isActive={pofileData?.oAuthType === "FACEBOOK" ? true : false}
                   logo={facebookIcon}
@@ -317,7 +317,7 @@ const ProfileSettings = () => {
                     {selectedContent[localizationKeys.connected]}
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
