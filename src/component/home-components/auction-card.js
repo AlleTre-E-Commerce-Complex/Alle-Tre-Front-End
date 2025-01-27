@@ -128,8 +128,8 @@ const AuctionCard = ({
     if (navigator.share) {
       try {
         await navigator.share({
-          title,
-          text: title,
+          title: { title },
+          text: "Check out this auction!",
           // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
           url: `${getDomain()}/alletre/home/${auctionId}/details`,
         });

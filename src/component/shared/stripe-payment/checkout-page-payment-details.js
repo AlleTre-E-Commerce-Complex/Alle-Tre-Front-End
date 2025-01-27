@@ -249,7 +249,7 @@ export default function CheckoutPagePaymentDetails() {
                 <div>
                   <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
                     <h1>
-                      {selectedContent[localizationKeys.auctionFee]}
+                      {selectedContent[localizationKeys.securityDeposit]}
 
                       <span class="text-gray-dark font-normal">
                         {" "}

@@ -36,6 +36,7 @@ const en = {
   [localizationKeys.or]: "OR",
   [localizationKeys.backToLogin]: "Back to Login",
   [localizationKeys.sentVerification]: "Send verification",
+  [localizationKeys.securityDeposit]: "Security Deposit",
   // home
   [localizationKeys.subscribedSuccessfully]: "subscribed successfully",
   [localizationKeys.unsubscribedSuccessfully]:
@@ -92,7 +93,7 @@ const en = {
   [localizationKeys.sellForCharity]: "Sell for charity",
   [localizationKeys.businessTools]: "Business tools",
   [localizationKeys.createAuction]: "Create Auction",
-  [localizationKeys.listProduct]: "List Products",
+  [localizationKeys.listProduct]: "List Product",
   [localizationKeys.price]: "Price",
   [localizationKeys.myAccount]: "My Account",
   [localizationKeys.iamBiddingOn]: "I'm Bidding On",
@@ -176,6 +177,11 @@ const en = {
     "In order to complete the bidding process, please pay the auction deposit.",
   [localizationKeys.pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit]:
     "Please notice that The bidding deposit will be captured until the auction is completed within 3 working days. if you wins the auction, the website will withdraw the deposit.",
+  [localizationKeys.shopSustainableChoosePreOwned]:
+    "Shop Sustainable: Choose Pre-Owned",
+  [localizationKeys.getItNewFeeltheDifference]:
+    "Get It New, Feel the Difference",
+  [localizationKeys.locationNotAvailable]: "Location not available",
   // create auctions
   [localizationKeys.drafts]: "Drafts",
   [localizationKeys.proceed]: "Proceed",
@@ -212,6 +218,9 @@ const en = {
   [localizationKeys.wirteYourAddress]: "Wirte your address",
   [localizationKeys.exHome]: "ex: Home",
   [localizationKeys.enterPostalZipCode]: "Enter postal/Zip code",
+  [localizationKeys.building]: "  Julphar Tower, Office Number: 504,",
+  [localizationKeys.place]: "Ras Al Khaimah,",
+  [localizationKeys.uae]: "United Arab Emirates",
   // product details
   [localizationKeys.itemDetails]: "Item Details",
   [localizationKeys.itemName]: "Item Name",
@@ -242,7 +251,7 @@ const en = {
   [localizationKeys.DontForgetToMention]: "Don't forget to mention",
   [localizationKeys.alletre]: "Alletre",
   [localizationKeys.whenYouCall]: "When you call!",
-  
+
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",
@@ -297,7 +306,7 @@ const en = {
   [localizationKeys.errorDeletingAddress]: "Error deleting address",
   [localizationKeys.deleteAddress]: "Delete Address",
   [localizationKeys.cannotDeleteMainAddress]: "Cannot delete main address",
-  [localizationKeys.confirmDeleteAddressHeading]:" Confirm delete address",
+  [localizationKeys.confirmDeleteAddressHeading]: " Confirm delete address",
   // payment details
   [localizationKeys.paymentMethod]: "Payment Method",
   [localizationKeys.backToHome]: "Back to home",

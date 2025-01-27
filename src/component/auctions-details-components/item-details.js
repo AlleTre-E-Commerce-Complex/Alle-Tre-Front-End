@@ -64,19 +64,21 @@ const ItemDetails = ({ itemDetailsData }) => {
             const colors = ["bg-[#F2F2F2]", "bg-[#FEFEFE]"];
             const bgColor = colors[index % colors.length];
             return (
-              <div
-                className={`flex ${bgColor} drop-shadow my-2 py-3 rounded ${
-                  itemDetailsArray.length > 4 ? "w-auto" : "sm:w-1/2 w-auto "
-                }`}
-                key={index}
-              >
-                <p className="text-gray-med font-normal text-sm  px-5 w-1/2">
-                  {field?.label[lang]} :
-                </p>
-                <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
-                  {field.value}
-                </p>
-              </div>
+              <>
+                {field.value !== null && (
+                  <div
+                    className={`flex ${bgColor} drop-shadow my-2 py-3 rounded `}
+                    key={index}
+                  >
+                    <p className="text-gray-med font-normal text-sm  px-5 w-1/2">
+                      {field?.label[lang]} :
+                    </p>
+                    <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
+                      {field.value}
+                    </p>
+                  </div>
+                )}
+              </>
             );
           })}
         </div>

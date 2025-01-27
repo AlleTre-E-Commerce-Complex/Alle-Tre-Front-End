@@ -35,6 +35,8 @@ const ar = {
   [localizationKeys.or]: "أو",
   [localizationKeys.backToLogin]: "الرجوع إلى تسجيل الدخول",
   [localizationKeys.sentVerification]: "إرسال التحقق",
+  [localizationKeys.securityDeposit]: "بلغ التأمين",
+
   // home
   [localizationKeys.subscribedSuccessfully]: "تم الاشتراك بنجاح",
   [localizationKeys.unsubscribedSuccessfully]: "لقد تم إلغاء اشتراكك بنجاح",
@@ -86,7 +88,7 @@ const ar = {
   [localizationKeys.sellForCharity]: "بيع للجمعيات الخيرية",
   [localizationKeys.businessTools]: "أدوات العمل",
   [localizationKeys.createAuction]: "إنشاء مزاد",
-  [localizationKeys.listProduct]: "قائمة المنتجات",
+  [localizationKeys.listProduct]: "اضف اعلان",
   [localizationKeys.price]: "سعر",
   [localizationKeys.myAccount]: "حسابي",
   [localizationKeys.iamBiddingOn]: "أنا أقوم بالمزايدة على",
@@ -128,7 +130,7 @@ const ar = {
     "ابق على اطلاع بأحدث المنتجات التي وصلتنا ، والعروض الترويجية الخاصة ، والمبيعات الموسمية.",
   [localizationKeys.termsAndCondition]: "الشروط والأحكام",
   [localizationKeys.iAcceptThe]: "انا اقبل",
-  [localizationKeys.sell]: "يبيع",
+  [localizationKeys.sell]: "بيع",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
@@ -172,6 +174,11 @@ const ar = {
     "من أجل إكمال عملية المزايدة، يرجى دفع وديعة المزاد",
   [localizationKeys.pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit]:
     "يرجى ملاحظة أن وديعة المزايدة سيتم حجزها حتى اكتمال المزاد في غضون ثلاثة أيام عمل. إذا فزت بالمزاد، فسوف يقوم الموقع بسحب الوديعة.",
+  [localizationKeys.ShopSustainableChoosePreOwned]:
+    "تسوق مستدامًا: اختر السلع المستعملة",
+  [localizationKeys.getItNewFeeltheDifference]:
+    "احصل عليه جديدًا، واشعر بالفرق",
+  [localizationKeys.locationNotAvailable]: "الموقع غير متاح",
 
   // create auctions
   [localizationKeys.drafts]: "المسودات",
@@ -208,6 +215,9 @@ const ar = {
   [localizationKeys.wirteYourAddress]: "اكتب عنوانك",
   [localizationKeys.exHome]: "مثال:  المنزل",
   [localizationKeys.enterPostalZipCode]: "أدخل الرمز البريدي",
+  [localizationKeys.building]: "أبراج جلفار، مكتب رقم 504,",
+  [localizationKeys.place]: "رأس الخيمة,",
+  [localizationKeys.uae]: "الإمارات العربية المتحدة",
   // product details
   [localizationKeys.itemDetails]: "تفاصيل السلعة",
   [localizationKeys.itemName]: "اسم العنصر",
@@ -461,7 +471,7 @@ const ar = {
   [localizationKeys.uploadImages]: "تحميل الصور",
   [localizationKeys.YouCanSelectMultipleImagestogether]:
     "يمكنك تحديد صور متعددة معًا",
-  [localizationKeys.Submit]: "يُقدِّم",
+  [localizationKeys.Submit]: "ادفع",
   [localizationKeys.PleaseSelectAnyOption]: "الرجاء اختيار أي خيار..!",
   [localizationKeys.PleaseGiveTheDescription]: "من فضلك أعط الوصف..!",
   [localizationKeys.SorryYourSubmissionHasFailedPleaseTryAgainLater]:
@@ -559,7 +569,7 @@ const ar = {
   [localizationKeys.Amount]: "كمية",
   [localizationKeys.AmountMustBeMoreThan1AED]:
     "يجب أن يكون المبلغ أكثر من 1 درهم إماراتي",
-  [localizationKeys.GoBack]: "عُد",
+  [localizationKeys.GoBack]: "العودة",
   [localizationKeys.SubmitWithdrawalRequest]: "إرسال طلب السحب",
   [localizationKeys.AddAccount]: "إضافة حساب",
   [localizationKeys.WithDrawalSuccessMessage]:
