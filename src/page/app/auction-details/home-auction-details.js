@@ -24,6 +24,7 @@ import routes from "../../../routes";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import SilmilarProductsSlider from "../../../component/auctions-details-components/silmilar-products-slider";
 import useLocalStorage from "../../../hooks/use-localstorage";
+import { Helmet } from "react-helmet-async";
 
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
@@ -66,6 +67,30 @@ const HomeAuctionDetails = () => {
   }, []);
   return (
     <div>
+        <Helmet>
+        {/* Update Open Graph meta tags dynamically */}
+        <title>{auctionsDetailsData?.product?.title || "Auction Details"}</title>
+        <meta
+          name="description"
+          content={
+            auctionsDetailsData?.product?.description ||
+            "Explore our latest auction details."
+          }
+        />
+        <meta property="og:title" content={auctionsDetailsData?.product?.title} />
+        <meta
+          property="og:description"
+          content={auctionsDetailsData?.product?.description}
+        />
+        <meta
+          property="og:image"
+          content={
+            auctionsDetailsData?.product?.images?.[0].imageLink || "default-image-url.jpg"
+          }
+        />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading}
