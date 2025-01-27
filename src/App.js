@@ -9,6 +9,7 @@ import AppLayouts from "./layout/app-layout";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import BlockedModal from "component/shared/UserBlockedModal/BlockedModal";
+import { HelmetProvider } from "react-helmet-async";
 
 
 function App() { 
@@ -26,6 +27,7 @@ function App() {
     // }
 }, [location.search]);
   return (
+    <HelmetProvider>
     <div className="App">
       <Switch>
         <Route path={routes.app.default} component={AppLayouts} />
@@ -66,6 +68,7 @@ function App() {
         }}
       />
     </div>
+    </HelmetProvider>
   );
 }
 
