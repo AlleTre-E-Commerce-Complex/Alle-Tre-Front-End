@@ -23,7 +23,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          Get It New, Feel the Difference.
+          {selectedContent[localizationKeys.getItNewFeeltheDifference]}
         </p>
       </Form.Field>
       <Form.Field>
@@ -37,7 +37,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          Shop Sustainable: Choose Pre-Owned.
+          {selectedContent[localizationKeys.shopSustainableChoosePreOwned]}
         </p>
       </Form.Field>
       {/* <Form.Field>

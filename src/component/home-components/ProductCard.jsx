@@ -14,6 +14,8 @@ const ProductCard = ({
   price,
   className,
   location,
+  city,
+  country,
   id,
   createdAt,
 }) => {
@@ -173,18 +175,23 @@ const ProductCard = ({
             <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
               {selectedContent[localizationKeys.location]}
             </h6>
-            <p
+            {/* <p
               className="text-gray-dark font-medium md:text-[10px] text-[8px]"
               onClick={() => handelGoDetails(id)}
             >
               {location}
+            </p> */}
+            <p
+              className="text-gray-dark font-medium md:text-[10px] text-[8px]"
+              onClick={() => handelGoDetails(id)}
+            >
+              {city}, {country}
             </p>
           </div>
           <div className="flex justify-between mt-2">
             <div>
               <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                 {selectedContent[localizationKeys.listed]}
-              
               </h6>
               <p
                 className="text-gray-dark font-medium md:text-[10px] text-[8px]"

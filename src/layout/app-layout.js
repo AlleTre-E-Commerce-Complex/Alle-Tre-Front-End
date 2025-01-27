@@ -227,7 +227,7 @@ const AppLayouts = () => {
             <>
               <button
                 onClick={toggleExpand}
-                className={`fixed bottom-4 ${
+                className={`fixed z-50 bottom-4 ${
                   lang === "ar" ? "left-4" : "right-4"
                 } bg-primary text-white font-semibold rounded-full w-12 h-12 flex items-center justify-center shadow-2xl transform transition-all duration-300 ease-in-out md:hidden ${
                   isExpanded
@@ -246,9 +246,9 @@ const AppLayouts = () => {
               </button>
 
               <div
-                className={`fixed ${
+                className={`fixed z-50 ${
                   lang === "ar" ? "left-4" : "right-4"
-                } transition-all duration-300 ease-in-out ${
+                } transition-all duration-300 ease-in-out md:hidden ${
                   isExpanded
                     ? "bottom-20 opacity-100"
                     : "bottom-4 opacity-0 pointer-events-none"

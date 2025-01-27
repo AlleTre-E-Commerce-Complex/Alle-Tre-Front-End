@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
 import Trash from "../../../component/shared/lotties-file/trash-lotifile";
-import { Button, Dimmer,  Modal } from "semantic-ui-react";
+import { Button, Dimmer, Modal } from "semantic-ui-react";
 import moment from "moment";
 
-import createAuctionimgBGfrom from "../../../../src/assets/img/create_auction_img_BG.png";
-import createAuctionimgSm from "../../../../src/assets/img/create_auction_img_SM.png";
-import CreaAuctionText from "../../../../src/assets/img/creat_auction_text.png";
+import createAuctionimgBGfrom from "../../../../src/assets/img/DraftImg.jpg";
 import emtyPhotos from "../../../../src/assets/icons/emty-photos-icon.svg";
 import TrashIcon from "../../../../src/assets/icons/trash-Icon.png";
 import PenIcon from "../../../../src/assets/icons/pen-icon.png";
@@ -84,32 +82,22 @@ const CreateAuction = () => {
         </div>
         <div className="relative">
           <img
-            className="w-full h-auto object-cover md:block hidden "
+            className="w-full h-auto object-cover  "
             src={createAuctionimgBGfrom}
             alt="createAuctionimgBGfrom"
           />
-          <img
-            className="w-full h-auto object-cover  block md:hidden "
-            src={createAuctionimgSm}
-            alt="createAuctionimgSm"
-          />
           <button
             onClick={() => handelCreatOuction()}
-            className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[68px] right-[90px] hidden md:block"
+            className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[68px] right-[90px] md:block hidden"
           >
             {selectedContent[localizationKeys.createAuctionNow]}
           </button>
           <button
             onClick={() => handelCreatOuction()}
-            className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[41px] right-[25px] md:hidden block"
+            className="w-[110px] h-[30px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[6px] right-[20px] md:hidden block"
           >
             {selectedContent[localizationKeys.createAuction]}
           </button>
-          <img
-            className="lg:w-[700px] w-[500px] absolute bottom-[68px] left-[90px] hidden md:block"
-            src={CreaAuctionText}
-            alt="CreaAuctionText"
-          />
         </div>
         <div className="max-w-[1366px] mx-auto px-2">
           <h1 className="text-gray-dark py-5 text-3xl font-medium text-center mt-5">

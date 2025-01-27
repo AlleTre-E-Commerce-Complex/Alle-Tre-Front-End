@@ -22,11 +22,11 @@ import {
   AuctionHomeDetailsBreadcrumb,
   MyBidsBreadcrumb,
 } from "../../component/shared/bread-crumb/Breadcrumb";
+import AuctionDetailsTabs from "component/auctions-details-components/auction-details-tabs";
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
   console.log("listedPdroduct", listedProductsData);
-  console.log("listedPdroductNAmem", listedProductsData?.subCategory?.nameEn);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [lang] = useLanguage("");
@@ -85,14 +85,14 @@ const SummaryListedSection = () => {
               {truncateString(listedProductsData.description, 250)}
             </p>
 
-            {/* <HashLink
+            <HashLink
               className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"
               smooth
               to={`${pathname}#itemDescription`}
               onClick={() => setActiveIndexTab(0)}
             >
               {selectedContent[localizationKeys.viewDetails]}
-            </HashLink> */}
+            </HashLink>
           </div>
           {/* Category sections */}
           <div className="pt-6 mb-8 flex flex-wrap gap-4">
@@ -137,10 +137,37 @@ const SummaryListedSection = () => {
               <div className="text-gray-med text-base font-normal">
                 {selectedContent[localizationKeys.location]}
               </div>
-              <div className="text-gray-verydark cursor-default text-2xl font-normal">
+              <div className="text-gray-verydark cursor-default font-normal">
                 {listedProductsData?.user?.locations?.find(
                   (location) => location.isMain
-                )?.address || "Location not available"}
+                ) ? (
+                  <>
+                    <p className="text-2xl font-semibold ">
+                      {
+                        listedProductsData.user.locations.find(
+                          (location) => location.isMain
+                        ).address
+                      }
+                    </p>
+
+                    <p className="text-lg font-medium text-gray-600">
+                      {
+                        listedProductsData.user.locations.find(
+                          (location) => location.isMain
+                        )?.city?.[lang === "ar" ? "nameAr" : "nameEn"]
+                      }
+                    </p>
+                    <p className="text-lg font-medium text-gray-600 ">
+                      {
+                        listedProductsData.user.locations.find(
+                          (location) => location.isMain
+                        )?.country?.[lang === "ar" ? "nameAr" : "nameEn"]
+                      }
+                    </p>
+                  </>
+                ) : (
+                  <p>{selectedContent[localizationKeys.locationNotAvailable]}</p>
+                )}
               </div>
             </div>
           </div>
@@ -173,13 +200,13 @@ const SummaryListedSection = () => {
             />
           </div>
         </div>
-        {/* <div className="mt-9 col-span-2">
+      </div>
+      <div className="mt-9 px-4 col-span-2">
         <AuctionDetailsTabs
           dataTabs={listedProductsData}
           activeIndexTab={activeIndexTab}
           setActiveIndexTab={setActiveIndexTab}
         />
-      // </div> */}
       </div>
       <div className="mt-16">
         <SilmilarProductsSlider

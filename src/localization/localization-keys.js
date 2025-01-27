@@ -31,6 +31,7 @@ const localizationKeys = {
   or: "or",
   backToLogin: "backToLogin",
   sentVerification: "sentVerification",
+  securityDeposit: "securityDeposit",
   // home
   subscribedSuccessfully: "subscribedSuccessfully",
   unsubscribedSuccessfully: "unsubscribedSuccessfully",
@@ -156,6 +157,9 @@ const localizationKeys = {
     "inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction",
   pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit:
     "pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit",
+  shopSustainableChoosePreOwned: "shopSustainableChoosePreOwned",
+  getItNewFeeltheDifference: "getItNewFeeltheDifference",
+  locationNotAvailable: "locationNotAvailable",
   // create auctions
   drafts: "drafts",
   proceed: "proceed",
@@ -188,6 +192,9 @@ const localizationKeys = {
   wirteYourAddress: "wirteYourAddress",
   exHome: "exHome",
   enterPostalZipCode: "enterPostalZipCode",
+  building: "building",
+  place: "place",
+  uae: "United Arab Emirates",
   // product details
   itemDetails: "itemDetails",
   itemName: "itemName",
@@ -262,7 +269,7 @@ const localizationKeys = {
   errorDeletingAddress: "error deleting address",
   deleteAddress: "delete Address",
   cannotDeleteMainAddress: "cannot delete main address",
-  confirmDeleteAddressHeading:"confirmDeleteAddress",
+  confirmDeleteAddressHeading: "confirmDeleteAddress",
   // paymemt details
   paymentMethod: "paymentMethod",
   backToHome: "backToHome",

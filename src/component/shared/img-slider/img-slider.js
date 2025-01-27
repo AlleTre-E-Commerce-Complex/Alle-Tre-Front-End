@@ -121,8 +121,8 @@ const ImgSlider = ({
     if (navigator.share) {
       try {
         await navigator.share({
-          title,
-          text: title,
+          title: { title },
+          text: "Check out this auction!",
           url: shareUrl,
         });
         console.log("Post shared successfully!");
@@ -144,21 +144,37 @@ const ImgSlider = ({
       {/* Main Image Section */}
       <div className="relative w-full h-[85%] cursor-pointer">
         {images && images.length > 0 && (
-          <img
-            className="w-full h-full object-contain"
-            src={images[selectedImgIndex]?.imageLink}
-            alt=""
-            onLoad={() => setIsImageLoaded(true)}
-            onClick={isImageLoaded ? toggleZoom : null}
-          />
+          <>
+            <div className="relative w-full h-full">
+              <img
+                className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
+                src={images[selectedImgIndex]?.imageLink}
+                alt={images[selectedImgIndex]?.description || "Product image"} // descriptive and concise alt
+                onLoad={() => setIsImageLoaded(true)}
+                onClick={isImageLoaded ? toggleZoom : null}
+              />
+              {/* Tap to Zoom Text */}
+              <div
+                onClick={isImageLoaded ? toggleZoom : null}
+                className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 cursor-pointer"
+              >
+                <span
+                  onClick={isImageLoaded ? toggleZoom : null}
+                  className="text-white text-sm md:text-xl font-semibold "
+                >
+                  Tap to Zoom
+                </span>
+              </div>
+            </div>
+          </>
         )}
         <div
           className={`absolute top-1/2 w-full flex ${
             isArabic ? "justify-between flex-row-reverse" : "justify-between"
-          } px-2 transform -translate-y-1/2 z-20`}
+          } px-4 transform -translate-y-1/2 z-20`}
         >
           <button
-            onClick={isArabic ? handleNext : handlePrevious} 
+            onClick={isArabic ? handleNext : handlePrevious}
             className="bg-primary/40 hover:bg-primary p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 group/btn"
           >
             <BsChevronLeft

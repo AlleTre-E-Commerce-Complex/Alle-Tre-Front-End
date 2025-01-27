@@ -856,51 +856,7 @@ const TermAndConditionData = [
       en: (
         <div className="ml-4 -mt-8">
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">14- </span>
-            <span>
-              Amendments and Notifications: ALLE TRE reserves the right to amend
-              the terms and conditions at any time. You will be notified of the
-              amendments via email or via a notice on the site, and your
-              continued use of the site constitutes acceptance of the new terms.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">15- </span>
-            <span>
-              Termination of Service: ALLE TRE reserves the right to suspend or
-              terminate users' accounts in the event that they violate any of
-              the terms and conditions, or in the event that they behave in a
-              manner that is harmful to the platform or other users.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">16- </span>
-            <span>
-              Electronic Communication: By using the platform, you agree to
-              receive notices from ALLE TRE via email or via notices on the
-              site. Any notice issued by ALLE TRE shall be considered an
-              official notice.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">17- </span>
-            <span>
-              Headquarters: The headquarters of the company ALLE TRE is one of
-              the properties of ALLE TRE E-COMMERCE COMPLEX LLC OPC.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">18- </span>
-            <span>
-              Inquiries: In the event of any questions or inquiries regarding
-              these terms and conditions, please contact us via email under the
-              title "Inquiries about the terms and conditions". Please ensure
-              that you agree to these terms before starting to use the ALLE TRE
-              platform.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-black">19- </span>
+            <span className="text-lg font-bold text-black">14- </span>
             <span>
               Value Added Tax Compliance: The ALLE TRE E-COMMERCE COMPLEX LLC
               OPC confirms that all transactions conducted through the platform
@@ -940,54 +896,56 @@ const TermAndConditionData = [
               </ul>
             </span>
           </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">15- </span>
+            <span>
+              Amendments and Notifications: ALLE TRE reserves the right to amend
+              the terms and conditions at any time. You will be notified of the
+              amendments via email or via a notice on the site, and your
+              continued use of the site constitutes acceptance of the new terms.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">16- </span>
+            <span>
+              Termination of Service: ALLE TRE reserves the right to suspend or
+              terminate users' accounts in the event that they violate any of
+              the terms and conditions, or in the event that they behave in a
+              manner that is harmful to the platform or other users.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">17- </span>
+            <span>
+              Electronic Communication: By using the platform, you agree to
+              receive notices from ALLE TRE via email or via notices on the
+              site. Any notice issued by ALLE TRE shall be considered an
+              official notice.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">18- </span>
+            <span>
+              Headquarters: The headquarters of the company ALLE TRE is one of
+              the properties of ALLE TRE E-COMMERCE COMPLEX LLC OPC.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">19- </span>
+            <span>
+              Inquiries: In the event of any questions or inquiries regarding
+              these terms and conditions, please contact us via email under the
+              title "Inquiries about the terms and conditions". Please ensure
+              that you agree to these terms before starting to use the ALLE TRE
+              platform.
+            </span>
+          </div>
         </div>
       ),
       ar: (
         <div className="ml-4 -mt-8">
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٤- </span>
-            <span>
-              التعديلات والإخطارات تحتفظ “ألي تري” بحقها في تعديل الشروط
-              والأحكام في أي وقت. سيتم إخطاركم بالتعديلات عبر البريد الإلكتروني
-              أو عبر إشعار على الموقع، ويُعد استمراركم في استخدام الموقع قبولًا
-              للشروط الجديدة.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٥- </span>
-            <span>
-              إنهاء الخدمة تحتفظ “ألي تري” بالحق في تعليق أو إنهاء حساب
-              المستخدمين في حال انتهاكهم لأي من الشروط والأحكام، أو في حال
-              سلوكهم بشكل ضار بالمنصة أو المستخدمين الآخرين.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٦- </span>
-            <span>
-              التواصل الإلكتروني باستخدامكم للمنصة، فإنكم توافقون على استقبال
-              الإشعارات من “ألي تري” عبر البريد الإلكتروني أو عن طريق الإشعارات
-              على الموقع. يُعتبر أي إشعار صادر عن “ألي تري” بمثابة إشعار رسمي.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٧- </span>
-            <span>
-              - مقر الشركة “ألي تري” هي من ممتلكات [ألي تري مجمع للتعامل
-              الالكتروني].
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٨- </span>
-            <span>
-              - الاستفسارات في حال وجود أي أسئلة أو استفسارات بخصوص هذه الشروط
-              والأحكام، يُرجى التواصل معنا عبر البريد الإلكتروني [ الدعم الفني و
-              خدمة العملاء ] بعنوان “استفسارات حول الشروط والأحكام”. يُرجى
-              التأكد من موافقتك على هذه الشروط قبل البدء في استخدام منصة “ألي
-              تري.
-            </span>
-          </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-black">١٩- </span>
+            <span className="text-lg font-bold text-black">١٤- </span>
             <span>
               الامتثال لضريبة القيمة المضافة: تؤكد منصة الي تري أن جميع
               المعاملات التي تتم عبر المنصة تخضع لأحكام مرسوم بقانون اتحادي رقم
@@ -1021,6 +979,48 @@ const TermAndConditionData = [
                   داخل دولة الامارات العربية المتحدة .
                 </li>
               </ul>
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٥- </span>
+            <span>
+              التعديلات والإخطارات تحتفظ “ألي تري” بحقها في تعديل الشروط
+              والأحكام في أي وقت. سيتم إخطاركم بالتعديلات عبر البريد الإلكتروني
+              أو عبر إشعار على الموقع، ويُعد استمراركم في استخدام الموقع قبولًا
+              للشروط الجديدة.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٦- </span>
+            <span>
+              إنهاء الخدمة تحتفظ “ألي تري” بالحق في تعليق أو إنهاء حساب
+              المستخدمين في حال انتهاكهم لأي من الشروط والأحكام، أو في حال
+              سلوكهم بشكل ضار بالمنصة أو المستخدمين الآخرين.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٧- </span>
+            <span>
+              التواصل الإلكتروني باستخدامكم للمنصة، فإنكم توافقون على استقبال
+              الإشعارات من “ألي تري” عبر البريد الإلكتروني أو عن طريق الإشعارات
+              على الموقع. يُعتبر أي إشعار صادر عن “ألي تري” بمثابة إشعار رسمي.
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٨- </span>
+            <span>
+              - مقر الشركة “ألي تري” هي من ممتلكات [ألي تري مجمع للتعامل
+              الالكتروني].
+            </span>
+          </div>
+          <div className="mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٩- </span>
+            <span>
+              - الاستفسارات في حال وجود أي أسئلة أو استفسارات بخصوص هذه الشروط
+              والأحكام، يُرجى التواصل معنا عبر البريد الإلكتروني [ الدعم الفني و
+              خدمة العملاء ] بعنوان “استفسارات حول الشروط والأحكام”. يُرجى
+              التأكد من موافقتك على هذه الشروط قبل البدء في استخدام منصة “ألي
+              تري.
             </span>
           </div>
         </div>

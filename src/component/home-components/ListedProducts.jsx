@@ -134,6 +134,16 @@ const ListedProducts = () => {
                         imageLink={product?.images[0].imageLink}
                         id={product?.id}
                         location={product?.user?.locations[0]?.address}
+                        city={
+                          lang === "en"
+                            ? product?.user?.locations[0]?.city?.nameEn
+                            : product?.user?.locations[0]?.city?.nameAr
+                        }
+                        country={
+                          lang === "en"
+                            ? product?.user?.locations[0]?.country?.nameEn
+                            : product?.user?.locations[0]?.country?.nameAr
+                        }
                         createdAt={product?.user?.createdAt}
                         // WatshlistState={product?.isSaved}
                       />

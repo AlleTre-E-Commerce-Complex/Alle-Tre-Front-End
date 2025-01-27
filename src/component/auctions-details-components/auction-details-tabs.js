@@ -27,7 +27,9 @@ const AuctionDetailsTabs = ({
       render: () => (
         <div>
           <Tab.Pane className="border-none w-full h-full animate-in">
-            <ItemDetails itemDetailsData={dataTabs?.product} />
+            <ItemDetails
+              itemDetailsData={dataTabs?.product ? dataTabs?.product : dataTabs}
+            />
           </Tab.Pane>
         </div>
       ),
