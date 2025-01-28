@@ -48,6 +48,7 @@ const HomeAuctionDetails = () => {
         authAxios
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
+            console.log('////////////////',res?.data?.data)
             setAuctionsDetailsData(res?.data?.data);
           })
       );
@@ -181,6 +182,7 @@ const HomeAuctionDetails = () => {
                     onReload={onReload}
                     // TODO add PurchasedTime
                     PurchasedTime={""}
+                    sellerLocation={auctionsDetailsData?.location}
                   />
                 )}
               </div>

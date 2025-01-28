@@ -53,6 +53,7 @@ const SummaryHomeAuctionSections = ({
   PurchasedTime,
   onReload,
   isOffer,
+  sellerLocation,
 }) => {
   // console.log("SummaryHomeAuctionSections");
   const { user } = useAuthState();
@@ -494,6 +495,8 @@ const SummaryHomeAuctionSections = ({
         setOpen={setOpenDeliverySelectingModal}
         auctionId={auctionId}
         paymentType={"BUY_NOW"}
+        sellerLocation={sellerLocation}
+
         // lastPrice={lastPrice}
       />
     </div>
