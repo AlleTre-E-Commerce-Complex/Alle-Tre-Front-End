@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Dropdown } from 'semantic-ui-react';
 import { Dimmer } from 'semantic-ui-react';
 import LodingTestAllatre from '../lotties-file/loding-test-allatre';
@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import { completePaymentData } from 'redux-store/complete-payment-slice';
 import routes from 'routes';
-const DeliverySelectingModal = ({ open, setOpen, auctionId, paymentType,lastPrice }) => {
+const DeliverySelectingModal = ({ open, setOpen, auctionId, paymentType,lastPrice, sellerLocation }) => {
   const [selectedOption, setSelectedOption] = useState(null); // Track selected option
   const { run, isLoading } = useAxios([]);
   const dispatch = useDispatch();
@@ -20,6 +20,8 @@ const DeliverySelectingModal = ({ open, setOpen, auctionId, paymentType,lastPric
     { key: 'PICKUP', value: 'PICKUP', text: 'Pick up yourself' },
     { key: 'DELIVERY', value: 'DELIVERY', text: 'Delivery by company' },
   ];
+
+ 
 
   // Descriptions for each delivery type
   const deliveryDescriptions = {
@@ -101,6 +103,36 @@ const DeliverySelectingModal = ({ open, setOpen, auctionId, paymentType,lastPric
               value={selectedOption}
             />
           </div>
+        {/* Seller Address */}
+            <div className="px-3 py-4">
+              <div className="bg-gray-100 border border-gray-300 rounded-lg p-4 shadow-sm">
+                <h4 className="text-lg font-semibold text-primary mb-2 flex items-center">
+                  <span className="mr-2">📍</span> Seller Address
+                </h4>
+                <ul className="space-y-2">
+                <li className="flex items-center">
+                    <span className="font-medium mr-2">Adress Lable:</span>
+                    <span>{sellerLocation?.addressLabel}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="font-medium mr-2">Adress:</span>
+                    <span>{sellerLocation?.address}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="font-medium mr-2">City:</span>
+                    <span>{sellerLocation?.city?.nameEn}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="font-medium mr-2">Country:</span>
+                    <span>{sellerLocation?.country?.nameEn}</span>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="font-medium mr-2">Mobile 📞:</span>
+                    {/* <span className="text-blue-500 hover:underline">{sellerLocation.phone}</span> */}
+                  </li>
+                </ul>
+              </div>
+            </div>
 
           {/* Description */}
           {selectedOption && (

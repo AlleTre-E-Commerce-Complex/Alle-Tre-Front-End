@@ -29,6 +29,7 @@ const PendingBids = () => {
   const [openDeliverySelectingModal, setOpenDeliverySelectingModal] = useState(false)
   const [auctionId, setAuctionId] = useState()
   const [lastPrice, setLastPrice] = useState()
+  const [sellerLocation,setSellerLocation] = useState()
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [activeAuctionData, setActiveAuctionData] = useState();
@@ -46,7 +47,7 @@ const PendingBids = () => {
             `${api.app.auctions.getAllMyBids}${search}&status=PENDING_PAYMENT`
           )
           .then((res) => {
-            console.log('res***>',res?.data?.data)
+            console.log('res***123>',res?.data?.data)
             setActiveAuctionData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
@@ -60,12 +61,13 @@ const PendingBids = () => {
     ""
   );
 
-  const handelCompletePayment = (auctionsId, lastPrice) => {
+  const handelCompletePayment = (auctionsId, lastPrice, location) => {
     if (JSON.parse(hasCompletedProfile)) {
       console.log('openDeliverySelectingModal')
       setOpenDeliverySelectingModal(true)
       setAuctionId(auctionsId)
       setLastPrice(lastPrice)
+      setSellerLocation(location)
       // history.push(routes.app.profile.myBids.completePayment);
       // dispatch(
       //   completePaymentData({
@@ -84,6 +86,7 @@ const PendingBids = () => {
         auctionId={auctionId}
         paymentType={'PENDING_BIDDING'}
         lastPrice={lastPrice}
+        sellerLocation={sellerLocation}
       />
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
@@ -122,7 +125,8 @@ const PendingBids = () => {
               buttonActions={() => {
                 handelCompletePayment(
                   e?.auction?.id,
-                  e?.auction?.bids[0]?.amount
+                  e?.auction?.bids[0]?.amount,
+                  e?.auction?.location,
                 );
               }}
               status={"PENDING_PAYMENT"}
