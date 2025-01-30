@@ -394,9 +394,10 @@ const ActionsRowTable = ({
               Status : Bank statement submitted
             </button>}
 
-           { !isBankStatementUploaded && <button
+           { !isBankStatementUploaded &&
+            <button
               onClick={buttonActions}
-              className={`border-primary border-[1px] text-primary text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 cursor-pointer`}
+              className={`${textButton === 'Delivery by company'? 'border-secondery border-[1px] text-primary font-bold cursor-auto' : 'border-primary border-[1px] text-primary font-normal cursor-pointer' } text-sm  sm:w-[158px]  w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
             >
               {textButton}
             </button>}

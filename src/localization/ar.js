@@ -442,6 +442,7 @@ const ar = {
   [localizationKeys.ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow]:
     "لا توجد عروض حتى الآن في انتظار مزادات التسليم في الوقت الحالي",
   [localizationKeys.confirmDelivery]: "تأكيد الاستلام",
+  [localizationKeys.deliveryByCompany]: "التوصيل عن طريق الشركة",
   [localizationKeys.AnyCompliants]: "أي شكاوى؟",
   [localizationKeys.sellerContactDetails]: "تفاصيل الاتصال بالبائع",
   [localizationKeys.buyerContactDetails]: "تفاصيل الاتصال بالمشتري",

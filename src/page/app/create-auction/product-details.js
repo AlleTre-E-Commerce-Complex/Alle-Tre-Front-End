@@ -103,7 +103,7 @@ const ProductDetails = () => {
           setRadioValue(completeDraftValue?.product?.usageStatus);
         })
       );
-  }, [runAuctionById, state?.auctionId, productDetailsint?.id]);
+  }, [runAuctionById,forceReload, state?.auctionId, productDetailsint?.id]);
 
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();

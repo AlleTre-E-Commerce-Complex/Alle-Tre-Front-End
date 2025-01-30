@@ -397,6 +397,7 @@ const localizationKeys = {
   ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow:
     "ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow",
   confirmDelivery: "confirmDelivery",
+  deliveryByCompany:"deliveryByCompany",
   AnyCompliants: "AnyCompliantsen",
   sellerContactDetails: "sellerContactDetails",
   unSubscribe: "unSubscribe",
