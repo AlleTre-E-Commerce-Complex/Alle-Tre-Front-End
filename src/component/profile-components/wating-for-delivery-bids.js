@@ -96,8 +96,8 @@ const WatingForDeliveryBids = ({ OnReload }) => {
               key={e?.auction?.id}
               isBidsButtons
               auctionsId = {e?.auction?.id}
-              textButton={selectedContent[localizationKeys.confirmDelivery]}
-              buttonActions={() => handelConfirmDelivery(e?.auction?.id)}
+              textButton={e?.auction?.deliveryType === "PICKUP" ? selectedContent[localizationKeys.confirmDelivery] : selectedContent[localizationKeys.deliveryByCompany]}
+              buttonActions={e?.auction?.deliveryType === "PICKUP" ? () => handelConfirmDelivery(e?.auction?.id) : ""}
               status={"WAITING_FOR_DELIVERY"}
               title={e?.auction?.product?.title}
               description={e?.auction?.product?.description}
