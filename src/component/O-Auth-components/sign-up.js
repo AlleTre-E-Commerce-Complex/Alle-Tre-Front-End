@@ -63,7 +63,7 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
 
   return (
     <div className="flex flex-col md:flex-row  gap-x-3 animate-in bg-transparent rtl:font-serifAR ltr:font-serifEN ">
-      <div className="mt-5 mx-auto md:mx-0">
+      <div className="mt-10 mx-auto md:mx-0">
         <OAuthSections isLogin={false} />
       </div>
       <div className="mx-5 ">
@@ -184,9 +184,7 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
                       placeholder={selectedContent[localizationKeys.password]}
                     />
                   </div>
-                  <TermsAndConditions
-                    isFooter={false}
-                  />
+                  <TermsAndConditions isFooter={false} />
                   <div className="">
                     <Button
                       loading={isLoading}

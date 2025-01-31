@@ -31,7 +31,8 @@ const HomeAuctionDetails = () => {
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
-  const { auctionId } = useParams();
+
+  const { auctionId } = useParams();;
   const { run, isLoading } = useAxios([]);
   const { pathname } = useLocation();
 
@@ -48,7 +49,6 @@ const HomeAuctionDetails = () => {
         authAxios
           .get(api.app.auctions.getUserAuctionsDetails(auctionId))
           .then((res) => {
-            console.log('////////////////',res?.data?.data)
             setAuctionsDetailsData(res?.data?.data);
           })
       );
@@ -62,15 +62,16 @@ const HomeAuctionDetails = () => {
       );
     }
   }, [auctionId, run, user, hasCompletedProfile]);
-
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
   return (
     <div>
-        <Helmet>
+      <Helmet>
         {/* Update Open Graph meta tags dynamically */}
-        <title>{auctionsDetailsData?.product?.title || "Auction Details"}</title>
+        <title>
+          {auctionsDetailsData?.product?.title || "Auction Details"}
+        </title>
         <meta
           name="description"
           content={
@@ -78,7 +79,10 @@ const HomeAuctionDetails = () => {
             "Explore our latest auction details."
           }
         />
-        <meta property="og:title" content={auctionsDetailsData?.product?.title} />
+        <meta
+          property="og:title"
+          content={auctionsDetailsData?.product?.title}
+        />
         <meta
           property="og:description"
           content={auctionsDetailsData?.product?.description}
@@ -86,7 +90,8 @@ const HomeAuctionDetails = () => {
         <meta
           property="og:image"
           content={
-            auctionsDetailsData?.product?.images?.[0].imageLink || "default-image-url.jpg"
+            auctionsDetailsData?.product?.images?.[0].imageLink ||
+            "default-image-url.jpg"
           }
         />
         <meta property="og:url" content={window.location.href} />

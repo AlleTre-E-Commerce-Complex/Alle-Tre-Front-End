@@ -81,6 +81,7 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
                 <SummaryAuctionSections
                   numberStare={3}
                   totalReviews={20}
+                  title={auctionsDetailsData?.product?.title}
                   description={auctionsDetailsData?.product?.description}
                   category={
                     lang === "en"

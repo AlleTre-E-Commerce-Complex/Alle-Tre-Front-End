@@ -135,6 +135,7 @@ const en = {
   [localizationKeys.iAcceptThe]: "I accept the",
   [localizationKeys.close]: "Close",
   [localizationKeys.sell]: "Sell",
+  [localizationKeys.timing]: "Timing",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
@@ -189,6 +190,7 @@ const en = {
     "Your auction has been deleted for you from drafting successfully",
   [localizationKeys.errorDelete]:
     "oops, sorry something with wrong please make sure everything is correct and try again",
+  [localizationKeys.confirmDeletedraft]: "Confirm delete draft",
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "Are you sure you want to delete this draft",
   [localizationKeys.cancel]: "Cancel",
@@ -350,7 +352,7 @@ const en = {
   [localizationKeys.editPhoneNumber]: "Edit Phone Number",
   [localizationKeys.loginService]: "Login Service",
   [localizationKeys.loginServiceMaseg]:
-    "Your Alla-tre account does not have an external login service. Connect accounts now for quick & secure access.",
+    "Your Alletre account does not have an external login service. Connect accounts now for quick & secure access.",
   [localizationKeys.connected]: "Connected",
   [localizationKeys.connectedWithApple]: "Connected with Apple",
   [localizationKeys.connectWithGoogle]: "Connect with Google",

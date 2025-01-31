@@ -255,6 +255,9 @@ const AuctionDetails = () => {
         <Stepper />
       </div>
       <div className="max-w-[1366px] mx-auto mt-10">
+      <h1 className="font-bold text-base sm:text-xl text-gray-800 pb-4">
+                      {selectedContent[localizationKeys.timing]}
+                    </h1>
         <div>
           <CheckboxRadioAuctionDetails
             valueRadio={valueRadio}
@@ -311,7 +314,7 @@ const AuctionDetails = () => {
                     </div>
                     <div>
                       <div className="flex mt-7">
-                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                        <h1 className="font-bold text-base sm:text-xl text-gray-800 mb-1 ltr:mr-16 rtl:ml-16">
                           {selectedContent[localizationKeys.scheduleBid]}
                           <span className="text-gray-med text-base font-normal mx-2">
                             {selectedContent[localizationKeys.optional]}
@@ -348,30 +351,30 @@ const AuctionDetails = () => {
                           value={selectedDateTime}
                           onChange={(newValue) => {
                             formik.setFieldValue("date", newValue);
-                            formik.setFieldValue("from", newValue); 
-
+                            formik.setFieldValue("from", newValue);
                           }}
                         />
                       </div>
                     </div>
-                    <div>
-                      <h1 className="font-bold text-base text-black py-6">
+                    <div className="py-2">
+                      <h1 className="font-bold text-base sm:text-xl text-gray-800 pb-4">
                         {selectedContent[localizationKeys.pricing]}
                       </h1>
-                      <div className="pt-6">
+                      <div className="pt-4">
                         <FormikInput
                           min={0}
                           type="number"
                           name="MinimumPrice"
                           label={selectedContent[localizationKeys.startPrice]}
-                          placeholder="AEDXXX"
+                          placeholder="AED XXX"
                           onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
                         />
                       </div>
                     </div>
                     <div>
                       <div className="flex mt-7">
-                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                        <h1 className="font-bold text-base sm:text-xl text-gray-800 mb-1 ltr:mr-16 rtl:ml-16">
                           {selectedContent[localizationKeys.buyNow]}
                           <span className="text-gray-med text-base font-normal mx-2">
                             {selectedContent[localizationKeys.optional]}
@@ -507,7 +510,7 @@ const AuctionDetails = () => {
                     {/* ================= */}
                     <div>
                       <div className="flex mt-7">
-                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                        <h1 className="font-bold text-base sm:text-xl text-gray-800 mb-1 ltr:mr-16 rtl:ml-16">
                           {selectedContent[localizationKeys.returnPolicy]}
                           <span className="text-gray-med text-base font-normal mx-2">
                             {selectedContent[localizationKeys.optional]}
@@ -559,7 +562,7 @@ const AuctionDetails = () => {
                     {/* =================== */}
                     <div>
                       <div className="flex mt-7">
-                        <h1 className="font-bold text-base text-black mb-1 ltr:mr-16 rtl:ml-16">
+                        <h1 className="font-bold text-base sm:text-xl text-gray-800 mb-1 ltr:mr-16 rtl:ml-16">
                           {selectedContent[localizationKeys.warrantyPolicy]}
                           <span className="text-gray-med text-base font-normal mx-2">
                             {selectedContent[localizationKeys.optional]}

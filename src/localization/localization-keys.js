@@ -119,6 +119,7 @@ const localizationKeys = {
   iAcceptThe: "iAcceptThe",
   close: "close",
   sell: "sell",
+  timing: "Timing",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -165,6 +166,7 @@ const localizationKeys = {
   proceed: "proceed",
   successDelete: "successDelete",
   errorDelete: "errorDelete",
+  confirmDeletedraft: "confirmDeletedraft",
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
   cancel: "cancel",
   logOut: "logOut",
