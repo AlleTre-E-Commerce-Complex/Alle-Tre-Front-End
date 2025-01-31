@@ -1,29 +1,22 @@
 import React, { useState } from "react";
 
 import routes from "../../routes";
-import { Link, useHistory } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
-
 import { Button, Form } from "semantic-ui-react";
 import OAuthSections from "./O-Auth-sections";
 import { toast } from "react-hot-toast";
-
-import auth from "../../utils/auth";
 import api from "../../api";
 import useAxios from "../../hooks/use-axios";
 import { axios } from "../../config/axios-config";
-
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
 import { welcomeBonus } from "../../redux-store/welcom-bonus-slice";
-import { loginDate } from "../../redux-store/socket-auctionId-slice";
 import { useAuthState } from "context/auth-context";
 import { store } from "redux-store/store";
 import { setBlockedUser } from "redux-store/blocked-user-slice";

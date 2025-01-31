@@ -234,6 +234,14 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
 
   return (
     <div>
+      <div className="flex md:hidden justify-center -mt-10">
+        <img
+          src={allatreLogoColor}
+          alt="allatreLogoColor"
+          className="w-28"
+        />
+      </div>
+
       <Loginbutton
         logo={appleIcon}
         onClick={signInWithApple}

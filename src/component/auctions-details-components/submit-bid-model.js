@@ -86,7 +86,7 @@ const SubmitBidModel = ({
           }
         </p>
         <div className="flex justify-end gap-x-4 pt-8">
-          <button
+          {/* <button
             onClick={() => {
               setOpen(false);
               setSubmitBidValue("");
@@ -94,7 +94,7 @@ const SubmitBidModel = ({
             className="underline text-primary w-[136px] h-[48px] "
           >
             {selectedContent[localizationKeys.editBid]}
-          </button>
+          </button> */}
           <button
             onClick={() => setOpen(false)}
             className="w-[136px] h-[48px] rounded-lg border-[1px] border-primary text-primary"

@@ -9,7 +9,7 @@ import { BsFillTelephoneFill, BsThreeDots } from "react-icons/bs";
 
 import appleIcon from "../../../../src/assets/icons/Apple-icon.svg";
 import googleIcon from "../../../../src/assets/icons/Google-icon.svg";
-import facebookIcon from "../../../../src/assets/icons/Fcaebook-icon.svg";
+// import facebookIcon from "../../../../src/assets/icons/Fcaebook-icon.svg";
 import userProfileicon from "../../../../src/assets/icons/user-Profile-icon.png";
 
 import UploadeImgModel from "../../../component/profile-components/uploade-img-model";

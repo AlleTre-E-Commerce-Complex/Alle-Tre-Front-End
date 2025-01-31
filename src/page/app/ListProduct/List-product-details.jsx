@@ -5,7 +5,7 @@ import routes from "../../../routes";
 
 import { CheckboxRadioProductDetails } from "../../../component/create-auction-components/check-box-radio-group";
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
-import AddImgMedia from "../../../component/create-auction-components/add-img-media";
+// import AddImgMedia from "../../../component/create-auction-components/add-img-media";
 import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
 import Stepper from "../../../component/shared/stepper/stepper-app";
 import { Dimmer, Form } from "semantic-ui-react";
@@ -30,11 +30,12 @@ import { useLanguage } from "../../../context/language-context";
 import { useDispatch } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
-import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
+// import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown } from "react-icons/md";
+import ImageMedia from "component/create-auction-components/ImageMedia";
 
 const ListProductDetails = () => {
   const [lang] = useLanguage("");
@@ -52,7 +53,7 @@ const ListProductDetails = () => {
 //     (state) => state.productDetails.productDetails
 //   );
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
@@ -685,7 +686,7 @@ const ListProductDetails = () => {
                       </label>
                     </div>
                     <div className="mt-6 w-full">
-                      {auctionState === "DRAFTED"  ? (
+                      {/* {auctionState === "DRAFTED"  ? (
                         <EditImgeMedia
                           auctionId={state?.auctionId}
                           imgOne={imgtest && imgtest[0]}
@@ -719,7 +720,28 @@ const ListProductDetails = () => {
                           fileFive={fileFive}
                           setFileFive={setFileFive}
                         />
-                      )}
+                      )} */}
+                       <ImageMedia
+                        auctionId={state?.auctionId}
+                        imgOne={imgtest && imgtest[0]}
+                        fileOne={fileOne}
+                        setFileOne={setFileOne}
+                        imgTwo={imgtest && imgtest[1]}
+                        fileTwo={fileTwo}
+                        setFileTwo={setFileTwo}
+                        imgThree={imgtest && imgtest[2]}
+                        fileThree={fileThree}
+                        setFileThree={setFileThree}
+                        imgFour={imgtest && imgtest[3]}
+                        fileFour={fileFour}
+                        setFileFour={setFileFour}
+                        imgFive={imgtest && imgtest[4]}
+                        fileFive={fileFive}
+                        setFileFive={setFileFive}
+                        onReload={onReload}
+                        setLoadingImg={setLoadingImg}
+                        isEditMode={auctionState === "DRAFTED"}
+                      />
                     </div>
                   </div>
                   <div

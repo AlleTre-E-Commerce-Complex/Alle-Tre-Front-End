@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
-import Trash from "../../../component/shared/lotties-file/trash-lotifile";
-import { Button, Dimmer, Modal } from "semantic-ui-react";
+import { Dimmer, Modal } from "semantic-ui-react";
 import moment from "moment";
 
 import createAuctionimgBGfrom from "../../../../src/assets/img/DraftImg.jpg";
@@ -192,31 +190,31 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
         onClose={() => setOpen(false)}
         open={open}
       >
-        <div className="sm:w-[392px] w-full  h-auto border-2 border-primary rounded-2xl bg-background">
-          <div className="mt-24">
-            <Trash />
-          </div>
-          <p className="text-gray-dark text-center text-base font-normal pt-8">
+        <div className="sm:w-[400px] w-full border-2 border-primary h-auto rounded-2xl bg-background pb-6 pt-4">
+          <h1 className="text-black font-semibold text-lg text-center">
+            {selectedContent[localizationKeys.confirmDeletedraft]}
+          </h1>
+          <p className="text-gray-dark text-center mx-8 text-base font-normal pt-4">
             {
               selectedContent[
                 localizationKeys.areYouSureYouWantToDeleteThisDraft
               ]
             }
           </p>
-          <div className="flex justify-center gap-x-10 mt-10 mb-12">
+          <div className="flex justify-center gap-x-6 pt-6">
             <button
               onClick={() => setOpen(false)}
-              className="w-[136px] h-[48px] bg-white border-[1px] border-primary text-primary rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR"
+              className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
             >
               {selectedContent[localizationKeys.cancel]}
             </button>
-            <Button
+            <button
               loading={isLoading}
               onClick={() => deleteAuction()}
-              className="w-[136px] h-[48px] bg-primary hover:bg-primary-dark opacity-100 text-white rounded-lg text-base font-normal ltr:font-serifEN rtl:font-serifAR "
+              className="bg-primary text-white w-[120px] h-[40px] rounded-lg text-base font-normal hover:bg-primary-dark"
             >
-              {selectedContent[localizationKeys.yesDelete]}
-            </Button>
+              {selectedContent[localizationKeys.delete]}
+            </button>
           </div>
         </div>
       </Modal>

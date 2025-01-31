@@ -435,9 +435,44 @@ const TermAndConditionData = [
     },
   },
   {
+    title: { en: "8- Auction Integrity", ar: "٨- نزاهة المزاد:" },
+    parag: {
+      en: (
+        <div className="ml-4">
+          <li>
+            The ALLE TRE E-COMMERCE COMPLEX LLC OPC platform is committed to
+            ensuring the integrity and transparency of auctions. Therefore, it
+            is strictly prohibited for the seller, directly or indirectly, to
+            participate as a bidder in the auction of the product he has offered
+            for sale, whether using his personal account or another account
+            belonging to him or any person acting on his behalf. In the event
+            that any attempt to circumvent this condition is discovered, the
+            platform management reserves the right to take the necessary
+            measures, which include canceling the auction, confiscating the
+            insurance amount, and blocking the accounts involved in order to
+            maintain a fair experience for all users.
+          </li>
+        </div>
+      ),
+      ar: (
+        <div className="ml-4">
+          <li>
+            تلتزم منصة الي تري بضمان نزاهة وشفافية المزادات. لذا، يُمنع تمامًا
+            على البائع سواء بشكل مباشر أو غير مباشر، المشاركة كمزايد في المزاد
+            الخاص بالمنتج الذي عرضه للبيع، سواء باستخدام حسابه الشخصي أو حساب
+            آخر تابع له أو لأي شخص ينوب عنه. في حال اكتشاف أي محاولة للتحايل على
+            هذا الشرط، تحتفظ إدارة المنصة بحق اتخاذ الإجراءات اللازمة، والتي
+            تشمل إلغاء المزاد، مصادرة مبلغ التأمين، وحظر الحسابات المتورطة،
+            حفاظًا على عدالة التجربة لجميع المستخدمين
+          </li>
+        </div>
+      ),
+    },
+  },
+  {
     title: {
-      en: "8- Guarantees",
-      ar: "٨- الضمانات:",
+      en: "9- Guarantees",
+      ar: "٩– الضمانات:",
     },
     parag: {
       en: (
@@ -494,8 +529,8 @@ const TermAndConditionData = [
   },
   {
     title: {
-      en: "9- Insurance:",
-      ar: "٩– التأمين:",
+      en: "10- Insurance:",
+      ar: "١٠- التأمين:",
     },
     parag: {
       en: (
@@ -705,7 +740,7 @@ const TermAndConditionData = [
     },
   },
   {
-    title: { en: "10- Compensation", ar: " ١٠- التعويض :" },
+    title: { en: "11- Compensation", ar: " ١١- التعويض :" },
     parag: {
       en: (
         <div className="ml-4">
@@ -732,14 +767,14 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div className="ml-4">
-          <span className="text-lg font-bold text-gray-verydark">11-</span>
+          <span className="text-lg font-bold text-gray-verydark">12-</span>
           <span>
             External links The platform may contain links to external sites.
             ALLE TRE is not responsible for the content of these links or any
             damages that may result from their use.
           </span>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">12-</span>
+            <span className="text-lg font-bold text-gray-verydark">13-</span>
             <span>
               Protection of intellectual property rights ALLE TRE respects
               intellectual property rights. Please contact us if you have a
@@ -752,7 +787,7 @@ const TermAndConditionData = [
       ar: (
         <div className="ml-4">
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١١- </span>
+            <span className="text-lg font-bold text-gray-verydark">١٢- </span>
             <span>
               الروابط الخارجية قد تحتوي المنصة على روابط لمواقع خارجية. لا تتحمل
               “ألي تري” مسؤولية محتوى هذه الروابط أو أي أضرار قد تنتج عن
@@ -760,7 +795,7 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٢- </span>
+            <span className="text-lg font-bold text-gray-verydark">١٣- </span>
             <span>
               حماية حقوق الملكية الفكرية تحترم “ألي تري” حقوق الملكية الفكرية
               يُرجى التواصل معنا إذا كانت لديك شكوى تتعلق بانتهاك حقوق الملكية
@@ -776,7 +811,7 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div className="ml-4 -mt-5">
-          <span className="text-lg font-bold text-gray-verydark">13- </span>
+          <span className="text-lg font-bold text-gray-verydark">14- </span>
           <span>
             Laws and jurisdiction These terms and conditions are subject to and
             construed in accordance with the laws of [the Emirates] . This
@@ -816,7 +851,7 @@ const TermAndConditionData = [
       ),
       ar: (
         <div className="ml-4 -mt-5">
-          <span className="text-lg font-bold text-gray-verydark">١٣- </span>
+          <span className="text-lg font-bold text-gray-verydark">١٤- </span>
           <span>
             القوانين والاختصاص القضائي تخضع هذه الشروط والأحكام لقوانين
             [الامارات ] وتُفسر وفقًا لها. تُعتبر هذه الدولة مقرًا قانونيًا لفض
@@ -856,7 +891,7 @@ const TermAndConditionData = [
       en: (
         <div className="ml-4 -mt-8">
           <div className="mt-4">
-            <span className="text-lg font-bold text-black">14- </span>
+            <span className="text-lg font-bold text-black">15- </span>
             <span>
               Value Added Tax Compliance: The ALLE TRE E-COMMERCE COMPLEX LLC
               OPC confirms that all transactions conducted through the platform
@@ -897,7 +932,7 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">15- </span>
+            <span className="text-lg font-bold text-gray-verydark">16- </span>
             <span>
               Amendments and Notifications: ALLE TRE reserves the right to amend
               the terms and conditions at any time. You will be notified of the
@@ -906,7 +941,7 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">16- </span>
+            <span className="text-lg font-bold text-gray-verydark">17- </span>
             <span>
               Termination of Service: ALLE TRE reserves the right to suspend or
               terminate users' accounts in the event that they violate any of
@@ -915,7 +950,7 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">17- </span>
+            <span className="text-lg font-bold text-gray-verydark">18- </span>
             <span>
               Electronic Communication: By using the platform, you agree to
               receive notices from ALLE TRE via email or via notices on the
@@ -924,14 +959,14 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">18- </span>
+            <span className="text-lg font-bold text-gray-verydark">19- </span>
             <span>
               Headquarters: The headquarters of the company ALLE TRE is one of
               the properties of ALLE TRE E-COMMERCE COMPLEX LLC OPC.
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">19- </span>
+            <span className="text-lg font-bold text-gray-verydark">20- </span>
             <span>
               Inquiries: In the event of any questions or inquiries regarding
               these terms and conditions, please contact us via email under the
@@ -945,7 +980,7 @@ const TermAndConditionData = [
       ar: (
         <div className="ml-4 -mt-8">
           <div className="mt-4">
-            <span className="text-lg font-bold text-black">١٤- </span>
+            <span className="text-lg font-bold text-black">١٥- </span>
             <span>
               الامتثال لضريبة القيمة المضافة: تؤكد منصة الي تري أن جميع
               المعاملات التي تتم عبر المنصة تخضع لأحكام مرسوم بقانون اتحادي رقم
@@ -982,7 +1017,7 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٥- </span>
+            <span className="text-lg font-bold text-gray-verydark">١٦- </span>
             <span>
               التعديلات والإخطارات تحتفظ “ألي تري” بحقها في تعديل الشروط
               والأحكام في أي وقت. سيتم إخطاركم بالتعديلات عبر البريد الإلكتروني
@@ -991,7 +1026,7 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٦- </span>
+            <span className="text-lg font-bold text-gray-verydark">١٧- </span>
             <span>
               إنهاء الخدمة تحتفظ “ألي تري” بالحق في تعليق أو إنهاء حساب
               المستخدمين في حال انتهاكهم لأي من الشروط والأحكام، أو في حال
@@ -999,7 +1034,7 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٧- </span>
+            <span className="text-lg font-bold text-gray-verydark">١٨- </span>
             <span>
               التواصل الإلكتروني باستخدامكم للمنصة، فإنكم توافقون على استقبال
               الإشعارات من “ألي تري” عبر البريد الإلكتروني أو عن طريق الإشعارات
@@ -1007,14 +1042,14 @@ const TermAndConditionData = [
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٨- </span>
+            <span className="text-lg font-bold text-gray-verydark">١٩- </span>
             <span>
               - مقر الشركة “ألي تري” هي من ممتلكات [ألي تري مجمع للتعامل
               الالكتروني].
             </span>
           </div>
           <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٩- </span>
+            <span className="text-lg font-bold text-gray-verydark">٢٠- </span>
             <span>
               - الاستفسارات في حال وجود أي أسئلة أو استفسارات بخصوص هذه الشروط
               والأحكام، يُرجى التواصل معنا عبر البريد الإلكتروني [ الدعم الفني و

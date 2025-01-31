@@ -131,6 +131,7 @@ const ar = {
   [localizationKeys.termsAndCondition]: "الشروط والأحكام",
   [localizationKeys.iAcceptThe]: "انا اقبل",
   [localizationKeys.sell]: "بيع",
+  [localizationKeys.timing]: "توقيت",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
@@ -188,6 +189,7 @@ const ar = {
     "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:
     "هل أنت متأكد أنك تريد حذف هذه المسودة",
+  [localizationKeys.confirmDeletedraft]: "تأكيد حذف المسودة",
   [localizationKeys.cancel]: "إلغاء",
   [localizationKeys.logOut]: "تسجيل الخروج",
   [localizationKeys.areYouSureYouWantToLogOut]:

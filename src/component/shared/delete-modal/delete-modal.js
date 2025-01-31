@@ -13,7 +13,7 @@ const ConfirmationModal = ({ open, onClose, onConfirm, message }) => {
       onClose={onClose}
       open={open}
     >
-      <div className="sm:w-[400px] w-full h-auto rounded-2xl bg-background pb-6 pt-4">
+      <div className="sm:w-[400px] w-full h-auto border-2 border-primary rounded-2xl bg-background pb-6 pt-4">
         <h1 className="text-black font-semibold text-lg text-center">
           {selectedContent[localizationKeys.confirmDeleteAddressHeading]}
         </h1>
@@ -23,13 +23,13 @@ const ConfirmationModal = ({ open, onClose, onConfirm, message }) => {
         <div className="flex justify-center gap-x-6 pt-6">
           <button
             onClick={onClose}
-            className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-red-600 hover:text-red-600"
+            className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
           >
             {selectedContent[localizationKeys.cancel]}
           </button>
           <button
             onClick={onConfirm}
-            className="bg-primary text-white w-[120px] h-[40px] rounded-lg text-base font-normal"
+            className="bg-primary text-white w-[120px] h-[40px] rounded-lg text-base font-normal hover:bg-primary-dark"
           >
             {selectedContent[localizationKeys.delete]}
           </button>

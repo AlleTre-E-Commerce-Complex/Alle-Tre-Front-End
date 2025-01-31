@@ -5,7 +5,7 @@ import routes from "../../../routes";
 
 import { CheckboxRadioProductDetails } from "../../../component/create-auction-components/check-box-radio-group";
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
-import AddImgMedia from "../../../component/create-auction-components/add-img-media";
+// import AddImgMedia from "../../../component/create-auction-components/add-img-media";
 import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
 import Stepper from "../../../component/shared/stepper/stepper-app";
 import { Dimmer, Form } from "semantic-ui-react";
@@ -32,22 +32,21 @@ import { productDetails } from "../../../redux-store/product-details-Slice";
 import { useDispatch, useSelector } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
-import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
+// import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown } from "react-icons/md";
+import ImageMedia from "component/create-auction-components/ImageMedia";
 
 const ProductDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { state } = useLocation();
-
   const [auctionState, setAuctionState] = useState();
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
-
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const productDetailsint = useSelector(
@@ -67,6 +66,17 @@ const ProductDetails = () => {
           const completeDraftValue = res?.data?.data;
           setAuctionState(res?.data?.data?.status);
           setimgtest(completeDraftValue?.product?.images);
+
+          // Map draft images to fileOne, fileTwo, etc.
+          if (completeDraftValue?.product?.images) {
+            const images = completeDraftValue.product.images;
+            setFileOne(images[0] || null);
+            setFileTwo(images[1] || null);
+            setFileThree(images[2] || null);
+            setFileFour(images[3] || null);
+            setFileFive(images[4] || null);
+          }
+
           setCompleteDraftValue(res?.data?.data);
           dispatch(
             productDetails({
@@ -155,7 +165,6 @@ const ProductDetails = () => {
     );
     setBrandSuggestions(filteredBrands);
   };
-
   const handleFileChange = (event) => {
     const files = event.target.files;
 
@@ -227,7 +236,6 @@ const ProductDetails = () => {
               )
             )
             .then((res) => {
-              console.log("ressssssss", res);
               setCustomFromData(res?.data?.data);
             })
         );
@@ -282,61 +290,65 @@ const ProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
-    const filesCount = [fileOne, fileTwo, fileThree, fileFour, fileFive].filter(
-      Boolean
+    const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+    const filesCount = files.filter(
+      (file) => file !== null && file !== undefined
     ).length;
+    const isDraftMode = completeDraftVal?.id !== undefined;
 
-    if (filesCount >= 3) {
-      if (valueRadio || draftValue.valueRadio || productDetailsint.valueRadio) {
-        dispatch(
-          productDetails({
-            ...values,
-            hasUsageCondition: hasUsageCondition,
-            valueRadio: valueRadio,
-            fileOne: fileOne,
-            fileTwo: fileTwo,
-            fileThree: fileThree,
-            fileFour: fileFour,
-            fileFive: fileFive,
-            auctionState: auctionState,
-            auctionId: completeDraftVal?.id,
-          })
-        );
-        history.push(routes.app.createAuction.auctionDetails);
-      } else {
-        if (hasUsageCondition) {
-          toast.error(
-            selectedContent[
-              localizationKeys.makeSureThatYouChooseItemConditionValue
-            ]
-          );
-        }
-      }
-      if (!hasUsageCondition) {
-        dispatch(
-          productDetails({
-            ...values,
-            hasUsageCondition: hasUsageCondition,
-            valueRadio: valueRadio,
-            fileOne: fileOne,
-            fileTwo: fileTwo,
-            fileThree: fileThree,
-            fileFour: fileFour,
-            fileFive: fileFive,
-            auctionState: auctionState,
-            auctionId: completeDraftVal?.id,
-          })
-        );
-        history.push(routes.app.createAuction.auctionDetails);
-      }
-    } else {
+    // Check if in draft mode or at least 3 files are selected
+    if (!isDraftMode && filesCount < 3) {
       toast.error(
         selectedContent[
           localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
         ]
       );
+      return; // Exit early if the condition is not met
     }
+
+    // Check if valueRadio or its draft equivalents are set
+    if (
+      !valueRadio &&
+      !draftValue?.valueRadio &&
+      !productDetailsint?.valueRadio
+    ) {
+      if (hasUsageCondition) {
+        toast.error(
+          selectedContent[
+            localizationKeys.makeSureThatYouChooseItemConditionValue
+          ]
+        );
+        return; // Exit early if the condition is not met
+      }
+    }
+
+    // Dispatch the product details
+    dispatch(
+      productDetails({
+        ...values,
+        hasUsageCondition,
+        valueRadio,
+        fileOne,
+        fileTwo,
+        fileThree,
+        fileFour,
+        fileFive,
+        auctionState,
+        auctionId: completeDraftVal?.id,
+      })
+    );
+
+    // Navigate to the next page
+    history.push(routes.app.createAuction.auctionDetails, {
+      fileOne,
+      fileTwo,
+      fileThree,
+      fileFour,
+      fileFive,
+    });
   };
+
+  // console.log("qqqqqq", handelProductDetailsdata);
 
   const {
     run: runSaveAuctionAsDraft,
@@ -358,13 +370,11 @@ const ProductDetails = () => {
     if (draftValue.brand || productDetailsint.brand) {
       formData.append("brand", draftValue.brand || productDetailsint.brand);
     }
-    // if (hasUsageCondition) {
     if (valueRadio || productDetailsint.valueRadio) {
       formData.append(
         "usageStatus",
         valueRadio || productDetailsint.valueRadio
       );
-      // }
     }
     if (draftValue.color || productDetailsint.color) {
       formData.append("color", draftValue.color || productDetailsint.color);
@@ -472,26 +482,26 @@ const ProductDetails = () => {
       );
     }
     if (draftValue.cityId || productDetailsint.cityId) {
-      formData.append(
-        "cityId",
-        draftValue.cityId || productDetailsint.countryId
-      );
+      formData.append("cityId", draftValue.cityId || productDetailsint.cityId);
     }
+
+    // Append files correctly
     if (fileOne) {
-      formData.append("images", fileOne || productDetailsint.fileOne);
+      formData.append("images", fileOne);
     }
     if (fileTwo) {
-      formData.append("images", fileTwo || productDetailsint.fileTwo);
+      formData.append("images", fileTwo);
     }
     if (fileThree) {
-      formData.append("images", fileThree || productDetailsint.fileThree);
+      formData.append("images", fileThree);
     }
-    if (fileThree || productDetailsint.fileFour) {
-      formData.append("images", fileThree || productDetailsint.fileFour);
+    if (fileFour) {
+      formData.append("images", fileFour); 
     }
-    if (fileFive || productDetailsint.fileFive) {
-      formData.append("images", fileFive || productDetailsint.fileFive);
+    if (fileFive) {
+      formData.append("images", fileFive);
     }
+
     if (
       auctionState === "DRAFTED" ||
       productDetailsint?.auctionState === "DRAFTED"
@@ -831,7 +841,7 @@ const ProductDetails = () => {
                       </label>
                     </div>
                     <div className="mt-6 w-full">
-                      {auctionState === "DRAFTED" ||
+                      {/* {auctionState === "DRAFTED" ||
                       productDetailsint?.auctionState === "DRAFTED" ? (
                         <EditImgeMedia
                           auctionId={state?.auctionId}
@@ -866,7 +876,31 @@ const ProductDetails = () => {
                           fileFive={fileFive}
                           setFileFive={setFileFive}
                         />
-                      )}
+                      )} */}
+                      <ImageMedia
+                        auctionId={state?.auctionId}
+                        imgOne={imgtest && imgtest[0]}
+                        fileOne={fileOne}
+                        setFileOne={setFileOne}
+                        imgTwo={imgtest && imgtest[1]}
+                        fileTwo={fileTwo}
+                        setFileTwo={setFileTwo}
+                        imgThree={imgtest && imgtest[2]}
+                        fileThree={fileThree}
+                        setFileThree={setFileThree}
+                        imgFour={imgtest && imgtest[3]}
+                        fileFour={fileFour}
+                        setFileFour={setFileFour}
+                        imgFive={imgtest && imgtest[4]}
+                        fileFive={fileFive}
+                        setFileFive={setFileFive}
+                        onReload={onReload}
+                        setLoadingImg={setLoadingImg}
+                        isEditMode={
+                          auctionState === "DRAFTED" ||
+                          productDetailsint?.auctionState === "DRAFTED"
+                        }
+                      />
                     </div>
                   </div>
                   <div
