@@ -136,7 +136,10 @@ const ImgSlider = ({
 
   // Function to toggle the zoom state
   const toggleZoom = () => {
-    setIsZoomed(!isZoomed);
+    window.scrollTo({ top: 0, behavior: "smooth" }); 
+    setTimeout(() => {
+      setIsZoomed(!isZoomed);
+    }, 300); 
   };
 
   return (

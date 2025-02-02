@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import BannerTopImage1 from "../../assets/images/HEROBANNER2.jpg";
-import BannerTopImage2 from "../../assets/images/HEROBANNER1.jpg";
-import BannerTopImage3 from "../../assets/images/platformFee.jpg";
-import BannerMobImage1 from "../../assets/images/new size-04.png";
-import BannerMobImage2 from "../../assets/images/new size-05.png";
-import BannerMobImage3 from "../../assets/images/new size-06.png";
+import BannerTopImage1 from "../../assets/images/mainImg1.jpg";
+import BannerTopImage2 from "../../assets/images/mainImg2.jpg";
+import BannerTopImage3 from "../../assets/images/mainImg3.jpg";
+import BannerTopImage4 from "../../assets/images/mainImg4.jpg";
+import BannerMobImage1 from "../../assets/images/mainImg1.jpg";
+import BannerMobImage2 from "../../assets/images/mainImg2.jpg";
+import BannerMobImage3 from "../../assets/images/mainImg3.jpg";
+import BannerMobImage4 from "../../assets/images/mainImg4.jpg";
 
 const BannerTop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,8 +15,8 @@ const BannerTop = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const images = isMobile
-    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3]
-    : [BannerTopImage1, BannerTopImage2, BannerTopImage3];
+    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3, BannerMobImage4]
+    : [BannerTopImage1, BannerTopImage2, BannerTopImage3, BannerTopImage4];
 
   const autoSlideInterval = 6000; // Slide every 6 seconds
 

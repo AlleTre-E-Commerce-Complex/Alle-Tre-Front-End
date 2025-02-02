@@ -106,7 +106,7 @@ const HomeAuctionDetails = () => {
         <LodingTestAllatre />
       </Dimmer>
       <div className="mt-44 animate-in mx-5 ">
-        <div className="px-4 mx-auto">
+        <div className="sm:px-4 px-0 mx-auto">
           <div className="px-4 mx-auto h-14 px-4 py-4 sm:block hidden ">
             {pathname.startsWith(routes.app.home) ? (
               <AuctionHomeDetailsBreadcrumb details={auctionId} />

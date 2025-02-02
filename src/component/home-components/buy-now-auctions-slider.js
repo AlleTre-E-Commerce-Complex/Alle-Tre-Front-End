@@ -17,7 +17,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 // import { useSelector } from "react-redux";
 
-import buyNowEmty from "../../../src/assets/images/sell online.jpg";
+import buyNowEmty from "../../../src/assets/images/bannerTop-5.jpg";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 
 const BuyNowAuctionsSlider = () => {
