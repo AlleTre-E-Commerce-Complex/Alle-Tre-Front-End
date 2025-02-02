@@ -298,8 +298,9 @@ const Header = ({ SetSid }) => {
   };
   const handleOnSell = () => {
     setisDropdownOpen(false);
-    
+
     localStorage.removeItem("auctionId");
+    dispatch(productDetails({ auctionId: null }));
 
     if (user) {
       const hasCompletedProfile = window.localStorage.getItem(
@@ -308,7 +309,7 @@ const Header = ({ SetSid }) => {
 
       if (JSON.parse(hasCompletedProfile)) {
         history.push(routes.app.createAuction.productDetails);
-        dispatch(productDetails({})); 
+        // dispatch(productDetails({}))
       } else {
         setOpen(true);
       }

@@ -315,7 +315,7 @@ const ProductDetails = () => {
     }, {});
 
   const model = customFromData?.model?.key;
-
+  // const isArabic = lang === "ar";
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import imageCompression from "browser-image-compression";
 import { MdOutlineImage } from "react-icons/md";
@@ -50,65 +50,24 @@ const ImageMedia = ({
     setLoadingImg(isloadingUpload);
   }, [isloadingUpload]);
 
-  useEffect(() => {
+  const handleReorderImages = useCallback(() => {
     try {
-      const images = [imgOne, imgTwo, imgThree, imgFour, imgFive];
-      const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-
-      if (
-        !Number.isInteger(coverPhotoIndex) ||
-        coverPhotoIndex < 1 ||
-        coverPhotoIndex > images.length
-      ) {
-        toast.error("Invalid coverPhotoIndex:", coverPhotoIndex);
-        return;
+      if (coverPhotoIndex !== 1) {
+        setCoverPhotoIndex(1);
       }
-
-      const coverImage = images[coverPhotoIndex - 1];
-      const coverFile = files[coverPhotoIndex - 1];
-
-      if (!coverImage || !coverFile) {
-        toast.error("Missing cover image or file");
-        return;
-      }
-
-      const reorderedImages = [
-        coverImage,
-        ...images.filter((img, index) => index !== coverPhotoIndex - 1 && img),
-      ];
-
-      const reorderedFiles = [
-        coverFile,
-        ...files.filter((file, index) => index !== coverPhotoIndex - 1 && file), 
-      ];
-
-      if (onReorderImages) {
-        onReorderImages(reorderedImages, reorderedFiles);
-      }
-
-      setCoverPhotoIndex(1);
     } catch (error) {
-      console.error("Error in useEffect:", error);
+      console.error("Error in handleReorderImages:", error);
     }
-  }, [
-    coverPhotoIndex,
-    imgOne,
-    imgTwo,
-    imgThree,
-    imgFour,
-    imgFive,
-    fileOne,
-    fileTwo,
-    fileThree,
-    fileFour,
-    fileFive,
-    onReorderImages,
-  ]);
+  }, [coverPhotoIndex]);
+
+  useEffect(() => {
+    handleReorderImages();
+  }, [handleReorderImages]);
 
   const handelDeleteImg = async (imgId, setFile, event) => {
     if (event) {
       event.preventDefault();
-      event.stopPropagation(); 
+      event.stopPropagation();
     }
 
     try {
@@ -121,15 +80,14 @@ const ImageMedia = ({
       setFile(null);
       onReload();
     } catch (error) {
-
       toast.error("Failed to delete image");
     }
   };
 
   const handleSetCover = (index, e) => {
     if (e) {
-      e.preventDefault(); 
-      e.stopPropagation(); 
+      e.preventDefault();
+      e.stopPropagation();
     }
 
     const images = [imgOne, imgTwo, imgThree, imgFour, imgFive];
@@ -236,18 +194,34 @@ const ImageMedia = ({
     }
   };
 
-  const imageData = [
-    { img: imgOne, file: fileOne, setFile: setFileOne },
-    { img: imgTwo, file: fileTwo, setFile: setFileTwo },
-    { img: imgThree, file: fileThree, setFile: setFileThree },
-    { img: imgFour, file: fileFour, setFile: setFileFour },
-    { img: imgFive, file: fileFive, setFile: setFileFive },
-  ];
+  const imageData = useMemo(
+    () => [
+      { img: imgOne, file: fileOne, setFile: setFileOne },
+      { img: imgTwo, file: fileTwo, setFile: setFileTwo },
+      { img: imgThree, file: fileThree, setFile: setFileThree },
+      { img: imgFour, file: fileFour, setFile: setFileFour },
+      { img: imgFive, file: fileFive, setFile: setFileFive },
+    ],
+    [
+      imgOne,
+      fileOne,
+      imgTwo,
+      fileTwo,
+      imgThree,
+      fileThree,
+      imgFour,
+      fileFour,
+      imgFive,
+      fileFive,
+    ]
+  );
 
-  const reorderedImageData = [
-    imageData[coverPhotoIndex - 1],
-    ...imageData.filter((_, index) => index !== coverPhotoIndex - 1),
-  ];
+  const reorderedImageData = useMemo(() => {
+    return [
+      imageData[coverPhotoIndex - 1],
+      ...imageData.filter((_, index) => index !== coverPhotoIndex - 1),
+    ];
+  }, [coverPhotoIndex, imageData]);
 
   return (
     <>
@@ -262,7 +236,7 @@ const ImageMedia = ({
         <div className="flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4">
           {reorderedImageData.map((data, index) => {
             const { img, file, setFile } = data;
-            const isCoverPhoto = index === 0; 
+            const isCoverPhoto = index === 0;
 
             return (
               <div key={index} className="relative">

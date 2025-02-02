@@ -33,7 +33,7 @@ const CountdownDisplay = memo(
       <p
         className={`${
           timeLeft.days === 0 ? "text-red" : "text-gray-dark"
-        } font-medium md:text-[10px] text-[8px] `}
+        } font-medium text-xs md:text-sm`}
       >
         {status === "IN_SCHEDULED" ? formattedstartDate : formattedTimeLeft}
       </p>
@@ -75,17 +75,17 @@ const AuctionCard = ({
   const [latestBid, setlatestBid] = useState(latestBidAmount);
   const socket = useSocket();
   const timeLeft = useCountdown(endingTime);
+  const startDate = useCountdown(StartDate);
   // const formattedTimeLeft = `${timeLeft.days} ${
   //   selectedContent[localizationKeys.days]
   // } :
   // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
   // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
+
   const formattedBid = formatCurrency(
     latestBid || CurrentBid || startBidAmount
   );
-
-  const startDate = useCountdown(StartDate);
 
   const formattedstartDate = `${startDate.days} ${
     selectedContent[localizationKeys.days]
@@ -94,10 +94,10 @@ const AuctionCard = ({
   } ${selectedContent[localizationKeys.min]}: ${startDate.seconds} ${
     selectedContent[localizationKeys.sec]
   }`;
+
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
   }, [WatshlistState]);
-
   // dispatch(socketAuctionId(auctionId));
   useEffect(() => {
     dispatch(socketAuctionId(auctionId));
@@ -208,7 +208,6 @@ const AuctionCard = ({
     } else history.push(routes.app.homeDetails(id));
   };
 
-  // Check if startDate has reached zero
   const isStartDateZero =
     startDate.days === 0 &&
     startDate.hours === 0 &&
@@ -220,7 +219,7 @@ const AuctionCard = ({
     timeLeft.hours === 0 &&
     timeLeft.minutes === 0 &&
     timeLeft.seconds === 0;
-  // Prevent rendering if startDate is zero
+
   if (status === "IN_SCHEDULED" && isStartDateZero) {
     return null;
   } else if (status === "ACTIVE" && isEndDateZero) {
@@ -228,42 +227,41 @@ const AuctionCard = ({
   }
 
   return (
-    <div className={className}>
-      <div className="group lg:w-[272px] l:w-[367px]  md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
-        <div className="lg:w-[240px] l:w-[335px]  md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden">
+    <div className={`w-full max-w-[300px] mx-auto ${className}`}>
+      <div className="group w-full h-auto rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
+        <div className="w-full h-[180px] rounded-2xl bg-[#F9F9F9] relative overflow-hidden">
           <div className="relative group">
-            {/* Card Content */}
             <div className="absolute top-3 right-1 z-20 flex items-center space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {!isMyAuction && (
                 <button
                   onClick={() => handelAddNewWatshlist(auctionId)}
-                  className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl w-10 h-10 md:w-12 md:h-12 hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
+                  className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl w-10 h-10 hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
                 >
                   {isWatshlist ? (
-                    <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-2xl md:text-2xl" />
+                    <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-xl" />
                   ) : (
-                    <BsBookmark className="text-primary group-hover/watchlist:text-white text-2xl md:text-2xl" />
+                    <BsBookmark className="text-primary group-hover/watchlist:text-white text-xl" />
                   )}
                 </button>
               )}
               <div
                 onClick={handleShare}
-                className="border-primary border-2 border-solid bg-white rounded-xl w-10 h-10 md:w-12 md:h-12 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
+                className="border-primary border-2 border-solid bg-white rounded-xl w-10 h-10 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
               >
-                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-2xl" />
+                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-xl" />
               </div>
             </div>
           </div>
 
           <img
             onClick={() => handelGoDetails(auctionId)}
-            className="w-full h-full mx-auto  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
+            className="w-full h-full object-cover group-hover:scale-110 duration-300 ease-in-out transform p-2"
             src={adsImg}
             alt="adsImd"
           />
           <div
             onClick={() => handelGoDetails(auctionId)}
-            className="price-button absolute bg-orang text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
+            className="price-button absolute bg-orang text-white text-xs top-0 w-auto px-2 h-6 flex justify-center items-center"
           >
             {formattedBid}
           </div>
@@ -276,25 +274,29 @@ const AuctionCard = ({
         </h1>
         <div onClick={() => handelGoDetails(auctionId)}>
           <AuctionsStatus status={status} small />
-          <div className="flex justify-between mt-2 ">
-            <div>
-              <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
+          <div className="grid grid-cols-2 gap-4 mt-2 items-center text-xs">
+            {/* Total Bids */}
+            <div className="flex flex-col">
+              <h6 className="text-gray-500 font-medium">
                 {selectedContent[localizationKeys.totalBids]}
               </h6>
-              <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
+              <p className="text-gray-800 font-semibold">
                 {totalBods || 0} {selectedContent[localizationKeys.bid]}
               </p>
             </div>
-            <div>
-              <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
+
+            {/* Auction Timing (Start Date / End Date / Purchased Time) */}
+            <div className="flex flex-col items-end">
+              <h6 className="text-gray-500 font-medium">
                 {status === "IN_SCHEDULED"
                   ? selectedContent[localizationKeys.startDate]
                   : status === "SOLD"
                   ? "Purchased Time"
                   : selectedContent[localizationKeys.endingTime]}
               </h6>
+
               {status === "SOLD" ? (
-                <p className="font-medium md:text-[10px] text-[8px]  text-gray-dark">
+                <p className="text-gray-800 font-semibold">
                   {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
                 </p>
               ) : (
@@ -307,6 +309,7 @@ const AuctionCard = ({
               )}
             </div>
           </div>
+
           {isMyAuction ? (
             <div
               className={
@@ -318,7 +321,7 @@ const AuctionCard = ({
               {!hideButton && (
                 <button
                   onClick={() => handelGoDetails(auctionId)}
-                  className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
+                  className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-8 rounded-lg"
                 >
                   {selectedContent[localizationKeys.viewDetails]}
                 </button>
@@ -326,18 +329,18 @@ const AuctionCard = ({
             </div>
           ) : (
             <div
-              className={` ${
+              className={`${
                 isPurchased || isExpired
                   ? "hidden"
                   : "mt-4 flex gap-x-3 justify-end"
-              }  ${
+              } ${
                 isBuyNowAllowed ? "justify-between" : "justify-end"
               } mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3`}
             >
               {!hideButton && isBuyNowAllowed && (
                 <button
                   onClick={() => handelGoDetails(auctionId)}
-                  className="border-primary border-[1px] text-primary md:w-[128px] w-full h-[32px] rounded-lg"
+                  className="border-primary border-[1px] text-primary w-full md:w-[128px] h-8 rounded-lg"
                 >
                   {selectedContent[localizationKeys.buyNow]}
                 </button>
@@ -345,7 +348,7 @@ const AuctionCard = ({
               {!hideButton && (
                 <button
                   onClick={() => handelGoDetails(auctionId)}
-                  className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
+                  className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-8 rounded-lg"
                 >
                   {selectedContent[localizationKeys.bidNow]}
                 </button>

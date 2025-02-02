@@ -355,6 +355,7 @@ const ShippingDetails = () => {
                 Address={e?.address}
                 Country={lang === "en" ? e?.country?.nameEn : e?.country.nameAn}
                 City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
+                phone={e?.phone ? e.phone : "No phone number"}
                 PostalCode={e?.zipCode}
                 isMain={e?.isMain}
                 onReload={onReload}
@@ -405,6 +406,7 @@ export const LocationDetailsCard = ({
   Address,
   Country,
   City,
+  phone,
   PostalCode,
   isMain,
   onReload,
@@ -531,6 +533,7 @@ export const LocationDetailsCard = ({
         <p className="text-gray-med text-sm pt-1">
           {City}, {Country}
         </p>
+        <p className="text-gray-med text-sm pt-2">{phone}</p>
         <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
         {isMain && (
           <p className="text-primary-dark underline text-md absolute bottom-2 right-2">
