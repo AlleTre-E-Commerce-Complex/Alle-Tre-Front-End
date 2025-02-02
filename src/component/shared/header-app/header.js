@@ -298,14 +298,17 @@ const Header = ({ SetSid }) => {
   };
   const handleOnSell = () => {
     setisDropdownOpen(false);
+    
+    localStorage.removeItem("auctionId");
+
     if (user) {
       const hasCompletedProfile = window.localStorage.getItem(
         "hasCompletedProfile"
       );
-      console.log("isProfileComplete", hasCompletedProfile);
+
       if (JSON.parse(hasCompletedProfile)) {
         history.push(routes.app.createAuction.productDetails);
-        dispatch(productDetails({}));
+        dispatch(productDetails({})); 
       } else {
         setOpen(true);
       }

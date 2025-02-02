@@ -11,6 +11,8 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import { toast } from "react-hot-toast";
+import { Dimmer } from "semantic-ui-react";
+import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 
 const fileTypes = ["JPEG", "PNG", "GIF", "JPG", "MOV", "mp4"];
 
@@ -34,6 +36,8 @@ const ImageMedia = ({
   onReload,
   setLoadingImg,
   isEditMode = false,
+  onReorderImages,
+  setimgtest,
 }) => {
   const [coverPhotoIndex, setCoverPhotoIndex] = useState(1);
   const [lang] = useLanguage("");
@@ -46,10 +50,65 @@ const ImageMedia = ({
     setLoadingImg(isloadingUpload);
   }, [isloadingUpload]);
 
+  useEffect(() => {
+    try {
+      const images = [imgOne, imgTwo, imgThree, imgFour, imgFive];
+      const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+
+      if (
+        !Number.isInteger(coverPhotoIndex) ||
+        coverPhotoIndex < 1 ||
+        coverPhotoIndex > images.length
+      ) {
+        toast.error("Invalid coverPhotoIndex:", coverPhotoIndex);
+        return;
+      }
+
+      const coverImage = images[coverPhotoIndex - 1];
+      const coverFile = files[coverPhotoIndex - 1];
+
+      if (!coverImage || !coverFile) {
+        toast.error("Missing cover image or file");
+        return;
+      }
+
+      const reorderedImages = [
+        coverImage,
+        ...images.filter((img, index) => index !== coverPhotoIndex - 1 && img),
+      ];
+
+      const reorderedFiles = [
+        coverFile,
+        ...files.filter((file, index) => index !== coverPhotoIndex - 1 && file), 
+      ];
+
+      if (onReorderImages) {
+        onReorderImages(reorderedImages, reorderedFiles);
+      }
+
+      setCoverPhotoIndex(1);
+    } catch (error) {
+      console.error("Error in useEffect:", error);
+    }
+  }, [
+    coverPhotoIndex,
+    imgOne,
+    imgTwo,
+    imgThree,
+    imgFour,
+    imgFive,
+    fileOne,
+    fileTwo,
+    fileThree,
+    fileFour,
+    fileFive,
+    onReorderImages,
+  ]);
+
   const handelDeleteImg = async (imgId, setFile, event) => {
     if (event) {
       event.preventDefault();
-      event.stopPropagation(); // Stop event propagation
+      event.stopPropagation(); 
     }
 
     try {
@@ -62,14 +121,40 @@ const ImageMedia = ({
       setFile(null);
       onReload();
     } catch (error) {
-      console.error("Error deleting image:", error);
+
       toast.error("Failed to delete image");
     }
   };
 
   const handleSetCover = (index, e) => {
-    if (e) e.stopPropagation(); // Stop event propagation
-    setCoverPhotoIndex(index);
+    if (e) {
+      e.preventDefault(); 
+      e.stopPropagation(); 
+    }
+
+    const images = [imgOne, imgTwo, imgThree, imgFour, imgFive];
+    const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+
+    const coverImage = images[index - 1];
+    const coverFile = files[index - 1];
+    const reorderedImages = [
+      coverImage,
+      ...images.filter((img, i) => i !== index - 1 && img),
+    ];
+
+    const reorderedFiles = [
+      coverFile,
+      ...files.filter((file, i) => i !== index - 1 && file),
+    ];
+
+    setFileOne(reorderedFiles[0] || null);
+    setFileTwo(reorderedFiles[1] || null);
+    setFileThree(reorderedFiles[2] || null);
+    setFileFour(reorderedFiles[3] || null);
+    setFileFive(reorderedFiles[4] || null);
+
+    setimgtest(reorderedImages);
+    setCoverPhotoIndex(1);
   };
 
   const handleChange = async (file, setFile, index) => {
@@ -158,95 +243,111 @@ const ImageMedia = ({
     { img: imgFour, file: fileFour, setFile: setFileFour },
     { img: imgFive, file: fileFive, setFile: setFileFive },
   ];
-  console.log("Image Data:", imgOne, imgTwo, imgThree, imgFour, imgFive);
-  console.log("File Data:", fileOne, fileTwo, fileThree, fileFour, fileFive);
+
+  const reorderedImageData = [
+    imageData[coverPhotoIndex - 1],
+    ...imageData.filter((_, index) => index !== coverPhotoIndex - 1),
+  ];
 
   return (
-    <div className="image-upload-container">
-      <div className="flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4">
-        {imageData.map((data, index) => {
-          const { img, file, setFile } = data;
-          const isCoverPhoto = index + 1 === coverPhotoIndex;
+    <>
+      <Dimmer
+        className="fixed w-full h-full top-0 bg-white/50"
+        active={isloadingDelete || isloadingUpload}
+        inverted
+      >
+        <LodingTestAllatre />
+      </Dimmer>
+      <div className="image-upload-container">
+        <div className="flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4">
+          {reorderedImageData.map((data, index) => {
+            const { img, file, setFile } = data;
+            const isCoverPhoto = index === 0; 
 
-          return (
-            <div key={index} className="relative">
-              {img?.imageLink || file ? (
-                <div className="relative group">
-                  <div className="sm:w-[154px] w-full h-[139px] hover:bg-gradient-to-t hover:from-[#25252562] absolute z-30 group">
-                    <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <button
-                        className="bg-white/50 hover:bg-gray-med hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
-                        onClick={(e) => {
-                          e.stopPropagation(); // Stop event propagation
-                          handelDeleteImg(img?.id, setFile, e);
+            return (
+              <div key={index} className="relative">
+                {img?.imageLink || file ? (
+                  <div className="relative group">
+                    <div className="sm:w-[154px] w-full h-[139px] hover:bg-gradient-to-t hover:from-[#25252562] absolute z-30 group">
+                      <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <button
+                          className="bg-white/50 hover:bg-gray-med hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handelDeleteImg(img?.id, setFile, e);
+                          }}
+                        >
+                          <img
+                            className="w-4 h-4"
+                            src={TrashIcon}
+                            alt="Remove"
+                          />
+                        </button>
+                      </div>
+                    </div>
+                    {isCoverPhoto && (
+                      <div className="absolute top-2 left-2 z-10">
+                        <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
+                          {selectedContent[localizationKeys.cover]}
+                        </span>
+                      </div>
+                    )}
+                    <FileUploader
+                      handleChange={(file) =>
+                        handleChange(file, setFile, index + 1)
+                      }
+                      name={`file${index + 1}`}
+                    >
+                      <img
+                        className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
+                          isCoverPhoto ? "ring-2 ring-primary" : ""
+                        }`}
+                        src={
+                          img?.imageLink
+                            ? img.imageLink
+                            : file instanceof File
+                            ? URL.createObjectURL(file)
+                            : addImage
+                        }
+                        alt="Product img"
+                        onError={(e) => {
+                          console.error("Image failed to load:", e.target.src);
+                          e.target.src = addImage;
                         }}
-                      >
-                        <img className="w-4 h-4" src={TrashIcon} alt="Remove" />
-                      </button>
-                    </div>
+                      />
+                    </FileUploader>
+
+                    {!isCoverPhoto && (
+                      <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
+                        <button
+                          onClick={(e) => handleSetCover(index + 1, e)}
+                          className="bg-primary hover:bg-white/90 text-white hover:text-primary px-3 py-1 rounded-full text-sm shadow hover:shadow-lg transition-all duration-300 flex items-center gap-1 mx-auto"
+                        >
+                          <MdOutlineImage className="w-4 h-4" />
+                          Set as Cover
+                        </button>
+                      </div>
+                    )}
                   </div>
-                  {isCoverPhoto && (
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
-                        {selectedContent[localizationKeys.cover]}
-                      </span>
-                    </div>
-                  )}
+                ) : (
                   <FileUploader
                     handleChange={(file) =>
                       handleChange(file, setFile, index + 1)
                     }
                     name={`file${index + 1}`}
+                    types={fileTypes}
                   >
-                    <img
-                      className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
-                        isCoverPhoto ? "ring-2 ring-primary" : ""
-                      }`}
-                      src={
-                        img?.imageLink
-                          ? img.imageLink
-                          : file instanceof File
-                          ? URL.createObjectURL(file)
-                          : addImage
-                      }
-                      alt="Product img"
-                      onError={(e) => {
-                        console.error("Image failed to load:", e.target.src);
-                        e.target.src = addImage;
-                      }}
-                    />
-                  </FileUploader>
-
-                  {!isCoverPhoto && (
-                    <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
-                      <button
-                        onClick={(e) => handleSetCover(index + 1, e)}
-                        className="bg-primary hover:bg-white/90 text-white hover:text-primary px-3 py-1 rounded-full text-sm shadow hover:shadow-lg transition-all duration-300 flex items-center gap-1 mx-auto"
-                      >
-                        <MdOutlineImage className="w-4 h-4" />
-                        Set as Cover
-                      </button>
+                    <div className="border-gray-med border-[1px] border-dashed rounded-lg w-[154px] h-[139px] flex justify-center items-center cursor-pointer">
+                      <img className="w-6 h-6" src={addImage} alt="Add Icon" />
                     </div>
-                  )}
-                </div>
-              ) : (
-                <FileUploader
-                  handleChange={(file) =>
-                    handleChange(file, setFile, index + 1)
-                  }
-                  name={`file${index + 1}`}
-                  types={fileTypes}
-                >
-                  <div className="border-gray-med border-[1px] border-dashed rounded-lg w-[154px] h-[139px] flex justify-center items-center cursor-pointer">
-                    <img className="w-6 h-6" src={addImage} alt="Add Icon" />
-                  </div>
-                </FileUploader>
-              )}
-            </div>
-          );
-        })}
+                  </FileUploader>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

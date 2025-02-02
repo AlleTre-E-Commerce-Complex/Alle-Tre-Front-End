@@ -44,9 +44,11 @@ const ProductDetails = () => {
   const selectedContent = content[lang];
   const { state } = useLocation();
   const [auctionState, setAuctionState] = useState();
+
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
+  const [auctionId, setAuctionId] = useState(state?.auctionId || null);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const productDetailsint = useSelector(
@@ -58,6 +60,7 @@ const ProductDetails = () => {
   const history = useHistory();
 
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
+
   useEffect(() => {
     const id = productDetailsint?.auctionId || state?.auctionId;
     if (id)
@@ -113,7 +116,49 @@ const ProductDetails = () => {
           setRadioValue(completeDraftValue?.product?.usageStatus);
         })
       );
-  }, [runAuctionById,forceReload, state?.auctionId, productDetailsint?.id]);
+  }, [runAuctionById, forceReload, state?.auctionId, productDetailsint?.id]);
+
+  useEffect(() => {
+    const storedAuctionId = localStorage.getItem("auctionId");
+
+    if (state?.auctionId) {
+      if (storedAuctionId !== null) {
+        localStorage.setItem("auctionId", state.auctionId);
+        setAuctionId(state.auctionId);
+      }
+    } else {
+      if (
+        auctionState === "DRAFTED" ||
+        productDetailsint?.auctionState === "DRAFTED"
+      ) {
+        if (storedAuctionId) {
+          setAuctionId(storedAuctionId);
+        }
+      }
+    }
+  }, [state]);
+
+  useEffect(() => {
+    if (completeDraftVal?.product?.images) {
+      const images = completeDraftVal.product.images;
+      setimgtest(images); // Update imgtest with the fetched images
+    }
+  }, [completeDraftVal]);
+
+  useEffect(() => {
+    if (auctionId) {
+      localStorage.setItem("auctionId", auctionId);
+    }
+  }, [auctionId]);
+
+  useEffect(() => {
+    if (!state?.auctionId && auctionId) {
+      history.replace({
+        pathname: history.location.pathname,
+        state: { auctionId },
+      });
+    }
+  }, [state, auctionId, history]);
 
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
@@ -153,6 +198,16 @@ const ProductDetails = () => {
   const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(
     categoryId || productDetailsint.category
   );
+
+  const handleReorderImages = (reorderedImages, reorderedFiles) => {
+    setFileOne(reorderedFiles[0] || null);
+    setFileTwo(reorderedFiles[1] || null);
+    setFileThree(reorderedFiles[2] || null);
+    setFileFour(reorderedFiles[3] || null);
+    setFileFive(reorderedFiles[4] || null);
+
+    setimgtest(reorderedImages);
+  };
 
   const [brandInput, setBrandInput] = useState("");
   const [brandSuggestions, setBrandSuggestions] = useState([]);
@@ -207,6 +262,7 @@ const ProductDetails = () => {
     setFileFive(newFiles[4]);
   };
   const { run, isLoading } = useAxios([]);
+
   useEffect(() => {
     if (
       categoryId ||
@@ -294,10 +350,8 @@ const ProductDetails = () => {
     const filesCount = files.filter(
       (file) => file !== null && file !== undefined
     ).length;
-    const isDraftMode = completeDraftVal?.id !== undefined;
 
-    // Check if in draft mode or at least 3 files are selected
-    if (!isDraftMode && filesCount < 3) {
+    if (filesCount < 3) {
       toast.error(
         selectedContent[
           localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
@@ -496,7 +550,7 @@ const ProductDetails = () => {
       formData.append("images", fileThree);
     }
     if (fileFour) {
-      formData.append("images", fileFour); 
+      formData.append("images", fileFour);
     }
     if (fileFive) {
       formData.append("images", fileFive);
@@ -551,9 +605,8 @@ const ProductDetails = () => {
   }, []);
 
   const handleCameraChange = (event) => {
-    const file = event.target.files[0]; // Get single captured photo
+    const file = event.target.files[0];
     if (file) {
-      // Find first empty slot
       if (!fileOne) setFileOne(file);
       else if (!fileTwo) setFileTwo(file);
       else if (!fileThree) setFileThree(file);
@@ -900,6 +953,8 @@ const ProductDetails = () => {
                           auctionState === "DRAFTED" ||
                           productDetailsint?.auctionState === "DRAFTED"
                         }
+                        onReorderImages={handleReorderImages}
+                        setimgtest={setimgtest}
                       />
                     </div>
                   </div>

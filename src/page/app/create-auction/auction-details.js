@@ -9,9 +9,7 @@ import routes from "../../../routes";
 
 import * as Yup from "yup";
 import { Formik } from "formik";
-import FormikDate from "../../../component/shared/formik/formik-date";
 import FormikInput from "../../../component/shared/formik/formik-input";
-import FormikTimePicker from "../../../component/shared/formik/formik-time-picker";
 import FormikMultiDropdown from "../../../component/shared/formik/formik-dropdown";
 import { CheckboxRadioAuctionDetails } from "../../../component/create-auction-components/check-box-radio-group";
 
