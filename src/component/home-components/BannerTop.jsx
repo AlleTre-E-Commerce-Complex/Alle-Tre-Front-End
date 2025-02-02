@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BannerTopImage1 from "../../assets/images/HEROBANNER2.jpg";
 import BannerTopImage2 from "../../assets/images/HEROBANNER1.jpg";
-import BannerTopImage3 from "../../assets/images/electronics banner 2.jpg";
+import BannerTopImage3 from "../../assets/images/platformFee.jpg";
 import BannerMobImage1 from "../../assets/images/new size-04.png";
 import BannerMobImage2 from "../../assets/images/new size-05.png";
 import BannerMobImage3 from "../../assets/images/new size-06.png";

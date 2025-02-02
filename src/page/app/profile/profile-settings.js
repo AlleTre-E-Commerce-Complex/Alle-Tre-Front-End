@@ -157,7 +157,7 @@ const ProfileSettings = () => {
             <div className="flex justify-between pt-9">
               <div>
                 <div className="flex ">
-                  <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5 ">
+                  <p className="bg-primary text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5 ">
                     <RiUser3Fill size={16} />
                   </p>
                   <p className="text-gray-dark text-base font-medium  ">
@@ -182,7 +182,7 @@ const ProfileSettings = () => {
             >
               <div>
                 <div className="flex ">
-                  <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
+                  <p className="bg-primary  text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
                     <HiLockClosed size={16} />
                   </p>
                   <p className="text-gray-dark text-base font-medium  ">
@@ -206,7 +206,7 @@ const ProfileSettings = () => {
             <div className="flex pt-9">
               <div>
                 <div className="flex ">
-                  <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
+                  <p className="bg-primary text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
                     <MdMail size={16} />
                   </p>
                   <p className="text-gray-dark text-base font-medium">
@@ -233,7 +233,7 @@ const ProfileSettings = () => {
             <div className="flex justify-between pt-9">
               <div>
                 <div className="flex ">
-                  <p className="bg-primary-light/80 text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
+                  <p className="bg-primary text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
                     <BsFillTelephoneFill size={16} />
                   </p>
                   <p className="text-gray-dark text-base font-medium">
