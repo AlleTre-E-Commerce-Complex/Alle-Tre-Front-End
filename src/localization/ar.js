@@ -156,7 +156,7 @@ const ar = {
   [localizationKeys.expiredAuctions]: "المزادات المنتهية",
   [localizationKeys.payDeposite]: "إيداع الدفع",
   [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
-    "لكي تتمكن من إتمام نشر إعلانك بنجاح، يرجى دفع رسوم الإعلان والبدء في تلقي العروض على الفور.",
+    "لكي تتمكن من إتمام نشر مزادك بنجاح، يرجى دفع رسوم المزاد والبدء في تلقي العطاءات على الفور.",
   [localizationKeys.adPreview]: "معاينة الإعلان",
   [localizationKeys.auctionFee]: "رسوم المزاد",
   [localizationKeys.feesRefundedAfterAuctionCompletion]:

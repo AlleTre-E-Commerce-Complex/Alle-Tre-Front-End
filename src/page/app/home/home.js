@@ -32,7 +32,7 @@ import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusMo
 import { welcomeBonus } from "redux-store/welcom-bonus-slice";
 // import { useSocket } from "context/socket-context";
 import { useSocket } from "context/socket-context";
-import LiveAuctionsSlider from "component/home-components/live-auctions-slider";
+// import LiveAuctionsSlider from "component/home-components/live-auctions-slider";
 import ListedProducts from "component/home-components/ListedProducts";
 
 const Home = () => {

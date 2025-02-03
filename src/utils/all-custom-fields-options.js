@@ -18,7 +18,7 @@ export const allCustomFileOptions = {
     { key: "Convertible", text: "Convertible | كابريوليه", value: "Convertible" },
     { key: "Wagon", text: "Wagon | واغن", value: "Wagon" },
     { key: "Luxury", text: "Luxury | فاخرة", value: "Luxury" },
-    { key: "Antique", text: "Antique | قديمة", value: "Antique" },
+    { key: "Antique", text: "Antique | عتيقة", value: "Antique" },
     { key: "Sports car", text: "Sports car | سيارة رياضية", value: "Sports car" },
     { key: "Supercar", text: "Supercar | سيارة خارقة", value: "Supercar" },
     { key: "Diesel car", text: "Diesel car | سيارة ديزل", value: "Diesel car" },
