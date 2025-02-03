@@ -338,9 +338,9 @@ const ProfileSettings = () => {
                     AddressLable={e?.addressLabel}
                     Address={e?.address}
                     Country={
-                      lang === "en" ? e?.country?.nameEn : e?.country.nameAn
+                      lang === "en" ? e?.country?.nameEn : e?.country.nameAr
                     }
-                    City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
+                    City={lang === "en" ? e?.city?.nameEn : e?.city.nameAr}
                     phone={e?.phone ? e.phone : "No phone number"}
                     // PostalCode={e?.zipCode}
                     isMain={e?.isMain}

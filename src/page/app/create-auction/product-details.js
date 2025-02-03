@@ -315,7 +315,7 @@ const ProductDetails = () => {
     }, {});
 
   const model = customFromData?.model?.key;
-  // const isArabic = lang === "ar";
+  const isArabic = lang === "ar";
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
@@ -357,10 +357,9 @@ const ProductDetails = () => {
           localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
         ]
       );
-      return; // Exit early if the condition is not met
+      return;
     }
 
-    // Check if valueRadio or its draft equivalents are set
     if (
       !valueRadio &&
       !draftValue?.valueRadio &&
@@ -372,11 +371,10 @@ const ProductDetails = () => {
             localizationKeys.makeSureThatYouChooseItemConditionValue
           ]
         );
-        return; // Exit early if the condition is not met
+        return;
       }
     }
 
-    // Dispatch the product details
     dispatch(
       productDetails({
         ...values,
@@ -401,8 +399,6 @@ const ProductDetails = () => {
       fileFive,
     });
   };
-
-  // console.log("qqqqqq", handelProductDetailsdata);
 
   const {
     run: runSaveAuctionAsDraft,
@@ -629,7 +625,8 @@ const ProductDetails = () => {
           isLoading ||
           loadingSubGatogry ||
           isLoadingCSaveAuctionAsDraft ||
-          isLoadingAuctionById
+          isLoadingAuctionById ||
+          loadingAllBranOptions
         }
         inverted
       >
@@ -761,7 +758,14 @@ const ProductDetails = () => {
                                   ? AllCountriesOptions
                                   : e?.key === "cityId"
                                   ? AllCitiesOptions
-                                  : allCustomFileOptions[e?.key]
+                                  : allCustomFileOptions[e?.key]?.map(
+                                      (option) => ({
+                                        ...option,
+                                        text: isArabic
+                                          ? option.text.split(" | ")[1]
+                                          : option.text.split(" | ")[0],
+                                      })
+                                    )
                               }
                               onChange={(e) => setCountriesId(e)}
                               loading={
@@ -791,11 +795,11 @@ const ProductDetails = () => {
                           />
                           <button
                             onClick={() => setIsDropdownOpen((prev) => !prev)}
-                            className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70" // Button to toggle dropdown
+                            className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70"
                             aria-label="Toggle Dropdown"
                           >
                             {isDropdownOpen && brandSuggestions.length > 0 && (
-                              <MdArrowDropDown className="w-5 h-5" /> // Show icon only when dropdown is open
+                              <MdArrowDropDown className="w-5 h-5" />
                             )}
                           </button>
                           {isDropdownOpen && brandSuggestions.length > 0 && (

@@ -353,8 +353,8 @@ const ShippingDetails = () => {
                 Id={e?.id}
                 AddressLable={e?.addressLabel}
                 Address={e?.address}
-                Country={lang === "en" ? e?.country?.nameEn : e?.country.nameAn}
-                City={lang === "en" ? e?.city?.nameEn : e?.city.nameAn}
+                Country={lang === "en" ? e?.country?.nameEn : e?.country.nameAr}
+                City={lang === "en" ? e?.city?.nameEn : e?.city.nameAr}
                 phone={e?.phone ? e.phone : "No phone number"}
                 PostalCode={e?.zipCode}
                 isMain={e?.isMain}
@@ -536,7 +536,11 @@ export const LocationDetailsCard = ({
         <p className="text-gray-med text-sm pt-2">{phone}</p>
         <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
         {isMain && (
-          <p className="text-primary-dark underline text-md absolute bottom-2 right-2">
+          <p
+            className={`text-primary-dark underline text-md absolute bottom-2 ${
+              lang === "ar" ? "left-2" : "right-2"
+            }`}
+          >
             {selectedContent[localizationKeys.default]}
           </p>
         )}

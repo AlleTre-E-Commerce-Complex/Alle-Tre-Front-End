@@ -248,14 +248,13 @@ const ImgSlider = ({
         </div>
       </div>
 
-      {/* Zoomed Image Overlay */}
       {isZoomed && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50"
           onClick={toggleZoom}
           style={{
             cursor: "zoom-out",
-            height: "80vh", // Ensure the dimmer covers the full viewport height
+            height: "80vh", 
           }}
         >
           <img
@@ -265,13 +264,12 @@ const ImgSlider = ({
             style={{
               width: "90vw",
               height: "80vh",
-              objectFit: "contain", // Ensures the image scales proportionally
+              objectFit: "contain",
             }}
           />
-          {/* Navigation Buttons for Zoomed Image */}
           <button
             onClick={(event) => {
-              event.stopPropagation(); // Prevent closing the zoom
+              event.stopPropagation(); 
               handlePrevious();
             }}
             className="absolute left-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
@@ -283,7 +281,7 @@ const ImgSlider = ({
           </button>
           <button
             onClick={(event) => {
-              event.stopPropagation(); // Prevent closing the zoom
+              event.stopPropagation(); 
               handleNext();
             }}
             className="absolute right-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"

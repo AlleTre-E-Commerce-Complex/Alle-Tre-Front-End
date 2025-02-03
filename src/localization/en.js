@@ -159,7 +159,7 @@ const en = {
   [localizationKeys.expiredAuctions]: "Expired Auctions",
   [localizationKeys.payDeposite]: "Pay Deposite",
   [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
-    "In order to complete publishing your ad successfully, please pay the ad fee and start receiving bids immediately.",
+    "In order to complete publishing your auction successfully, please pay the auction fee and start receiving bids immediately.",
   [localizationKeys.adPreview]: "Ad Preview",
   [localizationKeys.auctionFee]: "Auction Fee",
   [localizationKeys.feesRefundedAfterAuctionCompletion]:
