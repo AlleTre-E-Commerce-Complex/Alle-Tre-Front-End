@@ -64,26 +64,26 @@ const SliderRow = () => {
                     />
                   </div>
                 ))}
-                <button
+                {/* <button
                   onClick={handleNextClick}
-                  className={`swiper-button-next absolute top-1/2 -right-3 overflow-hidden`}
+                  className={`swiper-button-next absolute top-1/2 -right-3 overflow-hidden md:hidden `}
                 >
                   <img
-                    className="rounded-full  cursor-pointer z-20 w-14 h-14 "
+                    className="rounded-full cursor-pointer z-20 w-14 h-14"
                     src={AnglesRight}
                     alt="AnglesRight"
                   />
                 </button>
                 <button
                   onClick={handlePrevClick}
-                  className={`swiper-button-prev absolute top-1/2 -left-5 overflow-hidden `}
+                  className={`swiper-button-prev absolute top-1/2 -left-5 overflow-hidden md:hidden `}
                 >
                   <img
-                    className="rounded-full  cursor-pointer z-20 w-14 h-14 "
+                    className="rounded-full cursor-pointer z-20 w-14 h-14"
                     src={AnglesLeft}
                     alt="AnglesLeft"
                   />
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
