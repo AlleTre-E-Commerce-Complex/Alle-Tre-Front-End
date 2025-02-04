@@ -40,7 +40,7 @@ const UploadeImgModel = ({
           .put(api.app.profile.editPersonalInfo, formData)
           .then((res) => {
             toast.success(
-              selectedContent[localizationKeys.uploadImageHasbeenSuccessfully]
+              selectedContent[localizationKeys.imageUpdatedSuccessfully]
             );
             setDropzoneActive(true);
             setOpen(false);

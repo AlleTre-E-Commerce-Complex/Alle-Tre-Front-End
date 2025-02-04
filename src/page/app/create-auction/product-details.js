@@ -564,7 +564,9 @@ const ProductDetails = () => {
           )
           .then((res) => {
             toast.success(
-              selectedContent[localizationKeys.yourAuctionSaveAsDraftedSuccess]
+              selectedContent[
+                localizationKeys.yourAuctionSuccessfullySavedAsDraft
+              ]
             );
             history.push(routes.app.createAuction.default);
             dispatch(productDetails({}));
@@ -582,7 +584,9 @@ const ProductDetails = () => {
           .post(api.app.auctions.setAssdraft, formData)
           .then((res) => {
             toast.success(
-              selectedContent[localizationKeys.yourAuctionSaveAsDraftedSuccess]
+              selectedContent[
+                localizationKeys.yourAuctionSuccessfullySavedAsDraft
+              ]
             );
             history.push(routes.app.createAuction.default);
             dispatch(productDetails({}));
@@ -616,6 +620,14 @@ const ProductDetails = () => {
     // Reset input
     event.target.value = "";
   };
+
+  const carField = [
+    ...(customFromData?.arrayCustomFields || []),
+    ...(customFromData?.regularCustomFields || []),
+  ];
+  const adjustedcarField = carField.filter(
+    (field) => field.subCategoryId !== null || field.categoryId === 4
+  );
 
   return (
     <>
@@ -740,43 +752,98 @@ const ProductDetails = () => {
                     </div>
                     {formik.values.subCategory && (
                       <>
-                        {customFromData?.arrayCustomFields?.map((e) => (
-                          <div
-                            key={e.key}
-                            className="w-full col-span-2 sm:col-span-1 md:col-span-2"
-                          >
-                            <FormikMultiDropdown
-                              name={e?.key}
-                              label={`${
-                                lang === "en" ? e?.labelEn : e?.labelAr
-                              }`}
-                              placeholder={`${
-                                lang === "en" ? e?.labelEn : e?.labelAr
-                              }`}
-                              options={
-                                e?.key === "countryId"
-                                  ? AllCountriesOptions
-                                  : e?.key === "cityId"
-                                  ? AllCitiesOptions
-                                  : allCustomFileOptions[e?.key]?.map(
-                                      (option) => ({
-                                        ...option,
-                                        text: isArabic
-                                          ? option.text.split(" | ")[1]
-                                          : option.text.split(" | ")[0],
-                                      })
-                                    )
-                              }
-                              onChange={(e) => setCountriesId(e)}
-                              loading={
-                                loadingAllCountries || loadingCitiesOptions
-                              }
-                            />
-                          </div>
-                        ))}
+                        {[
+                          ...(customFromData?.arrayCustomFields || []),
+                          ...(customFromData?.regularCustomFields || []),
+                        ]
+                          .filter((e) => e?.key !== "brandId")
+                          .map((e) => {
+                            console.log("Rendering Field:", e);
+                            return (
+                              <div
+                                key={e.key}
+                                className="w-full col-span-2 sm:col-span-1 md:col-span-2"
+                              >
+                                <FormikMultiDropdown
+                                  name={e?.key}
+                                  label={`${
+                                    lang === "en" ? e?.labelEn : e?.labelAr
+                                  }`}
+                                  placeholder={`${
+                                    lang === "en" ? e?.labelEn : e?.labelAr
+                                  }`}
+                                  options={
+                                    e?.key === "countryId"
+                                      ? AllCountriesOptions
+                                      : e?.key === "cityId"
+                                      ? AllCitiesOptions
+                                      : allCustomFileOptions[e?.key]?.map(
+                                          (option) => ({
+                                            ...option,
+                                            text: isArabic
+                                              ? option.text.split(" | ")[1]
+                                              : option.text.split(" | ")[0],
+                                          })
+                                        )
+                                  }
+                                  onChange={(selectedValue) =>
+                                    setCountriesId(selectedValue)
+                                  }
+                                  loading={
+                                    loadingAllCountries || loadingCitiesOptions
+                                  }
+                                />
+                              </div>
+                            );
+                          })}
                       </>
                     )}
-                    {formik.values.subCategory && (
+                    {categoryId === 4 &&
+                      adjustedcarField
+                        .filter(
+                          (field) =>
+                            field.categoryId === 4 && field.key !== "brandId"
+                        ) // Filter for car category
+                        .map((field) => {
+                          return (
+                            <div
+                              key={field.key}
+                              className="w-full col-span-2 sm:col-span-1 md:col-span-2"
+                            >
+                              <FormikMultiDropdown
+                                name={field.key}
+                                label={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
+                                options={
+                                  field.key === "countryId"
+                                    ? AllCountriesOptions
+                                    : field.key === "cityId"
+                                    ? AllCitiesOptions
+                                    : allCustomFileOptions[field.key]?.map(
+                                        (option) => ({
+                                          ...option,
+                                          text: isArabic
+                                            ? option.text.split(" | ")[1]
+                                            : option.text.split(" | ")[0],
+                                        })
+                                      )
+                                }
+                                onChange={(selectedValue) =>
+                                  setCountriesId(selectedValue)
+                                }
+                                loading={
+                                  loadingAllCountries || loadingCitiesOptions
+                                }
+                              />
+                            </div>
+                          );
+                        })}
+
+                    {(formik.values.subCategory || categoryId === 4) && (
                       <>
                         <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                           <FormikInput
@@ -826,22 +893,24 @@ const ProductDetails = () => {
                             </div>
                           )}
                         </div>
-                        <div className="col-span-2 sm:col-span-1  md:col-span-2">
-                          <FormikInput
-                            min={0}
-                            name={`${customFromData?.model?.key}`}
-                            label={`${
-                              lang === "en"
-                                ? customFromData?.model?.labelEn
-                                : customFromData?.model?.labelAr
-                            }`}
-                            placeholder={`${
-                              lang === "en"
-                                ? customFromData?.model?.labelEn
-                                : customFromData?.model?.labelAr
-                            }`}
-                          />
-                        </div>
+                        {customFromData?.model && categoryId === 3 && (
+                          <div className="col-span-2 sm:col-span-1  md:col-span-2">
+                            <FormikInput
+                              min={0}
+                              name={`${customFromData?.model?.key}`}
+                              label={`${
+                                lang === "en"
+                                  ? customFromData?.model?.labelEn
+                                  : customFromData?.model?.labelAr
+                              }`}
+                              placeholder={`${
+                                lang === "en"
+                                  ? customFromData?.model?.labelEn
+                                  : customFromData?.model?.labelAr
+                              }`}
+                            />
+                          </div>
+                        )}
                       </>
                     )}
 
