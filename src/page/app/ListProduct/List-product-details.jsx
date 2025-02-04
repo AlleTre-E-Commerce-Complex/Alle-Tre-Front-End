@@ -49,19 +49,19 @@ const ListProductDetails = () => {
 
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
-//   const productDetailsint = useSelector(
-//     (state) => state.productDetails.productDetails
-//   );
+  //   const productDetailsint = useSelector(
+  //     (state) => state.productDetails.productDetails
+  //   );
 
   // const dispatch = useDispatch();
   const history = useHistory();
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
-  const [fileOne, setFileOne] = useState( null);
-  const [fileTwo, setFileTwo] = useState( null);
-  const [fileThree, setFileThree] = useState( null);
-  const [fileFour, setFileFour] = useState( null);
-  const [fileFive, setFileFive] = useState( null);
+  const [fileOne, setFileOne] = useState(null);
+  const [fileTwo, setFileTwo] = useState(null);
+  const [fileThree, setFileThree] = useState(null);
+  const [fileFour, setFileFour] = useState(null);
+  const [fileFive, setFileFive] = useState(null);
 
   const [valueRadio, setRadioValue] = useState(null);
 
@@ -69,16 +69,17 @@ const ListProductDetails = () => {
   const [categoryId, setCategoryId] = useState();
   const [subCategoryId, setSubCategoryId] = useState();
 
-//   const [hasUsageCondition, setHasUsageCondition] = useState(
-//     completeDraftVal?.product?.category?.hasUsageCondition ||
-//       productDetailsint.hasUsageCondition ||
-//       true
-//   );
+  //   const [hasUsageCondition, setHasUsageCondition] = useState(
+  //     completeDraftVal?.product?.category?.hasUsageCondition ||
+  //       productDetailsint.hasUsageCondition ||
+  //       true
+  //   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
-  const { AllCitiesOptions, loadingCitiesOptions } = useGetAllCities(countriesId);
+  const { AllCitiesOptions, loadingCitiesOptions } =
+    useGetAllCities(countriesId);
 
   const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(categoryId);
 
@@ -137,16 +138,11 @@ const ListProductDetails = () => {
   };
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
-    if (
-      categoryId ||
-      subCategoryId ||
-      loadingImg
-    ) {
+    if (categoryId || subCategoryId || loadingImg) {
       if (SubGatogryOptions.length === 0) {
         run(
           authAxios
-            .get(
-              api.app.customField.ByCategoryId(categoryId))
+            .get(api.app.customField.ByCategoryId(categoryId))
             .then((res) => {
               setCustomFromData(res?.data?.data);
             })
@@ -154,24 +150,14 @@ const ListProductDetails = () => {
       } else
         run(
           authAxios
-            .get(
-              api.app.customField.BySubCategoryId(
-                subCategoryId
-              )
-            )
+            .get(api.app.customField.BySubCategoryId(subCategoryId))
             .then((res) => {
               console.log("ressssssss", res);
               setCustomFromData(res?.data?.data);
             })
         );
     }
-  }, [
-    run,
-    categoryId,
-    subCategoryId,
-    SubGatogryOptions.length,
-    loadingImg,
-  ]);
+  }, [run, categoryId, subCategoryId, SubGatogryOptions.length, loadingImg]);
 
   const arrayCustomFieldsvalidations =
     customFromData?.arrayCustomFields?.reduce((acc, curr) => {
@@ -182,14 +168,15 @@ const ListProductDetails = () => {
     }, {});
 
   const model = customFromData?.model?.key;
+  const isArabic = lang === "ar";
 
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
       .required(selectedContent[localizationKeys.required]),
-      itemPrice: Yup.number().required(
-        selectedContent[localizationKeys.required]
-      ),
+    itemPrice: Yup.number().required(
+      selectedContent[localizationKeys.required]
+    ),
     category: Yup.string()
       .trim()
       .required(selectedContent[localizationKeys.required]),
@@ -220,17 +207,13 @@ const ListProductDetails = () => {
       Boolean
     ).length;
     if (filesCount >= 3) {
-   
-      if (valueRadio ) {
+      if (valueRadio) {
         const formData = new FormData();
         formData.append("product[title]", values.itemName);
-        formData.append('product[ProductListingPrice]', values.itemPrice)
+        formData.append("product[ProductListingPrice]", values.itemPrice);
         formData.append("product[categoryId]", values.category);
         if (values.subCategory) {
-          formData.append(
-            "product[subCategoryId]",
-            values.subCategory
-          );
+          formData.append("product[subCategoryId]", values.subCategory);
         }
         if (values.brand) {
           formData.append("product[brand]", values.brand);
@@ -278,10 +261,7 @@ const ListProductDetails = () => {
           formData.append("product[totalArea]", values.totalArea);
         }
         if (values.operatingSystem) {
-          formData.append(
-            "product[operatingSystem]",
-            values.operatingSystem
-          );
+          formData.append("product[operatingSystem]", values.operatingSystem);
         }
         if (values.regionOfManufacture) {
           formData.append(
@@ -290,22 +270,13 @@ const ListProductDetails = () => {
           );
         }
         if (values.numberOfFloors) {
-          formData.append(
-            "product[numberOfFloors]",
-            values.numberOfFloors
-          );
+          formData.append("product[numberOfFloors]", values.numberOfFloors);
         }
         if (values.numberOfRooms) {
-          formData.append(
-            "product[numberOfRooms]",
-            values.numberOfRooms
-          );
+          formData.append("product[numberOfRooms]", values.numberOfRooms);
         }
         if (values.itemDescription) {
-          formData.append(
-            "product[description]",
-            values.itemDescription
-          );
+          formData.append("product[description]", values.itemDescription);
         }
         if (values.countryId) {
           formData.append("product[countryId]", values.countryId);
@@ -320,65 +291,62 @@ const ListProductDetails = () => {
         if (values?.auctionState === "DRAFTED") {
         } else {
           formData.append("images", fileOne);
-        
+
           formData.append("images", fileTwo);
-   
+
           formData.append("images", fileThree);
 
           if (fileFour) {
             formData.append("images", fileFour);
-
-
           }
           if (fileFive) {
             formData.append("images", fileFive);
-
           }
         }
-     
-          
+
         run(
-            authAxios.post(api.app.productListing.listNewProduct, formData)
-            .then((res)=>{
-                toast.success(
-                    selectedContent[localizationKeys.yourProductIsSuccessfullyListed]
-                  );
-                  history.push(routes.app.home)
+          authAxios
+            .post(api.app.productListing.listNewProduct, formData)
+            .then((res) => {
+              toast.success(
+                selectedContent[
+                  localizationKeys.yourProductIsSuccessfullyListed
+                ]
+              );
+              history.push(routes.app.home);
             })
-            .catch((error)=>{
-                toast.error(
-                    selectedContent[
-                      localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
-                    ]
-                  );
+            .catch((error) => {
+              toast.error(
+                selectedContent[
+                  localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+                ]
+              );
             })
-        )
+        );
       } else {
-        
-          toast.error(
-            selectedContent[
-              localizationKeys.makeSureThatYouChooseItemConditionValue
-            ]
-          );
-        
+        toast.error(
+          selectedContent[
+            localizationKeys.makeSureThatYouChooseItemConditionValue
+          ]
+        );
       }
-    //   if (!hasUsageCondition) {
-    //     // dispatch(
-    //     //   productDetails({
-    //     //     ...values,
-    //     //     hasUsageCondition: hasUsageCondition,
-    //     //     valueRadio: valueRadio,
-    //     //     fileOne: fileOne,
-    //     //     fileTwo: fileTwo,
-    //     //     fileThree: fileThree,
-    //     //     fileFour: fileFour,
-    //     //     fileFive: fileFive,
-    //     //     auctionState: auctionState,
-    //     //     auctionId: completeDraftVal?.id,
-    //     //   })
-    //     // );
-    //     history.push(routes.app.createAuction.auctionDetails);
-    //   }
+      //   if (!hasUsageCondition) {
+      //     // dispatch(
+      //     //   productDetails({
+      //     //     ...values,
+      //     //     hasUsageCondition: hasUsageCondition,
+      //     //     valueRadio: valueRadio,
+      //     //     fileOne: fileOne,
+      //     //     fileTwo: fileTwo,
+      //     //     fileThree: fileThree,
+      //     //     fileFour: fileFour,
+      //     //     fileFive: fileFive,
+      //     //     auctionState: auctionState,
+      //     //     auctionId: completeDraftVal?.id,
+      //     //   })
+      //     // );
+      //     history.push(routes.app.createAuction.auctionDetails);
+      //   }
     } else {
       toast.error(
         selectedContent[
@@ -387,7 +355,6 @@ const ListProductDetails = () => {
       );
     }
   };
-
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -411,14 +378,19 @@ const ListProductDetails = () => {
     event.target.value = "";
   };
 
+  const carField = [
+    ...(customFromData?.arrayCustomFields || []),
+    ...(customFromData?.regularCustomFields || []),
+  ];
+  const adjustedcarField = carField.filter(
+    (field) => field.subCategoryId !== null || field.categoryId === 4
+  );
+
   return (
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={
-          isLoading ||
-          loadingSubGatogry 
-        }
+        active={isLoading || loadingSubGatogry}
         inverted
       >
         <LodingTestAllatre />
@@ -441,31 +413,31 @@ const ListProductDetails = () => {
           <div>
             <Formik
               initialValues={{
-                itemName:  "",
+                itemName: "",
                 itemPrice: "",
-                category:  "",
-                subCategory:  "",
-                operatingSystem:  "",
-                releaseYear:  "",
+                category: "",
+                subCategory: "",
+                operatingSystem: "",
+                releaseYear: "",
                 regionOfManufacture: "",
-                ramSize:  "",
-                processor:  "",
-                screenSize:  "",
-                model:  "",
-                color:  "",
-                brand:  "",
-                cameraType:  "",
-                material:  "",
-                memory:  "",
-                age:  "",
-                totalArea:  "",
-                numberOfRooms:  "",
-                numberOfFloors:  "",
-                landType:  "",
-                carType:  "",
-                cityId:  "",
-                countryId:  "",
-                itemDescription:  "",
+                ramSize: "",
+                processor: "",
+                screenSize: "",
+                model: "",
+                color: "",
+                brand: "",
+                cameraType: "",
+                material: "",
+                memory: "",
+                age: "",
+                totalArea: "",
+                numberOfRooms: "",
+                numberOfFloors: "",
+                landType: "",
+                carType: "",
+                cityId: "",
+                countryId: "",
+                itemDescription: "",
               }}
               onSubmit={handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}
@@ -486,15 +458,15 @@ const ListProductDetails = () => {
                     </div>
                     <div className="col-span-2 hidden md:block"></div>
                     <div className="col-span-2">
-                        <FormikInput
-                          min={0}
-                          type="number"
-                          name="itemPrice"
-                          label={selectedContent[localizationKeys.price]}
-                          placeholder="AEDXXX"
-                          onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
-                        />
-                      </div>
+                      <FormikInput
+                        min={0}
+                        type="number"
+                        name="itemPrice"
+                        label={selectedContent[localizationKeys.price]}
+                        placeholder="AEDXXX"
+                        onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
+                      />
+                    </div>
                     <div className="col-span-2 hidden md:block"></div>
                     <div className="col-span-2 ">
                       <FormikMultiDropdown
@@ -535,36 +507,97 @@ const ListProductDetails = () => {
                     </div>
                     {formik.values.subCategory && (
                       <>
-                        {customFromData?.arrayCustomFields?.map((e) => (
-                          <div
-                            key={e.key}
-                            className="w-full col-span-2 sm:col-span-1 md:col-span-2"
-                          >
-                            <FormikMultiDropdown
-                              name={e?.key}
-                              label={`${
-                                lang === "en" ? e?.labelEn : e?.labelAr
-                              }`}
-                              placeholder={`${
-                                lang === "en" ? e?.labelEn : e?.labelAr
-                              }`}
-                              options={
-                                e?.key === "countryId"
-                                  ? AllCountriesOptions
-                                  : e?.key === "cityId"
-                                  ? AllCitiesOptions
-                                  : allCustomFileOptions[e?.key]
-                              }
-                              onChange={(e) => setCountriesId(e)}
-                              loading={
-                                loadingAllCountries || loadingCitiesOptions
-                              }
-                            />
-                          </div>
-                        ))}
+                        {[
+                          ...(customFromData?.arrayCustomFields || []),
+                          ...(customFromData?.regularCustomFields || []),
+                        ]
+                          .filter((e) => e?.key !== "brandId")
+                          .map((e) => {
+                            console.log("Rendering Field:", e);
+                            return (
+                              <div
+                                key={e.key}
+                                className="w-full col-span-2 sm:col-span-1 md:col-span-2"
+                              >
+                                <FormikMultiDropdown
+                                  name={e?.key}
+                                  label={`${
+                                    lang === "en" ? e?.labelEn : e?.labelAr
+                                  }`}
+                                  placeholder={`${
+                                    lang === "en" ? e?.labelEn : e?.labelAr
+                                  }`}
+                                  options={
+                                    e?.key === "countryId"
+                                      ? AllCountriesOptions
+                                      : e?.key === "cityId"
+                                      ? AllCitiesOptions
+                                      : allCustomFileOptions[e?.key]?.map(
+                                          (option) => ({
+                                            ...option,
+                                            text: isArabic
+                                              ? option.text.split(" | ")[1]
+                                              : option.text.split(" | ")[0],
+                                          })
+                                        )
+                                  }
+                                  onChange={(selectedValue) =>
+                                    setCountriesId(selectedValue)
+                                  }
+                                  loading={
+                                    loadingAllCountries || loadingCitiesOptions
+                                  }
+                                />
+                              </div>
+                            );
+                          })}
                       </>
                     )}
-                    {formik.values.subCategory && (
+                    {categoryId === 4 &&
+                      adjustedcarField
+                        .filter(
+                          (field) =>
+                            field.categoryId === 4 && field.key !== "brandId"
+                        ) // Filter for car category
+                        .map((field) => {
+                          return (
+                            <div
+                              key={field.key}
+                              className="w-full col-span-2 sm:col-span-1 md:col-span-2"
+                            >
+                              <FormikMultiDropdown
+                                name={field.key}
+                                label={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
+                                options={
+                                  field.key === "countryId"
+                                    ? AllCountriesOptions
+                                    : field.key === "cityId"
+                                    ? AllCitiesOptions
+                                    : allCustomFileOptions[field.key]?.map(
+                                        (option) => ({
+                                          ...option,
+                                          text: isArabic
+                                            ? option.text.split(" | ")[1]
+                                            : option.text.split(" | ")[0],
+                                        })
+                                      )
+                                }
+                                onChange={(selectedValue) =>
+                                  setCountriesId(selectedValue)
+                                }
+                                loading={
+                                  loadingAllCountries || loadingCitiesOptions
+                                }
+                              />
+                            </div>
+                          );
+                        })}
+                    {(formik.values.subCategory || categoryId === 4) && (
                       <>
                         <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                           <FormikInput
@@ -614,22 +647,24 @@ const ListProductDetails = () => {
                             </div>
                           )}
                         </div>
-                        <div className="col-span-2 sm:col-span-1  md:col-span-2">
-                          <FormikInput
-                            min={0}
-                            name={`${customFromData?.model?.key}`}
-                            label={`${
-                              lang === "en"
-                                ? customFromData?.model?.labelEn
-                                : customFromData?.model?.labelAr
-                            }`}
-                            placeholder={`${
-                              lang === "en"
-                                ? customFromData?.model?.labelEn
-                                : customFromData?.model?.labelAr
-                            }`}
-                          />
-                        </div>
+                        {customFromData?.model && categoryId === 3 && (
+                          <div className="col-span-2 sm:col-span-1  md:col-span-2">
+                            <FormikInput
+                              min={0}
+                              name={`${customFromData?.model?.key}`}
+                              label={`${
+                                lang === "en"
+                                  ? customFromData?.model?.labelEn
+                                  : customFromData?.model?.labelAr
+                              }`}
+                              placeholder={`${
+                                lang === "en"
+                                  ? customFromData?.model?.labelEn
+                                  : customFromData?.model?.labelAr
+                              }`}
+                            />
+                          </div>
+                        )}
                       </>
                     )}
 
@@ -721,7 +756,7 @@ const ListProductDetails = () => {
                           setFileFive={setFileFive}
                         />
                       )} */}
-                       <ImageMedia
+                      <ImageMedia
                         auctionId={state?.auctionId}
                         imgOne={imgtest && imgtest[0]}
                         fileOne={fileOne}
@@ -745,13 +780,13 @@ const ListProductDetails = () => {
                     </div>
                   </div>
                   <div
-                    // className={
-                    //   hasUsageCondition ||
-                    //   completeDraftVal?.product?.category?.hasUsageCondition ||
-                    //   productDetailsint?.hasUsageCondition
-                    //     ? "w-full"
-                    //     : "hidden"
-                    // }
+                  // className={
+                  //   hasUsageCondition ||
+                  //   completeDraftVal?.product?.category?.hasUsageCondition ||
+                  //   productDetailsint?.hasUsageCondition
+                  //     ? "w-full"
+                  //     : "hidden"
+                  // }
                   >
                     <h1 className="font-bold text-base text-black pt-6">
                       {selectedContent[localizationKeys.itemCondition]}
