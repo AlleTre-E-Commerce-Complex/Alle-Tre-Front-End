@@ -541,9 +541,10 @@ const ar = {
     "تم تعديل كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]: "تم جعله افتراضيًا بنجاح",
-  [localizationKeys.uploadImageHasbeenSuccessfully]: "تم تحميل الصورة بنجاح",
+  [localizationKeys.imageUpdatedSuccessfully]: "تم تحديث الصورة بنجاح",
   [localizationKeys.nameHasBeenEditSuccessfully]: "تم تحرير الاسم بنجاح",
-  [localizationKeys.yourAuctionSaveAsDraftedSuccess]: "مزادك حفظ كمسودة نجاح",
+  [localizationKeys.yourAuctionSuccessfullySavedAsDraft]:
+    "تم حفظ المزاد الخاص بك بنجاح كمسودة",
   [localizationKeys.yourAuctionIsCreatedSuccess]: "تم إنشاء مزادك بنجاح",
   [localizationKeys.yourProductIsSuccessfullyListed]: "تم إدراج منتجك بنجاح",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:

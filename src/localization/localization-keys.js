@@ -498,7 +498,7 @@ const localizationKeys = {
   thePhoneNumberHasBeenEditSuccessfully:
     "thePhoneNumberHasBeenEditSuccessfully",
   nameHasBeenEditSuccessfully: "nameHasBeenEditSuccessfully",
-  uploadImageHasbeenSuccessfully: "uploadImageHasbeenSuccessfully",
+  imageUpdatedSuccessfully: "imageUpdatedSuccessfully",
   yourAuctionSaveAsDraftedSuccess: "yourAuctionSaveAsDraftedSuccess",
   yourAuctionIsCreatedSuccess: "yourAuctionIsCreatedSuccess",
   yourProductIsSuccessfullyListed: "yourProductIsSuccessfullyListed",

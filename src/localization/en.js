@@ -550,12 +550,11 @@ const en = {
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]:
     "has been Make Default successfully",
-  [localizationKeys.uploadImageHasbeenSuccessfully]:
-    "Upload image has been successfully",
+  [localizationKeys.imageUpdatedSuccessfully]: "Image updated successfully",
   [localizationKeys.nameHasBeenEditSuccessfully]:
     "Name has been edit successfully",
-  [localizationKeys.yourAuctionSaveAsDraftedSuccess]:
-    "Your auction save as draft success",
+  [localizationKeys.yourAuctionSuccessfullySavedAsDraft]:
+    "Your auction successfully saved as draft",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
     "Your auction is created success",
   [localizationKeys.yourProductIsSuccessfullyListed]:
