@@ -677,6 +677,7 @@ const ProductDetails = () => {
                 brand: productDetailsint.brand || "",
                 cameraType: productDetailsint.cameraType || "",
                 material: productDetailsint.material || "",
+                type: productDetailsint.type || "",
                 memory: productDetailsint.memory || "",
                 age: productDetailsint.age || "",
                 totalArea: productDetailsint.totalArea || "",
@@ -758,46 +759,64 @@ const ProductDetails = () => {
                         ]
                           .filter((e) => e?.key !== "brandId")
                           .map((e) => {
-                            console.log("Rendering Field:", e);
+                            const isDropdown =
+                              customFromData?.arrayCustomFields?.some(
+                                (field) => field.key === e.key
+                              );
+
                             return (
                               <div
                                 key={e.key}
                                 className="w-full col-span-2 sm:col-span-1 md:col-span-2"
                               >
-                                <FormikMultiDropdown
-                                  name={e?.key}
-                                  label={`${
-                                    lang === "en" ? e?.labelEn : e?.labelAr
-                                  }`}
-                                  placeholder={`${
-                                    lang === "en" ? e?.labelEn : e?.labelAr
-                                  }`}
-                                  options={
-                                    e?.key === "countryId"
-                                      ? AllCountriesOptions
-                                      : e?.key === "cityId"
-                                      ? AllCitiesOptions
-                                      : allCustomFileOptions[e?.key]?.map(
-                                          (option) => ({
-                                            ...option,
-                                            text: isArabic
-                                              ? option.text.split(" | ")[1]
-                                              : option.text.split(" | ")[0],
-                                          })
-                                        )
-                                  }
-                                  onChange={(selectedValue) =>
-                                    setCountriesId(selectedValue)
-                                  }
-                                  loading={
-                                    loadingAllCountries || loadingCitiesOptions
-                                  }
-                                />
+                                {isDropdown ? (
+                                  <FormikMultiDropdown
+                                    name={e?.key}
+                                    label={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                    placeholder={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                    options={
+                                      e?.key === "countryId"
+                                        ? AllCountriesOptions
+                                        : e?.key === "cityId"
+                                        ? AllCitiesOptions
+                                        : allCustomFileOptions[e?.key]?.map(
+                                            (option) => ({
+                                              ...option,
+                                              text: isArabic
+                                                ? option.text.split(" | ")[1]
+                                                : option.text.split(" | ")[0],
+                                            })
+                                          )
+                                    }
+                                    onChange={(selectedValue) =>
+                                      setCountriesId(selectedValue)
+                                    }
+                                    loading={
+                                      loadingAllCountries ||
+                                      loadingCitiesOptions
+                                    }
+                                  />
+                                ) : (
+                                  <FormikInput
+                                    name={e?.key}
+                                    label={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                    placeholder={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                  />
+                                )}
                               </div>
                             );
                           })}
                       </>
                     )}
+
                     {categoryId === 4 &&
                       adjustedcarField
                         .filter(
@@ -843,76 +862,78 @@ const ProductDetails = () => {
                           );
                         })}
 
-                    {(formik.values.subCategory || categoryId === 4) && (
-                      <>
-                        <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
-                          <FormikInput
-                            name="brand"
-                            type="text"
-                            label={selectedContent[localizationKeys.brand]}
-                            placeholder={
-                              selectedContent[localizationKeys.brand]
-                            }
-                            value={brandInput}
-                            onChange={(e) => {
-                              handleBrandInputChange(e.target.value);
-                              formik.handleChange(e);
-                            }}
-                            onFocus={() => setIsDropdownOpen(true)}
-                          />
-                          <button
-                            onClick={() => setIsDropdownOpen((prev) => !prev)}
-                            className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70"
-                            aria-label="Toggle Dropdown"
-                          >
+                    {(formik.values.subCategory || categoryId === 4) &&
+                      categoryId !== 3 && (
+                        <>
+                          <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
+                            <FormikInput
+                              name="brand"
+                              type="text"
+                              label={selectedContent[localizationKeys.brand]}
+                              placeholder={
+                                selectedContent[localizationKeys.brand]
+                              }
+                              value={brandInput}
+                              onChange={(e) => {
+                                handleBrandInputChange(e.target.value);
+                                formik.handleChange(e);
+                              }}
+                              onFocus={() => setIsDropdownOpen(true)}
+                            />
+                            <button
+                              onClick={() => setIsDropdownOpen((prev) => !prev)}
+                              className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70"
+                              aria-label="Toggle Dropdown"
+                            >
+                              {isDropdownOpen &&
+                                brandSuggestions.length > 0 && (
+                                  <MdArrowDropDown className="w-5 h-5" />
+                                )}
+                            </button>
                             {isDropdownOpen && brandSuggestions.length > 0 && (
-                              <MdArrowDropDown className="w-5 h-5" />
+                              <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+                                <ul>
+                                  {brandSuggestions.map((suggestion, index) => (
+                                    <li
+                                      key={index}
+                                      onClick={() => {
+                                        formik.setFieldValue(
+                                          "brand",
+                                          suggestion.text
+                                        );
+                                        setBrandInput(suggestion.text);
+                                        setBrandSuggestions([]);
+                                        setIsDropdownOpen(false);
+                                      }}
+                                      className="cursor-pointer hover:bg-gray-200 px-4 py-2"
+                                    >
+                                      {suggestion.text}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             )}
-                          </button>
-                          {isDropdownOpen && brandSuggestions.length > 0 && (
-                            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-                              <ul>
-                                {brandSuggestions.map((suggestion, index) => (
-                                  <li
-                                    key={index}
-                                    onClick={() => {
-                                      formik.setFieldValue(
-                                        "brand",
-                                        suggestion.text
-                                      );
-                                      setBrandInput(suggestion.text);
-                                      setBrandSuggestions([]);
-                                      setIsDropdownOpen(false);
-                                    }}
-                                    className="cursor-pointer hover:bg-gray-200 px-4 py-2"
-                                  >
-                                    {suggestion.text}
-                                  </li>
-                                ))}
-                              </ul>
+                          </div>
+                          {customFromData?.model && (
+                            <div className="col-span-2 sm:col-span-1  md:col-span-2">
+                              <FormikInput
+                                min={0}
+                                name={`${customFromData?.model?.key}`}
+                                label={`${
+                                  lang === "en"
+                                    ? customFromData?.model?.labelEn
+                                    : customFromData?.model?.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en"
+                                    ? customFromData?.model?.labelEn
+                                    : customFromData?.model?.labelAr
+                                }`}
+                              />
                             </div>
                           )}
-                        </div>
-                        {customFromData?.model && categoryId === 3 && (
-                          <div className="col-span-2 sm:col-span-1  md:col-span-2">
-                            <FormikInput
-                              min={0}
-                              name={`${customFromData?.model?.key}`}
-                              label={`${
-                                lang === "en"
-                                  ? customFromData?.model?.labelEn
-                                  : customFromData?.model?.labelAr
-                              }`}
-                              placeholder={`${
-                                lang === "en"
-                                  ? customFromData?.model?.labelEn
-                                  : customFromData?.model?.labelAr
-                              }`}
-                            />
-                          </div>
-                        )}
-                      </>
-                    )}
+                        </>
+                      )}
 
                     <div className="col-span-2 col-start-1 mt-1">
                       <FormikTextArea
