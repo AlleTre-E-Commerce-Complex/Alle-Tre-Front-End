@@ -428,6 +428,7 @@ const ListProductDetails = () => {
                 brand: "",
                 cameraType: "",
                 material: "",
+                type: "",
                 memory: "",
                 age: "",
                 totalArea: "",
@@ -513,41 +514,58 @@ const ListProductDetails = () => {
                         ]
                           .filter((e) => e?.key !== "brandId")
                           .map((e) => {
-                            console.log("Rendering Field:", e);
+                            const isDropdown =
+                              customFromData?.arrayCustomFields?.some(
+                                (field) => field.key === e.key
+                              );
+
                             return (
                               <div
                                 key={e.key}
                                 className="w-full col-span-2 sm:col-span-1 md:col-span-2"
                               >
-                                <FormikMultiDropdown
-                                  name={e?.key}
-                                  label={`${
-                                    lang === "en" ? e?.labelEn : e?.labelAr
-                                  }`}
-                                  placeholder={`${
-                                    lang === "en" ? e?.labelEn : e?.labelAr
-                                  }`}
-                                  options={
-                                    e?.key === "countryId"
-                                      ? AllCountriesOptions
-                                      : e?.key === "cityId"
-                                      ? AllCitiesOptions
-                                      : allCustomFileOptions[e?.key]?.map(
-                                          (option) => ({
-                                            ...option,
-                                            text: isArabic
-                                              ? option.text.split(" | ")[1]
-                                              : option.text.split(" | ")[0],
-                                          })
-                                        )
-                                  }
-                                  onChange={(selectedValue) =>
-                                    setCountriesId(selectedValue)
-                                  }
-                                  loading={
-                                    loadingAllCountries || loadingCitiesOptions
-                                  }
-                                />
+                                {isDropdown ? (
+                                  <FormikMultiDropdown
+                                    name={e?.key}
+                                    label={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                    placeholder={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                    options={
+                                      e?.key === "countryId"
+                                        ? AllCountriesOptions
+                                        : e?.key === "cityId"
+                                        ? AllCitiesOptions
+                                        : allCustomFileOptions[e?.key]?.map(
+                                            (option) => ({
+                                              ...option,
+                                              text: isArabic
+                                                ? option.text.split(" | ")[1]
+                                                : option.text.split(" | ")[0],
+                                            })
+                                          )
+                                    }
+                                    onChange={(selectedValue) =>
+                                      setCountriesId(selectedValue)
+                                    }
+                                    loading={
+                                      loadingAllCountries ||
+                                      loadingCitiesOptions
+                                    }
+                                  />
+                                ) : (
+                                  <FormikInput
+                                    name={e?.key}
+                                    label={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                    placeholder={
+                                      lang === "en" ? e?.labelEn : e?.labelAr
+                                    }
+                                  />
+                                )}
                               </div>
                             );
                           })}
@@ -597,7 +615,8 @@ const ListProductDetails = () => {
                             </div>
                           );
                         })}
-                    {(formik.values.subCategory || categoryId === 4) && (
+                    {(formik.values.subCategory || categoryId === 4) &&
+                      categoryId !== 3 && (
                       <>
                         <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                           <FormikInput
@@ -647,7 +666,7 @@ const ListProductDetails = () => {
                             </div>
                           )}
                         </div>
-                        {customFromData?.model && categoryId === 3 && (
+                        {customFromData?.model &&  (
                           <div className="col-span-2 sm:col-span-1  md:col-span-2">
                             <FormikInput
                               min={0}
