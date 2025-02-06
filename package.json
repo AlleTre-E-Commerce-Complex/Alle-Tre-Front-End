@@ -10,6 +10,7 @@
     "@mui/material": "^6.3.1",
     "@mui/x-date-pickers": "^7.23.3",
     "@reach/combobox": "0.16.1",
+    "@react-google-maps/api": "^2.20.5",
     "@reduxjs/toolkit": "^1.9.3",
     "@stripe/react-stripe-js": "^2.1.0",
     "@stripe/stripe-js": "^1.53.0",
