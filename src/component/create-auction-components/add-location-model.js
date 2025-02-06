@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
 import FormikMultiDropdown from "../shared/formik/formik-dropdown";
-import { useDispatch } from "react-redux";
 import { Button, Modal } from "semantic-ui-react";
 import useGetAllCities from "../../hooks/use-get-all-cities";
 import useGetAllCountries from "../../hooks/use-get-all-countries";
@@ -20,6 +19,7 @@ import localizationKeys from "../../localization/localization-keys";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { PiWarningCircle } from "react-icons/pi";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 
 const AddLocationModel = ({
   open,
@@ -35,13 +35,13 @@ const AddLocationModel = ({
   const selectedContent = content[lang];
   const history = useHistory();
   const [countriesId, setCountriesId] = useState();
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
   const { AllCitiesOptions, loadingCitiesOptions } =
     useGetAllCities(countriesId);
 
   const isArabic = lang === "ar";
-  const dispatch = useDispatch();
-  const isMounted = useRef(true); // Track component mount status
+  const isMounted = useRef(true);
 
   const AddLocationSchema = Yup.object({
     countryId: Yup.string().required(
@@ -60,10 +60,31 @@ const AddLocationModel = ({
       ),
   });
 
+  const handleLocationSelect = (lat, lng, setFieldValue) => {
+    if (typeof lat === "number" && typeof lng === "number") {
+      setSelectedLocation({ lat, lng });
+      setFieldValue("lat", lat);
+      setFieldValue("lng", lng);
+
+      // Reverse Geocode to get address only
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+        if (status === "OK" && results[0]) {
+          setFieldValue("address", results[0].formatted_address);
+        } else {
+          console.error("Geocode failed: ", status);
+        }
+      });
+    }
+  };
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyB9ATxmePBJdgRl8mq4D1ahCRxHy99IFqg",
+  });
+
   const { run, isLoading } = useAxios();
 
   useEffect(() => {
-    // Cleanup function to mark component as unmounted
     return () => {
       isMounted.current = false;
     };
@@ -76,6 +97,8 @@ const AddLocationModel = ({
         countryId: editData.country || "",
         cityId: editData.city || "",
         phone: editData.phone || "",
+        lat: editData.lat || "",
+        lng: editData.lng || "",
       }
     : {
         addressLabel: "",
@@ -83,6 +106,8 @@ const AddLocationModel = ({
         countryId: "",
         cityId: "",
         phone: "",
+        lat: "",
+        lng: "",
       };
 
   const handleSubmit = (values) => {
@@ -93,6 +118,8 @@ const AddLocationModel = ({
         countryId: values.countryId,
         cityId: values.cityId,
         phone: values.phone,
+        lat: selectedLocation?.lat || values.lat,
+        lng: selectedLocation?.lng || values.lng,
       };
 
       run(
@@ -100,7 +127,6 @@ const AddLocationModel = ({
       )
         .then((res) => {
           if (isMounted.current) {
-            // Only update state if mounted
             window.localStorage.setItem("hasCompletedProfile", "true");
             toast.success(
               selectedContent[localizationKeys.successUpdateLocation]
@@ -114,11 +140,9 @@ const AddLocationModel = ({
           toast.error(selectedContent[localizationKeys.oops]);
         });
     } else {
-      // Logic for adding a new location
       run(authAxios.post(api.app.location.post, values))
         .then((res) => {
           if (isMounted.current) {
-            // Only update state if mounted
             window.localStorage.setItem("hasCompletedProfile", "true");
             if (TextButton === selectedContent[localizationKeys.proceed]) {
               if (isListing) {
@@ -192,6 +216,7 @@ const AddLocationModel = ({
           >
             {({ values, setFieldValue, errors, touched, handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
+               
                 <div className="w-full py-6">
                   <FormikMultiDropdown
                     name="countryId"
@@ -213,6 +238,7 @@ const AddLocationModel = ({
                     loading={loadingCitiesOptions}
                   />
                 </div>
+          
                 <div className="w-full py-6">
                   <FormikInput
                     name="address"
@@ -270,14 +296,38 @@ const AddLocationModel = ({
                     placeholder={selectedContent[localizationKeys.exHome]}
                   />
                 </div>
-                {/* <div className="w-full py-6">
-                  <FormikInput
-                    name="zipCode"
-                    type="text"
-                    label={selectedContent[localizationKeys.zipCode]}
-                    placeholder={selectedContent[localizationKeys.enterPostalZipCode]}
-                  />
-                </div> */}
+
+                <div className="w-full py-6">
+                  {isLoaded ? (
+                    <GoogleMap
+                      mapContainerStyle={{ width: "100%", height: "200px" }}
+                      zoom={10}
+                      center={selectedLocation || { lat: 24.5, lng: 54 }}
+                      onClick={(e) => {
+                        const lat = e.latLng.lat();
+                        const lng = e.latLng.lng();
+                        handleLocationSelect(lat, lng, setFieldValue);
+                      }}
+                    >
+                      {selectedLocation && (
+                        <Marker position={selectedLocation} />
+                      )}
+                    </GoogleMap>
+                  ) : (
+                    <div>Loading map...</div>
+                  )}
+                </div>
+
+                <FormikInput
+                  name="lat"
+                  type="hidden"
+                  value={values.lat || ""}
+                />
+                <FormikInput
+                  name="lng"
+                  type="hidden"
+                  value={values.lng || ""}
+                />
                 <div className="flex justify-end">
                   <Button
                     loading={isLoading}

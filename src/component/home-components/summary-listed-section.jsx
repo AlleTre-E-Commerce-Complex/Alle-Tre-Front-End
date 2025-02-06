@@ -36,6 +36,20 @@ const SummaryListedSection = () => {
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
 
+  const mainLocation = listedProductsData?.user?.locations?.find(
+    (location) => location.isMain
+  );
+  
+  const lat = mainLocation?.lat;
+  const lng = mainLocation?.lng;
+  const mapUrl = mainLocation
+  ? `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
+      `${lat},${lng}`
+    )}&key=AIzaSyB9ATxmePBJdgRl8mq4D1ahCRxHy99IFqg`
+  : ""; 
+
+
+
   useEffect(() => {
     run(
       authAxios
@@ -150,7 +164,7 @@ const SummaryListedSection = () => {
                       }
                     </p>
 
-                    <p className="text-lg font-medium text-gray-600">
+                    {/* <p className="text-lg font-medium text-gray-600">
                       {
                         listedProductsData.user.locations.find(
                           (location) => location.isMain
@@ -163,10 +177,28 @@ const SummaryListedSection = () => {
                           (location) => location.isMain
                         )?.country?.[lang === "ar" ? "nameAr" : "nameEn"]
                       }
-                    </p>
+                    </p> */}
+
+            
+                    {listedProductsData.user.locations.find(
+                      (location) => location.isMain
+                    ) ? (
+                      <iframe
+                        title="Google Map"
+                        className="w-full h-64 mt-4 rounded-lg"
+                        src={mapUrl}
+                        allowFullScreen
+                      />
+                    ) : (
+                      <p className="text-gray-600 mt-2">
+                        {selectedContent[localizationKeys.locationNotAvailable]}
+                      </p>
+                    )}
                   </>
                 ) : (
-                  <p>{selectedContent[localizationKeys.locationNotAvailable]}</p>
+                  <p>
+                    {selectedContent[localizationKeys.locationNotAvailable]}
+                  </p>
                 )}
               </div>
             </div>
