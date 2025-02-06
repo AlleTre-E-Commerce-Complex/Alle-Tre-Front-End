@@ -54,7 +54,8 @@ const ProductDetails = () => {
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
   );
-
+  console.log('state : ',state)
+  console.log('productDetailsint?.auctionId : ',productDetailsint?.auctionId)
   const dispatch = useDispatch();
 
   const history = useHistory();

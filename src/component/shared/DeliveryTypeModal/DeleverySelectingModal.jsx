@@ -128,7 +128,7 @@ const DeliverySelectingModal = ({ open, setOpen, auctionId, paymentType,lastPric
                   </li>
                   <li className="flex items-center">
                     <span className="font-medium mr-2">Mobile 📞:</span>
-                    {/* <span className="text-blue-500 hover:underline">{sellerLocation.phone}</span> */}
+                    <span className="text-blue-500 hover:underline">{sellerLocation?.phone}</span>
                   </li>
                 </ul>
               </div>

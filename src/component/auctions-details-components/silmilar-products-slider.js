@@ -34,9 +34,11 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(20);
   // const loginData = useSelector((state) => state?.loginDate?.loginDate);
-
+  console.log('****--->',isListProduct,categoriesId)
   useEffect(() => {
-    if (!isListProduct && categoriesId) {
+    if (!isListProduct
+      //  && categoriesId
+      ) {
       if (user) {
         runAuctions(
           authAxios
@@ -66,7 +68,9 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
           })
       );
     }
-  }, [categoriesId, page, runAuctions, user]);
+  }, [
+    // categoriesId,
+     page, runAuctions, user]);
 
   const swiperOptions = {
     cssMode: true,

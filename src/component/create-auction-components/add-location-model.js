@@ -79,7 +79,7 @@ const AddLocationModel = ({
   };
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyB9ATxmePBJdgRl8mq4D1ahCRxHy99IFqg",
+    googleMapsApiKey: process.env.GOOGLE_MAP_SECRET_KEY,
   });
 
   const { run, isLoading } = useAxios();
