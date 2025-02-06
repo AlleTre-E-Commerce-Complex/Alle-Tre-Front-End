@@ -88,10 +88,10 @@ const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
 
                     if (balance && Number(balance) >= Number(amountToPay)) {
                       setWalletBalance(balance);
-                      // setShwoPaymentSelection(true);
                     } else {
                       stripePaymentApiCall();
                     }
+                    setShwoPaymentSelection(true);
                   })
               );
             } else {
@@ -265,7 +265,7 @@ const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
                showPaymentSelecton && (
                     <PaymentSelectionOnAuctionPurchase
                       isWalletPayment={isWalletPayment}
-                      isLoading={isLoading && isLoadingPendingAuctionData}
+                      isLoading={isLoading || isLoadingPendingAuctionData}
                       setIsWalletPayment={setIsWalletPayment}
                       handleSubmitPayment={handleSubmitPayment}
                       walletBalance= {walletBalance}

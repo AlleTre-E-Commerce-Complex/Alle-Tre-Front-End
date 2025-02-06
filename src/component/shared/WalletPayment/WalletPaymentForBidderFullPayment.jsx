@@ -51,7 +51,7 @@ const WalletPaymentForBidderFullPayment = ({
     setShwoPaymentSelection()
   }
   return (
-    <div className="flex flex-col justify-center bg-gray-200  h-4/5 rounded-xl p-4 border">
+    <div className="flex flex-col justify-center bg-gray-100  h-4/5 rounded-xl p-4 border">
       <h1 className="text-center text-xl font-bold mb-20">
         Your Wallet Balance is AED {walletBalance}/-
       </h1>
