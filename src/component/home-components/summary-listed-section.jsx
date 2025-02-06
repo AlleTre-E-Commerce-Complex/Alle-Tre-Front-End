@@ -45,7 +45,7 @@ const SummaryListedSection = () => {
   const mapUrl = mainLocation
   ? `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
       `${lat},${lng}`
-    )}&key=${process.env.GOOGLE_MAP_SECRET_KEY}`
+    )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`
   : ""; 
 
 

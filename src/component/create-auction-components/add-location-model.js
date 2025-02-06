@@ -77,9 +77,9 @@ const AddLocationModel = ({
       });
     }
   };
-
+  console.log('***ccc ' ,process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY)
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.GOOGLE_MAP_SECRET_KEY,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY,
   });
 
   const { run, isLoading } = useAxios();
