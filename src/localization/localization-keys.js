@@ -120,6 +120,8 @@ const localizationKeys = {
   close: "close",
   sell: "sell",
   timing: "Timing",
+  selectTheDeliveryType: "selectTheDeliveryType",
+  sellerAddress: "sellerAddress",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -399,7 +401,7 @@ const localizationKeys = {
   ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow:
     "ThereIsNoBidsYetOnWaitingForDeliveryAuctionsRightNow",
   confirmDelivery: "confirmDelivery",
-  deliveryByCompany:"deliveryByCompany",
+  deliveryByCompany: "deliveryByCompany",
   AnyCompliants: "AnyCompliantsen",
   sellerContactDetails: "sellerContactDetails",
   unSubscribe: "unSubscribe",

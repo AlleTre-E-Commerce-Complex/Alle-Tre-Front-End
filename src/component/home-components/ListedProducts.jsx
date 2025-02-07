@@ -108,7 +108,11 @@ const ListedProducts = () => {
         </div>
       ) : (
         <div className="ezd-content  relative ">
-          <Dimmer className=" bg-" active={isLoadingListedProduct} inverted>
+          <Dimmer
+            className=" bg-white/50"
+            active={isLoadingListedProduct}
+            inverted
+          >
             <Loader active />
             <LodingTestAllatre />
           </Dimmer>

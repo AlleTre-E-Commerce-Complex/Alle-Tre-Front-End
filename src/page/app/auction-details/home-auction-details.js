@@ -31,8 +31,7 @@ const HomeAuctionDetails = () => {
   const [lang] = useLanguage();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const [auctionsDetailsData, setAuctionsDetailsData] = useState({});
-
-  const { auctionId } = useParams();;
+  const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
   const { pathname } = useLocation();
 
@@ -65,6 +64,7 @@ const HomeAuctionDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
   return (
     <div>
       <Helmet>

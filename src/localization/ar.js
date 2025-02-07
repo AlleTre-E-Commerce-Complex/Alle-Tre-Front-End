@@ -132,6 +132,8 @@ const ar = {
   [localizationKeys.iAcceptThe]: "انا اقبل",
   [localizationKeys.sell]: "بيع",
   [localizationKeys.timing]: "توقيت",
+  [localizationKeys.selectTheDeliveryType]: "حدد نوع التسليم",
+  [localizationKeys.sellerAddress]: "عنوان البائع",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
@@ -209,6 +211,7 @@ const ar = {
   [localizationKeys.city]: "المدينة",
   [localizationKeys.address]: "العنوان",
   [localizationKeys.addressLabel]: "علامة للعنوان",
+  [localizationKeys.mobile]: "Mobile",
   [localizationKeys.zipCode]: "الرمز البريدي",
   [localizationKeys.successAddLocatons]: "إضافة موقع النجاح",
   [localizationKeys.add]: "إضافة",

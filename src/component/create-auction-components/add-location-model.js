@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import FormikInput from "../shared/formik/formik-input";
+import { useDispatch } from "react-redux";
 import FormikMultiDropdown from "../shared/formik/formik-dropdown";
 import { Button, Modal } from "semantic-ui-react";
 import useGetAllCities from "../../hooks/use-get-all-cities";
@@ -41,6 +42,7 @@ const AddLocationModel = ({
     useGetAllCities(countriesId);
 
   const isArabic = lang === "ar";
+  const dispatch = useDispatch();
   const isMounted = useRef(true);
 
   const AddLocationSchema = Yup.object({
@@ -216,7 +218,6 @@ const AddLocationModel = ({
           >
             {({ values, setFieldValue, errors, touched, handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
-               
                 <div className="w-full py-6">
                   <FormikMultiDropdown
                     name="countryId"
@@ -238,7 +239,7 @@ const AddLocationModel = ({
                     loading={loadingCitiesOptions}
                   />
                 </div>
-          
+
                 <div className="w-full py-6">
                   <FormikInput
                     name="address"

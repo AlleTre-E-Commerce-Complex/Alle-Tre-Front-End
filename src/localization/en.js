@@ -136,6 +136,8 @@ const en = {
   [localizationKeys.close]: "Close",
   [localizationKeys.sell]: "Sell",
   [localizationKeys.timing]: "Timing",
+  [localizationKeys.selectTheDeliveryType]: "Select the delivery type",
+  [localizationKeys.sellerAddress]: "Seller address",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
@@ -248,7 +250,7 @@ const en = {
   [localizationKeys.findAndReachTheProduct]: "Find and reach the product",
   [localizationKeys.theBestDealsYouMissed]: "The best deals you missed",
   [localizationKeys.callNow]: "Call now",
-  [localizationKeys.contactNumber]: "Contact number",
+  [localizationKeys.contactNumber]: "Contact Number",
   [localizationKeys.youCanConnectOn]: "You can connect on:",
   [localizationKeys.DontForgetToMention]: "Don't forget to mention",
   [localizationKeys.alletre]: "Alletre",
