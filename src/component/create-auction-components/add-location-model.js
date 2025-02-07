@@ -99,8 +99,8 @@ const AddLocationModel = ({
         countryId: editData.country || "",
         cityId: editData.city || "",
         phone: editData.phone || "",
-        lat: editData.lat || "",
-        lng: editData.lng || "",
+        lat: editData.lat || 0.0000,
+        lng: editData.lng || 0.0000,
       }
     : {
         addressLabel: "",
@@ -108,8 +108,8 @@ const AddLocationModel = ({
         countryId: "",
         cityId: "",
         phone: "",
-        lat: "",
-        lng: "",
+        lat: 0.0000,
+        lng: 0.0000,
       };
 
   const handleSubmit = (values) => {
