@@ -39,16 +39,15 @@ const SummaryListedSection = () => {
   const mainLocation = listedProductsData?.user?.locations?.find(
     (location) => location.isMain
   );
-  
+
   const lat = mainLocation?.lat;
   const lng = mainLocation?.lng;
-  const mapUrl = mainLocation
-  ? `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
-      `${lat},${lng}`
-    )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`
-  : ""; 
-
-
+  const mapUrl =
+    mainLocation && lat !== undefined && lng !== undefined
+      ? `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
+          `${lat},${lng}`
+        )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`
+      : null;
 
   useEffect(() => {
     run(
@@ -179,7 +178,6 @@ const SummaryListedSection = () => {
                       }
                     </p> */}
 
-            
                     {listedProductsData.user.locations.find(
                       (location) => location.isMain
                     ) ? (

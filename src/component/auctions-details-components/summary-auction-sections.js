@@ -17,6 +17,9 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import AuctionsStatus from "../shared/status/auctions-status";
 import TotalBidsTableModel from "./total-bids-table-model";
+import { Dimmer } from "semantic-ui-react";
+import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import useAxios from "hooks/use-axios";
 
 const SummaryAuctionSections = ({
   numberStare,
@@ -38,11 +41,20 @@ const SummaryAuctionSections = ({
   const { pathname } = useLocation();
   const [openTotaltBid, setTotalBidOpen] = useState(false);
   const [lastestBid, setLastestBid] = useState();
-
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { auctionId } = useParams();
   dispatch(socketAuctionId(auctionId));
 
+  useEffect(() => {
+    if (category === undefined) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [category]);
+
+  const { isLoading: isLoadingAuctionById } = useAxios([]);
   const socket = useSocket();
   useEffect(() => {
     if (socket) {
@@ -57,127 +69,137 @@ const SummaryAuctionSections = ({
       }
     };
   }, [socket]);
-  return (
-    <div>
-      {/* Title Section */}
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
 
-      {/* Status and Rating Section */}
-      <div className="flex items-center gap-x-5">
-        <AuctionsStatus status={status} big />
-        {/* Rating Section (uncomment when needed) */}
-        {/* <div className="flex items-center gap-x-2">
+  return (
+    <>
+      <Dimmer
+        className="fixed w-full h-full top-0 bg-white/50"
+        active={isLoadingAuctionById || loading}
+        inverted
+      >
+        <LodingTestAllatre />
+      </Dimmer>
+      <div>
+        {/* Title Section */}
+        <h1 className="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
+
+        {/* Status and Rating Section */}
+        <div className="flex items-center gap-x-5">
+          <AuctionsStatus status={status} big />
+          {/* Rating Section (uncomment when needed) */}
+          {/* <div className="flex items-center gap-x-2">
 <RatingStare max={numberStare} size="huge" />
 <p className="text-sm text-gray-600">
   ({totalReviews} {selectedContent[localizationKeys.reviews]})
 </p>
 </div> */}
-      </div>
-      {/* Description */}
-      <div className="pt-8 overflow-clip">
-        <h3 className="text-gray-dark text-base font-normal">
-          {selectedContent[localizationKeys.description]}
-        </h3>
-        <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
-          {truncateString(description, 250)}
-        </p>
-        <HashLink
-          className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"
-          smooth
-          to={`${pathname}#itemDescription`}
-          onClick={() => setActiveIndexTab(0)}
-        >
-          {selectedContent[localizationKeys.viewDetails]}
-        </HashLink>
-      </div>
-      {/* Category sections */}
-      <div className="pt-6 mb-8 flex flex-wrap gap-4">
-        <div>
-          <p className="text-sm text-gray-500 mb-2">
-            {selectedContent[localizationKeys.category]}
-          </p>
-          <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
-            {category}
-          </div>
         </div>
-        {subCategory && (
+        {/* Description */}
+        <div className="pt-8 overflow-clip">
+          <h3 className="text-gray-dark text-base font-normal">
+            {selectedContent[localizationKeys.description]}
+          </h3>
+          <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
+            {truncateString(description, 250)}
+          </p>
+          <HashLink
+            className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"
+            smooth
+            to={`${pathname}#itemDescription`}
+            onClick={() => setActiveIndexTab(0)}
+          >
+            {selectedContent[localizationKeys.viewDetails]}
+          </HashLink>
+        </div>
+        {/* Category sections */}
+        <div className="pt-6 mb-8 flex flex-wrap gap-4">
           <div>
             <p className="text-sm text-gray-500 mb-2">
-              {selectedContent[localizationKeys.subCategory]}
+              {selectedContent[localizationKeys.category]}
             </p>
             <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
-              {subCategory}
+              {category}
             </div>
           </div>
-        )}
-      </div>
-      {/* Prices  sections */}
-      <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 gap-6">
-        <div className="space-y-2">
-          <p className="text-gray-med text-base font-normal">
-            {selectedContent[localizationKeys.startingPrice]}
-          </p>
-          <p className="text-gray-verydark cursor-default text-2xl font-semibold">
-            {formatCurrency(startingPrice)}
-          </p>
+          {subCategory && (
+            <div>
+              <p className="text-sm text-gray-500 mb-2">
+                {selectedContent[localizationKeys.subCategory]}
+              </p>
+              <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+                {subCategory}
+              </div>
+            </div>
+          )}
         </div>
-        <div className="space-y-2">
-          <p className="text-gray-med text-base font-normal">
-            {selectedContent[localizationKeys.endingPrice]}
-          </p>
-          <p className="text-gray-verydark cursor-default text-2xl font-semibold">
-            {formatCurrency(lastestBid?.bidAmount) ||
-              formatCurrency(endingPrice) ||
-              "--"}
-          </p>
-        </div>
-
-        {/* Bids Section */}
-        <div className="space-y-4">
-          <p className="text-gray-med text-base font-normal">
-            {selectedContent[localizationKeys.totalBids]}
-          </p>
-          <div className="flex items-center gap-4">
-            <p className="text-gray-verydark text-2xl font-semibold">
-              {lastestBid?.totalBids || totalBids}
-            </p>
-            <button
-              onClick={() => setTotalBidOpen(true)}
-              className="w-24 h-8 text-xs font-medium bg-primary rounded text-white flex items-center justify-center gap-x-2 px-2"
-            >
-              <span>{selectedContent[localizationKeys.viewAll]}</span>
-              <img
-                className="w-2.5 h-2.5"
-                src={AnglesRight}
-                alt="AnglesRight"
-              />
-            </button>
-          </div>
-        </div>
-
-        {/* Time Section */}
-        <div className="space-y-4">
+        {/* Prices  sections */}
+        <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 gap-6">
           <div className="space-y-2">
             <p className="text-gray-med text-base font-normal">
-              {selectedContent[localizationKeys.startingTime]}
+              {selectedContent[localizationKeys.startingPrice]}
             </p>
-            <p className="text-gray-verydark text-2xl font-semibold">
-              {moment(startingTime).format("hh:mm A · DD MMM YYYY")}
+            <p className="text-gray-verydark cursor-default text-2xl font-semibold">
+              {formatCurrency(startingPrice)}
             </p>
           </div>
           <div className="space-y-2">
             <p className="text-gray-med text-base font-normal">
-              {selectedContent[localizationKeys.endingTime]}
+              {selectedContent[localizationKeys.endingPrice]}
             </p>
-            <p className="text-gray-verydark text-2xl font-semibold">
-              {moment(endingTime).format("hh:mm A · DD MMM YYYY")}
+            <p className="text-gray-verydark cursor-default text-2xl font-semibold">
+              {formatCurrency(lastestBid?.bidAmount) ||
+                formatCurrency(endingPrice) ||
+                "--"}
             </p>
           </div>
-        </div>
-      </div>
 
-      <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
-    </div>
+          {/* Bids Section */}
+          <div className="space-y-4">
+            <p className="text-gray-med text-base font-normal">
+              {selectedContent[localizationKeys.totalBids]}
+            </p>
+            <div className="flex items-center gap-4">
+              <p className="text-gray-verydark text-2xl font-semibold">
+                {lastestBid?.totalBids || totalBids}
+              </p>
+              <button
+                onClick={() => setTotalBidOpen(true)}
+                className="w-24 h-8 text-xs font-medium bg-primary rounded text-white flex items-center justify-center gap-x-2 px-2"
+              >
+                <span>{selectedContent[localizationKeys.viewAll]}</span>
+                <img
+                  className="w-2.5 h-2.5"
+                  src={AnglesRight}
+                  alt="AnglesRight"
+                />
+              </button>
+            </div>
+          </div>
+
+          {/* Time Section */}
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <p className="text-gray-med text-base font-normal">
+                {selectedContent[localizationKeys.startingTime]}
+              </p>
+              <p className="text-gray-verydark text-2xl font-semibold">
+                {moment(startingTime).format("hh:mm A · DD MMM YYYY")}
+              </p>
+            </div>
+            <div className="space-y-2">
+              <p className="text-gray-med text-base font-normal">
+                {selectedContent[localizationKeys.endingTime]}
+              </p>
+              <p className="text-gray-verydark text-2xl font-semibold">
+                {moment(endingTime).format("hh:mm A · DD MMM YYYY")}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
+      </div>
+    </>
   );
 };
 
