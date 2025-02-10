@@ -215,7 +215,7 @@ const en = {
   [localizationKeys.address]: "Address",
   [localizationKeys.addressLabel]: "Address Label",
   [localizationKeys.zipCode]: "Postal code",
-  [localizationKeys.successAddLocatons]: "locaton add success",
+  [localizationKeys.successAddLocatons]: "Location added successfully",
   [localizationKeys.add]: "Add",
   [localizationKeys.selectCountry]: "Select Country",
   [localizationKeys.selectCity]: "Select City",
@@ -558,7 +558,7 @@ const en = {
   [localizationKeys.yourAuctionSuccessfullySavedAsDraft]:
     "Your auction successfully saved as draft",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
-    "Your auction is created success",
+    "Your auction has been created successfully",
   [localizationKeys.yourProductIsSuccessfullyListed]:
     "Your product is successfully listed",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:

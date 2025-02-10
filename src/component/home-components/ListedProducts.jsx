@@ -93,7 +93,7 @@ const ListedProducts = () => {
         <h1 className="text-gray-dark text-base font-bold">
           {selectedContent[localizationKeys.listedProduct]}
         </h1>
-        <p className="text-gray-med text-base font-normal pb-10">
+        <p className="text-gray-med text-base font-normal ">
           {selectedContent[localizationKeys.findAndReachTheProduct]}
         </p>
       </div>
@@ -132,7 +132,6 @@ const ListedProducts = () => {
                       // onClick={handelGoDetails(product.id)}
                     >
                       <ProductCard
-                        className="min-w-[272px]"
                         price={product?.ProductListingPrice}
                         title={product?.title}
                         imageLink={product?.images[0].imageLink}
@@ -159,7 +158,7 @@ const ListedProducts = () => {
                   className={`swiper-button-next absolute top-1/2 -right-3 `}
                 >
                   <img
-                    className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
+                    className="rounded-full bg-white/40 cursor-pointer z-20 w-14 h-14 "
                     src={AnglesRight}
                     alt="AnglesRight"
                   />
@@ -169,7 +168,7 @@ const ListedProducts = () => {
                   className={`swiper-button-prev absolute top-1/2 -left-5  `}
                 >
                   <img
-                    className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
+                    className="rounded-full bg-white/40 cursor-pointer z-20 w-14 h-14 "
                     src={AnglesLeft}
                     alt="AnglesLeft"
                   />

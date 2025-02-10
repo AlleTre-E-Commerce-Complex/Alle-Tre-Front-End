@@ -127,7 +127,7 @@ const ContactDetails = ({ open, onClose, userType, auctionId }) => {
         <div className="flex justify-end gap-x-6 p-4">
           <button
             onClick={onClose}
-            className="w-[120px] h-[40px] text-sm font-bold text-white rounded-lg bg-primary border border-primary shadow-lg hover:bg-primary-dark hover:text-white"
+            className="w-[120px] h-[30px] md:h-[40px] text-sm font-bold text-white rounded-lg bg-primary border border-primary shadow-lg hover:bg-primary-dark hover:text-white"
           >
             {selectedContent[localizationKeys.cancel]}
           </button>

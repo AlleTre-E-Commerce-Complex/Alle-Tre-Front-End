@@ -12,7 +12,6 @@ const ProductCard = ({
   imageLink,
   title,
   price,
-  className,
   location,
   city,
   country,
@@ -125,13 +124,15 @@ const ProductCard = ({
   };
 
   return (
-    <div className={className}>
-      <div className="group lg:w-[272px] l:w-[367px]  md:h-auto h-[335px] rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
-        <div className="lg:w-[240px] l:w-[335px]  md:h-[165px] h-[120px] rounded-2xl mx-auto round bg-[#F9F9F9] relative overflow-hidden">
-          <div className="relative group">
-            {/* Card Content */}
-            <div className="absolute top-3 right-1 z-20 flex items-center space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {/* {!isMyAuction && (
+    <div>
+      <div
+        className="group max-w-[190px] w-full h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-3 cursor-pointer transition-all duration-300 
+         sm:max-w-sm sm:p-4"
+      >
+        <div className="w-[160px] h-[100px] sm:w-[210px] sm:h-[125px] rounded-lg bg-[#F9F9F9] relative overflow-hidden flex items-start justify-start">
+          <div className=" group">
+            <div className="absolute top-0 right-0 z-30 flex items-center space-x-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
+               {/* {!isMyAuction && (
                 <button
                   onClick={() => handelAddNewWatshlist(id)}
                   className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl w-10 h-10 md:w-12 md:h-12 hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
@@ -145,21 +146,22 @@ const ProductCard = ({
               )} */}
               <div
                 onClick={handleShare}
-                className="border-primary border-2 border-solid bg-white rounded-xl w-10 h-10 md:w-12 md:h-12 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
+                className="border-primary border-2 border-solid bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
               >
                 <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-2xl" />
               </div>
             </div>
           </div>
+
           <img
-            className="w-full h-full mx-auto rounded-lg  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
+            className="w-full h-full mx-auto rounded-lg object-contain group-hover:scale-110 duration-300 ease-in-out transform  "
             src={imageLink}
             alt="adsImd"
             onClick={() => handelGoDetails(id)}
           />
           <div
             onClick={() => handelGoDetails(id)}
-            className="price-button absolute bg-orang text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
+            className="price-button absolute bg-orang text-white text-[10px] top-0 w-auto px-2 h-[24px] flex justify-center items-center"
           >
             AED {price}
           </div>
@@ -182,13 +184,13 @@ const ProductCard = ({
               {location}
             </p> */}
             <p
-              className="text-gray-dark font-medium md:text-[10px] text-[8px]"
+              className="text-gray-dark font-medium md:text-[11px] text-[10px] mt-1"
               onClick={() => handelGoDetails(id)}
             >
               {city}, {country}
             </p>
           </div>
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between mt-4">
             <div>
               <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                 {selectedContent[localizationKeys.listed]}
@@ -213,7 +215,7 @@ const ProductCard = ({
             <div>
               <button
                 onClick={() => handelGoDetails(id)}
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[35px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center"
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center"
               >
                 {selectedContent[localizationKeys.buyNow]}
               </button>

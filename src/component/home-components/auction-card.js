@@ -82,7 +82,6 @@ const AuctionCard = ({
   // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
   // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
-
   const formattedBid = formatCurrency(
     latestBid || CurrentBid || startBidAmount
   );
@@ -227,135 +226,131 @@ const AuctionCard = ({
   }
 
   return (
-    <div className={`w-full max-w-[300px] mx-auto ${className}`}>
-      <div className="group w-full h-auto rounded-2xl hover:border-primary border-transparent border-[1px] shadow p-4 cursor-pointer">
-        <div className="w-full h-[180px] rounded-2xl bg-[#F9F9F9] relative overflow-hidden">
-          <div className="relative group">
-            <div className="absolute top-3 right-1 z-20 flex items-center space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {!isMyAuction && (
-                <button
-                  onClick={() => handelAddNewWatshlist(auctionId)}
-                  className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl w-10 h-10 hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
-                >
-                  {isWatshlist ? (
-                    <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-xl" />
-                  ) : (
-                    <BsBookmark className="text-primary group-hover/watchlist:text-white text-xl" />
-                  )}
-                </button>
-              )}
-              <div
-                onClick={handleShare}
-                className="border-primary border-2 border-solid bg-white rounded-xl w-10 h-10 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
+    <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-4 cursor-pointer">
+      <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[16/10]">
+        <div className="relative group">
+          <div className="absolute top-0 right-0 z-20 flex items-center space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {!isMyAuction && (
+              <button
+                onClick={() => handelAddNewWatshlist(auctionId)}
+                className="border-primary border-2 bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 group/watchlist hover:bg-primary transition-all duration-300 flex items-center justify-center"
               >
-                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-xl" />
-              </div>
+                {isWatshlist ? (
+                  <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-lg sm:text-xl" />
+                ) : (
+                  <BsBookmark className="text-primary group-hover/watchlist:text-white text-lg sm:text-2xl" />
+                )}
+              </button>
+            )}
+            <div
+              onClick={handleShare}
+              className="border-primary border-2 bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 flex items-center justify-center"
+            >
+              <RiShareForwardFill className="text-primary group-hover/share:text-white text-lg sm:text-2xl" />
             </div>
           </div>
-
-          <img
-            onClick={() => handelGoDetails(auctionId)}
-            className="w-full h-full object-cover group-hover:scale-110 duration-300 ease-in-out transform p-2"
-            src={adsImg}
-            alt="adsImd"
-          />
-          <div
-            onClick={() => handelGoDetails(auctionId)}
-            className="price-button absolute bg-orang text-white text-xs top-0 w-auto px-2 h-6 flex justify-center items-center"
-          >
-            {formattedBid}
-          </div>
         </div>
-        <h1
+
+        <img
           onClick={() => handelGoDetails(auctionId)}
-          className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10"
+          className="w-full h-full object-contain group-hover:scale-110 duration-300 ease-in-out transform "
+          src={adsImg}
+          alt="adsImg"
+        />
+
+        <div
+          onClick={() => handelGoDetails(auctionId)}
+          className="price-button absolute top-0 left-0 bg-orang text-white text-xs px-2 h-6 flex items-center"
         >
-          {truncateString(title, 75)}
-        </h1>
-        <div onClick={() => handelGoDetails(auctionId)}>
-          <AuctionsStatus status={status} small />
-          <div className="grid grid-cols-2 gap-4 mt-2 items-center text-xs">
-            {/* Total Bids */}
-            <div className="flex flex-col">
-              <h6 className="text-gray-500 font-medium">
-                {selectedContent[localizationKeys.totalBids]}
-              </h6>
-              <p className="text-gray-800 font-semibold">
-                {totalBods || 0} {selectedContent[localizationKeys.bid]}
-              </p>
-            </div>
+          {formattedBid}
+        </div>
+      </div>
 
-            {/* Auction Timing (Start Date / End Date / Purchased Time) */}
-            <div className="flex flex-col items-end">
-              <h6 className="text-gray-500 font-medium">
-                {status === "IN_SCHEDULED"
-                  ? selectedContent[localizationKeys.startDate]
-                  : status === "SOLD"
-                  ? "Purchased Time"
-                  : selectedContent[localizationKeys.endingTime]}
-              </h6>
+      <h1
+        onClick={() => handelGoDetails(auctionId)}
+        className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10"
+      >
+        {truncateString(title, 75)}
+      </h1>
 
-              {status === "SOLD" ? (
-                <p className="text-gray-800 font-semibold">
-                  {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
-                </p>
-              ) : (
-                <CountdownDisplay
-                  timeLeft={timeLeft}
-                  status={status}
-                  formattedstartDate={formattedstartDate}
-                  selectedContent={selectedContent}
-                />
-              )}
-            </div>
+      <div onClick={() => handelGoDetails(auctionId)}>
+        <AuctionsStatus status={status} small />
+        <div className="grid grid-cols-2 gap-4 mt-2 items-center text-xs">
+          <div className="flex flex-col">
+            <h6 className="text-gray-500 font-medium -mt-5">
+              {selectedContent[localizationKeys.totalBids]}
+            </h6>
+            <p className="text-gray-800 font-semibold">
+              {totalBods || 0} {selectedContent[localizationKeys.bid]}
+            </p>
           </div>
 
-          {isMyAuction ? (
-            <div
-              className={
-                isPurchased || isExpired
-                  ? "hidden"
-                  : "mt-4 flex gap-x-3 justify-end"
-              }
-            >
-              {!hideButton && (
-                <button
-                  onClick={() => handelGoDetails(auctionId)}
-                  className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-8 rounded-lg"
-                >
-                  {selectedContent[localizationKeys.viewDetails]}
-                </button>
-              )}
-            </div>
-          ) : (
-            <div
-              className={`${
-                isPurchased || isExpired
-                  ? "hidden"
-                  : "mt-4 flex gap-x-3 justify-end"
-              } ${
-                isBuyNowAllowed ? "justify-between" : "justify-end"
-              } mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3`}
-            >
-              {!hideButton && isBuyNowAllowed && (
-                <button
-                  onClick={() => handelGoDetails(auctionId)}
-                  className="border-primary border-[1px] text-primary w-full md:w-[128px] h-8 rounded-lg"
-                >
-                  {selectedContent[localizationKeys.buyNow]}
-                </button>
-              )}
-              {!hideButton && (
-                <button
-                  onClick={() => handelGoDetails(auctionId)}
-                  className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-8 rounded-lg"
-                >
-                  {selectedContent[localizationKeys.bidNow]}
-                </button>
-              )}
-            </div>
-          )}
+          <div className="flex flex-col items-start min-h-[68px]">
+            <h6 className="text-gray-500 font-medium">
+              {status === "IN_SCHEDULED"
+                ? selectedContent[localizationKeys.startDate]
+                : status === "SOLD"
+                ? "Purchased Time"
+                : selectedContent[localizationKeys.endingTime]}
+            </h6>
+            {status === "SOLD" ? (
+              <p className="text-gray-800 font-sm ">
+                {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
+              </p>
+            ) : (
+              <CountdownDisplay
+                timeLeft={timeLeft}
+                status={status}
+                formattedstartDate={formattedstartDate}
+                selectedContent={selectedContent}
+              />
+            )}
+          </div>
         </div>
+
+        {/* Buttons */}
+        {isMyAuction ? (
+          <div
+            className={`${
+              isPurchased || isExpired    ? "hidden"
+                : "mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3 justify-end"
+            }`}
+          >
+            {!hideButton && (
+              <button
+                onClick={() => handelGoDetails(auctionId)}
+              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm flex items-center justify-center transition-all duration-300"
+              >
+                {selectedContent[localizationKeys.viewDetails]}
+              </button>
+            )}
+          </div>
+        ) : (
+          <div
+            className={`${
+              isPurchased || isExpired
+                ? "hidden"
+                : "mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3 justify-end "
+            }`}
+          >
+            {!hideButton && isBuyNowAllowed && (
+              <button
+                onClick={() => handelGoDetails(auctionId)}
+                className="border-primary border-[1px] text-primary w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm  flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-primary hover:text-white"
+              >
+                {selectedContent[localizationKeys.buyNow]}
+              </button>
+            )}
+            {!hideButton && (
+              <button
+                onClick={() => handelGoDetails(auctionId)}
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm flex items-center justify-center transition-all duration-300"
+              >
+                {selectedContent[localizationKeys.bidNow]}
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
