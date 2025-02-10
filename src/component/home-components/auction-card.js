@@ -226,25 +226,25 @@ const AuctionCard = ({
   }
 
   return (
-    <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-4 cursor-pointer">
+    <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
       <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[16/10]">
         <div className="relative group">
-          <div className="absolute top-0 right-0 z-20 flex items-center space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="absolute top-0 right-0 z-20 flex items-center space-x-1 sm:space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {!isMyAuction && (
               <button
                 onClick={() => handelAddNewWatshlist(auctionId)}
-                className="border-primary border-2 bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 group/watchlist hover:bg-primary transition-all duration-300 flex items-center justify-center"
+                className="border-primary border-2 bg-white/90 rounded-lg w-8 h-9 md:w-11 md:h-12 group/watchlist hover:bg-primary transition-all duration-300 flex items-center justify-center"
               >
                 {isWatshlist ? (
                   <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-lg sm:text-xl" />
                 ) : (
-                  <BsBookmark className="text-primary group-hover/watchlist:text-white text-lg sm:text-2xl" />
+                  <BsBookmark className="text-primary group-hover/watchlist:text-white text-lg sm:text-xl" />
                 )}
               </button>
             )}
             <div
               onClick={handleShare}
-              className="border-primary border-2 bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 flex items-center justify-center"
+              className="border-primary border-2 bg-white/90 rounded-lg w-8 h-9 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 flex items-center justify-center"
             >
               <RiShareForwardFill className="text-primary group-hover/share:text-white text-lg sm:text-2xl" />
             </div>

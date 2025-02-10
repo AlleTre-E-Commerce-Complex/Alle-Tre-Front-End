@@ -68,7 +68,7 @@ const Footer = () => {
       {/* Banner Section */}
       <div className="relative">
         <img
-          className="w-full h-[209px] object-cover"
+          className="w-full h-[209px] object-fill"
           src={footerImg}
           alt="Footer Banner"
         />

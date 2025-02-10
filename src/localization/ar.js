@@ -537,9 +537,9 @@ const ar = {
     "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
   // sucsess
   [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
-    "تم حذف هذا المزاد من قائمة المراقبة بنجاح",
+    "تمت إزالة المزاد من قائمة المراقبة بنجاح",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
-    "تم إضافة هذا المزاد إلى قائمة المراقبة بنجاح",
+    "تمت الإضافة إلى قائمة المراقبة الخاصة بك بنجاح",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "تم تعديل كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",

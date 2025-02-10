@@ -396,7 +396,7 @@ const Header = ({ SetSid }) => {
 
   return (
     <div className="w-full fixed top-0 z-50 bg-white/90 backdrop-blur-md">
-      <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4 w-full px-4 md:px-8 lg:px-12">
+      <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4 w-full px-4 md:px-6 lg:px-8">
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
             className="cursor-pointer hidden md:block"
@@ -579,7 +579,7 @@ const Header = ({ SetSid }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="py-[6px] flex gap-x-10 w-full px-4 md:px-8 lg:px-12">
+        <div className="py-[6px] flex gap-x-10 w-full px-4 md:px-6 lg:px-8">
           <Input
             className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR"
             icon="search"
