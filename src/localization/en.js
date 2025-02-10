@@ -544,9 +544,9 @@ const en = {
     "oops, sorry something with wrong please make sure everything is correct and try again",
   // success
   [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
-    "This auction delete from WatchList been successfully",
+    "Auction removed from Watchlist successfully",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
-    "This auction add to watchList been successfully",
+    "Added to your Watchlist successfull",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "he Password Has Been Edit Successfully",
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",

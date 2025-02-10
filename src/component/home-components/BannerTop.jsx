@@ -59,9 +59,15 @@ const BannerTop = () => {
     }
   };
 
+  // Dynamic height based on screen width
+  const bannerHeight = isMobile ? "130px" : "32rem";
+
   return (
-    <div className="relative w-full mt-10 mx-auto">
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-[29rem]">
+    <div className="relative w-full  mx-auto">
+      <div
+        className="relative overflow-hidden h-120px sm:h-[28vh] md:h-[35vh] lg:h-[34rem]"
+        style={{ height: bannerHeight }}
+      >
         {images.map((image, index) => {
           const isActive = currentIndex === index;
           let position = isActive
@@ -79,7 +85,7 @@ const BannerTop = () => {
             >
               <img
                 src={image}
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-cover"
                 alt={`Slide ${index + 1}`}
               />
             </div>
@@ -87,7 +93,7 @@ const BannerTop = () => {
         })}
       </div>
 
-      {images.length > 0 && (
+      {/* {images.length > 0 && (
         <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2">
           {images.map((_, index) => (
             <button
@@ -102,9 +108,9 @@ const BannerTop = () => {
             ></button>
           ))}
         </div>
-      )}
+      )} */}
 
-      {images.length > 0 && (
+      {/* {images.length > 0 && (
         <>
           <button
             type="button"
@@ -141,7 +147,7 @@ const BannerTop = () => {
             </svg>
           </button>
         </>
-      )}
+      )} */}
     </div>
   );
 };

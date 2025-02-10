@@ -12,7 +12,6 @@ import api from 'api'
 import toast from 'react-hot-toast'
 
 const UnSubscribeModal = ({open,onClose}) => {
-    console.log('***************')
 const history = useHistory()
 const {run, isLoading} = useAxios([])
 const [email,setEmail] = useState('')

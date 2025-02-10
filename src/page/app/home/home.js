@@ -152,20 +152,17 @@ const Home = () => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="z-20 md:h-[464px] w-full h-[200px] px-4 mx-auto py-10 ">
-        {/* <ImageSlider
-          myRef={myRef}
-          images={sponsoredAuctions?.map((img) => img?.product?.images)}
-          slidesData={sponsoredAuctions}
-          emtystateImg={bigSliderEmtyState}
-        /> */}
+      <div className="z-20  w-full px-4 mx-auto py-5">
         <BannerTop />
       </div>
-      <div className="pt-10 text-center mt-16 md:mt-0">
-        <h1 ref={myRef} className="text-gray-dark text-base font-bold ">
+      <div className="text-center mt-1 md:mt-3 lg:mt-5">
+        <h1
+          ref={myRef}
+          className="text-gray-dark text-base font-bold md:text-2xl lg:text-3xl"
+        >
           {selectedContent[localizationKeys.popularCategories]}
         </h1>
-        <p className="text-gray-med text-base font-normal">
+        <p className="text-gray-med text-base font-normal md:text-lg lg:text-xl">
           {selectedContent[localizationKeys.PopularPicksPerfectChoices]}
         </p>
       </div>
