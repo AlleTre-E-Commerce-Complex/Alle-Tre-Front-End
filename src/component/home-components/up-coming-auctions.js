@@ -130,7 +130,6 @@ const UpComingAuctionsSlider = () => {
                   {auctions?.map((e) => (
                     <div key={e?.id} className="snapslider-card swiper-slide">
                       <AuctionCard
-                        className="min-w-[272px]"
                         auctionId={e?.id}
                         startBidAmount={e?.startBidAmount || e?.acceptedAmount}
                         title={e?.product?.title}

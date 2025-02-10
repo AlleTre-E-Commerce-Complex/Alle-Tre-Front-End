@@ -210,7 +210,7 @@ const SummaryListedSection = () => {
                 const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
                 window.open(whatsappUrl, "_blank");
               }}
-              className="border-primary border-[1px] text-primary md:w-[120px] w-full h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
+              className="border-primary border-[1px] text-primary md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
             >
               <FaWhatsapp />
               <span>{selectedContent[localizationKeys.chat]}</span>
@@ -218,11 +218,12 @@ const SummaryListedSection = () => {
 
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-primary hover:bg-primary-dark text-white md:w-[120px] w-full h-[40px] rounded-lg flex items-center justify-center space-x-2"
+              className="bg-primary hover:bg-primary-dark text-white md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
             >
               <IoCall />
               <span> {selectedContent[localizationKeys.call]}</span>
             </button>
+
             <PhoneNumberModal
               openModal={isModalOpen}
               phoneNumber={listedProductsData?.user?.phone}

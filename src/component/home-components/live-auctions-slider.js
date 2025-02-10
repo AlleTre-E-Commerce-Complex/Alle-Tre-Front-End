@@ -130,7 +130,6 @@ const LiveAuctionsSlider = ({ type }) => {
                   {auctions?.map((e) => (
                     <div className="snapslider-card swiper-slide">
                       <AuctionCard
-                        className="min-w-[272px]"
                         auctionId={e?.id}
                         price={e?.startBidAmount || e?.acceptedAmount}
                         title={e?.product?.title}

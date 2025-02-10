@@ -137,7 +137,6 @@ const BuyNowAuctionsSlider = () => {
                     >
                       <AuctionCard
                         isExpired={e?.status === "EXPIRED"}
-                        className="min-w-[272px]"
                         auctionId={e?.id}
                         price={e?.acceptedAmount || e?.startBidAmount}
                         title={e?.product?.title}

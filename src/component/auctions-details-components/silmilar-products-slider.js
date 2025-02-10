@@ -135,7 +135,6 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                 <div className="snapslider-card swiper-slide">
                   {isListProduct ? (
                     <ProductCard
-                      className="min-w-[272px]"
                       price={e?.ProductListingPrice}
                       title={e?.title}
                       imageLink={e?.images[0].imageLink}
@@ -145,7 +144,6 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                     />
                   ) : (
                     <AuctionCard
-                      className="min-w-[272px]"
                       auctionId={e?.id}
                       startBidAmount={e?.acceptedAmount || e?.startBidAmount}
                       title={e?.product?.title}

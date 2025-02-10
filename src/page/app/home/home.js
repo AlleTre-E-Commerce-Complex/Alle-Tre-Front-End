@@ -208,7 +208,7 @@ const Home = () => {
         </div>
       </div>
       <div className=" lg:mx-auto mx-2">
-        <div className="flex gap-5  lg:mx-auto mx-2">
+        <div className="flex gap-5  px-4 mx-2 ">
           {/* left filter sections */}
           <FilterSections myRef={myRef} />
           {/* right card sections */}
@@ -236,7 +236,7 @@ const Home = () => {
           ) : (
             <div className="w-full">
               {isGrid ? (
-                <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 sm:gap-4 gap-2 h-fit mx-auto w-full">
+                <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                   {mainAuctions?.map((e) => (
                     <AuctionCard
                       key={e?.id}
@@ -254,7 +254,6 @@ const Home = () => {
                       latestBidAmount={e?.bids[0]?.amount}
                       CurrentBid={e?.currentBid?.bidAmount}
                       startBidAmount={e?.startBidAmount}
-                      className="w-full max-w-none" // Ensure card takes full available width
                     />
                   ))}
                 </div>

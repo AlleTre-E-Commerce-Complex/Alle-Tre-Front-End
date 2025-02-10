@@ -23,13 +23,13 @@ const ConfirmationModal = ({ open, onClose, onConfirm, message }) => {
         <div className="flex justify-center gap-x-6 pt-6">
           <button
             onClick={onClose}
-            className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
+            className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[30px] md:h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
           >
             {selectedContent[localizationKeys.cancel]}
           </button>
           <button
             onClick={onConfirm}
-            className="bg-primary text-white w-[120px] h-[40px] rounded-lg text-base font-normal hover:bg-primary-dark"
+            className="bg-primary text-white w-[120px] h-[30px] md:h-[40px] rounded-lg text-base font-normal hover:bg-primary-dark"
           >
             {selectedContent[localizationKeys.delete]}
           </button>

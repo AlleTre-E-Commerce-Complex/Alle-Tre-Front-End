@@ -213,7 +213,7 @@ const ar = {
   [localizationKeys.addressLabel]: "علامة للعنوان",
   [localizationKeys.mobile]: "Mobile",
   [localizationKeys.zipCode]: "الرمز البريدي",
-  [localizationKeys.successAddLocatons]: "إضافة موقع النجاح",
+  [localizationKeys.successAddLocatons]: "تمت إضافة الموقع بنجاح",
   [localizationKeys.add]: "إضافة",
   [localizationKeys.selectCountry]: "تحديد البلد",
   [localizationKeys.selectCity]: "اختر المدينة",
@@ -548,7 +548,8 @@ const ar = {
   [localizationKeys.nameHasBeenEditSuccessfully]: "تم تحرير الاسم بنجاح",
   [localizationKeys.yourAuctionSuccessfullySavedAsDraft]:
     "تم حفظ المزاد الخاص بك بنجاح كمسودة",
-  [localizationKeys.yourAuctionIsCreatedSuccess]: "تم إنشاء مزادك بنجاح",
+  [localizationKeys.yourAuctionIsCreatedSuccess]:
+    "لقد تم إنشاء المزاد الخاص بك بنجاح",
   [localizationKeys.yourProductIsSuccessfullyListed]: "تم إدراج منتجك بنجاح",
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "تأكد من اختيار موقع المزاد أو إنشاء موقع آخر",
