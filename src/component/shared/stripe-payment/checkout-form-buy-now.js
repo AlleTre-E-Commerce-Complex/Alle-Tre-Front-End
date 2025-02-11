@@ -4,11 +4,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button } from "semantic-ui-react";
+import { Button, Dimmer } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
+import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 
 export default function CheckoutFormBuyNow({ payPrice }) {
   const history = useHistory();
@@ -16,6 +17,8 @@ export default function CheckoutFormBuyNow({ payPrice }) {
   const elements = useElements();
 
   const [isLoading, setIsLoading] = useState(false);
+    const [isStripeLoading, setIsStripeLoading] = useState(true)
+  
 
   useEffect(() => {
     if (!stripe) {
@@ -86,8 +89,17 @@ export default function CheckoutFormBuyNow({ payPrice }) {
   };
 
   return (
+    <div>
+    <Dimmer
+      className="fixed w-full h-full top-0 bg-white/50"
+      active={isLoading || isStripeLoading}
+      inverted
+    >
+      {/* <Loader active /> */}
+      <LodingTestAllatre />
+    </Dimmer>
     <form className="w-full mx-auto" id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
+      <PaymentElement id="payment-element" options={paymentElementOptions} onReady={()=>setIsStripeLoading(false)}/>
       <Button
         className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"
         loading={isLoading}
@@ -97,5 +109,6 @@ export default function CheckoutFormBuyNow({ payPrice }) {
         Pay {formatCurrency(payPrice)}
       </Button>
     </form>
+    </div>
   );
 }
