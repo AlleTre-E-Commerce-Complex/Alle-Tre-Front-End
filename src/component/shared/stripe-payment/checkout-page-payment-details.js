@@ -97,14 +97,14 @@ export default function CheckoutPagePaymentDetails() {
             auctionData.product.category.sellerDepositFixedAmount;
 
           if (auctionData) {
-            const pendingPeymentData = await authAxios.get(
-              `${api.app.auctions.isPendingPayment(
-                auctionId,
-                "SELLER_DEPOSIT"
-              )}`
-            );
+            // const pendingPeymentData = await authAxios.get(
+            //   `${api.app.auctions.isPendingPayment(
+            //     auctionId,
+            //     "SELLER_DEPOSIT"
+            //   )}`
+            // );
 
-            if (!pendingPeymentData?.data?.isPendingPaymentData) {
+            // if (!pendingPeymentData?.data?.isPendingPaymentData) {
               run(
                 authAxios
                   .get(`${api.app.Wallet.getBalance}`)
@@ -119,9 +119,9 @@ export default function CheckoutPagePaymentDetails() {
                     }
                   })
               );
-            } else {
-              stripePaymentApiCall();
-            }
+            // } else {
+            //   stripePaymentApiCall();
+            // }
           }
         })
     );
@@ -205,7 +205,7 @@ export default function CheckoutPagePaymentDetails() {
       )}
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading && isLoadingPendingAuctionData}
+        active={isLoading || isLoadingPendingAuctionData}
         inverted
       >
         {/* <Loader active /> */}
@@ -347,12 +347,11 @@ export default function CheckoutPagePaymentDetails() {
                 <WalletPayment
                   setIsPaymentCompleted={setIsPaymentCompleted}
                   auctionId={auctionId}
-                  amount={
-                    pendingAuctionData?.product?.category
-                      ?.bidderDepositFixedAmount
-                  }
+                  amount={pendingAuctionData?.product?.category?.bidderDepositFixedAmount}
                   walletBalance={walletBalance}
                   paymentAPI={api.app.auctions.walletPayForAuction}
+                  setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
+                  setShowWalletPaymentMethod={ ()=>(setShowWalletPaymentMethod(false))}
                 />
               )}
             </div>

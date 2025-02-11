@@ -34,7 +34,7 @@ export default function CheckoutPageBuyNow() {
   const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-
+  // const [payingAmount, setPayingAmount] =  useState(0)
   const buyNowValue = useSelector((state) => state?.bidAmount?.buyNow);
 
   const { auctionId } = useParams();
@@ -62,11 +62,12 @@ export default function CheckoutPageBuyNow() {
           const amountToPay = auctionData.acceptedAmount 
         
           if(auctionData){
-            const pendingPeymentData = 
-              await authAxios.get(`${api.app.auctions.isPendingPayment(
-                auctionId,'BUY_NOW_PURCHASE')}`)
-            console.log('pending payment data :',pendingPeymentData)
-            if(!pendingPeymentData?.data?.isPendingPaymentData){
+            // const pendingPeymentData = 
+            //   await authAxios.get(`${api.app.auctions.isPendingPayment(
+            //     auctionId,'BUY_NOW_PURCHASE')}`)
+            // console.log('pending payment data :',pendingPeymentData)
+
+            // if(!pendingPeymentData?.data?.isPendingPaymentData){
               run(
                 authAxios.get(`${api.app.Wallet.getBalance}`)
                 .then((response)=>{ 
@@ -83,9 +84,9 @@ export default function CheckoutPageBuyNow() {
                 })
                 
               )
-            }else{
-              stripePaymentApiCall()
-            }
+            // }else{
+            //   stripePaymentApiCall()
+            // }
            
           }
         })
@@ -144,14 +145,21 @@ export default function CheckoutPageBuyNow() {
   };
 
   const baseValue = Number(buyNowValue ?? pendingAuctionData?.acceptedAmount);
-const payingAmount = baseValue + (baseValue * 0.5) / 100;
+  const auctionFee = ((baseValue * 0.5) / 100)
+  const stripeFee = (((baseValue * 2.9) /100) + 1 )// stripe takes 2.9% of the base value and additionally 1 dirham
 
+
+  const payingAmount = !walletBalance ?
+    baseValue + auctionFee+ stripeFee
+  : showStripePayment ?
+    baseValue + auctionFee + stripeFee
+  : baseValue + auctionFee;
 
   return (
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading && isLoadingPendingAuctionData}
+        active={isLoading || isLoadingPendingAuctionData}
         inverted
       >
         {/* <Loader active /> */}
@@ -233,6 +241,30 @@ const payingAmount = baseValue + (baseValue * 0.5) / 100;
                       {formatCurrency(pendingAuctionData?.acceptedAmount)}
                     </p>
                   </p>
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Auction Fee
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {formatCurrency(auctionFee)}
+                    </p>
+                  </p>
+               { clientSecret&&    <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Card Fee
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {formatCurrency(stripeFee)}
+                    </p>
+                  </p>}
+                  <p className="flex justify-between px-4 py-1.5">
+                    <h1 className="text-gray-dark font-medium text-sm">
+                      Total
+                    </h1>
+                    <p className="text-gray-med font-normal text-base">
+                      {formatCurrency(payingAmount)}
+                    </p>
+                  </p>
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
                   If you want to check Auctions policy you can check{" "}
@@ -281,6 +313,8 @@ const payingAmount = baseValue + (baseValue * 0.5) / 100;
                 amount={payingAmount}
                 walletBalance={walletBalance}
                 paymentAPI={api.app.auctions.buyNowThroughWallet(auctionId)}
+                setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
+                setShowWalletPaymentMethod={ ()=>(setShowWalletPaymentMethod(false))}
               />
               }
             </div>

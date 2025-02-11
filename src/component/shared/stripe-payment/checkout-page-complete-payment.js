@@ -40,10 +40,7 @@ export default function CheckoutPageCompletePayment() {
     (state) => state?.completePayment?.completePaymentData
   );
 
-  // const payingAmount = Number(completedPaymentData?.lastPrice) + (Number(completedPaymentData?.lastPrice) * 0.5)/100
-const baseAmount = Number(completedPaymentData?.lastPrice) || 0; // Default to 0 if undefined
-const feePercentage = 0.5 / 100; // 0.5%
-const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
+
 
   const { auctionId } = useParams();
 
@@ -73,13 +70,13 @@ const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
           const auctionData = res?.data?.data;
           const amountToPay = payingAmount;
           if (auctionData) {
-            const pendingPeymentData = await authAxios.get(
-              `${api.app.auctions.isPendingPayment(
-                completedPaymentData?.auctionsId,
-                "AUCTION_PURCHASE"
-              )}`
-            );
-            if (!pendingPeymentData?.data?.isPendingPaymentData) {
+            // const pendingPeymentData = await authAxios.get(
+            //   `${api.app.auctions.isPendingPayment(
+            //     completedPaymentData?.auctionsId,
+            //     "AUCTION_PURCHASE"
+            //   )}`
+            // );
+            // if (!pendingPeymentData?.data?.isPendingPaymentData) {
               run(
                 authAxios
                   .get(`${api.app.Wallet.getBalance}`)
@@ -94,9 +91,9 @@ const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
                     setShwoPaymentSelection(true);
                   })
               );
-            } else {
-              stripePaymentApiCall();
-            }
+            // } else {
+            //   stripePaymentApiCall();
+            // }
           }
         })
     );
@@ -161,11 +158,21 @@ const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  // const payingAmount = Number(completedPaymentData?.lastPrice) + (Number(completedPaymentData?.lastPrice) * 0.5)/100
+  const baseValue = Number(completedPaymentData?.lastPrice);
+  const auctionFee = ((baseValue * 0.5) / 100)
+  const stripeFee = (((baseValue * 2.9) /100) + 1 )
+  const payingAmount = !walletBalance ?
+  baseValue + auctionFee+ stripeFee
+  : showStripePayment ?
+  baseValue + auctionFee + stripeFee
+  : baseValue + auctionFee;
+
   return (
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading && isLoadingPendingAuctionData}
+        active={isLoading || isLoadingPendingAuctionData}
         inverted
       >
         {/* <Loader active /> */}
@@ -243,6 +250,30 @@ const payingAmount = Math.round(baseAmount + (baseAmount * feePercentage));
                       {formatCurrency(completedPaymentData?.lastPrice)}
                     </p>
                   </p>
+                     <p className="flex justify-between px-4 py-1.5">
+                      <h1 className="text-gray-dark font-medium text-sm">
+                        Auction Fee
+                      </h1>
+                      <p className="text-gray-med font-normal text-base">
+                        {formatCurrency(auctionFee)}
+                      </p>
+                    </p>
+                  { clientSecret &&    <p className="flex justify-between px-4 py-1.5">
+                      <h1 className="text-gray-dark font-medium text-sm">
+                        Card Fee
+                      </h1>
+                      <p className="text-gray-med font-normal text-base">
+                        {formatCurrency(stripeFee)}
+                      </p>
+                    </p>}
+                    <p className="flex justify-between px-4 py-1.5">
+                      <h1 className="text-gray-dark font-medium text-sm">
+                        Total
+                      </h1>
+                      <p className="text-gray-med font-normal text-base">
+                        {formatCurrency(payingAmount)}
+                      </p>
+                    </p>
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
                   If you want to check Auctions policy you can check{" "}
