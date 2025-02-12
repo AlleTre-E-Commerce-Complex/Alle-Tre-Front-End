@@ -364,6 +364,11 @@ const Header = ({ SetSid }) => {
       history.push(routes.app.profile.myBids.default);
     } else dispatch(Open());
   };
+  const handelmyProducts = () => {
+    if (user) {
+      history.push(routes.app.profile.myProducts.default);
+    } else dispatch(Open());
+  };
   const handelWatchlist = () => {
     if (user) {
       history.push(routes.app.profile.watchlist);
@@ -446,6 +451,11 @@ const Header = ({ SetSid }) => {
                 key: localizationKeys.myBids,
                 path: routes.app.profile.myBids.default,
                 handler: handelmyBids,
+              },
+              {
+                key: localizationKeys.myProducts,
+                path: routes.app.profile.myProducts.default,
+                handler: handelmyProducts,
               },
               {
                 key: localizationKeys.watchlist,

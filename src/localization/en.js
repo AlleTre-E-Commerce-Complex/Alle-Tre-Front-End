@@ -46,6 +46,7 @@ const en = {
     "You have been successfully unsubscribed.",
   [localizationKeys.unsubscriptionFailed]: "Unsubscribe failed.",
   [localizationKeys.myBids]: "My Bids",
+  [localizationKeys.myProducts]: "My Products",
   [localizationKeys.categories]: "Categories",
   [localizationKeys.watchlist]: "Watchlist",
   [localizationKeys.faqs]: "FAQs",
@@ -65,6 +66,7 @@ const en = {
   [localizationKeys.brand]: "Brand",
   [localizationKeys.sellingType]: "Selling Type",
   [localizationKeys.auction]: "Auction",
+  [localizationKeys.products]: "Products",
   [localizationKeys.buyNow]: "Buy Now",
   [localizationKeys.expiredAuctions]: "Expired Auctions",
   [localizationKeys.deliveryPolicy]: "Delivery Policy",
@@ -98,6 +100,7 @@ const en = {
   [localizationKeys.createAuction]: "Create Auction",
   [localizationKeys.listProduct]: "List Product",
   [localizationKeys.price]: "Price",
+  [localizationKeys.changeProductStatus]: "Change Product Status Here",
   [localizationKeys.myAccount]: "My Account",
   [localizationKeys.iamBiddingOn]: "I'm Bidding On",
   [localizationKeys.iHaveBought]: "I've Bought",
@@ -447,6 +450,8 @@ const en = {
   [localizationKeys.startBidding]: "Starting bidding",
   [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:
     "There are no active bids at the moment. Place your first bid now!",
+    [localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]:
+    "There are no listed products at the moment. List your first product now!",
   [localizationKeys.increaseBid]: "Increase Bid",
   [localizationKeys.inPrsubmitNewBidogress]: "Submit new bid",
   [localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow]:
@@ -469,7 +474,9 @@ const en = {
   [localizationKeys.submitNewBid]: "Submit New Bid",
   [localizationKeys.AnyObjection]: "Any Objections?",
   [localizationKeys.AllMyBids]: "All My Bids",
+  [localizationKeys.AllMyProducts]: "All My Products",
   [localizationKeys.InProgress]: "In Progress",
+  [localizationKeys.outOfStock]: "Out Of Stock",
   [localizationKeys.Pending]: "Pending",
   [localizationKeys.completedAuction]: "Completed Auction",
   [localizationKeys.cancelledAuctions]: "Cancelled Auctions",

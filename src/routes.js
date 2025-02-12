@@ -43,6 +43,7 @@ const routes = {
       default: `/alletre/home/list-product`,
       details: (productId = ":productId") =>
         `/alletre/my-product/${productId}/details`,
+      listProductLocationDetails: `/alletre/my-products/add-location`
     },
     profile: {
       default: `/alletre/profile`,
@@ -93,6 +94,13 @@ const routes = {
           `/alletre/profile/my-bids/completed/${auctionId}/details`,
 
         completePayment: `/alletre/profile/my-bids/pending/complete-payment`,
+      },
+
+      myProducts: {
+        default: `/alletre/profile/my-products`,
+        inPogress: `/alletre/profile/my-products/in-pogress`,
+        outOfStock: `/alletre/profile/my-products/out-of-stock`,
+        soldOut: `/alletre/profile/my-products/sold-out`,
       },
 
       watchlist: `/alletre/profile/watchlist`,

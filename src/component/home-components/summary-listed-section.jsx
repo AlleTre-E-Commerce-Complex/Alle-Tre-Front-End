@@ -26,6 +26,7 @@ import AuctionDetailsTabs from "component/auctions-details-components/auction-de
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
+  const [mainLocation, setMainLocation] = useState()
   console.log("listedPdroduct", listedProductsData);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,10 +37,23 @@ const SummaryListedSection = () => {
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
 
-  const mainLocation = listedProductsData?.user?.locations?.find(
-    (location) => location.isMain
-  );
 
+
+  useEffect(() => {
+
+    run(
+      authAxios
+        .get(`${api.app.productListing.listedProduct(productId)}`)
+        .then((res) => {
+          console.log('112233',res.data.data)
+          setListedProductsData(res?.data?.data?.product);
+          setMainLocation(res?.data?.data?.location)
+        })
+        .catch((error) => {
+          console.log('summery listed section error:',error)
+        })
+    );
+  }, [run, productId]);
   const lat = mainLocation?.lat;
   const lng = mainLocation?.lng;
   const mapUrl =
@@ -48,17 +62,6 @@ const SummaryListedSection = () => {
           `${lat},${lng}`
         )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`
       : null;
-
-  useEffect(() => {
-    run(
-      authAxios
-        .get(`${api.app.productListing.listedProduct(productId)}`)
-        .then((res) => {
-          setListedProductsData(res?.data?.data);
-        })
-        .catch((error) => {})
-    );
-  }, [run, productId]);
 
   return (
     <div>

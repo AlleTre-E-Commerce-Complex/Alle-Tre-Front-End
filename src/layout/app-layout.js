@@ -37,6 +37,7 @@ import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal
 import ListProductDetails from "page/app/ListProduct/List-product-details";
 import { FaPlus } from "react-icons/fa6";
 import SummaryListedSection from "component/home-components/summary-listed-section";
+import ListingProductsLocationDetails from "page/app/ListProduct/List-location-details";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
@@ -188,6 +189,7 @@ const AppLayouts = () => {
               path={routes.app.createAuction.auctionDetails}
               component={AuctionDetails}
             />
+            
             <Route
               path={routes.app.createAuction.productDetails}
               component={ProductDetails}
@@ -199,6 +201,10 @@ const AppLayouts = () => {
             <Route
               path={routes.app.listProduct.default}
               component={ListProductDetails}
+            />
+            <Route
+              path={routes.app.listProduct.listProductLocationDetails}
+              component={ListingProductsLocationDetails}
             />
             <Route
               path={routes.app.listProduct.details()}

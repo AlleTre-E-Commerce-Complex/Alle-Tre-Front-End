@@ -45,6 +45,7 @@ const ar = {
   [localizationKeys.unsubscribedSuccessfully]: "لقد تم إلغاء اشتراكك بنجاح",
   [localizationKeys.unsubscriptionFailed]: "فشل إلغاء الاشتراك",
   [localizationKeys.myBids]: "مزاياداتي",
+  [localizationKeys.myProducts]: "منتجاتي",
   [localizationKeys.categories]: "الفئات",
   [localizationKeys.watchlist]: "قائمة المراقبة",
   [localizationKeys.faqs]: "الأسئلة الشائعة",
@@ -64,6 +65,7 @@ const ar = {
   [localizationKeys.brand]: "العلامة التجارية",
   [localizationKeys.sellingType]: "نوع البيع",
   [localizationKeys.auction]: "مزاد",
+  [localizationKeys.products]: "منتجات",
   [localizationKeys.buyNow]: "اشتري الآن",
   [localizationKeys.expiredAuctions]: "المزادات المنتهية",
   [localizationKeys.deliveryPolicy]: "سياسة التسليم ",
@@ -94,6 +96,7 @@ const ar = {
   [localizationKeys.listProduct]: "اضف اعلان",
   [localizationKeys.price]: "سعر",
   [localizationKeys.myAccount]: "حسابي",
+  [localizationKeys.changeProductStatus]: "تغيير حالة المنتج هنا",
   [localizationKeys.iamBiddingOn]: "أنا أقوم بالمزايدة على",
   [localizationKeys.iHaveBought]: "لقد اشتريت",
   [localizationKeys.bidsIHaveReceived]: "العطاءات التي استلمتها",
@@ -442,6 +445,8 @@ const ar = {
   [localizationKeys.startBidding]: "بدء المزايدة",
   [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:
     "لا توجد عروض نشطة في الوقت الحالي. قم بتقديم عرضك الأول الآن!",
+    [localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]:
+    "لا توجد منتجات مدرجة في الوقت الحالي. قم بإدراج منتجك الأول الآن!",
   [localizationKeys.increaseBid]: "زيادة العطاء",
   [localizationKeys.inPrsubmitNewBidogress]: "تقديم عطاء جديد",
   [localizationKeys.ThereIsNoBidsYetPendingAuctionsRightNow]:
@@ -464,7 +469,9 @@ const ar = {
   [localizationKeys.submitNewBid]: "تقديم مزايدة جديد",
   [localizationKeys.AnyObjection]: "أي اعتراضات؟",
   [localizationKeys.AllMyBids]: "كل عرضي",
+  [localizationKeys.AllMyProducts]: "جميع منتجاتي",
   [localizationKeys.InProgress]: "قيد التنفيذ",
+  [localizationKeys.outOfStock]: "إنتهى من المخزن",
   [localizationKeys.Pending]: "المعلقه",
   [localizationKeys.completedAuction]: "المزاد المكتمل",
   [localizationKeys.cancelledAuctions]: "المزادات الملغية",
