@@ -38,6 +38,9 @@ const en = {
   [localizationKeys.sentVerification]: "Send verification",
   [localizationKeys.securityDeposit]: "Security Deposit",
   // home
+  [localizationKeys.filterOptions]: "Filter options",
+  [localizationKeys.selectOptions]: "Select Options",
+  [localizationKeys.clearAll]: "Clear All",
   [localizationKeys.subscribedSuccessfully]: "subscribed successfully",
   [localizationKeys.unsubscribedSuccessfully]:
     "You have been successfully unsubscribed.",

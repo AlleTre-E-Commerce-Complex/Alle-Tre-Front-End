@@ -132,7 +132,7 @@ const ProductCard = ({
         <div className="w-[160px] h-[100px] sm:w-[210px] sm:h-[125px] rounded-lg bg-[#F9F9F9] relative overflow-hidden flex items-start justify-start">
           <div className=" group">
             <div className="absolute top-0 right-0 z-30 flex items-center space-x-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
-               {/* {!isMyAuction && (
+              {/* {!isMyAuction && (
                 <button
                   onClick={() => handelAddNewWatshlist(id)}
                   className="border-primary border-2 border-solid bg-white group/watchlist rounded-xl w-10 h-10 md:w-12 md:h-12 hover:bg-primary transition-all duration-300 cursor-pointer flex items-center justify-center"
@@ -154,7 +154,7 @@ const ProductCard = ({
           </div>
 
           <img
-            className="w-full h-full mx-auto rounded-lg object-contain group-hover:scale-110 duration-300 ease-in-out transform  "
+            className="w-full h-full mx-auto rounded-lg object-scale-down group-hover:scale-110 duration-300 ease-in-out transform  "
             src={imageLink}
             alt="adsImd"
             onClick={() => handelGoDetails(id)}
