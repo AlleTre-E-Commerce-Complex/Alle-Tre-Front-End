@@ -51,6 +51,7 @@ const ListedProducts = () => {
             )
             .then((res) => {
               setListedProducts(res?.data?.data);
+              console.log('res......',res.data.data)
               setPagination(res?.data?.pagination);
             })
         );
@@ -126,29 +127,29 @@ const ListedProducts = () => {
                       : "md:justify-center justify-start"
                   } snapslider-scroll swiper-wrapper py-2`}
                 >
-                  {listedProducts?.map((product) => (
+                  {listedProducts?.map((listedData) => (
                     <div
                       className="snapslider-card swiper-slide"
                       // onClick={handelGoDetails(product.id)}
                     >
                       <ProductCard
-                        price={product?.ProductListingPrice}
-                        title={product?.title}
-                        imageLink={product?.images[0].imageLink}
-                        id={product?.id}
-                        location={product?.user?.locations[0]?.address}
+                        price={listedData?.product?.ProductListingPrice}
+                        title={listedData?.product?.title}
+                        imageLink={listedData?.product?.images[0].imageLink}
+                        id={listedData?.product?.id}
+                        location={listedData?.product?.user?.locations[0]?.address}
                         city={
                           lang === "en"
-                            ? product?.user?.locations[0]?.city?.nameEn
-                            : product?.user?.locations[0]?.city?.nameAr
+                            ? listedData?.product?.user?.locations[0]?.city?.nameEn
+                            : listedData?.product?.user?.locations[0]?.city?.nameAr
                         }
                         country={
                           lang === "en"
-                            ? product?.user?.locations[0]?.country?.nameEn
-                            : product?.user?.locations[0]?.country?.nameAr
+                            ? listedData?.product?.user?.locations[0]?.country?.nameEn
+                            : listedData?.product?.user?.locations[0]?.country?.nameAr
                         }
-                        createdAt={product?.user?.createdAt}
-                        // WatshlistState={product?.isSaved}
+                        createdAt={listedData?.product?.user?.createdAt}
+                        // WatshlistState={listedData?.product?.isSaved}
                       />
                     </div>
                   ))}

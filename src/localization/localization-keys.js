@@ -40,6 +40,7 @@ const localizationKeys = {
   unsubscribedSuccessfully: "unsubscribedSuccessfully",
   unsubscriptionFailed: "unsubscriptionFailed",
   myBids: "myBids",
+  myProducts: "myProducts",
   categories: "categories",
   watchlist: "watchlist",
   faqs: "faqs",
@@ -70,6 +71,7 @@ const localizationKeys = {
   brand: "brand",
   sellingType: "sellingType",
   auction: "auction",
+  products: "products",
   comingSoon: "comingSoon",
   liveAuction: "liveAuction",
   auctionState: "auctionState",
@@ -90,6 +92,7 @@ const localizationKeys = {
   createAuction: "createAuction",
   listProduct: "listProduct",
   price: "Price",
+  changeProductStatus: 'changeProductStatus',
   myAccount: "myAccount",
   iamBiddingOn: "iamBiddingOn",
   iHaveBought: "iHaveBought",
@@ -134,6 +137,8 @@ const localizationKeys = {
   soldOut: "soldOut",
   expired: "expired",
   inProgress: "inProgress",
+  outOfStock: "outOfStock",
+  
   // Breadcrumb
   home: "home",
   productDetails: "productDetails",
@@ -396,6 +401,8 @@ const localizationKeys = {
   startBidding: "startBidding",
   thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow:
     "thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow",
+    thereAreNoListedProductsAtTheMomentListYouFirstProductNow:
+    "thereAreNoListedProductsAtTheMomentListYouFirstProductNow",
   increaseBid: "increaseBid",
   submitNewBid: " submitNewBid",
   ThereIsNoBidsYetPendingAuctionsRightNow:
@@ -418,6 +425,7 @@ const localizationKeys = {
   ChangedDefaultAdrress: "changedDefaultAdrress",
   AnyObjection: "AnyObjection",
   AllMyBids: "allMyBids",
+  AllMyProducts: "AllMyProducts",
   InProgress: "inProgress",
   Pending: "pending",
   completedAuction: "completedAuction",

@@ -9,11 +9,13 @@ import socketAuctionIdSlice from "./socket-auctionId-slice";
 import walletBalanceSlice from "./wallet-balance-slice";
 import welcomeBonusSlice from "./welcom-bonus-slice";
 import blockedUserSlice from "./blocked-user-slice"
+import listingProductDetailsSlice  from "./ListingProduct-details-slice";
 
 export const store = configureStore({
   reducer: {
     toggle: toggleReducer,
     productDetails: productDetailsSlice,
+    listingProductDetails: listingProductDetailsSlice,
     auctionDetails: auctionDetailsSlice,
     profileData: pofileDataSlice,
     bidAmount: bidAmountSlice,

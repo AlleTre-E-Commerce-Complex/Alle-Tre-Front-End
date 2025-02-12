@@ -36,6 +36,7 @@ import LodingTestAllatre from "../../../component/shared/lotties-file/loding-tes
 import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
+import { listingProductDetails } from "redux-store/ListingProduct-details-slice";
 
 const ListProductDetails = () => {
   const [lang] = useLanguage("");
@@ -49,11 +50,11 @@ const ListProductDetails = () => {
 
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
-  //   const productDetailsint = useSelector(
-  //     (state) => state.productDetails.productDetails
-  //   );
+    // const productDetailsint = useSelector(
+    //   (state) => state.listingProductDetails.listingProductDetails
+    // );
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
@@ -208,141 +209,139 @@ const ListProductDetails = () => {
     ).length;
     if (filesCount >= 3) {
       if (valueRadio) {
-        const formData = new FormData();
-        formData.append("product[title]", values.itemName);
-        formData.append("product[ProductListingPrice]", values.itemPrice);
-        formData.append("product[categoryId]", values.category);
-        if (values.subCategory) {
-          formData.append("product[subCategoryId]", values.subCategory);
-        }
-        if (values.brand) {
-          formData.append("product[brand]", values.brand);
-        }
-        if (values.valueRadio) {
-          formData.append("product[usageStatus]", values.valueRadio);
-        }
-        if (values.color) {
-          formData.append("product[color]", values.color);
-        }
-        if (values.age) {
-          formData.append("product[age]", values.age);
-        }
-        if (values.landType) {
-          formData.append("product[landType]", values.landType);
-        }
-        if (values.cameraType) {
-          formData.append("product[cameraType]", values.cameraType);
-        }
-        if (values.carType) {
-          formData.append("product[carType]", values.carType);
-        }
-        if (values.material) {
-          formData.append("product[material]", values.material);
-        }
-        if (values.memory) {
-          formData.append("product[memory]", values.memory);
-        }
-        if (values.model) {
-          formData.append("product[model]", values.model);
-        }
-        if (values.processor) {
-          formData.append("product[processor]", values.processor);
-        }
-        if (values.ramSize) {
-          formData.append("product[ramSize]", values.ramSize);
-        }
-        if (values.releaseYear) {
-          formData.append("product[releaseYear]", values.releaseYear);
-        }
-        if (values.screenSize) {
-          formData.append("product[screenSize]", values.screenSize);
-        }
-        if (values.totalArea) {
-          formData.append("product[totalArea]", values.totalArea);
-        }
-        if (values.operatingSystem) {
-          formData.append("product[operatingSystem]", values.operatingSystem);
-        }
-        if (values.regionOfManufacture) {
-          formData.append(
-            "product[regionOfManufacture]",
-            values.regionOfManufacture
-          );
-        }
-        if (values.numberOfFloors) {
-          formData.append("product[numberOfFloors]", values.numberOfFloors);
-        }
-        if (values.numberOfRooms) {
-          formData.append("product[numberOfRooms]", values.numberOfRooms);
-        }
-        if (values.itemDescription) {
-          formData.append("product[description]", values.itemDescription);
-        }
-        if (values.countryId) {
-          formData.append("product[countryId]", values.countryId);
-        }
-        if (values.cityId) {
-          formData.append("product[cityId]", values.cityId);
-        }
-        // if (offerDataInt.IsOfferPrice) {
-        //   formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
-        //   formData.append("product[offerAmount]", offerDataInt.offerAmount);
+        // const formData = new FormData();
+        // formData.append("product[title]", values.itemName);
+        // formData.append("product[ProductListingPrice]", values.itemPrice);
+        // formData.append("product[categoryId]", values.category);
+        // if (values.subCategory) {
+        //   formData.append("product[subCategoryId]", values.subCategory);
         // }
-        if (values?.auctionState === "DRAFTED") {
-        } else {
-          formData.append("images", fileOne);
+        // if (values.brand) {
+        //   formData.append("product[brand]", values.brand);
+        // }
+        // if (values.valueRadio) {
+        //   formData.append("product[usageStatus]", values.valueRadio);
+        // }
+        // if (values.color) {
+        //   formData.append("product[color]", values.color);
+        // }
+        // if (values.age) {
+        //   formData.append("product[age]", values.age);
+        // }
+        // if (values.landType) {
+        //   formData.append("product[landType]", values.landType);
+        // }
+        // if (values.cameraType) {
+        //   formData.append("product[cameraType]", values.cameraType);
+        // }
+        // if (values.carType) {
+        //   formData.append("product[carType]", values.carType);
+        // }
+        // if (values.material) {
+        //   formData.append("product[material]", values.material);
+        // }
+        // if (values.memory) {
+        //   formData.append("product[memory]", values.memory);
+        // }
+        // if (values.model) {
+        //   formData.append("product[model]", values.model);
+        // }
+        // if (values.processor) {
+        //   formData.append("product[processor]", values.processor);
+        // }
+        // if (values.ramSize) {
+        //   formData.append("product[ramSize]", values.ramSize);
+        // }
+        // if (values.releaseYear) {
+        //   formData.append("product[releaseYear]", values.releaseYear);
+        // }
+        // if (values.screenSize) {
+        //   formData.append("product[screenSize]", values.screenSize);
+        // }
+        // if (values.totalArea) {
+        //   formData.append("product[totalArea]", values.totalArea);
+        // }
+        // if (values.operatingSystem) {
+        //   formData.append("product[operatingSystem]", values.operatingSystem);
+        // }
+        // if (values.regionOfManufacture) {
+        //   formData.append(
+        //     "product[regionOfManufacture]",
+        //     values.regionOfManufacture
+        //   );
+        // }
+        // if (values.numberOfFloors) {
+        //   formData.append("product[numberOfFloors]", values.numberOfFloors);
+        // }
+        // if (values.numberOfRooms) {
+        //   formData.append("product[numberOfRooms]", values.numberOfRooms);
+        // }
+        // if (values.itemDescription) {
+        //   formData.append("product[description]", values.itemDescription);
+        // }
+        // if (values.countryId) {
+        //   formData.append("product[countryId]", values.countryId);
+        // }
+        // if (values.cityId) {
+        //   formData.append("product[cityId]", values.cityId);
+        // }
+        // // if (offerDataInt.IsOfferPrice) {
+        // //   formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
+        // //   formData.append("product[offerAmount]", offerDataInt.offerAmount);
+        // // }
+        // if (values?.auctionState === "DRAFTED") {
+        // } else {
+        //   formData.append("images", fileOne);
 
-          formData.append("images", fileTwo);
+        //   formData.append("images", fileTwo);
 
-          formData.append("images", fileThree);
+        //   formData.append("images", fileThree);
 
-          if (fileFour) {
-            formData.append("images", fileFour);
-          }
-          if (fileFive) {
-            formData.append("images", fileFive);
-          }
-        }
+        //   if (fileFour) {
+        //     formData.append("images", fileFour);
+        //   }
+        //   if (fileFive) {
+        //     formData.append("images", fileFive);
+        //   }
+        // }
 
-        run(
-          authAxios
-            .post(api.app.productListing.listNewProduct, formData)
-            .then((res) => {
-              toast.success(
-                selectedContent[
-                  localizationKeys.yourProductIsSuccessfullyListed
-                ]
-              );
-              history.push(routes.app.home);
+        // run(
+        //   authAxios
+        //     .post(api.app.productListing.listNewProduct, formData)
+        //     .then((res) => {
+        //       toast.success(
+        //         selectedContent[
+        //           localizationKeys.yourProductIsSuccessfullyListed
+        //         ]
+        //       );
+        //       history.push(routes.app.home);
+        //     })
+        //     .catch((error) => {
+        //       toast.error(
+        //         selectedContent[
+        //           localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+        //         ]
+        //       );
+        //     })
+        // );
+        dispatch(
+          listingProductDetails({
+              ...values,
+              valueRadio,
+              fileOne,
+              fileTwo,
+              fileThree,
+              fileFour,
+              fileFive,
+              auctionState,
+              auctionId: completeDraftVal?.id,
             })
-            .catch((error) => {
-              toast.error(
-                selectedContent[
-                  localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
-                ]
-              );
-            })
-        );
+          );
+          history.push(routes.app.listProduct.listProductLocationDetails)
+
       } else {
         toast.error(selectedContent[localizationKeys.oops]);
       }
-      //   if (!hasUsageCondition) {
-      //     // dispatch(
-      //     //   productDetails({
-      //     //     ...values,
-      //     //     hasUsageCondition: hasUsageCondition,
-      //     //     valueRadio: valueRadio,
-      //     //     fileOne: fileOne,
-      //     //     fileTwo: fileTwo,
-      //     //     fileThree: fileThree,
-      //     //     fileFour: fileFour,
-      //     //     fileFive: fileFive,
-      //     //     auctionState: auctionState,
-      //     //     auctionId: completeDraftVal?.id,
-      //     //   })
-      //     // );
-      //     history.push(routes.app.createAuction.auctionDetails);
-      //   }
     } else {
       toast.error(
         selectedContent[
@@ -833,7 +832,7 @@ const ListProductDetails = () => {
                       </div>
                     </div> */}
                     <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                      {selectedContent[localizationKeys.List]}
+                      {selectedContent[localizationKeys.next]}
                     </button>
                   </div>
                 </Form>

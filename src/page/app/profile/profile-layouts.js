@@ -10,6 +10,7 @@ import MyBidsCompletePayment from "../../../component/profile-components/my-bids
 import Purchased from "./purchased";
 import Wallet from "./Wallet";
 import Notifications from "./Notifications";
+import MyProducts from "./MyProducts";
 const ProfileLayouts = () => {
   const [sid, SetSid] = useState(false);
 
@@ -33,6 +34,7 @@ const ProfileLayouts = () => {
             component={MyAuctions}
           />
           <Route path={routes.app.profile.myBids.default} component={MyBids} />
+          <Route path={routes.app.profile.myProducts.default} component={MyProducts} />
           <Route path={routes.app.profile.watchlist} component={Watshlist} />
           <Route path={routes.app.profile.purchased} component={Purchased} />
           <Route path={routes.app.profile.wallet} component={Wallet} />
