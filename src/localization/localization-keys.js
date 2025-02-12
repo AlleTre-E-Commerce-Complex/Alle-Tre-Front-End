@@ -33,6 +33,9 @@ const localizationKeys = {
   sentVerification: "sentVerification",
   securityDeposit: "securityDeposit",
   // home
+  filterOptions:"filterOptions",
+  selectOptions:"selectOptions",
+  clearAll:"clearAll",
   subscribedSuccessfully: "subscribedSuccessfully",
   unsubscribedSuccessfully: "unsubscribedSuccessfully",
   unsubscriptionFailed: "unsubscriptionFailed",

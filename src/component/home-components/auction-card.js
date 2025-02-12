@@ -229,7 +229,13 @@ const AuctionCard = ({
     <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
       <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[16/10]">
         <div className="relative group">
-          <div className="absolute top-0 right-0 z-20 flex items-center space-x-1 sm:space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div
+            className={`absolute top-0 ${
+              lang === "ar" ? "left-0" : "right-0"
+            } z-20 flex items-center ${
+              lang === "ar" ? "gap-2" : "space-x-1 sm:space-x-2"
+            } opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+          >
             {!isMyAuction && (
               <button
                 onClick={() => handelAddNewWatshlist(auctionId)}
@@ -253,14 +259,14 @@ const AuctionCard = ({
 
         <img
           onClick={() => handelGoDetails(auctionId)}
-          className="w-full h-full object-contain group-hover:scale-110 duration-300 ease-in-out transform "
+          className="w-full h-full object-scale-down group-hover:scale-110 duration-300 ease-in-out transform "
           src={adsImg}
           alt="adsImg"
         />
 
         <div
           onClick={() => handelGoDetails(auctionId)}
-          className="price-button absolute top-0 left-0 bg-orang text-white text-xs px-2 h-6 flex items-center"
+          className="price-button absolute top-0 bg-orang text-white text-xs px-2 h-6 flex items-center"
         >
           {formattedBid}
         </div>
@@ -312,14 +318,15 @@ const AuctionCard = ({
         {isMyAuction ? (
           <div
             className={`${
-              isPurchased || isExpired    ? "hidden"
+              isPurchased || isExpired
+                ? "hidden"
                 : "mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3 justify-end"
             }`}
           >
             {!hideButton && (
               <button
                 onClick={() => handelGoDetails(auctionId)}
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm flex items-center justify-center transition-all duration-300"
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm flex items-center justify-center transition-all duration-300"
               >
                 {selectedContent[localizationKeys.viewDetails]}
               </button>

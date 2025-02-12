@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import api from "../../../api";
 import AuctionCard from "../../../component/home-components/auction-card";
 import BuyNowAuctionsSlider from "../../../component/home-components/buy-now-auctions-slider";
@@ -22,7 +22,6 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
-import ShowFilterSections from "../../../component/home-components/show-filter-sections";
 import listicon from "../../../../src/assets/icons/bullet.svg";
 import menuicon from "../../../../src/assets/icons/grid-06.svg";
 import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
@@ -34,6 +33,7 @@ import { welcomeBonus } from "redux-store/welcom-bonus-slice";
 import { useSocket } from "context/socket-context";
 // import LiveAuctionsSlider from "component/home-components/live-auctions-slider";
 import ListedProducts from "component/home-components/ListedProducts";
+
 
 const Home = () => {
   const [lang] = useLanguage("");
@@ -169,24 +169,23 @@ const Home = () => {
       <div className="mt-11 mb-20">
         <SliderRow />
       </div>
-      <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-4 ">
-        <div className="flex  gap-x-60">
-          <h6 className=" text-gray-med text-base font-normal pt-3 ">
+      <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
+        <div className="flex  ">
+          <h6 className=" text-gray-dark text-base font-normal pt-3 pl-3 ">
             {mainAuctions?.length} {selectedContent[localizationKeys.results]}
           </h6>
-          <div className="">
+          {/* <div className="">
             <ShowFilterSections />
-          </div>
+          </div> */}
         </div>
         <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
           {isGrid ? (
             <button
               onClick={() => setIsGrid((p) => !p)}
-              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
             >
               <img src={menuicon} alt="menuiconicon" />
               <p className="flex items-center">
-                {" "}
                 {selectedContent[localizationKeys.Grid]}
               </p>
             </button>
@@ -205,10 +204,9 @@ const Home = () => {
         </div>
       </div>
       <div className=" lg:mx-auto mx-2">
-        <div className="flex gap-5  px-4 mx-2 ">
+        <div className="flex gap-5  px-2 sm:px-4 mx-2 ">
           {/* left filter sections */}
           <FilterSections myRef={myRef} />
-          {/* right card sections */}
           {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto "> */}
           {mainAuctions?.length === 0 ? (
             <div className="w-full flex justify-center pt-52 bg-[#E5E5E51A] rounded-2xl">

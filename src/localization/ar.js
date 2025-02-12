@@ -38,6 +38,9 @@ const ar = {
   [localizationKeys.securityDeposit]: "بلغ التأمين",
 
   // home
+  [localizationKeys.filterOptions]: "خيارات الفلتر",
+  [localizationKeys.selectOptions]: "حدد الخيارات",
+  [localizationKeys.clearAll]: "مسح الكل",
   [localizationKeys.subscribedSuccessfully]: "تم الاشتراك بنجاح",
   [localizationKeys.unsubscribedSuccessfully]: "لقد تم إلغاء اشتراكك بنجاح",
   [localizationKeys.unsubscriptionFailed]: "فشل إلغاء الاشتراك",
@@ -117,7 +120,7 @@ const ar = {
   [localizationKeys.PopularPicksPerfectChoices]:
     "اختيارات رائجة ، اختيارات مثالية",
   [localizationKeys.Grid]: "الشبكة",
-  [localizationKeys.List]: "قائمة",
+  [localizationKeys.List]: "إضافة الإعلان",
   [localizationKeys.ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow]:
     "لا توجد مزادات حاليًا. يمكنك إنشاء مزادك الخاص الآن",
   [localizationKeys.BidWinRepeat]: "المزايدة ، الفوز ، التكرار!",

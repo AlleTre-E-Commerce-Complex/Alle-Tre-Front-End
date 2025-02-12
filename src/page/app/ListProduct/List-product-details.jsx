@@ -324,11 +324,7 @@ const ListProductDetails = () => {
             })
         );
       } else {
-        toast.error(
-          selectedContent[
-            localizationKeys.makeSureThatYouChooseItemConditionValue
-          ]
-        );
+        toast.error(selectedContent[localizationKeys.oops]);
       }
       //   if (!hasUsageCondition) {
       //     // dispatch(
@@ -617,75 +613,76 @@ const ListProductDetails = () => {
                         })}
                     {(formik.values.subCategory || categoryId === 4) &&
                       categoryId !== 3 && (
-                      <>
-                        <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
-                          <FormikInput
-                            name="brand"
-                            type="text"
-                            label={selectedContent[localizationKeys.brand]}
-                            placeholder={
-                              selectedContent[localizationKeys.brand]
-                            }
-                            value={brandInput}
-                            onChange={(e) => {
-                              handleBrandInputChange(e.target.value);
-                              formik.handleChange(e);
-                            }}
-                            onFocus={() => setIsDropdownOpen(true)}
-                          />
-                          <button
-                            onClick={() => setIsDropdownOpen((prev) => !prev)}
-                            className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70" // Button to toggle dropdown
-                            aria-label="Toggle Dropdown"
-                          >
+                        <>
+                          <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
+                            <FormikInput
+                              name="brand"
+                              type="text"
+                              label={selectedContent[localizationKeys.brand]}
+                              placeholder={
+                                selectedContent[localizationKeys.brand]
+                              }
+                              value={brandInput}
+                              onChange={(e) => {
+                                handleBrandInputChange(e.target.value);
+                                formik.handleChange(e);
+                              }}
+                              onFocus={() => setIsDropdownOpen(true)}
+                            />
+                            <button
+                              onClick={() => setIsDropdownOpen((prev) => !prev)}
+                              className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70" // Button to toggle dropdown
+                              aria-label="Toggle Dropdown"
+                            >
+                              {isDropdownOpen &&
+                                brandSuggestions.length > 0 && (
+                                  <MdArrowDropDown className="w-5 h-5" /> // Show icon only when dropdown is open
+                                )}
+                            </button>
                             {isDropdownOpen && brandSuggestions.length > 0 && (
-                              <MdArrowDropDown className="w-5 h-5" /> // Show icon only when dropdown is open
+                              <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+                                <ul>
+                                  {brandSuggestions.map((suggestion, index) => (
+                                    <li
+                                      key={index}
+                                      onClick={() => {
+                                        formik.setFieldValue(
+                                          "brand",
+                                          suggestion.text
+                                        );
+                                        setBrandInput(suggestion.text);
+                                        setBrandSuggestions([]);
+                                        setIsDropdownOpen(false);
+                                      }}
+                                      className="cursor-pointer hover:bg-gray-200 px-4 py-2"
+                                    >
+                                      {suggestion.text}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             )}
-                          </button>
-                          {isDropdownOpen && brandSuggestions.length > 0 && (
-                            <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-                              <ul>
-                                {brandSuggestions.map((suggestion, index) => (
-                                  <li
-                                    key={index}
-                                    onClick={() => {
-                                      formik.setFieldValue(
-                                        "brand",
-                                        suggestion.text
-                                      );
-                                      setBrandInput(suggestion.text);
-                                      setBrandSuggestions([]);
-                                      setIsDropdownOpen(false);
-                                    }}
-                                    className="cursor-pointer hover:bg-gray-200 px-4 py-2"
-                                  >
-                                    {suggestion.text}
-                                  </li>
-                                ))}
-                              </ul>
+                          </div>
+                          {customFromData?.model && (
+                            <div className="col-span-2 sm:col-span-1  md:col-span-2">
+                              <FormikInput
+                                min={0}
+                                name={`${customFromData?.model?.key}`}
+                                label={`${
+                                  lang === "en"
+                                    ? customFromData?.model?.labelEn
+                                    : customFromData?.model?.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en"
+                                    ? customFromData?.model?.labelEn
+                                    : customFromData?.model?.labelAr
+                                }`}
+                              />
                             </div>
                           )}
-                        </div>
-                        {customFromData?.model &&  (
-                          <div className="col-span-2 sm:col-span-1  md:col-span-2">
-                            <FormikInput
-                              min={0}
-                              name={`${customFromData?.model?.key}`}
-                              label={`${
-                                lang === "en"
-                                  ? customFromData?.model?.labelEn
-                                  : customFromData?.model?.labelAr
-                              }`}
-                              placeholder={`${
-                                lang === "en"
-                                  ? customFromData?.model?.labelEn
-                                  : customFromData?.model?.labelAr
-                              }`}
-                            />
-                          </div>
-                        )}
-                      </>
-                    )}
+                        </>
+                      )}
 
                     <div className="col-span-2 col-start-1 mt-1">
                       <FormikTextArea
