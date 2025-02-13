@@ -109,6 +109,11 @@ const Sidebar = ({ SetSid, sid }) => {
       history.push(routes.app.profile.myBids.default);
     } else dispatch(Open());
   };
+  const handleMyProducts = () => {
+    if (user) {
+      history.push(routes.app.profile.myProducts.default);
+    } else dispatch(Open());
+  };
   const handelWatchlist = () => {
     if (user) {
       history.push(routes.app.profile.watchlist);
@@ -183,6 +188,17 @@ const Sidebar = ({ SetSid, sid }) => {
                 }
                 onClick={() => {
                   handelmyBids();
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.myProducts]}
+                isActive={
+                  pathname.length === 1 ||
+                  pathname.startsWith(routes.app.profile.myProducts.default)
+                }
+                onClick={() => {
+                  handleMyProducts();
                   SetSid(false);
                 }}
               />
