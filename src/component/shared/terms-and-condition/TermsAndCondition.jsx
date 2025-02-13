@@ -1062,6 +1062,150 @@ const TermAndConditionData = [
       ),
     },
   },
+  {
+    title: { en: "", ar: "" },
+    parag: {
+      en: (
+        <div className="ml-4 -mt-5">
+          <span className="text-lg font-bold text-gray-verydark">21- </span>
+          <span>Alletre Platform Participation and Advertisement Policy</span>
+          <p className="mt-2">
+            Please note that posts or advertisements containing any of the
+            following are not permitted in any of the Alletre Platform sections:
+          </p>
+          <ul className="list-disc ml-6">
+            <li>
+              <span className="font-semibold">Prohibited Materials</span>
+              <ul className="list-disc mt-1 ml-6">
+                <li>
+                  Materials that violate the laws in force in the United Arab
+                  Emirates or conflict with local customs, traditions, and
+                  Islamic law.
+                </li>
+                <li>
+                  Content that violates intellectual property rights, such as
+                  copyrights, trademarks, or patents.
+                </li>
+                <li>
+                  Advertisements that contain misleading, false, or incorrect
+                  information.
+                </li>
+                <li>
+                  Content that offends any individual or entity or includes
+                  defamation, threats, or incitement.
+                </li>
+                <li>
+                  Materials that contain viruses or malware that affect the
+                  safety of the site or users.
+                </li>
+                <li>
+                  Advertisements for counterfeit products or those that violate
+                  trademark rights.
+                </li>
+              </ul>
+            </li>
+            <li className="mt-3">
+              <span className="font-semibold">
+                Acceptable Advertising Criteria
+              </span>
+              <ul className="list-disc mt-1 ml-6">
+                <li>
+                  The advertisement must be for a real product available within
+                  the UAE.
+                </li>
+                <li>
+                  Photograph the product from all angles and indicate any
+                  defects.
+                </li>
+                <li>Photograph the purchase invoice if any.</li>
+                <li>
+                  Real images of the advertised product must be attached, and
+                  images containing only advertising texts must not be used.
+                </li>
+                <li>
+                  Avoid duplicating advertisements, as the previous
+                  advertisement can be updated instead of publishing a new
+                  advertisement.
+                </li>
+                <li>
+                  The advertisement must comply with all the terms and
+                  conditions of the "Alletre" platform, and any violation may
+                  lead to the removal of the advertisement and the blocking of
+                  the account.
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p className="flex justify-end mt-5">
+            Thank you for your cooperation.
+          </p>
+        </div>
+      ),
+      ar: (
+        <div className="ml-4 -mt-5">
+          <span className="text-lg font-bold text-gray-verydark">١٥- </span>
+          <span>سياسة المشاركات والإعلانات في منصة "Alletre"</span>
+          <p className="mt-2">
+            نرجو ملاحظة أنه لا يسمح بالمشاركات أو الإعلانات التي تحتوي على أي
+            مما يلي في أي من أقسام منصة "Alletre":
+          </p>
+          <ul className="list-disc ml-6">
+            <li>
+              <span className="font-semibold">المواد الممنوعة:</span>
+              <ul className="list-disc mt-1 ml-6">
+                <li>
+                  المواد التي تخالف القوانين المعمول بها في دولة الإمارات
+                  العربية المتحدة أو تتعارض مع العادات والتقاليد المحلية.
+                </li>
+                <li>
+                  المحتوى الذي ينتهك حقوق الملكية الفكرية، مثل حقوق النشر أو
+                  العلامات التجارية أو براءات الاختراع..
+                </li>
+                <li>
+                  الإعلانات التي تحتوي على معلومات مضللة أو مزيفة أو غير صحيحة.
+                </li>
+                <li>
+                  المحتوى الذي يسيء إلى أي فرد أو جهة أو يتضمن تشهيرًا أو
+                  تهديدًا أو تحريضًا.
+                </li>
+                <li>
+                  المواد التي تحتوي على فيروسات أو برمجيات ضارة تؤثر على سلامة
+                  الموقع أو المستخدمين.
+                </li>
+                <li>
+                  الإعلانات عن المنتجات المقلدة أو التي تنتهك حقوق العلامات
+                  التجارية.
+                </li>
+              </ul>
+            </li>
+            <li className="mt-3">
+              <span className="font-semibold">معايير الإعلان المقبول:</span>
+              <ul className="list-disc mt-1 ml-6">
+                <li>
+                  يجب أن يكون الإعلان عن سلعة حقيقية ومُتاحة داخل دولة الإمارات.
+                </li>
+                <li> تصوير المنتج من جميع الزوايا و بيان العيوب ان وجدت .</li>
+                <li> تصوير فاتورة الشراء ان وجدت .</li>
+                <li>
+                  يجب إرفاق صور واقعية للمنتج المُعلن عنها، وعدم استخدام صور
+                  تحتوي على نصوص إعلانية فقط..
+                </li>
+                <li>
+                  تجنب تكرار الإعلانات، حيث يمكن تحديث الإعلان السابق بدلاً من
+                  نشر إعلان جديد.
+                </li>
+                <li>
+                  يجب أن يلتزم الإعلان بجميع شروط وأحكام منصة "Alletre"، وأي
+                  مخالفة قد تؤدي إلى إزالة الإعلان وحظر الحساب.
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <p className="flex justify-end mt-5">نشكركم على تعاونكم </p>
+        </div>
+      ),
+    },
+  },
 ];
 
 const TermsAndConditions = (isFooter) => {

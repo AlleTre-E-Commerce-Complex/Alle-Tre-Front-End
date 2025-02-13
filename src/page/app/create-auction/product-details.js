@@ -54,8 +54,7 @@ const ProductDetails = () => {
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
   );
-  console.log('state : ',state)
-  console.log('productDetailsint?.auctionId : ',productDetailsint?.auctionId)
+
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -760,6 +759,7 @@ const ProductDetails = () => {
                         ]
                           .filter((e) => e?.key !== "brandId")
                           .map((e) => {
+                            console.log("Processing field:", e);
                             const isDropdown =
                               customFromData?.arrayCustomFields?.some(
                                 (field) => field.key === e.key
@@ -810,6 +810,7 @@ const ProductDetails = () => {
                                     placeholder={
                                       lang === "en" ? e?.labelEn : e?.labelAr
                                     }
+                                    type={e?.type}
                                   />
                                 )}
                               </div>
