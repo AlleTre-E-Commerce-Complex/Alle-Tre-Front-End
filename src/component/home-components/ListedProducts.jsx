@@ -132,7 +132,7 @@ const ListedProducts = () => {
                       className="snapslider-card swiper-slide"
                       // onClick={handelGoDetails(product.id)}
                     >
-                      <ProductCard
+                     {listedData.status === 'IN_PROGRESS' && <ProductCard
                         price={listedData?.product?.ProductListingPrice}
                         title={listedData?.product?.title}
                         imageLink={listedData?.product?.images[0].imageLink}
@@ -150,7 +150,7 @@ const ListedProducts = () => {
                         }
                         createdAt={listedData?.product?.user?.createdAt}
                         // WatshlistState={listedData?.product?.isSaved}
-                      />
+                      />}
                     </div>
                   ))}
                 </div>
