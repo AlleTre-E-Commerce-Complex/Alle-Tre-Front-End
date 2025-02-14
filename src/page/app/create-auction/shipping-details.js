@@ -474,29 +474,29 @@ export const LocationDetailsCard = ({
   return (
     <>
       <div
-        onClick={() => {
-          setLocationId(Id);
-        }}
-        className={`${
-          locationId === `${Id}` ? "border-primary" : "border-gray-med"
-        } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer relative`}
+        onClick={() => setLocationId(Id)}
+        className={`transition-all duration-100 ${
+          locationId === `${Id}`
+            ? "border-2 border-primary "
+            : "border-gray-300 bg-white"
+        } border rounded-xl h-[130px] w-full p-5 cursor-pointer relative hover:shadow-lg`}
       >
-        <div className="flex justify-between">
-          <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-gray-dark text-sm font-medium">{AddressLable}</h1>
           <Popup
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
             open={open}
-            className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
+            className="bg-white w-auto h-auto rounded-lg border-none shadow-lg"
             trigger={
-              <div className="cursor-pointer hover:text-primary">
-                <BsThreeDots size={20} className="text-gray-med mb-auto" />
+              <div className="cursor-pointer hover:text-primary transition-all">
+                <BsThreeDots size={20} className="text-gray-dark" />
               </div>
             }
             on="click"
             position="bottom right"
           >
-            <div className="py-2 min-w-[150px]">
+            <div className="py-2 min-w-[150px] rounded-lg ">
               {!isMain && (
                 <div
                   onClick={handleMakeDefault}
@@ -520,7 +520,7 @@ export const LocationDetailsCard = ({
                     setDeleteModalOpen(true);
                     setOpen(false);
                   }}
-                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-red-50 text-base font-normal"
                 >
                   {selectedContent[localizationKeys.delete]}
                 </div>
@@ -529,16 +529,16 @@ export const LocationDetailsCard = ({
           </Popup>
         </div>
 
-        <p className="text-gray-med text-sm pt-2">{Address}</p>
-        <p className="text-gray-med text-sm pt-1">
+        <p className="text-gray-dark text-sm pt-2">{Address}</p>
+        <p className="text-gray-dark text-sm pt-1">
           {City}, {Country}
         </p>
-        <p className="text-gray-med text-sm pt-2">{phone}</p>
-        <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
+        <p className="text-gray-dark text-sm pt-1">{phone}</p>
+        <p className="text-gray-dark text-sm pt-1">{PostalCode}</p>
         {isMain && (
           <p
-            className={`text-primary-dark underline text-md absolute bottom-2 ${
-              lang === "ar" ? "left-2" : "right-2"
+            className={`text-primary text-md absolute bottom-2 ${
+              lang === "ar" ? "left-4" : "right-4"
             }`}
           >
             {selectedContent[localizationKeys.default]}

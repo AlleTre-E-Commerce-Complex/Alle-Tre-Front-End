@@ -49,14 +49,16 @@ import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "../../../localization/localization-keys";
 
-const Category = ({ img, title, id, view }) => {
+const Category = ({ img, title, id, view, className }) => {
   const history = useHistory();
   const isDisabled = id === 1 || id === undefined;
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   return (
-    <div className="flex flex-col items-center justify-center px-4 sm:px-10 md:px-20 lg:px-32 relative w-full">
+    <div
+      className={`flex flex-col items-center justify-center px-4 sm:px-10 relative w-full  ${className}`}
+    >
       <div className="group relative">
         {!isDisabled && (
           <div className="absolute inset-0 flex items-center justify-center">
@@ -66,39 +68,39 @@ const Category = ({ img, title, id, view }) => {
           </div>
         )}
 
-<div
-  onClick={
-    view || !isDisabled
-      ? null
-      : () =>
-          history.push(
-            `${routes.app.categories(title, id)}?categories[]=${id}`
-          )
-  }
-  className={`w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white ${
-    !isDisabled
-      ? "opacity-40 cursor-not-allowed"
-      : "hover:bg-primary/10 cursor-pointer"
-  } transition-all duration-300 ease-in-out rounded-full flex items-center justify-center custom-sm-padding custom-lg-padding`}
->
-  <div
-    className={`w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28 rounded-full ${
-      !isDisabled
-        ? "bg-gray-med"
-        : "bg-primary group-hover:bg-primary-dark"
-    } transition-all duration-300 ease-in-out flex items-center justify-center`}
-  >
-    <img
-      className={`w-10 h-10 sm:w-16 sm:h-16 md:w-24 md:h-24 ${
-        !isDisabled
-          ? "opacity-90"
-          : "group-hover:scale-110 transition-transform duration-300 ease-in-out"
-      } rounded-full`}
-      src={img || addImage}
-      alt={title}
-    />
-  </div>
-</div>
+        <div
+          onClick={
+            view || !isDisabled
+              ? null
+              : () =>
+                  history.push(
+                    `${routes.app.categories(title, id)}?categories[]=${id}`
+                  )
+          }
+          className={`w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white ${
+            !isDisabled
+              ? "opacity-40 cursor-not-allowed"
+              : "hover:bg-primary/10 cursor-pointer"
+          } transition-all duration-300 ease-in-out rounded-full flex items-center justify-center custom-sm-padding custom-lg-padding`}
+        >
+          <div
+            className={`w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28 rounded-full ${
+              !isDisabled
+                ? "bg-gray-med"
+                : "bg-primary group-hover:bg-primary-dark"
+            } transition-all duration-300 ease-in-out flex items-center justify-center`}
+          >
+            <img
+              className={`w-10 h-10 sm:w-16 sm:h-16 md:w-24 md:h-24 ${
+                !isDisabled
+                  ? "opacity-90"
+                  : "group-hover:scale-110 transition-transform duration-300 ease-in-out"
+              } rounded-full`}
+              src={img || addImage}
+              alt={title}
+            />
+          </div>
+        </div>
       </div>
 
       <p

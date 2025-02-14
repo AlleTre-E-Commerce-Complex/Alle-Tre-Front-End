@@ -266,7 +266,7 @@ const AuctionCard = ({
 
         <div
           onClick={() => handelGoDetails(auctionId)}
-          className="price-button absolute top-0 bg-orang text-white text-xs px-2 h-6 flex items-center"
+          className="price-button absolute top-0 bg-[#e04868] text-white text-xs px-2 h-6 flex items-center"
         >
           {formattedBid}
         </div>

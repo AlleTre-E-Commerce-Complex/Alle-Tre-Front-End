@@ -176,7 +176,7 @@ const Categories = () => {
         ) : (
           <div className="w-full">
             {isGrid ? (
-              <div className="lg:grid lg:grid-cols-4 md:flex lg:flex-nowrap md:flex-wrap gap-5 h-fit mx-auto">
+              <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                 {mainAuctions?.map((e) => (
                   <AuctionCard
                     auctionId={e?.id}
@@ -189,6 +189,7 @@ const Categories = () => {
                     endingTime={e?.expiryDate}
                     isBuyNowAllowed={e?.isBuyNowAllowed}
                     isMyAuction={e?.isMyAuction}
+                    startBidAmount={e?.startBidAmount}
                   />
                 ))}
               </div>
@@ -207,6 +208,7 @@ const Categories = () => {
                     StartDate={e?.startDate}
                     isBuyNowAllowed={e?.isBuyNowAllowed}
                     isMyAuction={e?.isMyAuction}
+                    startBidAmount={e?.startBidAmount}
                   />
                 ))}
               </div>

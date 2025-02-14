@@ -15,7 +15,7 @@ import { useLanguage } from "../../../context/language-context";
 import useFilter from "../../../hooks/use-filter";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { listingProductDetails } from "redux-store/ListingProduct-details-slice"; 
+import { listingProductDetails } from "redux-store/ListingProduct-details-slice";
 import {
   auctionDetails,
   type,
@@ -38,7 +38,7 @@ const ListingProductsLocationDetails = () => {
   const productDetailsInt = useSelector(
     (state) => state.listingProductDetails.listingProductDetails
   );
- 
+
   const [locationId, setLocationId] = useFilter("locationId", "");
 
   const history = useHistory();
@@ -73,17 +73,21 @@ const ListingProductsLocationDetails = () => {
     // isError: isErrorCreatAuction,
   } = useAxios([]);
 
-
-
   const listProduct = () => {
     if (locationId) {
       const formData = new FormData();
       formData.append("product[title]", productDetailsInt.itemName);
-      formData.append("product[ProductListingPrice]", productDetailsInt.itemPrice);
+      formData.append(
+        "product[ProductListingPrice]",
+        productDetailsInt.itemPrice
+      );
       formData.append("product[categoryId]", productDetailsInt.category);
       formData.append("product[locationId]", locationId);
       if (productDetailsInt.subCategory) {
-        formData.append("product[subCategoryId]",productDetailsInt.subCategory);
+        formData.append(
+          "product[subCategoryId]",
+          productDetailsInt.subCategory
+        );
       }
       if (productDetailsInt.brand) {
         formData.append("product[brand]", productDetailsInt.brand);
@@ -166,11 +170,11 @@ const ListingProductsLocationDetails = () => {
       if (productDetailsInt.cityId) {
         formData.append("product[cityId]", productDetailsInt.cityId);
       }
-    //   if (offerDataInt.IsOfferPrice) {
-    //     formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
-    //     formData.append("product[offerAmount]", offerDataInt.offerAmount);
-    //   }
-       {
+      //   if (offerDataInt.IsOfferPrice) {
+      //     formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
+      //     formData.append("product[offerAmount]", offerDataInt.offerAmount);
+      //   }
+      {
         formData.append("images", productDetailsInt.fileOne);
         formData.append("images", productDetailsInt.fileTwo);
         formData.append("images", productDetailsInt.fileThree);
@@ -181,27 +185,28 @@ const ListingProductsLocationDetails = () => {
           formData.append("images", productDetailsInt.fileFive);
         }
       }
-     
 
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`);
-        }
-        runListNewProduct(
-          authAxios
-            .post(api.app.productListing.listNewProduct, formData)
-            .then((res) => {
-                toast.success(selectedContent[localizationKeys.yourProductIsSuccessfullyListed]);
-                history.push(routes.app.home);
-                dispatch(listingProductDetails({}));
-            })
-            .catch((err) => {
-              toast.error(
-                // err?.response?.data?.message.map((e) => e) ||
-                //   err?.message.map((e) => e) ||
-                selectedContent[localizationKeys.oops]
-              );
-            })
-        );
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      runListNewProduct(
+        authAxios
+          .post(api.app.productListing.listNewProduct, formData)
+          .then((res) => {
+            toast.success(
+              selectedContent[localizationKeys.yourProductIsSuccessfullyListed]
+            );
+            history.push(routes.app.home);
+            dispatch(listingProductDetails({}));
+          })
+          .catch((err) => {
+            toast.error(
+              // err?.response?.data?.message.map((e) => e) ||
+              //   err?.message.map((e) => e) ||
+              selectedContent[localizationKeys.oops]
+            );
+          })
+      );
     } else {
       toast.error(
         selectedContent[
@@ -361,29 +366,29 @@ export const LocationDetailsCard = ({
   return (
     <>
       <div
-        onClick={() => {
-          setLocationId(Id);
-        }}
-        className={`${
-          locationId === `${Id}` ? "border-primary" : "border-gray-med"
-        } border-[1px] rounded-lg h-[120px] w-full p-5 cursor-pointer relative`}
+        onClick={() => setLocationId(Id)}
+        className={`transition-all duration-100 ${
+          locationId === `${Id}`
+            ? "border-2 border-primary "
+            : "border-gray-300 bg-white"
+        } border rounded-xl h-[130px] w-full p-5 cursor-pointer relative hover:shadow-lg`}
       >
-        <div className="flex justify-between">
-          <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-gray-dark text-sm font-medium">{AddressLable}</h1>
           <Popup
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
             open={open}
-            className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
+            className="bg-white w-auto h-auto rounded-lg border-none shadow-lg"
             trigger={
-              <div className="cursor-pointer hover:text-primary">
-                <BsThreeDots size={20} className="text-gray-med mb-auto" />
+              <div className="cursor-pointer hover:text-primary transition-all">
+                <BsThreeDots size={20} className="text-gray-dark" />
               </div>
             }
             on="click"
             position="bottom right"
           >
-            <div className="py-2 min-w-[150px]">
+            <div className="py-2 min-w-[150px] rounded-lg ">
               {!isMain && (
                 <div
                   onClick={handleMakeDefault}
@@ -407,7 +412,7 @@ export const LocationDetailsCard = ({
                     setDeleteModalOpen(true);
                     setOpen(false);
                   }}
-                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-red-50 text-base font-normal"
                 >
                   {selectedContent[localizationKeys.delete]}
                 </div>
@@ -416,16 +421,16 @@ export const LocationDetailsCard = ({
           </Popup>
         </div>
 
-        <p className="text-gray-med text-sm pt-2">{Address}</p>
-        <p className="text-gray-med text-sm pt-1">
+        <p className="text-gray-dark text-sm pt-2">{Address}</p>
+        <p className="text-gray-dark text-sm pt-1">
           {City}, {Country}
         </p>
-        <p className="text-gray-med text-sm pt-2">{phone}</p>
-        <p className="text-gray-med text-sm pt-1">{PostalCode}</p>
+        <p className="text-gray-dark text-sm pt-1">{phone}</p>
+        <p className="text-gray-dark text-sm pt-1">{PostalCode}</p>
         {isMain && (
           <p
-            className={`text-primary-dark underline text-md absolute bottom-2 ${
-              lang === "ar" ? "left-2" : "right-2"
+            className={`text-primary text-md absolute bottom-2 ${
+              lang === "ar" ? "left-4" : "right-4"
             }`}
           >
             {selectedContent[localizationKeys.default]}

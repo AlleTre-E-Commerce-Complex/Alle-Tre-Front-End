@@ -81,7 +81,7 @@ const AuctionCardList = ({
             />
             <div
               onClick={() => handelGoDetails(auctionId)}
-              className="price-button-list absolute bg-orang text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
+              className="price-button-list absolute  bg-[#e04868]  text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
             >
               {formatCurrency(price)}
             </div>
