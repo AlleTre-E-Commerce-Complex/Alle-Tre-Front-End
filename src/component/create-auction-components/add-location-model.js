@@ -98,8 +98,8 @@ const AddLocationModel = ({
         countryId: editData.country || "",
         cityId: editData.city || "",
         phone: editData.phone || "",
-        lat: editData.lat || 0.0000,
-        lng: editData.lng || 0.0000,
+        lat: editData.lat || 0.0,
+        lng: editData.lng || 0.0,
       }
     : {
         addressLabel: "",
@@ -107,8 +107,8 @@ const AddLocationModel = ({
         countryId: "",
         cityId: "",
         phone: "",
-        lat: 0.0000,
-        lng: 0.0000,
+        lat: 0.0,
+        lng: 0.0,
       };
 
   const handleSubmit = (values) => {
@@ -301,8 +301,11 @@ const AddLocationModel = ({
                   {isLoaded ? (
                     <GoogleMap
                       mapContainerStyle={{ width: "100%", height: "200px" }}
-                      zoom={10}
-                      center={selectedLocation || { lat: 24.5, lng: 54 }}
+                      zoom={10.5}
+                      center={selectedLocation || { lat: 25.1850, lng: 55.2651 }}
+                      options={{
+                        streetViewControl: false, 
+                      }}
                       onClick={(e) => {
                         const lat = e.latLng.lat();
                         const lng = e.latLng.lng();

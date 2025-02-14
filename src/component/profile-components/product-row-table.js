@@ -24,12 +24,12 @@ const ProductRowTable = ({
   goToDetails,
   createdAt,
   productId,
-  onReload
+  onReload,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-  const {run, isLoading} = useAxios([])
+  const { run, isLoading } = useAxios([]);
   const [currentStatus, setCurrentStatus] = useState(status);
 
   const statusOptions = {
@@ -42,23 +42,33 @@ const ProductRowTable = ({
     switch (currentStatus) {
       case "IN_PROGRESS":
         return [
-          { key: "OUT_OF_STOCK", text: statusOptions.OUT_OF_STOCK, value: "OUT_OF_STOCK" },
+          {
+            key: "OUT_OF_STOCK",
+            text: statusOptions.OUT_OF_STOCK,
+            value: "OUT_OF_STOCK",
+          },
           { key: "SOLD_OUT", text: statusOptions.SOLD_OUT, value: "SOLD_OUT" },
         ];
       case "OUT_OF_STOCK":
         return [
-          { key: "IN_PROGRESS", text: statusOptions.IN_PROGRESS, value: "IN_PROGRESS" },
+          {
+            key: "IN_PROGRESS",
+            text: statusOptions.IN_PROGRESS,
+            value: "IN_PROGRESS",
+          },
           { key: "SOLD_OUT", text: statusOptions.SOLD_OUT, value: "SOLD_OUT" },
         ];
       case "SOLD_OUT":
       default:
-        return [{ key: "SOLD_OUT", text: statusOptions.SOLD_OUT, value: "SOLD_OUT" }];
+        return [
+          { key: "SOLD_OUT", text: statusOptions.SOLD_OUT, value: "SOLD_OUT" },
+        ];
     }
   };
   const [dropdownValue, setDropdownValue] = useState(currentStatus);
   const handleButtonClick = (value) => {
     setDropdownValue(value);
-  
+
     run(
       authAxios
         .patch(api.app.productListing.updateProductStatus(productId), {
@@ -75,12 +85,9 @@ const ProductRowTable = ({
         })
     );
   };
-  
-  
-  
 
   return (
-    <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
+    <div className="rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg  py-4 px-4 mb-2 animate-in">
       <div className="flex flex-wrap justify-between overflow-clip ">
         <div className="flex gap-x-4">
           <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9] cursor-default">
@@ -131,36 +138,42 @@ const ProductRowTable = ({
 
         <div>
           {currentStatus !== "SOLD_OUT" && (
-            <div className="">
-              <label className="text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5">
-                {selectedContent[localizationKeys.changeProductStatus]}:
-              </label>
-              <div className="flex gap-2 mt-2">
-               {getDropdownOptions().map((option) => (
-               <button
-                  key={option.key}
-                  onClick={() => handleButtonClick(option.value)}
-                  className={`px-4 py-2 rounded-lg text-sm ${
-                  dropdownValue === option.value
-                  ? "bg-primary text-white"
-                 : "bg-gray-100 text-gray-600"
-                  }`}
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 sm:mt-18 mt-5 w-full">
+              {/* Dropdown Options - First Line */}
+              <div className="w-full flex justify-center">
+                <button
+                  onClick={() =>
+                    handleButtonClick(getDropdownOptions()[0]?.value)
+                  }
+                  className="border-primary border text-primary hover:bg-primary hover:text-white text-sm font-normal px-4 py-2 w-full sm:w-[120px] h-[40px] rounded-lg"
                 >
-                {option.text}
-              </button>
-               ))}
-               </div>
+                  {getDropdownOptions()[0]?.text}
+                </button>
+              </div>
 
-               <button
-            onClick={() => history.push(goToDetails)}
-            className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5"
-          >
-            {selectedContent[localizationKeys.viewDetails]}
-          </button>
+              {/* Dropdown Options - Second Line */}
+              <div className="w-full flex justify-center">
+                <button
+                  onClick={() =>
+                    handleButtonClick(getDropdownOptions()[1]?.value)
+                  }
+                  className="border-primary border text-primary hover:bg-primary hover:text-white text-sm font-normal px-4 py-2 w-full sm:w-[120px] h-[40px] rounded-lg"
+                >
+                  {getDropdownOptions()[1]?.text}
+                </button>
+              </div>
 
+              {/* View Details Button - Third Line */}
+              <div className="w-full flex justify-center">
+                <button
+                  onClick={() => history.push(goToDetails)}
+                  className="bg-primary hover:bg-primary-dark text-white text-sm font-normal px-4 py-2 w-full sm:w-[120px] h-[40px] rounded-lg"
+                >
+                  {selectedContent[localizationKeys.viewDetails]}
+                </button>
+              </div>
             </div>
           )}
-          
         </div>
       </div>
     </div>
