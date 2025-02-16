@@ -61,7 +61,7 @@ const searchParams = new URLSearchParams(search).toString()
     }
   
     fetchUser();
-  }, [pathname, history]);
+  }, [pathname]); // Only re-run when pathname changes
   
   return (
     <AuthContext.Provider
