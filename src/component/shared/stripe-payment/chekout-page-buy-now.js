@@ -178,7 +178,7 @@ export default function CheckoutPageBuyNow() {
               {selectedContent[localizationKeys.paymentDetails]}
             </h1>
             <p className="text-gray-dark font-normal text-base py-4">
-              To successfully complete the purchase of this ad, you must pay for
+              To successfully complete the purchase of this ad, you should pay for
               this auction
             </p>
           </div>

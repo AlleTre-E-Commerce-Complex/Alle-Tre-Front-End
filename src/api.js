@@ -7,6 +7,7 @@ const api = {
     resendVerification: "/auth/resend-verification",
     resetCredentials: "/auth/reset-credentials",
     RefrshToken: "/auth/refresh-token",
+    logout: "/auth/logout",
   },
   app: {
     allHomecategory: {
