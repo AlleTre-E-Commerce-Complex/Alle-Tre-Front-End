@@ -48,11 +48,14 @@ class Auth {
   async getToken() {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      if (!accessToken) return null;
+      if (!accessToken) {
+        const newToken = await this.refreshToken();
+        return newToken;
+      }
       
       if (this.hasExpired(accessToken)) {
         const newToken = await this.refreshToken();
-        return newToken || null;
+        return newToken;
       }
       
       return accessToken;
@@ -66,8 +69,7 @@ class Auth {
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
       await this.logout();
-      window.location = routes.app.home;
-      return false;
+      return null;
     }
 
     try {
@@ -76,21 +78,20 @@ class Auth {
       });
       
       const data = res.data;
-      if (!data?.data?.accessToken || !data?.data?.refreshToken) {
+      if (!data?.data?.accessToken) {
         throw new Error('Invalid token response');
       }
 
       this.setToken({
         newAccessToken: data.data.accessToken,
-        newRefreshToken: data.data.refreshToken,
+        newRefreshToken: data.data.refreshToken || refreshToken,
       });
       
       return data.data.accessToken;
     } catch (error) {
       console.error('Token refresh failed:', error);
       await this.logout();
-      window.location = routes.app.home;
-      return false;
+      return null;
     }
   }
 
@@ -103,7 +104,6 @@ class Auth {
       // Add 30 second buffer to prevent edge cases
       return !decodeToken || (decodeToken.exp - 30) < now;
     } catch (e) {
-      console.error('Token expiration check failed:', e);
       return true;
     }
   }
