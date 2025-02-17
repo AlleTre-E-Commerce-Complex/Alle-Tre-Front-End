@@ -21,7 +21,7 @@ class Auth {
 
   setToken({ newAccessToken, newRefreshToken }) {
     if (newAccessToken) {
-      sessionStorage.setItem("accessToken", newAccessToken);
+      localStorage.setItem("accessToken", newAccessToken);
     }
     if (newRefreshToken) {
       localStorage.setItem("refreshToken", newRefreshToken);
@@ -37,14 +37,14 @@ class Auth {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      sessionStorage.removeItem("accessToken");
+      localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     }
   }
 
   async getToken() {
     try {
-      const accessToken = sessionStorage.getItem("accessToken");
+      const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) return null;
       
       if (this.hasExpired(accessToken)) {

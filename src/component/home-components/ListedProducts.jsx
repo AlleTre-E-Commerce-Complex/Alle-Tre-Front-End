@@ -45,8 +45,7 @@ const ListedProducts = () => {
     if (search.includes("page") && search.includes("perPage"))
       if (user) {
         runListedProduct(
-          authAxios
-            .get(
+          axios.get(
               `${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`
             )
             .then((res) => {
