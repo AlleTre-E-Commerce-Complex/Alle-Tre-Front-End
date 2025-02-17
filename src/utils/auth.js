@@ -32,13 +32,16 @@ class Auth {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
-        await Axios.post(api.auth.logout, { refreshToken });
+        // Even if the server call fails, we'll still clear local storage
+        await Axios.post(api.auth.logout, { refreshToken }).catch(console.error);
       }
-    } catch (error) {
-      console.error("Logout error:", error);
     } finally {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      // Ensure we redirect to home page after logout
+      if (window.location.pathname !== routes.app.home) {
+        window.location = routes.app.home;
+      }
     }
   }
 
@@ -62,6 +65,7 @@ class Auth {
   async refreshToken() {
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
+      await this.logout();
       window.location = routes.app.home;
       return false;
     }
@@ -70,24 +74,36 @@ class Auth {
       const res = await Axios.post(api.auth.RefrshToken, {
         refreshToken,
       });
+      
       const data = res.data;
+      if (!data?.data?.accessToken || !data?.data?.refreshToken) {
+        throw new Error('Invalid token response');
+      }
+
       this.setToken({
-        newAccessToken: data?.data.accessToken,
-        newRefreshToken: data?.data?.refreshToken,
+        newAccessToken: data.data.accessToken,
+        newRefreshToken: data.data.refreshToken,
       });
-      return data?.data?.accessToken;
-    } catch (e) {
-      this.logout();
+      
+      return data.data.accessToken;
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      await this.logout();
+      window.location = routes.app.home;
       return false;
     }
   }
 
   hasExpired(token) {
+    if (!token) return true;
+    
     try {
       const decodeToken = jwt_decode(token);
       const now = new Date().getTime() / 1000;
-      return decodeToken.exp < now;
+      // Add 30 second buffer to prevent edge cases
+      return !decodeToken || (decodeToken.exp - 30) < now;
     } catch (e) {
+      console.error('Token expiration check failed:', e);
       return true;
     }
   }

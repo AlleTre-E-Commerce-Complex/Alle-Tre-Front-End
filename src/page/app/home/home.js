@@ -145,7 +145,7 @@ const Home = ({ selectedType }) => {
             )
             .then((res) => {
               setListedProducts(res?.data?.data);
-              console.log("res......", res.data.data);
+              console.log("***res......", res.data.data);
               setTotalPages(res?.data?.totalPages);
             })
         );
@@ -157,7 +157,7 @@ const Home = ({ selectedType }) => {
             )
             .then((res) => {
               setListedProducts(res?.data?.data);
-              console.log("aaaaa", res?.data?.data);
+              console.log("***aaaaa", res?.data?.data);
               setTotalPages(res?.data?.totalPages);
             })
         );
