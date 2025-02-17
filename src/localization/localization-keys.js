@@ -33,6 +33,8 @@ const localizationKeys = {
   sentVerification: "sentVerification",
   securityDeposit: "securityDeposit",
   // home
+  trendingAuctions: "trendingAuctions",
+  type: "type",
   filterOptions: "filterOptions",
   selectOptions: "selectOptions",
   clearAll: "clearAll",
@@ -294,6 +296,7 @@ const localizationKeys = {
   viewBids: "viewBids",
   viewPurchased: "viewPurchased",
   viewAuction: "viewAuction",
+  viewProducts: "viewProducts",
 
   // profile
   online: "online",
@@ -399,6 +402,7 @@ const localizationKeys = {
     "ThereIsNoBidsYetInProgressAuctionsRightNow",
   youHaveNotPlacedAnyBidsAtThisTime: "youHaveNotPlacedAnyBidsAtThisTime",
   startBidding: "startBidding",
+  startLisitng: "startLisitng",
   thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow:
     "thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow",
   thereAreNoListedProductsAtTheMomentListYouFirstProductNow:

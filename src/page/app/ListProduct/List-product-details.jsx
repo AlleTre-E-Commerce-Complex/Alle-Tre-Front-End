@@ -50,9 +50,6 @@ const ListProductDetails = () => {
 
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
-    // const productDetailsint = useSelector(
-    //   (state) => state.listingProductDetails.listingProductDetails
-    // );
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -326,19 +323,18 @@ const ListProductDetails = () => {
         // );
         dispatch(
           listingProductDetails({
-              ...values,
-              valueRadio,
-              fileOne,
-              fileTwo,
-              fileThree,
-              fileFour,
-              fileFive,
-              auctionState,
-              auctionId: completeDraftVal?.id,
-            })
-          );
-          history.push(routes.app.listProduct.listProductLocationDetails)
-
+            ...values,
+            valueRadio,
+            fileOne,
+            fileTwo,
+            fileThree,
+            fileFour,
+            fileFive,
+            auctionState,
+            auctionId: completeDraftVal?.id,
+          })
+        );
+        history.push(routes.app.listProduct.listProductLocationDetails);
       } else {
         toast.error(selectedContent[localizationKeys.oops]);
       }
@@ -559,6 +555,7 @@ const ListProductDetails = () => {
                                     placeholder={
                                       lang === "en" ? e?.labelEn : e?.labelAr
                                     }
+                                    type={e?.type}
                                   />
                                 )}
                               </div>

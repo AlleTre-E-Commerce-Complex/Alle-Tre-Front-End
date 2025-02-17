@@ -33,10 +33,8 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
     return () => window.removeEventListener("popstate", handlePopState);
   }, [history]);
 
-  
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   // const socket_ = io(socketUrl, { query: { userId: user?.id } });
-
 
   return (
     <Modal
@@ -57,9 +55,13 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
           {pathname.endsWith(`${routes.app.home}/complete-pay`)
             ? selectedContent[localizationKeys.yourBidHasBeenSuccessfullyPlaced]
             : pathname.endsWith(`${routes.app.home}/buyNow`)
-            ? selectedContent[localizationKeys.yourPurchaseHasBeenSuccessfullyCompleted]
-            : selectedContent[localizationKeys.yourDepositHasBeenSuccessfullyTransferredAndYourAuctionIsActiveNow]
-          }
+            ? selectedContent[
+                localizationKeys.yourPurchaseHasBeenSuccessfullyCompleted
+              ]
+            : selectedContent[
+                localizationKeys
+                  .yourDepositHasBeenSuccessfullyTransferredAndYourAuctionIsActiveNow
+              ]}
         </p>
         <div className="flex justify-center gap-x-10 pt-8">
           <button
@@ -81,7 +83,7 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
               : selectedContent[localizationKeys.viewAuction]}
           </button>
           <button
-            onClick={() => history.push(routes.app.home)}
+            onClick={() => history.push(`${routes.app.home}?page=1&perPage=28`)}
             className="bg-primary text-white w-[136px] h-[48px] rounded-lg text-base font-normal"
           >
             {selectedContent[localizationKeys.backToHome]}

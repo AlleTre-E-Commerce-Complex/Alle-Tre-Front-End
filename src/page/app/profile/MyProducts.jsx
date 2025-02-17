@@ -76,18 +76,19 @@ const MyProducts = () => {
             <div>
               <BidIcon className="mx-auto" />
               <p className="text-gray-dark text-center mt-12 ">
-                {selectedContent[localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]}
+                {
+                  selectedContent[
+                    localizationKeys
+                      .thereAreNoListedProductsAtTheMomentListYouFirstProductNow
+                  ]
+                }
               </p>
               <div className="flex justify-center mt-8">
                 <button
-                  onClick={() => history.push(routes.app.home)}
-                  className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 h-8 "
+                  onClick={() => history.push(routes.app.listProduct.default)}
+                  className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 w-[120px] h-[40px] "
                 >
-                  {
-                    selectedContent[
-                      localizationKeys.startBidding
-                    ]
-                  }
+                  {selectedContent[localizationKeys.startLisitng]}
                 </button>
               </div>
             </div>
