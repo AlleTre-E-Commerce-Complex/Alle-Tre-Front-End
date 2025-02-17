@@ -389,7 +389,7 @@ const ar = {
   [localizationKeys.oppsActive]: "عفوًا ، لا توجد مزادات نشطة حتى الآن.",
   [localizationKeys.oppsCancelled]:
     "عفواً، لا توجد مزادات تم إلغاؤها حتى الآن.",
-  [localizationKeys.lastPrice]: "آخر سعر",
+  [localizationKeys.lastestPrice]: "اخر سعر",
   [localizationKeys.startingPrice]: "السعر المبدئي",
   [localizationKeys.startingDate]: "تاريخ البدء",
   [localizationKeys.pendingDeposit]: "إيداع معلق",
@@ -445,7 +445,7 @@ const ar = {
   [localizationKeys.startBidding]: "بدء المزايدة",
   [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:
     "لا توجد عروض نشطة في الوقت الحالي. قم بتقديم عرضك الأول الآن!",
-    [localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]:
+  [localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]:
     "لا توجد منتجات مدرجة في الوقت الحالي. قم بإدراج منتجك الأول الآن!",
   [localizationKeys.increaseBid]: "زيادة العطاء",
   [localizationKeys.inPrsubmitNewBidogress]: "تقديم عطاء جديد",

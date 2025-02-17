@@ -33,9 +33,9 @@ const localizationKeys = {
   sentVerification: "sentVerification",
   securityDeposit: "securityDeposit",
   // home
-  filterOptions:"filterOptions",
-  selectOptions:"selectOptions",
-  clearAll:"clearAll",
+  filterOptions: "filterOptions",
+  selectOptions: "selectOptions",
+  clearAll: "clearAll",
   subscribedSuccessfully: "subscribedSuccessfully",
   unsubscribedSuccessfully: "unsubscribedSuccessfully",
   unsubscriptionFailed: "unsubscriptionFailed",
@@ -92,7 +92,7 @@ const localizationKeys = {
   createAuction: "createAuction",
   listProduct: "listProduct",
   price: "Price",
-  changeProductStatus: 'changeProductStatus',
+  changeProductStatus: "changeProductStatus",
   myAccount: "myAccount",
   iamBiddingOn: "iamBiddingOn",
   iHaveBought: "iHaveBought",
@@ -138,7 +138,7 @@ const localizationKeys = {
   expired: "expired",
   inProgress: "inProgress",
   outOfStock: "outOfStock",
-  
+
   // Breadcrumb
   home: "home",
   productDetails: "productDetails",
@@ -352,7 +352,7 @@ const localizationKeys = {
   oppsActive: "oppsActive",
   oppsCancelled: "oppsCancelled",
   youCanCreateOne: "youCanCreateOne",
-  lastPrice: "lastPrice",
+  lastestPrice: "lastestPrice",
   startingPrice: "startingPrice",
   startingDate: " startingDate",
   pendingDeposit: "pendingDeposit",
@@ -401,7 +401,7 @@ const localizationKeys = {
   startBidding: "startBidding",
   thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow:
     "thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow",
-    thereAreNoListedProductsAtTheMomentListYouFirstProductNow:
+  thereAreNoListedProductsAtTheMomentListYouFirstProductNow:
     "thereAreNoListedProductsAtTheMomentListYouFirstProductNow",
   increaseBid: "increaseBid",
   submitNewBid: " submitNewBid",

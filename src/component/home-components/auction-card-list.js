@@ -31,22 +31,22 @@ const AuctionCardList = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-  
+
   const timeLeft = useCountdown(endingTime);
   const formattedTimeLeft = `${timeLeft.days} ${
     selectedContent[localizationKeys.days]
   } :
   ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
   ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
-  
+
   const startDate = useCountdown(StartDate);
-  
+
   const formattedstartDate = `${startDate.days} ${
     selectedContent[localizationKeys.days]
   } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
     startDate.minutes
   } ${selectedContent[localizationKeys.min]}`;
-  
+
   console.log("auction-card-list---***---");
   const handelGoDetails = (id) => {
     if (isMyAuction) {
@@ -69,13 +69,13 @@ const AuctionCardList = ({
   };
   return (
     <div className="cursor-pointer " onClick={() => handelGoDetails(auctionId)}>
-      <div className=" h-auto my-2 rounded-lg group hover:border-primary border-transparent border-[1px] shadow-md p-4 flex md:flex-row flex-col justify-between ">
+      <div className=" h-auto my-2  rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg group p-4 flex md:flex-row flex-col justify-between ">
         <div className="flex  gap-x-4">
           {/* img */}
           <div className="w-[103px] min-w-[80px] md:h-[112px] h-[100px] rounded-lg relative overflow-hidden bg-gray-light ">
             <img
               onClick={() => handelGoDetails(auctionId)}
-              className="w-full h-full mx-auto rounded-lg  object-cover group-hover:scale-110 duration-300 ease-in-out transform  "
+              className="w-full h-full object-scale-down group-hover:scale-110 duration-300 ease-in-out transform "
               src={adsImg}
               alt="adsImd"
             />
@@ -99,7 +99,7 @@ const AuctionCardList = ({
             </div>
             <div className="flex md:gap-x-10 gap-x-6 mt-2">
               <div>
-                <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
+                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                   {selectedContent[localizationKeys.totalBids]}
                 </h6>
                 <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
@@ -108,8 +108,8 @@ const AuctionCardList = ({
               </div>
               {/*  */}
               <div>
-                <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
-                  {selectedContent[localizationKeys.lastPrice]}
+                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
+                  {selectedContent[localizationKeys.lastestPrice]}
                 </h6>
                 <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
                   {formatCurrency(price)}
@@ -117,7 +117,7 @@ const AuctionCardList = ({
               </div>
               {/*  */}
               <div>
-                <h6 className="text-gray-veryLight font-normal md:text-[10px] text-[8px]">
+                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                   {status === "IN_SCHEDULED"
                     ? selectedContent[localizationKeys.startDate]
                     : status === "SOLD"

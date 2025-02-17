@@ -125,11 +125,8 @@ const ProductCard = ({
 
   return (
     <div>
-      <div
-        className="group max-w-[190px] w-full h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-3 cursor-pointer transition-all duration-300 
-         sm:max-w-sm sm:p-4"
-      >
-        <div className="w-[160px] h-[100px] sm:w-[210px] sm:h-[125px] rounded-lg bg-[#F9F9F9] relative overflow-hidden flex items-start justify-start">
+      <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
+        <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[16/10]">
           <div className=" group">
             <div className="absolute top-0 right-0 z-30 flex items-center space-x-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
               {/* {!isMyAuction && (
@@ -161,7 +158,7 @@ const ProductCard = ({
           />
           <div
             onClick={() => handelGoDetails(id)}
-            className="price-button absolute bg-orang text-white text-[10px] top-0 w-auto px-2 h-[24px] flex justify-center items-center"
+            className="price-button absolute bg-[#e04868]  text-white text-[10px] top-0 w-auto px-2 h-[24px] flex justify-center items-center"
           >
             AED {price}
           </div>

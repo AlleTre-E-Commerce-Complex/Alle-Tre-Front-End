@@ -12,7 +12,7 @@ import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
 import { RiArrowDownSFill, RiHome2Line } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
-import PopupCategoriesModel from "./popup-categories-model";
+// import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
 import useFilter from "../../../hooks/use-filter";
 import { useDebouncedCallback } from "use-debounce";
@@ -31,7 +31,7 @@ import useAxios from "hooks/use-axios";
 import { FaPlus } from "react-icons/fa6";
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
-const Header = ({ SetSid }) => {
+const Header = ({ SetSid, setSelectedType }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -46,7 +46,7 @@ const Header = ({ SetSid }) => {
   const { run } = useAxios();
   const { user } = useAuthState();
   const [name, setTitle] = useFilter("title", "");
-
+  const [selectedOption, setSelectedOption] = useState("Type");
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   const { logout } = useAuthState();
@@ -74,6 +74,12 @@ const Header = ({ SetSid }) => {
       setNotificationCount(response.data.count);
     }
   }
+  const handleTypeChange = (type) => {
+    setSelectedType(type);
+    setSelectedOption(
+      type === "auction" ? "Auction" : type === "products" ? "Products" : "All"
+    );
+  };
 
   useEffect(() => {
     console.log("soket useEffect test");
@@ -190,6 +196,8 @@ const Header = ({ SetSid }) => {
     };
   }, [socket, user?.id]);
 
+  const location = useLocation();
+  const currentPath = location.pathname;
   // Combined notification initialization and FCM setup
   // useEffect(() => {
   //   console.log("user?.id *************", user?.id);
@@ -279,13 +287,7 @@ const Header = ({ SetSid }) => {
     });
   }, 850);
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
 
   const dispatch = useDispatch();
 
@@ -600,7 +602,7 @@ const Header = ({ SetSid }) => {
           />
           <DropdownLang className="text-black  md:hidden bg-white/90  hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
 
-          <div className="md:block hidden">
+          {/* <div className="md:block hidden">
             <button
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[250px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
               onClick={handleOpen}
@@ -608,12 +610,76 @@ const Header = ({ SetSid }) => {
               {selectedContent[localizationKeys.categories]}
               <RiArrowDownSFill size={20} />
             </button>
-          </div>
-          <PopupCategoriesModel
+          </div> */}
+          {currentPath === routes.app.home && (
+            <div className="relative md:block hidden">
+              {/* Type Button */}
+              <button
+      className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[160px] h-[50px] flex items-center justify-between px-4 py-3 text-base font-medium transition-all duration-300 shadow-md"
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <span className="flex-1 text-center">{selectedOption}</span>
+      <span
+        className={`transform transition-transform duration-300 ${
+          isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
+        }`}
+      >
+        <RiArrowDownSFill size={20} />
+      </span>
+    </button>
+
+              {isOpen && (
+                <div className="absolute left-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+                  <ul className="py-2">
+                    <li>
+                      <button
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
+                          selectedOption === "Auction" ? "bg-gray-med" : ""
+                        }`}
+                        onClick={() => {
+                          handleTypeChange("auction");
+                          setIsOpen(false);
+                        }}
+                      >
+                        View Auction
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
+                          selectedOption === "Products" ? "bg-gray-med" : ""
+                        }`}
+                        onClick={() => {
+                          handleTypeChange("products");
+                          setIsOpen(false);
+                        }}
+                      >
+                        View Products
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
+                          selectedOption === "All" ? "bg-gray-med" : ""
+                        }`}
+                        onClick={() => {
+                          handleTypeChange("all");
+                          setIsOpen(false);
+                        }}
+                      >
+                        View All
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+          {/* <PopupCategoriesModel
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             onClose={handleClose}
-          />
+          /> */}
           <div className="md:flex hidden gap-x-4">
             {user ? (
               <>
