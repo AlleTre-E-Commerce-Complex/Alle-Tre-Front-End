@@ -90,7 +90,7 @@ const MyAuctions = () => {
               <div className="flex justify-center mt-8">
                 <button
                   onClick={() => history.push(routes.app.createAuction.default)}
-                  className="text-white text-sm font-normal bg-primary rounded-lg w-32 h-8 "
+                  className="text-white text-sm font-normal bg-primary rounded-lg w-[120px] h-[40px] "
                 >
                   {selectedContent[localizationKeys.createNow]}
                 </button>
@@ -107,7 +107,10 @@ const MyAuctions = () => {
               scheduled={analyticsDataObject?.IN_SCHEDULED?.count}
               pending={analyticsDataObject?.PENDING_OWNER_DEPOIST?.count}
               watingForPayment={analyticsDataObject?.WAITING_FOR_PAYMENT?.count}
-              cancelledAuction={analyticsDataObject?.CANCELLED_BEFORE_EXP_DATE?.count + analyticsDataObject?.CANCELLED_AFTER_EXP_DATE?.count }
+              cancelledAuction={
+                analyticsDataObject?.CANCELLED_BEFORE_EXP_DATE?.count +
+                analyticsDataObject?.CANCELLED_AFTER_EXP_DATE?.count
+              }
               expired={analyticsDataObject?.EXPIRED?.count}
               totalcount={analyticsDataObject?.totalcount}
             />

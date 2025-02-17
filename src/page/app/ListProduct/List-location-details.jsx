@@ -196,7 +196,7 @@ const ListingProductsLocationDetails = () => {
             toast.success(
               selectedContent[localizationKeys.yourProductIsSuccessfullyListed]
             );
-            history.push(routes.app.home);
+            history.push(`${routes.app.home}?page=1&perPage=28`);
             dispatch(listingProductDetails({}));
           })
           .catch((err) => {

@@ -38,6 +38,8 @@ const ar = {
   [localizationKeys.securityDeposit]: "بلغ التأمين",
 
   // home
+  [localizationKeys.trendingAuctions]: "المزادات المميزه",
+  [localizationKeys.type]: "يكتب",
   [localizationKeys.filterOptions]: "خيارات الفلتر",
   [localizationKeys.selectOptions]: "حدد الخيارات",
   [localizationKeys.clearAll]: "مسح الكل",
@@ -250,7 +252,7 @@ const ar = {
   [localizationKeys.chat]: "محادثة",
   [localizationKeys.sellingPrice]: "سعر البيع",
   [localizationKeys.listed]: "مُدرج",
-  [localizationKeys.listedProduct]: "المنتج المدرج",
+  [localizationKeys.listedProduct]: "الإعلانات",
   [localizationKeys.findAndReachTheProduct]: "البحث عن المنتج والوصول إليه",
   [localizationKeys.theBestDealsYouMissed]: "أفضل الصفقات التي فاتتك",
   [localizationKeys.callNow]: "اتصل الان",
@@ -326,6 +328,7 @@ const ar = {
   [localizationKeys.viewBids]: "عرض العطاءات",
   [localizationKeys.viewPurchased]: "عرض المشتريات",
   [localizationKeys.viewAuction]: "عرض المزادات",
+  [localizationKeys.viewProducts]: "عرض المنتجات",
   // profile
   [localizationKeys.online]: "متصل",
   [localizationKeys.logout]: "تسجيل الخروج",
@@ -442,7 +445,8 @@ const ar = {
     "لا توجد عطاءات حتى الآن مزادات قيد التقدم في الوقت الحالي",
   [localizationKeys.youHaveNotPlacedAnyBidsAtThisTime]:
     "لم تقم بوضع أي عروض في هذا الوقت",
-  [localizationKeys.startBidding]: "بدء المزايدة",
+  [localizationKeys.startBidding]: "ابدأ المزايدة",
+  [localizationKeys.startLisitng]: "بدء القائمة",
   [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:
     "لا توجد عروض نشطة في الوقت الحالي. قم بتقديم عرضك الأول الآن!",
   [localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]:

@@ -36,7 +36,9 @@ const Categories = () => {
   const myRef = useRef();
   const dispatch = useDispatch();
 
-  const [isGrid, setIsGrid] = useState(true);
+  const [isGrid, setIsGrid] = useState(() => {
+    return JSON.parse(localStorage.getItem("isGrid")) ?? true;
+  });
   const [open, setOpen] = useState(false);
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
@@ -94,6 +96,10 @@ const Categories = () => {
     } else dispatch(Open());
   };
 
+  useEffect(() => {
+    localStorage.setItem("isGrid", JSON.stringify(isGrid));
+  }, [isGrid]);
+
   return (
     <div className="px-4 mx-auto mt-[120px] sm:mt-[132px] ">
       <Dimmer
@@ -128,18 +134,18 @@ const Categories = () => {
         <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
           {isGrid ? (
             <button
-              onClick={() => setIsGrid((p) => !p)}
-              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              onClick={() => setIsGrid((prev) => !prev)}
+              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
             >
-              <img src={menuicon} alt="menuicon" className="h-full" />
+              <img src={menuicon} alt="menuicon" />
               <p className="flex items-center">
                 {selectedContent[localizationKeys.Grid]}
               </p>
             </button>
           ) : (
             <button
-              onClick={() => setIsGrid((p) => !p)}
-              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              onClick={() => setIsGrid((prev) => !prev)}
+              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
             >
               <img src={listicon} alt="listicon" />
               <p className="flex items-center">

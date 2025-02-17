@@ -46,7 +46,9 @@ const Home = ({ selectedType }) => {
   const isWelcomeBonus = useSelector(
     (state) => state.welcomeBonus.welcomeBonus
   );
-  const [isGrid, setIsGrid] = useState(true);
+  const [isGrid, setIsGrid] = useState(() => {
+    return JSON.parse(localStorage.getItem("isGrid")) ?? true;
+  });
   const socket = useSocket();
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState([]);
@@ -67,15 +69,24 @@ const Home = ({ selectedType }) => {
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
 
-  //socket listening for new auction
+  // useEffect(() => {
+  //   localStorage.setItem("isGrid", JSON.stringify(isGrid));
+  // }, [isGrid]);
+
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams();
+  //   queryParams.set("page", currentPage);
+  //   queryParams.set("perPage", itemsPerPage);
+
+  //   const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+  //   history.pushState({}, "", newUrl);
+  // }, [currentPage, itemsPerPage]);
+
   useEffect(() => {
     if (!socket) return;
 
     const handleNewAuction = (data) => {
-      setMainAuctions((prev) => [
-        ...prev, // Spread the previous state
-        data.auction, // Add the new auction
-      ]);
+      setMainAuctions((prev) => [...prev, data.auction]);
     };
 
     const handleAuctionCancelled = (data) => {
@@ -103,29 +114,33 @@ const Home = ({ selectedType }) => {
   }, [isWelcomeBonus]);
 
   useEffect(() => {
-    if (search.includes("page") && search.includes("perPage"))
+    const queryParams = new URLSearchParams(search);
+    const page = queryParams.get("page");
+    const perPage = queryParams.get("perPage");
+
+    if (page && perPage) {
       if (!user) {
         runMainAuctions(
-          axios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-            setMainAuctions(res?.data?.data);
-            setTotalPages(res?.data?.pagination?.totalPages);
-          })
+          axios
+            .get(`${api.app.auctions.getMain}?page=${page}&perPage=${perPage}`)
+            .then((res) => {
+              setMainAuctions(res?.data?.data);
+              setTotalPages(res?.data?.pagination?.totalPages);
+            })
         );
         runSponsoredAuctions(
           axios.get(`${api.app.auctions.sponsored}`).then((res) => {
-            console.log(
-              "response of runMainAuctions when user not  have XXX",
-              res
-            );
             SetSponsoredAuctions(res?.data?.data);
           })
         );
       } else {
         runMainAuctions(
-          authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-            setMainAuctions(res?.data?.data);
-            setTotalPages(res?.data?.pagination?.totalPages);
-          })
+          authAxios
+            .get(`${api.app.auctions.getMain}?page=${page}&perPage=${perPage}`)
+            .then((res) => {
+              setMainAuctions(res?.data?.data);
+              setTotalPages(res?.data?.pagination?.totalPages);
+            })
         );
         runSponsoredAuctions(
           authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
@@ -133,19 +148,23 @@ const Home = ({ selectedType }) => {
           })
         );
       }
-  }, [runMainAuctions, runSponsoredAuctions, search, user]);
+    }
+  }, [search, user]);
 
   useEffect(() => {
-    if (search.includes("page") && search.includes("perPage"))
+    const queryParams = new URLSearchParams(search);
+    const pageParam = queryParams.get("page");
+    const perPageParam = queryParams.get("perPage");
+
+    if (pageParam && perPageParam) {
       if (user) {
         runListedProduct(
           axios
             .get(
-              `${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`
+              `${api.app.productListing.getAllListedProducts}?page=${pageParam}&perPage=${perPageParam}`
             )
             .then((res) => {
               setListedProducts(res?.data?.data);
-              console.log("***res......", res.data.data);
               setTotalPages(res?.data?.totalPages);
             })
         );
@@ -153,16 +172,16 @@ const Home = ({ selectedType }) => {
         runListedProduct(
           axios
             .get(
-              `${api.app.productListing.getAllListedProducts}?page=1&perPage=${page}`
+              `${api.app.productListing.getAllListedProducts}?page=${pageParam}&perPage=${perPageParam}`
             )
             .then((res) => {
               setListedProducts(res?.data?.data);
-              console.log("***aaaaa", res?.data?.data);
               setTotalPages(res?.data?.totalPages);
             })
         );
       }
-  }, [page, runListedProduct, search, user]);
+    }
+  }, [page, search, user]);
 
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
@@ -216,22 +235,21 @@ const Home = ({ selectedType }) => {
         <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
           {isGrid ? (
             <button
-              onClick={() => setIsGrid((p) => !p)}
-              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
+              onClick={() => setIsGrid((prev) => !prev)}
+              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
             >
-              <img src={menuicon} alt="menuiconicon" />
+              <img src={menuicon} alt="menuicon" />
               <p className="flex items-center">
                 {selectedContent[localizationKeys.Grid]}
               </p>
             </button>
           ) : (
             <button
-              onClick={() => setIsGrid((p) => !p)}
-              className="flex items-center gap-x-3  h-9 text-primary-light bg-primary-light/20 rounded-lg p-2"
+              onClick={() => setIsGrid((prev) => !prev)}
+              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
             >
               <img src={listicon} alt="listicon" />
               <p className="flex items-center">
-                {" "}
                 {selectedContent[localizationKeys.List]}
               </p>
             </button>
@@ -270,7 +288,7 @@ const Home = ({ selectedType }) => {
                   return (
                     <div>
                       <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        Trending Auction
+                        {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
 
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
@@ -307,7 +325,7 @@ const Home = ({ selectedType }) => {
                   return (
                     <div>
                       <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        Trending auction
+                        {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
                       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
                         {mainAuctions?.map((e) => (
@@ -418,7 +436,7 @@ const Home = ({ selectedType }) => {
                   return (
                     <>
                       <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        Trending auction
+                        {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                         {mainAuctions?.map((e) => (
@@ -488,7 +506,7 @@ const Home = ({ selectedType }) => {
                   return (
                     <>
                       <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        Trending auction
+                        {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
                       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
                         {mainAuctions?.map((e) => (
@@ -559,9 +577,7 @@ const Home = ({ selectedType }) => {
           )}
         </div>
       </div>
-      <div className="px-4 mx-auto py-10">
-        {/* <LiveAuctionsSlider /> */}
-      </div>
+      <div className="px-4 mx-auto py-10">{/* <LiveAuctionsSlider /> */}</div>
       {/* <div className="relative py-14 ">
         <img
           className="w-full h-[257px] object-cover md:block hidden "

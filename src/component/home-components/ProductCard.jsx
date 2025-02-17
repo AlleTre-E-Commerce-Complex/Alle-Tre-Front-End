@@ -19,7 +19,6 @@ const ProductCard = ({
   createdAt,
 }) => {
   const [lang] = useLanguage("");
-  // const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const selectedContent = content[lang];
   const history = useHistory();
   // const { user } = useAuthState();

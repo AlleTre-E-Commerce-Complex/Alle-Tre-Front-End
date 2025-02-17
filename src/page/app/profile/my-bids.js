@@ -87,7 +87,7 @@ const MyBids = () => {
               <div className="flex justify-center mt-8">
                 <button
                   onClick={() => history.push(routes.app.home)}
-                  className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 h-8 "
+                  className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6  w-[120px] h-[40px] "
                 >
                   {
                     selectedContent[

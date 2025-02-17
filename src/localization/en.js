@@ -38,6 +38,8 @@ const en = {
   [localizationKeys.sentVerification]: "Send verification",
   [localizationKeys.securityDeposit]: "Security Deposit",
   // home
+  [localizationKeys.trendingAuctions]: "Trending Auctions",
+  [localizationKeys.type]: "Type",
   [localizationKeys.filterOptions]: "Filter options",
   [localizationKeys.selectOptions]: "Select Options",
   [localizationKeys.clearAll]: "Clear All",
@@ -329,7 +331,9 @@ const en = {
     "Your bid has been successfully placed",
   [localizationKeys.viewBids]: "View Bids",
   [localizationKeys.viewPurchased]: "View Purchased",
-  [localizationKeys.viewAuction]: "View Auction",
+  [localizationKeys.viewAuction]: "View Auctions",
+  [localizationKeys.viewProducts]: "View Products",
+
   // profile
   [localizationKeys.online]: "Online",
   [localizationKeys.logout]: "Logout",
@@ -447,10 +451,11 @@ const en = {
     "There is no bids yet in progress auctions right now",
   [localizationKeys.youHaveNotPlacedAnyBidsAtThisTime]:
     "You have not placed any bids at this time",
-  [localizationKeys.startBidding]: "Starting bidding",
+  [localizationKeys.startBidding]: "Start bidding",
+  [localizationKeys.startLisitng]: "Start listing",
   [localizationKeys.thereAreNoActiveBidsAtTheMomentPlaceYourFirstBidNow]:
     "There are no active bids at the moment. Place your first bid now!",
-    [localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]:
+  [localizationKeys.thereAreNoListedProductsAtTheMomentListYouFirstProductNow]:
     "There are no listed products at the moment. List your first product now!",
   [localizationKeys.increaseBid]: "Increase Bid",
   [localizationKeys.inPrsubmitNewBidogress]: "Submit new bid",

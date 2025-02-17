@@ -46,7 +46,10 @@ const Header = ({ SetSid, setSelectedType }) => {
   const { run } = useAxios();
   const { user } = useAuthState();
   const [name, setTitle] = useFilter("title", "");
-  const [selectedOption, setSelectedOption] = useState("Type");
+  const [selectedOption, setSelectedOption] = useState(
+    selectedContent[localizationKeys.type]
+  );
+
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   const { logout } = useAuthState();
@@ -287,8 +290,6 @@ const Header = ({ SetSid, setSelectedType }) => {
     });
   }, 850);
 
-
-
   const dispatch = useDispatch();
 
   const handelMyPfofile = () => {
@@ -355,6 +356,9 @@ const Header = ({ SetSid, setSelectedType }) => {
     if (user) {
       history.push(routes.app.profile.profileSettings);
     } else dispatch(Open());
+  };
+  const handelHome = () => {
+    history.push(`${routes.app.home}?page=1&perPage=28`);
   };
   const handelmyAuctions = () => {
     if (user) {
@@ -443,7 +447,11 @@ const Header = ({ SetSid, setSelectedType }) => {
           </div>
           <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto justify-center items-center">
             {[
-              { key: localizationKeys.home, path: routes.app.home },
+              {
+                key: localizationKeys.home,
+                path: routes.app.home,
+                handler: handelHome,
+              },
               {
                 key: localizationKeys.myAuctions,
                 path: routes.app.profile.myAuctions.default,
@@ -526,7 +534,7 @@ const Header = ({ SetSid, setSelectedType }) => {
 
               {isDropdownOpen && (
                 <div
-                  className={`absolute ${
+                  className={`absolute  ${
                     lang === "ar" ? "left-0 -translate-x-7" : "right-0"
                   } z-10 mt-1 w-56 origin-top-${
                     lang === "ar" ? "left" : "right"
@@ -536,7 +544,10 @@ const Header = ({ SetSid, setSelectedType }) => {
                   aria-labelledby="menu-button"
                   tabIndex="-1"
                 >
-                  <div className="bg-gray-med rounded-lg py-2" role="none">
+                  <div
+                    className="bg-gray-veryLight/50  border border-gray-400 rounded-lg py-2"
+                    role="none"
+                  >
                     <div className="my-auto space-y-3 px-4 py-2">
                       <button
                         onClick={handleOnSell}
@@ -615,18 +626,18 @@ const Header = ({ SetSid, setSelectedType }) => {
             <div className="relative md:block hidden">
               {/* Type Button */}
               <button
-      className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[160px] h-[50px] flex items-center justify-between px-4 py-3 text-base font-medium transition-all duration-300 shadow-md"
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <span className="flex-1 text-center">{selectedOption}</span>
-      <span
-        className={`transform transition-transform duration-300 ${
-          isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
-        }`}
-      >
-        <RiArrowDownSFill size={20} />
-      </span>
-    </button>
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[160px] h-[50px] flex items-center justify-between px-4 py-3 text-base font-medium transition-all duration-300 shadow-md"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                <span className="flex-1 text-center">{selectedOption}</span>
+                <span
+                  className={`transform transition-transform duration-300 ${
+                    isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
+                  }`}
+                >
+                  <RiArrowDownSFill size={20} />
+                </span>
+              </button>
 
               {isOpen && (
                 <div className="absolute left-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
@@ -641,7 +652,7 @@ const Header = ({ SetSid, setSelectedType }) => {
                           setIsOpen(false);
                         }}
                       >
-                        View Auction
+                        {selectedContent[localizationKeys.viewAuction]}
                       </button>
                     </li>
                     <li>
@@ -654,7 +665,7 @@ const Header = ({ SetSid, setSelectedType }) => {
                           setIsOpen(false);
                         }}
                       >
-                        View Products
+                        {selectedContent[localizationKeys.viewProducts]}
                       </button>
                     </li>
                     <li>
@@ -667,7 +678,7 @@ const Header = ({ SetSid, setSelectedType }) => {
                           setIsOpen(false);
                         }}
                       >
-                        View All
+                        {selectedContent[localizationKeys.viewAll]}
                       </button>
                     </li>
                   </ul>
