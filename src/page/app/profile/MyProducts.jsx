@@ -28,7 +28,7 @@ const MyProducts = () => {
   );
   useEffect(() => {
     runAlyticsData(
-      authAxios.get(api.app.auctions.bidAnalytics).then((res) => {
+      authAxios.get(api.app.productListing.productAnalytics).then((res) => {
         setAnalyticsData(res?.data?.data);
       })
     );
