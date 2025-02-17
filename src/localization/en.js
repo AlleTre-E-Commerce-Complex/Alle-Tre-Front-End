@@ -392,7 +392,7 @@ const en = {
   [localizationKeys.youCanCreateOne]: "You can create one",
   [localizationKeys.oppsActive]: "Ops, there are no active auctions yet.",
   [localizationKeys.oppsCancelled]: "Ops, there are no cancelled auctions yet.",
-  [localizationKeys.lastPrice]: "Last Price",
+  [localizationKeys.lastestPrice]: "Lastest Price",
   [localizationKeys.startingPrice]: "Starting Price",
   [localizationKeys.startingDate]: "Starting Date",
   [localizationKeys.pendingDeposit]: "Pending Deposit",

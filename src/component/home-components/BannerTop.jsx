@@ -65,7 +65,7 @@ const BannerTop = () => {
   return (
     <div className="relative w-full  mx-auto">
       <div
-        className="relative overflow-hidden h-120px sm:h-[28vh] md:h-[35vh] lg:h-[34rem]"
+        className="relative overflow-hidden h-120px sm:h-[28vh] md:h-[43vh] lg:h-[34rem]"
         style={{ height: bannerHeight }}
       >
         {images.map((image, index) => {

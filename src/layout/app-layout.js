@@ -41,6 +41,7 @@ import ListingProductsLocationDetails from "page/app/ListProduct/List-location-d
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState(false);
+  const [selectedType, setSelectedType] = useState("all");
   const [showRewardModal, setShowRewardModal] = useState(false);
   const [showUnSubscribeModal, setUnSubscribeModal] = useState(false);
   const location = useLocation();
@@ -99,7 +100,7 @@ const AppLayouts = () => {
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <SocketProvider auctionId={socketauctionId} userId={user?.id}>
-        <Header SetSid={SetSid} sid={sid} />
+        <Header SetSid={SetSid} sid={sid} setSelectedType={setSelectedType} />
         <Sidebar SetSid={SetSid} sid={sid} />
         {showRewardModal && (
           <RewardModal
@@ -189,7 +190,6 @@ const AppLayouts = () => {
               path={routes.app.createAuction.auctionDetails}
               component={AuctionDetails}
             />
-            
             <Route
               path={routes.app.createAuction.productDetails}
               component={ProductDetails}
@@ -218,8 +218,10 @@ const AppLayouts = () => {
               path={routes.app.homeDetails()}
               component={HomeAuctionDetails}
             />
-
-            <Route path={routes.app.home} component={Home} />
+            <Route
+              path={routes.app.home}
+              render={() => <Home selectedType={selectedType} />}
+            />
             <Route path={routes.app.unSubscribeUser} component={Home} />
             <Route path={routes.app.categories()} component={Categories} />
             <Route path={routes.app.faqs} component={FAQs} />
