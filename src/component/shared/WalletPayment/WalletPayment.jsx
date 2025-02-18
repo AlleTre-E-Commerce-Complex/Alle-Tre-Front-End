@@ -31,7 +31,6 @@ const WalletPayment = ({
       authAxios
         .post(paymentAPI, body)
         .then((res) => {
-          console.log('',res)
           if (res?.data?.success) {
             toast.success("Payment successful", {
               position: "top-right", // Position of the toast

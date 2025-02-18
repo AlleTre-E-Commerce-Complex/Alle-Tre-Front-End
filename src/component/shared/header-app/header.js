@@ -76,10 +76,14 @@ const Header = ({ SetSid, setSelectedType }) => {
     setisDropdownOpen(!isDropdownOpen);
   };
   async function getNotificationCount() {
+   try {
     const response = await run(authAxios.get("/notifications/unread-count"));
     if (response.data.success) {
       setNotificationCount(response.data.count);
     }
+   } catch (error) {
+    console.log('unread count error :',error)
+   }
   }
   const handleTypeChange = (type) => {
     setSelectedType(type);
@@ -92,7 +96,7 @@ const Header = ({ SetSid, setSelectedType }) => {
     console.log("soket useEffect test");
     if (!socket) return;
 
-    const handleNotification = (data) => {
+   if( user ){ const handleNotification = (data) => {
       if (data.status === "ON_SELLING") {
         console.log("listing message");
         setNotificationCount((prev) => prev + 1);
@@ -200,7 +204,7 @@ const Header = ({ SetSid, setSelectedType }) => {
     // Clean up listener on unmount
     return () => {
       socket.off("notification", handleNotification);
-    };
+    };}
   }, [socket, user?.id]);
 
   const location = useLocation();
