@@ -10,18 +10,11 @@ import { Dimmer } from "semantic-ui-react";
 import api from "../../../api";
 import useAxios from "../../../hooks/use-axios";
 import { authAxios } from "../../../config/axios-config";
-import moment from "moment";
 import { useLanguage } from "../../../context/language-context";
 import useFilter from "../../../hooks/use-filter";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { listingProductDetails } from "redux-store/ListingProduct-details-slice";
-import {
-  auctionDetails,
-  type,
-  duration,
-  isBuyNow,
-} from "../../../redux-store/auction-details-slice";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";

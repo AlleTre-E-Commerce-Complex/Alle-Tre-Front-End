@@ -8,7 +8,6 @@ import Auth from "../utils/auth";
 const AuthContext = React.createContext();
 
 const WHITE_LIST = [routes.auth.default, routes.auth.forgetpass.default];
-
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
@@ -20,7 +19,7 @@ function AuthProvider({ children }) {
 
   const login = ({ accessToken, refreshToken }) => {
     setUser(Auth._decodeToken(accessToken));
- 
+
     Auth.setToken({
       newAccessToken: accessToken,
       newRefreshToken: refreshToken,
@@ -34,18 +33,19 @@ function AuthProvider({ children }) {
     history.push(routes.app.home);
   };
 
-const searchParams = new URLSearchParams(search).toString()
+  const searchParams = new URLSearchParams(search).toString();
 
   React.useEffect(() => {
     async function fetchUser() {
       try {
         const user = await Auth.getUser();
-        console.log(user)
         if (!user) {
           if (!WHITE_LIST.some((route) => pathname.startsWith(route))) {
             const redirectPath = window.location.pathname.includes("details")
               ? window.location.pathname
-              : `${routes.app.home}?${searchParams.toString()}&page=1&perPage=28`;
+              : `${
+                  routes.app.home
+                }?${searchParams.toString()}&page=1&perPage=28`;
             history.push(redirectPath);
           }
           setUser(null);
@@ -59,10 +59,10 @@ const searchParams = new URLSearchParams(search).toString()
         setIsLoading(false);
       }
     }
-  
+
     fetchUser();
   }, [pathname]); // Only re-run when pathname changes
-  
+
   return (
     <AuthContext.Provider
       value={{
