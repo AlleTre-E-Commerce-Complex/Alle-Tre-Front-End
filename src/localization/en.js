@@ -333,7 +333,7 @@ const en = {
   [localizationKeys.viewPurchased]: "View Purchased",
   [localizationKeys.viewAuction]: "View Auctions",
   [localizationKeys.viewProducts]: "View Products",
-
+  [localizationKeys.view]: "View",
   // profile
   [localizationKeys.online]: "Online",
   [localizationKeys.logout]: "Logout",

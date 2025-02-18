@@ -39,7 +39,7 @@ const ar = {
 
   // home
   [localizationKeys.trendingAuctions]: "المزادات المميزه",
-  [localizationKeys.type]: "يكتب",
+  [localizationKeys.type]: "عرض",
   [localizationKeys.filterOptions]: "خيارات الفلتر",
   [localizationKeys.selectOptions]: "حدد الخيارات",
   [localizationKeys.clearAll]: "مسح الكل",
@@ -329,6 +329,7 @@ const ar = {
   [localizationKeys.viewPurchased]: "عرض المشتريات",
   [localizationKeys.viewAuction]: "عرض المزادات",
   [localizationKeys.viewProducts]: "عرض المنتجات",
+  [localizationKeys.view]: "عرض",
   // profile
   [localizationKeys.online]: "متصل",
   [localizationKeys.logout]: "تسجيل الخروج",

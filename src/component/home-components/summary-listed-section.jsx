@@ -26,8 +26,7 @@ import AuctionDetailsTabs from "component/auctions-details-components/auction-de
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
-  const [mainLocation, setMainLocation] = useState()
-  console.log("listedPdroduct", listedProductsData);
+  const [mainLocation, setMainLocation] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [lang] = useLanguage("");
@@ -37,31 +36,23 @@ const SummaryListedSection = () => {
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
 
-
-
   useEffect(() => {
-
     run(
       authAxios
         .get(`${api.app.productListing.listedProduct(productId)}`)
         .then((res) => {
-          console.log('112233',res.data.data)
           setListedProductsData(res?.data?.data?.product);
-          setMainLocation(res?.data?.data?.location)
+          setMainLocation(res?.data?.data?.location);
         })
         .catch((error) => {
-          console.log('summery listed section error:',error)
+          console.log("summery listed section error:", error);
         })
     );
   }, [run, productId]);
-  const lat = mainLocation?.lat;
-  const lng = mainLocation?.lng;
-  const mapUrl =
-    mainLocation && lat !== undefined && lng !== undefined
-      ? `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
-          `${lat},${lng}`
-        )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`
-      : null;
+
+  const mapUrl = ` https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
+    `${mainLocation?.lat},${mainLocation?.lng}`
+  )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`;
 
   return (
     <div>
@@ -154,16 +145,10 @@ const SummaryListedSection = () => {
                 {selectedContent[localizationKeys.location]}
               </div>
               <div className="text-gray-verydark cursor-default font-normal">
-                {listedProductsData?.user?.locations?.find(
-                  (location) => location.isMain
-                ) ? (
+                {mainLocation?.address ? (
                   <>
                     <p className="text-2xl font-semibold ">
-                      {
-                        listedProductsData.user.locations.find(
-                          (location) => location.isMain
-                        ).address
-                      }
+                      {mainLocation?.address}
                     </p>
 
                     {/* <p className="text-lg font-medium text-gray-600">
@@ -181,20 +166,19 @@ const SummaryListedSection = () => {
                       }
                     </p> */}
 
-                    {listedProductsData.user.locations.find(
-                      (location) => location.isMain
-                    ) ? (
-                      <iframe
-                        title="Google Map"
-                        className="w-full h-64 mt-4 rounded-lg"
-                        src={mapUrl}
-                        allowFullScreen
-                      />
-                    ) : (
-                      <p className="text-gray-600 mt-2">
-                        {selectedContent[localizationKeys.locationNotAvailable]}
-                      </p>
-                    )}
+                    {
+                      mainLocation?.lat && mainLocation?.lng ? (
+                        <iframe
+                          title="Google Map"
+                          className="w-full h-64 mt-4 rounded-lg"
+                          src={mapUrl}
+                          allowFullScreen
+                        />
+                      ) : null
+                      // <p className="text-gray-600 mt-2">
+                      //   {selectedContent[localizationKeys.locationNotAvailable]}
+                      // </p>
+                    }
                   </>
                 ) : (
                   <p>

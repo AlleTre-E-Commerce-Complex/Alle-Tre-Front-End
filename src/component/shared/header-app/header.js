@@ -59,6 +59,10 @@ const Header = ({ SetSid, setSelectedType }) => {
   const [showLogo, setShowLogo] = useState(false);
   const [showIcon, setShowIcon] = useState(true);
 
+  useEffect(() => {
+    setSelectedOption(selectedContent[localizationKeys.view]);
+  }, [selectedContent, localizationKeys]);
+
   // Show the AllatreLogo after a delay
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -423,7 +427,7 @@ const Header = ({ SetSid, setSelectedType }) => {
 
           <RiHome2Line
             onClick={() => {
-              history.push(routes.app.home);
+              history.push(`${routes.app.home}?page=1&perPage=28`);
             }}
             className="text-primary cursor-pointer"
             size={25}
@@ -441,7 +445,9 @@ const Header = ({ SetSid, setSelectedType }) => {
                   transition: "opacity 0.5s ease-in-out",
                 }}
                 className="cursor-pointer w-[100px] block md:hidden text-primary"
-                onClick={() => history.push(routes.app.home)}
+                onClick={() =>
+                  history.push(`${routes.app.home}?page=1&perPage=28`)
+                }
               />
             )}
           </div>

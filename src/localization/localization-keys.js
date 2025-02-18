@@ -297,7 +297,7 @@ const localizationKeys = {
   viewPurchased: "viewPurchased",
   viewAuction: "viewAuction",
   viewProducts: "viewProducts",
-
+  view: "view",
   // profile
   online: "online",
   profileSettings: "profileSettings",
