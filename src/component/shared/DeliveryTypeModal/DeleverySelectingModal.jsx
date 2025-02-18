@@ -105,7 +105,7 @@ const DeliverySelectingModal = ({
 
           <div className="px-3 pt-4 pb-2">
             <Dropdown
-              placeholder="Select a payment method"
+              placeholder= {selectedContent[localizationKeys.selectTheDeliveryType]}
               fluid
               selection
               options={deliveryOptions}

@@ -164,6 +164,8 @@ const Home = ({ selectedType }) => {
               `${api.app.productListing.getAllListedProducts}?page=${pageParam}&perPage=${perPageParam}`
             )
             .then((res) => {
+            console.log('all listed proudtucts:',res.data.data)
+
               setListedProducts(res?.data?.data);
               setTotalPages(res?.data?.totalPages);
             })

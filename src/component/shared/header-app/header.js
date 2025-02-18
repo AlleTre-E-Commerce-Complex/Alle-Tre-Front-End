@@ -408,7 +408,7 @@ const Header = ({ SetSid, setSelectedType }) => {
 
   const handleLogout = () => {
     setLogoutModalOpen(false);
-    history.push(routes.app.home);
+    // history.push(`${routes.app.home}?page=1&perPage=28`)
     socket.close();
     logout();
   };

@@ -30,7 +30,7 @@ function AuthProvider({ children }) {
     // Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
     Auth.logout();
     setUser(null);
-    history.push(routes.app.home);
+    // history.push(routes.app.home);
   };
 
   const searchParams = new URLSearchParams(search).toString();
