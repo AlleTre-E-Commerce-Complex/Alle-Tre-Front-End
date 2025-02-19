@@ -72,18 +72,12 @@ const AuctionCard = ({
   const history = useHistory();
   const { run, isLoading } = useAxios([]);
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
-  const [latestBid, setlatestBid] = useState(latestBidAmount);
   const socket = useSocket();
   const timeLeft = useCountdown(endingTime);
   const startDate = useCountdown(StartDate);
-  // const formattedTimeLeft = `${timeLeft.days} ${
-  //   selectedContent[localizationKeys.days]
-  // } :
-  // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
-  // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
   const formattedBid = formatCurrency(
-    latestBid || CurrentBid || startBidAmount
+    latestBidAmount || CurrentBid || startBidAmount
   );
 
   const formattedstartDate = `${startDate.days} ${
@@ -97,24 +91,25 @@ const AuctionCard = ({
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
   }, [WatshlistState]);
-  // dispatch(socketAuctionId(auctionId));
-  useEffect(() => {
-    dispatch(socketAuctionId(auctionId));
-  }, [auctionId]);
 
   useEffect(() => {
-    if (socket) {
-      const handleBidSubmitted = (data) => {
-        if (data && data.bidAmount && data.bidAmount !== latestBid) {
-          setlatestBid(data.bidAmount);
-        }
-      };
-      socket.on("bid:submitted", handleBidSubmitted);
-      return () => {
-        socket.off("bid:submitted", handleBidSubmitted);
-      };
-    }
-  }, [socket, latestBid]);
+    dispatch(socketAuctionId(auctionId));
+  }, [auctionId, dispatch]);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleBidSubmitted = (data) => {
+      if (data.auctionId === auctionId) {
+        console.log('Bid submitted for auction:', auctionId);
+      }
+    };
+
+    socket.on("bid:submitted", handleBidSubmitted);
+    return () => {
+      socket.off("bid:submitted", handleBidSubmitted);
+    };
+  }, [socket, auctionId]);
 
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -129,7 +124,6 @@ const AuctionCard = ({
         await navigator.share({
           title: { title },
           text: "Check out this auction!",
-          // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
           url: `${getDomain()}/alletre/home/${auctionId}/details`,
         });
       } catch (error) {

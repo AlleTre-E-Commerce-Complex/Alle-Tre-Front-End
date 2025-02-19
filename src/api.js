@@ -145,6 +145,7 @@ const api = {
     notifications: {
       get: "/notifications/get/all",
       subscribe: "/notifications/subscribe",
+      markAsRead:'/notifications/mark-as-read'
     },
   },
 };

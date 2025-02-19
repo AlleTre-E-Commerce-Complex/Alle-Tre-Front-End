@@ -95,14 +95,46 @@ const Home = ({ selectedType }) => {
       );
     };
 
+    const handleBuyNowAuctionPurchase = (data) =>{
+      setMainAuctions((prev) => 
+        prev.filter((auction) => auction.id !== data.auctionId)
+      )
+    }
+
+    const handleIncreaseBid = (data) => {
+      setMainAuctions((prev) => {
+        const updatedAuctions = prev.map((auction) =>
+          auction.id === data.auction.id
+            ? {
+                ...auction,
+                bids: data.auction.bids,
+                startBidAmount: data.auction.startBidAmount,
+                _count: {
+                  ...auction._count,
+                  bids: (auction._count.bids || 0) + 1
+                },
+                currentBid: {
+                  bidAmount: data.auction.bids[0]?.amount
+                }
+              }
+            : auction
+        );
+        return updatedAuctions;
+      });
+    };
+    
     // Register socket listeners
+    socket.on("auction:buyNowPurchase", handleBuyNowAuctionPurchase)
     socket.on("auction:newAuctionListed", handleNewAuction);
     socket.on("auction:cancelled", handleAuctionCancelled);
+    socket.on("auction:increaseBid", handleIncreaseBid);
 
     // Cleanup to avoid memory leaks
     return () => {
+      socket.off("auction:buyNowPurchase", handleBuyNowAuctionPurchase)
       socket.off("auction:newAuctionListed", handleNewAuction);
       socket.off("auction:cancelled", handleAuctionCancelled);
+      socket.off("auction:increaseBid", handleIncreaseBid);
     };
   }, [socket]);
 
