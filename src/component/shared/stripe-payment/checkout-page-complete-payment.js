@@ -53,11 +53,13 @@ export default function CheckoutPageCompletePayment() {
   const [isBankTransfer, setIsBankTransfer] = useState(false)
   const [showStripePayment, setShowStripePayment] = useState(null);
   const [showPaymentSelecton, setShwoPaymentSelection] = useState(true);
+  const [loading,setLoading] = useState(false)
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
     useAxios([]);
 
   useEffect(() => {
+    setLoading(true);
     runPendingAuctionData(
       authAxios
         .get(
@@ -70,31 +72,29 @@ export default function CheckoutPageCompletePayment() {
           const auctionData = res?.data?.data;
           const amountToPay = payingAmount;
           if (auctionData) {
-            // const pendingPeymentData = await authAxios.get(
-            //   `${api.app.auctions.isPendingPayment(
-            //     completedPaymentData?.auctionsId,
-            //     "AUCTION_PURCHASE"
-            //   )}`
-            // );
-            // if (!pendingPeymentData?.data?.isPendingPaymentData) {
-              run(
-                authAxios
-                  .get(`${api.app.Wallet.getBalance}`)
-                  .then((response) => {
-                    const balance = response.data;
+            try {
+              const response = await authAxios.get(`${api.app.Wallet.getBalance}`);
+              const balance = response.data;
 
-                    if (balance && Number(balance) >= Number(amountToPay)) {
-                      setWalletBalance(balance);
-                    } else {
-                      stripePaymentApiCall();
-                    }
-                    setShwoPaymentSelection(true);
-                  })
-              );
-            // } else {
-            //   stripePaymentApiCall();
-            // }
+              if (balance && Number(balance) >= Number(amountToPay)) {
+                setWalletBalance(balance);
+              } else {
+                stripePaymentApiCall();
+              }
+              setShwoPaymentSelection(true);
+            } catch (error) {
+              console.error("Error fetching wallet balance:", error);
+              stripePaymentApiCall();
+            } finally {
+              setLoading(false);
+            }
+          } else {
+            setLoading(false);
           }
+        })
+        .catch((error) => {
+          console.error("Error fetching auction details:", error);
+          setLoading(false);
         })
     );
   }, [
