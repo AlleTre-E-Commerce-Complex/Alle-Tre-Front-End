@@ -22,20 +22,33 @@ const Notifications = () => {
   }, []);
 
   useEffect(() => {
+    let isMounted = true; // Prevents state updates if component unmounts
+  
     const fetchNotifications = async () => {
       try {
-        const response = await run(
-          authAxios.get(`${api.app.notifications.get}`)
-        );
-        console.log("*****----------->", response.data);
-        setNotifications(response.data.data);
+        // Fetch notifications
+        const { data } = await run(authAxios.get(api.app.notifications.get));
+  
+        if (isMounted) {
+          setNotifications(data?.data || []); // Ensure data consistency
+  
+          // Mark notifications as read only if there are notifications
+          if (data?.data?.length) {
+            await run(authAxios.put(api.app.notifications.markAsRead));
+          }
+        }
       } catch (error) {
-        console.error("Error fetching wallet data:", error);
+        console.error("Failed to fetch notifications:", error);
       }
     };
-
+  
     fetchNotifications();
-  }, [run]);
+  
+    return () => {
+      isMounted = false; // Cleanup function to prevent memory leaks
+    };
+  }, [run]); 
+  
 
   const handleViewDetails = (auctionId) => {
     history.push(routes.app.homeDetails(auctionId));
