@@ -36,9 +36,10 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   // const loginData = useSelector((state) => state?.loginDate?.loginDate);
   // console.log('****--->',isListProduct,categoriesId)
   useEffect(() => {
-    if (!isListProduct
+    if (
+      !isListProduct
       //  && categoriesId
-      ) {
+    ) {
       if (user) {
         runAuctions(
           authAxios
@@ -70,7 +71,10 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
     }
   }, [
     // categoriesId,
-     page, runAuctions, user]);
+    page,
+    runAuctions,
+    user,
+  ]);
 
   const swiperOptions = {
     cssMode: true,
@@ -132,15 +136,30 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
               } snapslider-scroll swiper-wrapper py-2`}
             >
               {auctions?.map((e) => (
-                <div className="snapslider-card swiper-slide">
+                <div
+                  className="snapslider-card swiper-slide"
+                  onClick={() =>
+                    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+                  }
+                >
                   {isListProduct ? (
                     <ProductCard
-                      price={e?.ProductListingPrice}
-                      title={e?.title}
-                      imageLink={e?.images[0].imageLink}
-                      id={e?.id}
-                      location={e?.user?.locations[0]?.address}
-                      createdAt={e?.user?.createdAt}
+                      key={e?.id}
+                      price={e?.product?.ProductListingPrice}
+                      title={e?.product?.product?.title}
+                      imageLink={e?.product?.images[0].imageLink}
+                      id={e?.product?.id}
+                      city={
+                        lang === "en"
+                          ? e?.location?.city?.nameEn
+                          : e?.location?.city?.nameAr
+                      }
+                      country={
+                        lang === "en"
+                          ? e?.location?.country?.nameEn
+                          : e?.location?.country?.nameEn
+                      }
+                      createdAt={e?.createdAt}
                     />
                   ) : (
                     <AuctionCard

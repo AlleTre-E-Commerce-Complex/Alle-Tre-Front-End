@@ -76,19 +76,23 @@ const Header = ({ SetSid, setSelectedType }) => {
     setisDropdownOpen(!isDropdownOpen);
   };
   async function getNotificationCount() {
-   try {
-    const response = await run(authAxios.get("/notifications/unread-count"));
-    if (response.data.success) {
-      setNotificationCount(response.data.count);
+    try {
+      const response = await run(authAxios.get("/notifications/unread-count"));
+      if (response.data.success) {
+        setNotificationCount(response.data.count);
+      }
+    } catch (error) {
+      console.log("unread count error :", error);
     }
-   } catch (error) {
-    console.log('unread count error :',error)
-   }
   }
   const handleTypeChange = (type) => {
     setSelectedType(type);
     setSelectedOption(
-      type === "auction" ? "Auction" : type === "products" ? "Products" : "All"
+      type === "auction"
+        ? selectedContent[localizationKeys.auction]
+        : type === "products"
+        ? selectedContent[localizationKeys.products]
+        : selectedContent[localizationKeys.all]
     );
   };
 
@@ -96,115 +100,117 @@ const Header = ({ SetSid, setSelectedType }) => {
     console.log("soket useEffect test");
     if (!socket) return;
 
-   if( user ){ const handleNotification = (data) => {
-      if (data.status === "ON_SELLING") {
-        console.log("listing message");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_BIDDING" &&
-        data.userType === "FOR_SELLER" &&
-        data.usersId === user?.id
-      ) {
-        console.log("seller message");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_BIDDING" &&
-        data.userType === "CURRENT_BIDDER" &&
-        data.usersId === user?.id
-      ) {
-        console.log("bidder message");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_BIDDING" &&
-        data.userType === "OTHER_BIDDERS" &&
-        data.usersId.includes(String(user?.id))
-      ) {
-        console.log("other bidders message");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" &&
-        data.userType === "FOR_SELLER" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_AUCTION_EXPIRE_WITH_BIDDER");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_AUCTION_CANCELLED_WITH_BIDDER");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_AUCTION_PURCHASE_SUCCESS" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_AUCTION_PURCHASE_SUCCESS");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_PENDING_PAYMENT_OF_WINNER" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_PENDING_PAYMENT_OF_WINNER");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_DELIVERY_DELAY" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_DELIVERY_DELAY");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_PENDING_PAYMENT_TIME_EXPIRED");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_ITEM_SEND_FOR_DELIVERY" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_ITEM_SEND_FOR_DELIVERY");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_ITEM_BUY_NOW" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_ITEM_BUY_NOW");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_CONFIRM_DELIVERY" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_CONFIRM_DELIVERY");
-        setNotificationCount((prev) => prev + 1);
-      } else if (
-        data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" &&
-        data.usersId === user?.id
-      ) {
-        console.log("ON_AUCTION_CANCELLED_BY_ADMIN");
-        setNotificationCount((prev) => prev + 1);
-      }
-    };
+    if (user) {
+      const handleNotification = (data) => {
+        if (data.status === "ON_SELLING") {
+          console.log("listing message");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_BIDDING" &&
+          data.userType === "FOR_SELLER" &&
+          data.usersId === user?.id
+        ) {
+          console.log("seller message");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_BIDDING" &&
+          data.userType === "CURRENT_BIDDER" &&
+          data.usersId === user?.id
+        ) {
+          console.log("bidder message");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_BIDDING" &&
+          data.userType === "OTHER_BIDDERS" &&
+          data.usersId.includes(String(user?.id))
+        ) {
+          console.log("other bidders message");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" &&
+          data.userType === "FOR_SELLER" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_AUCTION_EXPIRE_WITH_BIDDER");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_AUCTION_CANCELLED_WITH_BIDDER");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_AUCTION_PURCHASE_SUCCESS" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_AUCTION_PURCHASE_SUCCESS");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_PENDING_PAYMENT_OF_WINNER" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_PENDING_PAYMENT_OF_WINNER");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_DELIVERY_DELAY" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_DELIVERY_DELAY");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_PENDING_PAYMENT_TIME_EXPIRED");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_ITEM_SEND_FOR_DELIVERY" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_ITEM_SEND_FOR_DELIVERY");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_ITEM_BUY_NOW" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_ITEM_BUY_NOW");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_CONFIRM_DELIVERY" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_CONFIRM_DELIVERY");
+          setNotificationCount((prev) => prev + 1);
+        } else if (
+          data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" &&
+          data.usersId === user?.id
+        ) {
+          console.log("ON_AUCTION_CANCELLED_BY_ADMIN");
+          setNotificationCount((prev) => prev + 1);
+        }
+      };
 
-    // Register the event listener
-    socket.on("notification", handleNotification);
-    getNotificationCount();
+      // Register the event listener
+      socket.on("notification", handleNotification);
+      getNotificationCount();
 
-    // Clean up listener on unmount
-    return () => {
-      socket.off("notification", handleNotification);
-    };}
+      // Clean up listener on unmount
+      return () => {
+        socket.off("notification", handleNotification);
+      };
+    }
   }, [socket, user?.id]);
 
   const location = useLocation();
@@ -275,7 +281,6 @@ const Header = ({ SetSid, setSelectedType }) => {
         const hasCompletedProfile = window.localStorage.getItem(
           "hasCompletedProfile"
         );
-
         if (hasCompletedProfile && JSON.parse(hasCompletedProfile)) {
           history.push(routes.app.profile.notifications);
         } else {

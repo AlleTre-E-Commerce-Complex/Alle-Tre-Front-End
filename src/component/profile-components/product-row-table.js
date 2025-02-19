@@ -139,7 +139,6 @@ const ProductRowTable = ({
         <div>
           {status !== "SOLD_OUT" && (
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 sm:mt-18 mt-5 w-full">
-              {/* Dropdown Options - First Line */}
               <div className="w-full flex justify-center">
                 <button
                   onClick={() =>
@@ -151,7 +150,6 @@ const ProductRowTable = ({
                 </button>
               </div>
 
-              {/* Dropdown Options - Second Line */}
               <div className="w-full flex justify-center">
                 <button
                   onClick={() =>

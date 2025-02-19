@@ -38,6 +38,8 @@ const ar = {
   [localizationKeys.securityDeposit]: "بلغ التأمين",
 
   // home
+  [localizationKeys.changeStatus]: "تغيير الحالة",
+  [localizationKeys.viewContactDetails]: " عرض تفاصيل الاتصال",
   [localizationKeys.trendingAuctions]: "المزادات المميزه",
   [localizationKeys.type]: "عرض",
   [localizationKeys.filterOptions]: "خيارات الفلتر",
@@ -68,6 +70,7 @@ const ar = {
   [localizationKeys.sellingType]: "نوع البيع",
   [localizationKeys.auction]: "مزاد",
   [localizationKeys.products]: "منتجات",
+  [localizationKeys.all]: "الجميع",
   [localizationKeys.buyNow]: "اشتري الآن",
   [localizationKeys.expiredAuctions]: "المزادات المنتهية",
   [localizationKeys.deliveryPolicy]: "سياسة التسليم ",
