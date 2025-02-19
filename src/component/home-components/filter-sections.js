@@ -38,7 +38,7 @@ const FilterSections = ({ myRef, hiddenGatogry, categoryId }) => {
   };
 
   return (
-    <div className="relative hidden lg:block bg-[#f5f5f5] flex flex-col gap-6 p-4 rounded-xl shadow-xl transition-shadow duration-300 max-w-full mx-auto w-full lg:max-w-xs border border-gray-200">
+    <div className="relative hidden lg:block bg-[#f5f5f5] flex flex-col gap-6 p-4 rounded-xl shadow-xl transition-shadow duration-300 max-w-full mx-auto w-full lg:max-w-xs border border-gray-200 h-full">
       <div className={`absolute top-4 ${lang === "ar" ? "left-1" : "right-1"}`}>
         <ShowFilterSections />
       </div>

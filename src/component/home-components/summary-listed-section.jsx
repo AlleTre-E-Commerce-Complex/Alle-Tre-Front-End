@@ -23,18 +23,46 @@ import {
   MyBidsBreadcrumb,
 } from "../../component/shared/bread-crumb/Breadcrumb";
 import AuctionDetailsTabs from "component/auctions-details-components/auction-details-tabs";
-
+import { useAuthState } from "context/auth-context";
+import { useDispatch } from "react-redux";
+import { Open } from "../../redux-store/auth-model-slice";
+import { toast } from "react-hot-toast";
+import { useHistory } from "react-router-dom";
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
   const [mainLocation, setMainLocation] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+  const { user } = useAuthState();
   const { pathname } = useLocation();
   const { productId } = useParams();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleOnContact = () => {
+    try {
+      if (!user) {
+        const hasCompletedProfile = window.localStorage.getItem(
+          "hasCompletedProfile"
+        );
+        if (hasCompletedProfile && JSON.parse(hasCompletedProfile)) {
+          setOpen(true);
+        } else {
+          dispatch(Open());
+        }
+      }
+    } catch (error) {
+      toast.error(selectedContent[localizationKeys.oops]);
+    }
+  };
+
+  const handleOnStatus = () => {
+    history.push(routes.app.profile.myProducts.default);
+  };
 
   useEffect(() => {
     run(
@@ -151,20 +179,23 @@ const SummaryListedSection = () => {
                       {mainLocation?.address}
                     </p>
 
-                    {/* <p className="text-lg font-medium text-gray-600">
-                      {
-                        listedProductsData.user.locations.find(
-                          (location) => location.isMain
-                        )?.city?.[lang === "ar" ? "nameAr" : "nameEn"]
-                      }
-                    </p>
-                    <p className="text-lg font-medium text-gray-600 ">
-                      {
-                        listedProductsData.user.locations.find(
-                          (location) => location.isMain
-                        )?.country?.[lang === "ar" ? "nameAr" : "nameEn"]
-                      }
-                    </p> */}
+                    <div className="flex space-x-1">
+                      <p className="text-lg font-medium text-gray-600">
+                        {
+                          mainLocation?.city?.[
+                            lang === "ar" ? "nameAr" : "nameEn"
+                          ]
+                        }
+                        ,
+                      </p>
+                      <p className="text-lg font-medium text-gray-600">
+                        {
+                          mainLocation?.country?.[
+                            lang === "ar" ? "nameAr" : "nameEn"
+                          ]
+                        }
+                      </p>
+                    </div>
 
                     {
                       mainLocation?.lat && mainLocation?.lng ? (
@@ -188,35 +219,52 @@ const SummaryListedSection = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row gap-4 pt-4">
-            <button
-              onClick={() => {
-                const message = encodeURIComponent(
-                  "Hello, I would like to inquire about your product listed on Alletre."
-                );
-                const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
-                window.open(whatsappUrl, "_blank");
-              }}
-              className="border-primary border-[1px] text-primary md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
-            >
-              <FaWhatsapp />
-              <span>{selectedContent[localizationKeys.chat]}</span>
-            </button>
+          {user?.id === listedProductsData?.userId ? (
+            <div className="pt-4" onClick={handleOnStatus}>
+              <button className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2">
+                {selectedContent[localizationKeys.changeStatus]}
+              </button>
+            </div>
+          ) : user ? (
+            <div className="flex flex-col md:flex-row gap-4 pt-4">
+              <button
+                onClick={() => {
+                  const message = encodeURIComponent(
+                    "Hello, I would like to inquire about your product listed on Alletre."
+                  );
+                  const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
+                  window.open(whatsappUrl, "_blank");
+                }}
+                className="border-primary border-[1px] text-primary md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
+              >
+                <FaWhatsapp />
+                <span>{selectedContent[localizationKeys.chat]}</span>
+              </button>
 
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-primary hover:bg-primary-dark text-white md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
-            >
-              <IoCall />
-              <span> {selectedContent[localizationKeys.call]}</span>
-            </button>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-primary hover:bg-primary-dark text-white md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+              >
+                <IoCall />
+                <span> {selectedContent[localizationKeys.call]}</span>
+              </button>
 
-            <PhoneNumberModal
-              openModal={isModalOpen}
-              phoneNumber={listedProductsData?.user?.phone}
-              setOpen={setIsModalOpen}
-            />
-          </div>
+              <PhoneNumberModal
+                openModal={isModalOpen}
+                phoneNumber={listedProductsData?.user?.phone}
+                setOpen={setIsModalOpen}
+              />
+            </div>
+          ) : (
+            <div className="pt-4">
+              <button
+                onClick={handleOnContact}
+                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+              >
+                {selectedContent[localizationKeys.viewContactDetails]}
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="mt-9 px-4 col-span-2">

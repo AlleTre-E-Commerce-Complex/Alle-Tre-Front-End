@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
-
 import useAxios from "../../../hooks/use-axios";
 import { Dimmer } from "semantic-ui-react";
 import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
-
-import { ReactComponent as BidIcon } from "../../../../src/assets/icons/Bids-icon.svg";
+import { ReactComponent as BidIcon } from "../../../../src/assets/icons/listing icon-01.svg";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
@@ -73,9 +71,10 @@ const MyProducts = () => {
         </Dimmer>
         {analyticsData?.length === 0 ? (
           <div className="align-middle pt-52">
-            <div>
-              <BidIcon className="mx-auto" />
-              <p className="text-gray-dark text-center mt-12 ">
+            <div className="flex flex-col items-center">
+              <BidIcon className="w-32 h-32" />
+
+              <p className="text-gray-dark text-center mt-10">
                 {
                   selectedContent[
                     localizationKeys
@@ -83,10 +82,11 @@ const MyProducts = () => {
                   ]
                 }
               </p>
+
               <div className="flex justify-center mt-8">
                 <button
                   onClick={() => history.push(routes.app.listProduct.default)}
-                  className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 w-[120px] h-[40px] "
+                  className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 w-[120px] h-[40px]"
                 >
                   {selectedContent[localizationKeys.startLisitng]}
                 </button>

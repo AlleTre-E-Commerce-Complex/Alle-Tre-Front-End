@@ -50,7 +50,6 @@ const ListProductDetails = () => {
 
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
-
   const dispatch = useDispatch();
   const history = useHistory();
   const [draftValue, setDraftValue] = useState();
@@ -465,7 +464,24 @@ const ListProductDetails = () => {
                         name="category"
                         label={selectedContent[localizationKeys.category]}
                         placeholder={selectedContent[localizationKeys.category]}
-                        options={GatogryOptions}
+                        options={GatogryOptions.map((option) => ({
+                          ...option,
+                          text:
+                            option.text === "Electronic Devices" ||
+                            option.text === "الأجهزة الإلكترونية" ? (
+                              option.text
+                            ) : (
+                              <div className="flex justify-between items-center">
+                                <span>{option.text}</span>
+                                <span className="bg-gray-200 text-gray-600 text-xs font-semibold px-2 py-1 rounded-lg">
+                                  {selectedContent[localizationKeys.comingSoon]}
+                                </span>
+                              </div>
+                            ),
+                          disabled:
+                            option.text !== "Electronic Devices" &&
+                            option.text !== "الأجهزة الإلكترونية",
+                        }))}
                         loading={loadingGatogry}
                         onChange={(value) => {
                           setCategoryId(value);

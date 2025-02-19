@@ -3,10 +3,10 @@ import BannerTopImage1 from "../../assets/images/mainImg1.jpg";
 import BannerTopImage2 from "../../assets/images/mainImg2.jpg";
 import BannerTopImage3 from "../../assets/images/mainImg3.jpg";
 import BannerTopImage4 from "../../assets/images/mainImg4.jpg";
-import BannerMobImage1 from "../../assets/images/mainImg1.jpg";
-import BannerMobImage2 from "../../assets/images/mainImg2.jpg";
-import BannerMobImage3 from "../../assets/images/mainImg3.jpg";
-import BannerMobImage4 from "../../assets/images/mainImg4.jpg";
+import BannerMobImage1 from "../../assets/images/mobileeSIze3.jpg";
+import BannerMobImage2 from "../../assets/images/mobileeSiz1.jpg";
+// import BannerMobImage3 from "../../assets/images/mainImg3.jpg";
+import BannerMobImage3 from "../../assets/images/mobileeSize2.jpg";
 
 const BannerTop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,8 +15,8 @@ const BannerTop = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const images = isMobile
-    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3, BannerMobImage4]
-    : [BannerTopImage1, BannerTopImage2, BannerTopImage3, BannerTopImage4];
+    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3]
+    : [BannerTopImage1, BannerTopImage2, BannerTopImage3];
 
   const autoSlideInterval = 6000; // Slide every 6 seconds
 
@@ -60,14 +60,10 @@ const BannerTop = () => {
   };
 
   // Dynamic height based on screen width
-  const bannerHeight = isMobile ? "130px" : "32rem";
 
   return (
-    <div className="relative w-full  mx-auto">
-      <div
-        className="relative overflow-hidden h-120px sm:h-[28vh] md:h-[43vh] lg:h-[34rem]"
-        style={{ height: bannerHeight }}
-      >
+    <div className="relative w-full mx-auto">
+      <div className="relative overflow-hidden h-[14rem] md:h-[20rem] lg:h-[30rem] xl:h-[32rem]">
         {images.map((image, index) => {
           const isActive = currentIndex === index;
           let position = isActive
@@ -81,11 +77,11 @@ const BannerTop = () => {
               key={index}
               className={`absolute inset-0 transition-transform duration-700 ease-in-out ${position} ${
                 isActive ? "z-20" : "z-10"
-              }`}
+              } flex items-center justify-center`} 
             >
               <img
                 src={image}
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-fill" 
                 alt={`Slide ${index + 1}`}
               />
             </div>
@@ -93,7 +89,7 @@ const BannerTop = () => {
         })}
       </div>
 
-      {/* {images.length > 0 && (
+      {images.length > 0 && (
         <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2">
           {images.map((_, index) => (
             <button
@@ -108,9 +104,9 @@ const BannerTop = () => {
             ></button>
           ))}
         </div>
-      )} */}
+      )}
 
-      {/* {images.length > 0 && (
+      {images.length > 0 && (
         <>
           <button
             type="button"
@@ -147,7 +143,7 @@ const BannerTop = () => {
             </svg>
           </button>
         </>
-      )} */}
+      )}
     </div>
   );
 };

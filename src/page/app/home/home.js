@@ -214,7 +214,7 @@ const Home = ({ selectedType }) => {
       <div className="text-center mt-1 md:mt-3 lg:mt-5">
         <h1
           ref={myRef}
-          className="text-gray-dark text-base font-bold md:text-2xl lg:text-3xl"
+          className=" text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md "
         >
           {selectedContent[localizationKeys.popularCategories]}
         </h1>
@@ -222,7 +222,7 @@ const Home = ({ selectedType }) => {
           {selectedContent[localizationKeys.PopularPicksPerfectChoices]}
         </p>
       </div>
-      <div className="mt-11 mb-20">
+      <div className="mt-8 mb-20">
         <SliderRow />
       </div>
       <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
@@ -250,7 +250,7 @@ const Home = ({ selectedType }) => {
               onClick={() => setIsGrid((prev) => !prev)}
               className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
             >
-              <img src={listicon} alt="listicon" />
+              <img src={listicon} alt="listicon" className="w-5 h-5" />
               <p className="flex items-center">
                 {selectedContent[localizationKeys.List]}
               </p>
@@ -263,7 +263,7 @@ const Home = ({ selectedType }) => {
           {/* left filter sections */}
           <FilterSections myRef={myRef} />
           {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto "> */}
-          {mainAuctions?.length === 0 ? (
+          {mainAuctions?.length === 0 && listedProducts?.length === 0 ? (
             <div className="w-full flex justify-center pt-52 bg-[#E5E5E51A] rounded-2xl">
               <div className="mx-auto text-center">
                 <EmtyHome className="mx-auto" />
@@ -289,7 +289,7 @@ const Home = ({ selectedType }) => {
                 if (isGrid && selectedType === "auction") {
                   return (
                     <div>
-                      <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
 
@@ -326,7 +326,7 @@ const Home = ({ selectedType }) => {
                 } else if (!isGrid && selectedType === "auction") {
                   return (
                     <div>
-                      <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
                       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
@@ -359,7 +359,7 @@ const Home = ({ selectedType }) => {
                 } else if (isGrid && selectedType === "products") {
                   return (
                     <div>
-                      <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.listedProduct]}
                       </h1>
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
@@ -372,15 +372,13 @@ const Home = ({ selectedType }) => {
                             id={e?.product?.id}
                             city={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.city?.nameEn
-                                : e?.product?.user?.locations[0]?.city?.nameAr
+                                ? e?.location?.city?.nameEn
+                                : e?.location?.city?.nameEn
                             }
                             country={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.country
-                                    ?.nameEn
-                                : e?.product?.user?.locations[0]?.country
-                                    ?.nameAr
+                                ? e?.location?.country?.nameEn
+                                : e?.location?.country?.nameEn
                             }
                             createdAt={e?.product?.user?.createdAt}
                           />
@@ -398,7 +396,7 @@ const Home = ({ selectedType }) => {
                 } else if (!isGrid && selectedType === "products") {
                   return (
                     <div>
-                      <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.listedProduct]}
                       </h1>
                       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
@@ -411,15 +409,13 @@ const Home = ({ selectedType }) => {
                             id={e?.product?.id}
                             city={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.city?.nameEn
-                                : e?.product?.user?.locations[0]?.city?.nameAr
+                                ? e?.location?.city?.nameEn
+                                : e?.location?.city?.nameEn
                             }
                             country={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.country
-                                    ?.nameEn
-                                : e?.product?.user?.locations[0]?.country
-                                    ?.nameAr
+                                ? e?.location?.country?.nameEn
+                                : e?.location?.country?.nameEn
                             }
                             createdAt={e?.product?.user?.createdAt}
                           />
@@ -437,7 +433,7 @@ const Home = ({ selectedType }) => {
                 } else if (isGrid && selectedType === "all") {
                   return (
                     <>
-                      <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
@@ -468,7 +464,7 @@ const Home = ({ selectedType }) => {
                           myRef={myRef}
                         />
                       </div>
-                      <h1 className="pb-6 text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.listedProduct]}
                       </h1>
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
@@ -481,15 +477,13 @@ const Home = ({ selectedType }) => {
                             id={e?.product?.id}
                             city={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.city?.nameEn
-                                : e?.product?.user?.locations[0]?.city?.nameAr
+                                ? e?.location?.city?.nameEn
+                                : e?.location?.city?.nameEn
                             }
                             country={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.country
-                                    ?.nameEn
-                                : e?.product?.user?.locations[0]?.country
-                                    ?.nameAr
+                                ? e?.location?.country?.nameEn
+                                : e?.location?.country?.nameEn
                             }
                             createdAt={e?.product?.user?.createdAt}
                           />
@@ -507,7 +501,7 @@ const Home = ({ selectedType }) => {
                 } else if (!isGrid && selectedType === "all") {
                   return (
                     <>
-                      <h1 className="text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.trendingAuctions]}
                       </h1>
                       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
@@ -535,7 +529,7 @@ const Home = ({ selectedType }) => {
                           myRef={myRef}
                         />
                       </div>
-                      <h1 className="pb-14 text-center text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      <h1 className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                         {selectedContent[localizationKeys.listedProduct]}
                       </h1>
                       <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
@@ -548,15 +542,13 @@ const Home = ({ selectedType }) => {
                             id={e?.product?.id}
                             city={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.city?.nameEn
-                                : e?.product?.user?.locations[0]?.city?.nameAr
+                                ? e?.location?.city?.nameEn
+                                : e?.location?.city?.nameEn
                             }
                             country={
                               lang === "en"
-                                ? e?.product?.user?.locations[0]?.country
-                                    ?.nameEn
-                                : e?.product?.user?.locations[0]?.country
-                                    ?.nameAr
+                                ? e?.location?.country?.nameEn
+                                : e?.location?.country?.nameEn
                             }
                             createdAt={e?.product?.user?.createdAt}
                           />

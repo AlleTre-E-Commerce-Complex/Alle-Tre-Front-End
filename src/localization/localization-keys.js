@@ -33,6 +33,8 @@ const localizationKeys = {
   sentVerification: "sentVerification",
   securityDeposit: "securityDeposit",
   // home
+  changeStatus: "changeStatus",
+  viewContactDetails: "viewContactDetails",
   trendingAuctions: "trendingAuctions",
   type: "type",
   filterOptions: "filterOptions",
@@ -74,6 +76,7 @@ const localizationKeys = {
   sellingType: "sellingType",
   auction: "auction",
   products: "products",
+  all: "all",
   comingSoon: "comingSoon",
   liveAuction: "liveAuction",
   auctionState: "auctionState",

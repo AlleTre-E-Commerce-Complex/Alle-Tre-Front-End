@@ -33,11 +33,14 @@ class Auth {
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
         // Even if the server call fails, we'll still clear local storage
-        await Axios.post(api.auth.logout, { refreshToken }).catch(console.error);
+        await Axios.post(api.auth.logout, { refreshToken }).catch(
+          console.error
+        );
       }
     } finally {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("hasCompletedProfile");
       // Ensure we redirect to home page after logout
       if (window.location.pathname !== routes.app.home) {
         window.location = `${routes.app.home}?page=1&perPage=28`
@@ -48,16 +51,20 @@ class Auth {
   async getToken() {
     try {
       const accessToken = localStorage.getItem("accessToken");
+
+      // If no access token, try to refresh
       if (!accessToken) {
         const newToken = await this.refreshToken();
         return newToken;
       }
-      
+
+      // Check if token is expired or will expire soon
       if (this.hasExpired(accessToken)) {
+        console.log("Token expired or expiring soon, refreshing...");
         const newToken = await this.refreshToken();
         return newToken;
       }
-      
+
       return accessToken;
     } catch (e) {
       console.error("Error getting token:", e);
@@ -91,7 +98,7 @@ class Auth {
       
       return data.data.accessToken;
     } catch (error) {
-      console.error('Token refresh failed:', error);
+      console.error("Token refresh failed:", error);
       await this.logout();
       return null;
     }
@@ -99,7 +106,7 @@ class Auth {
 
   hasExpired(token) {
     if (!token) return true;
-    
+
     try {
       const decodeToken = jwt_decode(token);
       const now = new Date().getTime() / 1000;
