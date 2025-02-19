@@ -7,6 +7,7 @@ import routes from "../../routes";
 // import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
 import localizationKeys from "../../localization/localization-keys";
+import { formatCurrency } from "utils/format-currency";
 
 const ProductCard = ({
   imageLink,
@@ -68,56 +69,6 @@ const ProductCard = ({
 
   const difference = getTimeDifference(createdAt);
 
-  // useEffect(() => {
-  //   if (WatshlistState) setWatshlist(WatshlistState);
-  // }, [WatshlistState]);
-  // const handelAddNewWatshlist = (id) => {
-  //   if (user) {
-  //     const body = {
-  //       id: id,
-  //     };
-  //     if (watshlistForceState || isWatshlist) {
-  //       run(
-  //         authAxios
-  //           .delete(api.app.WatchList.delete(id))
-  //           .then((res) => {
-  //             setWatshlist(false);
-  //             toast.success(
-  //               selectedContent[
-  //                 localizationKeys
-  //                   .thisAuctionDeleteFromWatchListBeenSuccessfully
-  //               ]
-  //             );
-  //             onReload();
-  //           })
-  //           .catch((err) => {
-  //             onReload();
-  //           })
-  //       );
-  //     } else {
-  //       run(
-  //         authAxios
-  //           .post(api.app.WatchList.add, body)
-  //           .then((res) => {
-  //             setWatshlist(true);
-  //             toast.success(
-  //               selectedContent[
-  //                 localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
-  //               ]
-  //             );
-  //             onReload();
-  //           })
-  //           .catch((err) => {
-  //             onReload();
-  //           })
-  //       );
-  //     }
-  //   } else {
-  //     dispatch(Open());
-  //     onReload();
-  //   }
-  // };
-
   const handelGoDetails = (id) => {
     history.push(routes.app.listProduct.details(id));
   };
@@ -159,7 +110,7 @@ const ProductCard = ({
             onClick={() => handelGoDetails(id)}
             className="price-button absolute bg-[#e04868]  text-white text-[10px] top-0 w-auto px-2 h-[24px] flex justify-center items-center"
           >
-            AED {price}
+            {formatCurrency(price)}
           </div>
         </div>
         <h1

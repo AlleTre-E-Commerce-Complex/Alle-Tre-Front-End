@@ -143,9 +143,14 @@ const SummaryAuctionSections = ({
             </p>
           </div>
           <div className="space-y-2">
+            {status === 'ACTIVE' ?<p className="text-gray-med text-base font-normal">
+              {selectedContent[localizationKeys.currentBid]}
+            </p>
+            :
             <p className="text-gray-med text-base font-normal">
               {selectedContent[localizationKeys.endingPrice]}
             </p>
+            }
             <p className="text-gray-verydark cursor-default text-2xl font-semibold">
               {formatCurrency(lastestBid?.bidAmount) ||
                 formatCurrency(endingPrice) ||
@@ -178,14 +183,14 @@ const SummaryAuctionSections = ({
 
           {/* Time Section */}
           <div className="space-y-4">
-            <div className="space-y-2">
+            {status === 'IN_SCHEDULED' && <div className="space-y-2">
               <p className="text-gray-med text-base font-normal">
                 {selectedContent[localizationKeys.startingTime]}
               </p>
               <p className="text-gray-verydark text-2xl font-semibold">
                 {moment(startingTime).format("hh:mm A · DD MMM YYYY")}
               </p>
-            </div>
+            </div>}
             <div className="space-y-2">
               <p className="text-gray-med text-base font-normal">
                 {selectedContent[localizationKeys.endingTime]}

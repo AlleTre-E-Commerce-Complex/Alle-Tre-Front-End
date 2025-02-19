@@ -23,12 +23,16 @@ const PaymentSelectionOnAuctionPurchase = ({
   return (
     <div className="mt-10  h-auto rounded-2xl bg-white border border-primary">
         <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
+        className="fixed w-full h-full top-0 "
         active={isLoading}
         inverted
       >
-        {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <div className="flex flex-col items-center">
+          <LodingTestAllatre />
+          <p className="mt-4 text-lg font-medium text-gray-700">
+            {selectedContent[localizationKeys.ProcessingYourPayment] || "Processing your payment..."}
+          </p>
+        </div>
       </Dimmer>
       <div className="">
         <div className="px-3 py-2 my-5 text-center font-semibold text-lg">
@@ -45,7 +49,7 @@ const PaymentSelectionOnAuctionPurchase = ({
   <div>
     <input
       type="radio"
-      className="mx-2 cursor-pointer accent-primary"
+      className="mx-2 cursor-pointer accent-primary disabled:cursor-not-allowed"
       name="PaymentMethod"
       id="walletPayment"
       onChange={() => {
@@ -53,6 +57,7 @@ const PaymentSelectionOnAuctionPurchase = ({
         setIsBankTransfer(false);
       }}
       checked={isWalletPayment === true}
+      disabled={isLoading}
     />
     <label htmlFor="walletPayment" className="cursor-pointer">
       {selectedContent[localizationKeys.walletPayment]}
@@ -63,7 +68,7 @@ const PaymentSelectionOnAuctionPurchase = ({
   <div>
     <input
       type="radio"
-      className="mx-2 cursor-pointer accent-primary"
+      className="mx-2 cursor-pointer accent-primary disabled:cursor-not-allowed"
       name="PaymentMethod"
       id="bankTransfer"
       onChange={() => {
@@ -71,6 +76,7 @@ const PaymentSelectionOnAuctionPurchase = ({
         setIsWalletPayment(false);
       }}
       checked={isBankTransfer === true}
+      disabled={isLoading}
     />
     <label htmlFor="bankTransfer" className="cursor-pointer">
       {selectedContent[localizationKeys.BankTransfer]}
@@ -80,7 +86,7 @@ const PaymentSelectionOnAuctionPurchase = ({
 <div>
   <input
     type="radio"
-    className="mx-2 cursor-pointer accent-primary"
+    className="mx-2 cursor-pointer accent-primary disabled:cursor-not-allowed"
     name="PaymentMethod"
     id="onlinePayment"
     onChange={() => {
@@ -88,6 +94,7 @@ const PaymentSelectionOnAuctionPurchase = ({
       setIsBankTransfer(false);
     }}
     checked={!isWalletPayment && !isBankTransfer}
+    disabled={isLoading}
   />
   <label htmlFor="onlinePayment" className="cursor-pointer">
     {selectedContent[localizationKeys.onlinePayment]}
