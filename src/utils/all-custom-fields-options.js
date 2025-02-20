@@ -1,7 +1,11 @@
 export const allCustomFileOptions = {
   landType: [
     { key: "industrial", text: "Industrial | صناعي", value: "industrial" },
-    { key: "agricultural", text: "Agricultural | زراعي", value: "agricultural" },
+    {
+      key: "agricultural",
+      text: "Agricultural | زراعي",
+      value: "agricultural",
+    },
     { key: "residential", text: "Residential | سكني", value: "residential" },
     { key: "commercial", text: "Commercial | تجاري", value: "commercial" },
     { key: "mixed-use", text: "Mixed-Use | مختلط", value: "mixed-use" },
@@ -9,22 +13,42 @@ export const allCustomFileOptions = {
     { key: "desert", text: "Desert | صحراوي", value: "desert" },
   ],
   carType: [
-    { key: "Micro Cars", text: "Micro Cars | سيارات صغيرة", value: "Micro Cars" },
+    {
+      key: "Micro Cars",
+      text: "Micro Cars | سيارات صغيرة",
+      value: "Micro Cars",
+    },
     { key: "Hatchback", text: "Hatchback | هاتشباك", value: "Hatchback" },
     { key: "Sedan", text: "Sedan | سيدان", value: "Sedan" },
     { key: "SUV", text: "SUV | دفع رباعي", value: "SUV" },
     { key: "MPV", text: "MPV | سيارة عائلية", value: "MPV" },
     { key: "Coupe", text: "Coupe | كوبيه", value: "Coupe" },
-    { key: "Convertible", text: "Convertible | كابريوليه", value: "Convertible" },
+    {
+      key: "Convertible",
+      text: "Convertible | كابريوليه",
+      value: "Convertible",
+    },
     { key: "Wagon", text: "Wagon | واغن", value: "Wagon" },
     { key: "Luxury", text: "Luxury | فاخرة", value: "Luxury" },
     { key: "Antique", text: "Antique | عتيقة", value: "Antique" },
-    { key: "Sports car", text: "Sports car | سيارة رياضية", value: "Sports car" },
+    {
+      key: "Sports car",
+      text: "Sports car | سيارة رياضية",
+      value: "Sports car",
+    },
     { key: "Supercar", text: "Supercar | سيارة خارقة", value: "Supercar" },
     { key: "Diesel car", text: "Diesel car | سيارة ديزل", value: "Diesel car" },
-    { key: "Electric car", text: "Electric car | سيارة كهربائية", value: "Electric car" },
+    {
+      key: "Electric car",
+      text: "Electric car | سيارة كهربائية",
+      value: "Electric car",
+    },
     { key: "Limousine", text: "Limousine | ليموزين", value: "Limousine" },
-    { key: "Hybrid car", text: "Hybrid car | سيارة هجينة", value: "Hybrid car" },
+    {
+      key: "Hybrid car",
+      text: "Hybrid car | سيارة هجينة",
+      value: "Hybrid car",
+    },
     { key: "Off-road", text: "Off-road | خارج الطرق", value: "Off-road" },
     { key: "Classic", text: "Classic | كلاسيكية", value: "Classic" },
   ],
@@ -45,8 +69,13 @@ export const allCustomFileOptions = {
     { key: "Bronze", text: "Bronze | برونزي", value: "Bronze" },
     { key: "Golden", text: "Golden | ذهبي", value: "Golden" },
     { key: "Pearl", text: "Pearl | لؤلؤي", value: "Pearl" },
-    { key: "Matte Black", text: "Matte Black | أسود غير لامع", value: "Matte Black" },
+    {
+      key: "Matte Black",
+      text: "Matte Black | أسود غير لامع",
+      value: "Matte Black",
+    },
     { key: "Champagne", text: "Champagne | شامبانيا", value: "Champagne" },
+    { key: "All Color", text: "All Color | جميع الالوان", value: "All Color" },
   ],
   cameraType: [
     { key: "digital", text: "Digital | رقمي", value: "digital" },
@@ -67,7 +96,11 @@ export const allCustomFileOptions = {
     { key: "silicon", text: "Silicon | سيليكون", value: "silicon" },
     { key: "glass", text: "Glass | زجاج", value: "glass" },
     { key: "wood", text: "Wood | خشب", value: "wood" },
-    { key: "carbon fiber", text: "Carbon Fiber | ألياف كربونية", value: "carbon fiber" },
+    {
+      key: "carbon fiber",
+      text: "Carbon Fiber | ألياف كربونية",
+      value: "carbon fiber",
+    },
     { key: "leather", text: "Leather | جلد", value: "leather" },
   ],
   memory: [
@@ -87,16 +120,28 @@ export const allCustomFileOptions = {
     { key: "dubai", text: "Dubai | دبي", value: "dubai" },
     { key: "sharjah", text: "Sharjah | الشارقة", value: "sharjah" },
     { key: "ajman", text: "Ajman | عجمان", value: "ajman" },
-    { key: "ras-al-khaimah", text: "Ras Al Khaimah | رأس الخيمة", value: "ras-al-khaimah" },
+    {
+      key: "ras-al-khaimah",
+      text: "Ras Al Khaimah | رأس الخيمة",
+      value: "ras-al-khaimah",
+    },
     { key: "fujairah", text: "Fujairah | الفجيرة", value: "fujairah" },
-    { key: "umm-al-quwain", text: "Umm Al Quwain | أم القيوين", value: "umm-al-quwain" },
+    {
+      key: "umm-al-quwain",
+      text: "Umm Al Quwain | أم القيوين",
+      value: "umm-al-quwain",
+    },
   ],
   propertyType: [
     { key: "apartment", text: "Apartment | شقة", value: "apartment" },
     { key: "villa", text: "Villa | فيلا", value: "villa" },
     { key: "townhouse", text: "Townhouse | تاون هاوس", value: "townhouse" },
     { key: "penthouse", text: "Penthouse | بنتهاوس", value: "penthouse" },
-    { key: "hotel-apartment", text: "Hotel Apartment | شقة فندقية", value: "hotel-apartment" },
+    {
+      key: "hotel-apartment",
+      text: "Hotel Apartment | شقة فندقية",
+      value: "hotel-apartment",
+    },
     { key: "office", text: "Office | مكتب", value: "office" },
     { key: "warehouse", text: "Warehouse | مستودع", value: "warehouse" },
     { key: "land", text: "Land | أرض", value: "land" },
@@ -110,7 +155,11 @@ export const allCustomFileOptions = {
   transmissionType: [
     { key: "automatic", text: "Automatic | أوتوماتيك", value: "automatic" },
     { key: "manual", text: "Manual | يدوي", value: "manual" },
-    { key: "semi-automatic", text: "Semi-Automatic | شبه أوتوماتيك", value: "semi-automatic" },
+    {
+      key: "semi-automatic",
+      text: "Semi-Automatic | شبه أوتوماتيك",
+      value: "semi-automatic",
+    },
   ],
   condition: [
     { key: "new", text: "New | جديد", value: "new" },

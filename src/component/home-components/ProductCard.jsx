@@ -8,6 +8,7 @@ import routes from "../../routes";
 import { RiShareForwardFill } from "react-icons/ri";
 import localizationKeys from "../../localization/localization-keys";
 import { formatCurrency } from "utils/format-currency";
+import { useAuthState } from "context/auth-context";
 
 const ProductCard = ({
   imageLink,
@@ -18,11 +19,12 @@ const ProductCard = ({
   country,
   id,
   createdAt,
+  userId,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-  // const { user } = useAuthState();
+  const { user } = useAuthState();
   // const { run, isLoading } = useAxios([]);
   // const dispatch = useDispatch();
 
@@ -159,7 +161,18 @@ const ProductCard = ({
                   `Today`}
               </p>
             </div>
-            <div>
+          </div>
+          {user?.id === userId ? (
+            <div className="mt-3 flex items-end justify-end">
+              <button
+                onClick={() => handelGoDetails(id)}
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center "
+              >
+                {selectedContent[localizationKeys.viewDetails]}
+              </button>
+            </div>
+          ) : (
+            <div className="mt-3 flex items-end justify-end">
               <button
                 onClick={() => handelGoDetails(id)}
                 className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center"
@@ -167,7 +180,7 @@ const ProductCard = ({
                 {selectedContent[localizationKeys.buyNow]}
               </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

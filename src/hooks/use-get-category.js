@@ -13,18 +13,19 @@ const useGetGatogry = () => {
   useEffect(() => {
     run(axios.get(api.app.category.default)).then(({ data }) => {
       const GatogryOptions = data.data;
-  
       const options = [];
 
-      GatogryOptions.forEach((d) =>{
-        d.status === true &&  options.push({
-          text: lang === "en" ? d?.nameEn : d?.nameAr,
-          key: d?.id,
-          value: d.id,
-          sliderLink: d?.sliderLink,
-          bannerLink: d?.bannerLink,
-          hasUsageCondition: d?.hasUsageCondition,
-        })
+      GatogryOptions.sort((a, b) => a.id - b.id).forEach((d) => {
+        if (d.status === true) {
+          options.push({
+            text: lang === "en" ? d?.nameEn : d?.nameAr,
+            key: d?.id,
+            value: d.id,
+            sliderLink: d?.sliderLink,
+            bannerLink: d?.bannerLink,
+            hasUsageCondition: d?.hasUsageCondition,
+          });
+        }
       });
 
       setGatogryOptions(options);
