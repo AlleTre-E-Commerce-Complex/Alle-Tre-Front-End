@@ -97,9 +97,9 @@ const MyProducts = () => {
           <>
             {/* DoughnutChart */}
             <TotalMyProducts
-              inProgressProducts={0}
-              outOfStockProducts={0}
-              soldOutProducts={0}
+              inProgressProducts={analyticsDataObject?.IN_PROGRESS?.count}
+              outOfStockProducts={analyticsDataObject?.OUT_OF_STOCK?.count}
+              soldOutProducts={analyticsDataObject?.SOLD_OUT?.count}
             />
             <div className="mt-4">
               <MyProductsTab onReload={onReload} />
