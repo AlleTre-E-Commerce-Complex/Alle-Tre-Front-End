@@ -71,7 +71,7 @@ const en = {
   [localizationKeys.sellingType]: "Selling Type",
   [localizationKeys.auction]: "Auctions",
   [localizationKeys.products]: "Products",
-  [localizationKeys.all]: "all",
+  [localizationKeys.all]: "All",
   [localizationKeys.buyNow]: "Buy Now",
   [localizationKeys.expiredAuctions]: "Expired Auctions",
   [localizationKeys.deliveryPolicy]: "Delivery Policy",

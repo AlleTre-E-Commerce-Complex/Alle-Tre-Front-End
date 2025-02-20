@@ -17,8 +17,10 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { PiWarningCircle } from "react-icons/pi";
 import TermsAndConditions from "component/shared/terms-and-condition/TermsAndCondition";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 const SignUp = ({ currentPAth, isAuthModel }) => {
+  const [showPassword, setShowPassword] = useState(false);
   // const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -176,13 +178,24 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-10 mx-auto ">
+                  <div className="mt-10 mx-auto relative">
                     <FormikInput
                       name="password"
-                      type={"password"}
+                      type={showPassword ? "text" : "password"}
                       label={selectedContent[localizationKeys.password]}
                       placeholder={selectedContent[localizationKeys.password]}
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute text-primary right-4 top-7 transform -translate-y-1/2 text-gray-500"
+                    >
+                      {showPassword ? (
+                        <VscEye size={20} />
+                      ) : (
+                        <VscEyeClosed size={20} />
+                      )}
+                    </button>
                   </div>
                   <TermsAndConditions isFooter={false} />
                   <div className="">

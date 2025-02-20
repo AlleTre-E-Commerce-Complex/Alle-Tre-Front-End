@@ -20,13 +20,14 @@ import { welcomeBonus } from "../../redux-store/welcom-bonus-slice";
 import { useAuthState } from "context/auth-context";
 import { store } from "redux-store/store";
 import { setBlockedUser } from "redux-store/blocked-user-slice";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 const LogIn = ({ currentPAth, isAuthModel }) => {
   const history = useHistory();
-
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
+  const [showPassword, setShowPassword] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -42,9 +43,9 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
       .then((res) => {
         const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
           res.data.data;
-          if(isAddedBonus){
-            dispatch(welcomeBonus(true))
-          }
+        if (isAddedBonus) {
+          dispatch(welcomeBonus(true));
+        }
         login({
           accessToken: accessToken,
           refreshToken: refreshToken,
@@ -92,13 +93,12 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
               </span>
             </p>
           );
-        }else  console.log('google auth error --->',err)
+        } else console.log("google auth error --->", err);
         // Check if the error is a 401 unauthorized
-            if (err?.message?.en === 'You are not authorized') {
-               // Dispatch the action to show the modal
-                store.dispatch(setBlockedUser(true));
-            }
-         else
+        if (err?.message?.en === "You are not authorized") {
+          // Dispatch the action to show the modal
+          store.dispatch(setBlockedUser(true));
+        } else
           toast.error(
             lang === "en"
               ? err.message.en || err.message
@@ -185,13 +185,24 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                       placeholder={selectedContent[localizationKeys.email]}
                     />
                   </div>
-                  <div className="mt-10 mx-auto ">
+                  <div className="mt-10 mx-auto relative">
                     <FormikInput
                       name="password"
-                      type={"password"}
+                      type={showPassword ? "text" : "password"}
                       label={selectedContent[localizationKeys.password]}
                       placeholder={selectedContent[localizationKeys.password]}
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute text-primary right-4 top-7 transform -translate-y-1/2 text-gray-500"
+                    >
+                      {showPassword ? (
+                        <VscEye size={20} />
+                      ) : (
+                        <VscEyeClosed size={20} />
+                      )}
+                    </button>
                   </div>
                   <div className="flex justify-between mt-5 mx-1">
                     <div>

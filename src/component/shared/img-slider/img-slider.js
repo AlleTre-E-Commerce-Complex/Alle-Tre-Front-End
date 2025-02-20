@@ -134,12 +134,11 @@ const ImgSlider = ({
     }
   };
 
-  // Function to toggle the zoom state
   const toggleZoom = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" }); 
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
       setIsZoomed(!isZoomed);
-    }, 300); 
+    }, 300);
   };
 
   return (
@@ -254,7 +253,7 @@ const ImgSlider = ({
           onClick={toggleZoom}
           style={{
             cursor: "zoom-out",
-            height: "80vh", 
+            height: "80vh",
           }}
         >
           <img
@@ -269,7 +268,7 @@ const ImgSlider = ({
           />
           <button
             onClick={(event) => {
-              event.stopPropagation(); 
+              event.stopPropagation();
               handlePrevious();
             }}
             className="absolute left-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
@@ -281,7 +280,7 @@ const ImgSlider = ({
           </button>
           <button
             onClick={(event) => {
-              event.stopPropagation(); 
+              event.stopPropagation();
               handleNext();
             }}
             className="absolute right-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
