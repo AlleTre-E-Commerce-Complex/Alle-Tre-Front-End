@@ -24,7 +24,6 @@ import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import listicon from "../../../../src/assets/icons/bullet.svg";
 import menuicon from "../../../../src/assets/icons/grid-06.svg";
-import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import AuctionCardList from "../../../component/home-components/auction-card-list";
 import BannerTop from "component/home-components/BannerTop";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
@@ -34,7 +33,8 @@ import { useSocket } from "context/socket-context";
 // import LiveAuctionsSlider from "component/home-components/live-auctions-slider";
 import ProductCard from "component/home-components/ProductCard";
 import ProductCardList from "component/home-components/products-card-list";
-
+import { ReactComponent as NoAuctionImg } from "../../../../src/assets/images/no auction new.svg";
+import { ReactComponent as NoProductImg } from "../../../../src/assets/images/no products new.svg";
 const Home = ({ selectedType }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -69,9 +69,9 @@ const Home = ({ selectedType }) => {
     isLoading: isLoadingrunSponsoredAuctions,
   } = useAxios([]);
 
-  // useEffect(() => {
-  //   localStorage.setItem("isGrid", JSON.stringify(isGrid));
-  // }, [isGrid]);
+  useEffect(() => {
+    localStorage.setItem("isGrid", JSON.stringify(isGrid));
+  }, [isGrid]);
 
   // useEffect(() => {
   //   const queryParams = new URLSearchParams();
@@ -95,11 +95,11 @@ const Home = ({ selectedType }) => {
       );
     };
 
-    const handleBuyNowAuctionPurchase = (data) =>{
-      setMainAuctions((prev) => 
+    const handleBuyNowAuctionPurchase = (data) => {
+      setMainAuctions((prev) =>
         prev.filter((auction) => auction.id !== data.auctionId)
-      )
-    }
+      );
+    };
 
     const handleIncreaseBid = (data) => {
       setMainAuctions((prev) => {
@@ -111,27 +111,27 @@ const Home = ({ selectedType }) => {
                 startBidAmount: data.auction.startBidAmount,
                 _count: {
                   ...auction._count,
-                  bids: (auction._count.bids || 0) + 1
+                  bids: (auction._count.bids || 0) + 1,
                 },
                 currentBid: {
-                  bidAmount: data.auction.bids[0]?.amount
-                }
+                  bidAmount: data.auction.bids[0]?.amount,
+                },
               }
             : auction
         );
         return updatedAuctions;
       });
     };
-    
+
     // Register socket listeners
-    socket.on("auction:buyNowPurchase", handleBuyNowAuctionPurchase)
+    socket.on("auction:buyNowPurchase", handleBuyNowAuctionPurchase);
     socket.on("auction:newAuctionListed", handleNewAuction);
     socket.on("auction:cancelled", handleAuctionCancelled);
     socket.on("auction:increaseBid", handleIncreaseBid);
 
     // Cleanup to avoid memory leaks
     return () => {
-      socket.off("auction:buyNowPurchase", handleBuyNowAuctionPurchase)
+      socket.off("auction:buyNowPurchase", handleBuyNowAuctionPurchase);
       socket.off("auction:newAuctionListed", handleNewAuction);
       socket.off("auction:cancelled", handleAuctionCancelled);
       socket.off("auction:increaseBid", handleIncreaseBid);
@@ -196,8 +196,6 @@ const Home = ({ selectedType }) => {
               `${api.app.productListing.getAllListedProducts}?page=${pageParam}&perPage=${perPageParam}`
             )
             .then((res) => {
-            console.log('all listed proudtucts:',res.data.data)
-
               setListedProducts(res?.data?.data);
               setTotalPages(res?.data?.totalPages);
             })
@@ -234,7 +232,11 @@ const Home = ({ selectedType }) => {
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home ">
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoadingMainAuctions || isLoadingrunSponsoredAuctions}
+        active={
+          isLoadingMainAuctions ||
+          isLoadingrunSponsoredAuctions ||
+          isLoadingListedProduct
+        }
         inverted
       >
         {/* <Loader active /> */}
@@ -266,7 +268,13 @@ const Home = ({ selectedType }) => {
             <ShowFilterSections />
           </div> */}
         </div>
-        <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
+        <div
+          className={
+            mainAuctions?.length === 0 && listedProducts?.length === 0
+              ? "hidden"
+              : "mt-auto"
+          }
+        >
           {isGrid ? (
             <button
               onClick={() => setIsGrid((prev) => !prev)}
@@ -292,39 +300,20 @@ const Home = ({ selectedType }) => {
       </div>
       <div className=" lg:mx-auto mx-2">
         <div className="flex gap-5  px-2 sm:px-4 mx-2 ">
-          {/* left filter sections */}
           <FilterSections myRef={myRef} />
-          {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto "> */}
-          {mainAuctions?.length === 0 && listedProducts?.length === 0 ? (
-            <div className="w-full flex justify-center pt-52 bg-[#E5E5E51A] rounded-2xl">
-              <div className="mx-auto text-center">
-                <EmtyHome className="mx-auto" />
-                <p className="text-gray-dark font-normal text-base py-8">
-                  {
-                    selectedContent[
-                      localizationKeys
-                        .thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway
-                    ]
-                  }
-                </p>
-                <button
-                  onClick={() => handelCreatOuction()}
-                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[128px] h-[32px]"
-                >
-                  {selectedContent[localizationKeys.createNow]}
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="w-full">
-              {(() => {
-                if (isGrid && selectedType === "auction") {
-                  return (
-                    <div>
-                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.trendingAuctions]}
-                      </h1>
-
+          <div className="w-full">
+            {(() => {
+              if (isGrid && selectedType === "auction") {
+                return (
+                  <div>
+                    <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.trendingAuctions]}
+                    </h1>
+                    {mainAuctions?.length === 0 ? (
+                      <div className="flex flex-col items-center mt-20">
+                        <NoAuctionImg className="w-40 h-40" />
+                      </div>
+                    ) : (
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                         {mainAuctions?.map((e) => (
                           <AuctionCard
@@ -346,22 +335,30 @@ const Home = ({ selectedType }) => {
                           />
                         ))}
                       </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                    )}
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {mainAuctions?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
-                      </div>
+                      ) : null}
                     </div>
-                  );
-                } else if (!isGrid && selectedType === "auction") {
-                  return (
-                    <div>
-                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.trendingAuctions]}
-                      </h1>
-                      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
+                  </div>
+                );
+              } else if (!isGrid && selectedType === "auction") {
+                return (
+                  <div>
+                    <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.trendingAuctions]}
+                    </h1>
+                    {mainAuctions?.length === 0 ? (
+                      <div className="flex flex-col items-center mt-20">
+                        <NoAuctionImg className="w-40 h-40" />
+                      </div>
+                    ) : (
+                      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                         {mainAuctions?.map((e) => (
                           <AuctionCardList
                             key={e?.id}
@@ -379,21 +376,29 @@ const Home = ({ selectedType }) => {
                           />
                         ))}
                       </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                    )}
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {mainAuctions?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
-                      </div>
+                      ) : null}
                     </div>
-                  );
-                } else if (isGrid && selectedType === "products") {
-                  return (
-                    <div>
-                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.listedProduct]}
-                      </h1>
+                  </div>
+                );
+              } else if (isGrid && selectedType === "products") {
+                return (
+                  <div>
+                    <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.listedProduct]}
+                    </h1>
+                    {listedProducts?.length === 0 ? (
+                      <div className="flex flex-col items-center mt-20">
+                        <NoProductImg className="w-40 h-40" />
+                      </div>
+                    ) : (
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                         {listedProducts?.map((e) => (
                           <ProductCard
@@ -401,6 +406,7 @@ const Home = ({ selectedType }) => {
                             price={e?.ProductListingPrice}
                             title={e?.product?.title}
                             imageLink={e?.product?.images[0].imageLink}
+                            userId={e?.userId}
                             id={e?.product?.id}
                             city={
                               lang === "en"
@@ -416,27 +422,36 @@ const Home = ({ selectedType }) => {
                           />
                         ))}
                       </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                    )}
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {listedProducts?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
-                      </div>
+                      ) : null}
                     </div>
-                  );
-                } else if (!isGrid && selectedType === "products") {
-                  return (
-                    <div>
-                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.listedProduct]}
-                      </h1>
-                      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
+                  </div>
+                );
+              } else if (!isGrid && selectedType === "products") {
+                return (
+                  <div>
+                    <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.listedProduct]}
+                    </h1>
+                    {listedProducts?.length === 0 ? (
+                      <div className="flex flex-col items-center mt-20">
+                        <NoProductImg className="w-40 h-40" />
+                      </div>
+                    ) : (
+                      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                         {listedProducts?.map((e) => (
                           <ProductCardList
                             key={e?.id}
                             price={e?.ProductListingPrice}
                             title={e?.product?.title}
+                            userId={e?.userId}
                             imageLink={e?.product?.images[0].imageLink}
                             id={e?.product?.id}
                             city={
@@ -453,21 +468,29 @@ const Home = ({ selectedType }) => {
                           />
                         ))}
                       </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                    )}
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {listedProducts?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
-                      </div>
+                      ) : null}
                     </div>
-                  );
-                } else if (isGrid && selectedType === "all") {
-                  return (
-                    <>
-                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.trendingAuctions]}
-                      </h1>
+                  </div>
+                );
+              } else if (isGrid && selectedType === "all") {
+                return (
+                  <>
+                    <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.trendingAuctions]}
+                    </h1>
+                    {mainAuctions?.length === 0 ? (
+                      <div className="flex flex-col items-center mt-20">
+                        <NoAuctionImg className="w-40 h-40" />
+                      </div>
+                    ) : (
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                         {mainAuctions?.map((e) => (
                           <AuctionCard
@@ -489,22 +512,31 @@ const Home = ({ selectedType }) => {
                           />
                         ))}
                       </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                    )}
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {mainAuctions?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
+                      ) : null}
+                    </div>
+                    <h1 className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.listedProduct]}
+                    </h1>
+                    {listedProducts?.length === 0 ? (
+                      <div className="flex flex-col items-center mt-20">
+                        <NoProductImg className="w-40 h-40" />
                       </div>
-                      <h1 className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.listedProduct]}
-                      </h1>
+                    ) : (
                       <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
                         {listedProducts?.map((e) => (
                           <ProductCard
                             key={e?.id}
                             price={e?.ProductListingPrice}
                             title={e?.product?.title}
+                            userId={e?.userId}
                             imageLink={e?.product?.images[0].imageLink}
                             id={e?.product?.id}
                             city={
@@ -521,86 +553,94 @@ const Home = ({ selectedType }) => {
                           />
                         ))}
                       </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                    )}
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {listedProducts?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
-                      </div>
-                    </>
-                  );
-                } else if (!isGrid && selectedType === "all") {
-                  return (
-                    <>
-                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.trendingAuctions]}
-                      </h1>
-                      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
-                        {mainAuctions?.map((e) => (
-                          <AuctionCardList
-                            key={e?.id}
-                            auctionId={e?.id}
-                            price={e?.acceptedAmount || e?.startBidAmount}
-                            title={e?.product?.title}
-                            status={e?.status}
-                            adsImg={e?.product?.images[0].imageLink}
-                            totalBods={e?._count?.bids}
-                            WatshlistState={e?.isSaved}
-                            endingTime={e?.expiryDate}
-                            StartDate={e?.startDate}
-                            isBuyNowAllowed={e?.isBuyNowAllowed}
-                            isMyAuction={e?.isMyAuction}
-                          />
-                        ))}
-                      </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      ) : null}
+                    </div>
+                  </>
+                );
+              } else if (!isGrid && selectedType === "all") {
+                return (
+                  <>
+                    <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.trendingAuctions]}
+                    </h1>
+                    <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                      {mainAuctions?.map((e) => (
+                        <AuctionCardList
+                          key={e?.id}
+                          auctionId={e?.id}
+                          price={e?.acceptedAmount || e?.startBidAmount}
+                          title={e?.product?.title}
+                          status={e?.status}
+                          adsImg={e?.product?.images[0].imageLink}
+                          totalBods={e?._count?.bids}
+                          WatshlistState={e?.isSaved}
+                          endingTime={e?.expiryDate}
+                          StartDate={e?.startDate}
+                          isBuyNowAllowed={e?.isBuyNowAllowed}
+                          isMyAuction={e?.isMyAuction}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {mainAuctions?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
-                      </div>
-                      <h1 className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                        {selectedContent[localizationKeys.listedProduct]}
-                      </h1>
-                      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-2">
-                        {listedProducts?.map((e) => (
-                          <ProductCardList
-                            key={e?.id}
-                            price={e?.ProductListingPrice}
-                            title={e?.product?.title}
-                            imageLink={e?.product?.images[0].imageLink}
-                            id={e?.product?.id}
-                            city={
-                              lang === "en"
-                                ? e?.location?.city?.nameEn
-                                : e?.location?.city?.nameEn
-                            }
-                            country={
-                              lang === "en"
-                                ? e?.location?.country?.nameEn
-                                : e?.location?.country?.nameEn
-                            }
-                            createdAt={e?.product?.user?.createdAt}
-                          />
-                        ))}
-                      </div>
-                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      ) : null}
+                    </div>
+                    <h1 className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                      {selectedContent[localizationKeys.listedProduct]}
+                    </h1>
+                    <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                      {listedProducts?.map((e) => (
+                        <ProductCardList
+                          key={e?.id}
+                          price={e?.ProductListingPrice}
+                          title={e?.product?.title}
+                          userId={e?.userId}
+                          imageLink={e?.product?.images[0].imageLink}
+                          id={e?.product?.id}
+                          city={
+                            lang === "en"
+                              ? e?.location?.city?.nameEn
+                              : e?.location?.city?.nameEn
+                          }
+                          country={
+                            lang === "en"
+                              ? e?.location?.country?.nameEn
+                              : e?.location?.country?.nameEn
+                          }
+                          createdAt={e?.product?.user?.createdAt}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                      {listedProducts?.length !== 0 ? (
                         <PaginationApp
                           totalPages={totalPages}
                           perPage={28}
                           myRef={myRef}
                         />
-                      </div>
-                    </>
-                  );
-                } else {
-                  return null; // Default case (optional)
-                }
-              })()}
-            </div>
-          )}
+                      ) : null}
+                    </div>
+                  </>
+                );
+              } else {
+                return null;
+              }
+            })()}
+          </div>
+          {/* )} */}
         </div>
       </div>
       <div className="px-4 mx-auto py-10">{/* <LiveAuctionsSlider /> */}</div>

@@ -57,7 +57,7 @@ const Category = ({ img, title, id, view, className }) => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center px-4 sm:px-10 relative w-full  ${className}`}
+      className={`flex flex-col items-center justify-center px-0.5 sm:px-8 relative w-full  ${className}`}
     >
       <div className="group relative">
         {!isDisabled && (
@@ -104,7 +104,7 @@ const Category = ({ img, title, id, view, className }) => {
       </div>
 
       <p
-        className={`mt-2 sm:mt-3 text-gray-700 font-medium text-xs sm:text-sm md:text-base text-center ${
+        className={`mt-1 sm:mt-3 text-gray-700 font-medium text-xs sm:text-sm md:text-base text-center ${
           !isDisabled ? "opacity-80" : "group-hover:text-primary"
         }`}
       >

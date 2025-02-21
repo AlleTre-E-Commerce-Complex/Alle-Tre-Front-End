@@ -11,19 +11,18 @@ const LodingTestAllatre = () => {
       document.body.style.overflow = "auto";
     }
 
-    // Fallback: Re-enable scrolling after a delay (e.g., 5 seconds)
     const fallbackTimer = setTimeout(() => {
       document.body.style.overflow = "auto";
-    }, 4000);
+    }, 1000);
 
     return () => {
-      clearTimeout(fallbackTimer); // Clear the fallback timer
-      document.body.style.overflow = "auto"; // Ensure scrolling is re-enabled
+      clearTimeout(fallbackTimer);
+      document.body.style.overflow = "auto";
     };
   }, [isLoading]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 cursor-wait">
+    <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 cursor-wait">
       <img
         src={loadingTest}
         alt="loading"

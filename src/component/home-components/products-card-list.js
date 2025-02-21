@@ -8,6 +8,7 @@ import localizationKeys from "../../localization/localization-keys";
 import routes from "../../routes";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
+import { RiShareForwardFill } from "react-icons/ri";
 
 const ProductCardList = ({
   imageLink,
@@ -22,6 +23,30 @@ const ProductCardList = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
+
+  const getDomain = () => {
+    const { protocol, hostname, port } = window.location;
+    return port
+      ? `${protocol}//${hostname}:${port}`
+      : `${protocol}//${hostname}`;
+  };
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title,
+          text: title,
+          // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
+          url: `${getDomain()}/alletre/my-product/${id}/details`,
+        });
+      } catch (error) {
+        console.error("Error sharing post:", error);
+      }
+    } else {
+      alert("Sharing is not supported in this browser.");
+    }
+  };
 
   const getTimeDifference = (createdAt) => {
     const createdDate = new Date(createdAt);
@@ -46,10 +71,23 @@ const ProductCardList = ({
     history.push(routes.app.listProduct.details(id));
   };
   return (
-    <div className="cursor-pointer " onClick={() => handelGoDetails(id)}>
-      <div className=" h-auto my-2  group rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg  p-4 flex md:flex-row flex-col justify-between ">
-        <div className="flex  gap-x-4">
-          {/* img */}
+    <div className="flex flex-wrap gap-4 ">
+      <div className="flex-1 my-2 group rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 lg:p-3 flex flex-col justify-between">
+        <div className="relative group">
+          <div
+            className={`absolute ${
+              lang === "ar" ? "left-0" : "right-0"
+            }  top-0 z-30  space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+          >
+            <div
+              onClick={handleShare}
+              className="border-primary border-2 border-solid bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
+            >
+              <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg md:text-2xl " />
+            </div>
+          </div>
+        </div>
+        <div className="flex  gap-x-4" onClick={() => handelGoDetails(id)}>
           <div className="w-[103px] min-w-[80px] md:h-[112px] h-[100px] rounded-lg relative overflow-hidden bg-gray-light ">
             <img
               onClick={() => handelGoDetails(id)}
@@ -64,7 +102,7 @@ const ProductCardList = ({
               {formatCurrency(price)}
             </div>
           </div>
-          {/* data */}
+
           <div>
             <h1
               onClick={() => handelGoDetails(id)}
@@ -73,7 +111,7 @@ const ProductCardList = ({
               {truncateString(title, 250)}
             </h1>
 
-            <div className="flex md:gap-x-10 gap-x-6 mt-2">
+            <div className="flex md:gap-x-10 gap-x-6 mt-4">
               <div>
                 <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                   {selectedContent[localizationKeys.lastestPrice]}
@@ -117,14 +155,16 @@ const ProductCardList = ({
             </div>
           </div>
         </div>
-        {/* buttons */}
-        <div className=" my-auto flex flex-col gap-y-5">
-          <button
-            onClick={() => handelGoDetails(id)}
-            className="border-primary border-[1px] text-primary md:w-[128px] w-full h-[32px] rounded-lg"
-          >
-            {selectedContent[localizationKeys.buyNow]}
-          </button>
+
+        <div className="relative my-auto flex flex-col mx-2">
+          <div className="flex  justify-end">
+            <button
+              onClick={() => handelGoDetails(id)}
+              className="border-primary border-[1px] text-primary w-full md:w-[128px] h-[32px] rounded-lg"
+            >
+              {selectedContent[localizationKeys.buyNow]}
+            </button>
+          </div>
         </div>
       </div>
     </div>
