@@ -1,40 +1,64 @@
 import Axios from "axios";
 import auth from "../utils/auth";
-import { createBrowserHistory } from "history"; 
-import routes from "routes";
 import { store } from "redux-store/store";
 import { setBlockedUser } from "redux-store/blocked-user-slice";
 
-// Axios.defaults.baseURL =
-//   process.env.NODE_ENV !== "production"
-//     ? process.env.REACT_APP_DEV_URL
-//     : process.env.REACT_APP_SERVER_URL;
 Axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 const AuthAxios = Axios.create();
 
+// Request interceptor
 AuthAxios.interceptors.request.use(async (config) => {
-  let accessToken = await auth.getToken();
-  config.headers = {
-    Authorization: `Bearer ${accessToken}`,
-    // "Accept-Language": window.localStorage.getItem("language"),
-  };
-  return config;
+  try {
+    const accessToken = await auth.getToken();
+    if (accessToken) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${accessToken}`,
+      };
+    }
+    return config;
+  } catch (error) {
+    return Promise.reject(error);
+  }
 });
 
-// Response interceptor for handling errors globally
+// Response interceptor
 AuthAxios.interceptors.response.use(
-  (response) => response, // Pass through successful responses
+  (response) => response,
   async (error) => {
-    console.log('****>',error)
-    // Check if the error is a 401 unauthorized
-    if (error?.response?.data?.message === 'Token error: User is blocked') {
-       auth.logout()
-       // Dispatch the action to show the modal
-        store.dispatch(setBlockedUser(true));
+    const originalRequest = error.config;
+
+    // Prevent infinite refresh loops
+    if (originalRequest?._retry) {
+      return Promise.reject(error);
     }
 
-    return Promise.reject(error); // Reject the promise to propagate the error
+    // Handle blocked user
+    if (error?.response?.data?.message === 'Token error: User is blocked') {
+      await auth.logout();
+      store.dispatch(setBlockedUser(true));
+      return Promise.reject(error);
+    }
+
+    // Handle token expiration
+    if (error?.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const accessToken = await auth.refreshToken();
+        if (accessToken) {
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+          return AuthAxios(originalRequest);
+        }
+      } catch (refreshError) {
+        // If refresh fails, logout and reject
+        await auth.logout();
+        return Promise.reject(refreshError);
+      }
+    }
+
+    return Promise.reject(error);
   }
 );
+
 export const axios = Axios;
 export const authAxios = AuthAxios;

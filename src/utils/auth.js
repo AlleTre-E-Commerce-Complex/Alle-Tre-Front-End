@@ -4,6 +4,11 @@ import api from "../api";
 import routes from "routes";
 
 class Auth {
+  constructor() {
+    this.refreshPromise = null;
+    this.REFRESH_BUFFER = 60; // Change buffer to 60 seconds
+  }
+
   async getDecodedToken() {
     const token = await this.getToken();
     return this._decodeToken(token);
@@ -32,16 +37,13 @@ class Auth {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
-        // Even if the server call fails, we'll still clear local storage
-        await Axios.post(api.auth.logout, { refreshToken }).catch(
-          console.error
-        );
+        await Axios.post(api.auth.logout, { refreshToken }).catch(console.error);
       }
     } finally {
+      this.refreshPromise = null;
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("hasCompletedProfile");
-      // Ensure we redirect to home page after logout
       if (window.location.pathname !== routes.app.home) {
         window.location = `${routes.app.home}?page=1&perPage=28`
       }
@@ -52,17 +54,13 @@ class Auth {
     try {
       const accessToken = localStorage.getItem("accessToken");
 
-      // If no access token, try to refresh
       if (!accessToken) {
-        const newToken = await this.refreshToken();
-        return newToken;
+        return await this.refreshToken();
       }
 
-      // Check if token is expired or will expire soon
       if (this.hasExpired(accessToken)) {
         console.log("Token expired or expiring soon, refreshing...");
-        const newToken = await this.refreshToken();
-        return newToken;
+        return await this.refreshToken();
       }
 
       return accessToken;
@@ -73,6 +71,11 @@ class Auth {
   }
 
   async refreshToken() {
+    // If there's already a refresh in progress, return that promise
+    if (this.refreshPromise) {
+      return this.refreshPromise;
+    }
+
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
       if(!window.location.pathname.includes("details")){
@@ -81,27 +84,35 @@ class Auth {
       return null;
     }
 
-    try {
-      const res = await Axios.post(api.auth.RefrshToken, {
-        refreshToken,
-      });
-      
-      const data = res.data;
-      if (!data?.data?.accessToken) {
-        throw new Error('Invalid token response');
-      }
+    // Create new refresh promise
+    this.refreshPromise = (async () => {
+      try {
+        const res = await Axios.post(api.auth.RefrshToken, {
+          refreshToken,
+        });
+        
+        const data = res.data;
+        if (!data?.data?.accessToken) {
+          throw new Error('Invalid token response');
+        }
 
-      this.setToken({
-        newAccessToken: data.data.accessToken,
-        newRefreshToken: data.data.refreshToken || refreshToken,
-      });
-      
-      return data.data.accessToken;
-    } catch (error) {
-      console.error("Token refresh failed:", error);
-      await this.logout();
-      return null;
-    }
+        this.setToken({
+          newAccessToken: data.data.accessToken,
+          newRefreshToken: data.data.refreshToken || refreshToken,
+        });
+        
+        return data.data.accessToken;
+      } catch (error) {
+        console.error("Token refresh failed:", error);
+        await this.logout();
+        return null;
+      } finally {
+        // Clear the refresh promise
+        this.refreshPromise = null;
+      }
+    })();
+
+    return this.refreshPromise;
   }
 
   hasExpired(token) {
@@ -110,8 +121,8 @@ class Auth {
     try {
       const decodeToken = jwt_decode(token);
       const now = new Date().getTime() / 1000;
-      // Add 30 second buffer to prevent edge cases
-      return !decodeToken || (decodeToken.exp - 30) < now;
+      // Use 60 second buffer instead of 30
+      return !decodeToken || (decodeToken.exp - this.REFRESH_BUFFER) < now;
     } catch (e) {
       return true;
     }
