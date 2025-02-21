@@ -50,7 +50,7 @@ const SliderRow = () => {
         <div className="ezd-snapslider">
           <div className="snapslider-wrapper">
             <div ref={swiperRef4} className="snapslider-overflow">
-              <div className="snapslider-scroll swiper-wrapper py-2 px-4 md:px-10 lg:px-20 flex justify-center gap-x-6">
+              <div className="snapslider-scroll swiper-wrapper py-2 px-6 md:px-10 lg:px-20 flex justify-center gap-x-0.5 sm:gap-x-3 md:gap-x-6">
                 {GatogryOptions?.map((e, index) => (
                   <div key={index} className="snapslider-card swiper-slide">
                     <Category

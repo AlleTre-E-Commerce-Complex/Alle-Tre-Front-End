@@ -51,11 +51,8 @@ const FilterSections = ({ myRef, hiddenGatogry, categoryId }) => {
         <div className="mb-3">
           <div
             onClick={() => toggleSection("categories")}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-300 ease-in-out
-            bg-gradient-to-r from-[#a91d3a] via-[#c83250] to-[#d85b73] text-white/90
-            hover:bg-gradient-to-r hover:from-[#f19ab1] hover:via-[#f1a1b1] hover:to-[#f1abba] hover:text-primary
-            hover:opacity-90 hover:shadow-xl transform hover:scale-105
-            flex justify-between items-center"
+            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary
+            hover:shadow-lg flex justify-between items-center"
             // className="cursor-pointer p-3 border border-gray-veryLight rounded-lg shadow-md transition-all duration-300 ease-in-out
             // bg-gradient-to-r from-[#7d7d7d] via-[#a4a4a4] to-[#c1c1c1] text-black hover:bg-gradient-to-r hover:from-[#252525] hover:via-[#4c4c4c] hover:to-[#7d7d7d] hover:text-white
             // hover:opacity-90 hover:shadow-xl transform hover:scale-105
