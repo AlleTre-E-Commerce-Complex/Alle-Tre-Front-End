@@ -21,7 +21,6 @@ const ShowBankDetailsModal = ({
   accountBalance,
 }) => {
   const { user } = useAuthState();
-  console.log("user***>", user);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { run, isLoading } = useAxios([]);
@@ -80,7 +79,6 @@ const ShowBankDetailsModal = ({
               selectedBankAccountId,
             })
             .then((response) => {
-              console.log("response of withdrawal request :", response);
               if (response.data.success) {
                 setOpen(false);
                 setSuccessModal(true);

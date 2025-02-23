@@ -32,6 +32,9 @@ const localizationKeys = {
   backToLogin: "backToLogin",
   sentVerification: "sentVerification",
   securityDeposit: "securityDeposit",
+  yourWalletBalanceIsAED: "yourWalletBalanceIsAED",
+  payAED: "PayAED",
+  fromWallet:"fromWallet",
   // home
   changeStatus: "changeStatus",
   viewContactDetails: "viewContactDetails",

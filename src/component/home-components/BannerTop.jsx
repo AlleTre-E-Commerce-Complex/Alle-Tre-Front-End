@@ -5,8 +5,8 @@ import BannerTopImage3 from "../../assets/images/mainImg3.jpg";
 import BannerTopImage4 from "../../assets/images/mainImg4.jpg";
 import BannerMobImage1 from "../../assets/images/mobileeSIze3.jpg";
 import BannerMobImage2 from "../../assets/images/mobileeSiz1.jpg";
-// import BannerMobImage3 from "../../assets/images/mainImg3.jpg";
 import BannerMobImage3 from "../../assets/images/mobileeSize2.jpg";
+import BannerMobImage4 from "../../assets/images/BannerMob4.jpg";
 
 const BannerTop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,8 +15,8 @@ const BannerTop = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const images = isMobile
-    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3]
-    : [BannerTopImage1, BannerTopImage2, BannerTopImage3];
+    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3, BannerMobImage4]
+    : [BannerTopImage1, BannerTopImage2, BannerTopImage3, BannerTopImage4];
 
   const autoSlideInterval = 6000; // Slide every 6 seconds
 
@@ -32,7 +32,7 @@ const BannerTop = () => {
           : (prevIndex - 1 + images.length) % images.length
       );
       setAnimating(false);
-    }, 700); // Animation duration
+    }, 700);
   };
 
   const nextSlide = () => handleSlide("left");
@@ -40,8 +40,8 @@ const BannerTop = () => {
 
   useEffect(() => {
     const interval = setInterval(nextSlide, autoSlideInterval);
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []); // Only runs once when the component mounts
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -77,11 +77,11 @@ const BannerTop = () => {
               key={index}
               className={`absolute inset-0 transition-transform duration-700 ease-in-out ${position} ${
                 isActive ? "z-20" : "z-10"
-              } flex items-center justify-center`} 
+              } flex items-center justify-center`}
             >
               <img
                 src={image}
-                className="w-full h-full object-fill" 
+                className="w-full h-full object-fill"
                 alt={`Slide ${index + 1}`}
               />
             </div>

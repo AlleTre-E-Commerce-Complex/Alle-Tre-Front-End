@@ -119,12 +119,12 @@ const ImageMedia = ({
     if (file) {
       try {
         const compressedFile = await compressImage(file);
-        console.log("Original size:", file.size / 1024 / 1024, "MB");
-        console.log(
-          "Compressed size:",
-          compressedFile.size / 1024 / 1024,
-          "MB"
-        );
+        // console.log("Original size:", file.size / 1024 / 1024, "MB");
+        // console.log(
+        //   "Compressed size:",
+        //   compressedFile.size / 1024 / 1024,
+        //   "MB"
+        // );
 
         if (isEditMode) {
           const formData = new FormData();
@@ -162,7 +162,6 @@ const ImageMedia = ({
       }
 
       if (file.size <= 800 * 1024) {
-        console.log("File already small enough, skipping compression");
         return file;
       }
 

@@ -66,7 +66,6 @@ const Notifications = () => {
     };
     return new Date(dateString).toLocaleString(undefined, options); // Changed to toLocaleString
   };
-  console.log("dddddd", formatTime);
   return (
     <div>
       <Dimmer className=" bg-white/50" active={isLoading} inverted>

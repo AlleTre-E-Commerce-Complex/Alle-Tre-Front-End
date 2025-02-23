@@ -16,8 +16,7 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 // import { useSelector } from "react-redux";
-
-import buyNowEmty from "../../../src/assets/images/bannerTop-5.jpg";
+import { ReactComponent as NoExpAuctionImg } from "../../../src/assets/images/noExpiredAuction.svg";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 
 const BuyNowAuctionsSlider = () => {
@@ -42,7 +41,6 @@ const BuyNowAuctionsSlider = () => {
               `${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`
             )
             .then((res) => {
-              console.log("res?.data?.data11111111", res?.data?.data);
               setAuctions(res?.data?.data);
               setpagination(res?.data?.pagination);
             })
@@ -94,25 +92,17 @@ const BuyNowAuctionsSlider = () => {
   };
   return (
     <div>
-      {auctions?.length > 0 && (
-        <div className="text-center">
-          <h1 className="text-gray-dark text-base font-bold">
-            {/* {selectedContent[localizationKeys.buyNow]} */}
-            {selectedContent[localizationKeys.expiredAuctions]}
-          </h1>
-          <p className="text-gray-med text-base font-normal pb-10">
-            {selectedContent[localizationKeys.theBestDealsYouMissed]}
-          </p>
-        </div>
-      )}
+      <div className="text-center">
+        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md ">
+          {selectedContent[localizationKeys.expiredAuctions]}
+        </h1>
+        <p className="text-gray-med text-base font-normal pb-1">
+          {selectedContent[localizationKeys.theBestDealsYouMissed]}
+        </p>
+      </div>
       {auctions?.length === 0 ? (
-        <div>
-          <img
-            className="w-full h-full object-cover rounded-2xl  shadow"
-            src={buyNowEmty}
-            alt="buyNowEmty"
-          />
-          {/* <BannerSingle /> */}
+        <div className="flex flex-col items-center">
+          <NoExpAuctionImg className="w-40 h-40" />
         </div>
       ) : (
         <div className="ezd-content relative">
@@ -133,7 +123,7 @@ const BuyNowAuctionsSlider = () => {
                   {auctions?.map((e) => (
                     <div
                       key={e?.id}
-                      className="snapslider-card swiper-slide flex items-center justify-center"
+                      className="snapslider-card swiper-slide flex items-center justify-center w-[280px] h-[300px] px-2 sm:px-4"
                     >
                       <AuctionCard
                         isExpired={e?.status === "EXPIRED"}

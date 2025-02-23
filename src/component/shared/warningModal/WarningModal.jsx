@@ -11,8 +11,6 @@ import toast from 'react-hot-toast';
 import LodingTestAllatre from '../lotties-file/loding-test-allatre.js';
 
 const WarningModal = ({open,setOpen,auctionId,message,setSuccessModal}) => {
-    console.log('auctoin Id in warning Modal:',auctionId);
-    
     const [lang] = useLanguage(""); 
     const selectedContent = content[lang];
     const {
@@ -29,7 +27,6 @@ const WarningModal = ({open,setOpen,auctionId,message,setSuccessModal}) => {
             authAxios
             .put(api.app.auctions.cancell_auction(auctionId))
             .then(res=>{
-                console.log('response from backnend of complaints : ',res)
                 if(res?.data?.success){
                     setSuccessModal(true) 
                     HandleDiscontinue()

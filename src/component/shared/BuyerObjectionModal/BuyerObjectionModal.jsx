@@ -36,7 +36,6 @@ const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
           authAxios
           .post(api.app.auctions.deliveryIssue,formData)
           .then(res=>{
-              console.log('response from backnend of complaints : ',res)
               if(res?.data?.success){
                   toast.success(selectedContent[localizationKeys.ThankYouForYourSubmission]);
               }else{
@@ -65,7 +64,6 @@ const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
         }
       } catch (error) { 
         toast.error(error.message);
-        console.log(error);
       }
     };
   
