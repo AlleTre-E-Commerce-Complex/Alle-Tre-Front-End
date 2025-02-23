@@ -68,34 +68,33 @@ const HomeAuctionDetails = () => {
   return (
     <div>
       <Helmet>
-        {/* Update Open Graph meta tags dynamically */}
         <title>
-          {auctionsDetailsData?.product?.title || "Auction Details"}
+          {auctionsDetailsData?.product?.title || "Auction Details - Alletre"}
         </title>
         <meta
           name="description"
           content={
             auctionsDetailsData?.product?.description ||
-            "Explore our latest auction details."
+            "Explore our latest auction details on Alletre."
           }
         />
-        <meta
-          property="og:title"
-          content={auctionsDetailsData?.product?.title}
-        />
-        <meta
-          property="og:description"
-          content={auctionsDetailsData?.product?.description}
-        />
-        <meta
-          property="og:image"
-          content={
-            auctionsDetailsData?.product?.images?.[0].imageLink ||
-            "default-image-url.jpg"
-          }
-        />
-        <meta property="og:url" content={window.location.href} />
+        
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.alletre.com${pathname}`} />
+        <meta property="og:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
+        <meta property="og:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
+        <meta property="og:image" content={auctionsDetailsData?.product?.images?.[0]?.imageLink ? `${auctionsDetailsData.product.images[0].imageLink}` : "https://www.alletre.com/default-image.jpg"} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Alletre" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={`https://www.alletre.com${pathname}`} />
+        <meta name="twitter:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
+        <meta name="twitter:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
+        <meta name="twitter:image" content={auctionsDetailsData?.product?.images?.[0]?.imageLink ? `${auctionsDetailsData.product.images[0].imageLink}` : "https://www.alletre.com/default-image.jpg"} />
       </Helmet>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
