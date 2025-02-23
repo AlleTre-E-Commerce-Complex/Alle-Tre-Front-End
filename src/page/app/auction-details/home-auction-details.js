@@ -34,6 +34,7 @@ const HomeAuctionDetails = () => {
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
   const { pathname } = useLocation();
+  console.log("pathname--", pathname);
 
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
@@ -65,6 +66,17 @@ const HomeAuctionDetails = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const imageUrl = auctionsDetailsData?.product?.images?.[0]?.imageLink;
+  console.log("Image URL for sharing:", imageUrl);
+  console.log("Image URL for sharing:encoded", encodeURI(imageUrl));
+
+  const getShareImage = () => {
+    if (imageUrl) {
+      return encodeURI(imageUrl);
+    }
+    return "https://www.alletre.com/logo512.png";
+  };
+
   return (
     <div>
       <Helmet>
@@ -86,19 +98,20 @@ const HomeAuctionDetails = () => {
         <meta property="og:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
         <meta property="og:site_name" content="Alletre" />
         
-        {/* Ensure og:image is always explicitly provided */}
-        <meta property="og:image" content={auctionsDetailsData?.product?.images?.[0]?.imageLink || "https://www.alletre.com/logo512.png"} />
-        <meta property="og:image:width" content="512" />
-        <meta property="og:image:height" content="512" />
+        {/* Explicitly provide og:image with encoded URL */}
+        <meta property="og:image" content={getShareImage()} />
+        <meta property="og:image:secure_url" content={getShareImage()} />
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:height" content="600" />
         <meta property="og:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
-        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:type" content="image/jpeg" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={`https://www.alletre.com${pathname}`} />
         <meta name="twitter:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
         <meta name="twitter:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
-        <meta name="twitter:image" content={auctionsDetailsData?.product?.images?.[0]?.imageLink || "https://www.alletre.com/logo512.png"} />
+        <meta name="twitter:image" content={getShareImage()} />
         <meta name="twitter:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
       </Helmet>
       <Dimmer
