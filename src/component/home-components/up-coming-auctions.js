@@ -10,13 +10,12 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import axios from "axios";
 import api from "../../api";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { useSelector } from "react-redux";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-import BannerSingle from "./BannerSingle";
+import { ReactComponent as NoUpcomingImg } from "../../../src/assets/images/noUpcoming Auction.svg";
 
 const UpComingAuctionsSlider = () => {
   const [lang] = useLanguage("");
@@ -27,10 +26,9 @@ const UpComingAuctionsSlider = () => {
   const [auctions, setAuctions] = useState();
   const [pagination, setPagination] = useState();
   const [page, setPage] = useState(20);
-  const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   const swiperRef = useRef(null);
-  const swiperInstance = useRef(null); // Ref to hold the Swiper instance
+  const swiperInstance = useRef(null);
 
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage") && user) {
@@ -70,13 +68,12 @@ const UpComingAuctionsSlider = () => {
     }
 
     return () => {
-      // Cleanup: destroy Swiper instance if it exists
       if (swiperInstance.current) {
         swiperInstance.current.destroy(true, true);
         swiperInstance.current = null;
       }
     };
-  }, [auctions]); // Re-run when auctions change to initialize Swiper correctly
+  }, [auctions]);
 
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
@@ -93,24 +90,18 @@ const UpComingAuctionsSlider = () => {
 
   return (
     <div>
-      {auctions?.length > 0 && (
-        <div className="text-center">
-          <h1 className="text-gray-dark text-base font-bold">
-            {selectedContent[localizationKeys.upComingAuctions]}
-          </h1>
-          <p className="text-gray-med text-base font-normal pb-10">
-            {selectedContent[localizationKeys.ComingSoonGetReadytoBid]}
-          </p>
-        </div>
-      )}
+      <div className="text-center">
+        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md ">
+          {selectedContent[localizationKeys.upComingAuctions]}
+        </h1>
+        <p className="text-gray-med text-base font-normal pb-1">
+          {selectedContent[localizationKeys.ComingSoonGetReadytoBid]}
+        </p>
+      </div>
+
       {auctions?.length === 0 ? (
-        <div>
-          {/* <img
-            className="w-full h-full object-cover rounded-2xl shadow"
-            src={upCompingEmty}
-            alt="upCompingEmty"
-          /> */}
-          <BannerSingle />
+        <div className="flex flex-col items-center ">
+          <NoUpcomingImg className="w-40 h-40" />
         </div>
       ) : (
         <div className="ezd-content relative">

@@ -96,7 +96,7 @@ export const allCustomFileOptions = {
     { key: "360", text: "360 Camera | كاميرا 360", value: "360" },
   ],
   material: [
-    { key: "ABS", text: "ABS | ا ب ج", value: "ABS" },
+    { key: "ABS", text: "ABS | أ ب س ", value: "ABS" },
     { key: "plastic", text: "Plastic | بلاستيك", value: "plastic" },
     { key: "metal", text: "Metal | معدن", value: "metal" },
     { key: "silicon", text: "Silicon | سيليكون", value: "silicon" },

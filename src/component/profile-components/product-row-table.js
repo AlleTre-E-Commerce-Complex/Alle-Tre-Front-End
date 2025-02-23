@@ -80,7 +80,6 @@ const ProductRowTable = ({
           toast.success("Product status updated successfully!");
         })
         .catch((error) => {
-          console.log("product row table err", error);
           toast.error("Failed to update status. Please try again.");
         })
     );

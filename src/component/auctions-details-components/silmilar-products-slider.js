@@ -34,7 +34,6 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(20);
   // const loginData = useSelector((state) => state?.loginDate?.loginDate);
-  // console.log('****--->',isListProduct,categoriesId)
   useEffect(() => {
     if (
       !isListProduct

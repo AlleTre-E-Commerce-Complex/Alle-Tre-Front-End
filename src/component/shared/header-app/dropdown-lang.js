@@ -26,7 +26,11 @@ const DropdownLang = ({ className }) => {
           alt={lang === "en" ? "English" : "Arabic"}
           className="w-6 h-6"
         />
-        <span className="hidden sm:inline-block ml-2">
+        <span
+          className={`hidden sm:inline-block ${
+            lang === "ar" ? "mr-2" : "ml-2"
+          }`}
+        >
           {
             selectedContent[
               localizationKeys[lang === "en" ? "english" : "arabic"]
@@ -34,6 +38,7 @@ const DropdownLang = ({ className }) => {
           }
         </span>
       </div>
+
       {isOpen && (
         <div
           className="absolute bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10 

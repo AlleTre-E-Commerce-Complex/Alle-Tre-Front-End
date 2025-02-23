@@ -97,107 +97,90 @@ const Header = ({ SetSid, setSelectedType }) => {
   };
 
   useEffect(() => {
-    console.log("soket useEffect test");
     if (!socket) return;
 
     if (user) {
       const handleNotification = (data) => {
         if (data.status === "ON_SELLING") {
-          console.log("listing message");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_BIDDING" &&
           data.userType === "FOR_SELLER" &&
           data.usersId === user?.id
         ) {
-          console.log("seller message");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_BIDDING" &&
           data.userType === "CURRENT_BIDDER" &&
           data.usersId === user?.id
         ) {
-          console.log("bidder message");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_BIDDING" &&
           data.userType === "OTHER_BIDDERS" &&
           data.usersId.includes(String(user?.id))
         ) {
-          console.log("other bidders message");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" &&
           data.userType === "FOR_SELLER" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_AUCTION_EXPIRE_WITH_BIDDER");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_AUCTION_CANCELLED_WITH_BIDDER");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_AUCTION_PURCHASE_SUCCESS" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_AUCTION_PURCHASE_SUCCESS");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_PENDING_PAYMENT_OF_WINNER" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_PENDING_PAYMENT_OF_WINNER");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_DELIVERY_DELAY" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_DELIVERY_DELAY");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_PENDING_PAYMENT_TIME_EXPIRED");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_ITEM_SEND_FOR_DELIVERY" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_ITEM_SEND_FOR_DELIVERY");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_ITEM_BUY_NOW" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_ITEM_BUY_NOW");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_CONFIRM_DELIVERY" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_CONFIRM_DELIVERY");
           setNotificationCount((prev) => prev + 1);
         } else if (
           data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" &&
           data.usersId === user?.id
         ) {
-          console.log("ON_AUCTION_CANCELLED_BY_ADMIN");
           setNotificationCount((prev) => prev + 1);
         }
       };
@@ -299,7 +282,7 @@ const Header = ({ SetSid, setSelectedType }) => {
     history.push(`${routes.app.home}?page=1&perPage=28&title=${value}`);
     window.scrollTo({
       behavior: "smooth",
-      top: 950,
+      top: 600,
     });
   }, 850);
 
@@ -460,7 +443,7 @@ const Header = ({ SetSid, setSelectedType }) => {
               />
             )}
           </div>
-          <div className="md:flex hidden lg:gap-x-12 gap-x-10 my-auto justify-center items-center">
+          <div className="md:flex hidden lg:gap-x-12 gap-x-8 my-auto justify-center items-center">
             {[
               {
                 key: localizationKeys.home,
@@ -530,13 +513,15 @@ const Header = ({ SetSid, setSelectedType }) => {
               />
             </div>
             <div className="my-auto ">
-              <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200 w-[120px] h-[48px] flex items-center justify-center " />
+              <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600 w-[120px] h-[48px] flex items-center justify-center " />
             </div>
             <div className="relative inline-block text-left">
               <div>
                 <button
                   type="button"
-                  className="-ml-7 w-[120px] h-[48px] hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-bold rounded-lg px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ltr:font-serifEN rtl:font-serifAR items-center justify-center "
+                  className={` w-[120px] h-[48px] hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-bold rounded-lg px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ${
+                    lang === "ar" ? "-mr-7" : "-ml-7"
+                  } ltr:font-serifEN rtl:font-serifAR items-center justify-center`}
                   id="menu-button"
                   aria-expanded={isDropdownOpen ? "true" : "false"}
                   aria-haspopup="true"
@@ -560,7 +545,7 @@ const Header = ({ SetSid, setSelectedType }) => {
                   tabIndex="-1"
                 >
                   <div
-                    className="bg-gray-veryLight/50  border border-gray-400 rounded-lg py-2"
+                    className=" bg-white border rounded-lg shadow-lg py-2"
                     role="none"
                   >
                     <div className="my-auto space-y-3 px-4 py-2">
@@ -617,34 +602,29 @@ const Header = ({ SetSid, setSelectedType }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="py-[6px] flex gap-x-10 w-full px-4 md:px-6 lg:px-8">
+        <div className="py-[6px] flex gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 md:px-6 lg:px-8">
           <Input
-            className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input ltr:font-serifEN rtl:font-serifAR"
+            className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input 
+             ltr:font-serifEN rtl:font-serifAR 
+             w-full sm:w-[40%] md:w-[50%]"
             icon="search"
             placeholder={selectedContent[localizationKeys.search]}
             onChange={(e, { value }) => {
               debounced(value);
             }}
           />
-          <DropdownLang className="text-black  md:hidden bg-white/90  hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-100 shadow-sm hover:shadow-md hover:border-gray-200" />
 
-          {/* <div className="md:block hidden">
-            <button
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[250px] h-[48px] flex justify-center gap-x-1 py-3 text-base font-normal"
-              onClick={handleOpen}
-            >
-              {selectedContent[localizationKeys.categories]}
-              <RiArrowDownSFill size={20} />
-            </button>
-          </div> */}
           {currentPath === routes.app.home && (
-            <div className="relative md:block hidden">
-              {/* Type Button */}
+            <div className="relative ">
               <button
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[160px] h-[50px] flex items-center justify-between px-4 py-3 text-base font-medium transition-all duration-300 shadow-md"
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg 
+             w-[90px] h-[48px] sm:w-[110px] sm:h-[48px] md:w-[160px] xs:h-[48px]
+             flex items-center justify-between px-4 py-2 text-md font-medium 
+             transition-all duration-300 shadow-md"
                 onClick={() => setIsOpen(!isOpen)}
               >
-                <span className="flex-1 text-center">{selectedOption}</span>
+                <span className="flex-1 text-center ">{selectedOption}</span>
+
                 <span
                   className={`transform transition-transform duration-300 ${
                     isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
@@ -655,7 +635,7 @@ const Header = ({ SetSid, setSelectedType }) => {
               </button>
 
               {isOpen && (
-                <div className="absolute left-0 mt-2 w-48 bg-white border rounded-lg shadow-lg z-50">
+                <div className="absolute left-0 mt-2 w-40 sm:w-42 md:w-48 bg-white border rounded-lg shadow-lg z-50">
                   <ul className="py-2">
                     <li>
                       <button
@@ -701,6 +681,8 @@ const Header = ({ SetSid, setSelectedType }) => {
               )}
             </div>
           )}
+          <DropdownLang className="text-black  md:hidden bg-white/90  hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600" />
+
           {/* <PopupCategoriesModel
             isOpen={isOpen}
             setIsOpen={setIsOpen}

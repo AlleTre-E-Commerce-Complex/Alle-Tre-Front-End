@@ -20,7 +20,7 @@ import moment from "moment";
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "component/shared/status/auctions-status";
 import { useSocket } from "context/socket-context";
-
+import expiredImg from "../../../src/assets/images/expired auction-03.svg";
 const CountdownDisplay = memo(
   ({ timeLeft, status, formattedstartDate, selectedContent }) => {
     const formattedTimeLeft = `${timeLeft.days} ${
@@ -65,12 +65,13 @@ const AuctionCard = ({
   latestBidAmount,
   hideButton,
 }) => {
+
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { user } = useAuthState();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { run, isLoading } = useAxios([]);
+  const { run } = useAxios([]);
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const socket = useSocket();
   const timeLeft = useCountdown(endingTime);
@@ -99,15 +100,15 @@ const AuctionCard = ({
   useEffect(() => {
     if (!socket) return;
 
-    const handleBidSubmitted = (data) => {
-      if (data.auctionId === auctionId) {
-        console.log('Bid submitted for auction:', auctionId);
-      }
-    };
+    // const handleBidSubmitted = (data) => {
+    //   if (data.auctionId === auctionId) {
+    //     console.log("Bid submitted for auction:", auctionId);
+    //   }
+    // };
 
-    socket.on("bid:submitted", handleBidSubmitted);
+    socket.on("bid:submitted");
     return () => {
-      socket.off("bid:submitted", handleBidSubmitted);
+      socket.off("bid:submitted");
     };
   }, [socket, auctionId]);
 
@@ -285,27 +286,35 @@ const AuctionCard = ({
             </p>
           </div>
 
-          <div className="flex flex-col items-start min-h-[68px]">
-            <h6 className="text-gray-500 font-medium">
-              {status === "IN_SCHEDULED"
-                ? selectedContent[localizationKeys.startDate]
-                : status === "SOLD"
-                ? "Purchased Time"
-                : selectedContent[localizationKeys.endingTime]}
-            </h6>
-            {status === "SOLD" ? (
-              <p className="text-gray-800 font-sm ">
-                {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
-              </p>
-            ) : (
-              <CountdownDisplay
-                timeLeft={timeLeft}
-                status={status}
-                formattedstartDate={formattedstartDate}
-                selectedContent={selectedContent}
-              />
-            )}
-          </div>
+          {hideButton ? (
+            <img
+              className=" object-cover"
+              src={expiredImg}
+              alt="Footer Banner"
+            />
+          ) : (
+            <div className="flex flex-col items-start min-h-[68px]">
+              <h6 className="text-gray-500 font-medium">
+                {status === "IN_SCHEDULED"
+                  ? selectedContent[localizationKeys.startDate]
+                  : status === "SOLD"
+                  ? "Purchased Time"
+                  : selectedContent[localizationKeys.endingTime]}
+              </h6>
+              {status === "SOLD" ? (
+                <p className="text-gray-800 font-sm">
+                  {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
+                </p>
+              ) : (
+                <CountdownDisplay
+                  timeLeft={timeLeft}
+                  status={status}
+                  formattedstartDate={formattedstartDate}
+                  selectedContent={selectedContent}
+                />
+              )}
+            </div>
+          )}
         </div>
 
         {/* Buttons */}

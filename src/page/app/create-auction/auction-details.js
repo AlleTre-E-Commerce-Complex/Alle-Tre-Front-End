@@ -53,7 +53,6 @@ const AuctionDetails = () => {
   useEffect(() => {
     runPofile(
       authAxios.get(api.app.profile.default).then((res) => {
-        console.log("profile data in auction details:", res?.data?.data);
         setPofileData(res?.data?.data);
       })
     );

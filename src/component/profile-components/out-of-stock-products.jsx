@@ -35,7 +35,6 @@ const OutOfStockProducts = () => {
         authAxios
           .get(`${api.app.productListing.getAllListedProducts}${search}&status=OUT_OF_STOCK`)
           .then((res) => {
-            console.log('inprogress product : ',res.data.data)
             setActiveProductData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })

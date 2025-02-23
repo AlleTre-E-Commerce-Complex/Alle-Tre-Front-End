@@ -9,7 +9,6 @@ const AuthLayouts = () => {
   return (
     <div className="h-screen">
       <Switch>
-        {console.log("auth")}
         <Route path={routes.auth.default} component={OAuthpage} />
       </Switch>
     </div>

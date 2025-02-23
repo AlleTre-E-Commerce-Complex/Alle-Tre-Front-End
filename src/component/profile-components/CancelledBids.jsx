@@ -39,7 +39,6 @@ const CancelledBids = () => {
               .get(`${api.app.auctions.getAllMyBids}${search}&status=CANCELLED_BEFORE_EXP_DATE`)
               .then((res) => {
                 const beforeExpAuctions = res?.data?.data || [];
-                console.log('CANCELLED_BEFORE_EXP_DATE:', beforeExpAuctions);
       
                 // Add results from the first API call to allAuctionData
                 allAuctionData = [...allAuctionData, ...beforeExpAuctions];
@@ -50,7 +49,6 @@ const CancelledBids = () => {
                     .get(`${api.app.auctions.getAllMyBids}${search}&status=CANCELLED_AFTER_EXP_DATE`)
                     .then((res) => {
                       const afterExpAuctions = res?.data?.data || [];
-                      console.log('CANCELLED_AFTER_EXP_DATE:', afterExpAuctions);
       
                       // Combine data from both API calls
                       allAuctionData = [...allAuctionData, ...afterExpAuctions];

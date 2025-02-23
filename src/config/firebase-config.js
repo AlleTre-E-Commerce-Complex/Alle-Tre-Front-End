@@ -29,7 +29,6 @@ export const getFCMToken = async () => {
   try {
     // Add your VAPID key here
     const vapidKey = process.env.REACT_APP_FIREBASE_VAPID_KEY;
-    console.log("vapidKey *************", vapidKey);
     if (!vapidKey) {
       console.error('VAPID key is missing');
       return null;
@@ -40,10 +39,8 @@ export const getFCMToken = async () => {
     });
 
     if (currentToken) {
-      console.log('FCM Token:', currentToken);
       return currentToken;
     } else {
-      console.log('No registration token available.');
       return null;
     }
   } catch (error) {

@@ -31,26 +31,20 @@ import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
   isDepositPaid,
-  numberStare,
-  totalReviews,
   title,
   description,
   category,
   subCategory,
   TimeLeft,
-  endingPrice,
   CurrentBid,
   totalBids,
-  endingTime,
   setActiveIndexTab,
   status,
-  auctionsID,
   startBidAmount,
   isBuyNowAllowed,
   acceptedAmount,
   StartDate,
   latestBidAmount,
-  PurchasedTime,
   onReload,
   isOffer,
   sellerLocation,
@@ -177,7 +171,7 @@ const SummaryHomeAuctionSections = ({
           setIsPaymentWithout_SD_Success(res?.data?.success);
           if (res?.data?.success) {
             toast.success("Payment successful", {
-              position: "top-right", 
+              position: "top-right",
             });
             history.push(routes.app.profile.myBids.inPogress);
           }

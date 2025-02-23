@@ -215,18 +215,18 @@ const Home = ({ selectedType }) => {
     }
   }, [page, search, user]);
 
-  const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
-    "hasCompletedProfile",
-    ""
-  );
+  // const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
+  //   "hasCompletedProfile",
+  //   ""
+  // );
 
-  const handelCreatOuction = () => {
-    if (user) {
-      if (JSON.parse(hasCompletedProfile)) {
-        history.push(routes.app.createAuction.productDetails);
-      } else setOpen(true);
-    } else dispatch(Open());
-  };
+  // const handelCreatOuction = () => {
+  //   if (user) {
+  //     if (JSON.parse(hasCompletedProfile)) {
+  //       history.push(routes.app.createAuction.productDetails);
+  //     } else setOpen(true);
+  //   } else dispatch(Open());
+  // };
 
   return (
     <div className="lg:mt-36 md:mt-32 mt-24 py-6 home ">
@@ -264,9 +264,6 @@ const Home = ({ selectedType }) => {
           <h6 className=" text-gray-dark text-base font-normal pt-3 pl-3 ">
             {mainAuctions?.length} {selectedContent[localizationKeys.results]}
           </h6>
-          {/* <div className="">
-            <ShowFilterSections />
-          </div> */}
         </div>
         <div
           className={
@@ -643,7 +640,7 @@ const Home = ({ selectedType }) => {
           {/* )} */}
         </div>
       </div>
-      <div className="px-4 mx-auto py-10">{/* <LiveAuctionsSlider /> */}</div>
+      {/* <div className="px-4 mx-auto py-10"><LiveAuctionsSlider /></div> */}
       {/* <div className="relative py-14 ">
         <img
           className="w-full h-[257px] object-cover md:block hidden "

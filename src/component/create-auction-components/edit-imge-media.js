@@ -46,7 +46,6 @@
 
 //   const handleSetCover = (index, e) => {
 //     e.stopPropagation();
-//     console.log("Setting cover image:", index);
 //     setCoverPhotoIndex(index);
 //   };
 

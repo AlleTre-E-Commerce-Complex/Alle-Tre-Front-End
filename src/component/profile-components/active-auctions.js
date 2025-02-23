@@ -37,7 +37,6 @@ const ActiveAuctions = () => {
           .get(`${api.app.auctions.getAllOwnesAuctions}${search}&status=ACTIVE`)
           .then((res) => {
             setActiveAuctionData(res?.data?.data);
-            console.log('==>',res?.data?.data)
             setTotalPages(res?.data?.pagination?.totalPages);
           })
       );
