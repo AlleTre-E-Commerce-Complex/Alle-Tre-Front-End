@@ -70,44 +70,54 @@ const HomeAuctionDetails = () => {
   console.log("Image URL for sharing:", imageUrl);
   console.log("Image URL for sharing:encoded", encodeURI(imageUrl));
 
+  // Function to determine image type from URL
+  const getImageType = (url) => {
+    if (!url) return 'image/png'; // default for logo
+    if (url.toLowerCase().includes('.jpg') || url.toLowerCase().includes('.jpeg')) return 'image/jpeg';
+    if (url.toLowerCase().includes('.png')) return 'image/png';
+    if (url.toLowerCase().includes('.gif')) return 'image/gif';
+    if (url.toLowerCase().includes('.webp')) return 'image/webp';
+    return 'image/jpeg'; // default for unknown
+  };
+
   const getShareImage = () => {
-    if (imageUrl) {
-      return encodeURI(imageUrl);
+    if (!imageUrl) {
+      return "https://www.alletre.com/logo512.png";
     }
-    return "https://www.alletre.com/logo512.png";
+    // Remove any query parameters for cleaner URL
+    const baseUrl = imageUrl.split('?')[0];
+    // Add back only the necessary Firebase parameters
+    const firebaseParams = imageUrl.includes('firebase') ? 
+      `?alt=media&token=${imageUrl.split('token=')[1]}` : '';
+    return encodeURI(baseUrl + firebaseParams);
   };
 
   return (
     <div>
       <Helmet>
-        <title>
-          {auctionsDetailsData?.product?.title || "Auction Details - Alletre"}
-        </title>
-        <meta
-          name="description"
-          content={
-            auctionsDetailsData?.product?.description ||
-            "Explore our latest auction details on Alletre."
-          }
-        />
+        {/* Base tags */}
+        <title>{auctionsDetailsData?.product?.title || "Auction Details - Alletre"}</title>
+        <meta name="description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Alletre" />
         <meta property="og:url" content={`https://www.alletre.com${pathname}`} />
         <meta property="og:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
         <meta property="og:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
-        <meta property="og:site_name" content="Alletre" />
         
-        {/* Explicitly provide og:image with encoded URL */}
+        {/* Image tags - explicitly provided */}
         <meta property="og:image" content={getShareImage()} />
+        <meta property="og:image:url" content={getShareImage()} />
         <meta property="og:image:secure_url" content={getShareImage()} />
+        <meta property="og:image:type" content={getImageType(imageUrl)} />
         <meta property="og:image:width" content="800" />
         <meta property="og:image:height" content="600" />
         <meta property="og:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
-        <meta property="og:image:type" content="image/jpeg" />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@alletre" />
         <meta name="twitter:url" content={`https://www.alletre.com${pathname}`} />
         <meta name="twitter:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
         <meta name="twitter:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
