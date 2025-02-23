@@ -72,7 +72,8 @@ const HomeAuctionDetails = () => {
 
   const getShareImage = () => {
     if (imageUrl) {
-      return encodeURI(imageUrl);
+      // return encodeURI(imageUrl);
+      return 'https://firebasestorage.googleapis.com/v0/b/alletre-auctions.firebasestorage.app/o/uploadedImage-7171e3ba-ff82-4910-aab9-ef3c4815b07a.jpg?alt=media&token=7171e3ba-ff82-4910-aab9-ef3c4815b07a'
     }
     return "https://www.alletre.com/logo512.png";
   };
