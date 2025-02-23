@@ -55,7 +55,6 @@ const ShippingDetails = () => {
   );
 
   const offerDataInt = useSelector((state) => state.auctionDetails.offerPrice);
-  console.log("offer price data int : ", offerDataInt);
   const [locationId, setLocationId] = useFilter("locationId", "");
 
   const history = useHistory();

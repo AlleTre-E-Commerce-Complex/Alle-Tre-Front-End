@@ -29,7 +29,6 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 export default function CheckoutPagePaymentDetails() {
   //pay deposit of the seller
-  console.log("test re render of CheckoutPagePaymentDetails");
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -305,7 +304,7 @@ export default function CheckoutPagePaymentDetails() {
                 </p>
               </div>
             </div>
-            <div className="w-full md:px-10 px-5 shadow-lg rounded-2xl pb-8 ">
+            <div className="w-full md:px-10 px-5 rounded-xl pb-8 ">
               <h1 className="font-bold text-base text-black pt-4 pb-6">
                 {selectedContent[localizationKeys.paymentMethod]}
               </h1>

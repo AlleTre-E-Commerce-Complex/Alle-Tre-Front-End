@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import footerImg from "../../../../src/assets/images/footerImg2.jpg";
+import footerMob from "../../../../src/assets/images/footerMob.jpg";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
 import {
   FaInstagram,
@@ -29,6 +30,16 @@ const Footer = () => {
   const selectedContent = content[lang];
   const { pathname } = useLocation();
   const [email, setEmail] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <=968);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 968);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const { run: runNewSubscriber, isLoading: isLoadingrunNewSubscriber } =
     useAxios([]);
@@ -69,19 +80,19 @@ const Footer = () => {
       <div className="relative">
         <img
           className="w-full h-[209px] object-fill"
-          src={footerImg}
+          src={isMobile ? footerMob : footerImg}
           alt="Footer Banner"
         />
         <div className="absolute flex gap-5 bottom-5 right-4 lg:bottom-20 lg:ltr:right-24">
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="sm:w-[400px] w-[200px] md:h-[48px] h-[32px] rounded-lg px-4 outline-none"
+            className="sm:w-[300px] w-[200px] md:h-[48px] h-[38px] rounded-lg px-4 bg-white border rounded-lg shadow-xl"
             placeholder={selectedContent[localizationKeys.writeYourMail]}
           />
           <button
             onClick={HandleSubscribe}
-            className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] md:h-[48px] h-[32px] text-white"
+            className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] md:h-[48px] h-[38px] text-white"
           >
             {selectedContent[localizationKeys.subscribe]}
           </button>

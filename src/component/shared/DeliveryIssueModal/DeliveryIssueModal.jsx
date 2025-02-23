@@ -122,13 +122,6 @@ const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
       const compressedFiles = await Promise.all(
         files.map(async (file) => {
           const compressed = await compressImage(file);
-          // console.log(
-          //   `Original size: ${(file.size / 1024 / 1024).toFixed(
-          //     2
-          //   )} MB, Compressed size: ${(compressed.size / 1024 / 1024).toFixed(
-          //     2
-          //   )} MB`
-          // );
           return compressed;
         })
       );

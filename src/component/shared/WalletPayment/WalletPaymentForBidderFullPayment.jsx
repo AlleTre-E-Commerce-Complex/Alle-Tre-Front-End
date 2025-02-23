@@ -47,30 +47,31 @@ const WalletPaymentForBidderFullPayment = ({
     );
   };
   const handleGoBack = () => {
-    setShowWalletPaymentMethod()
-    setShwoPaymentSelection()
-  }
+    setShowWalletPaymentMethod();
+    setShwoPaymentSelection();
+  };
   return (
     <div className="flex flex-col justify-center bg-gray-100  h-4/5 rounded-xl p-4 border">
       <h1 className="text-center text-xl font-bold mb-20">
-        Your Wallet Balance is AED {walletBalance}/-
+        {selectedContent[localizationKeys.yourWalletBalanceIsAED]}/-
       </h1>
       <div className="flex gap-3">
-      <Button
+        <Button
           className="bg-white hover:bg-slate-100 border border-slate-400 opacity-100 font-normal text-base text-primary w-full h-[48px] rounded-lg mt-6"
           loading={isLoading}
           onClick={handleGoBack}
-          >
+        >
           {selectedContent[localizationKeys.GoBack]}
         </Button>
-      <Button
-        className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"
-        loading={isLoading}
-        id="submit"
-        onClick={submitWalletPayment}
-      >
-        Pay AED {amount} From Wallet
-      </Button>
+        <Button
+          className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"
+          loading={isLoading}
+          id="submit"
+          onClick={submitWalletPayment}
+        >
+          {selectedContent[localizationKeys.payAED]} {amount}
+          {selectedContent[localizationKeys.fromWallet]}
+        </Button>
       </div>
     </div>
   );

@@ -36,6 +36,9 @@ const ar = {
   [localizationKeys.backToLogin]: "الرجوع إلى تسجيل الدخول",
   [localizationKeys.sentVerification]: "إرسال التحقق",
   [localizationKeys.securityDeposit]: "بلغ التأمين",
+  [localizationKeys.yourWalletBalanceIsAED]: " رصيد محفظتك هو درهم إماراتي ",
+  [localizationKeys.payAED]: "ادفع درهم",
+  [localizationKeys.fromWallet]: "من المحفظة",
 
   // home
   [localizationKeys.changeStatus]: "تغيير الحالة",

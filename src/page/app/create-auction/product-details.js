@@ -777,7 +777,6 @@ const ProductDetails = () => {
                         ]
                           .filter((e) => e?.key !== "brandId")
                           .map((e) => {
-                            console.log("Processing field:", e);
                             const isDropdown =
                               customFromData?.arrayCustomFields?.some(
                                 (field) => field.key === e.key

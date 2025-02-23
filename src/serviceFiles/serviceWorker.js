@@ -5,9 +5,6 @@ export  const  subscribeUser = async () => {
       userVisibleOnly: true,
       applicationServerKey: process.env.REACT_APP_VAPID_PUBLIC_KEY,
     });
-  
-    console.log('Push Subscription:', subscription);
-  
     // Send subscription to your backend
     await fetch('/api/subscribe', {
       method: 'POST',

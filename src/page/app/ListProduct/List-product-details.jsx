@@ -149,7 +149,6 @@ const ListProductDetails = () => {
           authAxios
             .get(api.app.customField.BySubCategoryId(subCategoryId))
             .then((res) => {
-              console.log("ressssssss", res);
               setCustomFromData(res?.data?.data);
             })
         );

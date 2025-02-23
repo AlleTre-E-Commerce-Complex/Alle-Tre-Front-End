@@ -44,9 +44,6 @@ const ActionsRowTable = ({
   deliveryType,
   isBankStatementUploaded,
 }) => {
-  // console.log('auction Id in auction row table:',auctionsId);
-  // console.log('Props:',    isBankStatementUploaded.status );
-
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();

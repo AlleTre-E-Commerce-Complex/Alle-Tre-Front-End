@@ -28,7 +28,6 @@ self.addEventListener('push', function(event) {
     event.notification.close();
     
     const urlToOpen = event.notification.data.url;
-    console.log("urlToOpen", urlToOpen);
     event.waitUntil(
       self.clients.matchAll({
         type: 'window',

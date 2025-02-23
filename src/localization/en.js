@@ -37,6 +37,9 @@ const en = {
   [localizationKeys.backToLogin]: "Back to Login",
   [localizationKeys.sentVerification]: "Send verification",
   [localizationKeys.securityDeposit]: "Security Deposit",
+  [localizationKeys.yourWalletBalanceIsAED]: "Your Wallet Balance is AED",
+  [localizationKeys.payAED]: "Pay AED",
+  [localizationKeys.fromWallet]: "From Wallet",
   // home
   [localizationKeys.changeStatus]: "Change status",
   [localizationKeys.viewContactDetails]: " View contact details",
