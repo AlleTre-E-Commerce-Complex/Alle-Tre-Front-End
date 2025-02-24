@@ -109,29 +109,23 @@ const ProductCard = ({
         </div>
         <h1
           onClick={() => handelGoDetails(id)}
-          className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10 ltr:pr-4 rtl:pl-4"
+          className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] line-clamp-2 overflow-hidden"
         >
           {truncateString(title, 250)}
         </h1>
-        <div className="mt-2" onClick={() => handelGoDetails(id)}>
-          <div>
+        <div className="mt-4" onClick={() => handelGoDetails(id)}>
+          <div className="h-[50px]">
             <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
               {selectedContent[localizationKeys.location]}
             </h6>
-            {/* <p
-              className="text-gray-dark font-medium md:text-[10px] text-[8px]"
-              onClick={() => handelGoDetails(id)}
-            >
-              {location}
-            </p> */}
             <p
-              className="text-gray-dark font-medium md:text-[11px] text-[10px] mt-1"
+              className="text-gray-dark font-medium md:text-[11px] text-[10px] mt-1 line-clamp-2"
               onClick={() => handelGoDetails(id)}
             >
               {city}, {country}
             </p>
           </div>
-          <div className="flex justify-between mt-4">
+          <div className="flex justify-between mt-2">
             <div>
               <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                 {selectedContent[localizationKeys.listed]}
