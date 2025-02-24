@@ -105,24 +105,25 @@ const HomeAuctionDetails = () => {
         <meta property="og:url" content={`https://www.alletre.com${pathname}`} />
         <meta property="og:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
         <meta property="og:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
-        
-        {/* Image tags - explicitly provided */}
         <meta property="og:image" content={getShareImage()} />
-        <meta property="og:image:url" content={getShareImage()} />
         <meta property="og:image:secure_url" content={getShareImage()} />
         <meta property="og:image:type" content={getImageType(imageUrl)} />
-        <meta property="og:image:width" content="800" />
-        <meta property="og:image:height" content="600" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@alletre" />
+        <meta name="twitter:creator" content="@alletre" />
         <meta name="twitter:url" content={`https://www.alletre.com${pathname}`} />
         <meta name="twitter:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
         <meta name="twitter:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
         <meta name="twitter:image" content={getShareImage()} />
         <meta name="twitter:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
+
+        {/* Additional SEO */}
+        <link rel="canonical" href={`https://www.alletre.com${pathname}`} />
       </Helmet>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
