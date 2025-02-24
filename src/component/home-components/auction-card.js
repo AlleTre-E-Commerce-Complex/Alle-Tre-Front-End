@@ -65,7 +65,6 @@ const AuctionCard = ({
   latestBidAmount,
   hideButton,
 }) => {
-
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { user } = useAuthState();
@@ -221,7 +220,7 @@ const AuctionCard = ({
   }
 
   return (
-    <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
+    <div className="group w-full max-w-[240px] h-full flex flex-col rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
       <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[16/10]">
         <div className="relative group">
           <div
@@ -254,7 +253,7 @@ const AuctionCard = ({
 
         <img
           onClick={() => handelGoDetails(auctionId)}
-          className="w-full h-full object-scale-down group-hover:scale-110 duration-300 ease-in-out transform "
+          className="w-full h-full object-scale-down group-hover:scale-110 duration-300 ease-in-out transform"
           src={adsImg}
           alt="adsImg"
         />
@@ -269,12 +268,15 @@ const AuctionCard = ({
 
       <h1
         onClick={() => handelGoDetails(auctionId)}
-        className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10"
+         className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] line-clamp-2 overflow-hidden"
       >
         {truncateString(title, 75)}
       </h1>
 
-      <div onClick={() => handelGoDetails(auctionId)}>
+      <div
+        className="flex flex-col flex-grow"
+        onClick={() => handelGoDetails(auctionId)}
+      >
         <AuctionsStatus status={status} small />
         <div className="grid grid-cols-2 gap-4 mt-2 items-center text-xs">
           <div className="flex flex-col">
@@ -288,7 +290,7 @@ const AuctionCard = ({
 
           {hideButton ? (
             <img
-              className=" object-cover"
+              className="object-cover"
               src={expiredImg}
               alt="Footer Banner"
             />
@@ -316,20 +318,16 @@ const AuctionCard = ({
             </div>
           )}
         </div>
-
-        {/* Buttons */}
+      </div>
+      <div className="mt-auto pt-3">
         {isMyAuction ? (
           <div
-            className={`${
-              isPurchased || isExpired
-                ? "hidden"
-                : "mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3 justify-end"
-            }`}
+            className={isPurchased || isExpired ? "hidden" : "flex justify-end"}
           >
             {!hideButton && (
               <button
                 onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm flex items-center justify-center transition-all duration-300"
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm flex items-center justify-center transition-all duration-300"
               >
                 {selectedContent[localizationKeys.viewDetails]}
               </button>
@@ -337,16 +335,16 @@ const AuctionCard = ({
           </div>
         ) : (
           <div
-            className={`${
+            className={
               isPurchased || isExpired
                 ? "hidden"
-                : "mt-4 flex flex-col md:flex-row gap-x-3 gap-y-3 justify-end "
-            }`}
+                : `flex flex-col sm:flex-row gap-y-3 sm:gap-x-3 ${!hideButton && !isBuyNowAllowed ? "sm:justify-end" : ""}`
+            }
           >
             {!hideButton && isBuyNowAllowed && (
               <button
                 onClick={() => handelGoDetails(auctionId)}
-                className="border-primary border-[1px] text-primary w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm  flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-primary hover:text-white"
+                className="border-primary border-[1px] text-primary w-full sm:w-auto h-[30px] sm:h-[33px] px-4 sm:px-6 text-sm flex items-center justify-center rounded-lg transition-all duration-300 hover:bg-primary hover:text-white"
               >
                 {selectedContent[localizationKeys.buyNow]}
               </button>
