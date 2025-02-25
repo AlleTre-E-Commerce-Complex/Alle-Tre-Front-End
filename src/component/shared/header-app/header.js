@@ -653,14 +653,14 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="py-[6px] flex gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 md:px-6 lg:px-8">
+        <div className="py-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-6 lg:px-8">
           <button
             onClick={onFilterClick}
             className="lg:hidden text-primary rounded-full flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-primary" 
+              className="h-5 w-5 xs:h-6 xs:w-6 text-primary" 
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -677,7 +677,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
           <Input
             className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input 
              ltr:font-serifEN rtl:font-serifAR 
-             w-full sm:w-[40%] md:w-[50%]"
+             w-full min-w-[120px] sm:w-[40%] md:w-[50%]"
             icon="search"
             placeholder={selectedContent[localizationKeys.search]}
             onChange={(e, { value }) => {

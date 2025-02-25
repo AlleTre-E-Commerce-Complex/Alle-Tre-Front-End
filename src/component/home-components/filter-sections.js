@@ -81,7 +81,7 @@ const FilterSections = ({
                 onClick={onClose}
                 className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary-dark transition rounded-md"
               >
-                Apply
+                {selectedContent[localizationKeys.apply]} 
               </button>
               <button
                 onClick={onClose}

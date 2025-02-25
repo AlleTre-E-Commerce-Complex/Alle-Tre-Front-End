@@ -110,20 +110,20 @@ const BuyNowAuctionsSlider = () => {
             <Loader active />
             <LodingTestAllatre />
           </Dimmer>
-          <div className="ezd-snapslider pt-10">
-            <div className="snapslider-wrapper">
-              <div ref={swiperRef2} className={`snapslider-overflow`}>
+          <div className="ezd-snapslider pt-6 pb-4">
+            <div className="snapslider-wrapper relative px-4 md:px-8">
+              <div ref={swiperRef2} className="snapslider-overflow">
                 <div
                   className={`${
                     auctions?.length > 4
                       ? ""
                       : "md:justify-center justify-start"
-                  } snapslider-scroll swiper-wrapper py-2`}
+                  } snapslider-scroll swiper-wrapper gap-4`}
                 >
                   {auctions?.map((e) => (
                     <div
                       key={e?.id}
-                      className="snapslider-card swiper-slide flex items-center justify-center w-[280px] h-[300px] px-2 sm:px-4"
+                      className="snapslider-card swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%]"
                     >
                       <AuctionCard
                         isExpired={e?.status === "EXPIRED"}
@@ -146,23 +146,27 @@ const BuyNowAuctionsSlider = () => {
                 </div>
                 <button
                   onClick={handleNextClick}
-                  className={`swiper-button-next absolute top-1/2 -right-3 `}
+                  className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
                 >
-                  <img
-                    className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
-                    src={AnglesRight}
-                    alt="AnglesRight"
-                  />
+                  <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                    <img
+                      className="w-6 h-6 md:w-8 md:h-8"
+                      src={AnglesRight}
+                      alt="Next"
+                    />
+                  </div>
                 </button>
                 <button
                   onClick={handlePrevClick}
-                  className={`swiper-button-prev absolute top-1/2 -left-5  `}
+                  className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
                 >
-                  <img
-                    className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
-                    src={AnglesLeft}
-                    alt="AnglesLeft"
-                  />
+                  <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                    <img
+                      className="w-6 h-6 md:w-8 md:h-8"
+                      src={AnglesLeft}
+                      alt="Previous"
+                    />
+                  </div>
                 </button>
               </div>
             </div>

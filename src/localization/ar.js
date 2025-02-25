@@ -132,7 +132,7 @@ const ar = {
   [localizationKeys.PopularPicksPerfectChoices]:
     "اختيارات رائجة ، اختيارات مثالية",
   [localizationKeys.Grid]: "الشبكة",
-  [localizationKeys.List]: "إضافة الإعلان",
+  [localizationKeys.List]: "قائمة",
   [localizationKeys.ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow]:
     "لا توجد مزادات حاليًا. يمكنك إنشاء مزادك الخاص الآن",
   [localizationKeys.BidWinRepeat]: "المزايدة ، الفوز ، التكرار!",
@@ -149,6 +149,7 @@ const ar = {
   [localizationKeys.timing]: "توقيت",
   [localizationKeys.selectTheDeliveryType]: "حدد نوع التسليم",
   [localizationKeys.sellerAddress]: "عنوان البائع",
+  [localizationKeys.apply]: "تطبيق",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
