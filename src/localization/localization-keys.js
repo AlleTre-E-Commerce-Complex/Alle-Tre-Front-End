@@ -41,6 +41,7 @@ const localizationKeys = {
   trendingAuctions: "trendingAuctions",
   type: "type",
   filterOptions: "filterOptions",
+  filter: "filter",
   selectOptions: "selectOptions",
   clearAll: "clearAll",
   subscribedSuccessfully: "subscribedSuccessfully",

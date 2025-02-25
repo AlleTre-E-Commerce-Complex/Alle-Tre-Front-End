@@ -40,10 +40,11 @@ import SummaryListedSection from "component/home-components/summary-listed-secti
 import ListingProductsLocationDetails from "page/app/ListProduct/List-location-details";
 
 const AppLayouts = () => {
-  const [sid, SetSid] = useState(false);
+  const [sid, SetSid] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const [showRewardModal, setShowRewardModal] = useState(false);
   const [showUnSubscribeModal, setUnSubscribeModal] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname } = useLocation();
@@ -100,7 +101,11 @@ const AppLayouts = () => {
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <SocketProvider auctionId={socketauctionId} userId={user?.id}>
-        <Header SetSid={SetSid} sid={sid} setSelectedType={setSelectedType} />
+        <Header
+          SetSid={SetSid}
+          setSelectedType={setSelectedType}
+          onFilterClick={() => setIsFilterOpen(true)}
+        />
         <Sidebar SetSid={SetSid} sid={sid} />
         {showRewardModal && (
           <RewardModal
@@ -115,185 +120,196 @@ const AppLayouts = () => {
             open={showUnSubscribeModal}
           />
         )}
-        <div className="p-0 m-0 border-none min-h-screen ">
-          <Win />
-          <AuthModel currentPAth={currentPath} />
-          <PaymentSucsessModel
-            open={
-              pathname.length === 1 ||
-              pathname.endsWith(`${routes.app.home}/paymentdetails`) ||
-              pathname.endsWith(`${routes.app.home}/payDeposite`) ||
-              pathname.endsWith(`${routes.app.home}/complete-pay`) ||
-              pathname.endsWith(`${routes.app.home}/buyNow`)
-                ? true
-                : false
-            }
-          />
-          {/* <SocketProvider> */}
-          <Switch>
-            <Route
-              path={routes.app.profile.myBids.inPogressDetails()}
-              component={HomeAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myBids.pendingDetails()}
-              component={HomeAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myBids.waitingForDeliveryDetails()}
-              component={HomeAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myBids.expiredDetails()}
-              component={HomeAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myBids.completedDetails()}
-              component={HomeAuctionDetails}
-            />
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-grow">
+            <Switch>
+              <Route
+                exact
+                path={routes.app.home}
+                render={(props) => (
+                  <Home
+                    {...props}
+                    selectedType={selectedType}
+                    isFilterOpen={isFilterOpen}
+                    setIsFilterOpen={setIsFilterOpen}
+                  />
+                )}
+              />
+              <Route
+                path={routes.app.profile.myBids.inPogressDetails()}
+                component={HomeAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myBids.pendingDetails()}
+                component={HomeAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myBids.waitingForDeliveryDetails()}
+                component={HomeAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myBids.expiredDetails()}
+                component={HomeAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myBids.completedDetails()}
+                component={HomeAuctionDetails}
+              />
 
-            <Route
-              path={routes.app.profile.myAuctions.activeDetails()}
-              component={ProfileAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myAuctions.scheduledDetails()}
-              component={ProfileAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myAuctions.soldDetails()}
-              component={ProfileAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myAuctions.pendingDetails()}
-              component={ProfileAuctionDetails}
-            />
-            <Route
-              path={routes.app.profile.myAuctions.expiredDetails()}
-              component={ProfileAuctionDetails}
-            />
+              <Route
+                path={routes.app.profile.myAuctions.activeDetails()}
+                component={ProfileAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myAuctions.scheduledDetails()}
+                component={ProfileAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myAuctions.soldDetails()}
+                component={ProfileAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myAuctions.pendingDetails()}
+                component={ProfileAuctionDetails}
+              />
+              <Route
+                path={routes.app.profile.myAuctions.expiredDetails()}
+                component={ProfileAuctionDetails}
+              />
 
-            <Route
-              path={routes.app.profile.default}
-              component={ProfileLayouts}
-            />
+              <Route
+                path={routes.app.profile.default}
+                component={ProfileLayouts}
+              />
 
-            <Route
-              path={routes.app.createAuction.paymentDetails}
-              component={PaymentDetails}
-            />
-            <Route
-              path={routes.app.createAuction.shippingDetails}
-              component={ShippingDetails}
-            />
-            <Route
-              path={routes.app.createAuction.auctionDetails}
-              component={AuctionDetails}
-            />
-            <Route
-              path={routes.app.createAuction.productDetails}
-              component={ProductDetails}
-            />
-            <Route
-              path={routes.app.createAuction.default}
-              component={CreateAuction}
-            />
-            <Route
-              path={routes.app.listProduct.default}
-              component={ListProductDetails}
-            />
-            <Route
-              path={routes.app.listProduct.listProductLocationDetails}
-              component={ListingProductsLocationDetails}
-            />
-            <Route
-              path={routes.app.listProduct.details()}
-              component={SummaryListedSection}
-            />
+              <Route
+                path={routes.app.createAuction.paymentDetails}
+                component={PaymentDetails}
+              />
+              <Route
+                path={routes.app.createAuction.shippingDetails}
+                component={ShippingDetails}
+              />
+              <Route
+                path={routes.app.createAuction.auctionDetails}
+                component={AuctionDetails}
+              />
+              <Route
+                path={routes.app.createAuction.productDetails}
+                component={ProductDetails}
+              />
+              <Route
+                path={routes.app.createAuction.default}
+                component={CreateAuction}
+              />
+              <Route
+                path={routes.app.listProduct.default}
+                component={ListProductDetails}
+              />
+              <Route
+                path={routes.app.listProduct.listProductLocationDetails}
+                component={ListingProductsLocationDetails}
+              />
+              <Route
+                path={routes.app.listProduct.details()}
+                component={SummaryListedSection}
+              />
 
-            <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />
-            <Route path={routes.app.payDeposite()} component={PayDeposite} />
+              <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />
+              <Route path={routes.app.payDeposite()} component={PayDeposite} />
 
-            <Route
-              path={routes.app.homeDetails()}
-              component={HomeAuctionDetails}
-            />
-            <Route
-              path={routes.app.home}
-              render={() => <Home selectedType={selectedType} />}
-            />
-            <Route path={routes.app.unSubscribeUser} component={Home} />
-            <Route path={routes.app.categories()} component={Categories} />
-            <Route path={routes.app.faqs} component={FAQs} />
-            <Route path={routes.app.support} component={Support} />
-          </Switch>
-          {/* </SocketProvider> */}
-        </div>
-        <Footer />
-        <div className="relative z-max">
-          {currentPath === routes.app.home && (
-            <>
-              <button
-                onClick={toggleExpand}
-                className={`fixed z-50 bottom-4 ${
-                  lang === "ar" ? "left-4" : "right-4"
-                } bg-primary text-white font-semibold rounded-full w-12 h-12 flex items-center justify-center shadow-2xl transform transition-all duration-300 ease-in-out md:hidden ${
-                  isExpanded
-                    ? "rotate-45 bg-primary-dark"
-                    : "rotate-0 bg-primary"
-                }`}
-              >
-                <span
-                  className="text-2xl font-bold transform transition-transform duration-300 ease-in-out"
-                  style={{
-                    transform: isExpanded ? "rotate(135deg)" : "rotate(0)",
-                  }}
-                >
-                  <FaPlus />
-                </span>
-              </button>
-
-              <div
-                className={`fixed z-50 ${
-                  lang === "ar" ? "left-4" : "right-4"
-                } transition-all duration-300 ease-in-out md:hidden ${
-                  isExpanded
-                    ? "bottom-20 opacity-100"
-                    : "bottom-4 opacity-0 pointer-events-none"
-                }`}
-              >
+              <Route
+                path={routes.app.homeDetails()}
+                component={HomeAuctionDetails}
+              />
+              <Route
+                path={routes.app.unSubscribeUser}
+                component={Home}
+              />
+              <Route path={routes.app.categories()} component={Categories} />
+              <Route path={routes.app.faqs} component={FAQs} />
+              <Route path={routes.app.support} component={Support} />
+            </Switch>
+          </div>
+          <Footer />
+          <div className="relative z-max">
+            {currentPath === routes.app.home && (
+              <>
                 <button
-                  onClick={handleOnSell}
-                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
-                  style={{
-                    transform: isExpanded
-                      ? lang === "ar"
-                        ? "translateY(-1px) translateX(-135px)"
-                        : "translateY(-1px) translateX(135px)"
-                      : "translateY(0,0)",
-                    transition: "transform 0.3s ease-in-out",
-                  }}
+                  onClick={toggleExpand}
+                  className={`fixed z-50 bottom-4 ${
+                    lang === "ar" ? "left-4" : "right-4"
+                  } bg-primary text-white font-semibold rounded-full w-12 h-12 flex items-center justify-center shadow-2xl transform transition-all duration-300 ease-in-out md:hidden ${
+                    isExpanded
+                      ? "rotate-45 bg-primary-dark"
+                      : "rotate-0 bg-primary"
+                  }`}
                 >
-                  {selectedContent[localizationKeys.createAuction]}
+                  <span
+                    className="text-2xl font-bold transform transition-transform duration-300 ease-in-out"
+                    style={{
+                      transform: isExpanded ? "rotate(135deg)" : "rotate(0)",
+                    }}
+                  >
+                    <FaPlus />
+                  </span>
                 </button>
-                <button
-                  onClick={handleListProduct}
-                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
-                  style={{
-                    transform: isExpanded
-                      ? lang === "ar"
-                        ? "translateY(-60px) translateX(-0)"
-                        : "translateY(-60px) translateX(0)"
-                      : "translateY(0,0)",
-                    transition: "transform 0.3s ease-in-out",
-                  }}
+
+                <div
+                  className={`fixed z-50 ${
+                    lang === "ar" ? "left-4" : "right-4"
+                  } transition-all duration-300 ease-in-out md:hidden ${
+                    isExpanded
+                      ? "bottom-20 opacity-100"
+                      : "bottom-4 opacity-0 pointer-events-none"
+                  }`}
                 >
-                  {selectedContent[localizationKeys.listProduct]}
-                </button>
-              </div>
-            </>
-          )}
+                  <button
+                    onClick={handleOnSell}
+                    className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
+                    style={{
+                      transform: isExpanded
+                        ? lang === "ar"
+                          ? "translateY(-1px) translateX(-135px)"
+                          : "translateY(-1px) translateX(135px)"
+                        : "translateY(0,0)",
+                      transition: "transform 0.3s ease-in-out",
+                    }}
+                  >
+                    {selectedContent[localizationKeys.createAuction]}
+                  </button>
+                  <button
+                    onClick={handleListProduct}
+                    className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
+                    style={{
+                      transform: isExpanded
+                        ? lang === "ar"
+                          ? "translateY(-60px) translateX(-0)"
+                          : "translateY(-60px) translateX(0)"
+                        : "translateY(0,0)",
+                      transition: "transform 0.3s ease-in-out",
+                    }}
+                  >
+                    {selectedContent[localizationKeys.listProduct]}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
+        <Win />
+        <AuthModel currentPAth={currentPath} />
+        <PaymentSucsessModel
+          open={
+            pathname.length === 1 ||
+            pathname.endsWith(`${routes.app.home}/paymentdetails`) ||
+            pathname.endsWith(`${routes.app.home}/payDeposite`) ||
+            pathname.endsWith(`${routes.app.home}/complete-pay`) ||
+            pathname.endsWith(`${routes.app.home}/buyNow`)
+              ? true
+              : false
+          }
+        />
       </SocketProvider>
     </div>
   );

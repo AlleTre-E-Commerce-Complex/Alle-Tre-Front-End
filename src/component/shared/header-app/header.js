@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/ALLETRE LOGO-03-01.svg";
 import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/ALLETRE LOGO-03-02.svg";
@@ -31,14 +31,14 @@ import useAxios from "hooks/use-axios";
 import { FaPlus } from "react-icons/fa6";
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
-const Header = ({ SetSid, setSelectedType }) => {
+const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
-  const [isDropdownOpen, setisDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const [notificationData, setNotificationData] = useState(null);
   const [serchShow, setSerchShow] = useState(false);
   const [isListing, setIsListing] = useState(false);
@@ -46,9 +46,7 @@ const Header = ({ SetSid, setSelectedType }) => {
   const { run } = useAxios();
   const { user } = useAuthState();
   const [name, setTitle] = useFilter("title", "");
-  const [selectedOption, setSelectedOption] = useState(
-    selectedContent[localizationKeys.type]
-  );
+  const [selectedOption, setSelectedOption] = useState(selectedContent[localizationKeys.all]);
 
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
@@ -60,7 +58,7 @@ const Header = ({ SetSid, setSelectedType }) => {
   const [showIcon, setShowIcon] = useState(true);
 
   useEffect(() => {
-    setSelectedOption(selectedContent[localizationKeys.view]);
+    setSelectedOption(selectedContent[localizationKeys.all]);
   }, [selectedContent, localizationKeys]);
 
   // Show the AllatreLogo after a delay
@@ -73,7 +71,7 @@ const Header = ({ SetSid, setSelectedType }) => {
   }, []);
 
   const toggleDropdown = () => {
-    setisDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen(!isDropdownOpen);
   };
   async function getNotificationCount() {
     try {
@@ -86,14 +84,21 @@ const Header = ({ SetSid, setSelectedType }) => {
     }
   }
   const handleTypeChange = (type) => {
+    switch (type) {
+      case "auction":
+        setSelectedOption(selectedContent[localizationKeys.viewAuction]);
+        break;
+      case "products":
+        setSelectedOption(selectedContent[localizationKeys.viewProducts]);
+        break;
+      case "all":
+        setSelectedOption(selectedContent[localizationKeys.viewAll]);
+        break;
+      default:
+        break;
+    }
     setSelectedType(type);
-    setSelectedOption(
-      type === "auction"
-        ? selectedContent[localizationKeys.auction]
-        : type === "products"
-        ? selectedContent[localizationKeys.products]
-        : selectedContent[localizationKeys.all]
-    );
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -296,8 +301,7 @@ const Header = ({ SetSid, setSelectedType }) => {
     }
   };
   const handleOnSell = () => {
-    setisDropdownOpen(false);
-
+    setIsDropdownOpen(false);
     localStorage.removeItem("auctionId");
     dispatch(productDetails({ auctionId: null }));
 
@@ -319,7 +323,7 @@ const Header = ({ SetSid, setSelectedType }) => {
   // useEffect(() => {
   //   const handleClickOutside = (event) => {
   //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       setisDropdownOpen(false); // Close dropdown
+  //       setIsDropdownOpen(false); // Close dropdown
   //     }
   //   };
 
@@ -331,7 +335,7 @@ const Header = ({ SetSid, setSelectedType }) => {
   // }, []);
 
   const handleListProduct = () => {
-    setisDropdownOpen(false);
+    setIsDropdownOpen(false);
     if (user) {
       const hasCompletedProfile = window.localStorage.getItem(
         "hasCompletedProfile"
@@ -401,6 +405,53 @@ const Header = ({ SetSid, setSelectedType }) => {
     logout();
   };
 
+  const dropdownRef = useRef(null);
+  const sellDropdownRef = useRef(null);
+  const typeDropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleSellDropdownClickOutside = (event) => {
+      if (sellDropdownRef.current && !sellDropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleSellDropdownClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleSellDropdownClickOutside);
+    };
+  }, []);
+
+  const handleTypeDropdownClick = (e) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    const handleTypeDropdownClickOutside = (event) => {
+      if (typeDropdownRef.current && !typeDropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleTypeDropdownClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleTypeDropdownClickOutside);
+    };
+  }, []);
   return (
     <div className="w-full fixed top-0 z-50 bg-white/90 backdrop-blur-md">
       <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4 w-full px-4 md:px-6 lg:px-8">
@@ -515,7 +566,7 @@ const Header = ({ SetSid, setSelectedType }) => {
             <div className="my-auto ">
               <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600 w-[120px] h-[48px] flex items-center justify-center " />
             </div>
-            <div className="relative inline-block text-left">
+            <div className="relative inline-block text-left" ref={sellDropdownRef}>
               <div>
                 <button
                   type="button"
@@ -603,6 +654,26 @@ const Header = ({ SetSid, setSelectedType }) => {
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
         <div className="py-[6px] flex gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 md:px-6 lg:px-8">
+          <button
+            onClick={onFilterClick}
+            className="lg:hidden text-primary rounded-full flex items-center justify-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-primary" 
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+              />
+            </svg>
+          </button>
+
           <Input
             className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input 
              ltr:font-serifEN rtl:font-serifAR 
@@ -615,13 +686,13 @@ const Header = ({ SetSid, setSelectedType }) => {
           />
 
           {currentPath === routes.app.home && (
-            <div className="relative ">
+            <div className="relative" ref={typeDropdownRef}>
               <button
                 className="bg-primary hover:bg-primary-dark text-white rounded-lg 
              w-[90px] h-[48px] sm:w-[110px] sm:h-[48px] md:w-[160px] xs:h-[48px]
              flex items-center justify-between px-4 py-2 text-md font-medium 
              transition-all duration-300 shadow-md"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={handleTypeDropdownClick}
               >
                 <span className="flex-1 text-center ">{selectedOption}</span>
 
@@ -640,12 +711,9 @@ const Header = ({ SetSid, setSelectedType }) => {
                     <li>
                       <button
                         className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption === "Auction" ? "bg-gray-med" : ""
+                          selectedOption === selectedContent[localizationKeys.viewAuction] ? "bg-gray-med" : ""
                         }`}
-                        onClick={() => {
-                          handleTypeChange("auction");
-                          setIsOpen(false);
-                        }}
+                        onClick={() => handleTypeChange("auction")}
                       >
                         {selectedContent[localizationKeys.viewAuction]}
                       </button>
@@ -653,12 +721,9 @@ const Header = ({ SetSid, setSelectedType }) => {
                     <li>
                       <button
                         className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption === "Products" ? "bg-gray-med" : ""
+                          selectedOption === selectedContent[localizationKeys.viewProducts] ? "bg-gray-med" : ""
                         }`}
-                        onClick={() => {
-                          handleTypeChange("products");
-                          setIsOpen(false);
-                        }}
+                        onClick={() => handleTypeChange("products")}
                       >
                         {selectedContent[localizationKeys.viewProducts]}
                       </button>
@@ -666,12 +731,9 @@ const Header = ({ SetSid, setSelectedType }) => {
                     <li>
                       <button
                         className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption === "All" ? "bg-gray-med" : ""
+                          selectedOption === selectedContent[localizationKeys.viewAll] ? "bg-gray-med" : ""
                         }`}
-                        onClick={() => {
-                          handleTypeChange("all");
-                          setIsOpen(false);
-                        }}
+                        onClick={() => handleTypeChange("all")}
                       >
                         {selectedContent[localizationKeys.viewAll]}
                       </button>

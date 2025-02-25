@@ -46,7 +46,8 @@ const en = {
   [localizationKeys.trendingAuctions]: "Trending Auctions",
   [localizationKeys.type]: "Type",
   [localizationKeys.filterOptions]: "Filter options",
-  [localizationKeys.selectOptions]: "Select Options",
+  [localizationKeys.filter]: "Filter",
+  [localizationKeys.selectOptions]: "Select options",
   [localizationKeys.clearAll]: "Clear All",
   [localizationKeys.subscribedSuccessfully]: "subscribed successfully",
   [localizationKeys.unsubscribedSuccessfully]:
