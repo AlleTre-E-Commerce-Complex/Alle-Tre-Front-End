@@ -35,6 +35,9 @@ import ProductCard from "component/home-components/ProductCard";
 import ProductCardList from "component/home-components/products-card-list";
 import { ReactComponent as NoAuctionImg } from "../../../../src/assets/images/no auction new.svg";
 import { ReactComponent as NoProductImg } from "../../../../src/assets/images/no products new.svg";
+import queryString from "query-string";
+import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
+
 const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -73,14 +76,90 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     localStorage.setItem("isGrid", JSON.stringify(isGrid));
   }, [isGrid]);
 
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams();
-  //   queryParams.set("page", currentPage);
-  //   queryParams.set("perPage", itemsPerPage);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    let page = queryParams.get("page") || DEFAULT_PAGE;
+    let perPage = queryParams.get("perPage") || getDefaultPerPage();
 
-  //   const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
-  //   history.pushState({}, "", newUrl);
-  // }, [currentPage, itemsPerPage]);
+    // Set default values if not present
+    if (!queryParams.has("page") || !queryParams.has("perPage")) {
+      queryParams.set("page", page);
+      queryParams.set("perPage", perPage);
+      history.replace({ search: queryParams.toString() });
+      return; // Let the URL change trigger the fetch
+    }
+
+    // Get all filter parameters from URL
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+    const queryStr = queryString.stringify(parsed, { arrayFormat: "bracket" });
+
+    // Fetch auctions
+    if (!user) {
+      runMainAuctions(
+        axios
+          .get(`${api.app.auctions.getMain}?${queryStr}`)
+          .then((res) => {
+            setMainAuctions(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+      );
+      runSponsoredAuctions(
+        axios.get(`${api.app.auctions.sponsored}`).then((res) => {
+          SetSponsoredAuctions(res?.data?.data);
+        })
+      );
+    } else {
+      runMainAuctions(
+        authAxios
+          .get(`${api.app.auctions.getMain}?${queryStr}`)
+          .then((res) => {
+            setMainAuctions(res?.data?.data);
+            setTotalPages(res?.data?.pagination?.totalPages);
+          })
+      );
+      runSponsoredAuctions(
+        authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
+          SetSponsoredAuctions(res?.data?.data);
+        })
+      );
+    }
+  }, [search, user]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    let page = queryParams.get("page") || DEFAULT_PAGE;
+    let perPage = queryParams.get("perPage") || getDefaultPerPage();
+
+    if (!queryParams.has("page") || !queryParams.has("perPage")) {
+      queryParams.set("page", page);
+      queryParams.set("perPage", perPage);
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+    const queryStr = queryString.stringify(parsed, { arrayFormat: "bracket" });
+
+    if (!user) {
+      runListedProduct(
+        axios
+          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+          .then((res) => {
+            setListedProducts(res?.data?.data);
+            setTotalPages(res?.data?.totalPages);
+          })
+      );
+    } else {
+      runListedProduct(
+        authAxios
+          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+          .then((res) => {
+            setListedProducts(res?.data?.data);
+            setTotalPages(res?.data?.totalPages);
+          })
+      );
+    }
+  }, [search, user]);
 
   useEffect(() => {
     if (!socket) return;
@@ -144,89 +223,6 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       dispatch(welcomeBonus(false));
     }
   }, [isWelcomeBonus]);
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(search);
-    const page = queryParams.get("page");
-    const perPage = queryParams.get("perPage");
-
-    if (page && perPage) {
-      if (!user) {
-        runMainAuctions(
-          axios
-            .get(`${api.app.auctions.getMain}?page=${page}&perPage=${perPage}`)
-            .then((res) => {
-              setMainAuctions(res?.data?.data);
-              setTotalPages(res?.data?.pagination?.totalPages);
-            })
-        );
-        runSponsoredAuctions(
-          axios.get(`${api.app.auctions.sponsored}`).then((res) => {
-            SetSponsoredAuctions(res?.data?.data);
-          })
-        );
-      } else {
-        runMainAuctions(
-          authAxios
-            .get(`${api.app.auctions.getMain}?page=${page}&perPage=${perPage}`)
-            .then((res) => {
-              setMainAuctions(res?.data?.data);
-              setTotalPages(res?.data?.pagination?.totalPages);
-            })
-        );
-        runSponsoredAuctions(
-          authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
-            SetSponsoredAuctions(res?.data?.data);
-          })
-        );
-      }
-    }
-  }, [search, user]);
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(search);
-    const pageParam = queryParams.get("page");
-    const perPageParam = queryParams.get("perPage");
-
-    if (pageParam && perPageParam) {
-      if (user) {
-        runListedProduct(
-          axios
-            .get(
-              `${api.app.productListing.getAllListedProducts}?page=${pageParam}&perPage=${perPageParam}`
-            )
-            .then((res) => {
-              setListedProducts(res?.data?.data);
-              setTotalPages(res?.data?.totalPages);
-            })
-        );
-      } else {
-        runListedProduct(
-          axios
-            .get(
-              `${api.app.productListing.getAllListedProducts}?page=${pageParam}&perPage=${perPageParam}`
-            )
-            .then((res) => {
-              setListedProducts(res?.data?.data);
-              setTotalPages(res?.data?.totalPages);
-            })
-        );
-      }
-    }
-  }, [page, search, user]);
-
-  // const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
-  //   "hasCompletedProfile",
-  //   ""
-  // );
-
-  // const handelCreatOuction = () => {
-  //   if (user) {
-  //     if (JSON.parse(hasCompletedProfile)) {
-  //       history.push(routes.app.createAuction.productDetails);
-  //     } else setOpen(true);
-  //   } else dispatch(Open());
-  // };
 
   return (
     <div className="relative">
@@ -345,7 +341,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}
@@ -386,7 +382,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}
@@ -432,7 +428,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}
@@ -478,7 +474,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}
@@ -522,7 +518,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}
@@ -563,7 +559,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}
@@ -598,7 +594,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}
@@ -633,7 +629,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
                               totalPages={totalPages}
-                              perPage={28}
+                              perPage={getDefaultPerPage()}
                               myRef={myRef}
                             />
                           ) : null}

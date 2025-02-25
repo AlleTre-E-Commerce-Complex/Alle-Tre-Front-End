@@ -170,6 +170,6 @@ export const allCustomFileOptions = {
   condition: [
     { key: "new", text: "New | جديد", value: "new" },
     { key: "used", text: "Used | مستعمل", value: "used" },
-    { key: "refurbished", text: "Refurbished | مجدد", value: "refurbished" },
+    // { key: "refurbished", text: "Refurbished | مجدد", value: "refurbished" },
   ],
 };

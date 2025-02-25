@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import BlockedModal from "component/shared/UserBlockedModal/BlockedModal";
 import { HelmetProvider } from "react-helmet-async";
 import { initGA, logPageView } from "./utils/analytics";
+import { getDefaultPaginationString } from "./constants/pagination";
 
 function App() {
   const location = useLocation();
@@ -46,7 +47,7 @@ function App() {
             path={routes.auth.forgetpass.default}
             component={CredentialsuUpdateLayout}
           />
-          <Redirect to={`${routes.app.home}?page=1&perPage=28`} />
+          <Redirect to={`${routes.app.home}?${getDefaultPaginationString()}`} />
         </Switch>
         {/* Blocked Modal */}
         <BlockedModal />

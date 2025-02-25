@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import localizationKeys from "../../../localization/localization-keys";
 // import { io } from "socket.io-client";
 import { useAuthState } from "context/auth-context";
+import { getDefaultPaginationString } from "../../../constants/pagination";
 const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
@@ -83,7 +84,7 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
               : selectedContent[localizationKeys.viewAuction]}
           </button>
           <button
-            onClick={() => history.push(`${routes.app.home}?page=1&perPage=28`)}
+            onClick={() => history.push(`${routes.app.home}?${getDefaultPaginationString()}`)}
             className="bg-primary text-white w-[136px] h-[48px] rounded-lg text-base font-normal"
           >
             {selectedContent[localizationKeys.backToHome]}

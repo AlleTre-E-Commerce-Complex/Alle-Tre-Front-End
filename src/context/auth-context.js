@@ -4,6 +4,7 @@ import LodingTestAllatre from "../component/shared/lotties-file/loding-test-alla
 import useAxios from "../hooks/use-axios";
 import routes from "../routes";
 import Auth from "../utils/auth";
+import { getDefaultPaginationString } from "../constants/pagination";
 
 const AuthContext = React.createContext();
 
@@ -41,14 +42,11 @@ function AuthProvider({ children }) {
         const user = await Auth.getUser();
         if (!user) {
           if (!WHITE_LIST.some((route) => pathname.startsWith(route))) {
-            // const redirectPath = window.location.pathname.includes("details")
-            //   ? window.location.pathname
-            //   : `${routes.app.home}?${searchParams.toString()}&page=1&perPage=28`;
-            // history.push(redirectPath);
+ 
             if (!searchParams.includes("page") && !searchParams.includes("perPage")) {
               const redirectPath = window.location.pathname.includes("details")
                 ? window.location.pathname
-                : `${routes.app.home}?page=1&perPage=28`;
+                : `${routes.app.home}?${getDefaultPaginationString()}`;
               history.push(redirectPath);
             } else {
               history.push(window.location.pathname + window.location.search);
