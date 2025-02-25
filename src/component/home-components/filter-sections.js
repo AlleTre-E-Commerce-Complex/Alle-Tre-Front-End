@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useGetALLBrand from "../../hooks/use-get-all-brands";
 import useGetAllCountries from "../../hooks/use-get-all-countries";
 import useGetGatogry from "../../hooks/use-get-category";
@@ -12,7 +12,13 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { motion } from "framer-motion";
 import ShowFilterSections from "./show-filter-sections";
 
-const FilterSections = ({ myRef, hiddenGatogry, categoryId }) => {
+const FilterSections = ({
+  myRef,
+  hiddenGatogry,
+  categoryId,
+  isFullPage,
+  onClose,
+}) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { GatogryOptions } = useGetGatogry();
@@ -37,15 +43,70 @@ const FilterSections = ({ myRef, hiddenGatogry, categoryId }) => {
     );
   };
 
+  const overlayClasses = isFullPage
+    ? "fixed inset-0 z-50 bg-white overflow-y-auto px-4"
+    : "relative hidden lg:block bg-[#f5f5f5] flex flex-col gap-6 p-4 rounded-xl shadow-xl transition-shadow duration-300 max-w-full mx-auto w-full lg:max-w-xs border border-gray-200 h-full";
+
+  useEffect(() => {
+    if (isFullPage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isFullPage]);
+
   return (
-    <div className="relative hidden lg:block bg-[#f5f5f5] flex flex-col gap-6 p-4 rounded-xl shadow-xl transition-shadow duration-300 max-w-full mx-auto w-full lg:max-w-xs border border-gray-200 h-full">
-      <div className={`absolute top-4 ${lang === "ar" ? "left-1" : "right-1"}`}>
-        <ShowFilterSections />
+    <motion.div
+      initial={isFullPage ? { opacity: 0, y: 20 } : false}
+      animate={isFullPage ? { opacity: 1, y: 0 } : false}
+      exit={isFullPage ? { opacity: 0, y: 20 } : false}
+      transition={{ duration: 0.3 }}
+      className={overlayClasses}
+    >
+      <div className="relative flex items-center justify-between p-4">
+        <h2 className="text-xl font-bold text-gray-500">
+          {selectedContent[localizationKeys.filterOptions]}
+        </h2>
+        {isFullPage && (
+          <div className="flex items-center justify-between">
+            <div className={`${lang === "ar" ? "ml-2" : "mr-2"}`}>
+              <ShowFilterSections />
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={onClose}
+                className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary-dark transition rounded-md"
+              >
+                Apply
+              </button>
+              <button
+                onClick={onClose}
+                className="p-2 text-gray-500 hover:text-primary transition rounded-full hover:bg-gray-100"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
-      <h2 className="text-xl font-bold text-start text-gray-500 mb-3">
-        {selectedContent[localizationKeys.filterOptions]}
-      </h2>
       {/* Categories Section */}
       {!hiddenGatogry && (
         <div className="mb-3">
@@ -229,13 +290,13 @@ const FilterSections = ({ myRef, hiddenGatogry, categoryId }) => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.1, ease: "linear" }}
-            className="mt-3 "
+            className={`mt-3 ${isFullPage ? 'w-full max-w-3xl mx-auto' : ''}`}
           >
-            <RangeInput className="" myRef={myRef} />
+            <RangeInput className="" myRef={myRef} isFullPage={isFullPage} />
           </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

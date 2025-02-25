@@ -47,6 +47,7 @@ const ar = {
   [localizationKeys.type]: "عرض",
   [localizationKeys.filterOptions]: "خيارات الفلتر",
   [localizationKeys.selectOptions]: "حدد الخيارات",
+  [localizationKeys.filter]: "تصفية",
   [localizationKeys.clearAll]: "مسح الكل",
   [localizationKeys.subscribedSuccessfully]: "تم الاشتراك بنجاح",
   [localizationKeys.unsubscribedSuccessfully]: "لقد تم إلغاء اشتراكك بنجاح",

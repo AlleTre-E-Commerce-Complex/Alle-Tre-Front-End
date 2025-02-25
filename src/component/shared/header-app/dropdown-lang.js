@@ -3,23 +3,39 @@ import En from "../../../../src/assets/icons/En_icon.png";
 import Ar from "../../../../src/assets/icons/Ar_icon.png";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const DropdownLang = ({ className }) => {
   const [lang, setLang] = useLanguage("");
   const [isOpen, setIsOpen] = useState(false);
   const selectedContent = content[lang];
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
     <div
       dir="ltr"
+      ref={dropdownRef}
       className={`relative flex items-center justify-center ${className}`}
+      onClick={toggleDropdown}
+      style={{ cursor: 'pointer' }}
     >
       <div
-        className="flex items-center justify-center cursor-pointer"
-        onClick={toggleDropdown}
+        className="flex items-center justify-center"
       >
         <img
           src={lang === "en" ? En : Ar}

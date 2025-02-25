@@ -6,7 +6,7 @@ import "./range-input.css";
 import useFilter from "../../hooks/use-filter";
 import { useDebouncedCallback } from "use-debounce";
 
-const RangeInput = ({ title, myRef }) => {
+const RangeInput = ({ title, myRef, isFullPage }) => {
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(1000000);
   const [PriceFrom, setPriceFrom] = useFilter("priceFrom", "");
@@ -30,7 +30,7 @@ const RangeInput = ({ title, myRef }) => {
   };
 
   return (
-    <div className="group w-full max-w-xs p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className={`group w-full ${!isFullPage ? 'max-w-xs' : ''} p-4 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300`}>
       {/* Title */}
       <div className="flex justify-between border-b pb-3 border-gray-200">
         <h1 className="text-gray-700 text-lg font-semibold">{title}</h1>
