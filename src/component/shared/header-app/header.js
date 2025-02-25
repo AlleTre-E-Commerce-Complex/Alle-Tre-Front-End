@@ -29,6 +29,7 @@ import { MdOutlineNotifications } from "react-icons/md";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
 import { FaPlus } from "react-icons/fa6";
+import { DEFAULT_PAGE, getDefaultPerPage, getDefaultPaginationString } from "../../../constants/pagination";
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
 const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
@@ -284,7 +285,11 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
 
   const debounced = useDebouncedCallback((value) => {
     setTitle(value);
-    history.push(`${routes.app.home}?page=1&perPage=28&title=${value}`);
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", DEFAULT_PAGE);
+    queryParams.set("perPage", getDefaultPerPage());
+    queryParams.set("title", value);
+    history.push(`${routes.app.home}?${queryParams.toString()}`);
     window.scrollTo({
       behavior: "smooth",
       top: 600,
@@ -358,7 +363,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
     } else dispatch(Open());
   };
   const handelHome = () => {
-    history.push(`${routes.app.home}?page=1&perPage=28`);
+    history.push(`${routes.app.home}?${getDefaultPaginationString()}`);
   };
   const handelmyAuctions = () => {
     if (user) {
@@ -400,7 +405,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
 
   const handleLogout = () => {
     setLogoutModalOpen(false);
-    // history.push(`${routes.app.home}?page=1&perPage=28`)
+
     socket.close();
     logout();
   };
@@ -458,7 +463,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
             className="cursor-pointer hidden md:block"
-            onClick={() => history.push(`${routes.app.home}?page=1&perPage=28`)}
+            onClick={() => history.push(`${routes.app.home}?${getDefaultPaginationString()}`)}
           />
         </div>
         <div className="flex items-center space-x-3 md:hidden ">
@@ -470,7 +475,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
 
           <RiHome2Line
             onClick={() => {
-              history.push(`${routes.app.home}?page=1&perPage=28`);
+              history.push(`${routes.app.home}?${getDefaultPaginationString()}`);
             }}
             className="text-primary cursor-pointer"
             size={25}
@@ -489,7 +494,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
                 }}
                 className="cursor-pointer w-[100px] block md:hidden text-primary"
                 onClick={() =>
-                  history.push(`${routes.app.home}?page=1&perPage=28`)
+                  history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
                 }
               />
             )}

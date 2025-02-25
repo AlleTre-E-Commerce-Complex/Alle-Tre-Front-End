@@ -26,6 +26,19 @@ import SilmilarProductsSlider from "../../../component/auctions-details-componen
 import useLocalStorage from "../../../hooks/use-localstorage";
 import { Helmet } from "react-helmet-async";
 
+// Move getShareImage function outside of component
+const getShareImage = (imageUrl) => {
+  if (!imageUrl) {
+    return "https://www.alletre.com/logo512.png";
+  }
+  // Remove any query parameters for cleaner URL
+  const baseUrl = imageUrl.split('?')[0];
+  // Add back only the necessary Firebase parameters
+  const firebaseParams = imageUrl.includes('firebase') ? 
+    `?alt=media&token=${imageUrl.split('token=')[1]}` : '';
+  return baseUrl + firebaseParams;
+};
+
 const HomeAuctionDetails = () => {
   const { user } = useAuthState();
   const [lang] = useLanguage();
@@ -66,9 +79,9 @@ const HomeAuctionDetails = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  const imageUrl = auctionsDetailsData?.product?.images?.[0]?.imageLink;
-  console.log("Image URL for sharing:", imageUrl);
-  console.log("Image URL for sharing:encoded", encodeURI(imageUrl));
+  // Get the main image URL for sharing
+  const mainImageUrl = auctionsDetailsData?.product?.images?.[0]?.imageLink;
+  const shareImageUrl = getShareImage(mainImageUrl);
 
   // Function to determine image type from URL
   const getImageType = (url) => {
@@ -80,34 +93,22 @@ const HomeAuctionDetails = () => {
     return 'image/jpeg'; // default for unknown
   };
 
-  const getShareImage = () => {
-    if (!imageUrl) {
-      return "https://www.alletre.com/logo512.png";
-    }
-    // Remove any query parameters for cleaner URL
-    const baseUrl = imageUrl.split('?')[0];
-    // Add back only the necessary Firebase parameters
-    const firebaseParams = imageUrl.includes('firebase') ? 
-      `?alt=media&token=${imageUrl.split('token=')[1]}` : '';
-    return encodeURI(baseUrl + firebaseParams);
-  };
-
   return (
     <div>
-      <Helmet>
+      <Helmet prioritizeSeoTags={true}>
         {/* Base tags */}
         <title>{auctionsDetailsData?.product?.title || "Auction Details - Alletre"}</title>
         <meta name="description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
         
-        {/* Open Graph / Facebook */}
+        {/* Open Graph / Facebook - Explicitly provided first */}
+        <meta property="og:image" content={shareImageUrl} key="og:image" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Alletre" />
         <meta property="og:url" content={`https://www.alletre.com${pathname}`} />
         <meta property="og:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
         <meta property="og:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
-        <meta property="og:image" content={getShareImage()} />
-        <meta property="og:image:secure_url" content={getShareImage()} />
-        <meta property="og:image:type" content={getImageType(imageUrl)} />
+        <meta property="og:image:secure_url" content={shareImageUrl} />
+        <meta property="og:image:type" content={getImageType(mainImageUrl)} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
@@ -119,7 +120,7 @@ const HomeAuctionDetails = () => {
         <meta name="twitter:url" content={`https://www.alletre.com${pathname}`} />
         <meta name="twitter:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
         <meta name="twitter:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
-        <meta name="twitter:image" content={getShareImage()} />
+        <meta name="twitter:image" content={shareImageUrl} />
         <meta name="twitter:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
 
         {/* Additional SEO */}
