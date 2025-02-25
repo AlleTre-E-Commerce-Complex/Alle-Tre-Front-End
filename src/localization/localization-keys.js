@@ -34,7 +34,7 @@ const localizationKeys = {
   securityDeposit: "securityDeposit",
   yourWalletBalanceIsAED: "yourWalletBalanceIsAED",
   payAED: "PayAED",
-  fromWallet:"fromWallet",
+  fromWallet: "fromWallet",
   // home
   changeStatus: "changeStatus",
   viewContactDetails: "viewContactDetails",
@@ -137,6 +137,7 @@ const localizationKeys = {
   timing: "Timing",
   selectTheDeliveryType: "selectTheDeliveryType",
   sellerAddress: "sellerAddress",
+  apply: "apply",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",

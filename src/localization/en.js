@@ -153,6 +153,7 @@ const en = {
   [localizationKeys.timing]: "Timing",
   [localizationKeys.selectTheDeliveryType]: "Select the delivery type",
   [localizationKeys.sellerAddress]: "Seller address",
+  [localizationKeys.apply]: "Apply",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
