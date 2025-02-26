@@ -91,7 +91,29 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
 
     // Get all filter parameters from URL
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    const queryStr = queryString.stringify(parsed, { arrayFormat: "bracket" });
+    
+    // Prepare filter parameters to match backend DTO
+    const filterParams = {
+      page: Number(parsed.page || DEFAULT_PAGE),
+      perPage: Number(parsed.perPage || getDefaultPerPage()),
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined
+    };
+
+    // Remove undefined values
+    Object.keys(filterParams).forEach(key => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
+
+    const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
+    console.log("Sending filters to backend:", filterParams); // For debugging
 
     // Fetch auctions
     if (!user) {
@@ -138,7 +160,29 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     }
 
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    const queryStr = queryString.stringify(parsed, { arrayFormat: "bracket" });
+    
+    // Prepare filter parameters to match backend DTO
+    const filterParams = {
+      page: Number(parsed.page || DEFAULT_PAGE),
+      perPage: Number(parsed.perPage || getDefaultPerPage()),
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined
+    };
+
+    // Remove undefined values
+    Object.keys(filterParams).forEach(key => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
+
+    const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
+    console.log("Sending filters to backend:", filterParams); // For debugging
 
     if (!user) {
       runListedProduct(
@@ -151,7 +195,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       );
     } else {
       runListedProduct(
-        authAxios
+        axios
           .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
           .then((res) => {
             setListedProducts(res?.data?.data);

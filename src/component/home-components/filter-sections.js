@@ -22,8 +22,8 @@ const FilterSections = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { GatogryOptions } = useGetGatogry();
-  const { NotAllBranOptions } = useGetBrand(categoryId);
-  const { AllBranOptions } = useGetALLBrand();
+  const { brandOptions } = useGetBrand(categoryId);
+  const { allBrands } = useGetALLBrand();
   const { AllCountriesOptions } = useGetAllCountries();
 
   const [expandedSections, setExpandedSections] = useState({});
@@ -107,153 +107,51 @@ const FilterSections = ({
         )}
       </div>
 
-      {/* Categories Section */}
-      {!hiddenGatogry && (
-        <div className="mb-3">
-          <div
-            onClick={() => toggleSection("categories")}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary
-            hover:shadow-lg flex justify-between items-center"
-            // className="cursor-pointer p-3 border border-gray-veryLight rounded-lg shadow-md transition-all duration-300 ease-in-out
-            // bg-gradient-to-r from-[#7d7d7d] via-[#a4a4a4] to-[#c1c1c1] text-black hover:bg-gradient-to-r hover:from-[#252525] hover:via-[#4c4c4c] hover:to-[#7d7d7d] hover:text-white
-            // hover:opacity-90 hover:shadow-xl transform hover:scale-105
-            // flex justify-between items-center"
-          >
-            <h3 className="font-medium text-lg">
-              {selectedContent[localizationKeys.categories]}
-            </h3>
-            {renderArrowIcon("categories")}
-          </div>
-
-          {expandedSections.categories && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.1, ease: "linear" }}
-              className="mt-2 p-2 rounded-lg bg-white shadow-sm"
+      {/* Filter Sections */}
+      <div className="flex flex-col gap-4">
+        {/* Categories Section */}
+        {!hiddenGatogry && (
+          <div>
+            <div
+              onClick={() => toggleSection("categories")}
+              className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
             >
-              <MultiButtonFilter
-                seeAll={GatogryOptions?.length}
-                name="categories"
-                values={GatogryOptions?.map((CategoryName) => ({
-                  name: CategoryName?.text,
-                  value: `${CategoryName?.value}`,
-                })).filter(Boolean)}
-                myRef={myRef}
-              />
-            </motion.div>
-          )}
-        </div>
-      )}
-
-      {/* Brands Section */}
-      <div className="mb-3">
-        <div
-          onClick={() => toggleSection("brands")}
-          className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary
-            hover:shadow-lg flex justify-between items-center"
-        >
-          <h3 className="font-medium text-lg">
-            {selectedContent[localizationKeys.brand]}
-          </h3>
-          {renderArrowIcon("brands")}
-        </div>
-
-        {expandedSections.brands && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.1, ease: "linear" }}
-            className="mt-3 p-4 rounded-lg bg-white shadow-sm"
-          >
-            {categoryId ? (
-              NotAllBranOptions?.length > 0 && (
+              <h3 className="font-medium text-lg">
+                {selectedContent[localizationKeys.category]}
+              </h3>
+              {renderArrowIcon("categories")}
+            </div>
+            {expandedSections.categories && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.1, ease: "linear" }}
+                className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+              >
                 <MultiButtonFilter
-                  name="brands"
-                  values={NotAllBranOptions?.map((brandName) => ({
-                    name: brandName?.text,
-                    value: `${brandName?.value}`,
-                  })).filter(Boolean)}
+                  values={GatogryOptions}
+                  name="categories"
+                  isMultiSelect={true}
                   myRef={myRef}
                 />
-              )
-            ) : (
-              <MultiButtonFilter
-                name="brands"
-                values={AllBranOptions?.map((brandName) => ({
-                  name: brandName?.text,
-                  value: `${brandName?.value}`,
-                })).filter(Boolean)}
-                myRef={myRef}
-              />
+              </motion.div>
             )}
-          </motion.div>
-        )}
-      </div>
-
-      {/* Other Sections */}
-      {[
-        {
-          key: "sellingType",
-          title: selectedContent[localizationKeys.sellingType],
-          values: [
-            {
-              name: selectedContent[localizationKeys.auction],
-              value: "Auction",
-            },
-            {
-              name: selectedContent[localizationKeys.buyNow],
-              value: "Buy_Now",
-            },
-          ],
-        },
-        {
-          key: "auctionState",
-          title: selectedContent[localizationKeys.auctionState],
-          values: [
-            {
-              name: selectedContent[localizationKeys.comingSoon],
-              value: "IN_SCHEDULED",
-            },
-            {
-              name: selectedContent[localizationKeys.liveAuction],
-              value: "ACTIVE",
-            },
-          ],
-        },
-        {
-          key: "location",
-          title: selectedContent[localizationKeys.location],
-          values: AllCountriesOptions?.map((countryName) => ({
-            name: countryName?.text,
-            value: `${countryName?.value}`,
-          })).filter(Boolean),
-        },
-        {
-          key: "condition",
-          title: selectedContent[localizationKeys.condition],
-          values: [
-            { name: selectedContent[localizationKeys.new], value: "NEW" },
-            { name: selectedContent[localizationKeys.used], value: "USED" },
-            {
-              name: selectedContent[localizationKeys.openBox],
-              value: "OPEN_BOX",
-            },
-          ],
-        },
-      ].map(({ key, title, values }) => (
-        <div key={key} className="mb-3">
-          <div
-            onClick={() => toggleSection(key)}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary
-            hover:shadow-lg flex justify-between items-center"
-          >
-            <h3 className="font-medium text-lg">{title}</h3>
-            {renderArrowIcon(key)}
           </div>
-          {expandedSections[key] && (
+        )}
+
+        {/* Brands Section */}
+        <div>
+          <div
+            onClick={() => toggleSection("brands")}
+            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+          >
+            <h3 className="font-medium text-lg">
+              {selectedContent[localizationKeys.brand]}
+            </h3>
+            {renderArrowIcon("brands")}
+          </div>
+          {expandedSections.brands && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
@@ -262,39 +160,129 @@ const FilterSections = ({
               className="mt-3 p-4 rounded-lg bg-white shadow-sm"
             >
               <MultiButtonFilter
-                seeAll={values?.length}
-                name={key}
-                values={values}
+                values={categoryId ? brandOptions : allBrands}
+                name="brands"
+                isMultiSelect={true}
                 myRef={myRef}
               />
             </motion.div>
           )}
         </div>
-      ))}
 
-      {/* Price Range Section */}
-      <div>
-        <div
-          onClick={() => toggleSection("price")}
-          className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary
-            hover:shadow-lg flex justify-between items-center"
-        >
-          <h3 className="font-medium text-lg">
-            {selectedContent[localizationKeys.price]}
-          </h3>
-          {renderArrowIcon("price")}
-        </div>
-        {expandedSections.price && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.1, ease: "linear" }}
-            className={`mt-3 ${isFullPage ? 'w-full max-w-3xl mx-auto' : ''}`}
+        {/* Selling Type */}
+        <div className="mb-3">
+          <div
+            onClick={() => toggleSection("sellingType")}
+            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
           >
-            <RangeInput className="" myRef={myRef} isFullPage={isFullPage} />
-          </motion.div>
-        )}
+            <h3 className="font-medium text-lg">{selectedContent[localizationKeys.sellingType]}</h3>
+            {renderArrowIcon("sellingType")}
+          </div>
+          {expandedSections.sellingType && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.1, ease: "linear" }}
+              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+            >
+              <MultiButtonFilter
+                name="sellingType"
+                values={[
+                  { name: selectedContent[localizationKeys.auction], value: "Auction" },
+                  { name: selectedContent[localizationKeys.buyNow], value: "Buy_Now" }
+                ]}
+                isMultiSelect={false}
+                myRef={myRef}
+              />
+            </motion.div>
+          )}
+        </div>
+
+        {/* Auction Status */}
+        <div className="mb-3">
+          <div
+            onClick={() => toggleSection("auctionStatus")}
+            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+          >
+            <h3 className="font-medium text-lg">{selectedContent[localizationKeys.auctionState]}</h3>
+            {renderArrowIcon("auctionStatus")}
+          </div>
+          {expandedSections.auctionStatus && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.1, ease: "linear" }}
+              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+            >
+              <MultiButtonFilter
+                name="auctionStatus"
+                values={[
+                  { name: selectedContent[localizationKeys.comingSoon], value: "IN_SCHEDULED" },
+                  { name: selectedContent[localizationKeys.liveAuction], value: "ACTIVE" }
+                ]}
+                isMultiSelect={false}
+                myRef={myRef}
+              />
+            </motion.div>
+          )}
+        </div>
+
+        {/* Usage Status */}
+        <div className="mb-3">
+          <div
+            onClick={() => toggleSection("usageStatus")}
+            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+          >
+            <h3 className="font-medium text-lg">{selectedContent[localizationKeys.condition]}</h3>
+            {renderArrowIcon("usageStatus")}
+          </div>
+          {expandedSections.usageStatus && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.1, ease: "linear" }}
+              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+            >
+              <MultiButtonFilter
+                name="usageStatus"
+                values={[
+                  { name: selectedContent[localizationKeys.new], value: "NEW" },
+                  { name: selectedContent[localizationKeys.used], value: "USED" },
+                  { name: selectedContent[localizationKeys.openBox], value: "OPEN_BOX" }
+                ]}
+                isMultiSelect={false}
+                myRef={myRef}
+              />
+            </motion.div>
+          )}
+        </div>
+
+        {/* Price Range Section */}
+        <div>
+          <div
+            onClick={() => toggleSection("price")}
+            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+          >
+            <h3 className="font-medium text-lg">
+              {selectedContent[localizationKeys.price]}
+            </h3>
+            {renderArrowIcon("price")}
+          </div>
+          {expandedSections.price && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.1, ease: "linear" }}
+              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+            >
+              <RangeInput myRef={myRef} />
+            </motion.div>
+          )}
+        </div>
       </div>
     </motion.div>
   );
