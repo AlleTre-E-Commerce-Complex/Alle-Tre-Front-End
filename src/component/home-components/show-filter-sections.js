@@ -23,10 +23,6 @@ const ShowFilterSections = ({ category }) => {
   const usageStatusOptinal = [
     { name: selectedContent[localizationKeys.new], value: "NEW" },
     { name: selectedContent[localizationKeys.used], value: "USED" },
-    {
-      name: selectedContent[localizationKeys.openBox],
-      value: "OPEN_BOX",
-    },
   ];
 
   const [categories, setcategories] = useFilter("categories", []);

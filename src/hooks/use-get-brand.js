@@ -8,33 +8,31 @@ import { useAuthState } from "context/auth-context";
 const useGetBrand = (categoryId) => {
   const { user } = useAuthState();
   const [lang] = useLanguage();
-  const [NotAllBranOptions, setAllAllBranOptions] = React.useState([]);
+  const [brandOptions, setBrandOptions] = React.useState([]);
 
   const { run, isLoading, error, isError } = useAxios();
 
   useEffect(() => {
-    if (categoryId && user)
+    if (categoryId && user) {
       run(authAxios.get(api.app.brand.default(categoryId))).then(({ data }) => {
-        const AllBranOptions = data.data;
-        const options = [];
-
-        AllBranOptions.forEach((d) =>
-          options.push({
-            text: d?.name,
-            key: d?.id,
-            value: d.id,
-          })
-        );
-
-        setAllAllBranOptions(options);
+        const brands = data.data;
+        const options = brands
+          .filter(d => d?.name) // Filter out items without names
+          .map(d => ({
+            name: d.name,
+            key: d.id,
+            value: d.name // Use name for filtering since backend uses the brand field
+          }));
+        setBrandOptions(options);
       });
-  }, [categoryId, lang, run]);
+    }
+  }, [categoryId, lang, run, user]);
 
   return {
-    NotAllBranOptions,
-    loadingAllBranOptions: isLoading,
-    errorAllBranOptions: error,
-    isErrorAllBranOptions: isError,
+    brandOptions,
+    loadingBrands: isLoading,
+    errorBrands: error,
+    isErrorBrands: isError,
   };
 };
 

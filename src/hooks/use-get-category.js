@@ -18,6 +18,7 @@ const useGetGatogry = () => {
       GatogryOptions.sort((a, b) => a.id - b.id).forEach((d) => {
         if (d.status === true) {
           options.push({
+            name: lang === "en" ? d?.nameEn : d?.nameAr,
             text: lang === "en" ? d?.nameEn : d?.nameAr,
             key: d?.id,
             value: d.id,

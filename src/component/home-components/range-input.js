@@ -7,26 +7,37 @@ import useFilter from "../../hooks/use-filter";
 import { useDebouncedCallback } from "use-debounce";
 
 const RangeInput = ({ title, myRef, isFullPage }) => {
-  const [minValue, setMinValue] = useState(0);
+  const [minValue, setMinValue] = useState(1);
   const [maxValue, setMaxValue] = useState(1000000);
-  const [PriceFrom, setPriceFrom] = useFilter("priceFrom", "");
-  const [PriceTo, seTpriceTo] = useFilter("priceTo", "");
+  const [priceFrom, setPriceFrom] = useFilter("priceFrom", "");
+  const [priceTo, setPriceTo] = useFilter("priceTo", "");
   
   const debouncedFrom = useDebouncedCallback((value) => {
-    setPriceFrom(value);
+    setPriceFrom(value.toString()); // Convert to string since backend expects string
     window.scrollTo({ behavior: "smooth", top: myRef?.current?.offsetTop });
   }, 850);
 
   const debouncedTo = useDebouncedCallback((value) => {
-    seTpriceTo(value);
+    setPriceTo(value.toString()); // Convert to string since backend expects string
     window.scrollTo({ behavior: "smooth", top: myRef?.current?.offsetTop });
   }, 850);
 
   const handleSliderChange = (value) => {
     setMinValue(value[0]);
-    debouncedFrom(value[0]);
     setMaxValue(value[1]);
+    debouncedFrom(value[0]);
     debouncedTo(value[1]);
+  };
+
+  const handleInputChange = (type, value) => {
+    const numValue = parseInt(value) || 0;
+    if (type === 'min') {
+      setMinValue(numValue);
+      debouncedFrom(numValue);
+    } else {
+      setMaxValue(numValue);
+      debouncedTo(numValue);
+    }
   };
 
   return (
@@ -49,27 +60,25 @@ const RangeInput = ({ title, myRef, isFullPage }) => {
         
         {/* Input Fields */}
         <div className="flex items-center justify-between gap-4 mt-5">
-          <input
-            className="border border-gray-300 text-gray-700 w-full px-3 py-2 rounded-lg focus:ring focus:ring-gray-200 outline-none transition"
-            type="number"
-            id="minValue"
-            value={minValue}
-            onChange={(e) => {
-              setMinValue(e.target.value);
-              debouncedFrom(e.target.value);
-            }}
-          />
-          <BsDashLg className="text-gray-500 text-2xl" />
-          <input
-            className="border border-gray-300 text-gray-700 w-full px-3 py-2 rounded-lg focus:ring focus:ring-gray-200 outline-none transition"
-            type="number"
-            id="maxValue"
-            value={maxValue}
-            onChange={(e) => {
-              setMaxValue(e.target.value);
-              debouncedTo(e.target.value);
-            }}
-          />
+          <div className="flex-1">
+            <input
+              type="number"
+              value={minValue}
+              onChange={(e) => handleInputChange('min', e.target.value)}
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-primary"
+              placeholder="Min"
+            />
+          </div>
+          <BsDashLg className="text-gray-400" />
+          <div className="flex-1">
+            <input
+              type="number"
+              value={maxValue}
+              onChange={(e) => handleInputChange('max', e.target.value)}
+              className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-primary"
+              placeholder="Max"
+            />
+          </div>
         </div>
       </div>
     </div>

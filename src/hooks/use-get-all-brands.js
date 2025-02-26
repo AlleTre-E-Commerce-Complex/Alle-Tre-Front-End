@@ -4,35 +4,32 @@ import { axios } from "../config/axios-config";
 import { useLanguage } from "../context/language-context";
 import useAxios from "./use-axios";
 
-const useGetALLBrand = () => {
+const useGetAllBrands = () => {
   const [lang] = useLanguage();
-  const [AllBranOptions, setAllAllBranOptions] = React.useState([]);
+  const [allBrands, setAllBrands] = React.useState([]);
 
   const { run, isLoading, error, isError } = useAxios();
 
   useEffect(() => {
     run(axios.get(api.app.brand.all)).then(({ data }) => {
-      const AllBranOptions = data.data;
-      const options = [];
-
-      AllBranOptions.forEach((d) =>
-        options.push({
-          text: d?.name,
-          key: d?.id,
-          value: d.id,
-        })
-      );
-
-      setAllAllBranOptions(options);
+      const brands = data.data;
+      const options = brands
+        .filter(d => d?.name) // Filter out items without names
+        .map(d => ({
+          name: d.name,
+          key: d.id,
+          value: d.name // Use name for filtering since backend uses the brand field
+        }));
+      setAllBrands(options);
     });
   }, [lang, run]);
 
   return {
-    AllBranOptions,
-    loadingAllBranOptions: isLoading,
-    errorAllBranOptions: error,
-    isErrorAllBranOptions: isError,
+    allBrands,
+    loadingBrands: isLoading,
+    errorBrands: error,
+    isErrorBrands: isError,
   };
 };
 
-export default useGetALLBrand;
+export default useGetAllBrands;
