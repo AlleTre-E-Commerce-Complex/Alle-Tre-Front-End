@@ -54,11 +54,11 @@ const AppLayouts = () => {
 
   useEffect(() => {
     const hasCompletedProfile = window.localStorage.getItem("hasCompletedProfile");
-    const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
+    const hasSeenRewardModal = localStorage.getItem("hasSeenRewardModal");
     
     if (!hasCompletedProfile && !hasSeenRewardModal) {
       setShowRewardModal(true);
-      sessionStorage.setItem("hasSeenRewardModal", "true");
+      localStorage.setItem("hasSeenRewardModal", "true");
     }
   }, []);
   const searchParams = new URLSearchParams(location.search);
