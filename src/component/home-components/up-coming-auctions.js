@@ -27,9 +27,6 @@ const UpComingAuctionsSlider = () => {
   const [pagination, setPagination] = useState();
   const [page, setPage] = useState(20);
 
-  const swiperRef = useRef(null);
-  const swiperInstance = useRef(null);
-
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage") && user) {
       runAuctions(
@@ -52,40 +49,36 @@ const UpComingAuctionsSlider = () => {
     }
   }, [page, runAuctions, search, user]);
 
-  useEffect(() => {
-    if (swiperRef.current) {
-      swiperInstance.current = new Swiper(swiperRef.current, {
-        cssMode: true,
-        speed: 1000,
-        navigation: {
-          nextEl: `.swiper-button-next`,
-          prevEl: `.swiper-button-prev`,
-        },
-        slidesPerView: "auto",
-        mousewheel: true,
-        keyboard: true,
-      });
-    }
+  const swiperOptions = {
+    cssMode: true,
+    speed: 1000,
+    navigation: {
+      nextEl: `.swiper-button-next`,
+      prevEl: `.swiper-button-prev`,
+    },
+    slidesPerView: "auto",
+    mousewheel: true,
+    keyboard: true,
+  };
 
+  const swiperRef2 = useRef(null);
+  const swiper2 = new Swiper(swiperRef2?.current, { ...swiperOptions });
+
+  useEffect(() => {
     return () => {
-      if (swiperInstance.current) {
-        swiperInstance.current.destroy(true, true);
-        swiperInstance.current = null;
-      }
+      swiper2?.destroy();
     };
-  }, [auctions]);
+  }, []);
 
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
-      swiperInstance.current?.slideNext();
-      setPage((prevPage) => prevPage + 5);
-    } else {
-      swiperInstance.current?.slideNext();
-    }
+      swiper2?.slideNext();
+      setPage(page + 5);
+    } else swiper2?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiperInstance.current?.slidePrev();
+    swiper2?.slidePrev();
   };
 
   return (
@@ -110,7 +103,7 @@ const UpComingAuctionsSlider = () => {
           </Dimmer>
           <div className="ezd-snapslider pt-6 pb-4">
             <div className="snapslider-wrapper relative px-4 md:px-8">
-              <div ref={swiperRef} className="snapslider-overflow">
+              <div ref={swiperRef2} className="snapslider-overflow">
                 <div
                   className={`${
                     auctions?.length > 4
@@ -119,7 +112,10 @@ const UpComingAuctionsSlider = () => {
                   } snapslider-scroll swiper-wrapper gap-4`}
                 >
                   {auctions?.map((e) => (
-                    <div key={e?.id} className="snapslider-card swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%]">
+                    <div
+                      key={e?.id}
+                      className="snapslider-card swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%]"
+                    >
                       <AuctionCard
                         auctionId={e?.id}
                         startBidAmount={e?.startBidAmount || e?.acceptedAmount}
@@ -135,9 +131,37 @@ const UpComingAuctionsSlider = () => {
                       />
                     </div>
                   ))}
+                  {auctions?.length >= 2 && (
+                    <div className="swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%] flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                          <svg
+                            className="w-8 h-8 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d={
+                                lang === "ar"
+                                  ? "M19 12H5M12 19l-7-7 7-7"
+                                  : "M5 12h14M12 5l7 7-7 7"
+                              }
+                            />
+                          </svg>
+                        </div>
+                        <p className="text-gray-500 text-sm font-medium">
+                          {selectedContent[localizationKeys.noMoreAuctions]}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <button
-                  onClick={handleNextClick}
+                  onClick={lang === "ar" ? handlePrevClick : handleNextClick}
                   className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
                 >
                   <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
@@ -149,7 +173,7 @@ const UpComingAuctionsSlider = () => {
                   </div>
                 </button>
                 <button
-                  onClick={handlePrevClick}
+                  onClick={lang === "ar" ? handleNextClick : handlePrevClick}
                   className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
                 >
                   <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">

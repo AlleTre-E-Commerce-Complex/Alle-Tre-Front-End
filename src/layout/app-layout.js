@@ -53,11 +53,12 @@ const AppLayouts = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
+    const hasCompletedProfile = window.localStorage.getItem("hasCompletedProfile");
     const hasSeenRewardModal = sessionStorage.getItem("hasSeenRewardModal");
-    console.log("hasSeenRewardModal :", hasSeenRewardModal);
-    if (hasSeenRewardModal !== "true") {
+    
+    if (!hasCompletedProfile && !hasSeenRewardModal) {
       setShowRewardModal(true);
-      sessionStorage.setItem("hasSeenRewardModal", "true"); // Mark as shown
+      sessionStorage.setItem("hasSeenRewardModal", "true");
     }
   }, []);
   const searchParams = new URLSearchParams(location.search);

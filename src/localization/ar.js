@@ -150,6 +150,7 @@ const ar = {
   [localizationKeys.selectTheDeliveryType]: "حدد نوع التسليم",
   [localizationKeys.sellerAddress]: "عنوان البائع",
   [localizationKeys.apply]: "تطبيق",
+  [localizationKeys.noMoreAuctions]: "لا مزيد من المزادات",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",

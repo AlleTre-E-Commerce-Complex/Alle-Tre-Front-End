@@ -154,6 +154,7 @@ const en = {
   [localizationKeys.selectTheDeliveryType]: "Select the delivery type",
   [localizationKeys.sellerAddress]: "Seller address",
   [localizationKeys.apply]: "Apply",
+  [localizationKeys.noMoreAuctions]: "No more auctions",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",

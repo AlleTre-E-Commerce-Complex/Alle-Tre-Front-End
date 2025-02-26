@@ -138,6 +138,7 @@ const localizationKeys = {
   selectTheDeliveryType: "selectTheDeliveryType",
   sellerAddress: "sellerAddress",
   apply: "apply",
+  noMoreAuctions: "noMoreAuctions",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
