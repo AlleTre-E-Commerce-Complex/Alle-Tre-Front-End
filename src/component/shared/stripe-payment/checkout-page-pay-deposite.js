@@ -43,6 +43,8 @@ export default function CheckoutPagePayDeposite() {
   const { auctionId } = useParams();
 
   const [clientSecret, setClientSecret] = useState("");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [hiddenMess, setHiddenMess] = useState(false);
   const [pendingAuctionData, setPendingAuctionData] = useState("");
   const [walletBalance, setWalletBalance] = useState(0);
@@ -51,7 +53,7 @@ export default function CheckoutPagePayDeposite() {
   const [showStripePayment, setShowStripePayment] = useState(null);
   const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
 
-  const { run, isLoading } = useAxios([]);
+  const { run, isLoading: isLoadingRun } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
     useAxios([]);
 
@@ -128,34 +130,48 @@ export default function CheckoutPagePayDeposite() {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  const stripePaymentApiCall = () => {
-    const body = {
-      bidAmount: bidAmountValue,
-    };
-    run(
-      authAxios
-        .post(api.app.auctions.PayDepositByBidder(auctionId), body)
-        .then((res) => {
-          setClientSecret(res?.data?.data.clientSecret);
-        })
-        .catch((err) => {
-          toast.error(
-            err?.response?.data?.message[lang] ||
-              selectedContent[
-                localizationKeys.somethingWentWrongPleaseTryAgainLater
-              ]
-          );
-        })
-    );
+  const stripePaymentApiCall = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const body = {
+        bidAmount: bidAmountValue,
+      };
+      const response = await authAxios.post(
+        api.app.auctions.PayDepositByBidder(auctionId), 
+        body
+      );
+      console.log("Stripe payment response:", response);
+      if (response?.data?.data?.clientSecret) {
+        setClientSecret(response.data.data.clientSecret);
+      } else {
+        throw new Error("No client secret received");
+      }
+    } catch (err) {
+      console.error("Stripe payment error:", err);
+      const errorMessage = err?.response?.data?.message[lang] || 
+        selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater];
+      setError(errorMessage);
+      toast.error(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  // Show error message if there's an error
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   return (
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading || isLoadingPendingAuctionData}
+        active={isLoading || isLoadingPendingAuctionData || isLoadingRun}
         inverted
       >
-        {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
       <div className="mt-44 animate-in ">
@@ -297,7 +313,7 @@ export default function CheckoutPagePayDeposite() {
                       handleSubmitPayment={handleSubmitPayment}
                     />
                   )
-                : clientSecret && (
+                : clientSecret ? (
                     <Elements options={options} stripe={stripePromise}>
                       <CheckoutFormPayDeposite
                         auctionId={auctionId}
@@ -305,8 +321,17 @@ export default function CheckoutPagePayDeposite() {
                           pendingAuctionData?.product?.category
                             ?.bidderDepositFixedAmount
                         }
+                        onError={(msg) => setError(msg)}
                       />
                     </Elements>
+                  ) : error ? (
+                    <div className="text-red-500 text-center p-4">
+                      {error}
+                    </div>
+                  ) : (
+                    <div className="text-center p-4">
+                      <LodingTestAllatre />
+                    </div>
                   )}
               {clientSecret && showStripePayment && (
                 <Elements options={options} stripe={stripePromise}>
@@ -316,6 +341,7 @@ export default function CheckoutPagePayDeposite() {
                       pendingAuctionData?.product?.category
                         ?.bidderDepositFixedAmount
                     }
+                    onError={(msg) => setError(msg)}
                   />
                 </Elements>
               )}

@@ -9,15 +9,15 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 
-export default function CheckoutFormPayDeposite({ payPrice, auctionId }) {
+export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError }) {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
-  // const { pathname, auctionId } = useLocation();
-  const [isStripeLoading, setIsStripeLoading] = useState(true)
+  
+  const [message, setMessage] = useState(null);
+  const [isStripeLoading, setIsStripeLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -36,79 +36,119 @@ export default function CheckoutFormPayDeposite({ payPrice, auctionId }) {
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
         case "succeeded":
+          setMessage("Payment succeeded!");
           toast.success("Payment succeeded!");
           break;
         case "processing":
+          setMessage("Your payment is processing.");
           toast.loading("Your payment is processing.");
           break;
         case "requires_payment_method":
+          setMessage("Your payment was not successful, please try again.");
           toast.error("Your payment was not successful, please try again.");
           break;
         default:
+          setMessage("Something went wrong.");
           toast.error("Something went wrong.");
           break;
       }
     });
-  }, [history, stripe]);
+  }, [stripe]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
+      console.error("Stripe.js hasn't loaded yet");
       return;
     }
 
     setIsLoading(true);
+    setMessage(null);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`,
-      },
-    });
+    try {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`,
+        },
+      });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      toast.error(error.message);
-    } else {
-      toast.error("An unexpected error occurred.");
+      if (error) {
+        const errorMessage = error.message || "An unexpected error occurred.";
+        setMessage(errorMessage);
+        toast.error(errorMessage);
+        if (onError) {
+          onError(errorMessage);
+        }
+      }
+    } catch (err) {
+      console.error("Payment confirmation error:", err);
+      const errorMessage = "Failed to process payment. Please try again.";
+      setMessage(errorMessage);
+      toast.error(errorMessage);
+      if (onError) {
+        onError(errorMessage);
+      }
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   const paymentElementOptions = {
     layout: "tabs",
+    loader: "always",
   };
 
+  if (!stripe || !elements) {
+    return (
+      <div className="text-center p-4">
+        <LodingTestAllatre />
+        <p className="mt-2">Loading payment system...</p>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="relative">
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoading || isStripeLoading}
         inverted
       >
-        {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-    <form className="w-full mx-auto" id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions}  onReady={()=>setIsStripeLoading(false)}/>
-      <Button
-        className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"
-        loading={isLoading}
-        disabled={isLoading || !stripe || !elements}
-        id="submit"
-      >
-        Pay {formatCurrency(payPrice)}
-      </Button>
-    </form>
+
+      <form className="w-full mx-auto" id="payment-form" onSubmit={handleSubmit}>
+        <PaymentElement 
+          id="payment-element" 
+          options={paymentElementOptions} 
+          onReady={() => setIsStripeLoading(false)}
+          onChange={(event) => {
+            if (event.error) {
+              setMessage(event.error.message);
+              if (onError) {
+                onError(event.error.message);
+              }
+            }
+          }}
+        />
+
+        {message && (
+          <div className="text-red-500 mt-4 text-center">
+            {message}
+          </div>
+        )}
+
+        <Button
+          className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"
+          loading={isLoading}
+          disabled={isLoading || !stripe || !elements || isStripeLoading}
+          id="submit"
+        >
+          {isLoading ? "Processing..." : `Pay ${formatCurrency(payPrice)}`}
+        </Button>
+      </form>
     </div>
   );
 }
