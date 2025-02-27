@@ -359,7 +359,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <NoAuctionImg className="w-40 h-40" />
                           </div>
                         ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                             {mainAuctions?.map((e) => (
                               <AuctionCard
                                 key={e?.id}
@@ -444,7 +444,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <NoProductImg className="w-40 h-40" />
                           </div>
                         ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                             {listedProducts?.map((e) => (
                               <ProductCard
                                 key={e?.id}
@@ -490,7 +490,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <NoProductImg className="w-40 h-40" />
                           </div>
                         ) : (
-                          <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                          <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                             {listedProducts?.map((e) => (
                               <ProductCardList
                                 key={e?.id}
@@ -536,7 +536,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <NoAuctionImg className="w-40 h-40" />
                           </div>
                         ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                             {mainAuctions?.map((e) => (
                               <AuctionCard
                                 key={e?.id}
@@ -575,7 +575,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <NoProductImg className="w-40 h-40" />
                           </div>
                         ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
+                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
                             {listedProducts?.map((e) => (
                               <ProductCard
                                 key={e?.id}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/ALLETRE LOGO-03-01.svg";
 import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/ALLETRE LOGO-03-02.svg";
@@ -29,7 +29,11 @@ import { MdOutlineNotifications } from "react-icons/md";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
 import { FaPlus } from "react-icons/fa6";
-import { DEFAULT_PAGE, getDefaultPerPage, getDefaultPaginationString } from "../../../constants/pagination";
+import {
+  DEFAULT_PAGE,
+  getDefaultPerPage,
+  getDefaultPaginationString,
+} from "../../../constants/pagination";
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
 const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
@@ -47,7 +51,9 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
   const { run } = useAxios();
   const { user } = useAuthState();
   const [name, setTitle] = useFilter("title", "");
-  const [selectedOption, setSelectedOption] = useState(selectedContent[localizationKeys.all]);
+  const [selectedOption, setSelectedOption] = useState(
+    selectedContent[localizationKeys.all]
+  );
 
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
@@ -420,23 +426,26 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         setIsOpen(false);
       }
     };
-  
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   useEffect(() => {
     const handleSellDropdownClickOutside = (event) => {
-      if (sellDropdownRef.current && !sellDropdownRef.current.contains(event.target)) {
+      if (
+        sellDropdownRef.current &&
+        !sellDropdownRef.current.contains(event.target)
+      ) {
         setIsDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleSellDropdownClickOutside);
+    document.addEventListener("mousedown", handleSellDropdownClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleSellDropdownClickOutside);
+      document.removeEventListener("mousedown", handleSellDropdownClickOutside);
     };
   }, []);
 
@@ -447,14 +456,17 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
 
   useEffect(() => {
     const handleTypeDropdownClickOutside = (event) => {
-      if (typeDropdownRef.current && !typeDropdownRef.current.contains(event.target)) {
+      if (
+        typeDropdownRef.current &&
+        !typeDropdownRef.current.contains(event.target)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleTypeDropdownClickOutside);
+    document.addEventListener("mousedown", handleTypeDropdownClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleTypeDropdownClickOutside);
+      document.removeEventListener("mousedown", handleTypeDropdownClickOutside);
     };
   }, []);
   return (
@@ -463,7 +475,9 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
             className="cursor-pointer hidden md:block"
-            onClick={() => history.push(`${routes.app.home}?${getDefaultPaginationString()}`)}
+            onClick={() =>
+              history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
+            }
           />
         </div>
         <div className="flex items-center space-x-3 md:hidden ">
@@ -475,7 +489,9 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
 
           <RiHome2Line
             onClick={() => {
-              history.push(`${routes.app.home}?${getDefaultPaginationString()}`);
+              history.push(
+                `${routes.app.home}?${getDefaultPaginationString()}`
+              );
             }}
             className="text-primary cursor-pointer"
             size={25}
@@ -494,7 +510,9 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
                 }}
                 className="cursor-pointer w-[100px] block md:hidden text-primary"
                 onClick={() =>
-                  history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
+                  history.push(
+                    `${routes.app.home}?${getDefaultPaginationString()}`
+                  )
                 }
               />
             )}
@@ -571,7 +589,10 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
             <div className="my-auto ">
               <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600 w-[120px] h-[48px] flex items-center justify-center " />
             </div>
-            <div className="relative inline-block text-left" ref={sellDropdownRef}>
+            <div
+              className="relative inline-block text-left"
+              ref={sellDropdownRef}
+            >
               <div>
                 <button
                   type="button"
@@ -659,26 +680,27 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
         <div className="py-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-6 lg:px-8">
-          <button
-            onClick={onFilterClick}
-            className="lg:hidden text-primary rounded-full flex items-center justify-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 xs:h-6 xs:w-6 text-primary" 
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {currentPath === routes.app.home && (
+            <button
+              onClick={onFilterClick}
+              className="md:hidden text-primary rounded-full flex items-center justify-center"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-              />
-            </svg>
-          </button>
-
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 xs:h-6 xs:w-6 text-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                />
+              </svg>
+            </button>
+          )}
           <Input
             className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input 
              ltr:font-serifEN rtl:font-serifAR 
@@ -716,7 +738,10 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
                     <li>
                       <button
                         className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption === selectedContent[localizationKeys.viewAuction] ? "bg-gray-med" : ""
+                          selectedOption ===
+                          selectedContent[localizationKeys.viewAuction]
+                            ? "bg-gray-med"
+                            : ""
                         }`}
                         onClick={() => handleTypeChange("auction")}
                       >
@@ -726,7 +751,10 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
                     <li>
                       <button
                         className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption === selectedContent[localizationKeys.viewProducts] ? "bg-gray-med" : ""
+                          selectedOption ===
+                          selectedContent[localizationKeys.viewProducts]
+                            ? "bg-gray-med"
+                            : ""
                         }`}
                         onClick={() => handleTypeChange("products")}
                       >
@@ -736,7 +764,10 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
                     <li>
                       <button
                         className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption === selectedContent[localizationKeys.viewAll] ? "bg-gray-med" : ""
+                          selectedOption ===
+                          selectedContent[localizationKeys.viewAll]
+                            ? "bg-gray-med"
+                            : ""
                         }`}
                         onClick={() => handleTypeChange("all")}
                       >

@@ -97,7 +97,7 @@ const ProductCardList = ({
             />
             <div
               onClick={() => handelGoDetails(id)}
-              className="price-button-list absolute  bg-[#e04868]  text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
+              className="price-button-list absolute  bg-[#e04868]  text-white text-[10px] top-0 w-auto px-1  h-[24px] flex justify-center items-center "
             >
               {formatCurrency(price)}
             </div>
@@ -106,9 +106,9 @@ const ProductCardList = ({
           <div>
             <h1
               onClick={() => handelGoDetails(id)}
-              className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10 ltr:pr-4 rtl:pl-4"
+              className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] ltr:pr-4 rtl:pl-4 line-clamp-2 md:line-clamp-2"
             >
-              {truncateString(title, 250)}
+              {truncateString(title, 70)}
             </h1>
 
             <div className="flex md:gap-x-10 gap-x-6 mt-4">

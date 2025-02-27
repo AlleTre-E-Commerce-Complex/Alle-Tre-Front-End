@@ -45,17 +45,17 @@ const FilterSections = ({
 
   const overlayClasses = isFullPage
     ? "fixed inset-0 z-50 bg-white overflow-y-auto px-4"
-    : "relative hidden lg:block bg-[#f5f5f5] flex flex-col gap-6 p-4 rounded-xl shadow-xl transition-shadow duration-300 max-w-full mx-auto w-full lg:max-w-xs border border-gray-200 h-full";
+    : "relative hidden md:block bg-white flex flex-col gap-4 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 max-w-full mx-auto w-full lg:max-w-[300px] md:max-w-[280px] border border-gray-100 h-full backdrop-blur-sm";
 
   useEffect(() => {
     if (isFullPage) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isFullPage]);
 
@@ -81,7 +81,7 @@ const FilterSections = ({
                 onClick={onClose}
                 className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary-dark transition rounded-md"
               >
-                {selectedContent[localizationKeys.apply]} 
+                {selectedContent[localizationKeys.apply]}
               </button>
               <button
                 onClick={onClose}
@@ -175,7 +175,9 @@ const FilterSections = ({
             onClick={() => toggleSection("sellingType")}
             className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
           >
-            <h3 className="font-medium text-lg">{selectedContent[localizationKeys.sellingType]}</h3>
+            <h3 className="font-medium text-lg">
+              {selectedContent[localizationKeys.sellingType]}
+            </h3>
             {renderArrowIcon("sellingType")}
           </div>
           {expandedSections.sellingType && (
@@ -189,8 +191,14 @@ const FilterSections = ({
               <MultiButtonFilter
                 name="sellingType"
                 values={[
-                  { name: selectedContent[localizationKeys.auction], value: "Auction" },
-                  { name: selectedContent[localizationKeys.buyNow], value: "Buy_Now" }
+                  {
+                    name: selectedContent[localizationKeys.auction],
+                    value: "Auction",
+                  },
+                  {
+                    name: selectedContent[localizationKeys.buyNow],
+                    value: "Buy_Now",
+                  },
                 ]}
                 isMultiSelect={false}
                 myRef={myRef}
@@ -205,7 +213,9 @@ const FilterSections = ({
             onClick={() => toggleSection("auctionStatus")}
             className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
           >
-            <h3 className="font-medium text-lg">{selectedContent[localizationKeys.auctionState]}</h3>
+            <h3 className="font-medium text-lg">
+              {selectedContent[localizationKeys.auctionState]}
+            </h3>
             {renderArrowIcon("auctionStatus")}
           </div>
           {expandedSections.auctionStatus && (
@@ -219,8 +229,14 @@ const FilterSections = ({
               <MultiButtonFilter
                 name="auctionStatus"
                 values={[
-                  { name: selectedContent[localizationKeys.comingSoon], value: "IN_SCHEDULED" },
-                  { name: selectedContent[localizationKeys.liveAuction], value: "ACTIVE" }
+                  {
+                    name: selectedContent[localizationKeys.comingSoon],
+                    value: "IN_SCHEDULED",
+                  },
+                  {
+                    name: selectedContent[localizationKeys.liveAuction],
+                    value: "ACTIVE",
+                  },
                 ]}
                 isMultiSelect={false}
                 myRef={myRef}
@@ -235,7 +251,9 @@ const FilterSections = ({
             onClick={() => toggleSection("usageStatus")}
             className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
           >
-            <h3 className="font-medium text-lg">{selectedContent[localizationKeys.condition]}</h3>
+            <h3 className="font-medium text-lg">
+              {selectedContent[localizationKeys.condition]}
+            </h3>
             {renderArrowIcon("usageStatus")}
           </div>
           {expandedSections.usageStatus && (
@@ -250,8 +268,14 @@ const FilterSections = ({
                 name="usageStatus"
                 values={[
                   { name: selectedContent[localizationKeys.new], value: "NEW" },
-                  { name: selectedContent[localizationKeys.used], value: "USED" },
-                  { name: selectedContent[localizationKeys.openBox], value: "OPEN_BOX" }
+                  {
+                    name: selectedContent[localizationKeys.used],
+                    value: "USED",
+                  },
+                  {
+                    name: selectedContent[localizationKeys.openBox],
+                    value: "OPEN_BOX",
+                  },
                 ]}
                 isMultiSelect={false}
                 myRef={myRef}
@@ -264,7 +288,8 @@ const FilterSections = ({
         <div>
           <div
             onClick={() => toggleSection("price")}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary
+            hover:shadow-lg flex justify-between items-center"
           >
             <h3 className="font-medium text-lg">
               {selectedContent[localizationKeys.price]}
@@ -277,9 +302,9 @@ const FilterSections = ({
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.1, ease: "linear" }}
-              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+              className={`mt-3 ${isFullPage ? "w-full max-w-3xl mx-auto" : ""}`}
             >
-              <RangeInput myRef={myRef} />
+              <RangeInput className="" myRef={myRef} isFullPage={isFullPage} />
             </motion.div>
           )}
         </div>

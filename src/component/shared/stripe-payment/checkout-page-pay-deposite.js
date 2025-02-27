@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
 import { AuctionHomeDetailsBreadcrumb } from "../bread-crumb/Breadcrumb";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import useAxios from "../../../hooks/use-axios";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
@@ -82,19 +82,17 @@ export default function CheckoutPagePayDeposite() {
             //   )}`
             // );
             // if (!pendingPeymentData?.data?.isPendingPaymentData) {
-              run(
-                authAxios
-                  .get(`${api.app.Wallet.getBalance}`)
-                  .then((response) => {   
-                    const balance = response.data;                
-                    if (balance && Number(balance) >= Number(amountToPay)) {
-                      setWalletBalance(balance);
-                      setShwoPaymentSelection(true);
-                    } else {
-                      stripePaymentApiCall();
-                    }
-                  })
-              );
+            run(
+              authAxios.get(`${api.app.Wallet.getBalance}`).then((response) => {
+                const balance = response.data;
+                if (balance && Number(balance) >= Number(amountToPay)) {
+                  setWalletBalance(balance);
+                  setShwoPaymentSelection(true);
+                } else {
+                  stripePaymentApiCall();
+                }
+              })
+            );
             // } else {
             //   stripePaymentApiCall();
             // }
@@ -138,7 +136,7 @@ export default function CheckoutPagePayDeposite() {
         bidAmount: bidAmountValue,
       };
       const response = await authAxios.post(
-        api.app.auctions.PayDepositByBidder(auctionId), 
+        api.app.auctions.PayDepositByBidder(auctionId),
         body
       );
       console.log("Stripe payment response:", response);
@@ -149,7 +147,8 @@ export default function CheckoutPagePayDeposite() {
       }
     } catch (err) {
       console.error("Stripe payment error:", err);
-      const errorMessage = err?.response?.data?.message[lang] || 
+      const errorMessage =
+        err?.response?.data?.message[lang] ||
         selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater];
       setError(errorMessage);
       toast.error(errorMessage);
@@ -174,190 +173,195 @@ export default function CheckoutPagePayDeposite() {
       >
         <LodingTestAllatre />
       </Dimmer>
-      <div className="mt-44 animate-in ">
-        <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">
+      <div className="mt-44 animate-in px-2 sm:px-4">
+        <div className="w-full   mx-auto h-14 my-7 py-4 sm:block hidden">
           <AuctionHomeDetailsBreadcrumb details={auctionId} />
         </div>
-        <div className="max-w-[1366px] mx-auto ">
-          <div>
-            <h1 className="font-bold text-base text-black">
-              {selectedContent[localizationKeys.paymentDetails]}
-            </h1>
-            <p className="text-gray-dark font-normal text-base py-4">
-              {
-                selectedContent[
-                  localizationKeys
-                    .inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction
-                ]
-              }
-            </p>
-          </div>
-          <div
-            className={
-              hiddenMess
-                ? "hidden"
-                : "bg-[#A2547A05] border-primary-light border-[0.5px] rounded-lg w-full h-auto pt-9 pb-7 flex gap-x-10 justify-start px-10 mt-4 mb-5 relative"
+        <div>
+          <h1 className="font-bold text-base text-black">
+            {selectedContent[localizationKeys.paymentDetails]}
+          </h1>
+          <p className="text-gray-dark font-normal text-base py-4">
+            {
+              selectedContent[
+                localizationKeys
+                  .inOrderToCompleteSubmittingYourBidPleasePayTheDepositForTheAuction
+              ]
             }
-          >
-            <CircleCloseIcon
-              onClick={() => setHiddenMess(true)}
-              className="absolute right-3 -top-5 cursor-pointer"
-            />
+          </p>
+        </div>
+        <div
+          className={
+            hiddenMess
+              ? "hidden"
+              : "bg-[#A2547A05] border-primary-light border-[0.5px] rounded-lg w-full h-auto pt-6 md:pt-9 pb-5 md:pb-7 flex flex-col md:flex-row md:gap-x-10 gap-y-4 items-center md:items-start md:justify-start px-4 md:px-10 mt-4 mb-5 relative"
+          }
+        >
+          <CircleCloseIcon
+            onClick={() => setHiddenMess(true)}
+            className="absolute right-3 -top-5 cursor-pointer"
+          />
+          <div className="flex justify-center">
             <MoneyINHand />
-            <p className="text-gray-dark my-auto">
-            {selectedContent[localizationKeys.pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit]}
-            </p>
           </div>
-          <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
-            <div className="w-full ">
-              <div className="bg-gray-light rounded-2xl px-8 py-5">
-                <h1 className="font-bold text-base text-black pb-4 ">
-                  {selectedContent[localizationKeys.adPreview]}
-                </h1>
-                <PandingRow
-                  payDeposite
-                  status={"ACTIVE"}
-                  title={pendingAuctionData?.product?.title}
-                  description={pendingAuctionData?.product?.description}
-                  img={pendingAuctionData?.product?.images[0]?.imageLink}
-                  startingPrice={pendingAuctionData?.startBidAmount}
-                  startDate={pendingAuctionData?.startDate}
-                />
-                <div>
-                  <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
-                    <h1>
-                      {selectedContent[localizationKeys.auctionFee]}
-                      <span class="text-gray-dark font-normal">
-                        {" "}
-                        (
-                        {
-                          selectedContent[
-                            localizationKeys.feesRefundedAfterAuctionCompletion
-                          ]
-                        }
-                        )
-                      </span>
-                    </h1>
-
-                    <p>
-                      {formatCurrency(
-                        pendingAuctionData?.product?.category
-                          ?.bidderDepositFixedAmount
-                      )}
-                    </p>
-                  </p>
-                  <p className="flex justify-between px-4 py-1.5">
-                    <h1 className="text-gray-dark font-medium text-sm">
-                      {selectedContent[localizationKeys.category]}
-                    </h1>
-                    <p className="text-gray-med font-normal text-base">
-                      {lang === "en"
-                        ? pendingAuctionData?.product?.category?.nameEn
-                        : pendingAuctionData?.product?.category?.nameAr}
-                    </p>
-                  </p>
-                  <p className="flex justify-between px-4 py-1.5 ">
-                    <h1 className="text-gray-dark font-medium text-sm">
-                      {selectedContent[localizationKeys.auctionStartingDate]}
-                    </h1>
-                    <p className="text-gray-med font-normal text-base">
-                      {moment(pendingAuctionData?.startDate).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </p>
-                  </p>
-                  <p className="flex justify-between px-4 py-1.5">
-                    <h1 className="text-gray-dark font-medium text-sm">
-                      {selectedContent[localizationKeys.auctionEndingDate]}
-                    </h1>
-                    <p className="text-gray-med font-normal text-base">
-                      {moment(pendingAuctionData?.expiryDate).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </p>
-                  </p>
-                  <p className="flex justify-between px-4 py-1.5">
-                    <h1 className="text-gray-dark font-medium text-sm">
-                      {selectedContent[localizationKeys.auctionStartingPrice]}
-                    </h1>
-                    <p className="text-gray-med font-normal text-base">
-                      {formatCurrency(pendingAuctionData?.startBidAmount)}
-                    </p>
-                  </p>
-                </div>
-                <p className="text-gray-med text-xs mt-11 text-center">
-                {
-                    selectedContent[
-                      localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck
-                    ]
-                  }
-                  <span
-                    onClick={() => history.push(routes.app.faqs)}
-                    className="text-primary underline cursor-pointer"
-                  >
-                    {selectedContent[localizationKeys.faqs]}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className="w-full md:px-10 px-5  rounded-xl pb-8 ">
-              <h1 className="font-bold text-base text-black pt-4 pb-6">
-                {selectedContent[localizationKeys.paymentMethod]}
+          <p className="text-gray-dark text-center md:text-left text-sm md:text-base">
+            {
+              selectedContent[
+                localizationKeys
+                  .pleaseNoticeThatTheBiddingDepositWillBeCapturedUntilTheAuctionIsCompletedWithin3WorkingDaysIfYouWinsTheAuctionTheWebsiteWillWithdrawTheDeposit
+              ]
+            }
+          </p>
+        </div>
+        <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse  h-auto">
+          <div className="w-full ">
+            <div className="bg-gray-light rounded-2xl  py-5">
+              <h1 className="font-bold text-base text-black pb-4 ">
+                {selectedContent[localizationKeys.adPreview]}
               </h1>
+              <PandingRow
+                payDeposite
+                status={"ACTIVE"}
+                title={pendingAuctionData?.product?.title}
+                description={pendingAuctionData?.product?.description}
+                img={pendingAuctionData?.product?.images[0]?.imageLink}
+                startingPrice={pendingAuctionData?.startBidAmount}
+                startDate={pendingAuctionData?.startDate}
+              />
+              <div>
+                <p className="font-bold text-base text-black flex justify-between px-4 pt-3 pb-5">
+                  <h1>
+                    {selectedContent[localizationKeys.auctionFee]}
+                    <span class="text-gray-dark font-normal">
+                      {" "}
+                      (
+                      {
+                        selectedContent[
+                          localizationKeys.feesRefundedAfterAuctionCompletion
+                        ]
+                      }
+                      )
+                    </span>
+                  </h1>
 
-              {walletBalance
-                ? showPaymentSelecton && (
-                    <PaymentSelection
-                      isWalletPayment={isWalletPayment}
-                      setIsWalletPayment={setIsWalletPayment}
-                      handleSubmitPayment={handleSubmitPayment}
-                    />
-                  )
-                : clientSecret ? (
-                    <Elements options={options} stripe={stripePromise}>
-                      <CheckoutFormPayDeposite
-                        auctionId={auctionId}
-                        payPrice={
-                          pendingAuctionData?.product?.category
-                            ?.bidderDepositFixedAmount
-                        }
-                        onError={(msg) => setError(msg)}
-                      />
-                    </Elements>
-                  ) : error ? (
-                    <div className="text-red-500 text-center p-4">
-                      {error}
-                    </div>
-                  ) : (
-                    <div className="text-center p-4">
-                      <LodingTestAllatre />
-                    </div>
-                  )}
-              {clientSecret && showStripePayment && (
-                <Elements options={options} stripe={stripePromise}>
-                  <CheckoutFormPayDeposite
-                    auctionId={auctionId}
-                    payPrice={
+                  <p>
+                    {formatCurrency(
                       pendingAuctionData?.product?.category
                         ?.bidderDepositFixedAmount
-                    }
-                    onError={(msg) => setError(msg)}
-                  />
-                </Elements>
-              )}
-              {showWalletPaymentMethod && (
-                <WalletPaymentForBiddingDeoposit
-                  auctionId={auctionId}
-                  amount={pendingAuctionData?.product?.category?.bidderDepositFixedAmount}
-                  walletBalance={walletBalance}
-                  paymentAPI={api.app.auctions.walletPayDepositByBidder}
-                  bidAmount={bidAmountValue}
-                  setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
-                  setShowWalletPaymentMethod={ ()=>(setShowWalletPaymentMethod(false))}
-
-                />
-              )}
+                    )}
+                  </p>
+                </p>
+                <p className="flex justify-between px-4 py-1.5">
+                  <h1 className="text-gray-dark font-medium text-sm">
+                    {selectedContent[localizationKeys.category]}
+                  </h1>
+                  <p className="text-gray-med font-normal text-base">
+                    {lang === "en"
+                      ? pendingAuctionData?.product?.category?.nameEn
+                      : pendingAuctionData?.product?.category?.nameAr}
+                  </p>
+                </p>
+                <p className="flex justify-between px-4 py-1.5 ">
+                  <h1 className="text-gray-dark font-medium text-sm">
+                    {selectedContent[localizationKeys.auctionStartingDate]}
+                  </h1>
+                  <p className="text-gray-med font-normal text-base">
+                    {moment(pendingAuctionData?.startDate).format("DD/MM/YYYY")}
+                  </p>
+                </p>
+                <p className="flex justify-between px-4 py-1.5">
+                  <h1 className="text-gray-dark font-medium text-sm">
+                    {selectedContent[localizationKeys.auctionEndingDate]}
+                  </h1>
+                  <p className="text-gray-med font-normal text-base">
+                    {moment(pendingAuctionData?.expiryDate).format(
+                      "DD/MM/YYYY"
+                    )}
+                  </p>
+                </p>
+                <p className="flex justify-between px-4 py-1.5">
+                  <h1 className="text-gray-dark font-medium text-sm">
+                    {selectedContent[localizationKeys.auctionStartingPrice]}
+                  </h1>
+                  <p className="text-gray-med font-normal text-base">
+                    {formatCurrency(pendingAuctionData?.startBidAmount)}
+                  </p>
+                </p>
+              </div>
+              <p className="text-gray-med text-xs mt-11 text-center">
+                {
+                  selectedContent[
+                    localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck
+                  ]
+                }
+                <span
+                  onClick={() => history.push(routes.app.faqs)}
+                  className="text-primary underline cursor-pointer"
+                >
+                  {selectedContent[localizationKeys.faqs]}
+                </span>
+              </p>
             </div>
+          </div>
+          <div className="w-full rounded-xl pb-3 ">
+            <h1 className="font-bold text-base text-black pt-4 pb-2">
+              {selectedContent[localizationKeys.paymentMethod]}
+            </h1>
+
+            {walletBalance ? (
+              showPaymentSelecton && (
+                <PaymentSelection
+                  isWalletPayment={isWalletPayment}
+                  setIsWalletPayment={setIsWalletPayment}
+                  handleSubmitPayment={handleSubmitPayment}
+                />
+              )
+            ) : clientSecret ? (
+              <Elements options={options} stripe={stripePromise}>
+                <CheckoutFormPayDeposite
+                  auctionId={auctionId}
+                  payPrice={
+                    pendingAuctionData?.product?.category
+                      ?.bidderDepositFixedAmount
+                  }
+                  onError={(msg) => setError(msg)}
+                />
+              </Elements>
+            ) : error ? (
+              <div className="text-red-500 text-center p-4">{error}</div>
+            ) : (
+              <div className="text-center p-4">
+                <LodingTestAllatre />
+              </div>
+            )}
+            {clientSecret && showStripePayment && (
+              <Elements options={options} stripe={stripePromise}>
+                <CheckoutFormPayDeposite
+                  auctionId={auctionId}
+                  payPrice={
+                    pendingAuctionData?.product?.category
+                      ?.bidderDepositFixedAmount
+                  }
+                  onError={(msg) => setError(msg)}
+                />
+              </Elements>
+            )}
+            {showWalletPaymentMethod && (
+              <WalletPaymentForBiddingDeoposit
+                auctionId={auctionId}
+                amount={
+                  pendingAuctionData?.product?.category
+                    ?.bidderDepositFixedAmount
+                }
+                walletBalance={walletBalance}
+                paymentAPI={api.app.auctions.walletPayDepositByBidder}
+                bidAmount={bidAmountValue}
+                setShwoPaymentSelection={() => setShwoPaymentSelection(true)}
+                setShowWalletPaymentMethod={() =>
+                  setShowWalletPaymentMethod(false)
+                }
+              />
+            )}
           </div>
         </div>
       </div>
@@ -376,7 +380,7 @@ export const PandingRow = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   return (
-    <div className="bg-white  flex gap-x-6 p-4 rounded-lg">
+    <div className="bg-white  flex gap-x-6 rounded-lg">
       <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9] cursor-default  ">
         {img ? (
           <img
