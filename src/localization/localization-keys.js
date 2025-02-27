@@ -139,6 +139,8 @@ const localizationKeys = {
   sellerAddress: "sellerAddress",
   apply: "apply",
   noMoreAuctions: "noMoreAuctions",
+  youCanUseYourBonusAmountUsingWalletPayment:
+    "youCanUseYourBonusAmountUsingWalletPayment",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",

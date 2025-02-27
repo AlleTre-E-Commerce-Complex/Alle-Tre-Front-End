@@ -59,17 +59,17 @@ const SubmitBidModel = ({
 
   return (
     <Modal
-      className="w-[680px] h-[326px] rounded-2xl bg-white border-[1px] border-primary"
+      className="w-[95%] md:w-[680px] h-auto md:h-[326px] rounded-2xl bg-white border-[1px] border-primary max-w-[680px] mx-auto"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
     >
-      <div className="w-[680px] h-[326px] rounded-2xl bg-white border-[1px] border-primary px-16">
+      <div className="w-full h-full rounded-2xl bg-white border-[1px] border-primary px-4 md:px-8 py-3 md:py-4">
         <AuctionHammer />
-        <h1 className="text-center font-bold text-black ">
+        <h1 className="text-center font-bold text-black text-lg md:text-xl">
           {selectedContent[localizationKeys.congratulationsOnYourFirstBid]}
         </h1>
-        <p className="text-center text-gray-dark pt-5 ">
+        <p className="text-center text-gray-dark pt-3 md:pt-5 text-sm md:text-base">
           {selectedContent[localizationKeys.YouAreAboutToPlaceBidFor]}{" "}
           {formatCurrency(submitBidValue)}{" "}
           {
@@ -85,26 +85,24 @@ const SubmitBidModel = ({
             ]
           }
         </p>
-        <div className="flex justify-end gap-x-4 pt-8">
-          {/* <button
-            onClick={() => {
-              setOpen(false);
-              setSubmitBidValue("");
-            }}
-            className="underline text-primary w-[136px] h-[48px] "
-          >
-            {selectedContent[localizationKeys.editBid]}
-          </button> */}
+        <p className="text-center text-gray-800 py-2 md:pt-5 text-sm md:text-lg font-bold">
+          {
+            selectedContent[
+              localizationKeys.youCanUseYourBonusAmountUsingWalletPayment
+            ]
+          }
+        </p>
+        <div className="flex flex-col md:flex-row md:justify-end gap-3 md:gap-x-4 pt-2 ">
           <button
             onClick={() => setOpen(false)}
-            className="w-[136px] h-[48px] rounded-lg border-[1px] border-primary text-primary"
+            className="w-full md:w-[136px] h-[40px] md:h-[48px] rounded-lg border-[1px] border-primary text-primary text-sm md:text-base"
           >
             {selectedContent[localizationKeys.cancel]}
           </button>
           <Button
             loading={isLoading}
             onClick={() => handelSubmitBid()}
-            className="w-[200px] h-[48px] rounded-lg bg-primary hover:bg-primary-dark text-white opacity-100 ltr:font-serifEN rtl:font-serifAR"
+            className="w-full md:w-[200px] h-[40px] md:h-[48px] rounded-lg bg-primary hover:bg-primary-dark text-white opacity-100 ltr:font-serifEN rtl:font-serifAR text-sm md:text-base"
           >
             {`${selectedContent[localizationKeys.pay]} ${
               isDepostPay
