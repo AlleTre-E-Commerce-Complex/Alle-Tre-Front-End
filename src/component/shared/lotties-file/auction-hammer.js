@@ -12,7 +12,7 @@ const AuctionHammer = () => {
   };
 
   return (
-    <div className="mt-6">
+    <div className="">
       <Lottie options={defaultOptions} height={110} width={130} />
     </div>
   );

@@ -155,6 +155,8 @@ const en = {
   [localizationKeys.sellerAddress]: "Seller address",
   [localizationKeys.apply]: "Apply",
   [localizationKeys.noMoreAuctions]: "No more auctions",
+  [localizationKeys.youCanUseYourBonusAmountUsingWalletPayment]:
+    " You can use your bonus amount using wallet payment",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",

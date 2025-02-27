@@ -151,6 +151,8 @@ const ar = {
   [localizationKeys.sellerAddress]: "عنوان البائع",
   [localizationKeys.apply]: "تطبيق",
   [localizationKeys.noMoreAuctions]: "لا مزيد من المزادات",
+  [localizationKeys.youCanUseYourBonusAmountUsingWalletPayment]:
+    " يمكنك استخدام رصيدك المجانى باستخدام رصيد المحفظة",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",

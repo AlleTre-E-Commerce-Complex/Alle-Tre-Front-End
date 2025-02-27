@@ -112,15 +112,15 @@ const Categories = () => {
       </Dimmer>
       <div className="h-[320px] relative">
         <img
-          className="w-full h-full object-cover pb-4"
+          className="w-full h-full object-fill pb-4"
           src={selectedCategor?.bannerLink || addImage}
           alt="bannerLink"
         />
-        <div className="bg-gray/50 text-white text-5xl absolute top-0 w-full h-[305px]">
+        {/* <div className="bg-gray/50 text-white text-5xl absolute top-0 w-full h-[305px]">
           <p className="flex justify-center items-center  h-full">
             {selectedCategor?.text}
           </p>
-        </div>
+        </div> */}
       </div>
       <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
         <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
