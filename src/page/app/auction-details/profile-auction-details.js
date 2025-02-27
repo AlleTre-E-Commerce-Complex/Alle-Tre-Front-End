@@ -65,9 +65,6 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
           </div>
           {/* up sections */}
           <div>
-            <h1 className="text-black font-medium text-2xl py-4">
-              {auctionsDetailsData?.product?.title}
-            </h1>
             <div className="grid md:grid-cols-2 grid-cols-1">
               <div className="">
                 <ImgSlider

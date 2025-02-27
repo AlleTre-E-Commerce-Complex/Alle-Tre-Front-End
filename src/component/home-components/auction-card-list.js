@@ -12,7 +12,7 @@ import { truncateString } from "../../utils/truncate-string";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { useAuthState } from "../../context/auth-context"
+import { useAuthState } from "../../context/auth-context";
 import useAxios from "../../hooks/use-axios";
 import { toast } from "react-hot-toast";
 import { authAxios } from "../../config/axios-config";
@@ -183,7 +183,7 @@ const AuctionCardList = ({
       </div>
 
       <div
-        className="h-auto my-2 rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg group p-4 flex md:flex-row flex-col justify-between"
+        className="h-auto my-2 rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg group p-4 flex flex-col mb-4"
         onClick={() => handelGoDetails(auctionId)}
       >
         <div className="flex gap-x-4">
@@ -202,12 +202,12 @@ const AuctionCardList = ({
             </div>
           </div>
 
-          <div>
+          <div className="flex-1">
             <h1
               onClick={() => handelGoDetails(auctionId)}
-              className="text-gray-dark font-medium text-sm pt-3 mb-2 h-10 ltr:pr-4 rtl:pl-4"
+              className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] ltr:pr-4 rtl:pl-4 line-clamp-2 md:line-clamp-2"
             >
-              {truncateString(title, 250)}
+              {truncateString(title, 70)}
             </h1>
             <div>
               <AuctionsStatus status={status} small />
@@ -256,38 +256,35 @@ const AuctionCardList = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-y-5 justify-end">
-          {isMyAuction ? (
-            <div className={isPurchased ? "hidden" : "flex gap-x-3"}>
+
+        <div className="mt-4 flex flex-col md:flex-row md:justify-end gap-2">
+          <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+            {isMyAuction ? (
               <button
                 onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
+                className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-[32px] rounded-lg"
               >
                 {selectedContent[localizationKeys.viewDetails]}
               </button>
-            </div>
-          ) : (
-            <div
-              className={`${
-                isPurchased ? "hidden" : "flex gap-x-3"
-              } justify-end flex md:flex-col flex-row gap-y-2 mt-auto`}
-            >
-              {isBuyNowAllowed && (
+            ) : (
+              <>
+                {isBuyNowAllowed && (
+                  <button
+                    onClick={() => handelGoDetails(auctionId)}
+                    className="border-primary border-[1px] text-primary w-full md:w-[128px] h-[32px] rounded-lg"
+                  >
+                    {selectedContent[localizationKeys.buyNow]}
+                  </button>
+                )}
                 <button
                   onClick={() => handelGoDetails(auctionId)}
-                  className="border-primary border-[1px] text-primary md:w-[128px] w-full h-[32px] rounded-lg"
+                  className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-[32px] rounded-lg"
                 >
-                  {selectedContent[localizationKeys.buyNow]}
+                  {selectedContent[localizationKeys.bidNow]}
                 </button>
-              )}
-              <button
-                onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white md:w-[128px] w-full h-[32px] rounded-lg"
-              >
-                {selectedContent[localizationKeys.bidNow]}
-              </button>
-            </div>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

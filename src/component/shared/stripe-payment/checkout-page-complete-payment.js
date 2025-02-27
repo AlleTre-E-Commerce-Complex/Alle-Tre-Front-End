@@ -25,7 +25,6 @@ import CheckoutFromCompletePayment from "./checkout-from-complete-payment";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import routes from "../../../routes";
 import WalletPaymentForBidderFullPayment from "../WalletPayment/WalletPaymentForBidderFullPayment";
-import PaymentSelection from "../PaymentSelection/PaymentSelection";
 import BankTransferPayment from "../BankTransferPayment/BankTransferPayment";
 import PaymentSelectionOnAuctionPurchase from "../PaymentSelection/PaymentSelectionOnAuctionPurchase";
 

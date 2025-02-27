@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -41,14 +39,14 @@ export default function CheckoutPageBuyNow() {
 
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
-  const [walletBalance,setWalletBalance] = useState(0)
-  const [isWalletPayment,setIsWalletPayment] = useState(null)
-  const [showWalletPaymentMethod,setShowWalletPaymentMethod] = useState(null)
-  const [showStripePayment,setShowStripePayment] = useState(null)
-  const [showPaymentSelecton,setShwoPaymentSelection] = useState(null)
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [isWalletPayment, setIsWalletPayment] = useState(null);
+  const [showWalletPaymentMethod, setShowWalletPaymentMethod] = useState(null);
+  const [showStripePayment, setShowStripePayment] = useState(null);
+  const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
   const { run, isLoading } = useAxios([]);
-  const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } = useAxios([]);
-
+  const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
+    useAxios([]);
 
   //==============================================================
 
@@ -58,43 +56,37 @@ export default function CheckoutPageBuyNow() {
         .get(api.app.auctions.getUserAuctionsDetails(auctionId))
         .then(async (res) => {
           setPendingAuctionData(res?.data?.data);
-          const auctionData = res?.data?.data 
-          const amountToPay = auctionData.acceptedAmount 
-        
-          if(auctionData){
-            // const pendingPeymentData = 
+          const auctionData = res?.data?.data;
+          const amountToPay = auctionData.acceptedAmount;
+
+          if (auctionData) {
+            // const pendingPeymentData =
             //   await authAxios.get(`${api.app.auctions.isPendingPayment(
             //     auctionId,'BUY_NOW_PURCHASE')}`)
             // console.log('pending payment data :',pendingPeymentData)
 
             // if(!pendingPeymentData?.data?.isPendingPaymentData){
-              run(
-                authAxios.get(`${api.app.Wallet.getBalance}`)
-                .then((response)=>{ 
-                  
-                  const balance = response.data
-                  
-                  if(balance && Number(balance) >= Number(amountToPay)){
-                    setWalletBalance(balance)
-                    setShwoPaymentSelection(true)
-                  }else{
-                      stripePaymentApiCall()
-                        
-                  }
-                })
-                
-              )
+            run(
+              authAxios.get(`${api.app.Wallet.getBalance}`).then((response) => {
+                const balance = response.data;
+
+                if (balance && Number(balance) >= Number(amountToPay)) {
+                  setWalletBalance(balance);
+                  setShwoPaymentSelection(true);
+                } else {
+                  stripePaymentApiCall();
+                }
+              })
+            );
             // }else{
             //   stripePaymentApiCall()
             // }
-           
           }
         })
     );
-  }, [auctionId, buyNowValue, run,lang, runPendingAuctionData]);
+  }, [auctionId, buyNowValue, run, lang, runPendingAuctionData]);
 
-  
-  const stripePaymentApiCall = () =>{
+  const stripePaymentApiCall = () => {
     run(
       authAxios
         .post(api.app.auctions.buyNow(auctionId))
@@ -105,18 +97,18 @@ export default function CheckoutPageBuyNow() {
           toast.error(err?.response?.data?.message[lang]);
         })
     );
-  }
+  };
 
   //==============================================================
-  const handleSubmitPayment = ()=>{
-    if(isWalletPayment=== null){
-      toast.error('Plese Select a payment method')
-      return
+  const handleSubmitPayment = () => {
+    if (isWalletPayment === null) {
+      toast.error("Plese Select a payment method");
+      return;
     }
-    setShwoPaymentSelection(false)
-    if(!isWalletPayment){
-      setShowStripePayment(true)
-      setShowWalletPaymentMethod(false)
+    setShwoPaymentSelection(false);
+    if (!isWalletPayment) {
+      setShowStripePayment(true);
+      setShowWalletPaymentMethod(false);
       // run(
       //   authAxios
       //     .post(api.app.auctions.buyNow(auctionId))
@@ -127,14 +119,13 @@ export default function CheckoutPageBuyNow() {
       //       toast.error(err?.response?.data?.message[lang]);
       //     })
       // );
-      stripePaymentApiCall()
-    }else{
-      setShowStripePayment(false)
-      setShowWalletPaymentMethod(true)
+      stripePaymentApiCall();
+    } else {
+      setShowStripePayment(false);
+      setShowWalletPaymentMethod(true);
     }
-  }
+  };
   //==============================================================
-
 
   const appearance = {
     theme: "flat",
@@ -145,15 +136,14 @@ export default function CheckoutPageBuyNow() {
   };
 
   const baseValue = Number(buyNowValue ?? pendingAuctionData?.acceptedAmount);
-  const auctionFee = ((baseValue * 0.5) / 100)
-  const stripeFee = (((baseValue * 2.9) /100) + 1 )// stripe takes 2.9% of the base value and additionally 1 dirham
+  const auctionFee = (baseValue * 0.5) / 100;
+  const stripeFee = (baseValue * 2.9) / 100 + 1; // stripe takes 2.9% of the base value and additionally 1 dirham
 
-
-  const payingAmount = !walletBalance ?
-    baseValue + auctionFee+ stripeFee
-  : showStripePayment ?
-    baseValue + auctionFee + stripeFee
-  : baseValue + auctionFee;
+  const payingAmount = !walletBalance
+    ? baseValue + auctionFee + stripeFee
+    : showStripePayment
+    ? baseValue + auctionFee + stripeFee
+    : baseValue + auctionFee;
 
   return (
     <>
@@ -178,8 +168,8 @@ export default function CheckoutPageBuyNow() {
               {selectedContent[localizationKeys.paymentDetails]}
             </h1>
             <p className="text-gray-dark font-normal text-base py-4">
-              To successfully complete the purchase of this ad, you should pay for
-              this auction
+              To successfully complete the purchase of this ad, you should pay
+              for this auction
             </p>
           </div>
           <div className="flex gap-x-10 justify-between md:flex-row flex-col-reverse md:mx-0 mx-4 h-auto">
@@ -249,14 +239,16 @@ export default function CheckoutPageBuyNow() {
                       {formatCurrency(auctionFee)}
                     </p>
                   </p>
-               { clientSecret&&    <p className="flex justify-between px-4 py-1.5">
-                    <h1 className="text-gray-dark font-medium text-sm">
-                      Card Fee
-                    </h1>
-                    <p className="text-gray-med font-normal text-base">
-                      {formatCurrency(stripeFee)}
+                  {clientSecret && (
+                    <p className="flex justify-between px-4 py-1.5">
+                      <h1 className="text-gray-dark font-medium text-sm">
+                        Card Fee
+                      </h1>
+                      <p className="text-gray-med font-normal text-base">
+                        {formatCurrency(stripeFee)}
+                      </p>
                     </p>
-                  </p>}
+                  )}
                   <p className="flex justify-between px-4 py-1.5">
                     <h1 className="text-gray-dark font-medium text-sm">
                       Total
@@ -281,24 +273,25 @@ export default function CheckoutPageBuyNow() {
               <h1 className="font-bold text-base text-black pt-4 pb-6">
                 Payment method
               </h1>
-            
 
-              {walletBalance ?showPaymentSelecton &&  <PaymentSelection 
-                isWalletPayment={isWalletPayment}
-                setIsWalletPayment={setIsWalletPayment}
-                handleSubmitPayment={handleSubmitPayment}
-              /> :
-              clientSecret && (
-                <Elements options={options} stripe={stripePromise}>
-                  <CheckoutFormBuyNow
-                    payDeposite
-                    auctionId={auctionId}
-                    payPrice={payingAmount}
-                  />
-                </Elements>
-              )
-              }
-                 {clientSecret && showStripePayment &&  (
+              {walletBalance
+                ? showPaymentSelecton && (
+                    <PaymentSelection
+                      isWalletPayment={isWalletPayment}
+                      setIsWalletPayment={setIsWalletPayment}
+                      handleSubmitPayment={handleSubmitPayment}
+                    />
+                  )
+                : clientSecret && (
+                    <Elements options={options} stripe={stripePromise}>
+                      <CheckoutFormBuyNow
+                        payDeposite
+                        auctionId={auctionId}
+                        payPrice={payingAmount}
+                      />
+                    </Elements>
+                  )}
+              {clientSecret && showStripePayment && (
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutFormBuyNow
                     payDeposite
@@ -307,16 +300,18 @@ export default function CheckoutPageBuyNow() {
                   />
                 </Elements>
               )}
-              {showWalletPaymentMethod && 
-              <WalletPaymentBuyNow
-                auctionId={auctionId}
-                amount={payingAmount}
-                walletBalance={walletBalance}
-                paymentAPI={api.app.auctions.buyNowThroughWallet(auctionId)}
-                setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
-                setShowWalletPaymentMethod={ ()=>(setShowWalletPaymentMethod(false))}
-              />
-              }
+              {showWalletPaymentMethod && (
+                <WalletPaymentBuyNow
+                  auctionId={auctionId}
+                  amount={payingAmount}
+                  walletBalance={walletBalance}
+                  paymentAPI={api.app.auctions.buyNowThroughWallet(auctionId)}
+                  setShwoPaymentSelection={() => setShwoPaymentSelection(true)}
+                  setShowWalletPaymentMethod={() =>
+                    setShowWalletPaymentMethod(false)
+                  }
+                />
+              )}
             </div>
           </div>
         </div>
@@ -408,4 +403,3 @@ export const PandingRow = ({
     </div>
   );
 };
-
