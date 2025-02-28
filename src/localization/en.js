@@ -319,6 +319,11 @@ const en = {
     "Why waiting? Buy it now on this price!",
   [localizationKeys.similarProducts]: "Similar Products",
   [localizationKeys.exploreRelatedFind]: "Explore Related Find",
+  [localizationKeys.auctionCancelledBySellerMessage]:
+    "This auction has been cancelled by the seller.",
+  [localizationKeys.auctionCancelledByAdminMessage]:
+    "This auction has been cancelled by the administrator. ",
+  [localizationKeys.auctionCancelled]: "Auction Cancelled",
   // shiping details
   [localizationKeys.locationDetails]: "Location Details",
   [localizationKeys.addAddress]: "Add Address",

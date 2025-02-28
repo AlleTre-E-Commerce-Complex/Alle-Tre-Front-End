@@ -316,6 +316,11 @@ const ar = {
     "لماذا الانتظار؟ اشتري الآن على هذا السعر!",
   [localizationKeys.similarProducts]: "منتجات مماثلة",
   [localizationKeys.exploreRelatedFind]: "استكشاف البحث عن ذات الصلة",
+  [localizationKeys.auctionCancelledBySellerMessage]:
+    "لقد تم إلغاء هذا المزاد من قبل البائع.",
+  [localizationKeys.auctionCancelledByAdminMessage]:
+    "لقد تم إلغاء هذا المزاد من قبل المسؤول.",
+  [localizationKeys.auctionCancelled]: "لقد تم إلغاء هذا المزاد",
   // shiping details
   [localizationKeys.locationDetails]: "تفاصيل الشحن",
   [localizationKeys.addAddress]: "إضافة عنوان",

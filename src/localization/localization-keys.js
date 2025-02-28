@@ -286,6 +286,10 @@ const localizationKeys = {
   whyWaitingBuyItNowOnThisPrice: "whyWaitingBuyItNowOnThisPrice",
   similarProducts: "similarProducts",
   exploreRelatedFind: "exploreRelatedFind",
+  auctionCancelledBySellerMessage: "auctionCancelledBySellerMessage",
+  auctionCancelledByAdminMessage: "auctionCancelledByAdminMessage",
+  auctionCancelled: "auctionCancelled",
+  
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",
