@@ -418,6 +418,9 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 StartDate={e?.startDate}
                                 isBuyNowAllowed={e?.isBuyNowAllowed}
                                 isMyAuction={e?.isMyAuction}
+                                latestBidAmount={e?.bids[0]?.amount}
+                                CurrentBid={e?.currentBid?.bidAmount}
+                                startBidAmount={e?.startBidAmount}
                               />
                             ))}
                           </div>
@@ -631,6 +634,9 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               StartDate={e?.startDate}
                               isBuyNowAllowed={e?.isBuyNowAllowed}
                               isMyAuction={e?.isMyAuction}
+                              latestBidAmount={e?.bids[0]?.amount}
+                              CurrentBid={e?.currentBid?.bidAmount}
+                              startBidAmount={e?.startBidAmount}
                             />
                           ))}
                         </div>

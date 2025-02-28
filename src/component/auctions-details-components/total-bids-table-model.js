@@ -53,21 +53,37 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
 
   return (
     <Modal
-      className="w-[1070px] h-[523px] rounded-2xl bg-transparent border-2 border-primary"
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      className="w-[calc(100%-32px)] mx-auto md:w-[970px] h-auto md:h-[473px] rounded-2xl bg-transparent border-2 border-primary"
+      onClose={() => {
+        setOpen(false);
+        document.body.style.overflow = 'auto';
+      }}
+      onOpen={() => {
+        setOpen(true);
+        document.body.style.overflow = 'hidden';
+      }}
       open={open}
     >
-      <div className="w-[1070px] h-[523px] rounded-2xl bg-white border-2 border-primary  ">
+      <div className="w-full md:w-[970px] h-auto md:h-[473px] rounded-2xl bg-white border-2 border-primary overflow-y-auto px-2 md:px-4">
+        <div className="relative">
+          <button 
+            onClick={() => {
+              setOpen(false);
+              document.body.style.overflow = 'auto';
+            }}
+            className="absolute top-2 right-2 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+          >
+            <span className="text-xl">&times;</span>
+          </button>
+        </div>
         <Dimmer
           className="fixed w-full h-full top-0 bg-white/50"
           active={isLoading}
           inverted
         >
-          {/* <Loader active /> */}
           <LodingTestAllatre />
         </Dimmer>
-        <Table className="bg-transparent border-none px-5 pt-8 ">
+        <Table className="bg-transparent border-none px-2 md:px-5 pt-8 w-full">
           <Table.Header>
             <Table.Row className="rounded-xl shadow bg-[#F8F8F8]">
               <Table.HeaderCell className="rounded-l-xl font-medium text-sm text-gray-dark text-center">
@@ -157,12 +173,29 @@ export const TotalBidsDetailsTableModel = ({
 
   return (
     <Modal
-      className="w-[1070px] h-[523px] rounded-2xl bg-transparent border-2 border-primary"
-      onClose={() => setOpenSecondModel(false)}
-      onOpen={() => setOpenSecondModel(true)}
+      className="w-[calc(100%-32px)] mx-auto md:w-[1070px] h-auto md:h-[523px] rounded-2xl bg-transparent border-2 border-primary "
+      onClose={() => {
+        setOpenSecondModel(false);
+        document.body.style.overflow = 'auto';
+      }}
+      onOpen={() => {
+        setOpenSecondModel(true);
+        document.body.style.overflow = 'hidden';
+      }}
       open={openSecondModel}
     >
-      <div className="w-[1070px] h-[523px] rounded-2xl bg-white border-2 border-primary  overflow-y-scroll scrollbar-hide ">
+      <div className="w-full md:w-[1070px] h-auto md:h-[523px] rounded-2xl bg-white border-2 border-primary overflow-y-auto scrollbar-hide p-4 md:p-6">
+        <div className="relative">
+          <button 
+            onClick={() => {
+              setOpenSecondModel(false);
+              document.body.style.overflow = 'auto';
+            }}
+            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+          >
+            <span className="text-xl">&times;</span>
+          </button>
+        </div>
         <Dimmer
           className="fixed w-full h-full top-0 bg-white/50"
           active={isLoading}
@@ -170,8 +203,8 @@ export const TotalBidsDetailsTableModel = ({
         >
           <Loader active />
         </Dimmer>
-        <div className=" mt-8">
-          <div className="bg-[#F9F9F9] w-[266px] h-[423px] rounded-lg fixed ltr:left-4 rtl:right-4">
+        <div className="mt-8">
+          <div className="bg-[#F9F9F9] w-full md:w-[266px] h-auto md:h-[423px] rounded-lg static md:fixed ltr:left-4 rtl:right-4 p-4 md:p-0">
             <div
               onClick={() => setOpenSecondModel(false)}
               className="flex mx-2 cursor-pointer "
@@ -205,35 +238,35 @@ export const TotalBidsDetailsTableModel = ({
               </div>
             </div>
           </div>
-          <div className="flex justify-end">
-            <Table className="bg-transparent border-none px-5 w-[754px] m-0 ">
-              <Table.Header className=" w-[754px] ">
+          <div className="flex justify-end mt-4 md:mt-0 overflow-x-auto">
+            <Table className="bg-transparent border-none px-2 md:px-5 w-full m-0">
+              <Table.Header>
                 <Table.Row className="rounded-xl shadow bg-[#F8F8F8]">
-                  <Table.HeaderCell className="rounded-l-xl font-medium text-sm text-gray-dark text-center">
+                  <Table.HeaderCell className="rounded-l-xl font-medium text-sm text-gray-dark text-center whitespace-nowrap px-4">
                     {selectedContent[localizationKeys.series]}
                   </Table.HeaderCell>
-                  <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
+                  <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center whitespace-nowrap px-4">
                     {selectedContent[localizationKeys.biddingTime]}
                   </Table.HeaderCell>
-                  <Table.HeaderCell className="rounded-r-xl font-medium text-sm text-gray-dark text-center ">
+                  <Table.HeaderCell className="rounded-r-xl font-medium text-sm text-gray-dark text-center whitespace-nowrap px-4">
                     {selectedContent[localizationKeys.bidAmount]}
                   </Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
 
               {historyBids?.bidsHistory?.map((e, index) => (
-                <Table.Body className="my-2">
+                <Table.Body key={index} className="my-2">
                   <div className="my-2"></div>
-                  <Table.Row className="bg-background border-none shadow rounded-lg ">
-                    <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-l-lg ">
+                  <Table.Row className="bg-background border-none shadow rounded-lg">
+                    <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-l-lg whitespace-nowrap px-4">
                       {index + 1}
                     </Table.Cell>
-                    <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center">
+                    <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center whitespace-nowrap px-4">
                       {moment(e?.createdAt).format(
-                        "dddd - DD/M/YYYY - HH:MM:SS"
+                        "DD/MM/YYYY HH:mm"
                       )}
                     </Table.Cell>
-                    <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-r-lg ">
+                    <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-r-lg whitespace-nowrap px-4">
                       {formatCurrency(e?.amount)}
                     </Table.Cell>
                   </Table.Row>
