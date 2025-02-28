@@ -20,22 +20,23 @@ import api from "../../api";
 import { Open } from "../../redux-store/auth-model-slice";
 
 const AuctionCardList = ({
-  price,
   title,
   adsImg,
   status,
   totalBods,
   endingTime,
-  bidNow,
   WatshlistState,
   watshlistForceState,
   auctionId,
-  className,
   isBuyNowAllowed,
   isMyAuction,
   onReload,
   StartDate,
   isPurchased,
+  isExpired,
+  CurrentBid,
+  startBidAmount,
+  latestBidAmount,
   PurchasedTime,
 }) => {
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
@@ -51,6 +52,10 @@ const AuctionCardList = ({
   } :
   ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
   ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
+
+  const formattedBid = formatCurrency(
+    latestBidAmount || CurrentBid || startBidAmount
+  );
 
   const startDate = useCountdown(StartDate);
 
@@ -198,7 +203,7 @@ const AuctionCardList = ({
               onClick={() => handelGoDetails(auctionId)}
               className="price-button-list absolute bg-[#e04868] text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
             >
-              {formatCurrency(price)}
+              {formattedBid}
             </div>
           </div>
 
@@ -226,7 +231,7 @@ const AuctionCardList = ({
                   {selectedContent[localizationKeys.lastestPrice]}
                 </h6>
                 <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
-                  {formatCurrency(price)}
+                  {formattedBid}
                 </p>
               </div>
               <div>
