@@ -14,6 +14,7 @@ import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import { formatCurrency } from "../../utils/format-currency";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import { FaCrown } from "react-icons/fa6";
 
 const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
   const { user } = useAuthState();
@@ -53,29 +54,37 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
 
   return (
     <Modal
-      className="w-[calc(100%-32px)] mx-auto md:w-[970px] h-auto md:h-[473px] rounded-2xl bg-transparent border-2 border-primary"
+      className="w-[calc(100%-32px)] mx-auto md:w-[970px] h-[473px] rounded-2xl bg-white border-2 border-primary"
       onClose={() => {
         setOpen(false);
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = "auto";
       }}
       onOpen={() => {
         setOpen(true);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
       }}
       open={open}
     >
-      <div className="w-full md:w-[970px] h-auto md:h-[473px] rounded-2xl bg-white border-2 border-primary overflow-y-auto px-2 md:px-4">
-        <div className="relative">
-          <button 
-            onClick={() => {
-              setOpen(false);
-              document.body.style.overflow = 'auto';
-            }}
-            className="absolute top-2 right-2 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
-          >
-            <span className="text-xl">&times;</span>
-          </button>
-        </div>
+      {/* Fixed Header & Close Button */}
+      <div className="relative bg-white border-b border-gray-200 p-4 rounded-t-2xl">
+        <button
+          onClick={() => {
+            setOpen(false);
+            document.body.style.overflow = "auto";
+          }}
+          className={`absolute top-4 ${
+            lang === "ar" ? "left-4" : "right-4"
+          } w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-primary`}
+        >
+          <span className="text-xl">&times;</span>
+        </button>
+        <h2 className="text-lg font-semibold text-gray-800 text-center">
+          {selectedContent[localizationKeys.totalBidders]}
+        </h2>
+      </div>
+
+      {/* Scrollable Content */}
+      <div className="overflow-y-auto h-[400px] px-2 md:px-4">
         <Dimmer
           className="fixed w-full h-full top-0 bg-white/50"
           active={isLoading}
@@ -83,55 +92,108 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
         >
           <LodingTestAllatre />
         </Dimmer>
-        <Table className="bg-transparent border-none px-2 md:px-5 pt-8 w-full">
-          <Table.Header>
-            <Table.Row className="rounded-xl shadow bg-[#F8F8F8]">
-              <Table.HeaderCell className="rounded-l-xl font-medium text-sm text-gray-dark text-center">
+
+        <Table className="bg-transparent border-none w-full">
+          {/* Fixed Table Header */}
+          <Table.Header className="sticky top-0 bg-[#F8F8F8] shadow z-10">
+            <Table.Row>
+              <Table.HeaderCell className="font-medium text-center py-2">
                 {selectedContent[localizationKeys.series]}
               </Table.HeaderCell>
-              <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
+              <Table.HeaderCell className="font-medium text-center py-2">
                 {selectedContent[localizationKeys.bidderName]}
               </Table.HeaderCell>
-              <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
+              <Table.HeaderCell className="font-medium text-center py-2">
                 {selectedContent[localizationKeys.biddingEndingTime]}
               </Table.HeaderCell>
-              <Table.HeaderCell className="font-medium text-sm text-gray-dark text-center">
+              <Table.HeaderCell className="font-medium text-center py-2">
                 {selectedContent[localizationKeys.totalBids]}
               </Table.HeaderCell>
-              <Table.HeaderCell className="rounded-r-xl font-medium text-sm text-gray-dark text-center ">
+              <Table.HeaderCell className="font-medium text-center py-2">
                 {selectedContent[localizationKeys.lastBidAmount]}
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
-          {totalBids?.map((e, index) => (
-            <Table.Body className="my-2 cursor-pointer">
-              <div className="my-2"></div>
-              <Table.Row
-                onClick={() => {
-                  setUserID(e?.id);
-                  setOpenSecondModel(true);
-                }}
-                className="bg-background border-none shadow rounded-lg "
-              >
-                <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-l-lg ">
-                  {index + 1}
-                </Table.Cell>
-                <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center">
-                  {e?.userName}
-                </Table.Cell>
-                <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center">
-                  {moment(e?.lastBidTime).format("dddd - DD/M/YYYY")}
-                </Table.Cell>
-                <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center">
-                  {e?.totalBids}
-                </Table.Cell>
-                <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-r-lg ">
-                  {formatCurrency(e?.lastBidAmount)}
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          ))}
+          {/* Scrollable Table Body */}
+          <Table.Body>
+            {totalBids?.map((e, index) => {
+              // Find the highest bid amount
+              const highestBidAmount = Math.max(
+                ...totalBids.map((bid) => Number(bid.lastBidAmount))
+              );
+              const isHighestBid =
+                Number(e?.lastBidAmount) === highestBidAmount;
+
+              return (
+                <Table.Row
+                  key={index}
+                  onClick={() => {
+                    setUserID(e?.id);
+                    setOpenSecondModel(true);
+                  }}
+                  className="bg-background border-none shadow rounded-lg mb-2"
+                >
+                  <Table.Cell
+                    className={`text-center relative ${
+                      isHighestBid ? "text-primary-dark font-bold" : ""
+                    }`}
+                  >
+                    {index + 1}
+                  </Table.Cell>
+                  <Table.Cell
+                    className={`text-center relative ${
+                      isHighestBid ? "text-primary-dark font-bold" : ""
+                    }`}
+                  >
+                    {e?.userName}
+                  </Table.Cell>
+                  <Table.Cell
+                    className={`text-center relative ${
+                      isHighestBid ? "text-primary-dark font-bold" : ""
+                    }`}
+                  >
+                    {moment(e?.lastBidTime).format("dddd - DD/M/YYYY")}
+                  </Table.Cell>
+                  <Table.Cell
+                    className={`text-center relative ${
+                      isHighestBid ? "text-primary-dark font-bold" : ""
+                    }`}
+                  >
+                    {e?.totalBids}
+                  </Table.Cell>
+                  <Table.Cell
+                    className={`text-center font-bold relative ${
+                      isHighestBid ? "text-primary-dark" : ""
+                    }`}
+                  >
+                    {formatCurrency(e?.lastBidAmount)}
+                    {isHighestBid && (
+                      <div className="group relative inline-block">
+                        <FaCrown
+                          className={`absolute ml-2 -top-1.5 transform -translate-y-1/2 text-yellow-500 text-lg ${
+                            lang === "ar" ? "mr-2" : ""
+                          }`}
+                        />
+
+                        <div className="absolute  mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black text-white text-sm py-1 px-2 rounded-md">
+                          <div className="flex flex-wrap">
+                            <span className="w-full">
+                              {selectedContent[localizationKeys.highest]}
+                            </span>
+                            <span className="w-full">
+                              {" "}
+                              {selectedContent[localizationKeys.bidder]}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
         </Table>
       </div>
       <TotalBidsDetailsTableModel
@@ -176,22 +238,22 @@ export const TotalBidsDetailsTableModel = ({
       className="w-[calc(100%-32px)] mx-auto md:w-[1070px] h-auto md:h-[523px] rounded-2xl bg-transparent border-2 border-primary "
       onClose={() => {
         setOpenSecondModel(false);
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = "auto";
       }}
       onOpen={() => {
         setOpenSecondModel(true);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
       }}
       open={openSecondModel}
     >
       <div className="w-full md:w-[1070px] h-auto md:h-[523px] rounded-2xl bg-white border-2 border-primary overflow-y-auto scrollbar-hide p-4 md:p-6">
         <div className="relative">
-          <button 
+          <button
             onClick={() => {
               setOpenSecondModel(false);
-              document.body.style.overflow = 'auto';
+              document.body.style.overflow = "auto";
             }}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-primary"
           >
             <span className="text-xl">&times;</span>
           </button>
@@ -262,9 +324,7 @@ export const TotalBidsDetailsTableModel = ({
                       {index + 1}
                     </Table.Cell>
                     <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center whitespace-nowrap px-4">
-                      {moment(e?.createdAt).format(
-                        "DD/MM/YYYY HH:mm"
-                      )}
+                      {moment(e?.createdAt).format("DD/MM/YYYY HH:mm")}
                     </Table.Cell>
                     <Table.Cell className="border-none text-gray-dark text-sm font-normal text-center rounded-r-lg whitespace-nowrap px-4">
                       {formatCurrency(e?.amount)}

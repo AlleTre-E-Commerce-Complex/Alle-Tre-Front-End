@@ -42,17 +42,14 @@ const CountdownDisplay = memo(
 );
 
 const AuctionCard = ({
-  price,
   title,
   adsImg,
   status,
   totalBods,
   endingTime,
-  bidNow,
   WatshlistState,
   watshlistForceState,
   auctionId,
-  className,
   isBuyNowAllowed,
   isMyAuction,
   onReload,

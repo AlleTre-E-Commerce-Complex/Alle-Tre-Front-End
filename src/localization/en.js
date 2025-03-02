@@ -44,6 +44,7 @@ const en = {
   [localizationKeys.changeStatus]: "Change status",
   [localizationKeys.viewContactDetails]: " View contact details",
   [localizationKeys.trendingAuctions]: "Trending Auctions",
+  [localizationKeys.postedBy]: "Posted by",
   [localizationKeys.type]: "Type",
   [localizationKeys.filterOptions]: "Filter options",
   [localizationKeys.filter]: "Filter",
@@ -157,6 +158,8 @@ const en = {
   [localizationKeys.noMoreAuctions]: "No more auctions",
   [localizationKeys.youCanUseYourBonusAmountUsingWalletPayment]:
     " You can use your bonus amount using wallet payment",
+  [localizationKeys.highest]: "Highest",
+  [localizationKeys.bidder]: "Bidder",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",

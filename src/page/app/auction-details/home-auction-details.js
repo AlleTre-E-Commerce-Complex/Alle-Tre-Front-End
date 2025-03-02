@@ -32,10 +32,11 @@ const getShareImage = (imageUrl) => {
     return "https://www.alletre.com/logo512.png";
   }
   // Remove any query parameters for cleaner URL
-  const baseUrl = imageUrl.split('?')[0];
+  const baseUrl = imageUrl.split("?")[0];
   // Add back only the necessary Firebase parameters
-  const firebaseParams = imageUrl.includes('firebase') ? 
-    `?alt=media&token=${imageUrl.split('token=')[1]}` : '';
+  const firebaseParams = imageUrl.includes("firebase")
+    ? `?alt=media&token=${imageUrl.split("token=")[1]}`
+    : "";
   return baseUrl + firebaseParams;
 };
 
@@ -85,43 +86,89 @@ const HomeAuctionDetails = () => {
 
   // Function to determine image type from URL
   const getImageType = (url) => {
-    if (!url) return 'image/png'; // default for logo
-    if (url.toLowerCase().includes('.jpg') || url.toLowerCase().includes('.jpeg')) return 'image/jpeg';
-    if (url.toLowerCase().includes('.png')) return 'image/png';
-    if (url.toLowerCase().includes('.gif')) return 'image/gif';
-    if (url.toLowerCase().includes('.webp')) return 'image/webp';
-    return 'image/jpeg'; // default for unknown
+    if (!url) return "image/png"; // default for logo
+    if (
+      url.toLowerCase().includes(".jpg") ||
+      url.toLowerCase().includes(".jpeg")
+    )
+      return "image/jpeg";
+    if (url.toLowerCase().includes(".png")) return "image/png";
+    if (url.toLowerCase().includes(".gif")) return "image/gif";
+    if (url.toLowerCase().includes(".webp")) return "image/webp";
+    return "image/jpeg"; // default for unknown
   };
 
   return (
     <div>
       <Helmet prioritizeSeoTags={true}>
         {/* Base tags */}
-        <title>{auctionsDetailsData?.product?.title || "Auction Details - Alletre"}</title>
-        <meta name="description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
-        
+        <title>
+          {auctionsDetailsData?.product?.title || "Auction Details - Alletre"}
+        </title>
+        <meta
+          name="description"
+          content={
+            auctionsDetailsData?.product?.description ||
+            "Explore our latest auction details on Alletre."
+          }
+        />
+
         {/* Open Graph / Facebook - Explicitly provided first */}
         <meta property="og:image" content={shareImageUrl} key="og:image" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Alletre" />
-        <meta property="og:url" content={`https://www.alletre.com${pathname}`} />
-        <meta property="og:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
-        <meta property="og:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
+        <meta
+          property="og:url"
+          content={`https://www.alletre.com${pathname}`}
+        />
+        <meta
+          property="og:title"
+          content={
+            auctionsDetailsData?.product?.title || "Auction Details - Alletre"
+          }
+        />
+        <meta
+          property="og:description"
+          content={
+            auctionsDetailsData?.product?.description ||
+            "Explore our latest auction details on Alletre."
+          }
+        />
         <meta property="og:image:secure_url" content={shareImageUrl} />
         <meta property="og:image:type" content={getImageType(mainImageUrl)} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
+        <meta
+          property="og:image:alt"
+          content={auctionsDetailsData?.product?.title || "Alletre Auction"}
+        />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@alletre" />
         <meta name="twitter:creator" content="@alletre" />
-        <meta name="twitter:url" content={`https://www.alletre.com${pathname}`} />
-        <meta name="twitter:title" content={auctionsDetailsData?.product?.title || "Auction Details - Alletre"} />
-        <meta name="twitter:description" content={auctionsDetailsData?.product?.description || "Explore our latest auction details on Alletre."} />
+        <meta
+          name="twitter:url"
+          content={`https://www.alletre.com${pathname}`}
+        />
+        <meta
+          name="twitter:title"
+          content={
+            auctionsDetailsData?.product?.title || "Auction Details - Alletre"
+          }
+        />
+        <meta
+          name="twitter:description"
+          content={
+            auctionsDetailsData?.product?.description ||
+            "Explore our latest auction details on Alletre."
+          }
+        />
         <meta name="twitter:image" content={shareImageUrl} />
-        <meta name="twitter:image:alt" content={auctionsDetailsData?.product?.title || "Alletre Auction"} />
+        <meta
+          name="twitter:image:alt"
+          content={auctionsDetailsData?.product?.title || "Alletre Auction"}
+        />
 
         {/* Additional SEO */}
         <link rel="canonical" href={`https://www.alletre.com${pathname}`} />
@@ -217,6 +264,7 @@ const HomeAuctionDetails = () => {
                     // TODO add PurchasedTime
                     PurchasedTime={""}
                     sellerLocation={auctionsDetailsData?.location}
+                    userName={auctionsDetailsData?.user?.userName}
                   />
                 )}
               </div>
