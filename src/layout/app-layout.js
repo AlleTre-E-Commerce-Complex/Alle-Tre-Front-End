@@ -53,9 +53,11 @@ const AppLayouts = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    const hasCompletedProfile = window.localStorage.getItem("hasCompletedProfile");
+    const hasCompletedProfile = window.localStorage.getItem(
+      "hasCompletedProfile"
+    );
     const hasSeenRewardModal = localStorage.getItem("hasSeenRewardModal");
-    
+
     if (!hasCompletedProfile && !hasSeenRewardModal) {
       setShowRewardModal(true);
       localStorage.setItem("hasSeenRewardModal", "true");
@@ -87,16 +89,9 @@ const AppLayouts = () => {
   const handleListProduct = () => {
     setIsExpanded(!isExpanded);
     if (user) {
-      const hasCompletedProfile = window.localStorage.getItem(
-        "hasCompletedProfile"
-      );
-      if (JSON.parse(hasCompletedProfile)) {
-        history.push(routes.app.listProduct.default);
-        // dispatch(productDetails({}));
-      }
-    } else {
-      dispatch(Open());
-    }
+      history.push(routes.app.listProduct.default);
+      // dispatch(productDetails({}));
+    } else dispatch(Open());
   };
 
   return (
@@ -223,10 +218,7 @@ const AppLayouts = () => {
                 path={routes.app.homeDetails()}
                 component={HomeAuctionDetails}
               />
-              <Route
-                path={routes.app.unSubscribeUser}
-                component={Home}
-              />
+              <Route path={routes.app.unSubscribeUser} component={Home} />
               <Route path={routes.app.categories()} component={Categories} />
               <Route path={routes.app.faqs} component={FAQs} />
               <Route path={routes.app.support} component={Support} />
