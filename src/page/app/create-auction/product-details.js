@@ -187,7 +187,7 @@ const ProductDetails = () => {
   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
-  
+
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || productDetailsint.category
   );
@@ -729,7 +729,7 @@ const ProductDetails = () => {
                             ),
                           disabled:
                             option.text !== "Electronic Devices" &&
-                            option.text !== "الأجهزة الإلكترونية", 
+                            option.text !== "الأجهزة الإلكترونية",
                         }))}
                         loading={loadingGatogry}
                         onChange={(value) => {
@@ -892,10 +892,11 @@ const ProductDetails = () => {
                               placeholder={
                                 selectedContent[localizationKeys.brand]
                               }
-                              value={brandInput}
+                              value={formik.values.brand}
                               onChange={(e) => {
-                                handleBrandInputChange(e.target.value);
+                                const value = e.target.value;
                                 formik.handleChange(e);
+                                handleBrandInputChange(value);
                               }}
                               onFocus={() => setIsDropdownOpen(true)}
                             />

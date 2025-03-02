@@ -163,8 +163,8 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
                     {e?.totalBids}
                   </Table.Cell>
                   <Table.Cell
-                    className={`text-center font-bold relative ${
-                      isHighestBid ? "text-primary-dark" : ""
+                    className={`text-center  relative ${
+                      isHighestBid ? "text-primary-dark font-bold" : ""
                     }`}
                   >
                     {formatCurrency(e?.lastBidAmount)}
