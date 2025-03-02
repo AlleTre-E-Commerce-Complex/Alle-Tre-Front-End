@@ -118,7 +118,7 @@ const BuyNowAuctionsSlider = () => {
                     auctions?.length > 4
                       ? ""
                       : "md:justify-center justify-start"
-                  } snapslider-scroll swiper-wrapper gap-4`}
+                  } snapslider-scroll swiper-wrapper gap-1`}
                 >
                   {auctions?.map((e) => (
                     <div

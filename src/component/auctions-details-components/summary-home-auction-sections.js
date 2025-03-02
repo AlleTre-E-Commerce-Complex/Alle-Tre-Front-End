@@ -27,6 +27,7 @@ import AddLocationModel from "../create-auction-components/add-location-model";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import { FaRegUser } from "react-icons/fa";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -48,6 +49,7 @@ const SummaryHomeAuctionSections = ({
   onReload,
   isOffer,
   sellerLocation,
+  userName,
 }) => {
   const { user } = useAuthState();
   const [lang] = useLanguage("");
@@ -300,53 +302,80 @@ const SummaryHomeAuctionSections = ({
       {/* Only show content if auction is not cancelled */}
       {!["CANCELLED_BEFORE_EXP_DATE", "CANCELLED_AFTER_EXP_DATE", "CANCELLED_BY_ADMIN"].includes(status) && (
         <div>
-          {" "}
-          {/* First Half */}
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">{title}</h1>
-          {/* Status and Rating Section */}
-          <div className="flex items-center gap-x-5">
-            <AuctionsStatus status={status} big />
-            {/* Rating Section (uncomment when needed) */}
-            {/* <div className="flex items-center gap-x-2">
-<RatingStare max={numberStare} size="huge" />
-<p className="text-sm text-gray-600">
-  ({totalReviews} {selectedContent[localizationKeys.reviews]})
-</p>
-</div> */}
+            {/* Header Section */}
+          <div className=" pb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+            {title}
+            </h1>
+            <div className="flex items-center gap-x-5">
+              <AuctionsStatus status={status} big />
+            </div>
+        </div>
+
+        {/* Seller Info Section */}
+        <div className="py-4">
+          {userName && (
+              <div className="flex items-start">
+              <div>
+                <p className="text-sm text-gray-500 mb-2.5">
+                  {selectedContent[localizationKeys.postedBy] || "Seller"}
+                </p>
+                <div className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5">
+                  <FaRegUser className="text-gray-500" />
+                  <span className="text-base font-medium">{userName}</span>
+                </div>
+              </div>
+            </div>
+          )}
           </div>
-          {/* Description */}
-          <div className="pt-8 overflow-clip">
-            <h3 className="text-base font-light text-gray-600 mb-2">
+  
+        {/* Description Section */}
+          <div className="py-6">
+            <h3 className="text-base font-medium text-gray-700 mb-3">
               {selectedContent[localizationKeys.description]}
             </h3>
-            <p className="text-lg text-gray-700 mb-4">
+            <p className="text-base text-gray-600 leading-relaxed mb-4">
               {truncateString(description, 80)}
             </p>
             <HashLink
-              className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"
+              className="inline-flex items-center text-primary hover:text-primary-dark text-sm font-medium transition-colors duration-200"
               smooth
               to={`${pathname}#itemDescription`}
               onClick={() => setActiveIndexTab(0)}
             >
               {selectedContent[localizationKeys.viewDetails]}
-            </HashLink>
+              <svg
+              className={`w-4 h-4 ml-1 ${lang === "ar" ? "rotate-180" : ""}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </HashLink>
           </div>
-          {/* Category sections */}
-          <div className="pt-6 mb-8 flex flex-wrap gap-4">
+  
+        {/* Category Section */}
+          <div className="py-6 flex flex-wrap gap-6">
             <div>
-              <p className="text-sm text-gray-500 mb-2">
+              <p className="text-sm text-gray-500 mb-2.5">
                 {selectedContent[localizationKeys.category]}
               </p>
-              <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+              <div className="px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
                 {category}
               </div>
             </div>
             {subCategory && (
               <div>
-                <p className="text-sm text-gray-500 mb-2">
+                <p className="text-sm text-gray-500 mb-2.5">
                   {selectedContent[localizationKeys.subCategory]}
                 </p>
-                <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+                <div className="px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
                   {subCategory}
                 </div>
               </div>

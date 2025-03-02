@@ -177,37 +177,46 @@ const AddLocationModel = ({
       open={open}
     >
       <div className="sm:w-[471px] w-full h-auto border-2 border-primary rounded-2xl bg-background p-6">
-        <div className="ltr:text-left rtl:text-right">
+        <div className="flex justify-between items-center ltr:text-left rtl:text-right">
           <h1 className="text-base font-bold">
             {isEditing
               ? selectedContent[localizationKeys.editLocation]
               : selectedContent[localizationKeys.locationIsRequired]}{" "}
             <span className="text-red-500">*</span>
           </h1>
-          <p className="text-gray-med text-xs font-normal pt-1 pb-2">
-            {
-              selectedContent[
-                localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo
-              ]
-            }
-            <br />
-            {
-              selectedContent[
-                localizationKeys.yourLocationYouCanManageThemLater
-              ]
-            }
-            <span>
-              <HashLink
-                smooth
-                to={`${routes.app.profile.profileSettings}#AddressBook`}
-                className="text-primary underline cursor-pointer"
-                onClick={() => setOpen(false)}
-              >
-                {selectedContent[localizationKeys.manageYouAddresses]}
-              </HashLink>
-            </span>
-          </p>
+          <button
+            onClick={() => {
+              setOpen(false);
+              setIsListing(false);
+            }}
+            className={`absolute top-4 ${
+              isArabic ? "left-4" : "right-4"
+            } w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-primary`}
+          >
+            <span className="text-xl">&times;</span>
+          </button>
         </div>
+
+        <p className="text-gray-med text-xs font-normal pt-1 pb-2">
+          {
+            selectedContent[
+              localizationKeys.inOrderToFinishTheProcedureWeHaveToGetAccessTo
+            ]
+          }
+          <br />
+          {selectedContent[localizationKeys.yourLocationYouCanManageThemLater]}
+          <span>
+            <HashLink
+              smooth
+              to={`${routes.app.profile.profileSettings}#AddressBook`}
+              className="text-primary underline cursor-pointer"
+              onClick={() => setOpen(false)}
+            >
+              {selectedContent[localizationKeys.manageYouAddresses]}
+            </HashLink>
+          </span>
+        </p>
+
         <div>
           <Formik
             initialValues={initialValues}
@@ -217,6 +226,7 @@ const AddLocationModel = ({
           >
             {({ values, setFieldValue, errors, touched, handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
+                {/* Form fields go here */}
                 <div className="w-full py-6">
                   <FormikMultiDropdown
                     name="countryId"
@@ -239,6 +249,7 @@ const AddLocationModel = ({
                   />
                 </div>
 
+                {/* Other fields */}
                 <div className="w-full py-6">
                   <FormikInput
                     name="address"
@@ -250,6 +261,7 @@ const AddLocationModel = ({
                   />
                 </div>
 
+                {/* Phone input */}
                 <div className="float-container" lang={lang}>
                   <label
                     htmlFor="phone"
@@ -288,6 +300,7 @@ const AddLocationModel = ({
                   </div>
                 </div>
 
+                {/* Address label */}
                 <div className="w-full py-11">
                   <FormikInput
                     name="addressLabel"
@@ -297,14 +310,15 @@ const AddLocationModel = ({
                   />
                 </div>
 
+                {/* Google Map */}
                 <div className="w-full py-6">
                   {isLoaded ? (
                     <GoogleMap
                       mapContainerStyle={{ width: "100%", height: "200px" }}
                       zoom={10.5}
-                      center={selectedLocation || { lat: 25.1850, lng: 55.2651 }}
+                      center={selectedLocation || { lat: 25.185, lng: 55.2651 }}
                       options={{
-                        streetViewControl: false, 
+                        streetViewControl: false,
                       }}
                       onClick={(e) => {
                         const lat = e.latLng.lat();
@@ -331,6 +345,7 @@ const AddLocationModel = ({
                   type="hidden"
                   value={values.lng || ""}
                 />
+
                 <div className="flex justify-end">
                   <Button
                     loading={isLoading}

@@ -141,6 +141,8 @@ const localizationKeys = {
   noMoreAuctions: "noMoreAuctions",
   youCanUseYourBonusAmountUsingWalletPayment:
     "youCanUseYourBonusAmountUsingWalletPayment",
+  highest: "highest",
+  bidder: "bidder",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -562,6 +564,7 @@ const localizationKeys = {
   AddAccount: "AddAccount",
   WithDrawalSuccessMessage: "WithDrawalSuccessMessage",
   addAccount: "addAccount",
+  postedBy: "postedBy",
 };
 
 export default localizationKeys;

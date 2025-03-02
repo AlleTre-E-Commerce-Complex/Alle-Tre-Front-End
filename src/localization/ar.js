@@ -153,6 +153,8 @@ const ar = {
   [localizationKeys.noMoreAuctions]: "لا مزيد من المزادات",
   [localizationKeys.youCanUseYourBonusAmountUsingWalletPayment]:
     " يمكنك استخدام رصيدك المجانى باستخدام رصيد المحفظة",
+  [localizationKeys.highest]: "أعلى",
+  [localizationKeys.bidder]: " مزايد",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
