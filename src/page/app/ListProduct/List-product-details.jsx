@@ -633,10 +633,11 @@ const ListProductDetails = () => {
                               placeholder={
                                 selectedContent[localizationKeys.brand]
                               }
-                              value={brandInput}
+                              value={formik.values.brand}
                               onChange={(e) => {
-                                handleBrandInputChange(e.target.value);
+                                const value = e.target.value;
                                 formik.handleChange(e);
+                                handleBrandInputChange(value);
                               }}
                               onFocus={() => setIsDropdownOpen(true)}
                             />
