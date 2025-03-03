@@ -56,9 +56,11 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState([]);
   const [listedProducts, setListedProducts] = useState([]);
-  const [totalPages, setTotalPages] = useState();
+  const [totalPagesListed, setTotalPagesListed] = useState();
+  const [totalpagesAuction, setTotalpagesAuction] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState([]);
-  const [page, setPage] = useState(20);
+  const [auctionPageNumber, setAuctionPageNumber] = useState(Number(DEFAULT_PAGE));
+  const [listedPageNumber, setListedPageNumber] = useState(Number(DEFAULT_PAGE));
 
   const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
@@ -78,24 +80,21 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
-    let page = queryParams.get("page") || DEFAULT_PAGE;
-    let perPage = queryParams.get("perPage") || getDefaultPerPage();
+    let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
 
-    // Set default values if not present
-    if (!queryParams.has("page") || !queryParams.has("perPage")) {
-      queryParams.set("page", page);
-      queryParams.set("perPage", perPage);
+    if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
+      queryParams.set("auctionPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
       history.replace({ search: queryParams.toString() });
-      return; // Let the URL change trigger the fetch
+      return;
     }
 
-    // Get all filter parameters from URL
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
     
-    // Prepare filter parameters to match backend DTO
     const filterParams = {
-      page: Number(parsed.page || DEFAULT_PAGE),
-      perPage: Number(parsed.perPage || getDefaultPerPage()),
+      page: page,
+      perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
       brands: parsed.brands ? parsed.brands.map(Number) : undefined,
       sellingType: parsed.sellingType || undefined,
@@ -105,7 +104,6 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined
     };
 
-    // Remove undefined values
     Object.keys(filterParams).forEach(key => {
       if (filterParams[key] === undefined) {
         delete filterParams[key];
@@ -115,14 +113,13 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
     console.log("Sending filters to backend:", filterParams); // For debugging
 
-    // Fetch auctions
     if (!user) {
       runMainAuctions(
         axios
           .get(`${api.app.auctions.getMain}?${queryStr}`)
           .then((res) => {
             setMainAuctions(res?.data?.data);
-            setTotalPages(res?.data?.pagination?.totalPages);
+            setTotalpagesAuction(res?.data?.pagination?.totalPages);
           })
       );
       runSponsoredAuctions(
@@ -136,7 +133,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           .get(`${api.app.auctions.getMain}?${queryStr}`)
           .then((res) => {
             setMainAuctions(res?.data?.data);
-            setTotalPages(res?.data?.pagination?.totalPages);
+            setTotalpagesAuction(res?.data?.pagination?.totalPages);
           })
       );
       runSponsoredAuctions(
@@ -145,26 +142,25 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         })
       );
     }
-  }, [search, user]);
+  }, [search, user, auctionPageNumber]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
-    let page = queryParams.get("page") || DEFAULT_PAGE;
-    let perPage = queryParams.get("perPage") || getDefaultPerPage();
+    let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
 
-    if (!queryParams.has("page") || !queryParams.has("perPage")) {
-      queryParams.set("page", page);
-      queryParams.set("perPage", perPage);
+    if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
+      queryParams.set("productPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
       history.replace({ search: queryParams.toString() });
       return;
     }
 
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
     
-    // Prepare filter parameters to match backend DTO
     const filterParams = {
-      page: Number(parsed.page || DEFAULT_PAGE),
-      perPage: Number(parsed.perPage || getDefaultPerPage()),
+      page: page,
+      perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
       brands: parsed.brands ? parsed.brands.map(Number) : undefined,
       sellingType: parsed.sellingType || undefined,
@@ -174,7 +170,6 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined
     };
 
-    // Remove undefined values
     Object.keys(filterParams).forEach(key => {
       if (filterParams[key] === undefined) {
         delete filterParams[key];
@@ -190,7 +185,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
           .then((res) => {
             setListedProducts(res?.data?.data);
-            setTotalPages(res?.data?.totalPages);
+            setTotalPagesListed(res?.data?.pagination?.totalPages);
           })
       );
     } else {
@@ -199,11 +194,11 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
           .then((res) => {
             setListedProducts(res?.data?.data);
-            setTotalPages(res?.data?.totalPages);
+            setTotalPagesListed(res?.data?.pagination?.totalPages);
           })
       );
     }
-  }, [search, user]);
+  }, [search, user, listedPageNumber]);
 
   useEffect(() => {
     if (!socket) return;
@@ -246,13 +241,11 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       });
     };
 
-    // Register socket listeners
     socket.on("auction:buyNowPurchase", handleBuyNowAuctionPurchase);
     socket.on("auction:newAuctionListed", handleNewAuction);
     socket.on("auction:cancelled", handleAuctionCancelled);
     socket.on("auction:increaseBid", handleIncreaseBid);
 
-    // Cleanup to avoid memory leaks
     return () => {
       socket.off("auction:buyNowPurchase", handleBuyNowAuctionPurchase);
       socket.off("auction:newAuctionListed", handleNewAuction);
@@ -287,7 +280,6 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             }
             inverted
           >
-            {/* <Loader active /> */}
             <LodingTestAllatre />
           </Dimmer>
           <div className="z-20  w-full px-4 mx-auto py-5">
@@ -308,10 +300,10 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             <SliderRow />
           </div>
           <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
-        <div className="flex  ">
+            <div className="flex  ">
               <h6 className="text-gray-dark text-base font-normal pt-3 lg:pl-3 px-4 lg:px-0 w-full lg:w-auto">
-            {mainAuctions?.length} {selectedContent[localizationKeys.results]}
-          </h6>
+                {mainAuctions?.length} {selectedContent[localizationKeys.results]}
+              </h6>
             </div>
             <div
               className={
@@ -345,7 +337,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           </div>
           <div className=" lg:mx-auto mx-2">
             <div className="flex gap-5  px-2 sm:px-4 mx-2 ">
-                <FilterSections myRef={myRef} />
+              <FilterSections myRef={myRef} />
               <div className="w-full">
                 {(() => {
                   if (isGrid && selectedType === "auction") {
@@ -384,9 +376,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'auction'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -428,9 +423,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'auction'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -474,9 +472,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'products'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -520,9 +521,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'products'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -564,9 +568,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'auction'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -605,9 +612,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'products'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -643,9 +653,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {mainAuctions?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'auction'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -678,9 +691,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
                           {listedProducts?.length !== 0 ? (
                             <PaginationApp
-                              totalPages={totalPages}
+                              totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
+                              type={'products'}
+                              setAuctionPageNumber={setAuctionPageNumber}
+                              setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
@@ -691,39 +707,8 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   }
                 })()}
               </div>
-              {/* )} */}
             </div>
           </div>
-          {/* <div className="px-4 mx-auto py-10"><LiveAuctionsSlider /></div> */}
-          {/* <div className="relative py-14 ">
-            <img
-              className="w-full h-[257px] object-cover md:block hidden "
-              src={createAuctionimgBGfrom}
-              alt="createAuctionimgBGfrom"
-            />
-            <img
-              className="w-full h-auto object-cover  block md:hidden "
-              src={createAuctionimgSm}
-              alt="createAuctionimgSm"
-            />
-            <button
-              onClick={() => handelCreatOuction()}
-              className="w-[304px] h-[48px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[90px] right-[90px] hidden md:block"
-            >
-              {selectedContent[localizationKeys.createAuctionNow]}
-            </button>
-            <button
-              onClick={() => handelCreatOuction()}
-              className="w-[128px] h-[32px] text-base font-normal bg-primary hover:bg-primary-dark rounded-lg text-white absolute bottom-[60px] right-[25px] md:hidden block"
-            >
-              {selectedContent[localizationKeys.createAuction]}
-            </button>
-            <img
-              className="lg:w-[700px] w-[500px] absolute bottom-[90px] left-[90px] hidden md:block"
-              src={CreaAuctionText}
-              alt="CreaAuctionText"
-            />
-          </div> */}
           <div className="px-4 mx-auto py-10">
             <UpComingAuctionsSlider />
           </div>

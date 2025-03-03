@@ -2,6 +2,7 @@ import jwt_decode from "jwt-decode";
 import Axios from "axios";
 import api from "../api";
 import routes from "routes";
+import { getDefaultPerPage } from "constants/pagination";
 
 class Auth {
   constructor() {
@@ -45,7 +46,8 @@ class Auth {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("hasCompletedProfile");
       if (window.location.pathname !== routes.app.home) {
-        window.location = `${routes.app.home}?page=1&perPage=28`
+        const perPage = getDefaultPerPage()
+        window.location = `${routes.app.home}?page=1&perPage=${perPage}`
       }
     }
   }
