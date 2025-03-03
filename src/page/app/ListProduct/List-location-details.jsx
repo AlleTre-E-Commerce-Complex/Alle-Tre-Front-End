@@ -21,6 +21,7 @@ import LodingTestAllatre from "../../../component/shared/lotties-file/loding-tes
 import { BsThreeDots } from "react-icons/bs";
 import { Popup } from "semantic-ui-react";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
+import { getDefaultPerPage } from "constants/pagination";
 
 const ListingProductsLocationDetails = () => {
   const [lang] = useLanguage("");
@@ -189,7 +190,8 @@ const ListingProductsLocationDetails = () => {
             toast.success(
               selectedContent[localizationKeys.yourProductIsSuccessfullyListed]
             );
-            history.push(`${routes.app.home}?page=1&perPage=28`);
+            const perPage = getDefaultPerPage()
+            history.push(`${routes.app.home}?page=1&perPage=${perPage}`);
             dispatch(listingProductDetails({}));
           })
           .catch((err) => {

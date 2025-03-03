@@ -4,12 +4,12 @@ import useFilter from "../../../hooks/use-filter";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import "../../../../src/assets/style/pagination-app.css";
 
-const PaginationApp = ({ totalPages, myRef, myRef1 }) => {
-  const [page, setPage] = useFilter("page", DEFAULT_PAGE);
+const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, setListedPageNumber }) => {
+  const pageParam = type === 'auction' ? 'auctionPage' : 'productPage';
+  const [page, setPage] = useFilter(pageParam, DEFAULT_PAGE);
   const [perPage, setPerPage] = useFilter("perPage", getDefaultPerPage());
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       const newPerPage = getDefaultPerPage();
@@ -24,10 +24,25 @@ const PaginationApp = ({ totalPages, myRef, myRef1 }) => {
   }, [perPage, setPerPage]);
 
   const handlePageChange = (e, { activePage }) => {
-    const newPage = activePage.toString();
-    if (newPage !== page) {
-      setPage(newPage);
+    const currentPage = parseInt(page);
+    const targetPage = parseInt(activePage);
+    const maxPages = parseInt(totalPages) || 1;
+
+    // Ensure we don't exceed boundaries
+    let newPage = Math.min(Math.max(1, targetPage), maxPages);
+    
+    // Convert to string for consistency with URL parameters
+    const newPageStr = newPage.toString();
+    
+    if (newPageStr !== page) {
+      setPage(newPageStr);
       
+      if (type === 'auction') {
+        setAuctionPageNumber(newPageStr);
+      } else if (type === 'products') {
+        setListedPageNumber(newPageStr);
+      }
+
       // Smooth scroll to ref
       if (myRef?.current) {
         window.scrollTo({
@@ -50,12 +65,16 @@ const PaginationApp = ({ totalPages, myRef, myRef1 }) => {
       defaultActivePage={parseInt(page)}
       activePage={parseInt(page)}
       ellipsisItem={windowWidth < 768 ? null : undefined}
-      firstItem={windowWidth < 768 ? null : undefined}
-      lastItem={windowWidth < 768 ? null : undefined}
+      firstItem={{ 'aria-label': 'First page' }}
+      lastItem={{ 'aria-label': 'Last page' }}
+      prevItem={null}
+      nextItem={null}
       secondary
-      totalPages={totalPages || 1}
+      totalPages={parseInt(totalPages) || 1}
       onPageChange={handlePageChange}
       size={windowWidth < 768 ? "mini" : "small"}
+      boundaryRange={windowWidth < 768 ? 0 : 1}
+      siblingRange={windowWidth < 768 ? 0 : 1}
     />
   );
 };
