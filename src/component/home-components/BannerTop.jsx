@@ -63,7 +63,7 @@ const BannerTop = () => {
 
   return (
     <div className="relative w-full mx-auto">
-      <div className="relative overflow-hidden h-[14rem] md:h-[20rem] lg:h-[30rem] xl:h-[32rem]">
+      <div className="relative overflow-hidden h-[12rem] md:h-[20rem] lg:h-[27rem] xl:h-[23rem]">
         {images.map((image, index) => {
           const isActive = currentIndex === index;
           let position = isActive

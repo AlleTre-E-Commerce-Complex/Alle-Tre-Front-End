@@ -19,7 +19,7 @@ import api from "../../../api";
 
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import { useDispatch } from "react-redux";
-
+import { ReactComponent as NoDraftSavedImg } from "../../../assets/images/noDraftSaved.svg";
 import { toast } from "react-hot-toast";
 import { truncateString } from "../../../utils/truncate-string";
 import { useLanguage } from "../../../context/language-context";
@@ -98,20 +98,26 @@ const CreateAuction = () => {
           </button>
         </div>
         <div className="max-w-[1366px] mx-auto px-2">
-          <h1 className="text-gray-dark py-5 text-3xl font-medium text-center mt-5">
+        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md my-16">
             {selectedContent[localizationKeys.drafts]}
           </h1>
-          <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
-            {draftAuctionData?.map((e) => (
-              <DraftsItem
-                auctionId={e?.id}
-                img={e && e?.product?.images[0]?.imageLink}
-                itemName={e?.product?.title}
-                date={e?.createdAt}
-                onReload={onReload}
-              />
-            ))}
-          </div>
+          {draftAuctionData?.length === 0 ? (
+            <div className="flex flex-col items-center mb-80">
+              <NoDraftSavedImg className="w-40 h-40" />
+            </div>
+          ) : (
+            <div className="grid lg:grid-cols-8 md:grid-cols-4 grid-cols-2">
+              {draftAuctionData?.map((e) => (
+                <DraftsItem
+                  auctionId={e?.id}
+                  img={e && e?.product?.images[0]?.imageLink}
+                  itemName={e?.product?.title}
+                  date={e?.createdAt}
+                  onReload={onReload}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <AddLocationModel
           open={open}

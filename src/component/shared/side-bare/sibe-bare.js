@@ -55,7 +55,7 @@ const Sidebar = ({ SetSid, sid }) => {
   const dispatch = useDispatch();
   const handelOnSell = () => {
     if (user) {
-      history.push(routes.app.createAuction.default);
+      history.push(routes.app.createAuction.productDetails);
     } else {
       dispatch(Open());
       toast.error("You must log in first to add new auction");
@@ -143,7 +143,6 @@ const Sidebar = ({ SetSid, sid }) => {
         {/* Sidebar content */}
         <div className="w-full mx-auto h-screen flex flex-col justify-between ">
           <div className="flex justify-between pt-5">
-            
             <AllatreLogo
               onClick={() => {
                 history.push(routes.app.home);
@@ -203,10 +202,10 @@ const Sidebar = ({ SetSid, sid }) => {
                 }}
               />
               <NavLink
-                title={selectedContent[localizationKeys.sellNow]}
+                title={selectedContent[localizationKeys.createAuction]}
                 isActive={
                   pathname.length === 1 ||
-                  pathname.startsWith(routes.app.createAuction.default)
+                  pathname.startsWith(routes.app.createAuction.productDetails)
                 }
                 onClick={() => {
                   handelOnSell();

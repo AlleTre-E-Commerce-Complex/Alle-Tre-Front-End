@@ -156,14 +156,15 @@ const ProfileSettings = () => {
             </h1>
             <div className="flex justify-between pt-9">
               <div>
-                <div className="flex ">
-                  <p className="bg-primary text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5 ">
+                <div className="flex items-center">
+                  <p className="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center ltr:mr-5 rtl:ml-5">
                     <RiUser3Fill size={16} />
                   </p>
-                  <p className="text-gray-dark text-base font-medium  ">
+                  <p className="text-gray-dark text-base font-medium">
                     {selectedContent[localizationKeys.userName]}
                   </p>
                 </div>
+
                 <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px] ">
                   {pofileData?.userName}
                 </p>
@@ -205,8 +206,8 @@ const ProfileSettings = () => {
             </h1>
             <div className="flex pt-9">
               <div>
-                <div className="flex ">
-                  <p className="bg-primary text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
+                <div className="flex items-center">
+                  <p className="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center ltr:mr-5 rtl:ml-5">
                     <MdMail size={16} />
                   </p>
                   <p className="text-gray-dark text-base font-medium">
@@ -232,14 +233,15 @@ const ProfileSettings = () => {
             </div>
             <div className="flex justify-between pt-9">
               <div>
-                <div className="flex ">
-                  <p className="bg-primary text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
+                <div className="flex items-center">
+                  <p className="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center ltr:mr-5 rtl:ml-5">
                     <BsFillTelephoneFill size={16} />
                   </p>
                   <p className="text-gray-dark text-base font-medium">
                     {selectedContent[localizationKeys.phoneNumber]}
                   </p>
                 </div>
+
                 <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px]">
                   {pofileData?.phone}
                 </p>

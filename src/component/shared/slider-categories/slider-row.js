@@ -32,7 +32,7 @@ const SliderRow = () => {
 
   useEffect(() => {
     if (GatogryOptions?.length && swiper4) {
-      swiper4.slideTo(0, 0); // Go to the first index of the slider
+      swiper4.slideTo(0, 0);
     }
   }, [GatogryOptions]);
 
@@ -66,8 +66,6 @@ const SliderRow = () => {
                   </div>
                 ))}
               </div>
-
-              {/* Buttons for navigation */}
               <button
                 onClick={handleNextClick}
                 className="swiper-button-next absolute top-1/2 -right-3 overflow-hidden md:block hidden"
