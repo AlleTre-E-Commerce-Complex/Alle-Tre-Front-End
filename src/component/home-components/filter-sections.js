@@ -170,7 +170,7 @@ const FilterSections = ({
         </div>
 
         {/* Selling Type */}
-        <div className="mb-3">
+        <div className="">
           <div
             onClick={() => toggleSection("sellingType")}
             className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
@@ -208,7 +208,7 @@ const FilterSections = ({
         </div>
 
         {/* Auction Status */}
-        <div className="mb-3">
+        <div className="">
           <div
             onClick={() => toggleSection("auctionStatus")}
             className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
@@ -246,7 +246,7 @@ const FilterSections = ({
         </div>
 
         {/* Usage Status */}
-        <div className="mb-3">
+        <div className="">
           <div
             onClick={() => toggleSection("usageStatus")}
             className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
