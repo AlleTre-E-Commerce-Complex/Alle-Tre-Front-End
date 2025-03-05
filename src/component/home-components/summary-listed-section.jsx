@@ -28,6 +28,9 @@ import { useDispatch } from "react-redux";
 import { Open } from "../../redux-store/auth-model-slice";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa";
+import { MdLocationOn } from "react-icons/md";
+
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
   const [mainLocation, setMainLocation] = useState();
@@ -42,6 +45,15 @@ const SummaryListedSection = () => {
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const scrollWithOffset = (el) => {
+    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    const yOffset = -220;
+    window.scrollTo({
+      top: yCoordinate + yOffset,
+      behavior: "smooth",
+    });
+  };
 
   const handleOnContact = () => {
     try {
@@ -111,31 +123,61 @@ const SummaryListedSection = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-4 pt-8">
             {listedProductsData.title}
           </h1>
+          <div className="py-4">
+            {listedProductsData?.user?.userName && (
+              <div className="flex items-start">
+                <div>
+                  <p className="text-sm text-gray-500 mb-2.5">
+                    {selectedContent[localizationKeys.postedBy] || "Seller"}
+                  </p>
+                  <div className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5">
+                    <FaRegUser className="text-gray-500" />
+                    <span className="text-base font-medium">
+                      {listedProductsData?.user?.userName}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
           {/* Description */}
-          <div className="pt-8 overflow-clip">
-            <h3 className="text-gray-dark text-base font-normal">
+          <div className="py-6">
+            <h3 className="text-base font-medium text-gray-700 mb-3">
               {selectedContent[localizationKeys.description]}
             </h3>
-            <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
-              {truncateString(listedProductsData.description, 250)}
+            <p className="text-base text-gray-600 leading-relaxed mb-4">
+              {truncateString(listedProductsData.description, 80)}
             </p>
-
             <HashLink
-              className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"
+              className="inline-flex items-center text-primary hover:text-primary-dark text-sm font-medium transition-colors duration-200"
               smooth
+              scroll={scrollWithOffset}
               to={`${pathname}#itemDescription`}
               onClick={() => setActiveIndexTab(0)}
             >
               {selectedContent[localizationKeys.viewDetails]}
+              <svg
+                className={`w-4 h-4 ml-1 ${lang === "ar" ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
             </HashLink>
           </div>
           {/* Category sections */}
-          <div className="pt-6 mb-8 flex flex-wrap gap-4">
+          <div className="py-6 flex flex-wrap gap-6">
             <div>
-              <span className="text-sm text-gray-500 mb-2">
+              <p className="text-sm text-gray-500 mb-2.5">
                 {selectedContent[localizationKeys.category]}
-              </span>
-              <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+              </p>
+              <div className="px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
                 {lang === "en"
                   ? listedProductsData?.category?.nameEn
                   : listedProductsData?.category?.nameAr}
@@ -144,10 +186,10 @@ const SummaryListedSection = () => {
             {(listedProductsData?.subCategory?.nameEn ||
               listedProductsData?.subCategory?.nameAr) && (
               <div>
-                <span className="text-sm text-gray-500 mb-2">
+                <p className="text-sm text-gray-500 mb-2.5">
                   {selectedContent[localizationKeys.subCategory]}
-                </span>
-                <div className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+                </p>
+                <div className="px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
                   {lang === "en"
                     ? listedProductsData?.subCategory?.nameEn
                     : listedProductsData?.subCategory?.nameAr}
@@ -158,44 +200,41 @@ const SummaryListedSection = () => {
 
           {/* Prices  sections */}
           <div className="pt-6  gap-6">
-            <div className="space-y-2">
-              <p className="text-gray-med text-base font-normal">
-                {selectedContent[localizationKeys.sellingPrice]}
-              </p>
-              <p className="text-gray-verydark cursor-default text-2xl font-semibold">
-                {formatCurrency(listedProductsData.ProductListingPrice)}
-              </p>
+            <div className="flex items-start space-x-4 p-4 ">
+              <div className="flex-1">
+                <p className="text-gray-dark text-sm font-medium uppercase tracking-wide">
+                  {selectedContent[localizationKeys.sellingPrice]}
+                </p>
+                <p className="text-gray-verydark text-2xl font-bold mt-1">
+                  {formatCurrency(listedProductsData.ProductListingPrice)}
+                </p>
+              </div>
             </div>
           </div>
           <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 gap-6">
-            <div className="space-y-2">
-              <div className="text-gray-med text-base font-normal">
-                {selectedContent[localizationKeys.location]}
-              </div>
-              <div className="text-gray-verydark cursor-default font-normal">
-                {mainLocation?.address ? (
-                  <>
-                    <p className="text-2xl font-semibold ">
-                      {mainLocation?.address}
-                    </p>
+            <div className="p-4">
+              <div className="flex items-start space-x-3">
+                <MdLocationOn className="text-primary-600 text-2xl mt-1" />
+                <div className="flex-1">
+                  <div className="text-gray-dark text-sm font-medium uppercase tracking-wide">
+                    {selectedContent[localizationKeys.location]}
+                  </div>
+                  <div className="text-gray-verydark mt-2">
+                    {mainLocation?.address ? (
+                      <>
+                        <p className="text-xl font-semibold leading-tight">
+                          {mainLocation?.address}
+                        </p>
 
-                    <div className="flex space-x-1">
-                      <p className="text-lg font-medium text-gray-600">
-                        {
-                          mainLocation?.city?.[
-                            lang === "ar" ? "nameAr" : "nameEn"
-                          ]
-                        }
-                        ,
-                      </p>
-                      <p className="text-lg font-medium text-gray-600">
-                        {
-                          mainLocation?.country?.[
-                            lang === "ar" ? "nameAr" : "nameEn"
-                          ]
-                        }
-                      </p>
-                    </div>
+                        <div className="flex items-center space-x-1 mt-2">
+                          <p className="text-base text-gray-600">
+                            {mainLocation?.city?.[lang === "ar" ? "nameAr" : "nameEn"]}
+                          </p>
+                          <span className="text-gray-400">&bull;</span>
+                          <p className="text-base text-gray-600">
+                            {mainLocation?.country?.[lang === "ar" ? "nameAr" : "nameEn"]}
+                          </p>
+                        </div>
 
                     {
                       mainLocation?.lat && mainLocation?.lng ? (
@@ -210,12 +249,14 @@ const SummaryListedSection = () => {
                       //   {selectedContent[localizationKeys.locationNotAvailable]}
                       // </p>
                     }
-                  </>
-                ) : (
-                  <p>
-                    {selectedContent[localizationKeys.locationNotAvailable]}
-                  </p>
-                )}
+                      </>
+                    ) : (
+                      <p>
+                        {selectedContent[localizationKeys.locationNotAvailable]}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
