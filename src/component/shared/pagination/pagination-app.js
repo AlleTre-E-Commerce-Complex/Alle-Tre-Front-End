@@ -4,16 +4,17 @@ import useFilter from "../../../hooks/use-filter";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import "../../../../src/assets/style/pagination-app.css";
 
-const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, setListedPageNumber }) => {
-  const pageParam = type === 'auction' ? 'auctionPage' : 'productPage';
+const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, setListedPageNumber, perPage }) => {
+  const pageParam = type === 'auction' ? 'auctionPage' : type === "products" ? 'productPage' : 'page';
   const [page, setPage] = useFilter(pageParam, DEFAULT_PAGE);
-  const [perPage, setPerPage] = useFilter("perPage", getDefaultPerPage());
+  const per_Page = perPage ? perPage : getDefaultPerPage()
+  const [perpage, setPerPage] = useFilter("perPage", per_Page);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
       const newPerPage = getDefaultPerPage();
-      if (newPerPage !== perPage) {
+      if (newPerPage !== perpage) {
         setPerPage(newPerPage);
         setWindowWidth(window.innerWidth);
       }
@@ -21,7 +22,7 @@ const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, 
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [perPage, setPerPage]);
+  }, [perpage, setPerPage]);
 
   const handlePageChange = (e, { activePage }) => {
     const currentPage = parseInt(page);
