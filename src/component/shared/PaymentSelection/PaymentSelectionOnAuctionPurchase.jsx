@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "localization/localization-keys";
@@ -19,6 +19,11 @@ const PaymentSelectionOnAuctionPurchase = ({
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+
+  useEffect(()=>{
+      setIsWalletPayment(false);
+      setIsBankTransfer(false);
+  },[])
 
   return (
     <div className="mt-10  h-auto rounded-2xl bg-white border border-primary">
