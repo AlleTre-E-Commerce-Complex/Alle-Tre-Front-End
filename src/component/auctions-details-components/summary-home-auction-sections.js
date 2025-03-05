@@ -63,7 +63,8 @@ const SummaryHomeAuctionSections = ({
   const [openTotaltBid, setTotalBidOpen] = useState(false);
   const [openMakeDefultLocations, setOpenMakeDefultLocations] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [openDeliverySelectingModal, setOpenDeliverySelectingModal] = useState(false);
+  const [openDeliverySelectingModal, setOpenDeliverySelectingModal] =
+    useState(false);
   const [showCancellationModal, setShowCancellationModal] = useState(false);
 
   const dispatch = useDispatch();
@@ -107,7 +108,13 @@ const SummaryHomeAuctionSections = ({
 
   useEffect(() => {
     // Check if auction is cancelled and show modal
-    if (["CANCELLED_BEFORE_EXP_DATE", "CANCELLED_AFTER_EXP_DATE", "CANCELLED_BY_ADMIN"].includes(status)) {
+    if (
+      [
+        "CANCELLED_BEFORE_EXP_DATE",
+        "CANCELLED_AFTER_EXP_DATE",
+        "CANCELLED_BY_ADMIN",
+      ].includes(status)
+    ) {
       setShowCancellationModal(true);
     }
   }, [status]);
@@ -116,9 +123,15 @@ const SummaryHomeAuctionSections = ({
     switch (status) {
       case "CANCELLED_BEFORE_EXP_DATE":
       case "CANCELLED_AFTER_EXP_DATE":
-        return selectedContent[localizationKeys.auctionCancelledBySellerMessage] || "This auction has been cancelled by the seller. Please contact support for more information.";
+        return (
+          selectedContent[localizationKeys.auctionCancelledBySellerMessage] ||
+          "This auction has been cancelled by the seller. Please contact support for more information."
+        );
       case "CANCELLED_BY_ADMIN":
-        return selectedContent[localizationKeys.auctionCancelledByAdminMessage] || "This auction has been cancelled by the administrator. Please contact support for more information.";
+        return (
+          selectedContent[localizationKeys.auctionCancelledByAdminMessage] ||
+          "This auction has been cancelled by the administrator. Please contact support for more information."
+        );
       default:
         return "";
     }
@@ -265,6 +278,16 @@ const SummaryHomeAuctionSections = ({
       setSubmitBidValue(currentBidValue - 50);
     }
   };
+
+  const scrollWithOffset = (el) => {
+    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    const yOffset = -220;
+    window.scrollTo({
+      top: yCoordinate + yOffset,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <Dimmer
@@ -283,14 +306,15 @@ const SummaryHomeAuctionSections = ({
         closeOnDimmerClick={false}
       >
         <Modal.Header className="text-red-600">
-          {selectedContent[localizationKeys.auctionCancelled] || "Auction Cancelled"}
+          {selectedContent[localizationKeys.auctionCancelled] ||
+            "Auction Cancelled"}
         </Modal.Header>
         <Modal.Content>
           <p>{getCancellationMessage()}</p>
         </Modal.Content>
         <Modal.Actions>
-          <Button 
-            primary 
+          <Button
+            primary
             onClick={handleCancellationModalClose}
             className="bg-primary text-white hover:bg-primary-dark"
           >
@@ -298,38 +322,40 @@ const SummaryHomeAuctionSections = ({
           </Button>
         </Modal.Actions>
       </Modal>
-
-      {/* Only show content if auction is not cancelled */}
-      {!["CANCELLED_BEFORE_EXP_DATE", "CANCELLED_AFTER_EXP_DATE", "CANCELLED_BY_ADMIN"].includes(status) && (
+      {![
+        "CANCELLED_BEFORE_EXP_DATE",
+        "CANCELLED_AFTER_EXP_DATE",
+        "CANCELLED_BY_ADMIN",
+      ].includes(status) && (
         <div>
-            {/* Header Section */}
+          {/* Header Section */}
           <div className=" pb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-            {title}
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+              {title}
             </h1>
             <div className="flex items-center gap-x-5">
               <AuctionsStatus status={status} big />
             </div>
-        </div>
+          </div>
 
-        {/* Seller Info Section */}
-        <div className="py-4">
-          {userName && (
+          {/* Seller Info Section */}
+          <div className="py-4">
+            {userName && (
               <div className="flex items-start">
-              <div>
-                <p className="text-sm text-gray-500 mb-2.5">
-                  {selectedContent[localizationKeys.postedBy] || "Seller"}
-                </p>
-                <div className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5">
-                  <FaRegUser className="text-gray-500" />
-                  <span className="text-base font-medium">{userName}</span>
+                <div>
+                  <p className="text-sm text-gray-500 mb-2.5">
+                    {selectedContent[localizationKeys.postedBy] || "Seller"}
+                  </p>
+                  <div className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5">
+                    <FaRegUser className="text-gray-500" />
+                    <span className="text-base font-medium">{userName}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
           </div>
-  
-        {/* Description Section */}
+
+          {/* Description Section */}
           <div className="py-6">
             <h3 className="text-base font-medium text-gray-700 mb-3">
               {selectedContent[localizationKeys.description]}
@@ -340,27 +366,28 @@ const SummaryHomeAuctionSections = ({
             <HashLink
               className="inline-flex items-center text-primary hover:text-primary-dark text-sm font-medium transition-colors duration-200"
               smooth
+              scroll={scrollWithOffset}
               to={`${pathname}#itemDescription`}
               onClick={() => setActiveIndexTab(0)}
             >
               {selectedContent[localizationKeys.viewDetails]}
               <svg
-              className={`w-4 h-4 ml-1 ${lang === "ar" ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </HashLink>
+                className={`w-4 h-4 ml-1 ${lang === "ar" ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </HashLink>
           </div>
-  
-        {/* Category Section */}
+
+          {/* Category Section */}
           <div className="py-6 flex flex-wrap gap-6">
             <div>
               <p className="text-sm text-gray-500 mb-2.5">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import imageCompression from "browser-image-compression";
+
 import { MdOutlineImage } from "react-icons/md";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
@@ -13,8 +14,8 @@ import api from "../../api";
 import { toast } from "react-hot-toast";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-
-const fileTypes = ["JPEG", "PNG", "GIF", "JPG", "MOV", "mp4"];
+const heic2any = require('heic2any');
+const fileTypes = ["JPEG", "PNG", "GIF", "JPG"];
 
 const ImageMedia = ({
   auctionId,
@@ -39,10 +40,10 @@ const ImageMedia = ({
   onReorderImages,
   setimgtest,
 }) => {
+
   const [coverPhotoIndex, setCoverPhotoIndex] = useState(1);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-
   const { run: runDelete, isLoading: isloadingDelete } = useAxios([]);
   const { run: runUpload, isLoading: isloadingUpload } = useAxios([]);
 
@@ -155,14 +156,28 @@ const ImageMedia = ({
     try {
       console.log("Input file:", file.type, file.size / 1024 / 1024, "MB");
 
-      if (file.type.includes("heic") || file.type.includes("heif")) {
-        console.warn(
-          "HEIC/HEIF format detected, compression might not work optimally"
-        );
+      // Convert HEIC/HEIF to JPEG first
+      let processedFile = file;
+      if (file.type.toLowerCase().includes("heic") || file.type.toLowerCase().includes("heif")) {
+        try {
+          const blob = await heic2any({
+            blob: file,
+            toType: "image/jpeg",
+            quality: 0.8
+          });
+          processedFile = new File([blob], file.name.replace(/\.(heic|heif)$/i, '.jpg'), {
+            type: "image/jpeg",
+            lastModified: new Date().getTime()
+          });
+          console.log("HEIC/HEIF conversion successful");
+        } catch (heicError) {
+          console.error("HEIC/HEIF conversion failed:", heicError);
+          return file;
+        }
       }
 
-      if (file.size <= 800 * 1024) {
-        return file;
+      if (processedFile.size <= 800 * 1024) {
+        return processedFile;
       }
 
       const options = {
@@ -176,14 +191,14 @@ const ImageMedia = ({
         exifOrientation: true,
       };
 
-      let compressedFile = await imageCompression(file, options);
-      if (compressedFile.size > file.size * 0.9) {
+      let compressedFile = await imageCompression(processedFile, options);
+      if (compressedFile.size > processedFile.size * 0.9) {
         options.maxSizeMB = 0.5;
         options.initialQuality = 0.6;
-        compressedFile = await imageCompression(file, options);
+        compressedFile = await imageCompression(processedFile, options);
       }
 
-      return new File([compressedFile], file.name, {
+      return new File([compressedFile], processedFile.name, {
         type: "image/jpeg",
         lastModified: new Date().getTime(),
       });

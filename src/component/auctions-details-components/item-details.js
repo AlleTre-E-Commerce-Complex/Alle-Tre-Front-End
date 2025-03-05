@@ -48,37 +48,38 @@ const ItemDetails = ({ itemDetailsData }) => {
         {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="animate-in ">
+      <div className="animate-in  mx-auto">
         {/* item description */}
         <div
           id="itemDescription"
-          className="text-gray-dark text-base font-normal"
+          className="bg-white rounded-xl p-6 shadow-sm mb-8"
         >
-          <h1 className="pb-8">
-            {selectedContent[localizationKeys.aboutTheBrand]}:
-          </h1>
-          <p>{itemDetailsData?.description}</p>
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            {selectedContent[localizationKeys.aboutTheBrand]}
+          </h2>
+          <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">
+            {itemDetailsData?.description}
+          </p>
         </div>
-        <div className="grid sm:grid-rows-5 sm:grid-flow-col gap-x-4 mt-4 mb-20">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-20">
           {itemDetailsArray.map((field, index) => {
-            const colors = ["bg-[#F2F2F2]", "bg-[#FEFEFE]"];
-            const bgColor = colors[index % colors.length];
+            if (field.value === null) return null;
+            
             return (
-              <>
-                {field.value !== null && (
-                  <div
-                    className={`flex ${bgColor} drop-shadow my-2 py-3 rounded `}
-                    key={index}
-                  >
-                    <p className="text-gray-med font-normal text-sm  px-5 w-1/2">
-                      {field?.label[lang]} :
-                    </p>
-                    <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
-                      {field.value}
-                    </p>
-                  </div>
-                )}
-              </>
+              <div
+                key={index}
+                className="bg-[#F2F2F2] rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                  <p className="text-gray-500 font-medium text-sm sm:w-1/3">
+                    {field?.label[lang]}
+                  </p>
+                  <p className="text-gray-800 font-medium text-sm sm:w-2/3">
+                    {field.value}
+                  </p>
+                </div>
+              </div>
             );
           })}
         </div>
