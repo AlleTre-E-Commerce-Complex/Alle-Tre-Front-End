@@ -74,8 +74,8 @@ const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, 
       totalPages={parseInt(totalPages) || 1}
       onPageChange={handlePageChange}
       size={windowWidth < 768 ? "mini" : "small"}
-      boundaryRange={windowWidth < 768 ? 0 : 1}
-      siblingRange={windowWidth < 768 ? 0 : 1}
+      boundaryRange={windowWidth < 768 ? 1 : 1}
+      siblingRange={windowWidth < 768 ? 1 : 1}
     />
   );
 };
