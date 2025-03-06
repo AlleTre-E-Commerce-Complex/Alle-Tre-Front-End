@@ -6,7 +6,7 @@ import BannerTopImage4 from "../../assets/images/mainImg4.jpg";
 import BannerMobImage1 from "../../assets/images/mobileeSIze3.jpg";
 import BannerMobImage2 from "../../assets/images/mobileeSiz1.jpg";
 import BannerMobImage3 from "../../assets/images/mobileeSize2.jpg";
-import BannerMobImage4 from "../../assets/images/BannerMob4.jpg";
+// import BannerMobImage4 from "../../assets/images/BannerMob4.jpg";
 
 const BannerTop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,7 +15,7 @@ const BannerTop = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const images = isMobile
-    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3, BannerMobImage4]
+    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3]
     : [BannerTopImage1, BannerTopImage2, BannerTopImage3, BannerTopImage4];
 
   const autoSlideInterval = 6000; // Slide every 6 seconds
