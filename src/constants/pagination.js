@@ -2,7 +2,7 @@
 export const DEFAULT_PAGE = "1";
 
 // Items per page for different screen sizes
-export const MOBILE_PER_PAGE = "4";
+export const MOBILE_PER_PAGE = "12";
 export const TABLET_PER_PAGE = "18";
 export const DESKTOP_PER_PAGE = "24";
 
