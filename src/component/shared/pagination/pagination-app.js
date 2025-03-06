@@ -66,10 +66,10 @@ const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, 
       defaultActivePage={parseInt(page)}
       activePage={parseInt(page)}
       ellipsisItem={windowWidth < 768 ? null : undefined}
-      firstItem={{ 'aria-label': 'First page' }}
-      lastItem={{ 'aria-label': 'Last page' }}
-      prevItem={null}
-      nextItem={null}
+      firstItem={null}
+      lastItem={null}
+      prevItem={{ 'aria-label': 'Previous page'}} 
+      nextItem={{ 'aria-label': 'Next page'}} 
       secondary
       totalPages={parseInt(totalPages) || 1}
       onPageChange={handlePageChange}

@@ -45,6 +45,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const history = useHistory();
   const { user } = useAuthState();
   const myRef = useRef();
+  const myRef1 = useRef()
   const dispatch = useDispatch();
   const isWelcomeBonus = useSelector(
     (state) => state.welcomeBonus.welcomeBonus
@@ -437,7 +438,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (isGrid && selectedType === "products") {
                     return (
                       <div>
-                        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1 ref={myRef1} className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         {listedProducts?.length === 0 ? (
@@ -474,7 +475,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <PaginationApp
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
-                              myRef={myRef}
+                              myRef={myRef1}
                               type={'products'}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
@@ -486,7 +487,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (!isGrid && selectedType === "products") {
                     return (
                       <div>
-                        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1 ref={myRef1} className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         {listedProducts?.length === 0 ? (
@@ -523,7 +524,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <PaginationApp
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
-                              myRef={myRef}
+                              myRef={myRef1}
                               type={'products'}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
@@ -577,7 +578,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             />
                           ) : null}
                         </div>
-                        <h1 className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1 ref={myRef1} className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         {listedProducts?.length === 0 ? (
@@ -614,7 +615,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <PaginationApp
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
-                              myRef={myRef}
+                              myRef={myRef1}
                               type={'products'}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
@@ -662,7 +663,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             />
                           ) : null}
                         </div>
-                        <h1 className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1 ref={myRef1} className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
@@ -693,7 +694,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <PaginationApp
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
-                              myRef={myRef}
+                              myRef={myRef1}
                               type={'products'}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
