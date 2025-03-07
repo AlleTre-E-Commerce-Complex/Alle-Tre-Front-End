@@ -111,7 +111,7 @@ const BankTransferPayment = ({setShowBankDetails, setShwoPaymentSelection, aucti
         }
       })
       .catch((err) => {
-        toast.error("Error submitting bank transfer details", {
+        toast.error("Error submitting bank transfer details:"+err, {
           position: "top-right",
         });
       })
