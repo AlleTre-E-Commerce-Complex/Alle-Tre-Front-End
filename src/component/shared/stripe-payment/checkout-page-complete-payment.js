@@ -52,58 +52,118 @@ export default function CheckoutPageCompletePayment() {
   const [isBankTransfer, setIsBankTransfer] = useState(false)
   const [showStripePayment, setShowStripePayment] = useState(null);
   const [showPaymentSelecton, setShwoPaymentSelection] = useState(true);
-  const [loading,setLoading] = useState(false)
+  const [loading,setLoading] = useState(true)
   const { run, isLoading } = useAxios([]);
   const { run: runPendingAuctionData, isLoading: isLoadingPendingAuctionData } =
     useAxios([]);
 
-  useEffect(() => {
-    setLoading(true);
-    runPendingAuctionData(
-      authAxios
-        .get(
-          api.app.auctions.getUserAuctionsDetails(
-            completedPaymentData?.auctionsId
-          )
-        )
-        .then(async (res) => {
-          setPendingAuctionData(res?.data?.data);
-          const auctionData = res?.data?.data;
-          const amountToPay = payingAmount;
-          if (auctionData) {
-            try {
-              const response = await authAxios.get(`${api.app.Wallet.getBalance}`);
-              const balance = response.data;
+  // useEffect(() => {
+    
+  //   setLoading(true);
+  //   runPendingAuctionData(
+  //     authAxios
+  //       .get(
+  //         api.app.auctions.getUserAuctionsDetails(
+  //           completedPaymentData?.auctionsId
+  //         )
+  //       )
+  //       .then(async (res) => {
+  //         setPendingAuctionData(res?.data?.data);
+  //         const auctionData = res?.data?.data;
+  //         const amountToPay = payingAmount;
+  //         if (auctionData) {
+  //           try {
+  //             const response = await authAxios.get(`${api.app.Wallet.getBalance}`);
+  //             const balance = response.data;
 
-              if (balance && Number(balance) >= Number(amountToPay)) {
-                setWalletBalance(balance);
-              } else {
-                stripePaymentApiCall();
-              }
-              setShwoPaymentSelection(true);
-            } catch (error) {
-              console.error("Error fetching wallet balance:", error);
-              stripePaymentApiCall();
-            } finally {
-              setLoading(false);
-            }
-          } else {
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching auction details:", error);
-          setLoading(false);
-        })
-    );
-  }, [
-    completedPaymentData?.auctionsId,
-    runPendingAuctionData,
-    run,
-    lang,
-    auctionId,
-    selectedContent,
-  ]);
+  //             if (balance && Number(balance) >= Number(amountToPay)) {
+  //               setWalletBalance(balance);
+  //             } else {
+  //               stripePaymentApiCall();
+  //             }
+  //             setShwoPaymentSelection(true);
+  //           } catch (error) {
+  //             console.error("Error fetching wallet balance:", error);
+  //             stripePaymentApiCall();
+  //           } finally {
+  //             setLoading(false);
+  //           }
+  //         } else {
+  //           setLoading(false);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching auction details:", error);
+  //         setLoading(false);
+  //       })
+  //   );
+  // }, [
+  //   completedPaymentData?.auctionsId,
+  //   runPendingAuctionData,
+  //   run,
+  //   lang,
+  //   auctionId,
+  //   selectedContent,
+  // ]);
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+
+      const auctionPromise = authAxios.get(
+        api.app.auctions.getUserAuctionsDetails(completedPaymentData?.auctionsId)
+      );
+      const walletPromise = authAxios.get(api.app.Wallet.getBalance);
+
+      // Call both APIs in parallel
+      const [auctionRes, walletRes] = await Promise.allSettled([
+        auctionPromise,
+        walletPromise,
+      ]);
+
+      // Handle auction data
+      if (auctionRes.status === "fulfilled") {
+        const auctionData = auctionRes.value?.data?.data;
+        setPendingAuctionData(auctionData);
+      } else {
+        console.error("Error fetching auction details:", auctionRes.reason);
+      }
+
+      // Handle wallet balance
+      if (walletRes.status === "fulfilled") {
+        const balance = walletRes.value?.data;
+        if (balance && Number(balance) >= Number(payingAmount)) {
+
+          setWalletBalance(balance);
+        } else {
+          stripePaymentApiCall();
+        }
+      } else {
+        console.error("Error fetching wallet balance:", walletRes.reason);
+        stripePaymentApiCall();
+      }
+
+      setShwoPaymentSelection(true);
+    } catch (error) {
+      console.error("Unexpected error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (completedPaymentData?.auctionsId) {
+    fetchData();
+  }
+}, [
+  completedPaymentData?.auctionsId,
+  // runPendingAuctionData,
+  // run,
+  lang,
+  auctionId,
+  selectedContent,
+]);
 
   const stripePaymentApiCall = () => {
     run(
@@ -171,7 +231,7 @@ export default function CheckoutPageCompletePayment() {
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading || isLoadingPendingAuctionData}
+        active={loading}
         inverted
       >
         {/* <Loader active /> */}
@@ -295,7 +355,7 @@ export default function CheckoutPageCompletePayment() {
                showPaymentSelecton && (
                     <PaymentSelectionOnAuctionPurchase
                       isWalletPayment={isWalletPayment}
-                      isLoading={isLoading || isLoadingPendingAuctionData}
+                      isLoading={loading}
                       setIsWalletPayment={setIsWalletPayment}
                       handleSubmitPayment={handleSubmitPayment}
                       walletBalance= {walletBalance}
