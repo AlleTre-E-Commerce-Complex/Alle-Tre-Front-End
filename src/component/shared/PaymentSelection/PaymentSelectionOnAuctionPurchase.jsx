@@ -32,12 +32,7 @@ const PaymentSelectionOnAuctionPurchase = ({
         active={isLoading}
         inverted
       >
-        <div className="flex flex-col items-center">
           <LodingTestAllatre />
-          <p className="mt-4 text-lg font-medium text-gray-700">
-            {selectedContent[localizationKeys.ProcessingYourPayment] || "Processing your payment..."}
-          </p>
-        </div>
       </Dimmer>
       <div className="">
         <div className="px-3 py-2 my-5 text-center font-semibold text-lg">

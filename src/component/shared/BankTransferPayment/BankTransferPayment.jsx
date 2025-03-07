@@ -10,6 +10,8 @@ import content from "localization/content";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import api from "api";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import routes from "routes";
 
 const BankTransferPayment = ({setShowBankDetails, setShwoPaymentSelection, auctionId, amount}) => {
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -17,7 +19,7 @@ const BankTransferPayment = ({setShowBankDetails, setShwoPaymentSelection, aucti
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const {run, isLoading} = useAxios([])
-
+  const history = useHistory()
   const accounts = [
     {
       accountName: "Account 1",
@@ -108,6 +110,7 @@ const BankTransferPayment = ({setShowBankDetails, setShwoPaymentSelection, aucti
           toast.success("Bank transfer details submitted successfully", {
             position: "top-right",
           });
+          history.push(routes.app.profile.myBids.pending)
         }
       })
       .catch((err) => {
