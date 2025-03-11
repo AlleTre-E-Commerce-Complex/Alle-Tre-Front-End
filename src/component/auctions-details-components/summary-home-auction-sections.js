@@ -50,6 +50,9 @@ const SummaryHomeAuctionSections = ({
   isOffer,
   sellerLocation,
   userName,
+  userId,
+  userPhone,
+  userImage,
 }) => {
   const { user } = useAuthState();
   const [lang] = useLanguage("");
@@ -236,6 +239,15 @@ const SummaryHomeAuctionSections = ({
       return false;
     return true;
   };
+  const handelUserDetails = () => {
+    const queryParams = new URLSearchParams({
+      username: userName || "",
+      id: userId || "",
+      imageLink: userImage || "",
+      phone: userPhone || "",
+    }).toString();
+    history.push(`${routes.app.listProduct.userDetails}?${queryParams}`);
+  };
 
   const sendSubmitBid = (newValue) => {
     const body = {
@@ -344,9 +356,12 @@ const SummaryHomeAuctionSections = ({
               <div className="flex items-start">
                 <div>
                   <p className="text-sm text-gray-500 mb-2.5">
-                    {selectedContent[localizationKeys.postedBy] || "Seller"}
+                    {selectedContent[localizationKeys.postedBy]}
                   </p>
-                  <div className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5">
+                  <div
+                    onClick={() => handelUserDetails()}
+                    className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-300 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5 cursor-pointer"
+                  >
                     <FaRegUser className="text-gray-500" />
                     <span className="text-base font-medium">{userName}</span>
                   </div>

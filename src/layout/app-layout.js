@@ -37,6 +37,7 @@ import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal
 import ListProductDetails from "page/app/ListProduct/List-product-details";
 import { FaPlus } from "react-icons/fa6";
 import SummaryListedSection from "component/home-components/summary-listed-section";
+import UserDetailsPage from "component/profile-components/user-details-page";
 import ListingProductsLocationDetails from "page/app/ListProduct/List-location-details";
 
 const AppLayouts = () => {
@@ -209,6 +210,11 @@ const AppLayouts = () => {
               <Route
                 path={routes.app.listProduct.details()}
                 component={SummaryListedSection}
+              />
+
+              <Route
+                path={routes.app.listProduct.userDetails}
+                component={UserDetailsPage}
               />
 
               <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />

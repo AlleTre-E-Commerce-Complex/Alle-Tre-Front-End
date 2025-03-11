@@ -265,6 +265,9 @@ const HomeAuctionDetails = () => {
                     PurchasedTime={""}
                     sellerLocation={auctionsDetailsData?.location}
                     userName={auctionsDetailsData?.user?.userName}
+                    userId={auctionsDetailsData?.user?.id}
+                    userPhone={auctionsDetailsData?.user?.phone}
+                    userImage={auctionsDetailsData?.user?.imageLink}
                   />
                 )}
               </div>
