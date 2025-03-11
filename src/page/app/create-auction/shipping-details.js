@@ -109,6 +109,7 @@ const ShippingDetails = () => {
   // }
 
   const creatAuction = () => {
+    console.log('location Id :',locationId)
     if (locationId) {
       const formData = new FormData();
       formData.append("product[title]", productDetailsInt.itemName);
@@ -262,8 +263,35 @@ const ShippingDetails = () => {
           warrantyPolicyInt.description
         );
       }
-
-      if (productDetailsInt?.auctionState === "DRAFTED") {
+      if(productDetailsInt?.auctionState === 'LISTED_PRODUCT'){
+        console.log('LISTED_PRODUCT :',productDetailsInt)
+        for (let [key, value] of formData.entries()) {
+          console.log(`** ${key}: ${value}`);
+        }
+        runCreatAuction(
+          authAxios
+            .post(
+              api.app.auctions.convertListedProductToAuction(productDetailsInt?.productId),
+              formData
+            )
+            .then((res) => {
+              // window.localStorage.setItem("productid", res?.data?.data.id);
+              toast.success(
+                selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
+              );
+              history.push(routes.app.createAuction.paymentDetails);
+              dispatch(productDetails({}));
+              dispatch(auctionDetails({}));
+              dispatch(type({}));
+              dispatch(duration({}));
+              dispatch(isBuyNow({}));
+            })
+            .catch((err) => {
+              console.log('convert product to auction err in shipping details :', err)
+              toast.error(selectedContent[localizationKeys.oops]);
+            })
+        );
+      } else if (productDetailsInt?.auctionState === "DRAFTED") {
         runCreatAuction(
           authAxios
             .put(
@@ -306,6 +334,7 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
+              console.log('create auction error : ',err)
               toast.error(
                 // err?.response?.data?.message.map((e) => e) ||
                 //   err?.message.map((e) => e) ||

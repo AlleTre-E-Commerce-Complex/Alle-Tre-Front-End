@@ -78,7 +78,7 @@ const ProductCard = ({
   return (
     <div>
       <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
-        <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[16/10]">
+        <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[4/5]">
           <div className=" group">
             <div
               className={`absolute ${
@@ -109,12 +109,12 @@ const ProductCard = ({
         </div>
         <h1
           onClick={() => handelGoDetails(id)}
-          className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] line-clamp-2 overflow-hidden"
+          className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[30px] line-clamp-2 overflow-hidden"
         >
           {truncateString(title, 250)}
         </h1>
-        <div className="mt-4" onClick={() => handelGoDetails(id)}>
-          <div className="h-[50px]">
+        <div className="mt-0" onClick={() => handelGoDetails(id)}>
+          <div className="h-[40px]">
             <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
               {selectedContent[localizationKeys.location]}
             </h6>

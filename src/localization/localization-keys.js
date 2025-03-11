@@ -37,6 +37,7 @@ const localizationKeys = {
   fromWallet: "fromWallet",
   // home
   changeStatus: "changeStatus",
+  convertToAuction: "convertToAuction",
   viewContactDetails: "viewContactDetails",
   trendingAuctions: "trendingAuctions",
   type: "type",
