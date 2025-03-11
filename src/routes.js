@@ -43,7 +43,8 @@ const routes = {
       default: `/alletre/home/list-product`,
       details: (productId = ":productId") =>
         `/alletre/my-product/${productId}/details`,
-      listProductLocationDetails: `/alletre/my-products/add-location`
+      listProductLocationDetails: `/alletre/my-products/add-location`,
+      userDetails: `/alletre/user/user-details`,
     },
     profile: {
       default: `/alletre/profile`,

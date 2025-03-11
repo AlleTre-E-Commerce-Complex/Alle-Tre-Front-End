@@ -90,6 +90,17 @@ const SummaryListedSection = () => {
     );
   }, [run, productId]);
 
+  const handelUserDetails = () => {
+    const userData = listedProductsData?.user;
+    const queryParams = new URLSearchParams({
+      username: userData?.userName || "",
+      id: userData?.id || "",
+      imageLink: userData?.imageLink || "",
+      phone: userData?.phone || "",
+    }).toString();
+    history.push(`${routes.app.listProduct.userDetails}?${queryParams}`);
+  };
+
   const mapUrl = ` https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
     `${mainLocation?.lat},${mainLocation?.lng}`
   )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`;
@@ -128,9 +139,12 @@ const SummaryListedSection = () => {
               <div className="flex items-start">
                 <div>
                   <p className="text-sm text-gray-500 mb-2.5">
-                    {selectedContent[localizationKeys.postedBy] || "Seller"}
+                    {selectedContent[localizationKeys.postedBy]}
                   </p>
-                  <div className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5">
+                  <div
+                    onClick={() => handelUserDetails()}
+                    className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-300 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5 cursor-pointer"
+                  >
                     <FaRegUser className="text-gray-500" />
                     <span className="text-base font-medium">
                       {listedProductsData?.user?.userName}
@@ -228,27 +242,35 @@ const SummaryListedSection = () => {
 
                         <div className="flex items-center space-x-1 mt-2">
                           <p className="text-base text-gray-600">
-                            {mainLocation?.city?.[lang === "ar" ? "nameAr" : "nameEn"]}
+                            {
+                              mainLocation?.city?.[
+                                lang === "ar" ? "nameAr" : "nameEn"
+                              ]
+                            }
                           </p>
                           <span className="text-gray-400">&bull;</span>
                           <p className="text-base text-gray-600">
-                            {mainLocation?.country?.[lang === "ar" ? "nameAr" : "nameEn"]}
+                            {
+                              mainLocation?.country?.[
+                                lang === "ar" ? "nameAr" : "nameEn"
+                              ]
+                            }
                           </p>
                         </div>
 
-                    {
-                      mainLocation?.lat && mainLocation?.lng ? (
-                        <iframe
-                          title="Google Map"
-                          className="w-full h-64 mt-4 rounded-lg"
-                          src={mapUrl}
-                          allowFullScreen
-                        />
-                      ) : null
-                      // <p className="text-gray-600 mt-2">
-                      //   {selectedContent[localizationKeys.locationNotAvailable]}
-                      // </p>
-                    }
+                        {
+                          mainLocation?.lat && mainLocation?.lng ? (
+                            <iframe
+                              title="Google Map"
+                              className="w-full h-64 mt-4 rounded-lg"
+                              src={mapUrl}
+                              allowFullScreen
+                            />
+                          ) : null
+                          // <p className="text-gray-600 mt-2">
+                          //   {selectedContent[localizationKeys.locationNotAvailable]}
+                          // </p>
+                        }
                       </>
                     ) : (
                       <p>

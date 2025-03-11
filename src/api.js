@@ -39,6 +39,7 @@ const api = {
       send_item_forDelivery: (auctionId) =>
         `/auctions/user/${auctionId}/sendItem-forDelivery`,
       getAllOwnesAuctions: "auctions/user/ownes",
+      getOtherUsersAuction: (userId) => `/auctions/user/user-details/?userId=${userId}`,
       getAlldraft: "auctions/user/ownes?status=DRAFTED",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       getUserAuctionsDetails: (auctionsId) =>
@@ -79,7 +80,8 @@ const api = {
       getSellerLocation: (auctionId) => `/auctions/user/${auctionId}/location`,
       getBuyerLocation: (auctionId) =>
         `auctions/user/${auctionId}/buyer-location-details`,
-      payByBank_uploadBankStatement : "/auctions/user/pay-by-banck/upload-bank-statement"
+      payByBank_uploadBankStatement:
+        "/auctions/user/pay-by-banck/upload-bank-statement",
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
@@ -90,11 +92,14 @@ const api = {
       listNewProduct: `auctions/product-listing`,
       productAnalytics: "auctions/user/product/analytics",
       getAllListedProducts: `auctions/listedProducts/getAllListed-products`,
-      listedProduct: (productId) => `auctions/listedProducts/${productId}/details`,
+      getOtherUserProducts: (userId) => `/auctions/user/user-Productdetails/?userId=${userId}`,
+      listedProduct: (productId) =>
+        `auctions/listedProducts/${productId}/details`,
       SimilarProduct: (productId) =>
         `auctions/product/similar?productId=${productId}`,
       getAllMyProduts: "auctions/user/get-all-myProducts",
-      updateProductStatus:(productId)=>`auctions/products/updateProductStatus?productId=${productId}`
+      updateProductStatus: (productId) =>
+        `auctions/products/updateProductStatus?productId=${productId}`,
     },
     customField: {
       ByCategoryId: (categoryId) =>
@@ -145,7 +150,7 @@ const api = {
     notifications: {
       get: "/notifications/get/all",
       subscribe: "/notifications/subscribe",
-      markAsRead:'/notifications/mark-as-read'
+      markAsRead: "/notifications/mark-as-read",
     },
   },
 };

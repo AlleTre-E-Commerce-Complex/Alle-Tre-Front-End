@@ -42,16 +42,17 @@ function AuthProvider({ children }) {
         const user = await Auth.getUser();
         if (!user) {
           if (!WHITE_LIST.some((route) => pathname.startsWith(route))) {
- 
-            if (!searchParams.includes("page") && !searchParams.includes("perPage")) {
+            if (
+              !searchParams.includes("page") &&
+              !searchParams.includes("perPage")
+            ) {
               const redirectPath = window.location.pathname.includes("details")
                 ? window.location.pathname
                 : `${routes.app.home}?${getDefaultPaginationString()}`;
-              history.push(redirectPath);
+              history.push(`${redirectPath}?${searchParams}`);
             } else {
               history.push(window.location.pathname + window.location.search);
             }
-            
           }
           setUser(null);
         } else {
