@@ -42,6 +42,7 @@ const en = {
   [localizationKeys.fromWallet]: "From Wallet",
   // home
   [localizationKeys.changeStatus]: "Change status",
+  [localizationKeys.convertToAuction]: "Convert to auction",
   [localizationKeys.viewContactDetails]: " View contact details",
   [localizationKeys.trendingAuctions]: "Trending Auctions",
   [localizationKeys.postedBy]: "Posted by",

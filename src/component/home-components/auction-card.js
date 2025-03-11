@@ -218,7 +218,7 @@ const AuctionCard = ({
 
   return (
     <div className="group w-full max-w-[240px] h-full flex flex-col rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
-      <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[16/10]">
+      <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[10/10]">
         <div className="relative group">
           <div
             className={`absolute top-0 ${

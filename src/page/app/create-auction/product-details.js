@@ -46,6 +46,7 @@ const ProductDetails = () => {
   const [auctionState, setAuctionState] = useState();
 
   const [completeDraftVal, setCompleteDraftValue] = useState();
+  const [listedProductVal, setListedProductVal] = useState();
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
   const [auctionId, setAuctionId] = useState(state?.auctionId || null);
@@ -60,63 +61,132 @@ const ProductDetails = () => {
   const history = useHistory();
 
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
+  const { run: runFetchListedProduct, isLoading: isLoadingFetchListedProduct } = useAxios([]);
 
   useEffect(() => {
     const id = productDetailsint?.auctionId || state?.auctionId;
-    if (id)
+    if (id) {
       runAuctionById(
         authAxios.get(api.app.auctions.getAuctionsDetails(id)).then((res) => {
           const completeDraftValue = res?.data?.data;
           setAuctionState(res?.data?.data?.status);
-          setimgtest(completeDraftValue?.product?.images);
-
-          // Map draft images to fileOne, fileTwo, etc.
-          if (completeDraftValue?.product?.images) {
-            const images = completeDraftValue.product.images;
-            setFileOne(images[0] || null);
-            setFileTwo(images[1] || null);
-            setFileThree(images[2] || null);
-            setFileFour(images[3] || null);
-            setFileFive(images[4] || null);
-          }
-
           setCompleteDraftValue(res?.data?.data);
-          dispatch(
-            productDetails({
-              itemName: completeDraftValue?.product?.title,
-              category: completeDraftValue?.product.categoryId,
-              subCategory: completeDraftValue?.product?.subCategoryId,
-              operatingSystem: completeDraftValue?.product?.operatingSystem,
-              releaseYear: completeDraftValue?.product?.releaseYear,
-              regionOfManufacture:
-                completeDraftValue?.product?.regionOfManufacture,
-              ramSize: completeDraftValue?.product?.ramSize,
-              processor: completeDraftValue?.product?.processor,
-              screenSize: completeDraftValue?.product?.screenSize,
-              model: completeDraftValue?.product?.model,
-              color: completeDraftValue?.product?.color,
-              brand: completeDraftValue?.product?.brand,
-              cameraType: completeDraftValue?.product?.cameraType,
-              material: completeDraftValue?.product?.material,
-              memory: completeDraftValue?.product?.memory,
-              age: completeDraftValue?.product?.age,
-              totalArea: completeDraftValue?.product?.totalArea,
-              numberOfRooms: completeDraftValue?.product?.numberOfRooms,
-              numberOfFloors: completeDraftValue?.product?.numberOfFloors,
-              landType: completeDraftValue?.product?.landType,
-              carType: completeDraftValue?.product?.carType,
-              cityId: completeDraftValue?.product?.cityId,
-              countryId: completeDraftValue?.product?.countryId,
-              itemDescription: completeDraftValue?.product?.description,
-              hasUsageCondition:
-                completeDraftValue?.product?.category?.hasUsageCondition,
-              valueRadio: completeDraftValue?.product?.usageStatus,
-            })
-          );
-          setRadioValue(completeDraftValue?.product?.usageStatus);
+          SetProductFunction(completeDraftValue?.product)
+          // setimgtest(completeDraftValue?.product?.images);
+
+          // // Map draft images to fileOne, fileTwo, etc.
+          // if (completeDraftValue?.product?.images) {
+          //   const images = completeDraftValue.product.images;
+          //   setFileOne(images[0] || null);
+          //   setFileTwo(images[1] || null);
+          //   setFileThree(images[2] || null);
+          //   setFileFour(images[3] || null);
+          //   setFileFive(images[4] || null);
+          // }
+
+          // dispatch(
+          //   productDetails({
+          //     itemName: completeDraftValue?.product?.title,
+          //     category: completeDraftValue?.product.categoryId,
+          //     subCategory: completeDraftValue?.product?.subCategoryId,
+          //     operatingSystem: completeDraftValue?.product?.operatingSystem,
+          //     releaseYear: completeDraftValue?.product?.releaseYear,
+          //     regionOfManufacture:
+          //       completeDraftValue?.product?.regionOfManufacture,
+          //     ramSize: completeDraftValue?.product?.ramSize,
+          //     processor: completeDraftValue?.product?.processor,
+          //     screenSize: completeDraftValue?.product?.screenSize,
+          //     model: completeDraftValue?.product?.model,
+          //     color: completeDraftValue?.product?.color,
+          //     brand: completeDraftValue?.product?.brand,
+          //     cameraType: completeDraftValue?.product?.cameraType,
+          //     material: completeDraftValue?.product?.material,
+          //     memory: completeDraftValue?.product?.memory,
+          //     age: completeDraftValue?.product?.age,
+          //     totalArea: completeDraftValue?.product?.totalArea,
+          //     numberOfRooms: completeDraftValue?.product?.numberOfRooms,
+          //     numberOfFloors: completeDraftValue?.product?.numberOfFloors,
+          //     landType: completeDraftValue?.product?.landType,
+          //     carType: completeDraftValue?.product?.carType,
+          //     cityId: completeDraftValue?.product?.cityId,
+          //     countryId: completeDraftValue?.product?.countryId,
+          //     itemDescription: completeDraftValue?.product?.description,
+          //     hasUsageCondition:
+          //       completeDraftValue?.product?.category?.hasUsageCondition,
+          //     valueRadio: completeDraftValue?.product?.usageStatus,
+          //   })
+          // );
+          // setRadioValue(completeDraftValue?.product?.usageStatus);
         })
       );
+    
+    }
   }, [runAuctionById, forceReload, state?.auctionId, productDetailsint?.id]);
+
+  //Fetching Listed Product to convert into auction
+  useEffect(() => {
+    const id = state?.productId;
+    if (id) {
+      runAuctionById(
+        authAxios.get(api.app.productListing.listedProduct(state?.productId)).then((res) => {
+          const listedProduct = res?.data?.data;
+          console.log('listed product into auction: ',res?.data )
+          setListedProductVal(res?.data?.data?.product)
+          SetProductFunction(listedProduct?.product)
+          setAuctionState('LISTED_PRODUCT');
+        })
+      );
+    
+    }
+  }, [runAuctionById, forceReload, state?.productId, productDetailsint?.id]);
+
+
+  function SetProductFunction(product){
+    setimgtest(product?.images);
+
+    // Map draft images to fileOne, fileTwo, etc.
+    if (product?.images) {
+      const images = product?.images;
+      setFileOne(images[0] || null);
+      setFileTwo(images[1] || null);
+      setFileThree(images[2] || null);
+      setFileFour(images[3] || null);
+      setFileFive(images[4] || null);
+    }
+
+    dispatch(
+      productDetails({
+        productId:product?.id,
+        itemName: product?.title,
+        category: product.categoryId,
+        subCategory: product?.subCategoryId,
+        operatingSystem: product?.operatingSystem,
+        releaseYear: product?.releaseYear,
+        regionOfManufacture: product?.regionOfManufacture,
+        ramSize: product?.ramSize,
+        processor: product?.processor,
+        screenSize: product?.screenSize,
+        model: product?.model,
+        color: product?.color,
+        brand: product?.brand,
+        cameraType: product?.cameraType,
+        material: product?.material,
+        memory: product?.memory,
+        age: product?.age,
+        totalArea: product?.totalArea,
+        numberOfRooms: product?.numberOfRooms,
+        numberOfFloors: product?.numberOfFloors,
+        landType: product?.landType,
+        carType: product?.carType,
+        cityId: product?.cityId,
+        countryId: product?.countryId,
+        itemDescription: product?.description,
+        hasUsageCondition: product?.category?.hasUsageCondition,
+        valueRadio: product?.usageStatus,
+      })
+    );
+    setRadioValue(product?.usageStatus);
+  }
 
   useEffect(() => {
     const storedAuctionId = localStorage.getItem("auctionId");
@@ -388,6 +458,7 @@ const ProductDetails = () => {
         fileFive,
         auctionState,
         auctionId: completeDraftVal?.id,
+        productId: state?.productId,
       })
     );
 

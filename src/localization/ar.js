@@ -42,6 +42,7 @@ const ar = {
 
   // home
   [localizationKeys.changeStatus]: "تغيير الحالة",
+  [localizationKeys.convertToAuction]: "تحويل إلى المزاد",
   [localizationKeys.viewContactDetails]: " عرض تفاصيل الاتصال",
   [localizationKeys.trendingAuctions]: "المزادات المميزه",
   [localizationKeys.type]: "عرض",
