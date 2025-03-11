@@ -275,7 +275,7 @@ const ShippingDetails = () => {
               formData
             )
             .then((res) => {
-              // window.localStorage.setItem("productid", res?.data?.data.id);
+              window.localStorage.setItem("auctionId", res?.data?.data.id);
               toast.success(
                 selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
               );
