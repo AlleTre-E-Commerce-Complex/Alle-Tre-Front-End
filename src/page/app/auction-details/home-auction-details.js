@@ -268,6 +268,7 @@ const HomeAuctionDetails = () => {
                     userId={auctionsDetailsData?.user?.id}
                     userPhone={auctionsDetailsData?.user?.phone}
                     userImage={auctionsDetailsData?.user?.imageLink}
+                    usageStatus={auctionsDetailsData?.product?.usageStatus}
                   />
                 )}
               </div>

@@ -53,6 +53,7 @@ const SummaryHomeAuctionSections = ({
   userId,
   userPhone,
   userImage,
+  usageStatus,
 }) => {
   const { user } = useAuthState();
   const [lang] = useLanguage("");
@@ -341,13 +342,24 @@ const SummaryHomeAuctionSections = ({
       ].includes(status) && (
         <div>
           {/* Header Section */}
-          <div className=" pb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+          <div className="pb-6 flex items-center gap-x-2 md:gap-x-5">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
               {title}
             </h1>
-            <div className="flex items-center gap-x-5">
-              <AuctionsStatus status={status} big />
+            <div
+              className={`state-button w-14 py-1 rounded-md text-sm font-medium text-white transition-colors text-center ${
+                usageStatus === "NEW"
+                  ? "bg-primary-light hover:bg-primary"
+                  : "bg-gray-dark hover:bg-gray-verydark"
+              }`}
+            >
+              {usageStatus?.charAt(0).toUpperCase() +
+                usageStatus?.slice(1).toLowerCase()}
             </div>
+          </div>
+
+          <div className="flex items-center gap-x-6">
+            <AuctionsStatus status={status} big />
           </div>
 
           {/* Seller Info Section */}

@@ -19,6 +19,7 @@ const ProductCardList = ({
   country,
   id,
   createdAt,
+  usageStatus,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -104,13 +105,24 @@ const ProductCardList = ({
           </div>
 
           <div>
-            <h1
-              onClick={() => handelGoDetails(id)}
-              className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] ltr:pr-4 rtl:pl-4 line-clamp-2 md:line-clamp-2"
-            >
-              {truncateString(title, 70)}
-            </h1>
-
+            <div className="flex items-center  gap-x-2 md:gap-x-4">
+              <h1
+                onClick={() => handelGoDetails(id)}
+                className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] ltr:pr-4 rtl:pl-4 line-clamp-2 md:line-clamp-2"
+              >
+                {truncateString(title, 70)}
+              </h1>
+              <div
+                className={`state-button px-2 mt-2 py-0.5 rounded-md text-xs font-medium text-white transition-colors ${
+                  usageStatus === "NEW"
+                    ? "bg-primary-light hover:bg-primary bg-opacity-70"
+                    : "bg-gray-dark hover:bg-gray-verydark bg-opacity-80"
+                }`}
+              >
+                {usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
+              </div>
+            </div>
             <div className="flex md:gap-x-10 gap-x-6 mt-4">
               <div>
                 <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">

@@ -131,9 +131,22 @@ const SummaryListedSection = () => {
           />
         </div>
         <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0 md:order-none order-last">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4 pt-8">
-            {listedProductsData.title}
-          </h1>
+          <div className="flex items-center gap-x-2 md:gap-x-5 pt-8">
+            <h1 className="text-3xl font-bold text-gray-800">
+              {listedProductsData.title}
+            </h1>
+            <div
+              className={`state-button px-6 py-1 rounded-md text-sm font-medium text-white transition-colors ${
+                listedProductsData?.usageStatus === "NEW"
+                  ? "bg-primary-light hover:bg-primary"
+                  : "bg-gray-dark hover:bg-gray-verydark"
+              }`}
+            >
+              {listedProductsData?.usageStatus?.charAt(0).toUpperCase() +
+                listedProductsData?.usageStatus?.slice(1).toLowerCase()}
+            </div>
+          </div>
+
           <div className="py-4">
             {listedProductsData?.user?.userName && (
               <div className="flex items-start">
@@ -283,26 +296,13 @@ const SummaryListedSection = () => {
             </div>
           </div>
           {user?.id === listedProductsData?.userId ? (
-            <div className="pt-4 flex gap-2" >
-              <button 
-              onClick={handleOnStatus}
-              className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2">
+            <div className="pt-2" onClick={handleOnStatus}>
+              <button className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2">
                 {selectedContent[localizationKeys.changeStatus]}
               </button>
-
-              <button 
-              onClick={() =>
-                history.push(routes.app.createAuction.productDetails, {
-                  productId: productId,
-                })
-              }
-              className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2">
-                {selectedContent[localizationKeys.convertToAuction]}
-              </button>
-
             </div>
           ) : user ? (
-            <div className="flex flex-col md:flex-row gap-4 pt-4">
+            <div className="flex flex-col md:flex-row gap-4 pt-2">
               <button
                 onClick={() => {
                   const message = encodeURIComponent(
