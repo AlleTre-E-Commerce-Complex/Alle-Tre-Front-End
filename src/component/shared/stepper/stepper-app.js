@@ -3,36 +3,54 @@ import routes from "../../../routes";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const StepperApp = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
   const history = useHistory();
-
+  const productDetailsint = useSelector(
+      (state) => state.productDetails.productDetails
+    );
+  const [isListedProduct, setIsListedProduct] = useState(false)
+  useEffect(()=>{
+    const is_ListedProduct = productDetailsint.auctionState === "LISTED_PRODUCT" ? true : false
+    setIsListedProduct(is_ListedProduct)
+  },[productDetailsint])
   return (
     <>
       {/* step 1 */}
       {pathname.length === 1 ||
         (pathname.endsWith(routes.app.createAuction.productDetails) && (
-          <div className="flex mb-8 ">
-            <div className="text-center relative">
-              <button
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails)
-                }
-                className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
+          <div className="flex mb-8">
+            <div className={`text-center relative ${isListedProduct ? "pointer-events-none opacity-50" : ""}`}>
+            <button
+                onClick={() => {
+                  if (!isListedProduct) {
+                    history.push(routes.app.createAuction.productDetails);
+                  }
+                }}
+                className={`bg-primary w-8 h-8 rounded-full text-white text-center mx-2 ${
+                  isListedProduct ? "cursor-not-allowed" : ""
+                }`}
               >
                 1
-              </button>
-              <p
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails)
-                }
-                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
+            </button>
+            <p
+                onClick={() => {
+                  if (!isListedProduct) {
+                    history.push(routes.app.createAuction.productDetails);
+                  }
+                }}
+                className={`text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary ${
+                  isListedProduct ? "cursor-not-allowed" : "cursor-pointer"
+                }`}
               >
                 {selectedContent[localizationKeys.productDetails]}
-              </p>
+            </p>
+
             </div>
             <div className="border-gray-med border-dashed border-b-2 lg:lg:w-[332px] lg:w-[332px] md:w-[200px] w-[57px] my-auto"></div>
             <div className="relative">
@@ -68,15 +86,19 @@ const StepperApp = () => {
       {pathname.length === 1 ||
         (pathname.endsWith(routes.app.createAuction.auctionDetails) && (
           <div className="flex mb-8">
-            <div className="text-center relative">
-              <button
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails)
-                }
-                className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
+            <div className={`text-center relative ${isListedProduct ? "pointer-events-none opacity-50" : ""}`}>
+            <button
+                onClick={() => {
+                  if (!isListedProduct) {
+                    history.push(routes.app.createAuction.productDetails);
+                  }
+                }}
+                className={`bg-primary w-8 h-8 rounded-full text-white text-center mx-2 ${
+                  isListedProduct ? "cursor-not-allowed" : ""
+                }`}
               >
                 1
-              </button>
+            </button>
               <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer">
                 {selectedContent[localizationKeys.productDetails]}
               </p>
@@ -120,21 +142,20 @@ const StepperApp = () => {
       {pathname.length === 1 ||
         (pathname.endsWith(routes.app.createAuction.shippingDetails) && (
           <div className="flex mb-8">
-            <div className="text-center relative">
-              <button
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails)
-                }
-                className="bg-primary w-8 h-8 rounded-full text-white text-center mx-2"
+            <div className={`text-center relative ${isListedProduct ? "pointer-events-none opacity-50" : ""}`}>
+            <button
+                onClick={() => {
+                  if (!isListedProduct) {
+                    history.push(routes.app.createAuction.productDetails);
+                  }
+                }}
+                className={`bg-primary w-8 h-8 rounded-full text-white text-center mx-2 ${
+                  isListedProduct ? "cursor-not-allowed" : ""
+                }`}
               >
                 1
-              </button>
-              <p
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails)
-                }
-                className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer"
-              >
+            </button>
+              <p className="text-center text-xs font-normal absolute w-32 -left-10 mt-2 text-primary cursor-pointer">
                 {selectedContent[localizationKeys.productDetails]}
               </p>
             </div>

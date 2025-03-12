@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { useHistory, useLocation } from "react-router-dom";
 import routes from "../../../routes";
@@ -51,7 +51,7 @@ const ProductDetails = () => {
   const [forceReload, setForceReload] = useState(false);
   const [auctionId, setAuctionId] = useState(state?.auctionId || null);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-
+  const formikRef = useRef(null);
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
   );
@@ -134,9 +134,12 @@ const ProductDetails = () => {
           setListedProductVal(res?.data?.data?.product)
           SetProductFunction(listedProduct?.product)
           setAuctionState('LISTED_PRODUCT');
+          // Check if formikRef has a current instance and submit the form
+          if (formikRef.current) {
+            formikRef.current.submitForm();
+          }
         })
-      );
-    
+      );  
     }
   }, [runAuctionById, forceReload, state?.productId, productDetailsint?.id]);
 
@@ -733,6 +736,7 @@ const ProductDetails = () => {
           {/* formik */}
           <div>
             <Formik
+             innerRef={formikRef} // Assigning ref to Formik
               initialValues={{
                 itemName: productDetailsint.itemName || "",
                 category: productDetailsint.category || "",
