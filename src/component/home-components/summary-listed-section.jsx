@@ -296,9 +296,23 @@ const SummaryListedSection = () => {
             </div>
           </div>
           {user?.id === listedProductsData?.userId ? (
-            <div className="pt-2" onClick={handleOnStatus}>
-              <button className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2">
+            <div className="pt-4 flex gap-2">
+              <button
+                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+                onClick={handleOnStatus}
+              >
                 {selectedContent[localizationKeys.changeStatus]}
+              </button>
+
+              <button
+                onClick={() =>
+                  history.push(routes.app.createAuction.productDetails, {
+                    productId: productId,
+                  })
+                }
+                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+              >
+                {selectedContent[localizationKeys.convertToAuction]}
               </button>
             </div>
           ) : user ? (
