@@ -61,6 +61,7 @@ const AuctionCard = ({
   startBidAmount,
   latestBidAmount,
   hideButton,
+  usageStatus,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -263,19 +264,30 @@ const AuctionCard = ({
         </div>
       </div>
 
-      <h1
-        onClick={() => handelGoDetails(auctionId)}
-         className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] line-clamp-2 overflow-hidden"
-      >
-        {truncateString(title, 75)}
-      </h1>
-
+      <div className="flex items-center justify-between gap-x-2">
+        <h1
+          onClick={() => handelGoDetails(auctionId)}
+          className="text-gray-dark font-medium text-sm pt-3  min-h-[30px] line-clamp-2 overflow-hidden"
+        >
+          {truncateString(title, 75)}
+        </h1>
+        <div
+          className={`state-button px-2 py-0.5 rounded-md text-xs font-medium text-white transition-colors ${
+            usageStatus === "NEW"
+              ? "bg-primary-light hover:bg-primary bg-opacity-70"
+              : "bg-gray-dark hover:bg-gray-verydark bg-opacity-80"
+          }`}
+        >
+          {usageStatus?.charAt(0).toUpperCase() +
+            usageStatus?.slice(1).toLowerCase()}
+        </div>
+      </div>
       <div
         className="flex flex-col flex-grow"
         onClick={() => handelGoDetails(auctionId)}
       >
         <AuctionsStatus status={status} small />
-        <div className="grid grid-cols-2 gap-4 mt-2 items-center text-xs">
+        <div className="grid grid-cols-2 gap-4 mt-1 items-center text-xs">
           <div className="flex flex-col">
             <h6 className="text-gray-500 font-medium -mt-5">
               {selectedContent[localizationKeys.totalBids]}
@@ -292,7 +304,7 @@ const AuctionCard = ({
               alt="Footer Banner"
             />
           ) : (
-            <div className="flex flex-col items-start min-h-[68px]">
+            <div className="flex flex-col items-start min-h-[58px]">
               <h6 className="text-gray-500 font-medium">
                 {status === "IN_SCHEDULED"
                   ? selectedContent[localizationKeys.startDate]
@@ -316,7 +328,7 @@ const AuctionCard = ({
           )}
         </div>
       </div>
-      <div className="mt-auto pt-3">
+      <div className="mt-auto">
         {isMyAuction ? (
           <div
             className={isPurchased || isExpired ? "hidden" : "flex justify-end"}
@@ -335,7 +347,9 @@ const AuctionCard = ({
             className={
               isPurchased || isExpired
                 ? "hidden"
-                : `flex flex-col sm:flex-row gap-y-3 sm:gap-x-3 ${!hideButton && !isBuyNowAllowed ? "sm:justify-end" : ""}`
+                : `flex flex-col sm:flex-row gap-y-3 sm:gap-x-3 ${
+                    !hideButton && !isBuyNowAllowed ? "sm:justify-end" : ""
+                  }`
             }
           >
             {!hideButton && isBuyNowAllowed && (

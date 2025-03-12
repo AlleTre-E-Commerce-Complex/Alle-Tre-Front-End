@@ -38,6 +38,7 @@ const AuctionCardList = ({
   startBidAmount,
   latestBidAmount,
   PurchasedTime,
+  usageStatus,
 }) => {
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const [lang] = useLanguage("");
@@ -208,12 +209,25 @@ const AuctionCardList = ({
           </div>
 
           <div className="flex-1">
-            <h1
-              onClick={() => handelGoDetails(auctionId)}
-              className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] ltr:pr-4 rtl:pl-4 line-clamp-2 md:line-clamp-2"
-            >
-              {truncateString(title, 70)}
-            </h1>
+            <div className="flex items-center  gap-x-2 md:gap-x-4">
+              <h1
+                onClick={() => handelGoDetails(auctionId)}
+                className="text-gray-dark font-medium text-sm pt-3 min-h-[30px] line-clamp-2 overflow-hidden"
+              >
+                {truncateString(title, 70)}
+              </h1>
+              <div
+                className={`state-button px-2 mt-2 py-0.5 rounded-md text-xs font-medium text-white transition-colors ${
+                  usageStatus === "NEW"
+                    ? "bg-primary-light hover:bg-primary bg-opacity-70"
+                    : "bg-gray-dark hover:bg-gray-verydark bg-opacity-80"
+                }`}
+              >
+                {usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
+              </div>
+            </div>
+
             <div>
               <AuctionsStatus status={status} small />
             </div>
@@ -262,7 +276,7 @@ const AuctionCardList = ({
           </div>
         </div>
 
-        <div className="mt-4 flex flex-col md:flex-row md:justify-end gap-2">
+        <div className="mt-2 flex flex-col md:flex-row md:justify-end gap-2">
           <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
             {isMyAuction ? (
               <button

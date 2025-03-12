@@ -11,10 +11,7 @@ import SliderRow from "../../../component/shared/slider-categories/slider-row";
 import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
-import routes from "../../../routes";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
-import useLocalStorage from "../../../hooks/use-localstorage";
-import { Open } from "../../../redux-store/auth-model-slice";
 import { useDispatch } from "react-redux";
 import UpComingAuctionsSlider from "../../../component/home-components/up-coming-auctions";
 import PaginationApp from "../../../component/shared/pagination/pagination-app";
@@ -45,7 +42,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const history = useHistory();
   const { user } = useAuthState();
   const myRef = useRef();
-  const myRef1 = useRef()
+  const myRef1 = useRef();
   const dispatch = useDispatch();
   const isWelcomeBonus = useSelector(
     (state) => state.welcomeBonus.welcomeBonus
@@ -60,8 +57,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [totalPagesListed, setTotalPagesListed] = useState();
   const [totalpagesAuction, setTotalpagesAuction] = useState();
   const [sponsoredAuctions, SetSponsoredAuctions] = useState([]);
-  const [auctionPageNumber, setAuctionPageNumber] = useState(Number(DEFAULT_PAGE));
-  const [listedPageNumber, setListedPageNumber] = useState(Number(DEFAULT_PAGE));
+  const [auctionPageNumber, setAuctionPageNumber] = useState(
+    Number(DEFAULT_PAGE)
+  );
+  const [listedPageNumber, setListedPageNumber] = useState(
+    Number(DEFAULT_PAGE)
+  );
 
   const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
@@ -92,7 +93,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     }
 
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    
+
     const filterParams = {
       page: page,
       perPage: perPage,
@@ -102,26 +103,26 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       auctionStatus: parsed.auctionStatus || undefined,
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
     };
 
-    Object.keys(filterParams).forEach(key => {
+    Object.keys(filterParams).forEach((key) => {
       if (filterParams[key] === undefined) {
         delete filterParams[key];
       }
     });
 
-    const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
     console.log("Sending filters to backend:", filterParams); // For debugging
 
     if (!user) {
       runMainAuctions(
-        axios
-          .get(`${api.app.auctions.getMain}?${queryStr}`)
-          .then((res) => {
-            setMainAuctions(res?.data?.data);
-            setTotalpagesAuction(res?.data?.pagination?.totalPages);
-          })
+        axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+        })
       );
       runSponsoredAuctions(
         axios.get(`${api.app.auctions.sponsored}`).then((res) => {
@@ -130,12 +131,10 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       );
     } else {
       runMainAuctions(
-        authAxios
-          .get(`${api.app.auctions.getMain}?${queryStr}`)
-          .then((res) => {
-            setMainAuctions(res?.data?.data);
-            setTotalpagesAuction(res?.data?.pagination?.totalPages);
-          })
+        authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+        })
       );
       runSponsoredAuctions(
         authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
@@ -158,7 +157,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     }
 
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    
+
     const filterParams = {
       page: page,
       perPage: perPage,
@@ -168,16 +167,18 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       auctionStatus: parsed.auctionStatus || undefined,
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
     };
 
-    Object.keys(filterParams).forEach(key => {
+    Object.keys(filterParams).forEach((key) => {
       if (filterParams[key] === undefined) {
         delete filterParams[key];
       }
     });
 
-    const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
     console.log("Sending filters to backend:", filterParams); // For debugging
 
     if (!user) {
@@ -303,7 +304,8 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
             <div className="flex  ">
               <h6 className="text-gray-dark text-base font-normal pt-3 lg:pl-3 px-4 lg:px-0 w-full lg:w-auto">
-                {mainAuctions?.length} {selectedContent[localizationKeys.results]}
+                {mainAuctions?.length}{" "}
+                {selectedContent[localizationKeys.results]}
               </h6>
             </div>
             <div
@@ -370,6 +372,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 latestBidAmount={e?.bids[0]?.amount}
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
+                                usageStatus={e?.product?.usageStatus}
                               />
                             ))}
                           </div>
@@ -380,7 +383,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
-                              type={'auction'}
+                              type={"auction"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />
@@ -417,6 +420,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 latestBidAmount={e?.bids[0]?.amount}
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
+                                usageStatus={e?.product?.usageStatus}
                               />
                             ))}
                           </div>
@@ -427,7 +431,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
-                              type={'auction'}
+                              type={"auction"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />
@@ -438,7 +442,10 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (isGrid && selectedType === "products") {
                     return (
                       <div>
-                        <h1 ref={myRef1} className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1
+                          ref={myRef1}
+                          className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                        >
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         {listedProducts?.length === 0 ? (
@@ -466,6 +473,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                     : e?.location?.country?.nameEn
                                 }
                                 createdAt={e?.product?.user?.createdAt}
+                                usageStatus={e?.product?.usageStatus}
                               />
                             ))}
                           </div>
@@ -476,7 +484,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef1}
-                              type={'products'}
+                              type={"products"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />
@@ -487,7 +495,10 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (!isGrid && selectedType === "products") {
                     return (
                       <div>
-                        <h1 ref={myRef1} className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1
+                          ref={myRef1}
+                          className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                        >
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         {listedProducts?.length === 0 ? (
@@ -515,6 +526,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                     : e?.location?.country?.nameEn
                                 }
                                 createdAt={e?.product?.user?.createdAt}
+                                usageStatus={e?.product?.usageStatus}
                               />
                             ))}
                           </div>
@@ -525,7 +537,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef1}
-                              type={'products'}
+                              type={"products"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />
@@ -562,6 +574,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 latestBidAmount={e?.bids[0]?.amount}
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
+                                usageStatus={e?.product?.usageStatus}
                               />
                             ))}
                           </div>
@@ -572,13 +585,16 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
-                              type={'auction'}
+                              type={"auction"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
-                        <h1 ref={myRef1} className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1
+                          ref={myRef1}
+                          className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                        >
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         {listedProducts?.length === 0 ? (
@@ -606,6 +622,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                     : e?.location?.country?.nameEn
                                 }
                                 createdAt={e?.product?.user?.createdAt}
+                                usageStatus={e?.product?.usageStatus}
                               />
                             ))}
                           </div>
@@ -616,7 +633,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef1}
-                              type={'products'}
+                              type={"products"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />
@@ -648,6 +665,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               latestBidAmount={e?.bids[0]?.amount}
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
+                              usageStatus={e?.product?.usageStatus}
                             />
                           ))}
                         </div>
@@ -657,13 +675,16 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalpagesAuction}
                               perPage={getDefaultPerPage()}
                               myRef={myRef}
-                              type={'auction'}
+                              type={"auction"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
                         </div>
-                        <h1 ref={myRef1} className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        <h1
+                          ref={myRef1}
+                          className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                        >
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
                         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
@@ -686,6 +707,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                   : e?.location?.country?.nameEn
                               }
                               createdAt={e?.product?.user?.createdAt}
+                              usageStatus={e?.product?.usageStatus}
                             />
                           ))}
                         </div>
@@ -695,7 +717,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalPages={totalPagesListed}
                               perPage={getDefaultPerPage()}
                               myRef={myRef1}
-                              type={'products'}
+                              type={"products"}
                               setAuctionPageNumber={setAuctionPageNumber}
                               setListedPageNumber={setListedPageNumber}
                             />

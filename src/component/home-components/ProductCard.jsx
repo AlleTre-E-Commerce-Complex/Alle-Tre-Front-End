@@ -20,6 +20,7 @@ const ProductCard = ({
   id,
   createdAt,
   userId,
+  usageStatus,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -78,7 +79,7 @@ const ProductCard = ({
   return (
     <div>
       <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
-        <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[4/5]">
+        <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[10/10]">
           <div className=" group">
             <div
               className={`absolute ${
@@ -107,12 +108,25 @@ const ProductCard = ({
             {formatCurrency(price)}
           </div>
         </div>
-        <h1
-          onClick={() => handelGoDetails(id)}
-          className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[30px] line-clamp-2 overflow-hidden"
-        >
-          {truncateString(title, 250)}
-        </h1>
+        <div className="flex items-center justify-between gap-x-2">
+          <h1
+            onClick={() => handelGoDetails(id)}
+            className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[30px] line-clamp-2 overflow-hidden cursor-pointer"
+          >
+            {truncateString(title, 250)}
+          </h1>
+          <div
+            className={`state-button px-2 py-0.5 rounded-md text-xs font-medium text-white transition-colors ${
+              usageStatus === "NEW"
+                ? "bg-primary-light hover:bg-primary bg-opacity-70"
+                : "bg-gray-dark hover:bg-gray-verydark bg-opacity-80"
+            }`}
+          >
+            {usageStatus?.charAt(0).toUpperCase() +
+              usageStatus?.slice(1).toLowerCase()}
+          </div>
+        </div>
+
         <div className="mt-0" onClick={() => handelGoDetails(id)}>
           <div className="h-[40px]">
             <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
@@ -125,7 +139,7 @@ const ProductCard = ({
               {city}, {country}
             </p>
           </div>
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between mt-1">
             <div>
               <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                 {selectedContent[localizationKeys.listed]}
@@ -149,7 +163,7 @@ const ProductCard = ({
             </div>
           </div>
           {user?.id === userId ? (
-            <div className="mt-3 flex items-end justify-end">
+            <div className="mt-2 flex items-end justify-end">
               <button
                 onClick={() => handelGoDetails(id)}
                 className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center "
