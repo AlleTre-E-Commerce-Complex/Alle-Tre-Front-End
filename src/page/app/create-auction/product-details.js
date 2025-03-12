@@ -61,7 +61,8 @@ const ProductDetails = () => {
   const history = useHistory();
 
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
-  const { run: runFetchListedProduct, isLoading: isLoadingFetchListedProduct } = useAxios([]);
+  const { run: runFetchListedProduct, isLoading: isLoadingFetchListedProduct } =
+    useAxios([]);
 
   useEffect(() => {
     const id = productDetailsint?.auctionId || state?.auctionId;
@@ -71,7 +72,7 @@ const ProductDetails = () => {
           const completeDraftValue = res?.data?.data;
           setAuctionState(res?.data?.data?.status);
           setCompleteDraftValue(res?.data?.data);
-          SetProductFunction(completeDraftValue?.product)
+          SetProductFunction(completeDraftValue?.product);
           // setimgtest(completeDraftValue?.product?.images);
 
           // // Map draft images to fileOne, fileTwo, etc.
@@ -119,7 +120,6 @@ const ProductDetails = () => {
           // setRadioValue(completeDraftValue?.product?.usageStatus);
         })
       );
-    
     }
   }, [runAuctionById, forceReload, state?.auctionId, productDetailsint?.id]);
 
@@ -143,8 +143,7 @@ const ProductDetails = () => {
     }
   }, [runAuctionById, forceReload, state?.productId, productDetailsint?.id]);
 
-
-  function SetProductFunction(product){
+  function SetProductFunction(product) {
     setimgtest(product?.images);
 
     // Map draft images to fileOne, fileTwo, etc.
@@ -159,7 +158,7 @@ const ProductDetails = () => {
 
     dispatch(
       productDetails({
-        productId:product?.id,
+        productId: product?.id,
         itemName: product?.title,
         category: product.categoryId,
         subCategory: product?.subCategoryId,
@@ -788,24 +787,25 @@ const ProductDetails = () => {
                         name="category"
                         label={selectedContent[localizationKeys.category]}
                         placeholder={selectedContent[localizationKeys.category]}
-                        options={GatogryOptions.map((option) => ({
-                          ...option,
-                          text:
-                            option.text === "Electronic Devices" ||
-                            option.text === "الأجهزة الإلكترونية" ? (
-                              option.text
-                            ) : (
-                              <div className="flex justify-between items-center">
-                                <span>{option.text}</span>
-                                <span className="bg-gray-200 text-gray-600 text-xs font-semibold px-2 py-1 rounded-lg">
-                                  {selectedContent[localizationKeys.comingSoon]}
-                                </span>
-                              </div>
-                            ),
-                          disabled:
-                            option.text !== "Electronic Devices" &&
-                            option.text !== "الأجهزة الإلكترونية",
-                        }))}
+                        options={GatogryOptions}
+                        // options={GatogryOptions.map((option) => ({
+                        //   ...option,
+                        //   text:
+                        //     option.text === "Electronic Devices" ||
+                        //     option.text === "الأجهزة الإلكترونية" ? (
+                        //       option.text
+                        //     ) : (
+                        //       <div className="flex justify-between items-center">
+                        //         <span>{option.text}</span>
+                        //         <span className="bg-gray-200 text-gray-600 text-xs font-semibold px-2 py-1 rounded-lg">
+                        //           {selectedContent[localizationKeys.comingSoon]}
+                        //         </span>
+                        //       </div>
+                        //     ),
+                        //   disabled:
+                        //     option.text !== "Electronic Devices" &&
+                        //     option.text !== "الأجهزة الإلكترونية",
+                        // }))}
                         loading={loadingGatogry}
                         onChange={(value) => {
                           setCategoryId(value);

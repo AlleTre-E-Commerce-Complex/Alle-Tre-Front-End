@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { Dimmer } from "semantic-ui-react";
 import Swiper from "swiper";
 import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
@@ -159,6 +157,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                           : e?.location?.country?.nameEn
                       }
                       createdAt={e?.createdAt}
+                      usageStatus={e?.product?.usageStatus}
                     />
                   ) : (
                     <AuctionCard
@@ -173,6 +172,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                       isBuyNowAllowed={e?.isBuyNowAllowed}
                       isMyAuction={e?.isMyAuction}
                       latestBidAmount={e?.bids[0]?.amount || 0}
+                      usageStatus={e?.product?.usageStatus}
                     />
                   )}
                 </div>

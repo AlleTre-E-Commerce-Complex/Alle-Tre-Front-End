@@ -128,6 +128,7 @@ const UpComingAuctionsSlider = () => {
                         StartDate={e?.startDate}
                         isBuyNowAllowed={e?.isBuyNowAllowed}
                         isMyAuction={e?.isMyAuction}
+                        usageStatus={e?.product?.usageStatus}
                       />
                     </div>
                   ))}

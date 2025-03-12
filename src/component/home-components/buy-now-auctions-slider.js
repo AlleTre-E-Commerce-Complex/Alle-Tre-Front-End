@@ -140,6 +140,7 @@ const BuyNowAuctionsSlider = () => {
                         latestBidAmount={e?.bids[0]?.amount}
                         startBidAmount={e?.startBidAmount}
                         hideButton={true}
+                        usageStatus={e?.product?.usageStatus}
                       />
                     </div>
                   ))}
@@ -173,7 +174,7 @@ const BuyNowAuctionsSlider = () => {
                   )}
                 </div>
                 <button
-                     onClick={lang === "ar" ? handlePrevClick : handleNextClick}
+                  onClick={lang === "ar" ? handlePrevClick : handleNextClick}
                   className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
                 >
                   <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
@@ -185,7 +186,7 @@ const BuyNowAuctionsSlider = () => {
                   </div>
                 </button>
                 <button
-                   onClick={lang === "ar" ? handleNextClick : handlePrevClick}
+                  onClick={lang === "ar" ? handleNextClick : handlePrevClick}
                   className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
                 >
                   <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
