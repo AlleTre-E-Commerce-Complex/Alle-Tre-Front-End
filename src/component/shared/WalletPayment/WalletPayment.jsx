@@ -50,22 +50,22 @@ const WalletPayment = ({
     setShwoPaymentSelection();
   };
   return (
-    <div className="bg-gray-100 h-4/5 rounded-xl p-4 border relative">
-      <h1 className="flex flex-col justify-center items-center text-center text-xl font-bold absolute inset-0 m-auto">
-        {selectedContent[localizationKeys.yourWalletBalanceIsAED]}
+    <div className="bg-gray-100 h-4/5 rounded-xl p-4 border relative flex flex-col">
+      <h1 className="flex flex-col justify-center items-center text-center text-xl md:text-2xl font-bold mb-20 md:mb-0 md:absolute md:inset-0 md:m-auto">
+        {selectedContent[localizationKeys.yourWalletBalanceIsAED]}{" "}
         {walletBalance}/-
       </h1>
-      <div className="absolute bottom-4 right-4 flex gap-4">
+      <div className="flex flex-col md:flex-row gap-4 md:absolute md:bottom-4 md:right-4 mt-auto">
         <Button
-          className="border border-solid border-gray-400 bg-white text-gray-700 w-[120px] h-[56px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
-          loading={isLoading}
+          className="border border-solid border-gray-400 bg-white text-gray-700 w-full md:w-[120px] h-[48px] md:h-[56px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
+          disabled={isLoading}
           onClick={handleGoBack}
         >
           {selectedContent[localizationKeys.GoBack]}
         </Button>
 
         <Button
-          className="bg-primary text-white w-[155px] h-[56px] rounded-lg text-base font-normal"
+          className="bg-primary text-white w-full md:w-[155px] h-[48px] md:h-[56px] rounded-lg text-base font-normal"
           loading={isLoading}
           id="submit"
           onClick={submitWalletPayment}

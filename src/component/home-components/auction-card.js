@@ -304,7 +304,7 @@ const AuctionCard = ({
               alt="Footer Banner"
             />
           ) : (
-            <div className="flex flex-col items-start min-h-[58px]">
+            <div className="flex flex-col items-start min-h-[68px]">
               <h6 className="text-gray-500 font-medium">
                 {status === "IN_SCHEDULED"
                   ? selectedContent[localizationKeys.startDate]

@@ -115,7 +115,6 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     const queryStr = queryString.stringify(filterParams, {
       arrayFormat: "bracket",
     });
-    console.log("Sending filters to backend:", filterParams); // For debugging
 
     if (!user) {
       runMainAuctions(
