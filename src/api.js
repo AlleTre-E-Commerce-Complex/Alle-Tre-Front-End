@@ -93,7 +93,7 @@ const api = {
       listNewProduct: `auctions/product-listing`,
       productAnalytics: "auctions/user/product/analytics",
       getAllListedProducts: `auctions/listedProducts/getAllListed-products`,
-      getOtherUserProducts: (userId) => `/auctions/user/user-Productdetails/?userId=${userId}`,
+      getOtherUserProducts: (userId) => `/auctions/listedProducts/userProductdetails/?userId=${userId}`,
       listedProduct: (productId) =>
         `auctions/listedProducts/${productId}/details`,
       SimilarProduct: (productId) =>

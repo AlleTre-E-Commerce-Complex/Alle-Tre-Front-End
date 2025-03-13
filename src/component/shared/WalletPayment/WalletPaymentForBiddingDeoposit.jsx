@@ -44,7 +44,12 @@ const WalletPaymentForBiddingDeoposit = ({
           }
         })
         .catch((error) => {
-          toast.error("Payment Failed", {
+          const errorMessage1 =
+            lang === "en"
+              ? error?.response?.data?.message?.en
+              : error?.response?.data?.message?.ar;
+          const errorMessage2 = error?.response?.data?.message[0];
+          toast.error(errorMessage1 || errorMessage2 || "Payment Failed", {
             position: "top-right",
           });
         })
@@ -57,7 +62,7 @@ const WalletPaymentForBiddingDeoposit = ({
   return (
     <div className="bg-gray-100 h-4/5 rounded-xl p-4 border relative flex flex-col">
       <h1 className="flex flex-col justify-center items-center text-center text-xl md:text-2xl font-bold mb-20 md:mb-0 md:absolute md:inset-0 md:m-auto">
-        {selectedContent[localizationKeys.yourWalletBalanceIsAED]}
+        {selectedContent[localizationKeys.yourWalletBalanceIsAED]}{" "}
         {walletBalance}/-
       </h1>
       <div className="flex flex-col md:flex-row gap-4 md:absolute md:bottom-4 md:right-4 mt-auto">

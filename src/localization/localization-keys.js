@@ -144,6 +144,12 @@ const localizationKeys = {
     "youCanUseYourBonusAmountUsingWalletPayment",
   highest: "highest",
   bidder: "bidder",
+  listedProducts: "listedProducts",
+  noActiveAuctions: "noActiveAuctions",
+  thisUserHasntPostedAnyAuctionsYet: "thisUserHasntPostedAnyAuctionsYet",
+  noListedProducts: "noListedProducts",
+  thisUserHasntListedAnyProductsYet: "thisUserHasntListedAnyProductsYet",
+  noUserSpecified: "noUserSpecified",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -292,7 +298,7 @@ const localizationKeys = {
   auctionCancelledBySellerMessage: "auctionCancelledBySellerMessage",
   auctionCancelledByAdminMessage: "auctionCancelledByAdminMessage",
   auctionCancelled: "auctionCancelled",
-  
+
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",

@@ -51,25 +51,27 @@ const WalletPaymentForBidderFullPayment = ({
     setShwoPaymentSelection();
   };
   return (
-    <div className="flex flex-col justify-center bg-gray-100  h-4/5 rounded-xl p-4 border">
-      <h1 className="text-center text-xl font-bold mb-20">
-        {selectedContent[localizationKeys.yourWalletBalanceIsAED]} {walletBalance}/-
+    <div className="bg-gray-100 h-4/5 rounded-xl p-4 border relative flex flex-col">
+      <h1 className="flex flex-col justify-center items-center text-center text-xl md:text-2xl font-bold mb-20 md:mb-0 md:absolute md:inset-0 md:m-auto">
+        {selectedContent[localizationKeys.yourWalletBalanceIsAED]}{" "}
+        {walletBalance}/-
       </h1>
-      <div className="flex gap-3">
+      <div className="flex flex-col md:flex-row gap-4 md:absolute md:bottom-4 md:right-4 mt-auto">
         <Button
-          className="bg-white hover:bg-slate-100 border border-slate-400 opacity-100 font-normal text-base text-primary w-full h-[48px] rounded-lg mt-6"
-          loading={isLoading}
+          className="border border-solid border-gray-400 bg-white text-gray-700 w-full md:w-[120px] h-[48px] md:h-[56px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
+          disabled={isLoading}
           onClick={handleGoBack}
         >
           {selectedContent[localizationKeys.GoBack]}
         </Button>
+
         <Button
-          className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"
+          className="bg-primary text-white w-full md:w-[155px] h-[48px] md:h-[56px] rounded-lg text-base font-normal"
           loading={isLoading}
           id="submit"
           onClick={submitWalletPayment}
         >
-          {selectedContent[localizationKeys.payAED]} {amount}
+          {selectedContent[localizationKeys.payAED]} {amount}{" "}
           {selectedContent[localizationKeys.fromWallet]}
         </Button>
       </div>

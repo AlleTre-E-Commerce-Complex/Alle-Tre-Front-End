@@ -156,6 +156,14 @@ const ar = {
     " يمكنك استخدام رصيدك المجانى باستخدام رصيد المحفظة",
   [localizationKeys.highest]: "أعلى",
   [localizationKeys.bidder]: " مزايد",
+  [localizationKeys.listedProducts]: "المنتجات المدرجة",
+  [localizationKeys.noActiveAuctions]: "لا توجد مزادات نشطة",
+  [localizationKeys.thisUserHasntPostedAnyAuctionsYet]:
+    "لم ينشر هذا المستخدم أي مزادات بعد",
+  [localizationKeys.noListedProducts]: "لا يوجد منتجات مدرجة",
+  [localizationKeys.thisUserHasntListedAnyProductsYet]:
+    "لم يقم هذا المستخدم بإدراج أي منتجات بعد",
+  [localizationKeys.noUserSpecified]: "لم يتم تحديد أي مستخدم",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",

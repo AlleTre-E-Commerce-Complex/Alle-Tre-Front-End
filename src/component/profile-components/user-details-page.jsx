@@ -7,14 +7,21 @@ import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "../../component/shared/lotties-file/loding-test-allatre";
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
 import AuctionCard from "component/home-components/auction-card";
+import ProductCard from "component/home-components/ProductCard";
+import { useLanguage } from "../../context/language-context";
+import localizationKeys from "../../localization/localization-keys";
+import content from "../../localization/content";
 
 const UserDetailsPage = () => {
   const [activeProductData, setActiveProductData] = useState();
   const [activeAuctionData, setActiveAuctionData] = useState();
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const [activeTab, setActiveTab] = useState("auctions");
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-  const { run, isLoading } = useAxios([]);
+  const { run, isLoading: isLoadingMainAuctions } = useAxios([]);
+  const { isLoading: isLoadingListedProduct } = useAxios([]);
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const username = searchParams.get("username");
@@ -48,14 +55,18 @@ const UserDetailsPage = () => {
   }, [username, run, forceReload]);
 
   if (!userId) {
-    return <div className="mt-40 pt-4">No user specified</div>;
+    return (
+      <div className="mt-40 pt-4">
+        {selectedContent[localizationKeys.noUserSpecified]} 
+      </div>
+    );
   }
 
   return (
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading}
+        active={isLoadingMainAuctions || isLoadingListedProduct || forceReload}
         inverted
       >
         <LodingTestAllatre />
@@ -109,7 +120,7 @@ const UserDetailsPage = () => {
                     }`}
                     onClick={() => setActiveTab("auctions")}
                   >
-                    Active Auctions
+                    {selectedContent[localizationKeys.activeAuctions]}
                   </button>
                   <button
                     className={`py-3 px-4 rounded-xl font-medium transition-all ${
@@ -119,7 +130,7 @@ const UserDetailsPage = () => {
                     }`}
                     onClick={() => setActiveTab("products")}
                   >
-                    Listed Products
+                    {selectedContent[localizationKeys.listedProducts]}
                   </button>
                 </div>
               </div>
@@ -156,6 +167,7 @@ const UserDetailsPage = () => {
                           latestBidAmount={e?.bids[0]?.amount}
                           CurrentBid={e?.currentBid?.bidAmount}
                           startBidAmount={e?.startBidAmount}
+                          usageStatus={e?.product?.usageStatus}
                         />
                       ))}
                     </div>
@@ -177,10 +189,14 @@ const UserDetailsPage = () => {
                         </svg>
                       </div>
                       <p className="text-gray-500 font-medium">
-                        No active auctions
+                        {selectedContent[localizationKeys.noActiveAuctions]}
                       </p>
                       <p className="text-sm text-gray-400 mt-1">
-                        This user hasn't posted any auctions yet
+                        {
+                          selectedContent[
+                            localizationKeys.thisUserHasntPostedAnyAuctionsYet
+                          ]
+                        }
                       </p>
                     </div>
                   )}
@@ -192,22 +208,25 @@ const UserDetailsPage = () => {
                   {activeProductData?.length > 0 ? (
                     <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                       {activeProductData?.map((e) => (
-                        <AuctionCard
+                        <ProductCard
                           key={e?.id}
-                          auctionId={e?.id}
-                          price={e?.acceptedAmount || e?.startBidAmount}
+                          price={e?.ProductListingPrice}
                           title={e?.product?.title}
-                          status={e?.status}
-                          adsImg={e?.product?.images[0].imageLink}
-                          totalBods={e?._count?.bids}
-                          WatshlistState={e?.isSaved}
-                          endingTime={e?.expiryDate}
-                          StartDate={e?.startDate}
-                          isBuyNowAllowed={e?.isBuyNowAllowed}
-                          isMyAuction={e?.isMyAuction}
-                          latestBidAmount={e?.bids[0]?.amount}
-                          CurrentBid={e?.currentBid?.bidAmount}
-                          startBidAmount={e?.startBidAmount}
+                          imageLink={e?.product?.images[0].imageLink}
+                          userId={e?.userId}
+                          id={e?.product?.id}
+                          city={
+                            lang === "en"
+                              ? e?.location?.city?.nameEn
+                              : e?.location?.city?.nameEn
+                          }
+                          country={
+                            lang === "en"
+                              ? e?.location?.country?.nameEn
+                              : e?.location?.country?.nameEn
+                          }
+                          createdAt={e?.product?.user?.createdAt}
+                          usageStatus={e?.product?.usageStatus}
                         />
                       ))}
                     </div>
@@ -229,10 +248,14 @@ const UserDetailsPage = () => {
                         </svg>
                       </div>
                       <p className="text-gray-500 font-medium">
-                        No listed products
+                        {selectedContent[localizationKeys.noListedProducts]}
                       </p>
                       <p className="text-sm text-gray-400 mt-1">
-                        This user hasn't listed any products yet
+                        {
+                          selectedContent[
+                            localizationKeys.thisUserHasntListedAnyProductsYet
+                          ]
+                        }
                       </p>
                     </div>
                   )}

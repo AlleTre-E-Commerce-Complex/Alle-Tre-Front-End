@@ -111,7 +111,7 @@ const ProductCard = ({
         <div className="flex items-center justify-between gap-x-2">
           <h1
             onClick={() => handelGoDetails(id)}
-            className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[30px] line-clamp-2 overflow-hidden cursor-pointer"
+            className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[45px] line-clamp-2 overflow-hidden cursor-pointer"
           >
             {truncateString(title, 250)}
           </h1>

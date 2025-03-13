@@ -161,6 +161,14 @@ const en = {
     " You can use your bonus amount using wallet payment",
   [localizationKeys.highest]: "Highest",
   [localizationKeys.bidder]: "Bidder",
+  [localizationKeys.listedProducts]: "Listed products",
+  [localizationKeys.noActiveAuctions]: "No active auctions",
+  [localizationKeys.thisUserHasntPostedAnyAuctionsYet]:
+    "This user hasn't posted any auctions yet",
+  [localizationKeys.noListedProducts]: "No listed products",
+  [localizationKeys.thisUserHasntListedAnyProductsYet]:
+    " This user hasn't listed any products yet",
+  [localizationKeys.noUserSpecified]: "No user specified",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
