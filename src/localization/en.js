@@ -180,7 +180,7 @@ const en = {
   [localizationKeys.inProgress]: "In Progress",
   // Breadcrumb
   [localizationKeys.home]: "Home",
-  [localizationKeys.productDetails]: "product Details",
+  [localizationKeys.productDetails]: "Product Details",
   [localizationKeys.auctionDetails]: "Auction Details",
   [localizationKeys.shippingDetails]: "Shipping Details",
   [localizationKeys.paymentDetails]: "Payment Details",

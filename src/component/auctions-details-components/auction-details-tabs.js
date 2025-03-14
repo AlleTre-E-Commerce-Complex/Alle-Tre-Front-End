@@ -17,6 +17,7 @@ const AuctionDetailsTabs = ({
   dataTabs,
   activeIndexTab,
   setActiveIndexTab,
+  isListProduct,
 }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
@@ -44,26 +45,34 @@ const AuctionDetailsTabs = ({
     //     </div>
     //   ),
     // },
-    {
-      menuItem: `${selectedContent[localizationKeys.returnPolicy]}`,
-      render: () => (
-        <div>
-          <Tab.Pane className="border-none w-full h-full  animate-in">
-            <ReturnPolicy dataTabs={dataTabs} />
-          </Tab.Pane>
-        </div>
-      ),
-    },
-    {
-      menuItem: `${selectedContent[localizationKeys.warrantyPolicy]}`,
-      render: () => (
-        <div>
-          <Tab.Pane className="border-none w-full h-full  animate-in">
-            <WarrantyPolicy dataTabs={dataTabs} />
-          </Tab.Pane>
-        </div>
-      ),
-    },
+    ...(!isListProduct
+      ? [
+          {
+            menuItem: `${selectedContent[localizationKeys.returnPolicy]}`,
+            render: () => (
+              <div>
+                <Tab.Pane className="border-none w-full h-full animate-in">
+                  <ReturnPolicy dataTabs={dataTabs} />
+                </Tab.Pane>
+              </div>
+            ),
+          },
+        ]
+      : []),
+    ...(!isListProduct
+      ? [
+          {
+            menuItem: `${selectedContent[localizationKeys.warrantyPolicy]}`,
+            render: () => (
+              <div>
+                <Tab.Pane className="border-none w-full h-full  animate-in">
+                  <WarrantyPolicy dataTabs={dataTabs} />
+                </Tab.Pane>
+              </div>
+            ),
+          },
+        ]
+      : []),
     // {
     //   menuItem: `${selectedContent[localizationKeys.deliveryPolicy]}`,
     //   render: () => (

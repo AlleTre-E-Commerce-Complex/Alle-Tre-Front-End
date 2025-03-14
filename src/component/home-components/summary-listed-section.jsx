@@ -18,10 +18,7 @@ import SilmilarProductsSlider from "component/auctions-details-components/silmil
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import routes from "../../routes";
-import {
-  AuctionHomeDetailsBreadcrumb,
-  MyBidsBreadcrumb,
-} from "../../component/shared/bread-crumb/Breadcrumb";
+import { ListProductsBreadcrumb } from "../../component/shared/bread-crumb/Breadcrumb";
 import AuctionDetailsTabs from "component/auctions-details-components/auction-details-tabs";
 import { useAuthState } from "context/auth-context";
 import { useDispatch } from "react-redux";
@@ -117,11 +114,7 @@ const SummaryListedSection = () => {
       <div className="grid md:grid-cols-2 grid-cols-1 mt-44 animate-in mx-5 mx-auto px-4">
         <div className="w-full md:w-auto">
           <div className="px-4 mx-auto h-14 px-4 py-4 sm:block  ">
-            {pathname.startsWith(routes.app.home) ? (
-              <AuctionHomeDetailsBreadcrumb details={productId} />
-            ) : (
-              <MyBidsBreadcrumb details={productId} />
-            )}
+            <ListProductsBreadcrumb details={productId} />
           </div>
           <ImgSlider
             images={listedProductsData?.images}
@@ -362,6 +355,7 @@ const SummaryListedSection = () => {
           dataTabs={listedProductsData}
           activeIndexTab={activeIndexTab}
           setActiveIndexTab={setActiveIndexTab}
+          isListProduct
         />
       </div>
       <div className="mt-16">
