@@ -8,7 +8,7 @@ import localizationKeys from "../../../localization/localization-keys";
 
 export const CreateAuctionBreadcrumb = ({ edit }) => {
   const { pathname } = useLocation();
-  const [lang, setLang] = useLanguage("");
+    const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const CreateAuctionSections = (pathname, edit) =>
@@ -369,7 +369,7 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
 
 export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
   const { pathname } = useLocation();
-  const [lang, setLang] = useLanguage("");
+    const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const AuctionHomeDetailsSections = (pathname, details) =>
@@ -449,7 +449,7 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
 
 export const MyBidsBreadcrumb = ({ details }) => {
   const { pathname } = useLocation();
-  const [lang, setLang] = useLanguage("");
+   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const MyBidsSections = (pathname, details) =>
@@ -720,7 +720,7 @@ export const MyBidsBreadcrumb = ({ details }) => {
 
 export const FAQsBreadcrumb = ({ details }) => {
   const { pathname } = useLocation();
-  const [lang, setLang] = useLanguage("");
+    const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const FAQsSections = (pathname, details) =>
@@ -759,6 +759,51 @@ export const FAQsBreadcrumb = ({ details }) => {
     <Breadcrumb
       className="Edit_Breadcrumb"
       sections={FAQsSections(pathname, details)}
+    />
+  );
+};
+
+export const ListProductsBreadcrumb = ({ details }) => {
+  const { pathname } = useLocation();
+    const [lang] = useLanguage("");
+  const selectedContent = content[lang];
+
+  const ListProductSections = (pathname, details) =>
+    [
+      {
+        key: "Home",
+        content: (
+          <Link
+            className="text-gray-med mx-2 text-base font-normal"
+            to={routes.app.home}
+          >
+            {selectedContent[localizationKeys.home]}
+          </Link>
+        ),
+      },
+      ...[
+        pathname.startsWith(routes.app.listProduct.details(details)) && {
+          key: "Home",
+          content: (
+            <Link
+              className={`${
+                pathname.startsWith(routes.app.listProduct.details(details))
+                  ? "text-primary"
+                  : "text-gray-med"
+              } mx-2 text-base font-normal `}
+              to={routes.app.listProduct.details(details)}
+            >
+              {selectedContent[localizationKeys.productDetails]}
+            </Link>
+          ),
+        },
+      ],
+    ].filter(Boolean);
+
+  return (
+    <Breadcrumb
+      className="Edit_Breadcrumb"
+      sections={ListProductSections(pathname, details)}
     />
   );
 };
