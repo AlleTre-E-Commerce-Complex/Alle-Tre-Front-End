@@ -55,7 +55,6 @@ const ProductDetails = () => {
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
   );
-
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -128,18 +127,20 @@ const ProductDetails = () => {
     const id = state?.productId;
     if (id) {
       runAuctionById(
-        authAxios.get(api.app.productListing.listedProduct(state?.productId)).then((res) => {
-          const listedProduct = res?.data?.data;
-          console.log('listed product into auction: ',res?.data )
-          setListedProductVal(res?.data?.data?.product)
-          SetProductFunction(listedProduct?.product)
-          setAuctionState('LISTED_PRODUCT');
-          // Check if formikRef has a current instance and submit the form
-          if (formikRef.current) {
-            formikRef.current.submitForm();
-          }
-        })
-      );  
+        authAxios
+          .get(api.app.productListing.listedProduct(state?.productId))
+          .then((res) => {
+            const listedProduct = res?.data?.data;
+            console.log("listed product into auction: ", res?.data);
+            setListedProductVal(res?.data?.data?.product);
+            SetProductFunction(listedProduct?.product);
+            setAuctionState("LISTED_PRODUCT");
+            // Check if formikRef has a current instance and submit the form
+            if (formikRef.current) {
+              formikRef.current.submitForm();
+            }
+          })
+      );
     }
   }, [runAuctionById, forceReload, state?.productId, productDetailsint?.id]);
 
@@ -389,6 +390,7 @@ const ProductDetails = () => {
 
   const model = customFromData?.model?.key;
   const isArabic = lang === "ar";
+  const [pdfFile, setPdfFile] = useState(null);
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
@@ -399,7 +401,14 @@ const ProductDetails = () => {
     itemDescription: Yup.string()
       .trim()
       .required(selectedContent[localizationKeys.required]),
-    // ...regularCustomFieldsvalidations,
+    pdfDocument: Yup.mixed().when("category", {
+      is: (category) =>
+        ["Cars", "Jewellers", "Properties"].includes(
+          GatogryOptions.find((opt) => opt.value === category)?.name
+        ),
+      then: Yup.mixed().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.mixed().notRequired(),
+    }),
     ...arrayCustomFieldsvalidations,
     model: Yup.string().when([], {
       is: () => model,
@@ -458,6 +467,7 @@ const ProductDetails = () => {
         fileThree,
         fileFour,
         fileFive,
+        pdfFile,
         auctionState,
         auctionId: completeDraftVal?.id,
         productId: state?.productId,
@@ -626,6 +636,10 @@ const ProductDetails = () => {
       formData.append("images", fileFive);
     }
 
+    if (pdfFile) {
+      formData.append("pdfDocument", pdfFile);
+    }
+
     if (
       auctionState === "DRAFTED" ||
       productDetailsint?.auctionState === "DRAFTED"
@@ -735,7 +749,7 @@ const ProductDetails = () => {
           {/* formik */}
           <div>
             <Formik
-             innerRef={formikRef} // Assigning ref to Formik
+              innerRef={formikRef} // Assigning ref to Formik
               initialValues={{
                 itemName: productDetailsint.itemName || "",
                 category: productDetailsint.category || "",
@@ -1147,6 +1161,44 @@ const ProductDetails = () => {
                       />
                     </div>
                   </div>
+                  {["Cars", "Jewellers", "Properties"].includes(
+                    GatogryOptions.find(
+                      (opt) => opt.value === formik.values.category
+                    )?.name
+                  ) && (
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        upload Pdf Document
+                        {/* {selectedContent[localizationKeys.uploadPdfDocument]} */}
+                      </label>
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            if (file.type === "application/pdf") {
+                              setPdfFile(file);
+                              formik.setFieldValue("pdfDocument", file);
+                            } else {
+                              toast.error(
+                                selectedContent[
+                                  localizationKeys.pleaseUploadPdfOnly
+                                ]
+                              );
+                            }
+                          }
+                        }}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      />
+                      {formik.errors.pdfDocument &&
+                        formik.touched.pdfDocument && (
+                          <div className="text-red-500 text-sm mt-1">
+                            {formik.errors.pdfDocument}
+                          </div>
+                        )}
+                    </div>
+                  )}
                   <div
                     className={
                       hasUsageCondition ||
