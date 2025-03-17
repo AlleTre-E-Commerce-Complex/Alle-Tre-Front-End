@@ -37,7 +37,7 @@ import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
 import { listingProductDetails } from "redux-store/ListingProduct-details-slice";
-
+import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 const ListProductDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -47,7 +47,6 @@ const ListProductDetails = () => {
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
-
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const dispatch = useDispatch();
@@ -91,8 +90,70 @@ const ListProductDetails = () => {
     );
     setBrandSuggestions(filteredBrands);
   };
+  const addImageWatermark = async (file) => {
+    const loadImage = (src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    };
 
-  const handleFileChange = (event) => {
+    try {
+      const [img, watermarkImg] = await Promise.all([
+        loadImage(URL.createObjectURL(file)),
+        loadImage(watermarkImage),
+      ]);
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Draw original image
+      ctx.drawImage(img, 0, 0);
+
+      // Calculate watermark dimensions
+      const watermarkWidth = img.width * 0.3;
+      const watermarkHeight =
+        (watermarkImg.height / watermarkImg.width) * watermarkWidth;
+
+      // Center watermark
+      const x = (img.width - watermarkWidth) / 2;
+      const y = (img.height - watermarkHeight) / 2;
+
+      // Draw watermark with opacity
+      ctx.globalAlpha = 0.5;
+      ctx.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight);
+      ctx.globalAlpha = 1.0;
+
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const watermarkedFile = new File([blob], file.name, {
+                type: "image/jpeg",
+                lastModified: new Date().getTime(),
+              });
+              resolve(watermarkedFile);
+            } else {
+              reject(new Error("Canvas to Blob conversion failed"));
+            }
+          },
+          "image/jpeg",
+          0.8
+        );
+      });
+    } catch (error) {
+      toast.error("Error in watermark process");
+      throw error;
+    }
+  };
+
+  const handleFileChange = async (event) => {
     const files = event.target.files;
 
     // Check if user selected more than 5 files
@@ -112,27 +173,57 @@ const ListProductDetails = () => {
       return;
     }
 
-    const fileArray = Array.from(files);
-    const newFiles = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+    try {
+      const fileArray = Array.from(files);
+      const newFiles = [fileOne, fileTwo, fileThree, fileFour, fileFive];
 
-    // Add new files to the existing files
-    let index = 0;
-    for (const file of fileArray) {
-      while (index < newFiles.length && newFiles[index]) {
-        index++;
+      for (const file of fileArray) {
+        let index = 0;
+        while (index < newFiles.length && newFiles[index]) {
+          index++;
+        }
+        if (index < newFiles.length) {
+          const watermarkedFile = await addImageWatermark(file);
+          newFiles[index] = watermarkedFile;
+        }
       }
-      if (index < newFiles.length) {
-        newFiles[index] = file; // Add new file to the first empty slot
+
+      // Set the updated files back to state
+      setFileOne(newFiles[0]);
+      setFileTwo(newFiles[1]);
+      setFileThree(newFiles[2]);
+      setFileFour(newFiles[3]);
+      setFileFive(newFiles[4]);
+    } catch (error) {
+      toast.error(
+        selectedContent[localizationKeys.errorProcessingImages] 
+      );
+    }
+  };
+  const handleCameraChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const watermarkedFile = await addImageWatermark(file);
+        if (!fileOne) setFileOne(watermarkedFile);
+        else if (!fileTwo) setFileTwo(watermarkedFile);
+        else if (!fileThree) setFileThree(watermarkedFile);
+        else if (!fileFour) setFileFour(watermarkedFile);
+        else if (!fileFive) setFileFive(watermarkedFile);
+        else {
+          toast.error(
+            selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
+          );
+        }
+      } catch (error) {
+        toast.error(
+          selectedContent[localizationKeys.errorProcessingImages] ||
+            "Error processing image"
+        );
       }
     }
-
-    // Set the updated files back to state
-    setFileOne(newFiles[0]);
-    setFileTwo(newFiles[1]);
-    setFileThree(newFiles[2]);
-    setFileFour(newFiles[3]);
-    setFileFive(newFiles[4]);
   };
+
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
     if (categoryId || subCategoryId || loadingImg) {
@@ -348,24 +439,6 @@ const ListProductDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-
-  const handleCameraChange = (event) => {
-    const file = event.target.files[0]; // Get single captured photo
-    if (file) {
-      // Find first empty slot
-      if (!fileOne) setFileOne(file);
-      else if (!fileTwo) setFileTwo(file);
-      else if (!fileThree) setFileThree(file);
-      else if (!fileFour) setFileFour(file);
-      else if (!fileFive) setFileFive(file);
-      else
-        toast.error(
-          selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
-        );
-    }
-    // Reset input
-    event.target.value = "";
-  };
 
   const carField = [
     ...(customFromData?.arrayCustomFields || []),

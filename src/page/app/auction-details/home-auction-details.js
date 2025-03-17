@@ -4,7 +4,7 @@ import api from "../../../api";
 import { useParams } from "react-router-dom";
 import useAxios from "../../../hooks/use-axios";
 
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 
 import ImgSlider from "../../../component/shared/img-slider/img-slider";

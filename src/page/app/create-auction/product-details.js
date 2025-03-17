@@ -38,6 +38,70 @@ import LodingTestAllatre from "../../../component/shared/lotties-file/loding-tes
 import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
+import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
+
+const addImageWatermark = async (file) => {
+  const loadImage = (src) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  };
+
+  try {
+    const [img, watermarkImg] = await Promise.all([
+      loadImage(URL.createObjectURL(file)),
+      loadImage(watermarkImage),
+    ]);
+
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Draw original image
+    ctx.drawImage(img, 0, 0);
+
+    // Calculate watermark dimensions
+    const watermarkWidth = img.width * 0.3;
+    const watermarkHeight =
+      (watermarkImg.height / watermarkImg.width) * watermarkWidth;
+
+    // Center watermark
+    const x = (img.width - watermarkWidth) / 2;
+    const y = (img.height - watermarkHeight) / 2;
+
+    // Draw watermark with opacity
+    ctx.globalAlpha = 0.5;
+    ctx.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight);
+    ctx.globalAlpha = 1.0;
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            const watermarkedFile = new File([blob], file.name, {
+              type: "image/jpeg",
+              lastModified: new Date().getTime(),
+            });
+            resolve(watermarkedFile);
+          } else {
+            reject(new Error("Canvas to Blob conversion failed"));
+          }
+        },
+        "image/jpeg",
+        0.8
+      );
+    });
+  } catch (error) {
+    toast.error("Error in watermark process");
+    throw error;
+  }
+};
 
 const ProductDetails = () => {
   const [lang] = useLanguage("");
@@ -235,7 +299,7 @@ const ProductDetails = () => {
 
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
-  const [relatedDocuments,setRelatedDocument] = useState([])
+  const [relatedDocuments, setRelatedDocument] = useState([]);
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
@@ -295,7 +359,7 @@ const ProductDetails = () => {
     );
     setBrandSuggestions(filteredBrands);
   };
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const files = event.target.files;
 
     // Check if user selected more than 5 files
@@ -315,26 +379,51 @@ const ProductDetails = () => {
       return;
     }
 
-    const fileArray = Array.from(files);
-    const newFiles = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+    try {
+      const fileArray = Array.from(files);
+      const newFiles = [fileOne, fileTwo, fileThree, fileFour, fileFive];
 
-    // Add new files to the existing files
-    let index = 0;
-    for (const file of fileArray) {
-      while (index < newFiles.length && newFiles[index]) {
-        index++;
+      // Process files with watermark
+      for (const file of fileArray) {
+        let index = 0;
+        while (index < newFiles.length && newFiles[index]) {
+          index++;
+        }
+        if (index < newFiles.length) {
+          const watermarkedFile = await addImageWatermark(file);
+          newFiles[index] = watermarkedFile;
+        }
       }
-      if (index < newFiles.length) {
-        newFiles[index] = file; // Add new file to the first empty slot
+
+      // Set the updated files back to state
+      setFileOne(newFiles[0]);
+      setFileTwo(newFiles[1]);
+      setFileThree(newFiles[2]);
+      setFileFour(newFiles[3]);
+      setFileFive(newFiles[4]);
+    } catch (error) {
+      toast.error(selectedContent[localizationKeys.errorProcessingImages]);
+    }
+  };
+  const handleCameraChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const watermarkedFile = await addImageWatermark(file);
+        if (!fileOne) setFileOne(watermarkedFile);
+        else if (!fileTwo) setFileTwo(watermarkedFile);
+        else if (!fileThree) setFileThree(watermarkedFile);
+        else if (!fileFour) setFileFour(watermarkedFile);
+        else if (!fileFive) setFileFive(watermarkedFile);
+        else {
+          toast.error(
+            selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
+          );
+        }
+      } catch (error) {
+        toast.error(selectedContent[localizationKeys.errorProcessingImages]);
       }
     }
-
-    // Set the updated files back to state
-    setFileOne(newFiles[0]);
-    setFileTwo(newFiles[1]);
-    setFileThree(newFiles[2]);
-    setFileFour(newFiles[3]);
-    setFileFive(newFiles[4]);
   };
   const { run, isLoading } = useAxios([]);
 
@@ -681,7 +770,7 @@ const ProductDetails = () => {
             dispatch(productDetails({}));
           })
           .catch((err) => {
-            console.log('draft error',err)
+            console.log("draft error", err);
             toast.error(
               selectedContent[localizationKeys.oops] ||
                 err?.message?.map((e) => e)
@@ -693,23 +782,6 @@ const ProductDetails = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-
-  const handleCameraChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      if (!fileOne) setFileOne(file);
-      else if (!fileTwo) setFileTwo(file);
-      else if (!fileThree) setFileThree(file);
-      else if (!fileFour) setFileFour(file);
-      else if (!fileFive) setFileFive(file);
-      else
-        toast.error(
-          selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
-        );
-    }
-    // Reset input
-    event.target.value = "";
-  };
 
   const carField = [
     ...(customFromData?.arrayCustomFields || []),
@@ -1174,7 +1246,7 @@ const ProductDetails = () => {
                         {/* {selectedContent[localizationKeys.uploadPdfDocument]} */}
                       </label>
                       <input
-                        name = 'relatedDocument'
+                        name="relatedDocument"
                         type="file"
                         accept=".pdf"
                         onChange={(e) => {
@@ -1183,7 +1255,10 @@ const ProductDetails = () => {
                             if (file.type === "application/pdf") {
                               // setPdfFile(file);
                               formik.setFieldValue("pdfDocument", file);
-                              setRelatedDocument((prevDocs) => [...prevDocs, file]);
+                              setRelatedDocument((prevDocs) => [
+                                ...prevDocs,
+                                file,
+                              ]);
                             } else {
                               toast.error(
                                 selectedContent[

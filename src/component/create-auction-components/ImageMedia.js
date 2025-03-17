@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import imageCompression from "browser-image-compression";
-
 import { MdOutlineImage } from "react-icons/md";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
@@ -14,7 +13,8 @@ import api from "../../api";
 import { toast } from "react-hot-toast";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-const heic2any = require('heic2any');
+import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png"
+const heic2any = require("heic2any");
 const fileTypes = ["JPEG", "PNG", "GIF", "JPG"];
 
 const ImageMedia = ({
@@ -40,7 +40,6 @@ const ImageMedia = ({
   onReorderImages,
   setimgtest,
 }) => {
-
   const [coverPhotoIndex, setCoverPhotoIndex] = useState(1);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -116,20 +115,85 @@ const ImageMedia = ({
     setCoverPhotoIndex(1);
   };
 
-  const handleChange = async (file, setFile, index) => {
-    if (file) {
+  const addImageWatermark = async (file) => {
+    const loadImage = (src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    };
+
+    try {
+      const [img, watermarkImg] = await Promise.all([
+        loadImage(URL.createObjectURL(file)),
+        loadImage(watermarkImage)
+      ]);
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Draw original image
+      ctx.drawImage(img, 0, 0);
+
+      // Calculate watermark dimensions
+      const watermarkWidth = img.width * 0.3;
+      const watermarkHeight = (watermarkImg.height / watermarkImg.width) * watermarkWidth;
+
+      // Center watermark
+      const x = (img.width - watermarkWidth) / 2;
+      const y = (img.height - watermarkHeight) / 2;
+
+      // Draw watermark with opacity
+      ctx.globalAlpha = 0.5;
+      ctx.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight);
+      ctx.globalAlpha = 1.0;
+
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const watermarkedFile = new File([blob], file.name, {
+                type: "image/jpeg",
+                lastModified: new Date().getTime(),
+              });
+              resolve(watermarkedFile);
+            } else {
+              reject(new Error("Canvas to Blob conversion failed"));
+            }
+          },
+          "image/jpeg",
+          0.8
+        );
+      });
+    } catch (error) {
+      toast.error("Error in watermark process");
+      throw error;
+    }
+  };
+
+  const handleChange = async (files, setFile, index) => {
+    if (files) {
       try {
-        const compressedFile = await compressImage(file);
-        // console.log("Original size:", file.size / 1024 / 1024, "MB");
-        // console.log(
-        //   "Compressed size:",
-        //   compressedFile.size / 1024 / 1024,
-        //   "MB"
-        // );
+        const filesArray = Array.from(files);
+        const processedFiles = await Promise.all(
+          filesArray.map(async (file) => {
+            const watermarkedFile = await addImageWatermark(file);
+            const compressedFile = await compressImage(watermarkedFile);
+            return compressedFile;
+          })
+        );
 
         if (isEditMode) {
           const formData = new FormData();
-          formData.append("image", compressedFile);
+          processedFiles.forEach((file, i) => {
+            formData.append(`image${i + 1}`, file);
+          });
           runUpload(
             authAxios
               .patch(api.app.Imagees.upload(auctionId), formData)
@@ -137,17 +201,16 @@ const ImageMedia = ({
                 onReload();
               })
               .catch((err) => {
-                console.error("Upload failed:", err);
-                toast.error("Failed to upload image");
+                toast.error("Failed to upload images");
               })
           );
         }
 
-        setFile(compressedFile);
+        setFile(processedFiles[0]); 
       } catch (error) {
-        console.error("Error handling file:", error);
-        toast.error("Failed to process image");
-        setFile(file);
+        console.error("Error handling files:", error);
+        toast.error("Failed to process images");
+        setFile(null);
       }
     }
   };
@@ -156,22 +219,27 @@ const ImageMedia = ({
     try {
       console.log("Input file:", file.type, file.size / 1024 / 1024, "MB");
 
-      // Convert HEIC/HEIF to JPEG first
       let processedFile = file;
-      if (file.type.toLowerCase().includes("heic") || file.type.toLowerCase().includes("heif")) {
+      if (
+        file.type.toLowerCase().includes("heic") ||
+        file.type.toLowerCase().includes("heif")
+      ) {
         try {
           const blob = await heic2any({
             blob: file,
             toType: "image/jpeg",
-            quality: 0.8
+            quality: 0.8,
           });
-          processedFile = new File([blob], file.name.replace(/\.(heic|heif)$/i, '.jpg'), {
-            type: "image/jpeg",
-            lastModified: new Date().getTime()
-          });
-          console.log("HEIC/HEIF conversion successful");
+          processedFile = new File(
+            [blob],
+            file.name.replace(/\.(heic|heif)$/i, ".jpg"),
+            {
+              type: "image/jpeg",
+              lastModified: new Date().getTime(),
+            }
+          );
         } catch (heicError) {
-          console.error("HEIC/HEIF conversion failed:", heicError);
+          toast.error("HEIC/HEIF conversion failed");
           return file;
         }
       }
@@ -281,10 +349,12 @@ const ImageMedia = ({
                       </div>
                     )}
                     <FileUploader
-                      handleChange={(file) =>
-                        handleChange(file, setFile, index + 1)
+                      handleChange={(files) =>
+                        handleChange(files, setFile, index + 1)
                       }
                       name={`file${index + 1}`}
+                      types={fileTypes}
+                      multiple
                     >
                       <img
                         className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
@@ -319,11 +389,12 @@ const ImageMedia = ({
                   </div>
                 ) : (
                   <FileUploader
-                    handleChange={(file) =>
-                      handleChange(file, setFile, index + 1)
+                    handleChange={(files) =>
+                      handleChange(files, setFile, index + 1)
                     }
                     name={`file${index + 1}`}
                     types={fileTypes}
+                    multiple
                   >
                     <div className="border-gray-med border-[1px] border-dashed rounded-lg w-[154px] h-[139px] flex justify-center items-center cursor-pointer">
                       <img className="w-6 h-6" src={addImage} alt="Add Icon" />

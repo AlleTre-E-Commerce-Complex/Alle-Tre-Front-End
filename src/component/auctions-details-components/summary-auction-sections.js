@@ -112,7 +112,7 @@ const SummaryAuctionSections = ({
           </HashLink>
          {relatedDocument && <div className='w-full'>
             <iframe
-                    src={relatedDocument[0].imageLink}
+                    src={relatedDocument[0]?.imageLink}
                     title="PDF Preview"
                     className="w-full h-full rounded-lg"
                 />
