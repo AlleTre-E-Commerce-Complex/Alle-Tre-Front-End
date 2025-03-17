@@ -33,7 +33,9 @@ const SummaryAuctionSections = ({
   startingTime,
   setActiveIndexTab,
   status,
+  relatedDocument,
 }) => {
+  console.log('relatedDocument SummaryAuctionSections',relatedDocument)
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
@@ -108,6 +110,22 @@ const SummaryAuctionSections = ({
           >
             {selectedContent[localizationKeys.viewDetails]}
           </HashLink>
+         {relatedDocument && <div className='w-full'>
+            <iframe
+                    src={relatedDocument[0].imageLink}
+                    title="PDF Preview"
+                    className="w-full h-full rounded-lg"
+                />
+                <button
+                    className=" text-center w-full border border-primary mt-2 rounded bg-primary hover:bg-primary-dark text-white p-2"
+                    onClick={() =>
+                    // downloadFile(selectedRequest.bankStatement.statementLink, "statement.pdf")
+                    window.open(relatedDocument[0].imageLink, '_blank')
+                    }
+                >
+                    View PDF
+                </button>
+            </div>}
         </div>
         {/* Category sections */}
         <div className="pt-6 mb-8 flex flex-wrap gap-4">

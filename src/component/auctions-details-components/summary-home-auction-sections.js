@@ -54,7 +54,9 @@ const SummaryHomeAuctionSections = ({
   userPhone,
   userImage,
   usageStatus,
+  relatedDocument
 }) => {
+
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -412,6 +414,22 @@ const SummaryHomeAuctionSections = ({
                 />
               </svg>
             </HashLink>
+            {relatedDocument && <div className='w-full'>
+            <iframe
+                    src={relatedDocument[0].imageLink}
+                    title="PDF Preview"
+                    className="w-full h-full rounded-lg"
+                />
+                <button
+                    className=" text-center w-full border border-primary mt-2 rounded bg-primary hover:bg-primary-dark text-white p-2"
+                    onClick={() =>
+                    // downloadFile(selectedRequest.bankStatement.statementLink, "statement.pdf")
+                    window.open(relatedDocument[0].imageLink, '_blank')
+                    }
+                >
+                    View PDF
+                </button>
+            </div>}
           </div>
 
           {/* Category Section */}
