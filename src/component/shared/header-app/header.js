@@ -680,7 +680,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
         <div className="py-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-6 lg:px-8">
-          {currentPath === routes.app.home && (
+          {(currentPath === routes.app.home || currentPath.includes('/alletre/categories')) && (
             <button
               onClick={onFilterClick}
               className="md:hidden text-primary rounded-full flex items-center justify-center"
@@ -712,7 +712,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
             }}
           />
 
-          {currentPath === routes.app.home && (
+          {(currentPath === routes.app.home || currentPath.includes('/alletre/categories')) &&  (
             <div className="relative" ref={typeDropdownRef}>
               <button
                 className="bg-primary hover:bg-primary-dark text-white rounded-lg 
