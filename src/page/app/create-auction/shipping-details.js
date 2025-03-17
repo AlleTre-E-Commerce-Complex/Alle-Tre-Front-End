@@ -217,6 +217,9 @@ const ShippingDetails = () => {
           formData.append("images", productDetailsInt.fileFive);
         }
       }
+      if(productDetailsInt.relatedDocuments){
+        formData.append('pdfs', productDetailsInt.relatedDocuments[0])
+      }
       formData.append("startBidAmount", auctionDetailsInt.MinimumPrice);
       if (isBuyNowInt.isBuyNowAllowed) {
         formData.append("acceptedAmount", isBuyNowInt.acceptedAmount);

@@ -48,6 +48,13 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const images = auctionsDetailsData?.product?.images.filter(
+    image => image.imagePath && !image.imagePath.toLowerCase().endsWith('.pdf')
+  );
+  const relatedDocuments = auctionsDetailsData?.product?.images.filter(
+    image => image.imagePath && image.imagePath.toLowerCase().endsWith('.pdf')
+  );
+
   return (
     <>
       <Dimmer
@@ -68,7 +75,8 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
             <div className="grid md:grid-cols-2 grid-cols-1">
               <div className="">
                 <ImgSlider
-                  images={auctionsDetailsData?.product?.images}
+                  // images={auctionsDetailsData?.product?.images}
+                  images={images}
                   auctionId={auctionsDetailsData?.id}
                   WatshlistState={auctionsDetailsData?.isSaved}
                   isMyAuction={true}
@@ -98,6 +106,7 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
                   endingTime={auctionsDetailsData?.expiryDate}
                   setActiveIndexTab={setActiveIndexTab}
                   status={auctionsDetailsData?.status}
+                  relatedDocument={relatedDocuments}
                 />
               </div>
             </div>

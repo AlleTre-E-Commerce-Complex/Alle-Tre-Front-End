@@ -235,6 +235,7 @@ const ProductDetails = () => {
 
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
+  const [relatedDocuments,setRelatedDocument] = useState([])
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
@@ -467,7 +468,7 @@ const ProductDetails = () => {
         fileThree,
         fileFour,
         fileFive,
-        pdfFile,
+        relatedDocuments,
         auctionState,
         auctionId: completeDraftVal?.id,
         productId: state?.productId,
@@ -680,6 +681,7 @@ const ProductDetails = () => {
             dispatch(productDetails({}));
           })
           .catch((err) => {
+            console.log('draft error',err)
             toast.error(
               selectedContent[localizationKeys.oops] ||
                 err?.message?.map((e) => e)
@@ -1172,14 +1174,16 @@ const ProductDetails = () => {
                         {/* {selectedContent[localizationKeys.uploadPdfDocument]} */}
                       </label>
                       <input
+                        name = 'relatedDocument'
                         type="file"
                         accept=".pdf"
                         onChange={(e) => {
                           const file = e.target.files[0];
                           if (file) {
                             if (file.type === "application/pdf") {
-                              setPdfFile(file);
+                              // setPdfFile(file);
                               formik.setFieldValue("pdfDocument", file);
+                              setRelatedDocument((prevDocs) => [...prevDocs, file]);
                             } else {
                               toast.error(
                                 selectedContent[

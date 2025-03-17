@@ -80,6 +80,17 @@ const HomeAuctionDetails = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
+  const images = auctionsDetailsData?.product?.images.filter(
+    image => image.imagePath && !image.imagePath.toLowerCase().endsWith('.pdf')
+  );
+  const relatedDocuments = auctionsDetailsData?.product?.images.filter(
+    image => image.imagePath && image.imagePath.toLowerCase().endsWith('.pdf')
+  );
+
+  console.log('images : ',images)
+  console.log('relatedDocuments : ',relatedDocuments?.imageLink)
+  
+
   // Get the main image URL for sharing
   const mainImageUrl = auctionsDetailsData?.product?.images?.[0]?.imageLink;
   const shareImageUrl = getShareImage(mainImageUrl);
@@ -195,7 +206,8 @@ const HomeAuctionDetails = () => {
             <div className="grid md:grid-cols-2 grid-cols-1">
               <div className="">
                 <ImgSlider
-                  images={auctionsDetailsData?.product?.images}
+                  // images={auctionsDetailsData?.product?.images}
+                  images={images}
                   auctionId={auctionsDetailsData?.id}
                   WatshlistState={auctionsDetailsData?.isSaved}
                   isMyAuction={auctionsDetailsData?.isMyAuction}
@@ -226,6 +238,7 @@ const HomeAuctionDetails = () => {
                     endingTime={auctionsDetailsData?.expiryDate}
                     setActiveIndexTab={setActiveIndexTab}
                     status={auctionsDetailsData?.status}
+                    relatedDocument={relatedDocuments}
                   />
                 ) : (
                   <SummaryHomeAuctionSections
@@ -269,6 +282,7 @@ const HomeAuctionDetails = () => {
                     userPhone={auctionsDetailsData?.user?.phone}
                     userImage={auctionsDetailsData?.user?.imageLink}
                     usageStatus={auctionsDetailsData?.product?.usageStatus}
+                    relatedDocument={relatedDocuments}
                   />
                 )}
               </div>
