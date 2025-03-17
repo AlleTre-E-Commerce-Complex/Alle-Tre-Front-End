@@ -225,7 +225,19 @@ const AppLayouts = () => {
                 component={HomeAuctionDetails}
               />
               <Route path={routes.app.unSubscribeUser} component={Home} />
-              <Route path={routes.app.categories()} component={Categories} />
+              {/* <Route path={routes.app.categories()} component={Categories} /> */}
+              <Route
+                exact
+                path={routes.app.categories()}
+                render={(props) => (
+                  <Categories
+                    {...props}
+                    selectedType={selectedType}
+                    isFilterOpen={isFilterOpen}
+                    setIsFilterOpen={setIsFilterOpen}
+                  />
+                )}
+              />
               <Route path={routes.app.faqs} component={FAQs} />
               <Route path={routes.app.support} component={Support} />
             </Switch>
