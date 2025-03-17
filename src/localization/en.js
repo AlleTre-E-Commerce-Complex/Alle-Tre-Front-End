@@ -169,6 +169,7 @@ const en = {
   [localizationKeys.thisUserHasntListedAnyProductsYet]:
     " This user hasn't listed any products yet",
   [localizationKeys.noUserSpecified]: "No user specified",
+  [localizationKeys.errorProcessingImages]: "Error processing images",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",

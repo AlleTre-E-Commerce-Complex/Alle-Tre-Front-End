@@ -150,6 +150,7 @@ const localizationKeys = {
   noListedProducts: "noListedProducts",
   thisUserHasntListedAnyProductsYet: "thisUserHasntListedAnyProductsYet",
   noUserSpecified: "noUserSpecified",
+  errorProcessingImages:"errorProcessingImages",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",

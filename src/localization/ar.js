@@ -164,6 +164,7 @@ const ar = {
   [localizationKeys.thisUserHasntListedAnyProductsYet]:
     "لم يقم هذا المستخدم بإدراج أي منتجات بعد",
   [localizationKeys.noUserSpecified]: "لم يتم تحديد أي مستخدم",
+  [localizationKeys.errorProcessingImages]: "خطأ في معالجة الصور",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
