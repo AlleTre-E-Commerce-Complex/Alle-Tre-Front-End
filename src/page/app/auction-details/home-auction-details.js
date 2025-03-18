@@ -85,11 +85,7 @@ const HomeAuctionDetails = () => {
   );
   const relatedDocuments = auctionsDetailsData?.product?.images.filter(
     image => image.imagePath && image.imagePath.toLowerCase().endsWith('.pdf')
-  );
-
-  console.log('images : ',images)
-  console.log('relatedDocuments : ',relatedDocuments?.imageLink)
-  
+  );  
 
   // Get the main image URL for sharing
   const mainImageUrl = auctionsDetailsData?.product?.images?.[0]?.imageLink;
@@ -212,6 +208,7 @@ const HomeAuctionDetails = () => {
                   WatshlistState={auctionsDetailsData?.isSaved}
                   isMyAuction={auctionsDetailsData?.isMyAuction}
                   isListProduct={false}
+                  relatedDocument={relatedDocuments}
                 />
               </div>
               <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
@@ -238,7 +235,6 @@ const HomeAuctionDetails = () => {
                     endingTime={auctionsDetailsData?.expiryDate}
                     setActiveIndexTab={setActiveIndexTab}
                     status={auctionsDetailsData?.status}
-                    relatedDocument={relatedDocuments}
                   />
                 ) : (
                   <SummaryHomeAuctionSections
@@ -282,7 +278,6 @@ const HomeAuctionDetails = () => {
                     userPhone={auctionsDetailsData?.user?.phone}
                     userImage={auctionsDetailsData?.user?.imageLink}
                     usageStatus={auctionsDetailsData?.product?.usageStatus}
-                    relatedDocument={relatedDocuments}
                   />
                 )}
               </div>

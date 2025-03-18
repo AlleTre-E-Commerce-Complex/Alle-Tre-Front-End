@@ -36,7 +36,7 @@ import useGetAllCities from "../../../hooks/use-get-all-cities";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import { IoCameraOutline } from "react-icons/io5";
-import { MdArrowDropDown } from "react-icons/md";
+import { MdArrowDropDown, MdDelete } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 
@@ -299,7 +299,8 @@ const ProductDetails = () => {
 
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
-  const [relatedDocuments, setRelatedDocument] = useState([]);
+  const [relatedDocuments, setRelatedDocuments] = useState([]);
+  console.log("rrrrrr", relatedDocuments);
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
@@ -325,7 +326,7 @@ const ProductDetails = () => {
   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
-
+  console.log("gggg", GatogryOptions);
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
     categoryId || productDetailsint.category
   );
@@ -1146,7 +1147,7 @@ const ProductDetails = () => {
                         max="5"
                         maxLength="5"
                         onChange={handleFileChange}
-                        className="w-full max-w-[680px] h-[50px] px-4 py-3 box-border pr-12"
+                        className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
                         style={{
                           width: "100%",
                           maxWidth: "680px",
@@ -1235,44 +1236,137 @@ const ProductDetails = () => {
                       />
                     </div>
                   </div>
-                  {["Cars", "Jewellers", "Properties"].includes(
+                  {[
+                    "Cars",
+                    "Jewellers",
+                    "Properties",
+                    "عقارات",
+                    "مجوهرات",
+                    "سيارات",
+                  ].includes(
                     GatogryOptions.find(
                       (opt) => opt.value === formik.values.category
                     )?.name
                   ) && (
-                    <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        upload Pdf Document
-                        {/* {selectedContent[localizationKeys.uploadPdfDocument]} */}
+                    <div className="mb-6">
+                      <label className="block font-bold text-base text-black pt-6">
+                        {selectedContent[localizationKeys.uploadPdfDocument]}
+                        <span className="text-gray-med text-base font-normal px-1">
+                          ({selectedContent[localizationKeys.maxSize]}
+                          10MB)
+                        </span>
                       </label>
-                      <input
-                        name="relatedDocument"
-                        type="file"
-                        accept=".pdf"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) {
-                            if (file.type === "application/pdf") {
-                              // setPdfFile(file);
-                              formik.setFieldValue("pdfDocument", file);
-                              setRelatedDocument((prevDocs) => [
-                                ...prevDocs,
-                                file,
-                              ]);
-                            } else {
-                              toast.error(
-                                selectedContent[
-                                  localizationKeys.pleaseUploadPdfOnly
-                                ]
-                              );
+                      <div
+                        className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-200 ease-in-out max-w-3xl
+                          ${
+                            formik.touched.pdfDocument &&
+                            formik.errors.pdfDocument
+                              ? "border-primary text-primary bg-primary-veryLight"
+                              : relatedDocuments.length > 0
+                              ? "border-primary-light bg-primary-veryLight"
+                              : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
+                          }`}
+                      >
+                        <input
+                          name="relatedDocument"
+                          type="file"
+                          accept=".pdf"
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              if (file.type === "application/pdf") {
+                                if (file.size <= 10 * 1024 * 1024) {
+                                  // 10MB limit
+                                  formik.setFieldValue("pdfDocument", file);
+                                  setRelatedDocuments([file]); // Reset array with new file
+                                } else {
+                                  toast.error(
+                                    "File size should be less than 10MB"
+                                  );
+                                }
+                              } else {
+                                toast.error(
+                                  selectedContent[
+                                    localizationKeys.pleaseUploadPdfOnly
+                                  ]
+                                );
+                              }
                             }
-                          }
-                        }}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                      />
-                      {formik.errors.pdfDocument &&
-                        formik.touched.pdfDocument && (
-                          <div className="text-red-500 text-sm mt-1">
+                          }}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        />
+                        <div className="text-center">
+                          <svg
+                            className="mx-auto h-12 w-12 text-gray-med"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 48 48"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 015.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          <div className="mt-4">
+                            <p className="text-sm text-gray-dark">
+                              {
+                                selectedContent[
+                                  localizationKeys.dragAndDropYourPdfHereOr
+                                ]
+                              }{" "}
+                              <span className="text-primary font-medium hover:text-primary-dark">
+                                {
+                                  selectedContent[
+                                    localizationKeys.clickToBrowse
+                                  ]
+                                }
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        {relatedDocuments.length > 0 && relatedDocuments[0] && (
+                          <div className="mt-4 p-3 bg-white rounded border border-gray-veryLight">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center flex-1 min-w-0">
+                                <svg
+                                  className="h-6 w-6 flex-shrink-0 text-primary"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                                  <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                                </svg>
+                                <span className="ml-2 text-sm text-gray-verydark truncate max-w-xs">
+                                  {relatedDocuments[0].name}
+                                </span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setRelatedDocuments([]);
+                                  formik.setFieldValue("pdfDocument", null);
+                                  const input =
+                                    document.querySelector(
+                                      'input[type="file"]'
+                                    );
+                                  if (input) {
+                                    input.value = "";
+                                  }
+                                }}
+                                className="ml-2 p-1 text-primary hover:text-red-600 focus:outline-none flex-shrink-0 relative z-20"
+                              >
+                                <MdDelete className="h-5 w-5" />
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      {formik.touched.pdfDocument &&
+                        formik.errors.pdfDocument && (
+                          <div className="text-primary text-sm mt-2">
                             {formik.errors.pdfDocument}
                           </div>
                         )}
