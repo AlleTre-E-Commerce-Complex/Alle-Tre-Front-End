@@ -105,6 +105,25 @@ const HomeAuctionDetails = () => {
     return "image/jpeg"; // default for unknown
   };
 
+  const calculateSecurityDeposit = (auction,auctionCategory)=>{
+    //calculate the seller security deposite
+    const startBidAmount = auction?.startBidAmount
+    let amount = Number(auctionCategory?.bidderDepositFixedAmount)
+    //checking whether the auction is luxuary or not
+    if(auctionCategory?.luxuaryAmount && Number(startBidAmount) > Number(auctionCategory?.luxuaryAmount)){
+
+      
+      //calculating the security deposite 
+      const total = Number((Number(startBidAmount) * Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
+      //checking the total is less than minimum security deposite 
+      if(auctionCategory?.minimumLuxuarySD_forBidder && total < Number(auctionCategory?.minimumLuxuarySD_forBidder)){
+        amount = Number(auctionCategory?.minimumLuxuarySD_forBidder)
+      }else{
+        amount = total
+      }
+    }
+    return amount
+  }
   return (
     <div>
       <Helmet prioritizeSeoTags={true}>
@@ -238,10 +257,11 @@ const HomeAuctionDetails = () => {
                   />
                 ) : (
                   <SummaryHomeAuctionSections
-                    bidderDepositFixedAmount={
-                      auctionsDetailsData?.product?.category
-                        ?.bidderDepositFixedAmount
-                    }
+                    // bidderDepositFixedAmount={
+                    //   auctionsDetailsData?.product?.category
+                    //     ?.bidderDepositFixedAmount
+                    // }
+                    bidderDepositFixedAmount = {calculateSecurityDeposit(auctionsDetailsData, auctionsDetailsData?.product?.category)}
                     isDepositPaid={auctionsDetailsData?.isDepositPaid || false}
                     numberStare={3}
                     totalReviews={20}

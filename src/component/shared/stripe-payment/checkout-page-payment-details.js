@@ -92,8 +92,9 @@ export default function CheckoutPagePaymentDetails() {
         .then(async (res) => {
           setPendingAuctionData(res?.data?.data);
           const auctionData = res?.data?.data;
-          const amountToPay =
-            auctionData.product.category.sellerDepositFixedAmount;
+          // const amountToPay =
+          //   auctionData.product.category.sellerDepositFixedAmount;
+          const amountToPay = calculateSecurityDeposit(auctionData,auctionData.product.category)
 
           if (auctionData) {
             // const pendingPeymentData = await authAxios.get(
@@ -142,6 +143,23 @@ export default function CheckoutPagePaymentDetails() {
     );
   };
 
+  const calculateSecurityDeposit = (auction,auctionCategory)=>{
+    //calculate the seller security deposite
+    const startBidAmount = auction?.startBidAmount
+    let amount = Number(auctionCategory?.sellerDepositFixedAmount)
+    //checking whether the auction is luxuary or not
+    if(auctionCategory?.luxuaryAmount && Number(startBidAmount) > Number(auctionCategory?.luxuaryAmount)){
+      //calculating the security deposite 
+      const total = Number((Number(startBidAmount) * Number(auctionCategory?.percentageOfLuxuarySD_forSeller) ) / 100)
+      //checking the total is less than minimum security deposite 
+      if(auctionCategory?.minimumLuxuarySD_forSeller && total < Number(auctionCategory?.minimumLuxuarySD_forSeller)){
+        amount = Number(auctionCategory?.minimumLuxuarySD_forSeller)
+      }else{
+        amount = total
+      }
+    }
+    return amount
+  }
   const handleSubmitPayment = () => {
     if (isWalletPayment === null) {
       toast.error("Plese Select a payment method");
@@ -263,10 +281,11 @@ export default function CheckoutPagePaymentDetails() {
                     </h1>
 
                     <p>
-                      {formatCurrency(
+                      {/* {formatCurrency(
                         pendingAuctionData?.product?.category
                           ?.bidderDepositFixedAmount
-                      )}
+                      )} */}
+                      {formatCurrency(calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category))}
                     </p>
                   </p>
                   <p className="flex justify-between px-4 py-1.5">
@@ -322,10 +341,11 @@ export default function CheckoutPagePaymentDetails() {
                         auctionId={auctionId}
                         setIsPaymentCompleted={setIsPaymentCompleted}
                         payDeposite
-                        payPrice={
-                          pendingAuctionData?.product?.category
-                            ?.bidderDepositFixedAmount
-                        }
+                        // payPrice={
+                        //   pendingAuctionData?.product?.category
+                        //     ?.bidderDepositFixedAmount
+                        // }
+                        payPrice={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
                       />
                     </Elements>
                   )}
@@ -335,10 +355,11 @@ export default function CheckoutPagePaymentDetails() {
                     auctionId={auctionId}
                     setIsPaymentCompleted={setIsPaymentCompleted}
                     payDeposite
-                    payPrice={
-                      pendingAuctionData?.product?.category
-                        ?.bidderDepositFixedAmount
-                    }
+                    // payPrice={
+                    //   pendingAuctionData?.product?.category
+                    //     ?.bidderDepositFixedAmount
+                    // }
+                    payPrice={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
                   />
                 </Elements>
               )}
@@ -346,7 +367,8 @@ export default function CheckoutPagePaymentDetails() {
                 <WalletPayment
                   setIsPaymentCompleted={setIsPaymentCompleted}
                   auctionId={auctionId}
-                  amount={pendingAuctionData?.product?.category?.bidderDepositFixedAmount}
+                  // amount={pendingAuctionData?.product?.category?.bidderDepositFixedAmount}
+                  amount={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
                   walletBalance={walletBalance}
                   paymentAPI={api.app.auctions.walletPayForAuction}
                   setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
