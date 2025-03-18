@@ -170,6 +170,13 @@ const en = {
     " This user hasn't listed any products yet",
   [localizationKeys.noUserSpecified]: "No user specified",
   [localizationKeys.errorProcessingImages]: "Error processing images",
+  [localizationKeys.uploadPdfDocument]: "Upload PDF Document",
+  [localizationKeys.maxSize]: "Max size:",
+  [localizationKeys.dragAndDropYourPdfHereOr]:
+    "Drag and drop your PDF here, or",
+  [localizationKeys.clickToBrowse]: "click to browse",
+  [localizationKeys.document]: "Document",
+  [localizationKeys.tapToZoom]: "Tap to zoom",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",

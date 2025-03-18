@@ -407,7 +407,7 @@ export const PandingRow = ({
               </h1>
             ) : (
               <h1 className="text-gray-veryLight text-[10px] font-normal">
-                {selectedContent[localizationKeys.endingTime]}
+                {selectedContent[localizationKeys.startPrice]}
               </h1>
             )}
             <p className="text-gray-dark text-[10px] font-normal ">

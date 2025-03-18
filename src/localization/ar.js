@@ -165,6 +165,12 @@ const ar = {
     "لم يقم هذا المستخدم بإدراج أي منتجات بعد",
   [localizationKeys.noUserSpecified]: "لم يتم تحديد أي مستخدم",
   [localizationKeys.errorProcessingImages]: "خطأ في معالجة الصور",
+  [localizationKeys.uploadPdfDocument]: "تحميل مستند PDF",
+  [localizationKeys.maxSize]: "الحجم الأقصى:",
+  [localizationKeys.dragAndDropYourPdfHereOr]:
+    "اسحب ملف PDF الخاص بك وأفلِته هنا، أو",
+  [localizationKeys.clickToBrowse]: "انقر للتصفح",
+  [localizationKeys.document]: "Document",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
