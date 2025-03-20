@@ -27,7 +27,7 @@ const ImgSlider = ({
   relatedDocument,
 }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
-  const [isZoomed, setIsZoomed] = useState(false); // State to track if the image is zoomed
+  const [isZoomed, setIsZoomed] = useState(false);
   const [isWatshlist, setWatshlist] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [showPdf, setShowPdf] = useState(false);
@@ -53,16 +53,15 @@ const ImgSlider = ({
     setWatshlist(WatshlistState);
   }, [WatshlistState]);
 
-  // New useEffect to handle scroll event when zoomed
   useEffect(() => {
     const handleScroll = () => {
       if (isZoomed) {
-        toggleZoom(); // Close the zoom when scrolling
+        toggleZoom();
       }
     };
 
     const handleScrollEvent = () => {
-      requestAnimationFrame(handleScroll); // Use requestAnimationFrame for better performance
+      requestAnimationFrame(handleScroll);
     };
 
     if (isZoomed) {
@@ -72,7 +71,7 @@ const ImgSlider = ({
     }
 
     return () => {
-      window.removeEventListener("scroll", handleScrollEvent); // Cleanup on unmount
+      window.removeEventListener("scroll", handleScrollEvent);
     };
   }, [isZoomed, toggleZoom]);
 
@@ -171,6 +170,12 @@ const ImgSlider = ({
     }
   };
 
+  // Check if the current media is a video
+  const isVideo = (media) => {
+    console.log(media);
+    return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
+  };
+
   return (
     <>
       <Dimmer
@@ -178,11 +183,10 @@ const ImgSlider = ({
         active={isLoading}
         inverted
       >
-        {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
       <div className="shadow rounded-2xl group overflow-hidden relative flex flex-col h-[480px]">
-        {/* Main Image Section */}
+        {/* Main Media Section */}
         <div className="relative w-full h-[85%] cursor-pointer">
           {showPdf && relatedDocument?.length > 0 ? (
             <div
@@ -204,22 +208,41 @@ const ImgSlider = ({
             images &&
             images?.length > 0 && (
               <div className="relative w-full h-full">
-                <img
-                  className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
-                  src={images[selectedImgIndex]?.imageLink}
-                  alt={images[selectedImgIndex]?.description || "Product image"}
-                  onLoad={() => setIsImageLoaded(true)}
-                  onClick={isImageLoaded ? toggleZoom : null}
-                />
+                {isVideo(images[selectedImgIndex]) ? (
+                  <video
+                    key={images[selectedImgIndex]?.imageLink} // Force re-render on src change
+                    className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
+                    controls
+                    onLoadedData={() => setIsImageLoaded(true)}
+                  >
+                    <source
+                      src={images[selectedImgIndex]?.imageLink}
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <img
+                    className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
+                    src={images[selectedImgIndex]?.imageLink}
+                    alt={
+                      images[selectedImgIndex]?.description || "Product image"
+                    }
+                    onLoad={() => setIsImageLoaded(true)}
+                    onClick={isImageLoaded ? toggleZoom : null}
+                  />
+                )}
                 {/* Tap to Zoom Text */}
-                <div
-                  onClick={isImageLoaded ? toggleZoom : null}
-                  className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 cursor-pointer"
-                >
-                  <span className="text-white text-sm md:text-xl font-semibold">
-                    {selectedContent[localizationKeys.tapToZoom]}
-                  </span>
-                </div>
+                {!isVideo(images[selectedImgIndex]) && (
+                  <div
+                    onClick={isImageLoaded ? toggleZoom : null}
+                    className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 cursor-pointer"
+                  >
+                    <span className="text-white text-sm md:text-xl font-semibold">
+                      {selectedContent[localizationKeys.tapToZoom]}
+                    </span>
+                  </div>
+                )}
               </div>
             )
           )}
@@ -287,11 +310,19 @@ const ImgSlider = ({
                   }`}
                   onClick={() => handleThumbnailClick(index)}
                 >
-                  <img
-                    src={image.imageLink}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
+                  {isVideo(image) ? (
+                    <video
+                      src={image.imageLink}
+                      className="w-full h-full object-cover rounded-lg"
+                      muted
+                    />
+                  ) : (
+                    <img
+                      src={image.imageLink}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                   {index === selectedImgIndex && !showPdf && (
                     <div className="absolute inset-0 bg-gray-500/50 rounded-lg transition-all duration-300" />
                   )}
@@ -346,6 +377,23 @@ const ImgSlider = ({
                   objectFit: "contain",
                 }}
               />
+            ) : isVideo(images[selectedImgIndex]) ? (
+              <video
+                key={images[selectedImgIndex]?.imageLink} // Force re-render on src change
+                className="w-full h-full object-contain"
+                controls
+                style={{
+                  width: "90vw",
+                  height: "80vh",
+                  objectFit: "contain",
+                }}
+              >
+                <source
+                  src={images[selectedImgIndex]?.imageLink}
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
             ) : (
               <img
                 src={images[selectedImgIndex]?.imageLink}
