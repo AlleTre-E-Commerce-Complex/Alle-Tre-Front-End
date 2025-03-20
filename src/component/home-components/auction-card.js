@@ -1,5 +1,8 @@
 import React, { useEffect, useState, memo } from "react";
-import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
+import {
+  BsBookmarkFill,
+  BsBookmark,
+} from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
 import { socketAuctionId } from "redux-store/socket-auctionId-slice";
 import { useDispatch } from "react-redux";
@@ -21,6 +24,8 @@ import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "component/shared/status/auctions-status";
 import { useSocket } from "context/socket-context";
 import expiredImg from "../../../src/assets/images/expired auction-03.svg";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+
 const CountdownDisplay = memo(
   ({ timeLeft, status, formattedstartDate, selectedContent }) => {
     const formattedTimeLeft = `${timeLeft.days} ${
@@ -73,6 +78,46 @@ const AuctionCard = ({
   const socket = useSocket();
   const timeLeft = useCountdown(endingTime);
   const startDate = useCountdown(StartDate);
+  const [isLoading, setIsLoading] = useState(true); // Add state for loading
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      // Swipe left
+      handleNext();
+    }
+    if (touchEnd - touchStart > 75) {
+      // Swipe right
+      handlePrevious();
+    }
+  };
+
+  const handleNext = () => {
+    if (!Array.isArray(adsImg) || !adsImg.length) return;
+    setIsLoading(true); // Set loading true when moving to next
+    setCurrentImageIndex((prev) => (prev === adsImg.length - 1 ? 0 : prev + 1));
+  };
+
+  const handlePrevious = () => {
+    if (!Array.isArray(adsImg) || !adsImg.length) return;
+    setIsLoading(true); // Set loading true when moving to previous
+    setCurrentImageIndex((prev) => (prev === 0 ? adsImg.length - 1 : prev - 1));
+  };
+
+  const handleImageLoad = () => {
+    setIsLoading(false); // Set loading to false once the image/video has loaded
+  };
 
   const formattedBid = formatCurrency(
     latestBidAmount || CurrentBid || startBidAmount
@@ -217,6 +262,9 @@ const AuctionCard = ({
     return null;
   }
 
+  // const isVideo = adsImg && adsImg.match(/\.(mp4|webm|ogg)$/i);
+  // const imagesArray = Array.isArray(adsImg) ? adsImg : [adsImg]; // Ensure it's always an array
+
   return (
     <div className="group w-full max-w-[240px] h-full flex flex-col rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
       <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[10/10]">
@@ -249,16 +297,98 @@ const AuctionCard = ({
           </div>
         </div>
 
-        <img
-          onClick={() => handelGoDetails(auctionId)}
-          className="w-full h-full object-scale-down group-hover:scale-110 duration-300 ease-in-out transform"
-          src={adsImg}
-          alt="adsImg"
-        />
+        <div
+          className="relative w-full h-full group"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {isLoading && (
+            <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50">
+              <span className="text-white text-xl">Loading...</span>
+            </div>
+          )}
+
+          {Array.isArray(adsImg) &&
+          adsImg.length > 0 &&
+          adsImg[currentImageIndex]?.imageLink ? (
+            <>
+              {adsImg[currentImageIndex].imagePath.match(
+                /\.(mp4|mov|webm|avi)$/i
+              ) ? (
+                <video
+                  onClick={() => handelGoDetails(auctionId)}
+                  className="w-full h-full object-cover"
+                  controls
+                  onLoadedData={handleImageLoad} // Trigger load completion on video
+                >
+                  <source
+                    src={adsImg[currentImageIndex].imageLink}
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img
+                  onClick={() => handelGoDetails(auctionId)}
+                  className="w-full h-full object-cover transition-transform duration-300"
+                  src={adsImg[currentImageIndex].imageLink}
+                  alt={`Product ${currentImageIndex + 1}`}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "fallback-image-url.jpg"; // You can add a fallback image URL here
+                  }}
+                  onLoad={handleImageLoad} // Trigger load completion on image
+                />
+              )}
+
+              {adsImg.length > 1 && (
+                <>
+                  <div className="absolute inset-0">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePrevious();
+                      }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidde"
+                    >
+                      <MdNavigateBefore className="flex justify-center text-white text-md item-center" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNext();
+                      }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                    >
+                      <MdNavigateNext className="flex justify-center text-white text-md item-center" />
+                    </button>
+                  </div>
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                    {adsImg.map((_, index) => (
+                      <div
+                        key={index}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndex(index);
+                        }}
+                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                          index === currentImageIndex
+                            ? "bg-primary w-3"
+                            : "bg-white/80 hover:bg-white"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          ) : null}
+        </div>
 
         <div
           onClick={() => handelGoDetails(auctionId)}
-          className="price-button absolute top-0 bg-[#e04868] text-white text-xs px-2 h-6 flex items-center"
+          className="price-button absolute top-0 bg-[#e04868] text-white text-xs px-2 h-6 flex items-center z-10"
         >
           {formattedBid}
         </div>

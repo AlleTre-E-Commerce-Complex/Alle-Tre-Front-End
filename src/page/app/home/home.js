@@ -141,7 +141,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         })
       );
     }
-  }, [search, user, auctionPageNumber]);
+  }, [search, user, auctionPageNumber, history, runMainAuctions]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
@@ -178,7 +178,6 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     const queryStr = queryString.stringify(filterParams, {
       arrayFormat: "bracket",
     });
-    console.log("Sending filters to backend:", filterParams); // For debugging
 
     if (!user) {
       runListedProduct(
@@ -199,7 +198,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           })
       );
     }
-  }, [search, user, listedPageNumber]);
+  }, [search, user, listedPageNumber, history, runListedProduct]);
 
   useEffect(() => {
     if (!socket) return;
@@ -260,7 +259,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       setOpenWelcomeBonusModal(true);
       dispatch(welcomeBonus(false));
     }
-  }, [isWelcomeBonus]);
+  }, [isWelcomeBonus, dispatch]);
 
   return (
     <div className="relative">
@@ -361,7 +360,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.acceptedAmount || e?.startBidAmount}
                                 title={e?.product?.title}
                                 status={e?.status}
-                                adsImg={e?.product?.images[0].imageLink}
+                                adsImg={e?.product?.images}
                                 totalBods={e?._count?.bids}
                                 WatshlistState={e?.isSaved}
                                 endingTime={e?.expiryDate}
@@ -563,7 +562,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.acceptedAmount || e?.startBidAmount}
                                 title={e?.product?.title}
                                 status={e?.status}
-                                adsImg={e?.product?.images[0].imageLink}
+                                adsImg={e?.product?.images}
                                 totalBods={e?._count?.bids}
                                 WatshlistState={e?.isSaved}
                                 endingTime={e?.expiryDate}

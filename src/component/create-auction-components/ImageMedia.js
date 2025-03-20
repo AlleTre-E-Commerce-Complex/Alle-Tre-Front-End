@@ -13,9 +13,11 @@ import api from "../../api";
 import { toast } from "react-hot-toast";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
-import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png"
+import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
 const heic2any = require("heic2any");
-const fileTypes = ["JPEG", "PNG", "GIF", "JPG"];
+
+// Supported file types (images and videos)
+const fileTypes = ["JPEG", "PNG", "GIF", "JPG", "MOV", "MP4", "WEBM", "AVI"];
 
 const ImageMedia = ({
   auctionId,
@@ -116,6 +118,10 @@ const ImageMedia = ({
   };
 
   const addImageWatermark = async (file) => {
+    if (file.type.startsWith("video/")) {
+      return file; // Skip watermarking for videos
+    }
+
     const loadImage = (src) => {
       return new Promise((resolve, reject) => {
         const img = new Image();
@@ -129,7 +135,7 @@ const ImageMedia = ({
     try {
       const [img, watermarkImg] = await Promise.all([
         loadImage(URL.createObjectURL(file)),
-        loadImage(watermarkImage)
+        loadImage(watermarkImage),
       ]);
 
       const canvas = document.createElement("canvas");
@@ -177,15 +183,28 @@ const ImageMedia = ({
     }
   };
 
+  const compressVideo = async (file) => {
+    // Placeholder for video compression logic
+    // You can use libraries like ffmpeg.js or backend services for video compression
+    return file;
+  };
+
   const handleChange = async (files, setFile, index) => {
     if (files) {
       try {
         const filesArray = Array.from(files);
         const processedFiles = await Promise.all(
           filesArray.map(async (file) => {
-            const watermarkedFile = await addImageWatermark(file);
-            const compressedFile = await compressImage(watermarkedFile);
-            return compressedFile;
+            if (file.type.startsWith("video/")) {
+              // Skip watermarking and compress video
+              const compressedVideo = await compressVideo(file);
+              return compressedVideo;
+            } else {
+              // Handle image files
+              const watermarkedFile = await addImageWatermark(file);
+              const compressedFile = await compressImage(watermarkedFile);
+              return compressedFile;
+            }
           })
         );
 
@@ -201,15 +220,15 @@ const ImageMedia = ({
                 onReload();
               })
               .catch((err) => {
-                toast.error("Failed to upload images");
+                toast.error("Failed to upload files");
               })
           );
         }
 
-        setFile(processedFiles[0]); 
+        setFile(processedFiles[0]);
       } catch (error) {
         console.error("Error handling files:", error);
-        toast.error("Failed to process images");
+        toast.error("Failed to process files");
         setFile(null);
       }
     }
@@ -356,23 +375,35 @@ const ImageMedia = ({
                       types={fileTypes}
                       multiple
                     >
-                      <img
-                        className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
-                          isCoverPhoto ? "ring-2 ring-primary" : ""
-                        }`}
-                        src={
-                          img?.imageLink
-                            ? img.imageLink
-                            : file instanceof File
-                            ? URL.createObjectURL(file)
-                            : addImage
-                        }
-                        alt="Product img"
-                        onError={(e) => {
-                          console.error("Image failed to load:", e.target.src);
-                          e.target.src = addImage;
-                        }}
-                      />
+                      {file?.type.startsWith("video/") ? (
+                        <video
+                          className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
+                            isCoverPhoto ? "ring-2 ring-primary" : ""
+                          }`}
+                          controls
+                        >
+                          <source src={URL.createObjectURL(file)} type={file.type} />
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : (
+                        <img
+                          className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
+                            isCoverPhoto ? "ring-2 ring-primary" : ""
+                          }`}
+                          src={
+                            img?.imageLink
+                              ? img.imageLink
+                              : file instanceof File
+                              ? URL.createObjectURL(file)
+                              : addImage
+                          }
+                          alt="Product img"
+                          onError={(e) => {
+                            console.error("Image failed to load:", e.target.src);
+                            e.target.src = addImage;
+                          }}
+                        />
+                      )}
                     </FileUploader>
 
                     {!isCoverPhoto && (
