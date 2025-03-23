@@ -470,7 +470,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                     ? e?.location?.country?.nameEn
                                     : e?.location?.country?.nameEn
                                 }
-                                createdAt={e?.product?.user?.createdAt}
+                                createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
                               />
                             ))}
@@ -523,7 +523,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                     ? e?.location?.country?.nameEn
                                     : e?.location?.country?.nameEn
                                 }
-                                createdAt={e?.product?.user?.createdAt}
+                                createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
                               />
                             ))}
@@ -619,7 +619,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                     ? e?.location?.country?.nameEn
                                     : e?.location?.country?.nameEn
                                 }
-                                createdAt={e?.product?.user?.createdAt}
+                                createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
                               />
                             ))}
@@ -704,7 +704,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                   ? e?.location?.country?.nameEn
                                   : e?.location?.country?.nameEn
                               }
-                              createdAt={e?.product?.user?.createdAt}
+                              createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
                             />
                           ))}
