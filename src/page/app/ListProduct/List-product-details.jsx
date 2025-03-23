@@ -85,10 +85,10 @@ const ListProductDetails = () => {
 
   const handleBrandInputChange = (value) => {
     setBrandInput(value);
-    const filteredBrands = NotAllBranOptions.filter((brand) =>
-      brand.text.toLowerCase().includes(value.toLowerCase())
-    );
-    setBrandSuggestions(filteredBrands);
+    // const filteredBrands = NotAllBranOptions.filter((brand) =>
+    //   brand.text.toLowerCase().includes(value.toLowerCase())
+    // );
+    // setBrandSuggestions(filteredBrands);
   };
   const addImageWatermark = async (file) => {
     const loadImage = (src) => {

@@ -354,10 +354,10 @@ const ProductDetails = () => {
 
   const handleBrandInputChange = (value) => {
     setBrandInput(value);
-    const filteredBrands = NotAllBranOptions.filter((brand) =>
-      brand.text.toLowerCase().includes(value.toLowerCase())
-    );
-    setBrandSuggestions(filteredBrands);
+    // const filteredBrands = NotAllBranOptions.filter((brand) =>
+    //   brand.text.toLowerCase().includes(value.toLowerCase())
+    // );
+    // setBrandSuggestions(filteredBrands);
   };
   const handleFileChange = async (event) => {
     const files = event.target.files;

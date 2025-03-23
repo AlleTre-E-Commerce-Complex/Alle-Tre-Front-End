@@ -59,15 +59,38 @@ const ProductCard = ({
     const diffInMs = today - createdDate;
 
     // Convert milliseconds to different units
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
     const diffInWeeks = Math.floor(diffInDays / 7);
     const diffInMonths = Math.floor(diffInDays / 30);
+    const diffInYears = Math.floor(diffInDays / 365);
 
     return {
+      hours: diffInHours,
       days: diffInDays,
       weeks: diffInWeeks,
       months: diffInMonths,
+      years: diffInYears,
     };
+  };
+
+  const getTimeDisplay = (diff) => {
+    if (diff.years > 0) {
+      return `${diff.years} ${diff.years === 1 ? "year" : "years"} ago`;
+    }
+    if (diff.months > 0) {
+      return `${diff.months} ${diff.months === 1 ? "month" : "months"} ago`;
+    }
+    if (diff.weeks > 0) {
+      return `${diff.weeks} ${diff.weeks === 1 ? "week" : "weeks"} ago`;
+    }
+    if (diff.days > 0) {
+      return `${diff.days} ${diff.days === 1 ? "day" : "days"} ago`;
+    }
+    if (diff.hours > 0) {
+      return `${diff.hours} ${diff.hours === 1 ? "hour" : "hours"} ago`;
+    }
+    return "Just now";
   };
 
   const difference = getTimeDifference(createdAt);
@@ -133,13 +156,13 @@ const ProductCard = ({
               {selectedContent[localizationKeys.location]}
             </h6>
             <p
-              className="text-gray-dark font-medium md:text-[11px] text-[10px] mt-1 line-clamp-2"
+              className="text-gray-dark font-medium md:text-[11px] text-[10px] mt-0.2 line-clamp-2"
               onClick={() => handelGoDetails(id)}
             >
               {city}, {country}
             </p>
           </div>
-          <div className="flex justify-between mt-1">
+          <div className="flex justify-between mt-3">
             <div>
               <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
                 {selectedContent[localizationKeys.listed]}
@@ -148,17 +171,7 @@ const ProductCard = ({
                 className="text-gray-dark font-medium md:text-[10px] text-[8px]"
                 onClick={() => handelGoDetails(id)}
               >
-                {difference.days > 0 && `${difference.days} days ago`}
-                {difference.days === 0 &&
-                  difference.weeks > 0 &&
-                  `${difference.weeks} weeks ago`}
-                {difference.weeks === 0 &&
-                  difference.months > 0 &&
-                  `${difference.months} months ago`}
-                {difference.days === 0 &&
-                  difference.weeks === 0 &&
-                  difference.months === 0 &&
-                  `Today`}
+                {getTimeDisplay(difference)}
               </p>
             </div>
           </div>
