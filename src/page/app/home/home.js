@@ -408,7 +408,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.acceptedAmount || e?.startBidAmount}
                                 title={e?.product?.title}
                                 status={e?.status}
-                                adsImg={e?.product?.images[0].imageLink}
+                                adsImg={e?.product?.images}
                                 totalBods={e?._count?.bids}
                                 WatshlistState={e?.isSaved}
                                 endingTime={e?.expiryDate}
@@ -457,7 +457,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 key={e?.id}
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
-                                imageLink={e?.product?.images[0].imageLink}
+                                adsImg={e?.product?.images}
                                 userId={e?.userId}
                                 id={e?.product?.id}
                                 city={
@@ -511,7 +511,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
                                 userId={e?.userId}
-                                imageLink={e?.product?.images[0].imageLink}
+                                adsImg={e?.product?.images}
                                 id={e?.product?.id}
                                 city={
                                   lang === "en"
@@ -607,7 +607,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
                                 userId={e?.userId}
-                                imageLink={e?.product?.images[0].imageLink}
+                                adsImg={e?.product?.images}
                                 id={e?.product?.id}
                                 city={
                                   lang === "en"
@@ -653,7 +653,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               price={e?.acceptedAmount || e?.startBidAmount}
                               title={e?.product?.title}
                               status={e?.status}
-                              adsImg={e?.product?.images[0].imageLink}
+                              adsImg={e?.product?.images}
                               totalBods={e?._count?.bids}
                               WatshlistState={e?.isSaved}
                               endingTime={e?.expiryDate}
@@ -692,7 +692,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               price={e?.ProductListingPrice}
                               title={e?.product?.title}
                               userId={e?.userId}
-                              imageLink={e?.product?.images[0].imageLink}
+                              adsImg={e?.product?.images}
                               id={e?.product?.id}
                               city={
                                 lang === "en"

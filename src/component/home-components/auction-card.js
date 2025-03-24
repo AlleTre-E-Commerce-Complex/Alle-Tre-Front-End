@@ -2,6 +2,7 @@ import React, { useEffect, useState, memo } from "react";
 import {
   BsBookmarkFill,
   BsBookmark,
+  BsPlayCircleFill,
 } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
 import { socketAuctionId } from "redux-store/socket-auctionId-slice";
@@ -78,11 +79,11 @@ const AuctionCard = ({
   const socket = useSocket();
   const timeLeft = useCountdown(endingTime);
   const startDate = useCountdown(StartDate);
-  const [isLoading, setIsLoading] = useState(true); // Add state for loading
-
+  const [isLoading, setIsLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [preloadedVideos, setPreloadedVideos] = useState(new Set());
 
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
@@ -94,30 +95,54 @@ const AuctionCard = ({
 
   const handleTouchEnd = () => {
     if (touchStart - touchEnd > 75) {
-      // Swipe left
       handleNext();
     }
     if (touchEnd - touchStart > 75) {
-      // Swipe right
       handlePrevious();
     }
   };
 
   const handleNext = () => {
     if (!Array.isArray(adsImg) || !adsImg.length) return;
-    setIsLoading(true); // Set loading true when moving to next
-    setCurrentImageIndex((prev) => (prev === adsImg.length - 1 ? 0 : prev + 1));
+    setIsLoading(true);
+    const nextIndex = (currentImageIndex + 1) % adsImg.length;
+    setCurrentImageIndex(nextIndex);
   };
 
   const handlePrevious = () => {
     if (!Array.isArray(adsImg) || !adsImg.length) return;
-    setIsLoading(true); // Set loading true when moving to previous
-    setCurrentImageIndex((prev) => (prev === 0 ? adsImg.length - 1 : prev - 1));
+    setIsLoading(true);
+    const prevIndex = currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
+    setCurrentImageIndex(prevIndex);
   };
 
   const handleImageLoad = () => {
-    setIsLoading(false); // Set loading to false once the image/video has loaded
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (!Array.isArray(adsImg) || adsImg.length <= 1) return;
+
+    const preloadVideo = (index) => {
+      if (index < 0 || index >= adsImg.length) return;
+      
+      const item = adsImg[index];
+      if (!item?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i)) return;
+      if (preloadedVideos.has(item.imageLink)) return;
+
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      video.src = item.imageLink;
+      
+      setPreloadedVideos(prev => new Set([...prev, item.imageLink]));
+    };
+
+    const nextIndex = (currentImageIndex + 1) % adsImg.length;
+    preloadVideo(nextIndex);
+    
+    const prevIndex = currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
+    preloadVideo(prevIndex);
+  }, [currentImageIndex, adsImg, preloadedVideos]);
 
   const formattedBid = formatCurrency(
     latestBidAmount || CurrentBid || startBidAmount
@@ -141,12 +166,6 @@ const AuctionCard = ({
 
   useEffect(() => {
     if (!socket) return;
-
-    // const handleBidSubmitted = (data) => {
-    //   if (data.auctionId === auctionId) {
-    //     console.log("Bid submitted for auction:", auctionId);
-    //   }
-    // };
 
     socket.on("bid:submitted");
     return () => {
@@ -262,9 +281,6 @@ const AuctionCard = ({
     return null;
   }
 
-  // const isVideo = adsImg && adsImg.match(/\.(mp4|webm|ogg)$/i);
-  // const imagesArray = Array.isArray(adsImg) ? adsImg : [adsImg]; // Ensure it's always an array
-
   return (
     <div className="group w-full max-w-[240px] h-full flex flex-col rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
       <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[10/10]">
@@ -304,8 +320,8 @@ const AuctionCard = ({
           onTouchEnd={handleTouchEnd}
         >
           {isLoading && (
-            <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <span className="text-white text-xl">Loading...</span>
+            <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-10">
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
             </div>
           )}
 
@@ -316,18 +332,32 @@ const AuctionCard = ({
               {adsImg[currentImageIndex].imagePath.match(
                 /\.(mp4|mov|webm|avi)$/i
               ) ? (
-                <video
-                  onClick={() => handelGoDetails(auctionId)}
-                  className="w-full h-full object-cover"
-                  controls
-                  onLoadedData={handleImageLoad} // Trigger load completion on video
-                >
-                  <source
-                    src={adsImg[currentImageIndex].imageLink}
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
+                <div className="relative w-full h-full group/video">
+                  <video
+                    key={adsImg[currentImageIndex].imageLink}
+                    onClick={() => handelGoDetails(auctionId)}
+                    className="w-full h-full object-cover cursor-pointer"
+                    preload="metadata"
+                    playsInline
+                    muted
+                    onLoadedMetadata={() => setIsLoading(false)}
+                    onLoadStart={() => setIsLoading(true)}
+                  >
+                    <source
+                      src={adsImg[currentImageIndex].imageLink}
+                      type="video/mp4"
+                    />
+                  </video>
+                  <div onClick={(e) => {
+                      e.stopPropagation();
+                      handelGoDetails(auctionId);
+                    }} className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all duration-300 cursor-pointer z-[5]">
+                    <BsPlayCircleFill onClick={(e) => {
+                      e.stopPropagation();
+                      handelGoDetails(auctionId);
+                    }} className="text-white text-4xl opacity-70 group-hover/video:opacity-100 transition-opacity duration-300 cursor-pointer" />
+                  </div>
+                </div>
               ) : (
                 <img
                   onClick={() => handelGoDetails(auctionId)}
@@ -338,7 +368,7 @@ const AuctionCard = ({
                     e.target.onerror = null;
                     e.target.src = "fallback-image-url.jpg"; // You can add a fallback image URL here
                   }}
-                  onLoad={handleImageLoad} // Trigger load completion on image
+                  onLoad={handleImageLoad}
                 />
               )}
 
@@ -350,7 +380,7 @@ const AuctionCard = ({
                         e.stopPropagation();
                         handlePrevious();
                       }}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidde"
+                      className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
                     >
                       <MdNavigateBefore className="flex justify-center text-white text-md item-center" />
                     </button>
@@ -359,7 +389,7 @@ const AuctionCard = ({
                         e.stopPropagation();
                         handleNext();
                       }}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                      className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
                     >
                       <MdNavigateNext className="flex justify-center text-white text-md item-center" />
                     </button>
