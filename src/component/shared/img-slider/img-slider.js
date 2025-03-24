@@ -172,7 +172,6 @@ const ImgSlider = ({
 
   // Check if the current media is a video
   const isVideo = (media) => {
-    console.log(media);
     return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
   };
 

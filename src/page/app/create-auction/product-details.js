@@ -114,6 +114,7 @@ const ProductDetails = () => {
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
   const [auctionId, setAuctionId] = useState(state?.auctionId || null);
+  const [maxStartPrice, setMaxStartPrice] = useState(null)
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const formikRef = useRef(null);
   const productDetailsint = useSelector(
@@ -300,7 +301,6 @@ const ProductDetails = () => {
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState();
   const [relatedDocuments, setRelatedDocuments] = useState([]);
-  console.log("rrrrrr", relatedDocuments);
   const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
   const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
   const [fileThree, setFileThree] = useState(
@@ -551,6 +551,7 @@ const ProductDetails = () => {
       productDetails({
         ...values,
         hasUsageCondition,
+        maxStartPrice,
         valueRadio,
         fileOne,
         fileTwo,
@@ -901,6 +902,7 @@ const ProductDetails = () => {
                             (go) => go.value === value
                           );
                           // onReload();
+                          setMaxStartPrice(fieldOption.maxStartPrice)
                           setCustomFromData([]);
                           setSubCategoryId(undefined);
                           formik.setFieldValue("subCategory", "");

@@ -106,15 +106,21 @@ const HomeAuctionDetails = () => {
   };
 
   const calculateSecurityDeposit = (auction,auctionCategory)=>{
+    const categoryName = auctionCategory?.nameEn
+
     //calculate the seller security deposite
     const startBidAmount = auction?.startBidAmount
     let amount = Number(auctionCategory?.bidderDepositFixedAmount)
     //checking whether the auction is luxuary or not
     if(auctionCategory?.luxuaryAmount && Number(startBidAmount) > Number(auctionCategory?.luxuaryAmount)){
 
-      
+      let total
       //calculating the security deposite 
-      const total = Number((Number(startBidAmount) * Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
+       total = Number(((Number(startBidAmount) )* Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
+      
+      if(categoryName === 'Cars' || categoryName === 'Properties'){
+       total = Number(((auctionsDetailsData?.latestBidAmount? auctionsDetailsData?.latestBidAmount: Number(startBidAmount) )* Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
+       }
       //checking the total is less than minimum security deposite 
       if(auctionCategory?.minimumLuxuarySD_forBidder && total < Number(auctionCategory?.minimumLuxuarySD_forBidder)){
         amount = Number(auctionCategory?.minimumLuxuarySD_forBidder)
@@ -267,6 +273,7 @@ const HomeAuctionDetails = () => {
                     totalReviews={20}
                     title={auctionsDetailsData?.product?.title}
                     description={auctionsDetailsData?.product?.description}
+                    categoryData={auctionsDetailsData?.product?.category}
                     category={
                       lang === "en"
                         ? auctionsDetailsData?.product?.category?.nameEn

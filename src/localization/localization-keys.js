@@ -500,6 +500,7 @@ const localizationKeys = {
   bidAmount: "bidAmount",
   startingBidAmount: "startingBidAmount",
   currentBid: "currentBid",
+  YourMaximumBidAllowedForThisAuctionIsAED: "YourMaximumBidAllowedForThisAuctionIsAED",
   submitValueIsRequiredAndMustBeBiggerThanCurrentBid:
     "submitValueIsRequiredAndMustBeBiggerThanCurrentBid",
   yourAddNewSubmitValueSuccessfully: " NewBidSubmittedSuccessfully",
