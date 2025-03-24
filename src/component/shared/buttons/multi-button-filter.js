@@ -45,13 +45,13 @@ const MultiButtonFilter = ({ name, values = [], myRef, isMultiSelect = true }) =
       </h4>
       <div className="grid grid-cols-2 gap-2 px-0.1 max-h-[350px] overflow-y-auto">
         {filterValues.map((v, index) => (
-          <div key={index} className="flex items-center justify-center">
+          <div key={index} className="flex items-center justify-center ">
             <p
-              onClick={() => handleClick(v?.value)}
+              onClick={() => handleClick(v?.value.toString())}
               className={`text-base font-medium p-1 cursor-pointer rounded-lg transition-all duration-200 ease-in-out
                 min-w-[100px] min-h-[45px] flex justify-center items-center text-center
                 ${
-                  isSelected(v?.value)
+                  isSelected(v?.value.toString())
                     ? "bg-primary text-white shadow-md"
                     : "bg-white text-gray-dark border border-gray-300 hover:border-primary hover:text-primary"
                 }`}
