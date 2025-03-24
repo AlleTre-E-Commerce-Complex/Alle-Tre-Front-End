@@ -1,6 +1,6 @@
+import React, { useEffect, useState, memo } from "react";
 import { useLanguage } from "context/language-context";
 import content from "localization/content";
-import React from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { truncateString } from "utils/truncate-string";
 import routes from "../../routes";
@@ -9,12 +9,13 @@ import { RiShareForwardFill } from "react-icons/ri";
 import localizationKeys from "../../localization/localization-keys";
 import { formatCurrency } from "utils/format-currency";
 import { useAuthState } from "context/auth-context";
+import { BsPlayCircleFill } from "react-icons/bs";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const ProductCard = ({
-  imageLink,
+  adsImg,
   title,
   price,
-  location,
   city,
   country,
   id,
@@ -28,6 +29,11 @@ const ProductCard = ({
   const { user } = useAuthState();
   // const { run, isLoading } = useAxios([]);
   // const dispatch = useDispatch();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [preloadedVideos, setPreloadedVideos] = useState(new Set());
+  const [isLoading, setIsLoading] = useState(true);
 
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -35,6 +41,67 @@ const ProductCard = ({
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      handleNext();
+    }
+    if (touchEnd - touchStart > 75) {
+      handlePrevious();
+    }
+  };
+
+  const handleNext = () => {
+    if (!Array.isArray(adsImg) || !adsImg.length) return;
+    setIsLoading(true);
+    const nextIndex = (currentImageIndex + 1) % adsImg.length;
+    setCurrentImageIndex(nextIndex);
+  };
+
+  const handlePrevious = () => {
+    if (!Array.isArray(adsImg) || !adsImg.length) return;
+    setIsLoading(true);
+    const prevIndex =
+      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
+    setCurrentImageIndex(prevIndex);
+  };
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (!Array.isArray(adsImg) || adsImg.length <= 1) return;
+
+    const preloadVideo = (index) => {
+      if (index < 0 || index >= adsImg.length) return;
+
+      const item = adsImg[index];
+      if (!item?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i)) return;
+      if (preloadedVideos.has(item.imageLink)) return;
+
+      const video = document.createElement("video");
+      video.preload = "metadata";
+      video.src = item.imageLink;
+
+      setPreloadedVideos((prev) => new Set([...prev, item.imageLink]));
+    };
+
+    const nextIndex = (currentImageIndex + 1) % adsImg.length;
+    preloadVideo(nextIndex);
+
+    const prevIndex =
+      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
+    preloadVideo(prevIndex);
+  }, [currentImageIndex, adsImg, preloadedVideos]);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -118,12 +185,114 @@ const ProductCard = ({
             </div>
           </div>
 
-          <img
-            className="w-full h-full mx-auto rounded-lg object-scale-down group-hover:scale-110 duration-300 ease-in-out transform  "
-            src={imageLink}
-            alt="adsImd"
-            onClick={() => handelGoDetails(id)}
-          />
+          <div
+            className="relative w-full h-full group"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {isLoading && (
+              <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-10">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+
+            {Array.isArray(adsImg) &&
+            adsImg.length > 0 &&
+            adsImg[currentImageIndex]?.imageLink ? (
+              <>
+                {adsImg[currentImageIndex].imagePath.match(
+                  /\.(mp4|mov|webm|avi)$/i
+                ) ? (
+                  <div className="relative w-full h-full group/video">
+                    <video
+                      key={adsImg[currentImageIndex].imageLink}
+                      onClick={() => handelGoDetails(id)}
+                      className="w-full h-full object-cover cursor-pointer"
+                      preload="metadata"
+                      playsInline
+                      muted
+                      onLoadedMetadata={() => setIsLoading(false)}
+                      onLoadStart={() => setIsLoading(true)}
+                    >
+                      <source
+                        src={adsImg[currentImageIndex].imageLink}
+                        type="video/mp4"
+                      />
+                    </video>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handelGoDetails(id);
+                      }}
+                      className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all duration-300 cursor-pointer z-[5]"
+                    >
+                      <BsPlayCircleFill
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handelGoDetails(id);
+                        }}
+                        className="text-white text-4xl opacity-70 group-hover/video:opacity-100 transition-opacity duration-300 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    onClick={() => handelGoDetails(id)}
+                    className="w-full h-full object-cover transition-transform duration-300"
+                    src={adsImg[currentImageIndex].imageLink}
+                    alt={`Product ${currentImageIndex + 1}`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "fallback-image-url.jpg"; // You can add a fallback image URL here
+                    }}
+                    onLoad={handleImageLoad}
+                  />
+                )}
+
+                {adsImg.length > 1 && (
+                  <>
+                    <div className="absolute inset-0">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePrevious();
+                        }}
+                        className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                      >
+                        <MdNavigateBefore className="flex justify-center text-white text-md item-center" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleNext();
+                        }}
+                        className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                      >
+                        <MdNavigateNext className="flex justify-center text-white text-md item-center" />
+                      </button>
+                    </div>
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                      {adsImg.map((_, index) => (
+                        <div
+                          key={index}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex(index);
+                          }}
+                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                            index === currentImageIndex
+                              ? "bg-primary w-3"
+                              : "bg-white/80 hover:bg-white"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </>
+            ) : null}
+          </div>
           <div
             onClick={() => handelGoDetails(id)}
             className="price-button absolute bg-[#e04868]  text-white text-[10px] top-0 w-auto px-2 h-[24px] flex justify-center items-center"
