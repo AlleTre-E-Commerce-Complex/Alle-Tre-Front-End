@@ -25,6 +25,7 @@ const useGetGatogry = () => {
             sliderLink: d?.sliderLink,
             bannerLink: d?.bannerLink,
             hasUsageCondition: d?.hasUsageCondition,
+            maxStartPrice: d?.maxStartPrice,
           });
         }
       });

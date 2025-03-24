@@ -550,6 +550,7 @@ const ar = {
   [localizationKeys.bidAmount]: "مبلغ المزايدة",
   [localizationKeys.startingBidAmount]: "بدء مبلغ المزايدة",
   [localizationKeys.currentBid]: " المزايدة الحالية",
+  [localizationKeys.YourMaximumBidAllowedForThisAuctionIsAED]: " الحد الأقصى للعطاء المسموح به لهذا المزاد هو درهم إماراتي ",
   [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
     "إرسال القيمة مطلوبة ويجب أن تكون أكبر من المزايدة الحالي",
   [localizationKeys.yourAddNewSubmitValueSuccessfully]:

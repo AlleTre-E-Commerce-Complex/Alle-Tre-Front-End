@@ -559,6 +559,7 @@ const en = {
   [localizationKeys.bidAmount]: "Bid Amount",
   [localizationKeys.startingBidAmount]: "Starting Bid Amount",
   [localizationKeys.currentBid]: "Current Bid",
+  [localizationKeys.YourMaximumBidAllowedForThisAuctionIsAED]: "Your Maximum Bid Allowed For This Auction Is AED ",
   [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
     "Submit value is required and must be bigger than current Bid",
   [localizationKeys.yourAddNewSubmitValueSuccessfully]:

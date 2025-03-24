@@ -34,6 +34,7 @@ const SummaryHomeAuctionSections = ({
   isDepositPaid,
   title,
   description,
+  categoryData,
   category,
   subCategory,
   TimeLeft,
@@ -170,7 +171,15 @@ const SummaryHomeAuctionSections = ({
   const { run, isLoading } = useAxios();
 
   const handelSubmitBidButton = () => {
+
     const newValue = Number(submitBidValue);
+    console.log('catetgory data :',categoryData)
+    if(categoryData.luxuaryAmount && Number(startBidAmount) < Number(categoryData.luxuaryAmount) ){
+      if(newValue > Number(categoryData.maxBidLimit)){
+        toast.error(`${selectedContent[localizationKeys.YourMaximumBidAllowedForThisAuctionIsAED]} ${categoryData.maxBidLimit}`)
+        return
+      }
+    }
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );

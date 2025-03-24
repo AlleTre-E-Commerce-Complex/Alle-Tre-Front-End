@@ -49,6 +49,10 @@ const AuctionDetails = () => {
   const auctionDetailsInt = useSelector(
     (state) => state.auctionDetails.auctionDetails
   );
+   const productDetailsint = useSelector(
+      (state) => state.productDetails.productDetails
+    );
+    console.log('productDetails ***>:', productDetailsint)
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
   useEffect(() => {
     runPofile(
@@ -97,7 +101,20 @@ const AuctionDetails = () => {
       then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
-    MinimumPrice: Yup.number().required(
+    MinimumPrice: Yup.number()
+    .min(1, "Price must be at least 1")
+    .test(
+      "max-start-price",
+      (value, context) => {
+        const maxPrice = productDetailsint?.maxStartPrice;
+        return maxPrice ? `Allowed only below ${maxPrice}` : true;
+      },
+      (value) => {
+        const maxPrice = productDetailsint?.maxStartPrice;
+        return maxPrice ? value <= maxPrice : true;
+      }
+    )
+    .required(
       selectedContent[localizationKeys.required]
     ),
     PurchasingPrice: Yup.number().when([], {
@@ -243,6 +260,7 @@ const AuctionDetails = () => {
     history.push(routes.app.createAuction.shippingDetails);
   };
 
+  
   return (
     <div className="mt-44 animate-in mx-5 ">
       <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
@@ -366,6 +384,11 @@ const AuctionDetails = () => {
                           placeholder="AED XXX"
                           onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
                           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
+                          validate={(value)=> {
+                            if(value > 5000){
+                              return 'allowed only below 5000'; 
+                            }
+                          }}
                         />
                       </div>
                     </div>
