@@ -33,7 +33,6 @@ import ProductCardList from "component/home-components/products-card-list";
 import queryString from "query-string";
 
 const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
-  console.log('categories test', { selectedType, isFilterOpen, setIsFilterOpen })
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -81,6 +80,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           page: page,
           perPage: perPage,
           categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+          subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
           brands: parsed.brands ? parsed.brands.map(Number) : undefined,
           sellingType: parsed.sellingType || undefined,
           auctionStatus: parsed.auctionStatus || undefined,
@@ -103,7 +103,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       if (user) {
         runCategories(
           authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
-            console.log('aucitnon: in categories :',res.data.data)
             setMainAuctions(res?.data?.data);
             setTotalpagesAuction(res?.data?.pagination?.totalPages);
             // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -138,6 +137,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           page: page,
           perPage: perPage,
           categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+          subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
           brands: parsed.brands ? parsed.brands.map(Number) : undefined,
           sellingType: parsed.sellingType || undefined,
           auctionStatus: parsed.auctionStatus || undefined,
@@ -461,7 +461,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 key={e?.id}
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
-                                imageLink={e?.product?.images[0].imageLink}
+                                imageLink={e?.product?.images}
                                 userId={e?.userId}
                                 id={e?.product?.id}
                                 city={
@@ -515,7 +515,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
                                 userId={e?.userId}
-                                imageLink={e?.product?.images[0].imageLink}
+                                imageLink={e?.product?.images}
                                 id={e?.product?.id}
                                 city={
                                   lang === "en"
@@ -611,7 +611,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
                                 userId={e?.userId}
-                                imageLink={e?.product?.images[0].imageLink}
+                                imageLink={e?.product?.images}
                                 id={e?.product?.id}
                                 city={
                                   lang === "en"
@@ -696,7 +696,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               price={e?.ProductListingPrice}
                               title={e?.product?.title}
                               userId={e?.userId}
-                              imageLink={e?.product?.images[0].imageLink}
+                              imageLink={e?.product?.images}
                               id={e?.product?.id}
                               city={
                                 lang === "en"
