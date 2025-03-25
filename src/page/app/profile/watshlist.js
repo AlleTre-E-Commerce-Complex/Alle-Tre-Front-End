@@ -66,7 +66,7 @@ const Watshlist = () => {
               price={e?.auction?.acceptedAmount || e?.auction?.startBidAmount}
               title={e?.auction?.product?.title}
               status={e?.auction?.status}
-              adsImg={e?.auction?.product?.images[0].imageLink}
+              adsImg={e?.auction?.product?.images}
               totalBods={e?.auction?._count?.bids}
               WatshlistState={true}
               watshlistForceState={true}
