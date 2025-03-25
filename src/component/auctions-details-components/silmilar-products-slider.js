@@ -165,7 +165,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                       startBidAmount={e?.acceptedAmount || e?.startBidAmount}
                       title={e?.product?.title}
                       status={e?.status}
-                      adsImg={e?.product?.images[0].imageLink}
+                      adsImg={e?.product?.images}
                       totalBods={e?._count?.bids}
                       WatshlistState={e?.isSaved}
                       endingTime={e?.expiryDate}
