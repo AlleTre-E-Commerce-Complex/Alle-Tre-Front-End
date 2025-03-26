@@ -126,7 +126,7 @@ const SummaryListedSection = () => {
         <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0 md:order-none order-last">
           <div className="flex items-center gap-x-2 md:gap-x-5 pt-8">
             <h1 className="text-3xl font-bold text-gray-800">
-              {listedProductsData.title}
+              {listedProductsData?.title}
             </h1>
             <div
               className={`state-button px-6 py-1 rounded-md text-sm font-medium text-white transition-colors ${
@@ -226,7 +226,7 @@ const SummaryListedSection = () => {
                   {selectedContent[localizationKeys.sellingPrice]}
                 </p>
                 <p className="text-gray-verydark text-2xl font-bold mt-1">
-                  {formatCurrency(listedProductsData.ProductListingPrice)}
+                  {formatCurrency(listedProductsData?.ProductListingPrice)}
                 </p>
               </div>
             </div>
@@ -291,7 +291,7 @@ const SummaryListedSection = () => {
           {user?.id === listedProductsData?.userId ? (
             <div className="pt-4 flex gap-2">
               <button
-                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
                 onClick={handleOnStatus}
               >
                 {selectedContent[localizationKeys.changeStatus]}
@@ -303,7 +303,7 @@ const SummaryListedSection = () => {
                     productId: productId,
                   })
                 }
-                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
               >
                 {selectedContent[localizationKeys.convertToAuction]}
               </button>
@@ -318,7 +318,7 @@ const SummaryListedSection = () => {
                   const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
                   window.open(whatsappUrl, "_blank");
                 }}
-                className="border-primary border-[1px] text-primary md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
+                className="border-primary border-[1px] text-primary md:w-[120px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
               >
                 <FaWhatsapp />
                 <span>{selectedContent[localizationKeys.chat]}</span>
@@ -326,7 +326,7 @@ const SummaryListedSection = () => {
 
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-primary hover:bg-primary-dark text-white md:w-[120px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+                className="bg-primary hover:bg-primary-dark text-white md:w-[120px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
               >
                 <IoCall />
                 <span> {selectedContent[localizationKeys.call]}</span>
@@ -342,7 +342,7 @@ const SummaryListedSection = () => {
             <div className="pt-4">
               <button
                 onClick={handleOnContact}
-                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[30px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
+                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
               >
                 {selectedContent[localizationKeys.viewContactDetails]}
               </button>
