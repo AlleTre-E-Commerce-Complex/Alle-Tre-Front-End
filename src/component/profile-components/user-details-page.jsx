@@ -212,7 +212,7 @@ const UserDetailsPage = () => {
                           key={e?.id}
                           price={e?.ProductListingPrice}
                           title={e?.product?.title}
-                          imageLink={e?.product?.images[0].imageLink}
+                          adsImg={e?.product?.images}
                           userId={e?.userId}
                           id={e?.product?.id}
                           city={

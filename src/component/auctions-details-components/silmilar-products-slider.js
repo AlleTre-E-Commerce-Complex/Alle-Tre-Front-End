@@ -29,6 +29,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   const { run: runAuctions, isLoading: isLoadingAuctions } = useAxios([]);
 
   const [auctions, setAuctions] = useState();
+  console.log("auction", auctions)
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(20);
   // const loginData = useSelector((state) => state?.loginDate?.loginDate);
@@ -143,8 +144,8 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                     <ProductCard
                       key={e?.id}
                       price={e?.product?.ProductListingPrice}
-                      title={e?.product?.product?.title}
-                      imageLink={e?.product?.images[0].imageLink}
+                      title={e?.product?.title}
+                      adsImg={e?.product?.images}
                       id={e?.product?.id}
                       city={
                         lang === "en"

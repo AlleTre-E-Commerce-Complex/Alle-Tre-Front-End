@@ -14,10 +14,13 @@ import { toast } from "react-hot-toast";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
-const heic2any = require("heic2any");
+// import { FFmpeg } from "@ffmpeg/ffmpeg";
+// import { fetchFile } from "@ffmpeg/util";
 
 // Supported file types (images and videos)
 const fileTypes = ["JPEG", "PNG", "GIF", "JPG", "MOV", "MP4", "WEBM", "AVI"];
+
+const heic2any = require("heic2any");
 
 const ImageMedia = ({
   auctionId,
@@ -50,7 +53,7 @@ const ImageMedia = ({
 
   useEffect(() => {
     setLoadingImg(isloadingUpload);
-  }, [isloadingUpload]);
+  }, [isloadingUpload, setLoadingImg]);
 
   const handleReorderImages = useCallback(() => {
     try {
@@ -117,6 +120,41 @@ const ImageMedia = ({
     setCoverPhotoIndex(1);
   };
 
+  // const addVideoWatermark = async (file) => {
+  //   const ffmpeg = new FFmpeg({ log: true });
+  //   await ffmpeg.load();
+
+  //   const inputFileName = "input.mp4";
+  //   const watermarkFileName = "watermark.png";
+  //   const outputFileName = "output.mp4";
+
+  //   // Write the input files to FFmpeg's virtual file system
+  //   await ffmpeg.writeFile(inputFileName, await file.arrayBuffer());
+  //   const watermarkResponse = await fetch(watermarkImage);
+  //   const watermarkArrayBuffer = await watermarkResponse.arrayBuffer();
+  //   await ffmpeg.writeFile(watermarkFileName, watermarkArrayBuffer);
+
+  //   await ffmpeg.run(
+  //     "-i",
+  //     inputFileName,
+  //     "-i",
+  //     watermarkFileName,
+  //     "-filter_complex",
+  //     "[0:v][1:v] overlay=W-w-10:H-h-10",
+  //     "-c:a",
+  //     "copy",
+  //     outputFileName
+  //   );
+  //   // Read the output file using the new API
+  //   const outputData = await ffmpeg.readFile(outputFileName);
+  //   const watermarkedFile = new File([outputData], file.name, {
+  //     type: "video/mp4",
+  //     lastModified: new Date().getTime(),
+  //   });
+
+  //   return watermarkedFile;
+  // };
+
   const addImageWatermark = async (file) => {
     if (file.type.startsWith("video/")) {
       return file; // Skip watermarking for videos
@@ -149,7 +187,8 @@ const ImageMedia = ({
 
       // Calculate watermark dimensions
       const watermarkWidth = img.width * 0.3;
-      const watermarkHeight = (watermarkImg.height / watermarkImg.width) * watermarkWidth;
+      const watermarkHeight =
+        (watermarkImg.height / watermarkImg.width) * watermarkWidth;
 
       // Center watermark
       const x = (img.width - watermarkWidth) / 2;
@@ -183,24 +222,158 @@ const ImageMedia = ({
     }
   };
 
-  const compressVideo = async (file) => {
-    // Placeholder for video compression logic
-    // You can use libraries like ffmpeg.js or backend services for video compression
-    return file;
-  };
+  // const compressVideo = async (file) => {
+  //   let ffmpeg = null;
+  //   try {
+  //     setLoadingImg(true);
+
+  //     console.log("File type:", file.type);
+  //     console.log("File name:", file.name);
+  //     const originalSize = (file.size / 1024 / 1024).toFixed(2);
+  //     console.log("Original video size:", originalSize, "MB");
+
+  //     ffmpeg = new FFmpeg({
+  //       log: true,
+  //       logger: ({ message }) => {
+  //         console.log("FFmpeg Log:", message);
+  //       },
+  //     });
+
+  //     await ffmpeg.load();
+  //     console.log("FFmpeg loaded successfully");
+
+  //     const inputExt = file.name.toLowerCase().endsWith(".mov")
+  //       ? ".mov"
+  //       : ".mp4";
+  //     const inputFileName = `input${inputExt}`;
+  //     const outputFileName = "output.mp4";
+
+  //     // Write input file
+  //     const fileArrayBuffer = await fetchFile(file);
+  //     if (!fileArrayBuffer || fileArrayBuffer.byteLength === 0) {
+  //       throw new Error("Failed to read input file");
+  //     }
+  //     await ffmpeg.writeFile(inputFileName, new Uint8Array(fileArrayBuffer));
+
+  //     // Determine target size and compression settings
+  //     const targetSizeMB = originalSize > 50 ? 50 : originalSize * 0.7;
+  //     console.log("Target size:", targetSizeMB, "MB");
+
+  //     try {
+  //       console.log("Starting compression...");
+
+  //       // Single compression attempt with size-based settings
+  //       await ffmpeg.exec([
+  //         "-i",
+  //         inputFileName,
+  //         "-c:v",
+  //         "libx264",
+  //         "-crf",
+  //         originalSize > 100 ? "28" : originalSize > 50 ? "26" : "23",
+  //         "-preset",
+  //         originalSize > 100 ? "faster" : "medium",
+  //         "-maxrate",
+  //         `${Math.ceil(targetSizeMB / 10)}M`,
+  //         "-bufsize",
+  //         `${Math.ceil(targetSizeMB / 5)}M`,
+  //         "-vf",
+  //         `scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease`,
+  //         "-c:a",
+  //         "aac",
+  //         "-b:a",
+  //         "128k",
+  //         "-movflags",
+  //         "+faststart",
+  //         "-y",
+  //         outputFileName,
+  //       ]);
+
+  //       // Add a small delay to ensure file writing is complete
+  //       await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  //       const outputData = await ffmpeg.readFile(outputFileName);
+  //       if (!outputData || outputData.byteLength === 0) {
+  //         throw new Error("Compression failed - output file is empty");
+  //       }
+
+  //       const compressedFile = new File(
+  //         [outputData],
+  //         file.name.replace(/\.[^.]+$/, ".mp4"),
+  //         {
+  //           type: "video/mp4",
+  //           lastModified: new Date().getTime(),
+  //         }
+  //       );
+
+  //       const compressedSize = (compressedFile.size / 1024 / 1024).toFixed(2);
+  //       console.log("Compression complete. Final size:", compressedSize, "MB");
+
+  //       // Very lenient size check - only reject if compression made file larger
+  //       if (compressedFile.size > file.size * 1.1) {
+  //         console.log("Compression resulted in larger file, using original");
+  //         return file;
+  //       }
+
+  //       return compressedFile;
+  //     } catch (compressionError) {
+  //       console.error("Compression failed with error:", compressionError);
+
+  //       // If compression fails, try a simple copy without re-encoding
+  //       try {
+  //         console.log("Attempting simple copy without re-encoding...");
+  //         await ffmpeg.exec([
+  //           "-i",
+  //           inputFileName,
+  //           "-c",
+  //           "copy",
+  //           "-movflags",
+  //           "+faststart",
+  //           "-y",
+  //           outputFileName,
+  //         ]);
+
+  //         const outputData = await ffmpeg.readFile(outputFileName);
+  //         if (!outputData || outputData.byteLength === 0) {
+  //           throw new Error("Copy failed - output file is empty");
+  //         }
+
+  //         return new File([outputData], file.name.replace(/\.[^.]+$/, ".mp4"), {
+  //           type: "video/mp4",
+  //           lastModified: new Date().getTime(),
+  //         });
+  //       } catch (copyError) {
+  //         console.error("Copy attempt failed:", copyError);
+  //         return file;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Video processing failed:", error);
+  //     return file;
+  //   } finally {
+  //     if (ffmpeg) {
+  //       try {
+  //         await ffmpeg.terminate();
+  //         console.log("FFmpeg terminated successfully");
+  //       } catch (cleanupError) {
+  //         console.error("Error during FFmpeg cleanup:", cleanupError);
+  //       }
+  //     }
+  //     setLoadingImg(false);
+  //   }
+  // };
 
   const handleChange = async (files, setFile, index) => {
     if (files) {
+      console.log("file", files);
       try {
         const filesArray = Array.from(files);
         const processedFiles = await Promise.all(
           filesArray.map(async (file) => {
             if (file.type.startsWith("video/")) {
-              // Skip watermarking and compress video
-              const compressedVideo = await compressVideo(file);
-              return compressedVideo;
+              // const compressedVideo = await compressVideo(file);
+              // return compressedVideo;
+              return file;
             } else {
-              // Handle image files
               const watermarkedFile = await addImageWatermark(file);
               const compressedFile = await compressImage(watermarkedFile);
               return compressedFile;
@@ -314,6 +487,11 @@ const ImageMedia = ({
       fileFour,
       imgFive,
       fileFive,
+      setFileOne,
+      setFileTwo,
+      setFileThree,
+      setFileFour,
+      setFileFive,
     ]
   );
 
@@ -382,7 +560,10 @@ const ImageMedia = ({
                           }`}
                           controls
                         >
-                          <source src={URL.createObjectURL(file)} type={file.type} />
+                          <source
+                            src={URL.createObjectURL(file)}
+                            type={file.type}
+                          />
                           Your browser does not support the video tag.
                         </video>
                       ) : (
@@ -399,7 +580,10 @@ const ImageMedia = ({
                           }
                           alt="Product img"
                           onError={(e) => {
-                            console.error("Image failed to load:", e.target.src);
+                            console.error(
+                              "Image failed to load:",
+                              e.target.src
+                            );
                             e.target.src = addImage;
                           }}
                         />
