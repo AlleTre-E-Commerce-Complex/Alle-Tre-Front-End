@@ -62,6 +62,7 @@ const SliderRow = () => {
                           ? "md:px-20 lg:px-40"
                           : " md:px-13 lg:px-14 "
                       }
+                      // isSubCategory={false}
                     />
                   </div>
                 ))}

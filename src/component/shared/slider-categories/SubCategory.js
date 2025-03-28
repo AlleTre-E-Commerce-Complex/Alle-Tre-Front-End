@@ -3,16 +3,19 @@ import { useHistory, useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
 import queryString from "query-string";
-const Category = ({ img, title, id, view, className, isSubCategory }) => {
+const SubCategory = ({ img, title, id, view, className }) => {
   const history = useHistory();
   const {search} = useLocation()
-   // Parse existing query parameters
- 
+  const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+
    const handleClick = ()=>{
-    {
-      history.push(`${routes.app.categories(title, id)}?categories[]=${id}`)
-    }
-   
+    console.log('subCategory queery "',parsed)
+    let updatedQuery = { ...parsed };
+    updatedQuery.subCategory = [id];
+    const updatedSearch = queryString.stringify(updatedQuery, { arrayFormat: "bracket" });
+
+    history.push(`${window.location.pathname}?${updatedSearch}`)
    }
   
   return (
@@ -41,4 +44,4 @@ const Category = ({ img, title, id, view, className, isSubCategory }) => {
   );
 };
 
-export default Category;
+export default SubCategory;

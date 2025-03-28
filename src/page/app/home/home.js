@@ -93,11 +93,11 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     }
 
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-
     const filterParams = {
       page: page,
       perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
       brands: parsed.brands ? parsed.brands.map(Number) : undefined,
       sellingType: parsed.sellingType || undefined,
       auctionStatus: parsed.auctionStatus || undefined,
@@ -161,6 +161,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       page: page,
       perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
       brands: parsed.brands ? parsed.brands.map(Number) : undefined,
       sellingType: parsed.sellingType || undefined,
       auctionStatus: parsed.auctionStatus || undefined,
