@@ -80,13 +80,11 @@ const ImgSlider = ({
       setShowPdf(false);
       setSelectedImgIndex(0);
     } else {
-      if (selectedImgIndex === images.length - 1 && relatedDocument) {
-        setShowPdf(true);
-      } else {
-        setSelectedImgIndex((prevIndex) =>
-          prevIndex === images.length - 1 ? 0 : prevIndex + 1
-        );
-      }
+      setSelectedImgIndex((prev) => {
+        const nextIndex = (prev + 1) % images.length;
+        scrollThumbnailIntoView(nextIndex);
+        return nextIndex;
+      });
     }
   };
 
@@ -95,12 +93,36 @@ const ImgSlider = ({
       setShowPdf(false);
       setSelectedImgIndex(images.length - 1);
     } else {
-      if (selectedImgIndex === 0 && relatedDocument) {
-        setShowPdf(true);
-      } else {
-        setSelectedImgIndex((prevIndex) =>
-          prevIndex === 0 ? images.length - 1 : prevIndex - 1
-        );
+      setSelectedImgIndex((prev) => {
+        const nextIndex = prev === 0 ? images.length - 1 : prev - 1;
+        scrollThumbnailIntoView(nextIndex);
+        return nextIndex;
+      });
+    }
+  };
+
+  const scrollThumbnailIntoView = (index) => {
+    const container = document.getElementById('thumbnail-container');
+    const thumbnail = container?.children[index];
+    if (thumbnail && container) {
+      const containerWidth = container.offsetWidth;
+      const thumbnailWidth = thumbnail.offsetWidth;
+      const scrollPosition = container.scrollLeft;
+      const thumbnailPosition = thumbnail.offsetLeft;
+      
+      const isOutOfViewRight = thumbnailPosition + thumbnailWidth > scrollPosition + containerWidth;
+      const isOutOfViewLeft = thumbnailPosition < scrollPosition;
+
+      if (isOutOfViewRight) {
+        container.scrollTo({
+          left: thumbnailPosition - containerWidth + thumbnailWidth + 16, 
+          behavior: 'smooth'
+        });
+      } else if (isOutOfViewLeft) {
+        container.scrollTo({
+          left: thumbnailPosition - 16, 
+          behavior: 'smooth'
+        });
       }
     }
   };
@@ -108,6 +130,7 @@ const ImgSlider = ({
   const handleThumbnailClick = (index) => {
     setShowPdf(false);
     setSelectedImgIndex(index);
+    scrollThumbnailIntoView(index);
   };
 
   const handlePdfClick = () => {
@@ -123,7 +146,7 @@ const ImgSlider = ({
       if (!isWatshlist) {
         run(
           authAxios.post(api.app.WatchList.add, body).then((res) => {
-            toast.success("This auction added to WatchList successfully");
+            toast.success(selectedContent[localizationKeys.thisAuctionAddedToWatchListSuccessfully]);
             setWatshlist(true);
             onReload();
           })
@@ -131,7 +154,7 @@ const ImgSlider = ({
       } else {
         run(
           authAxios.delete(api.app.WatchList.delete(auctionId)).then((res) => {
-            toast.success("This auction removed from WatchList successfully");
+            toast.success(selectedContent[localizationKeys.thisAuctionRemovedFromWatchListSuccessfully]);
             setWatshlist(false);
             onReload();
           })
@@ -170,7 +193,6 @@ const ImgSlider = ({
     }
   };
 
-  // Check if the current media is a video
   const isVideo = (media) => {
     return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
   };
@@ -185,7 +207,6 @@ const ImgSlider = ({
         <LodingTestAllatre />
       </Dimmer>
       <div className="shadow rounded-2xl group overflow-hidden relative flex flex-col h-[480px]">
-        {/* Main Media Section */}
         <div className="relative w-full h-[85%] cursor-pointer">
           {showPdf && relatedDocument?.length > 0 ? (
             <div
@@ -199,7 +220,7 @@ const ImgSlider = ({
               <iframe
                 src={relatedDocument[0]?.imageLink}
                 title="PDF Preview"
-                className="w-full h-full rounded-lg transition-transform duration-300"
+                className="w-full h-full object-contain rounded-lg transition-transform duration-300"
                 style={{ pointerEvents: isZoomed ? "auto" : "none" }}
               />
             </div>
@@ -209,7 +230,7 @@ const ImgSlider = ({
               <div className="relative w-full h-full">
                 {isVideo(images[selectedImgIndex]) ? (
                   <video
-                    key={images[selectedImgIndex]?.imageLink} // Force re-render on src change
+                    key={images[selectedImgIndex]?.imageLink} 
                     className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
                     controls
                     onLoadedData={() => setIsImageLoaded(true)}
@@ -298,62 +319,118 @@ const ImgSlider = ({
 
           {/* Thumbnail Section */}
           <div className="h-[18%] w-full flex justify-center items-center bg-secondary/10">
-            <div className="bg-opacity-70 p-2 flex gap-2 overflow-x-auto">
-              {images?.map((image, index) => (
-                <div
-                  key={index}
-                  className={`w-[70px] h-[70px] rounded-lg cursor-pointer border-2 relative ${
-                    index === selectedImgIndex && !showPdf
-                      ? "border-primary border-4"
-                      : "border-transparent"
-                  }`}
-                  onClick={() => handleThumbnailClick(index)}
+            <div className="bg-opacity-70 p-2 flex gap-2 relative w-full max-w-[90%]">
+              {/* Left scroll button */}
+              {images?.length > 8 && (
+                <button 
+                  onClick={() => {
+                    const container = document.getElementById('thumbnail-container');
+                    container.scrollLeft -= 200;
+                  }}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-1 shadow-md"
                 >
-                  {isVideo(image) ? (
-                    <video
-                      src={image.imageLink}
-                      className="w-full h-full object-cover rounded-lg"
-                      muted
-                    />
-                  ) : (
-                    <img
-                      src={image.imageLink}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                  {index === selectedImgIndex && !showPdf && (
-                    <div className="absolute inset-0 bg-gray-500/50 rounded-lg transition-all duration-300" />
-                  )}
-                </div>
-              ))}
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
 
-              {/* Related Documents Section */}
-              {relatedDocument?.length > 0 && (
-                <div className="flex items-center space-x-2">
-                  <div className="h-full w-[1px] bg-gray-300 mx-2" />
+              {/* Thumbnails container */}
+              <div 
+                id="thumbnail-container"
+                className="flex gap-2 overflow-x-auto scroll-smooth hide-scrollbar"
+                style={{
+                  scrollBehavior: 'smooth',
+                  msOverflowStyle: 'none',
+                  scrollbarWidth: 'none'
+                }}
+              >
+                {images?.map((image, index) => (
                   <div
-                    onClick={handlePdfClick}
-                    className={`min-w-[4rem] h-full flex items-center justify-center bg-white rounded-md cursor-pointer border-2 ${
-                      showPdf
-                        ? "border-primary border-4"
-                        : "border-transparent hover:border-primary/50"
-                    } transition-all `}
+                    key={index}
+                    className={`flex-shrink-0 w-[70px] h-[70px] rounded-lg cursor-pointer border-2 relative group/thumb
+                      ${index === selectedImgIndex && !showPdf
+                        ? "border-primary border-4 shadow-lg"
+                        : "border-transparent hover:border-primary/50"}
+                    `}
+                    onClick={() => handleThumbnailClick(index)}
                   >
-                    <div className="flex flex-col items-center justify-center">
-                      <div className="w-10 h-10 text-red-500 flex items-center justify-center">
-                        <BiSolidFilePdf className="w-8 h-8" />
-                      </div>
-                      <span className="text-sm mt-1 text-gray-700">
-                        {" "}
-                        {selectedContent[localizationKeys.document]}
-                      </span>
+                    {isVideo(image) ? (
+                      <video
+                        src={image.imageLink}
+                        className="w-full h-full object-cover rounded-lg"
+                        muted
+                      />
+                    ) : (
+                      <img
+                        src={image.imageLink}
+                        alt={`Image ${index + 1}`}
+                        className="w-full h-full object-cover rounded-lg"
+                        loading="lazy"
+                      />
+                    )}
+                    {/* Image number indicator */}
+                    <div className="absolute top-1 right-1 bg-black/60 text-white text-xs px-1.5 py-0.5 rounded-full opacity-0 group-hover/thumb:opacity-100 transition-opacity">
+                      {index + 1}
                     </div>
+                    {index === selectedImgIndex && !showPdf && (
+                      <div className="absolute inset-0 bg-gray-500/50 rounded-lg transition-all duration-300" />
+                    )}
                   </div>
-                </div>
+                ))}
+              </div>
+
+              {/* Right scroll button */}
+              {images?.length > 8 && (
+                <button 
+                  onClick={() => {
+                    const container = document.getElementById('thumbnail-container');
+                    container.scrollLeft += 200;
+                  }}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-1 shadow-md"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               )}
             </div>
           </div>
+
+          <style jsx>{`
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+            .hide-scrollbar {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
+
+          {/* Related Documents Section */}
+          {relatedDocument?.length > 0 && (
+            <div className="flex items-center space-x-2">
+              <div className="h-full w-[1px] bg-gray-300 mx-2" />
+              <div
+                onClick={handlePdfClick}
+                className={`min-w-[4rem] h-full flex items-center justify-center bg-white rounded-md cursor-pointer border-2 ${
+                  showPdf
+                    ? "border-primary border-4"
+                    : "border-transparent hover:border-primary/50"
+                } transition-all `}
+              >
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-10 h-10 text-red-500 flex items-center justify-center">
+                    <BiSolidFilePdf className="w-8 h-8" />
+                  </div>
+                  <span className="text-sm mt-1 text-gray-700">
+                    {" "}
+                    {selectedContent[localizationKeys.document]}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {isZoomed && (
@@ -378,7 +455,7 @@ const ImgSlider = ({
               />
             ) : isVideo(images[selectedImgIndex]) ? (
               <video
-                key={images[selectedImgIndex]?.imageLink} // Force re-render on src change
+                key={images[selectedImgIndex]?.imageLink} 
                 className="w-full h-full object-contain"
                 controls
                 style={{

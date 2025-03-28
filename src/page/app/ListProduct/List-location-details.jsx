@@ -64,6 +64,7 @@ const ListingProductsLocationDetails = () => {
     run: runListNewProduct,
     isLoading: isLoadingListNewProduct,
     // error: errorCreatAuction,
+    // error: errorCreatAuction,
     // isError: isErrorCreatAuction,
   } = useAxios([]);
 
@@ -164,25 +165,16 @@ const ListingProductsLocationDetails = () => {
       if (productDetailsInt.cityId) {
         formData.append("product[cityId]", productDetailsInt.cityId);
       }
-      //   if (offerDataInt.IsOfferPrice) {
-      //     formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
-      //     formData.append("product[offerAmount]", offerDataInt.offerAmount);
-      //   }
-      {
-        formData.append("images", productDetailsInt.fileOne);
-        formData.append("images", productDetailsInt.fileTwo);
-        formData.append("images", productDetailsInt.fileThree);
-        if (productDetailsInt.fileFour) {
-          formData.append("images", productDetailsInt.fileFour);
-        }
-        if (productDetailsInt.fileFive) {
-          formData.append("images", productDetailsInt.fileFive);
-        }
+
+      // Handle images properly
+      if (productDetailsInt.images && Array.isArray(productDetailsInt.images)) {
+        productDetailsInt.images.forEach((image, index) => {
+          if (image.file) {
+            formData.append("images", image.file);
+          }
+        });
       }
 
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
       runListNewProduct(
         authAxios
           .post(api.app.productListing.listNewProduct, formData)
@@ -196,8 +188,6 @@ const ListingProductsLocationDetails = () => {
           })
           .catch((err) => {
             toast.error(
-              // err?.response?.data?.message.map((e) => e) ||
-              //   err?.message.map((e) => e) ||
               selectedContent[localizationKeys.oops]
             );
           })

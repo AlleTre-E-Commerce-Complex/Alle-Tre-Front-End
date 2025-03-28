@@ -52,7 +52,7 @@ const ListProductDetails = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [draftValue, setDraftValue] = useState();
-  const [imgtest, setimgtest] = useState();
+  const [imgtest, setimgtest] = useState([]);
   const [fileOne, setFileOne] = useState(null);
   const [fileTwo, setFileTwo] = useState(null);
   const [fileThree, setFileThree] = useState(null);
@@ -148,82 +148,101 @@ const ListProductDetails = () => {
         );
       });
     } catch (error) {
-      toast.error("Error in watermark process");
+      toast.error(selectedContent[localizationKeys.errorInWatermarkProcess]);
       throw error;
     }
   };
 
   const handleFileChange = async (event) => {
-    const files = event.target.files;
-
-    // Check if user selected more than 5 files
-    const totalFiles =
-      (fileOne ? 1 : 0) +
-      (fileTwo ? 1 : 0) +
-      (fileThree ? 1 : 0) +
-      (fileFour ? 1 : 0) +
-      (fileFive ? 1 : 0) +
-      files.length;
-    if (totalFiles > 5) {
+    const files = Array.from(event.target.files);
+    const currentImages = imgtest || [];
+    if (currentImages.length + files.length > 50) {
       toast.error(
-        selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
+        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages] 
       );
-      // Clear the input
-      event.target.value = "";
+      event.target.value = null;
+      return;
+    }
+
+    // Check if there's already a video in the current images
+    const hasExistingVideo = currentImages.some(img => img.file.type.startsWith("video/"));
+    
+    // Check if any of the new files is a video
+    const newVideos = files.filter(file => file.type.startsWith("video/"));
+
+    // If trying to upload a video as first item
+    if (currentImages.length === 0 && newVideos.length > 0) {
+      toast.error( selectedContent[localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover] 
+       );
+      event.target.value = null;
+      return;
+    }
+
+    // If there's already a video or if trying to upload multiple videos
+    if ((hasExistingVideo && newVideos.length > 0) || newVideos.length > 1) {
+      toast.error( selectedContent[localizationKeys.onlyOneVideoFileIsAllowed] );
+      event.target.value = null;
       return;
     }
 
     try {
-      const fileArray = Array.from(files);
-      const newFiles = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-
-      for (const file of fileArray) {
-        let index = 0;
-        while (index < newFiles.length && newFiles[index]) {
-          index++;
-        }
-        if (index < newFiles.length) {
+      const processedFiles = await Promise.all(
+        files.map(async (file) => {
           const watermarkedFile = await addImageWatermark(file);
-          newFiles[index] = watermarkedFile;
-        }
-      }
-
-      // Set the updated files back to state
-      setFileOne(newFiles[0]);
-      setFileTwo(newFiles[1]);
-      setFileThree(newFiles[2]);
-      setFileFour(newFiles[3]);
-      setFileFive(newFiles[4]);
-    } catch (error) {
-      toast.error(
-        selectedContent[localizationKeys.errorProcessingImages] 
+          return {
+            file: watermarkedFile,
+            imageLink: URL.createObjectURL(watermarkedFile)
+          };
+        })
       );
+      setimgtest([...currentImages, ...processedFiles]);
+    } catch (error) {
+      toast.error(selectedContent[localizationKeys.errorProcessingImages]);
     }
   };
+
   const handleCameraChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
+      // Get current images array
+      const currentImages = imgtest || [];
+
+      if (currentImages.length >= 50) {
+        toast.error(
+          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages] 
+        );
+        event.target.value = null;
+        return;
+      }
+
+      const hasExistingVideo = currentImages.some(img => img.file.type.startsWith("video/"));
+      
+      const isVideo = file.type.startsWith("video/");
+
+      if (currentImages.length === 0 && isVideo) {
+        toast.error(selectedContent[localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]);
+        event.target.value = null;
+        return;
+      }
+
+      if (hasExistingVideo && isVideo) {
+        toast.error(selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]);
+        event.target.value = null;
+        return;
+      }
+
       try {
         const watermarkedFile = await addImageWatermark(file);
-        if (!fileOne) setFileOne(watermarkedFile);
-        else if (!fileTwo) setFileTwo(watermarkedFile);
-        else if (!fileThree) setFileThree(watermarkedFile);
-        else if (!fileFour) setFileFour(watermarkedFile);
-        else if (!fileFive) setFileFive(watermarkedFile);
-        else {
-          toast.error(
-            selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
-          );
-        }
+        const newImage = {
+          file: watermarkedFile,
+          imageLink: URL.createObjectURL(watermarkedFile)
+        };
+        setimgtest([...currentImages, newImage]);
       } catch (error) {
-        toast.error(
-          selectedContent[localizationKeys.errorProcessingImages] ||
-            "Error processing image"
-        );
+        toast.error(selectedContent[localizationKeys.errorProcessingImages]);
       }
     }
   };
-
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
     if (categoryId || subCategoryId || loadingImg) {
@@ -290,135 +309,17 @@ const ListProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
-    const filesCount = [fileOne, fileTwo, fileThree, fileFour, fileFive].filter(
-      Boolean
-    ).length;
-    if (filesCount >= 3) {
+    if (imgtest.length >= 3) {
       if (valueRadio) {
-        // const formData = new FormData();
-        // formData.append("product[title]", values.itemName);
-        // formData.append("product[ProductListingPrice]", values.itemPrice);
-        // formData.append("product[categoryId]", values.category);
-        // if (values.subCategory) {
-        //   formData.append("product[subCategoryId]", values.subCategory);
-        // }
-        // if (values.brand) {
-        //   formData.append("product[brand]", values.brand);
-        // }
-        // if (values.valueRadio) {
-        //   formData.append("product[usageStatus]", values.valueRadio);
-        // }
-        // if (values.color) {
-        //   formData.append("product[color]", values.color);
-        // }
-        // if (values.age) {
-        //   formData.append("product[age]", values.age);
-        // }
-        // if (values.landType) {
-        //   formData.append("product[landType]", values.landType);
-        // }
-        // if (values.cameraType) {
-        //   formData.append("product[cameraType]", values.cameraType);
-        // }
-        // if (values.carType) {
-        //   formData.append("product[carType]", values.carType);
-        // }
-        // if (values.material) {
-        //   formData.append("product[material]", values.material);
-        // }
-        // if (values.memory) {
-        //   formData.append("product[memory]", values.memory);
-        // }
-        // if (values.model) {
-        //   formData.append("product[model]", values.model);
-        // }
-        // if (values.processor) {
-        //   formData.append("product[processor]", values.processor);
-        // }
-        // if (values.ramSize) {
-        //   formData.append("product[ramSize]", values.ramSize);
-        // }
-        // if (values.releaseYear) {
-        //   formData.append("product[releaseYear]", values.releaseYear);
-        // }
-        // if (values.screenSize) {
-        //   formData.append("product[screenSize]", values.screenSize);
-        // }
-        // if (values.totalArea) {
-        //   formData.append("product[totalArea]", values.totalArea);
-        // }
-        // if (values.operatingSystem) {
-        //   formData.append("product[operatingSystem]", values.operatingSystem);
-        // }
-        // if (values.regionOfManufacture) {
-        //   formData.append(
-        //     "product[regionOfManufacture]",
-        //     values.regionOfManufacture
-        //   );
-        // }
-        // if (values.numberOfFloors) {
-        //   formData.append("product[numberOfFloors]", values.numberOfFloors);
-        // }
-        // if (values.numberOfRooms) {
-        //   formData.append("product[numberOfRooms]", values.numberOfRooms);
-        // }
-        // if (values.itemDescription) {
-        //   formData.append("product[description]", values.itemDescription);
-        // }
-        // if (values.countryId) {
-        //   formData.append("product[countryId]", values.countryId);
-        // }
-        // if (values.cityId) {
-        //   formData.append("product[cityId]", values.cityId);
-        // }
-        // // if (offerDataInt.IsOfferPrice) {
-        // //   formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
-        // //   formData.append("product[offerAmount]", offerDataInt.offerAmount);
-        // // }
-        // if (values?.auctionState === "DRAFTED") {
-        // } else {
-        //   formData.append("images", fileOne);
-
-        //   formData.append("images", fileTwo);
-
-        //   formData.append("images", fileThree);
-
-        //   if (fileFour) {
-        //     formData.append("images", fileFour);
-        //   }
-        //   if (fileFive) {
-        //     formData.append("images", fileFive);
-        //   }
-        // }
-
-        // run(
-        //   authAxios
-        //     .post(api.app.productListing.listNewProduct, formData)
-        //     .then((res) => {
-        //       toast.success(
-        //         selectedContent[
-        //           localizationKeys.yourProductIsSuccessfullyListed
-        //         ]
-        //       );
-        //       history.push(routes.app.home);
-        //     })
-        //     .catch((error) => {
-        //       toast.error(
-        //         selectedContent[
-        //           localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
-        //         ]
-        //       );
-        //     })
-        // );
         dispatch(
           listingProductDetails({
             ...values,
             valueRadio,
-            fileOne,
-            fileTwo,
-            fileThree,
-            fileFour,
-            fileFive,
+            images: imgtest.map(img => ({
+              file: img.file,
+              imageLink: img.imageLink,
+              imagePath: img.file.name
+            })),
             auctionState,
             auctionId: completeDraftVal?.id,
           })
@@ -667,10 +568,14 @@ const ListProductDetails = () => {
                               <FormikMultiDropdown
                                 name={field.key}
                                 label={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
+                                  lang === "en"
+                                    ? field.labelEn
+                                    : field.labelAr
                                 }`}
                                 placeholder={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
+                                  lang === "en"
+                                    ? field.labelEn
+                                    : field.labelAr
                                 }`}
                                 options={
                                   field.key === "countryId"
@@ -786,19 +691,17 @@ const ListProductDetails = () => {
                   <div>
                     <h1 className="font-bold text-base text-black pt-6">
                       {selectedContent[localizationKeys.addMedia]}{" "}
-                      <span className="text-gray-med text-base font-normal px-1">
-                        {selectedContent[localizationKeys.from3upto5photos]}
+                      <span className="text-gray-600 text-sm font-normal px-1">
+                        {selectedContent[localizationKeys.uploadOneImageAndOneVideo]}
                       </span>
                     </h1>
                     <div className="relative">
                       <input
                         type="file"
-                        accept="image/*"
+                        accept="image/*,video/*"
                         multiple
-                        max="5"
-                        maxLength="5"
                         onChange={handleFileChange}
-                        className="w-full max-w-[680px] h-[50px] px-4 py-3 box-border pr-12"
+                        className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
                         style={{
                           width: "100%",
                           maxWidth: "680px",
@@ -810,7 +713,7 @@ const ListProductDetails = () => {
                         id="camera-input-file"
                         name="camera-input-file"
                         type="file"
-                        accept="image/*"
+                        accept="image/*,video/*"
                         onChange={handleCameraChange}
                         capture="environment"
                         className="hidden"
@@ -823,58 +726,10 @@ const ListProductDetails = () => {
                       </label>
                     </div>
                     <div className="mt-6 w-full">
-                      {/* {auctionState === "DRAFTED"  ? (
-                        <EditImgeMedia
-                          auctionId={state?.auctionId}
-                          imgOne={imgtest && imgtest[0]}
-                          fileOne={fileOne}
-                          setFileOne={setFileOne}
-                          imgTwo={imgtest && imgtest[1]}
-                          fileTwo={fileTwo}
-                          setFileTwo={setFileTwo}
-                          imgThree={imgtest && imgtest[2]}
-                          fileThree={fileThree}
-                          setFileThree={setFileThree}
-                          imgFour={imgtest && imgtest[3]}
-                          fileFour={fileFour}
-                          setFileFour={setFileFour}
-                          imgFive={imgtest && imgtest[4]}
-                          fileFive={fileFive}
-                          setFileFive={setFileFive}
-                          onReload={onReload}
-                          setLoadingImg={setLoadingImg}
-                        />
-                      ) : (
-                        <AddImgMedia
-                          fileOne={fileOne}
-                          setFileOne={setFileOne}
-                          fileTwo={fileTwo}
-                          setFileTwo={setFileTwo}
-                          fileThree={fileThree}
-                          setFileThree={setFileThree}
-                          fileFour={fileFour}
-                          setFileFour={setFileFour}
-                          fileFive={fileFive}
-                          setFileFive={setFileFive}
-                        />
-                      )} */}
                       <ImageMedia
                         auctionId={state?.auctionId}
-                        imgOne={imgtest && imgtest[0]}
-                        fileOne={fileOne}
-                        setFileOne={setFileOne}
-                        imgTwo={imgtest && imgtest[1]}
-                        fileTwo={fileTwo}
-                        setFileTwo={setFileTwo}
-                        imgThree={imgtest && imgtest[2]}
-                        fileThree={fileThree}
-                        setFileThree={setFileThree}
-                        imgFour={imgtest && imgtest[3]}
-                        fileFour={fileFour}
-                        setFileFour={setFileFour}
-                        imgFive={imgtest && imgtest[4]}
-                        fileFive={fileFive}
-                        setFileFive={setFileFive}
+                        setimgtest={setimgtest}
+                        images={imgtest || []}
                         onReload={onReload}
                         setLoadingImg={setLoadingImg}
                         isEditMode={auctionState === "DRAFTED"}

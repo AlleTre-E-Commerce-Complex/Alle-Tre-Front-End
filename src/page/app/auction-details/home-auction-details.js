@@ -48,7 +48,6 @@ const HomeAuctionDetails = () => {
   const { auctionId } = useParams();
   const { run, isLoading } = useAxios([]);
   const { pathname } = useLocation();
-  console.log("pathname--", pathname);
 
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
@@ -260,6 +259,7 @@ const HomeAuctionDetails = () => {
                     endingTime={auctionsDetailsData?.expiryDate}
                     setActiveIndexTab={setActiveIndexTab}
                     status={auctionsDetailsData?.status}
+                    relatedDocuments={relatedDocuments}
                   />
                 ) : (
                   <SummaryHomeAuctionSections
@@ -305,6 +305,7 @@ const HomeAuctionDetails = () => {
                     userPhone={auctionsDetailsData?.user?.phone}
                     userImage={auctionsDetailsData?.user?.imageLink}
                     usageStatus={auctionsDetailsData?.product?.usageStatus}
+                    relatedDocuments={relatedDocuments}
                   />
                 )}
               </div>

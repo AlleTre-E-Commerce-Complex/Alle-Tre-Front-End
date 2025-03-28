@@ -20,6 +20,7 @@ import TotalBidsTableModel from "./total-bids-table-model";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import useAxios from "hooks/use-axios";
+import { BiSolidFilePdf } from "react-icons/bi";
 
 const SummaryAuctionSections = ({
   title,
@@ -33,6 +34,7 @@ const SummaryAuctionSections = ({
   startingTime,
   setActiveIndexTab,
   status,
+  relatedDocuments,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -97,11 +99,11 @@ const SummaryAuctionSections = ({
           <h3 className="text-gray-dark text-base font-normal">
             {selectedContent[localizationKeys.description]}
           </h3>
-          <p className="text-gray-dark text-2xl font-normal pt-4 pb-6">
+          <p className="text-gray-dark text-2xl font-normal pt-4 pb-1">
             {truncateString(description, 250)}
           </p>
           <HashLink
-            className="underline text-gray-dark text-sm font-normal cursor-pointer pt-6"
+            className="underline text-gray-dark text-sm font-normal cursor-pointer pt-2"
             smooth
             to={`${pathname}#itemDescription`}
             onClick={() => setActiveIndexTab(0)}
@@ -109,6 +111,44 @@ const SummaryAuctionSections = ({
             {selectedContent[localizationKeys.viewDetails]}
           </HashLink>
         </div>
+        {/* Documents Section */}
+        {relatedDocuments?.length > 0 && (
+          <div className="mt-6">
+            <h3 className="text-gray-dark text-base font-normal">
+            {selectedContent[localizationKeys.relatedDocument]}
+            </h3>
+
+            <div className="max-w-md">
+                 <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
+                {/* Document Header */}
+                <div className="p-4 bg-white border-b border-gray-100">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <BiSolidFilePdf className="w-8 h-8 text-red-500" />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-gray-900 truncate">
+                        {selectedContent[localizationKeys.document]}
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                        {selectedContent[localizationKeys.Pdfdocument]}
+                        </p>
+                      </div>
+                    </div>
+                    <a
+                      href={relatedDocuments[0].imageLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md text-white bg-primary hover:bg-primary/80 transition-colors duration-300"
+                    >
+                      {selectedContent?.[localizationKeys.view]}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Category sections */}
         <div className="pt-6 mb-8 flex flex-wrap gap-4">
           <div>

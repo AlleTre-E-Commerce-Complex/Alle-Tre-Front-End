@@ -272,8 +272,23 @@ const ar = {
   [localizationKeys.itemCondition]: "حالة العنصر",
   [localizationKeys.saveAsDraft]: "حفظ كمسودة",
   [localizationKeys.next]: "التالي",
-  [localizationKeys.youCanOnlySelectUpToFiveImages]:
-    "يمكنك تحديد ما يصل إلى خمس صور فقط.",
+  [localizationKeys.youCanOnlySelectUpToFiftyImages]:
+    "يمكنك فقط تحديد ما يصل إلى خمسين صورة",
+  [localizationKeys.relatedDocument]: "وثيقة ذات صلة",
+  [localizationKeys.Pdfdocument]: "وثيقة PDF",
+  [localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]: "لا يُمكن تحميل الفيديو أولاً. يُرجى تحميل صورة أولاً لاستخدامها كغلاف.",
+  [localizationKeys.onlyOneVideoFileIsAllowed]:"يُسمح بملف فيديو واحد فقط",
+  [localizationKeys.uploadOneImageAndOneVideo]: "* يمكنك تحميل ما يصل إلى ٥٠ صورة وفيديو واحد (بحد أقصى ٥٠ ميجابايت). يجب تحميل الفيديوهات بشكل منفصل عن الصور.",
+  [localizationKeys.fileSizeShouldBeLessThan10MB]:"يجب أن يكون حجم الملف أقل من 10 ميجا بايت",
+  [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:"تمت إضافة هذا المزاد إلى قائمة المراقبة بنجاح",
+  [localizationKeys.thisAuctionRemovedFromWatchListSuccessfully]:"تم إزالة هذا المزاد من قائمة المراقبة بنجاح",
+  [localizationKeys.imageDeletedSuccessfully]:"تم حذف الصورة بنجاح",
+  [localizationKeys.coverPhotoUpdatedSuccessfully]:"تم تحديث صورة الغلاف بنجاح",
+  [localizationKeys.failedToUpdateCoverPhoto]:"فشل في تحديث صورة الغلاف",
+  [localizationKeys.cannotMixVideoAndImages]:"يرجى تحميل الفيديو أو الصور، وليس كليهما في وقت واحد.",
+  [localizationKeys.videoSizeLimitExceeded]: "يجب أن يكون حجم الفيديو أقل من 50 ميجابايت",
+  [localizationKeys.errorInWatermarkProcess]:"خطأ في عملية العلامة المائية",
+  [localizationKeys.fileConversionFailed]:"فشل تحويل الملف",
   [localizationKeys.setAsCover]: "تعيين كصورة غلاف",
   [localizationKeys.cover]: "صورة غلاف",
   //List product
@@ -550,7 +565,8 @@ const ar = {
   [localizationKeys.bidAmount]: "مبلغ المزايدة",
   [localizationKeys.startingBidAmount]: "بدء مبلغ المزايدة",
   [localizationKeys.currentBid]: " المزايدة الحالية",
-  [localizationKeys.YourMaximumBidAllowedForThisAuctionIsAED]: " الحد الأقصى للعطاء المسموح به لهذا المزاد هو درهم إماراتي ",
+  [localizationKeys.YourMaximumBidAllowedForThisAuctionIsAED]:
+    " الحد الأقصى للعطاء المسموح به لهذا المزاد هو درهم إماراتي ",
   [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
     "إرسال القيمة مطلوبة ويجب أن تكون أكبر من المزايدة الحالي",
   [localizationKeys.yourAddNewSubmitValueSuccessfully]:
