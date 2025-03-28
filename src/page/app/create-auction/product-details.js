@@ -40,69 +40,6 @@ import { MdArrowDropDown, MdDelete } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 
-const addImageWatermark = async (file) => {
-  const loadImage = (src) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = src;
-    });
-  };
-
-  try {
-    const [img, watermarkImg] = await Promise.all([
-      loadImage(URL.createObjectURL(file)),
-      loadImage(watermarkImage),
-    ]);
-
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // Draw original image
-    ctx.drawImage(img, 0, 0);
-
-    // Calculate watermark dimensions
-    const watermarkWidth = img.width * 0.3;
-    const watermarkHeight =
-      (watermarkImg.height / watermarkImg.width) * watermarkWidth;
-
-    // Center watermark
-    const x = (img.width - watermarkWidth) / 2;
-    const y = (img.height - watermarkHeight) / 2;
-
-    // Draw watermark with opacity
-    ctx.globalAlpha = 0.5;
-    ctx.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight);
-    ctx.globalAlpha = 1.0;
-
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(
-        (blob) => {
-          if (blob) {
-            const watermarkedFile = new File([blob], file.name, {
-              type: "image/jpeg",
-              lastModified: new Date().getTime(),
-            });
-            resolve(watermarkedFile);
-          } else {
-            reject(new Error("Canvas to Blob conversion failed"));
-          }
-        },
-        "image/jpeg",
-        0.8
-      );
-    });
-  } catch (error) {
-    toast.error("Error in watermark process");
-    throw error;
-  }
-};
-
 const ProductDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -114,7 +51,7 @@ const ProductDetails = () => {
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
   const [auctionId, setAuctionId] = useState(state?.auctionId || null);
-  const [maxStartPrice, setMaxStartPrice] = useState(null)
+  const [maxStartPrice, setMaxStartPrice] = useState(null);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const formikRef = useRef(null);
   const productDetailsint = useSelector(
@@ -127,6 +64,73 @@ const ProductDetails = () => {
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
   const { run: runFetchListedProduct, isLoading: isLoadingFetchListedProduct } =
     useAxios([]);
+
+  const addImageWatermark = async (file) => {
+    if (file.type.startsWith("video/")) {
+      return file;
+    }
+
+    const loadImage = (src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    };
+
+    try {
+      const [img, watermarkImg] = await Promise.all([
+        loadImage(URL.createObjectURL(file)),
+        loadImage(watermarkImage),
+      ]);
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Draw original image
+      ctx.drawImage(img, 0, 0);
+
+      // Calculate watermark dimensions
+      const watermarkWidth = img.width * 0.3;
+      const watermarkHeight =
+        (watermarkImg.height / watermarkImg.width) * watermarkWidth;
+
+      // Center watermark
+      const x = (img.width - watermarkWidth) / 2;
+      const y = (img.height - watermarkHeight) / 2;
+
+      // Draw watermark with opacity
+      ctx.globalAlpha = 0.5;
+      ctx.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight);
+      ctx.globalAlpha = 1.0;
+
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const watermarkedFile = new File([blob], file.name, {
+                type: "image/jpeg",
+                lastModified: new Date().getTime(),
+              });
+              resolve(watermarkedFile);
+            } else {
+              reject(new Error("Canvas to Blob conversion failed"));
+            }
+          },
+          "image/jpeg",
+          0.8
+        );
+      });
+    } catch (error) {
+      toast.error(selectedContent[localizationKeys.errorInWatermarkProcess]);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     const id = productDetailsint?.auctionId || state?.auctionId;
@@ -196,7 +200,6 @@ const ProductDetails = () => {
           .get(api.app.productListing.listedProduct(state?.productId))
           .then((res) => {
             const listedProduct = res?.data?.data;
-            console.log("listed product into auction: ", res?.data);
             setListedProductVal(res?.data?.data?.product);
             SetProductFunction(listedProduct?.product);
             setAuctionState("LISTED_PRODUCT");
@@ -215,11 +218,6 @@ const ProductDetails = () => {
     // Map draft images to fileOne, fileTwo, etc.
     if (product?.images) {
       const images = product?.images;
-      setFileOne(images[0] || null);
-      setFileTwo(images[1] || null);
-      setFileThree(images[2] || null);
-      setFileFour(images[3] || null);
-      setFileFive(images[4] || null);
     }
 
     dispatch(
@@ -278,8 +276,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (completeDraftVal?.product?.images) {
-      const images = completeDraftVal.product.images;
-      setimgtest(images); // Update imgtest with the fetched images
+      setimgtest(completeDraftVal.product.images);
     }
   }, [completeDraftVal]);
 
@@ -299,16 +296,8 @@ const ProductDetails = () => {
   }, [state, auctionId, history]);
 
   const [draftValue, setDraftValue] = useState();
-  const [imgtest, setimgtest] = useState();
+  const [imgtest, setimgtest] = useState([]);
   const [relatedDocuments, setRelatedDocuments] = useState([]);
-  const [fileOne, setFileOne] = useState(productDetailsint.fileOne || null);
-  const [fileTwo, setFileTwo] = useState(productDetailsint.fileTwo || null);
-  const [fileThree, setFileThree] = useState(
-    productDetailsint.fileThree || null
-  );
-  const [fileFour, setFileFour] = useState(productDetailsint.fileFour || null);
-  const [fileFive, setFileFive] = useState(productDetailsint.fileFive || null);
-
   const [valueRadio, setRadioValue] = useState(
     completeDraftVal?.product?.usageStatus ||
       productDetailsint.valueRadio ||
@@ -338,15 +327,10 @@ const ProductDetails = () => {
     categoryId || productDetailsint.category
   );
 
-  const handleReorderImages = (reorderedImages, reorderedFiles) => {
-    setFileOne(reorderedFiles[0] || null);
-    setFileTwo(reorderedFiles[1] || null);
-    setFileThree(reorderedFiles[2] || null);
-    setFileFour(reorderedFiles[3] || null);
-    setFileFive(reorderedFiles[4] || null);
+  // const handleReorderImages = (reorderedImages, reorderedFiles) => {
 
-    setimgtest(reorderedImages);
-  };
+  //   setimgtest(reorderedImages);
+  // };
 
   const [brandInput, setBrandInput] = useState("");
   const [brandSuggestions, setBrandSuggestions] = useState([]);
@@ -359,67 +343,107 @@ const ProductDetails = () => {
     // );
     // setBrandSuggestions(filteredBrands);
   };
-  const handleFileChange = async (event) => {
-    const files = event.target.files;
+  const checkVideoValidation = (files, currentImages) => {
+    // Check if there's already a video in the current images
+    const hasExistingVideo = currentImages.some((img) =>
+      img.file.type.startsWith("video/")
+    );
 
-    // Check if user selected more than 5 files
-    const totalFiles =
-      (fileOne ? 1 : 0) +
-      (fileTwo ? 1 : 0) +
-      (fileThree ? 1 : 0) +
-      (fileFour ? 1 : 0) +
-      (fileFive ? 1 : 0) +
-      files.length;
-    if (totalFiles > 5) {
+    // Check if any of the new files is a video
+    const newVideos = Array.isArray(files)
+      ? files.filter((file) => file.type.startsWith("video/"))
+      : files.type.startsWith("video/")
+      ? [files]
+      : [];
+
+    // If trying to upload a video as first item
+    if (currentImages.length === 0 && newVideos.length > 0) {
+      return selectedContent[
+        localizationKeys
+          .videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover
+      ];
+    }
+
+    // If there's already a video or if trying to upload multiple videos
+    if ((hasExistingVideo && newVideos.length > 0) || newVideos.length > 1) {
+      return selectedContent[localizationKeys.onlyOneVideoFileIsAllowed];
+    }
+
+    return null;
+  };
+
+  const handleFileChange = async (event) => {
+    const files = Array.from(event.target.files);
+    // Get current images array
+    const currentImages = imgtest || [];
+
+    // Check if adding new files would exceed 50 images
+    if (currentImages.length + files.length > 50) {
       toast.error(
-        selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
+        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
       );
-      // Clear the input
-      event.target.value = "";
+      event.target.value = null;
+      return;
+    }
+
+    // Check video validation
+    const videoError = checkVideoValidation(files, currentImages);
+    if (videoError) {
+      toast.error(videoError);
+      event.target.value = null;
       return;
     }
 
     try {
-      const fileArray = Array.from(files);
-      const newFiles = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-
-      // Process files with watermark
-      for (const file of fileArray) {
-        let index = 0;
-        while (index < newFiles.length && newFiles[index]) {
-          index++;
-        }
-        if (index < newFiles.length) {
+      const processedFiles = await Promise.all(
+        files.map(async (file) => {
           const watermarkedFile = await addImageWatermark(file);
-          newFiles[index] = watermarkedFile;
-        }
-      }
+          return {
+            file: watermarkedFile,
+            imageLink: URL.createObjectURL(watermarkedFile),
+          };
+        })
+      );
 
-      // Set the updated files back to state
-      setFileOne(newFiles[0]);
-      setFileTwo(newFiles[1]);
-      setFileThree(newFiles[2]);
-      setFileFour(newFiles[3]);
-      setFileFive(newFiles[4]);
+      // Update the images array
+      setimgtest([...currentImages, ...processedFiles]);
     } catch (error) {
       toast.error(selectedContent[localizationKeys.errorProcessingImages]);
     }
   };
+
   const handleCameraChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
+      // Get current images array
+      const currentImages = imgtest || [];
+
+      // Check if adding new file would exceed 50 images
+      if (currentImages.length >= 50) {
+        toast.error(
+          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
+        );
+        event.target.value = null;
+        return;
+      }
+
+      // Check video validation
+      const videoError = checkVideoValidation(file, currentImages);
+      if (videoError) {
+        toast.error(videoError);
+        event.target.value = null;
+        return;
+      }
+
       try {
         const watermarkedFile = await addImageWatermark(file);
-        if (!fileOne) setFileOne(watermarkedFile);
-        else if (!fileTwo) setFileTwo(watermarkedFile);
-        else if (!fileThree) setFileThree(watermarkedFile);
-        else if (!fileFour) setFileFour(watermarkedFile);
-        else if (!fileFive) setFileFive(watermarkedFile);
-        else {
-          toast.error(
-            selectedContent[localizationKeys.youCanOnlySelectUpToFiveImages]
-          );
-        }
+        // Create object URL for preview
+        const newImage = {
+          file: watermarkedFile,
+          imageLink: URL.createObjectURL(watermarkedFile),
+        };
+        // Add the new image to the array
+        setimgtest([...currentImages, newImage]);
       } catch (error) {
         toast.error(selectedContent[localizationKeys.errorProcessingImages]);
       }
@@ -518,8 +542,8 @@ const ProductDetails = () => {
   });
 
   const handelProductDetailsdata = (values) => {
-    const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
-    const filesCount = files.filter(
+    const allImages = imgtest || [];
+    const filesCount = allImages.filter(
       (file) => file !== null && file !== undefined
     ).length;
 
@@ -553,11 +577,7 @@ const ProductDetails = () => {
         hasUsageCondition,
         maxStartPrice,
         valueRadio,
-        fileOne,
-        fileTwo,
-        fileThree,
-        fileFour,
-        fileFive,
+        images: allImages, // Store all images in an array
         relatedDocuments,
         auctionState,
         auctionId: completeDraftVal?.id,
@@ -566,21 +586,21 @@ const ProductDetails = () => {
     );
 
     // Navigate to the next page
-    history.push(routes.app.createAuction.auctionDetails, {
-      fileOne,
-      fileTwo,
-      fileThree,
-      fileFour,
-      fileFive,
-    });
+    history.push(routes.app.createAuction.auctionDetails);
   };
 
-  const {
-    run: runSaveAuctionAsDraft,
-    isLoading: isLoadingCSaveAuctionAsDraft,
-  } = useAxios([]);
-  const SaveAuctionAsDraft = () => {
+  const SaveAuctionAsDraft = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
+
+    // Add all images to formData
+    const allImages = imgtest || [];
+    allImages.forEach((image, index) => {
+      if (image?.file) {
+        formData.append("images", image.file);
+      }
+    });
+
     formData.append("title", draftValue.itemName || productDetailsint.itemName);
     formData.append(
       "categoryId",
@@ -710,76 +730,30 @@ const ProductDetails = () => {
       formData.append("cityId", draftValue.cityId || productDetailsint.cityId);
     }
 
-    // Append files correctly
-    if (fileOne) {
-      formData.append("images", fileOne);
-    }
-    if (fileTwo) {
-      formData.append("images", fileTwo);
-    }
-    if (fileThree) {
-      formData.append("images", fileThree);
-    }
-    if (fileFour) {
-      formData.append("images", fileFour);
-    }
-    if (fileFive) {
-      formData.append("images", fileFive);
+    // Handle document uploads
+    if (relatedDocuments?.length > 0) {
+      relatedDocuments.forEach((doc) => {
+        formData.append("relatedDocuments", doc);
+      });
     }
 
-    if (pdfFile) {
-      formData.append("pdfDocument", pdfFile);
-    }
+    const response = await authAxios.post(
+      api.app.auctions.setAssdraft,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    if (
-      auctionState === "DRAFTED" ||
-      productDetailsint?.auctionState === "DRAFTED"
-    ) {
-      runSaveAuctionAsDraft(
-        authAxios
-          .put(
-            api.app.auctions.completeUpdatedraft(completeDraftVal?.id),
-            formData
-          )
-          .then((res) => {
-            toast.success(
-              selectedContent[
-                localizationKeys.yourAuctionSuccessfullySavedAsDraft
-              ]
-            );
-            history.push(routes.app.createAuction.default);
-            dispatch(productDetails({}));
-          })
-          .catch((err) => {
-            toast.error(
-              err?.message?.map((e) => e) ||
-                selectedContent[localizationKeys.oops]
-            );
-          })
-      );
-    } else {
-      runSaveAuctionAsDraft(
-        authAxios
-          .post(api.app.auctions.setAssdraft, formData)
-          .then((res) => {
-            toast.success(
-              selectedContent[
-                localizationKeys.yourAuctionSuccessfullySavedAsDraft
-              ]
-            );
-            history.push(routes.app.createAuction.default);
-            dispatch(productDetails({}));
-          })
-          .catch((err) => {
-            console.log("draft error", err);
-            toast.error(
-              selectedContent[localizationKeys.oops] ||
-                err?.message?.map((e) => e)
-            );
-          })
-      );
+    if (response.data.status === 200) {
+      toast.success(selectedContent[localizationKeys.draftSavedSuccessfully]);
+      history.push(routes.app.createAuction.default);
+      dispatch(productDetails({}));
     }
   };
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -792,6 +766,22 @@ const ProductDetails = () => {
     (field) => field.subCategoryId !== null || field.categoryId === 4
   );
 
+  useEffect(() => {
+    return () => {
+      if (imgtest) {
+        imgtest.forEach((img) => {
+          if (
+            img?.imageLink &&
+            typeof img.imageLink === "string" &&
+            img.imageLink.startsWith("blob:")
+          ) {
+            URL.revokeObjectURL(img.imageLink);
+          }
+        });
+      }
+    };
+  }, [imgtest]);
+
   return (
     <>
       <Dimmer
@@ -799,7 +789,6 @@ const ProductDetails = () => {
         active={
           isLoading ||
           loadingSubGatogry ||
-          isLoadingCSaveAuctionAsDraft ||
           isLoadingAuctionById ||
           loadingAllBranOptions
         }
@@ -902,7 +891,7 @@ const ProductDetails = () => {
                             (go) => go.value === value
                           );
                           // onReload();
-                          setMaxStartPrice(fieldOption.maxStartPrice)
+                          setMaxStartPrice(fieldOption.maxStartPrice);
                           setCustomFromData([]);
                           setSubCategoryId(undefined);
                           formik.setFieldValue("subCategory", "");
@@ -1104,16 +1093,16 @@ const ProductDetails = () => {
                               <FormikInput
                                 min={0}
                                 name={`${customFromData?.model?.key}`}
-                                label={`${
+                                label={
                                   lang === "en"
                                     ? customFromData?.model?.labelEn
                                     : customFromData?.model?.labelAr
-                                }`}
-                                placeholder={`${
+                                }
+                                placeholder={
                                   lang === "en"
                                     ? customFromData?.model?.labelEn
                                     : customFromData?.model?.labelAr
-                                }`}
+                                }
                               />
                             </div>
                           )}
@@ -1136,8 +1125,12 @@ const ProductDetails = () => {
                   <div>
                     <h1 className="font-bold text-base text-black pt-6">
                       {selectedContent[localizationKeys.addMedia]}{" "}
-                      <span className="text-gray-med text-base font-normal px-1">
-                        {selectedContent[localizationKeys.from3upto5photos]}
+                      <span className="text-gray-600 text-sm font-normal px-1">
+                        {
+                          selectedContent[
+                            localizationKeys.uploadOneImageAndOneVideo
+                          ]
+                        }
                       </span>
                     </h1>
                     <div className="relative">
@@ -1145,8 +1138,8 @@ const ProductDetails = () => {
                         type="file"
                         accept="image/*"
                         multiple
-                        max="5"
-                        maxLength="5"
+                        max="50"
+                        maxLength="50"
                         onChange={handleFileChange}
                         className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
                         style={{
@@ -1173,67 +1166,17 @@ const ProductDetails = () => {
                       </label>
                     </div>
                     <div className="mt-6 w-full">
-                      {/* {auctionState === "DRAFTED" ||
-                      productDetailsint?.auctionState === "DRAFTED" ? (
-                        <EditImgeMedia
-                          auctionId={state?.auctionId}
-                          imgOne={imgtest && imgtest[0]}
-                          fileOne={fileOne}
-                          setFileOne={setFileOne}
-                          imgTwo={imgtest && imgtest[1]}
-                          fileTwo={fileTwo}
-                          setFileTwo={setFileTwo}
-                          imgThree={imgtest && imgtest[2]}
-                          fileThree={fileThree}
-                          setFileThree={setFileThree}
-                          imgFour={imgtest && imgtest[3]}
-                          fileFour={fileFour}
-                          setFileFour={setFileFour}
-                          imgFive={imgtest && imgtest[4]}
-                          fileFive={fileFive}
-                          setFileFive={setFileFive}
-                          onReload={onReload}
-                          setLoadingImg={setLoadingImg}
-                        />
-                      ) : (
-                        <AddImgMedia
-                          fileOne={fileOne}
-                          setFileOne={setFileOne}
-                          fileTwo={fileTwo}
-                          setFileTwo={setFileTwo}
-                          fileThree={fileThree}
-                          setFileThree={setFileThree}
-                          fileFour={fileFour}
-                          setFileFour={setFileFour}
-                          fileFive={fileFive}
-                          setFileFive={setFileFive}
-                        />
-                      )} */}
                       <ImageMedia
                         auctionId={state?.auctionId}
-                        imgOne={imgtest && imgtest[0]}
-                        fileOne={fileOne}
-                        setFileOne={setFileOne}
-                        imgTwo={imgtest && imgtest[1]}
-                        fileTwo={fileTwo}
-                        setFileTwo={setFileTwo}
-                        imgThree={imgtest && imgtest[2]}
-                        fileThree={fileThree}
-                        setFileThree={setFileThree}
-                        imgFour={imgtest && imgtest[3]}
-                        fileFour={fileFour}
-                        setFileFour={setFileFour}
-                        imgFive={imgtest && imgtest[4]}
-                        fileFive={fileFive}
-                        setFileFive={setFileFive}
+                        setimgtest={setimgtest}
+                        images={imgtest || []}
                         onReload={onReload}
                         setLoadingImg={setLoadingImg}
                         isEditMode={
-                          auctionState === "DRAFTED" ||
-                          productDetailsint?.auctionState === "DRAFTED"
+                          state?.auctionId || productDetailsint?.auctionId
+                            ? true
+                            : false
                         }
-                        onReorderImages={handleReorderImages}
-                        setimgtest={setimgtest}
                       />
                     </div>
                   </div>
@@ -1282,7 +1225,10 @@ const ProductDetails = () => {
                                   setRelatedDocuments([file]); // Reset array with new file
                                 } else {
                                   toast.error(
-                                    "File size should be less than 10MB"
+                                    selectedContent[
+                                      localizationKeys
+                                        .fileSizeShouldBeLessThan10MB
+                                    ]
                                   );
                                 }
                               } else {

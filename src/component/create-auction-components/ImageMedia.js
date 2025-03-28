@@ -14,150 +14,261 @@ import { toast } from "react-hot-toast";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
-// import { FFmpeg } from "@ffmpeg/ffmpeg";
-// import { fetchFile } from "@ffmpeg/util";
 
 // Supported file types (images and videos)
-const fileTypes = ["JPEG", "PNG", "GIF", "JPG", "MOV", "MP4", "WEBM", "AVI"];
+const fileTypes = ["JPG", "PNG", "JPEG", "HEIC", "MP4", "MOV"];
 
 const heic2any = require("heic2any");
 
+const MAX_VIDEO_SIZE_MB = 50;
+
 const ImageMedia = ({
   auctionId,
-  imgOne,
-  fileOne,
-  setFileOne,
-  imgTwo,
-  fileTwo,
-  setFileTwo,
-  imgThree,
-  fileThree,
-  setFileThree,
-  imgFour,
-  fileFour,
-  setFileFour,
-  imgFive,
-  fileFive,
-  setFileFive,
   onReload,
   setLoadingImg,
   isEditMode = false,
-  onReorderImages,
   setimgtest,
+  images = [], 
 }) => {
-  const [coverPhotoIndex, setCoverPhotoIndex] = useState(1);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { run: runDelete, isLoading: isloadingDelete } = useAxios([]);
   const { run: runUpload, isLoading: isloadingUpload } = useAxios([]);
 
   useEffect(() => {
-    setLoadingImg(isloadingUpload);
+    setLoadingImg?.(isloadingUpload);
   }, [isloadingUpload, setLoadingImg]);
 
-  const handleReorderImages = useCallback(() => {
-    try {
-      if (coverPhotoIndex !== 1) {
-        setCoverPhotoIndex(1);
-      }
-    } catch (error) {
-      console.error("Error in handleReorderImages:", error);
-    }
-  }, [coverPhotoIndex]);
-
-  useEffect(() => {
-    handleReorderImages();
-  }, [handleReorderImages]);
-
-  const handelDeleteImg = async (imgId, setFile, event) => {
+  const handelDeleteImg = async (imgId, index, event) => {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
 
     try {
+      // Create new array without the deleted image and preserve image links
+      const newImages = images
+        .filter((_, i) => i !== index)
+        .map(img => ({
+          ...img,
+          imageLink: img.file ? URL.createObjectURL(img.file) : img.imageLink
+        }));
+      
+      // Update local state first for better UX
+      setimgtest(newImages);
+
       if (isEditMode) {
-        await runDelete(
-          authAxios.delete(api.app.Imagees.delete(auctionId, imgId))
+        if (imgId) {
+          await runDelete(
+            authAxios.delete(api.app.Imagees.delete(auctionId, imgId))
+          );
+        }
+
+        // Update backend with remaining files
+        const formData = new FormData();
+        newImages.forEach((img, i) => {
+          if (img?.file) {
+            formData.append(`image${i + 1}`, img.file);
+          }
+        });
+
+        await runUpload(
+          authAxios.patch(api.app.Imagees.upload(auctionId), formData)
         );
-        toast.success("Image deleted successfully");
+        
+        toast.success(selectedContent[localizationKeys.imageDeletedSuccessfully]);
       }
-      setFile(null);
-      onReload();
+
+      // Call onReload after all operations are complete
+      if (typeof onReload === 'function') {
+        onReload();
+      }
     } catch (error) {
-      toast.error("Failed to delete image");
+      console.error("Delete error:", error);
+      toast.error(selectedContent[localizationKeys.failedToDeleteImage]);
+      // Revert local state on error
+      setimgtest(images);
     }
   };
 
-  const handleSetCover = (index, e) => {
+  const handleSetCover = async (index, e) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
 
-    const images = [imgOne, imgTwo, imgThree, imgFour, imgFive];
-    const files = [fileOne, fileTwo, fileThree, fileFour, fileFive];
+    try {
+      const selectedImage = images[index];
+      if (!selectedImage) return;
 
-    const coverImage = images[index - 1];
-    const coverFile = files[index - 1];
-    const reorderedImages = [
-      coverImage,
-      ...images.filter((img, i) => i !== index - 1 && img),
-    ];
+      // Create new array with selected image as first and preserve image links
+      const reorderedImages = [
+        { ...selectedImage, imageLink: selectedImage.file ? URL.createObjectURL(selectedImage.file) : selectedImage.imageLink },
+        ...images.slice(0, index).map(img => ({
+          ...img,
+          imageLink: img.file ? URL.createObjectURL(img.file) : img.imageLink
+        })),
+        ...images.slice(index + 1).map(img => ({
+          ...img,
+          imageLink: img.file ? URL.createObjectURL(img.file) : img.imageLink
+        }))
+      ];
 
-    const reorderedFiles = [
-      coverFile,
-      ...files.filter((file, i) => i !== index - 1 && file),
-    ];
+      // Update local state first for better UX
+      setimgtest(reorderedImages);
 
-    setFileOne(reorderedFiles[0] || null);
-    setFileTwo(reorderedFiles[1] || null);
-    setFileThree(reorderedFiles[2] || null);
-    setFileFour(reorderedFiles[3] || null);
-    setFileFive(reorderedFiles[4] || null);
+      if (isEditMode) {
+        const formData = new FormData();
+        reorderedImages.forEach((img, i) => {
+          if (img?.file) {
+            formData.append(`image${i + 1}`, img.file);
+          }
+        });
 
-    setimgtest(reorderedImages);
-    setCoverPhotoIndex(1);
+        await authAxios.patch(api.app.Imagees.upload(auctionId), formData);
+        toast.success(selectedContent[localizationKeys.coverPhotoUpdatedSuccessfully]);
+      }
+
+      // Call onReload after all operations are complete
+      if (typeof onReload === 'function') {
+        onReload();
+      }
+    } catch (error) {
+      console.error("Set cover error:", error);
+      toast.error(selectedContent[localizationKeys.failedToUpdateCoverPhoto]);
+      // Revert local state on error
+      setimgtest(images);
+    }
   };
 
-  // const addVideoWatermark = async (file) => {
-  //   const ffmpeg = new FFmpeg({ log: true });
-  //   await ffmpeg.load();
+  const handleChange = async (files, index) => {
+    if (!files) return;
 
-  //   const inputFileName = "input.mp4";
-  //   const watermarkFileName = "watermark.png";
-  //   const outputFileName = "output.mp4";
+    try {
+      const filesArray = Array.from(files);
+      
+      // First, check if we're trying to upload a video
+      const videoFiles = filesArray.filter(file => file.type.startsWith("video/"));
+      const imageFiles = filesArray.filter(file => !file.type.startsWith("video/"));
 
-  //   // Write the input files to FFmpeg's virtual file system
-  //   await ffmpeg.writeFile(inputFileName, await file.arrayBuffer());
-  //   const watermarkResponse = await fetch(watermarkImage);
-  //   const watermarkArrayBuffer = await watermarkResponse.arrayBuffer();
-  //   await ffmpeg.writeFile(watermarkFileName, watermarkArrayBuffer);
+      // If there are both videos and images in selection, reject
+      if (videoFiles.length > 0 && imageFiles.length > 0) {
+        toast.error(selectedContent[localizationKeys.cannotMixVideoAndImages]);
+        return;
+      }
 
-  //   await ffmpeg.run(
-  //     "-i",
-  //     inputFileName,
-  //     "-i",
-  //     watermarkFileName,
-  //     "-filter_complex",
-  //     "[0:v][1:v] overlay=W-w-10:H-h-10",
-  //     "-c:a",
-  //     "copy",
-  //     outputFileName
-  //   );
-  //   // Read the output file using the new API
-  //   const outputData = await ffmpeg.readFile(outputFileName);
-  //   const watermarkedFile = new File([outputData], file.name, {
-  //     type: "video/mp4",
-  //     lastModified: new Date().getTime(),
-  //   });
+      // Check for existing video first
+      const existingVideo = images.some(img => img?.file?.type?.startsWith("video/"));
 
-  //   return watermarkedFile;
-  // };
+      // If trying to upload a video
+      if (videoFiles.length > 0) {
+        // Prevent video as first upload
+        if (images.length === 0) {
+          toast.error(selectedContent[localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]);
+          return;
+        }
+
+        // Reject if there's already a video
+        if (existingVideo) {
+          toast.error(selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]);
+          return;
+        }
+
+        // Reject if trying to upload multiple videos
+        if (videoFiles.length > 1) {
+          toast.error(selectedContent[localizationKeys.onlyOneVideoFileIsAllowed] );
+          return;
+        }
+
+        const videoFile = videoFiles[0];
+        
+        // Check video size
+        if (videoFile.size > MAX_VIDEO_SIZE_MB * 1024 * 1024) {
+          toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded] );
+          return;
+        }
+
+        // Process the single video
+        const processedVideo = {
+          file: videoFile,
+          imageLink: URL.createObjectURL(videoFile),
+          id: videoFile.name,
+          isVideo: true
+        };
+
+        // Update state with the video
+        const newImages = index !== undefined 
+          ? [...images.slice(0, index), processedVideo, ...images.slice(index + 1)]
+          : [...images, processedVideo];
+        
+        setimgtest(newImages);
+
+        // Handle backend update
+        if (isEditMode) {
+          const formData = new FormData();
+          newImages.forEach((img, i) => {
+            if (img?.file) {
+              formData.append(`image${i + 1}`, img.file);
+            }
+          });
+          await authAxios.patch(api.app.Imagees.upload(auctionId), formData);
+        }
+      } else {
+        // Handle image uploads
+        const processedFiles = await Promise.all(
+          imageFiles.map(async (file) => {
+            const watermarkedFile = await addImageWatermark(file);
+            const compressedFile = await compressImage(watermarkedFile);
+            return {
+              file: compressedFile,
+              imageLink: URL.createObjectURL(compressedFile),
+              id: file.name,
+              isVideo: false
+            };
+          })
+        );
+
+        // Update state with images
+        let newImages;
+        if (index !== undefined) {
+          newImages = [...images];
+          processedFiles.forEach((processedFile, i) => {
+            if ((index + i) < 50) {
+              newImages[index + i] = processedFile;
+            }
+          });
+        } else {
+          newImages = [...images, ...processedFiles].slice(0, 50);
+        }
+        
+        setimgtest(newImages);
+
+        // Handle backend update
+        if (isEditMode) {
+          const formData = new FormData();
+          newImages.forEach((img, i) => {
+            if (img?.file) {
+              formData.append(`image${i + 1}`, img.file);
+            }
+          });
+          await authAxios.patch(api.app.Imagees.upload(auctionId), formData);
+        }
+      }
+
+      // Call onReload after all operations are complete
+      if (typeof onReload === 'function') {
+        onReload();
+      }
+    } catch (error) {
+      console.error("Error handling files:", error);
+      toast.error("Failed to process files");
+      setimgtest(images);
+    }
+  };
 
   const addImageWatermark = async (file) => {
     if (file.type.startsWith("video/")) {
-      return file; // Skip watermarking for videos
+      return file;
     }
 
     const loadImage = (src) => {
@@ -182,19 +293,13 @@ const ImageMedia = ({
       canvas.width = img.width;
       canvas.height = img.height;
 
-      // Draw original image
       ctx.drawImage(img, 0, 0);
 
-      // Calculate watermark dimensions
       const watermarkWidth = img.width * 0.3;
-      const watermarkHeight =
-        (watermarkImg.height / watermarkImg.width) * watermarkWidth;
-
-      // Center watermark
+      const watermarkHeight = (watermarkImg.height / watermarkImg.width) * watermarkWidth;
       const x = (img.width - watermarkWidth) / 2;
       const y = (img.height - watermarkHeight) / 2;
 
-      // Draw watermark with opacity
       ctx.globalAlpha = 0.5;
       ctx.drawImage(watermarkImg, x, y, watermarkWidth, watermarkHeight);
       ctx.globalAlpha = 1.0;
@@ -203,11 +308,10 @@ const ImageMedia = ({
         canvas.toBlob(
           (blob) => {
             if (blob) {
-              const watermarkedFile = new File([blob], file.name, {
+              resolve(new File([blob], file.name, {
                 type: "image/jpeg",
                 lastModified: new Date().getTime(),
-              });
-              resolve(watermarkedFile);
+              }));
             } else {
               reject(new Error("Canvas to Blob conversion failed"));
             }
@@ -217,221 +321,28 @@ const ImageMedia = ({
         );
       });
     } catch (error) {
-      toast.error("Error in watermark process");
+      toast.error(selectedContent[localizationKeys.errorInWatermarkProcess]);
       throw error;
-    }
-  };
-
-  // const compressVideo = async (file) => {
-  //   let ffmpeg = null;
-  //   try {
-  //     setLoadingImg(true);
-
-  //     console.log("File type:", file.type);
-  //     console.log("File name:", file.name);
-  //     const originalSize = (file.size / 1024 / 1024).toFixed(2);
-  //     console.log("Original video size:", originalSize, "MB");
-
-  //     ffmpeg = new FFmpeg({
-  //       log: true,
-  //       logger: ({ message }) => {
-  //         console.log("FFmpeg Log:", message);
-  //       },
-  //     });
-
-  //     await ffmpeg.load();
-  //     console.log("FFmpeg loaded successfully");
-
-  //     const inputExt = file.name.toLowerCase().endsWith(".mov")
-  //       ? ".mov"
-  //       : ".mp4";
-  //     const inputFileName = `input${inputExt}`;
-  //     const outputFileName = "output.mp4";
-
-  //     // Write input file
-  //     const fileArrayBuffer = await fetchFile(file);
-  //     if (!fileArrayBuffer || fileArrayBuffer.byteLength === 0) {
-  //       throw new Error("Failed to read input file");
-  //     }
-  //     await ffmpeg.writeFile(inputFileName, new Uint8Array(fileArrayBuffer));
-
-  //     // Determine target size and compression settings
-  //     const targetSizeMB = originalSize > 50 ? 50 : originalSize * 0.7;
-  //     console.log("Target size:", targetSizeMB, "MB");
-
-  //     try {
-  //       console.log("Starting compression...");
-
-  //       // Single compression attempt with size-based settings
-  //       await ffmpeg.exec([
-  //         "-i",
-  //         inputFileName,
-  //         "-c:v",
-  //         "libx264",
-  //         "-crf",
-  //         originalSize > 100 ? "28" : originalSize > 50 ? "26" : "23",
-  //         "-preset",
-  //         originalSize > 100 ? "faster" : "medium",
-  //         "-maxrate",
-  //         `${Math.ceil(targetSizeMB / 10)}M`,
-  //         "-bufsize",
-  //         `${Math.ceil(targetSizeMB / 5)}M`,
-  //         "-vf",
-  //         `scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease`,
-  //         "-c:a",
-  //         "aac",
-  //         "-b:a",
-  //         "128k",
-  //         "-movflags",
-  //         "+faststart",
-  //         "-y",
-  //         outputFileName,
-  //       ]);
-
-  //       // Add a small delay to ensure file writing is complete
-  //       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  //       const outputData = await ffmpeg.readFile(outputFileName);
-  //       if (!outputData || outputData.byteLength === 0) {
-  //         throw new Error("Compression failed - output file is empty");
-  //       }
-
-  //       const compressedFile = new File(
-  //         [outputData],
-  //         file.name.replace(/\.[^.]+$/, ".mp4"),
-  //         {
-  //           type: "video/mp4",
-  //           lastModified: new Date().getTime(),
-  //         }
-  //       );
-
-  //       const compressedSize = (compressedFile.size / 1024 / 1024).toFixed(2);
-  //       console.log("Compression complete. Final size:", compressedSize, "MB");
-
-  //       // Very lenient size check - only reject if compression made file larger
-  //       if (compressedFile.size > file.size * 1.1) {
-  //         console.log("Compression resulted in larger file, using original");
-  //         return file;
-  //       }
-
-  //       return compressedFile;
-  //     } catch (compressionError) {
-  //       console.error("Compression failed with error:", compressionError);
-
-  //       // If compression fails, try a simple copy without re-encoding
-  //       try {
-  //         console.log("Attempting simple copy without re-encoding...");
-  //         await ffmpeg.exec([
-  //           "-i",
-  //           inputFileName,
-  //           "-c",
-  //           "copy",
-  //           "-movflags",
-  //           "+faststart",
-  //           "-y",
-  //           outputFileName,
-  //         ]);
-
-  //         const outputData = await ffmpeg.readFile(outputFileName);
-  //         if (!outputData || outputData.byteLength === 0) {
-  //           throw new Error("Copy failed - output file is empty");
-  //         }
-
-  //         return new File([outputData], file.name.replace(/\.[^.]+$/, ".mp4"), {
-  //           type: "video/mp4",
-  //           lastModified: new Date().getTime(),
-  //         });
-  //       } catch (copyError) {
-  //         console.error("Copy attempt failed:", copyError);
-  //         return file;
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Video processing failed:", error);
-  //     return file;
-  //   } finally {
-  //     if (ffmpeg) {
-  //       try {
-  //         await ffmpeg.terminate();
-  //         console.log("FFmpeg terminated successfully");
-  //       } catch (cleanupError) {
-  //         console.error("Error during FFmpeg cleanup:", cleanupError);
-  //       }
-  //     }
-  //     setLoadingImg(false);
-  //   }
-  // };
-
-  const handleChange = async (files, setFile, index) => {
-    if (files) {
-      console.log("file", files);
-      try {
-        const filesArray = Array.from(files);
-        const processedFiles = await Promise.all(
-          filesArray.map(async (file) => {
-            if (file.type.startsWith("video/")) {
-              // const compressedVideo = await compressVideo(file);
-              // return compressedVideo;
-              return file;
-            } else {
-              const watermarkedFile = await addImageWatermark(file);
-              const compressedFile = await compressImage(watermarkedFile);
-              return compressedFile;
-            }
-          })
-        );
-
-        if (isEditMode) {
-          const formData = new FormData();
-          processedFiles.forEach((file, i) => {
-            formData.append(`image${i + 1}`, file);
-          });
-          runUpload(
-            authAxios
-              .patch(api.app.Imagees.upload(auctionId), formData)
-              .then(() => {
-                onReload();
-              })
-              .catch((err) => {
-                toast.error("Failed to upload files");
-              })
-          );
-        }
-
-        setFile(processedFiles[0]);
-      } catch (error) {
-        console.error("Error handling files:", error);
-        toast.error("Failed to process files");
-        setFile(null);
-      }
     }
   };
 
   const compressImage = async (file) => {
     try {
-      console.log("Input file:", file.type, file.size / 1024 / 1024, "MB");
-
       let processedFile = file;
-      if (
-        file.type.toLowerCase().includes("heic") ||
-        file.type.toLowerCase().includes("heif")
-      ) {
+      
+      if (file.type.toLowerCase().includes("heic") || file.type.toLowerCase().includes("heif")) {
         try {
           const blob = await heic2any({
             blob: file,
             toType: "image/jpeg",
             quality: 0.8,
           });
-          processedFile = new File(
-            [blob],
-            file.name.replace(/\.(heic|heif)$/i, ".jpg"),
-            {
-              type: "image/jpeg",
-              lastModified: new Date().getTime(),
-            }
-          );
+          processedFile = new File([blob], file.name.replace(/\.(heic|heif)$/i, ".jpg"), {
+            type: "image/jpeg",
+            lastModified: new Date().getTime(),
+          });
         } catch (heicError) {
-          toast.error("HEIC/HEIF conversion failed");
+          toast.error(selectedContent[localizationKeys.fileConversionFailed]);
           return file;
         }
       }
@@ -468,40 +379,6 @@ const ImageMedia = ({
     }
   };
 
-  const imageData = useMemo(
-    () => [
-      { img: imgOne, file: fileOne, setFile: setFileOne },
-      { img: imgTwo, file: fileTwo, setFile: setFileTwo },
-      { img: imgThree, file: fileThree, setFile: setFileThree },
-      { img: imgFour, file: fileFour, setFile: setFileFour },
-      { img: imgFive, file: fileFive, setFile: setFileFive },
-    ],
-    [
-      imgOne,
-      fileOne,
-      imgTwo,
-      fileTwo,
-      imgThree,
-      fileThree,
-      imgFour,
-      fileFour,
-      imgFive,
-      fileFive,
-      setFileOne,
-      setFileTwo,
-      setFileThree,
-      setFileFour,
-      setFileFive,
-    ]
-  );
-
-  const reorderedImageData = useMemo(() => {
-    return [
-      imageData[coverPhotoIndex - 1],
-      ...imageData.filter((_, index) => index !== coverPhotoIndex - 1),
-    ];
-  }, [coverPhotoIndex, imageData]);
-
   return (
     <>
       <Dimmer
@@ -512,113 +389,99 @@ const ImageMedia = ({
         <LodingTestAllatre />
       </Dimmer>
       <div className="image-upload-container">
-        <div className="flex flex-wrap gap-y-4 md:gap-y-0 gap-x-4">
-          {reorderedImageData.map((data, index) => {
-            const { img, file, setFile } = data;
-            const isCoverPhoto = index === 0;
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-wrap gap-y-4 gap-x-4">
+            {[...images, null].slice(0, Math.min(50, images.length + 1)).map((img, index) => {
+              const isCoverPhoto = index === 0;
+              const existingVideo = images.some(img => img?.file?.type?.startsWith("video/"));
 
-            return (
-              <div key={index} className="relative">
-                {img?.imageLink || file ? (
-                  <div className="relative group">
-                    <div className="sm:w-[154px] w-full h-[139px] hover:bg-gradient-to-t hover:from-[#25252562] absolute z-30 group">
-                      <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <button
-                          className="bg-white/50 hover:bg-gray-med hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handelDeleteImg(img?.id, setFile, e);
-                          }}
-                        >
+              return (
+                <div key={index} className="relative">
+                  {img ? (
+                    <div className="relative group">
+                      <div className="sm:w-[154px] w-full h-[139px] hover:bg-gradient-to-t hover:from-[#25252562] absolute z-30 group">
+                        <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                          <button
+                            className="bg-white/50 hover:bg-gray-med hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
+                            onClick={(e) => handelDeleteImg(img.id, index, e)}
+                          >
+                            <img
+                              className="w-4 h-4"
+                              src={TrashIcon}
+                              alt="Remove"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      {isCoverPhoto && (
+                        <div className="absolute top-2 left-2 z-10">
+                          <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
+                            {selectedContent[localizationKeys.cover]}
+                          </span>
+                        </div>
+                      )}
+                      <FileUploader
+                        handleChange={(files) => handleChange(files, index)}
+                        name={`file${index + 1}`}
+                        types={fileTypes}
+                        multiple={!existingVideo && !img?.file?.type?.startsWith("video/")}
+                      >
+                        {img.file?.type?.startsWith("video/") ? (
+                          <video
+                            className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
+                              isCoverPhoto ? "ring-2 ring-primary" : ""
+                            }`}
+                            controls
+                          >
+                            <source
+                              src={img.imageLink}
+                              type={img.file.type}
+                            />
+                            Your browser does not support the video tag.
+                          </video>
+                        ) : (
                           <img
-                            className="w-4 h-4"
-                            src={TrashIcon}
-                            alt="Remove"
+                            className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
+                              isCoverPhoto ? "ring-2 ring-primary" : ""
+                            }`}
+                            src={img.imageLink || addImage}
+                            alt="Product img"
+                            onError={(e) => {
+                              console.error("Image failed to load:", e.target.src);
+                              e.target.src = addImage;
+                            }}
                           />
-                        </button>
-                      </div>
+                        )}
+                      </FileUploader>
+
+                      {!isCoverPhoto && !img.file?.type?.startsWith("video/") && (
+                        <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
+                          <button
+                            onClick={(e) => handleSetCover(index, e)}
+                            className="bg-primary hover:bg-white/90 text-white hover:text-primary px-3 py-1 rounded-full text-sm shadow hover:shadow-lg transition-all duration-300 flex items-center gap-1 mx-auto"
+                          >
+                            <MdOutlineImage className="w-4 h-4" />
+                            Set as Cover
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    {isCoverPhoto && (
-                      <div className="absolute top-2 left-2 z-10">
-                        <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
-                          {selectedContent[localizationKeys.cover]}
-                        </span>
-                      </div>
-                    )}
+                  ) : (
                     <FileUploader
-                      handleChange={(files) =>
-                        handleChange(files, setFile, index + 1)
-                      }
+                      handleChange={(files) => handleChange(files)}
                       name={`file${index + 1}`}
                       types={fileTypes}
                       multiple
                     >
-                      {file?.type.startsWith("video/") ? (
-                        <video
-                          className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
-                            isCoverPhoto ? "ring-2 ring-primary" : ""
-                          }`}
-                          controls
-                        >
-                          <source
-                            src={URL.createObjectURL(file)}
-                            type={file.type}
-                          />
-                          Your browser does not support the video tag.
-                        </video>
-                      ) : (
-                        <img
-                          className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
-                            isCoverPhoto ? "ring-2 ring-primary" : ""
-                          }`}
-                          src={
-                            img?.imageLink
-                              ? img.imageLink
-                              : file instanceof File
-                              ? URL.createObjectURL(file)
-                              : addImage
-                          }
-                          alt="Product img"
-                          onError={(e) => {
-                            console.error(
-                              "Image failed to load:",
-                              e.target.src
-                            );
-                            e.target.src = addImage;
-                          }}
-                        />
-                      )}
-                    </FileUploader>
-
-                    {!isCoverPhoto && (
-                      <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
-                        <button
-                          onClick={(e) => handleSetCover(index + 1, e)}
-                          className="bg-primary hover:bg-white/90 text-white hover:text-primary px-3 py-1 rounded-full text-sm shadow hover:shadow-lg transition-all duration-300 flex items-center gap-1 mx-auto"
-                        >
-                          <MdOutlineImage className="w-4 h-4" />
-                          Set as Cover
-                        </button>
+                      <div className="border-gray-med border-[1px] border-dashed rounded-lg w-[154px] h-[139px] flex justify-center items-center cursor-pointer">
+                        <img className="w-6 h-6" src={addImage} alt="Add Icon" />
                       </div>
-                    )}
-                  </div>
-                ) : (
-                  <FileUploader
-                    handleChange={(files) =>
-                      handleChange(files, setFile, index + 1)
-                    }
-                    name={`file${index + 1}`}
-                    types={fileTypes}
-                    multiple
-                  >
-                    <div className="border-gray-med border-[1px] border-dashed rounded-lg w-[154px] h-[139px] flex justify-center items-center cursor-pointer">
-                      <img className="w-6 h-6" src={addImage} alt="Add Icon" />
-                    </div>
-                  </FileUploader>
-                )}
-              </div>
-            );
-          })}
+                    </FileUploader>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>

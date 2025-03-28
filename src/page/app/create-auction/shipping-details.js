@@ -205,18 +205,16 @@ const ShippingDetails = () => {
         formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
         formData.append("product[offerAmount]", offerDataInt.offerAmount);
       }
-      if (productDetailsInt?.auctionState === "DRAFTED") {
-      } else {
-        formData.append("images", productDetailsInt.fileOne);
-        formData.append("images", productDetailsInt.fileTwo);
-        formData.append("images", productDetailsInt.fileThree);
-        if (productDetailsInt.fileFour) {
-          formData.append("images", productDetailsInt.fileFour);
+
+      // Handle images once
+      const images = productDetailsInt.images || [];
+      console.log("iiii", images.length);
+      images.forEach(image => {
+        if (image && image.file) {
+          formData.append("images", image.file);
         }
-        if (productDetailsInt.fileFive) {
-          formData.append("images", productDetailsInt.fileFive);
-        }
-      }
+      });
+
       if(productDetailsInt.relatedDocuments){
         formData.append('pdfs', productDetailsInt.relatedDocuments[0])
       }
@@ -318,9 +316,6 @@ const ShippingDetails = () => {
             })
         );
       } else {
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}: ${value}`);
-        }
         runCreatAuction(
           authAxios
             .post(api.app.auctions.default, formData)

@@ -106,7 +106,7 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
                   endingTime={auctionsDetailsData?.expiryDate}
                   setActiveIndexTab={setActiveIndexTab}
                   status={auctionsDetailsData?.status}
-                  relatedDocument={relatedDocuments}
+                  relatedDocuments={relatedDocuments}
                 />
               </div>
             </div>

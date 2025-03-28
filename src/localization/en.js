@@ -276,8 +276,24 @@ const en = {
   [localizationKeys.itemCondition]: "Item Condition",
   [localizationKeys.saveAsDraft]: "Save As Draft",
   [localizationKeys.next]: "Next",
-  [localizationKeys.youCanOnlySelectUpToFiveImages]:
-    "You can only select up to 5 images",
+  [localizationKeys.youCanOnlySelectUpToFiftyImages]:
+    "You can only select up to 50 images",
+  [localizationKeys.relatedDocument]: "Related document",
+  [localizationKeys.Pdfdocument]:"PDF Document",
+  [localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]: "Video cannot be the first upload. Please upload an image first as it will be used as the cover.",
+  [localizationKeys.onlyOneVideoFileIsAllowed]:"Only one video file is allowed",
+  [localizationKeys.uploadOneImageAndOneVideo]: "* You can upload up to 50 images and 1 video (max 50MB). Videos must be uploaded separately from images.",
+  [localizationKeys.fileSizeShouldBeLessThan10MB]:"File size should be less than 10MB",
+  [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:"This auction added to WatchList successfully",
+  [localizationKeys.thisAuctionRemovedFromWatchListSuccessfully]:"This auction removed from WatchList successfully",
+  [localizationKeys.imageDeletedSuccessfully]:"Image deleted successfully",
+  [localizationKeys.failedToDeleteImage]:"Failed to delete image",
+  [localizationKeys.coverPhotoUpdatedSuccessfully]:"Cover photo updated successfully",
+  [localizationKeys.failedToUpdateCoverPhoto]:"Failed to update cover photo",
+  [localizationKeys.cannotMixVideoAndImages]:"Please upload either video or images, not both at once.",
+  [localizationKeys.videoSizeLimitExceeded]: "Video size must be less than 50 MB",
+  [localizationKeys.errorInWatermarkProcess]:"Error in watermark process",
+  [localizationKeys.fileConversionFailed]:"File conversion failed",
   [localizationKeys.setAsCover]: "Set as cover",
   [localizationKeys.cover]: "Cover",
   //List product
@@ -559,7 +575,8 @@ const en = {
   [localizationKeys.bidAmount]: "Bid Amount",
   [localizationKeys.startingBidAmount]: "Starting Bid Amount",
   [localizationKeys.currentBid]: "Current Bid",
-  [localizationKeys.YourMaximumBidAllowedForThisAuctionIsAED]: "Your Maximum Bid Allowed For This Auction Is AED ",
+  [localizationKeys.YourMaximumBidAllowedForThisAuctionIsAED]:
+    "Your Maximum Bid Allowed For This Auction Is AED ",
   [localizationKeys.submitValueIsRequiredAndMustBeBiggerThanCurrentBid]:
     "Submit value is required and must be bigger than current Bid",
   [localizationKeys.yourAddNewSubmitValueSuccessfully]:
