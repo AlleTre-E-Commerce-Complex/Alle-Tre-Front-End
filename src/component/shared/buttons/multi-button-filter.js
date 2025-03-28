@@ -3,6 +3,8 @@ import useFilter from "../../../hooks/use-filter";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
+import { useHistory, useLocation } from "react-router-dom";
+import queryString from "query-string";
 
 const removeFromArray = (arr, v) => arr.filter((a) => a !== v);
 
@@ -10,13 +12,19 @@ const MultiButtonFilter = ({ name, values = [], myRef, isMultiSelect = true }) =
   const [filter, setFilter] = useFilter(name, isMultiSelect ? [] : "");
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-
+  
   // Ensure values is always an array
   const filterValues = Array.isArray(values) ? values : [];
+  
 
   const handleClick = (value) => {
     if (isMultiSelect) {
       const currentFilter = Array.isArray(filter) ? filter : [];
+      if(name ==='categories' && !currentFilter.includes(value) ){
+         currentFilter.length = 0
+      }
+
+
       const newFilter = currentFilter.includes(value)
         ? removeFromArray(currentFilter, value)
         : [...currentFilter, value];

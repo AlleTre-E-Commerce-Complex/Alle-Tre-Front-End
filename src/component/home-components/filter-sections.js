@@ -11,6 +11,10 @@ import MultiButtonFilter from "component/shared/buttons/multi-button-filter";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { motion } from "framer-motion";
 import ShowFilterSections from "./show-filter-sections";
+import useGetSubGatogry from "hooks/use-get-sub-category";
+import { useLocation } from "react-router-dom";
+import queryString from 'query-string'
+import DropdownButtonFilter from "component/shared/buttons/dropdown-button-filter";
 
 const FilterSections = ({
   myRef,
@@ -25,9 +29,20 @@ const FilterSections = ({
   const { brandOptions } = useGetBrand(categoryId);
   const { allBrands } = useGetALLBrand();
   const { AllCountriesOptions } = useGetAllCountries();
-
   const [expandedSections, setExpandedSections] = useState({});
-
+  const { search } = useLocation();
+  const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+  const categories = parsed?.categories || [];
+  const category_Id = categories.length >= 1  ? categories[categories.length -1] : null
+  const { SubGatogryOptions } = useGetSubGatogry(category_Id);
+  
+  
+  const [subCategories, setSubCategories] = useState([]);
+  // console.log("Fetched subcategories:1--", category_Id);
+  // console.log("Fetched subcategories:2", GatogryOptions);
+  // console.log("Fetched subcategories:3", SubGatogryOptions);
+  
+  
   const toggleSection = (section) => {
     setExpandedSections((prevState) => ({
       ...prevState,
@@ -135,13 +150,19 @@ const FilterSections = ({
                   isMultiSelect={true}
                   myRef={myRef}
                 />
+                {SubGatogryOptions.length > 0 && <DropdownButtonFilter 
+                myRef={myRef}
+                values={SubGatogryOptions}
+                name='subCategory'
+                isMultiSelect={true}
+                />}
               </motion.div>
             )}
           </div>
         )}
 
         {/* Brands Section */}
-        <div>
+        {/* <div>
           <div
             onClick={() => toggleSection("brands")}
             className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
@@ -167,7 +188,7 @@ const FilterSections = ({
               />
             </motion.div>
           )}
-        </div>
+        </div> */}
 
         {/* Selling Type */}
         <div className="">
@@ -272,10 +293,10 @@ const FilterSections = ({
                     name: selectedContent[localizationKeys.used],
                     value: "USED",
                   },
-                  {
-                    name: selectedContent[localizationKeys.openBox],
-                    value: "OPEN_BOX",
-                  },
+                  // {
+                  //   name: selectedContent[localizationKeys.openBox],
+                  //   value: "OPEN_BOX",
+                  // },
                 ]}
                 isMultiSelect={false}
                 myRef={myRef}

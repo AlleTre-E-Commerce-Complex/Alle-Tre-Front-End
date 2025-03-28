@@ -8,8 +8,11 @@ const useFilter = (name, value = "") => {
   const { search } = useLocation();
 
   const onFilterChange = (newVal) => {
+
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    
+    if(name === 'categories'){
+      delete parsed.subCategory
+    }
     // Handle arrays properly
     if (Array.isArray(newVal)) {
       parsed[name] = newVal.filter(v => v != null && v !== '');
@@ -31,6 +34,8 @@ const useFilter = (name, value = "") => {
 
   React.useEffect(() => {
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+    // console.log('Updated URL in the useFilter useEffect 2:', window.location.href);
+    // console.log('Updated URL in the useFilter 3:', parsed);
 
     // Handle initial value
     if (!parsed[name] && (value || (Array.isArray(value) && value.length))) {

@@ -3,8 +3,9 @@ import AnglesRight from "../../../../src/assets/icons/arrow-right.svg";
 import AnglesLeft from "../../../../src/assets/icons/arrow-left.svg";
 import Category from "./Category";
 import Swiper from "swiper";
+import SubCategory from "./SubCategory";
 
-const SubCategorySlider = ({ SubGatogryOptions }) => {
+const  SubCategorySlider = ({ SubGatogryOptions }) => {
   const swiperOptions = {
     cssMode: true,
     speed: 1000,
@@ -51,12 +52,13 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
                 {/* slider */}
                 {SubGatogryOptions.map((e, index) => (
                   <div key={index} className="snapslider-card swiper-slide ">
-                    <Category
+                    <SubCategory
                       view
                       img={e?.imageLink}
                       title={e?.text}
-                      id={e?.id}
+                      id={e?.value}
                       className={"md:px-20 lg:px-32"}
+                      // isSubCategory={true}
                     />
                   </div>
                 ))}

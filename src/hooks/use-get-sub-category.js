@@ -28,6 +28,8 @@ const useGetSubGatogry = (categoryId) => {
           setSubGatogryOptions(options);
         }
       );
+    }else{
+      setSubGatogryOptions([])
     }
   }, [categoryId]);
 
