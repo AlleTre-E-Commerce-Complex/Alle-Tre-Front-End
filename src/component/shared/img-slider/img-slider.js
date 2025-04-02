@@ -10,11 +10,11 @@ import useAxios from "../../../hooks/use-axios";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useLanguage } from "../../../context/language-context";
-import { BiSolidFilePdf } from "react-icons/bi";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 
 const ImgSlider = ({
   images,
@@ -24,13 +24,11 @@ const ImgSlider = ({
   isMyAuction,
   title,
   isListProduct,
-  relatedDocument,
 }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [isWatshlist, setWatshlist] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const [showPdf, setShowPdf] = useState(false);
 
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -76,29 +74,19 @@ const ImgSlider = ({
   }, [isZoomed, toggleZoom]);
 
   const handleNext = () => {
-    if (showPdf) {
-      setShowPdf(false);
-      setSelectedImgIndex(0);
-    } else {
-      setSelectedImgIndex((prev) => {
-        const nextIndex = (prev + 1) % images.length;
-        scrollThumbnailIntoView(nextIndex);
-        return nextIndex;
-      });
-    }
+    setSelectedImgIndex((prev) => {
+      const nextIndex = (prev + 1) % images.length;
+      scrollThumbnailIntoView(nextIndex);
+      return nextIndex;
+    });
   };
 
   const handlePrevious = () => {
-    if (showPdf) {
-      setShowPdf(false);
-      setSelectedImgIndex(images.length - 1);
-    } else {
-      setSelectedImgIndex((prev) => {
-        const nextIndex = prev === 0 ? images.length - 1 : prev - 1;
-        scrollThumbnailIntoView(nextIndex);
-        return nextIndex;
-      });
-    }
+    setSelectedImgIndex((prev) => {
+      const nextIndex = prev === 0 ? images.length - 1 : prev - 1;
+      scrollThumbnailIntoView(nextIndex);
+      return nextIndex;
+    });
   };
 
   const scrollThumbnailIntoView = (index) => {
@@ -109,18 +97,18 @@ const ImgSlider = ({
       const thumbnailWidth = thumbnail.offsetWidth;
       const scrollPosition = container.scrollLeft;
       const thumbnailPosition = thumbnail.offsetLeft;
-      
+
       const isOutOfViewRight = thumbnailPosition + thumbnailWidth > scrollPosition + containerWidth;
       const isOutOfViewLeft = thumbnailPosition < scrollPosition;
 
       if (isOutOfViewRight) {
         container.scrollTo({
-          left: thumbnailPosition - containerWidth + thumbnailWidth + 16, 
+          left: thumbnailPosition - containerWidth + thumbnailWidth + 16,
           behavior: 'smooth'
         });
       } else if (isOutOfViewLeft) {
         container.scrollTo({
-          left: thumbnailPosition - 16, 
+          left: thumbnailPosition - 16,
           behavior: 'smooth'
         });
       }
@@ -128,13 +116,8 @@ const ImgSlider = ({
   };
 
   const handleThumbnailClick = (index) => {
-    setShowPdf(false);
     setSelectedImgIndex(index);
     scrollThumbnailIntoView(index);
-  };
-
-  const handlePdfClick = () => {
-    setShowPdf(true);
   };
 
   const { run, isLoading } = useAxios([]);
@@ -208,39 +191,35 @@ const ImgSlider = ({
       </Dimmer>
       <div className="shadow rounded-2xl group overflow-hidden relative flex flex-col h-[480px]">
         <div className="relative w-full h-[85%] cursor-pointer">
-          {showPdf && relatedDocument?.length > 0 ? (
-            <div
-              onClick={toggleZoom}
-              className={`w-full h-full cursor-pointer relative ${
-                isZoomed
-                  ? "fixed inset-0 z-50 bg-white flex items-center justify-center"
-                  : ""
-              }`}
-            >
-              <iframe
-                src={relatedDocument[0]?.imageLink}
-                title="PDF Preview"
-                className="w-full h-full object-contain rounded-lg transition-transform duration-300"
-                style={{ pointerEvents: isZoomed ? "auto" : "none" }}
-              />
-            </div>
-          ) : (
-            images &&
+          {images &&
             images?.length > 0 && (
               <div className="relative w-full h-full">
                 {isVideo(images[selectedImgIndex]) ? (
-                  <video
-                    key={images[selectedImgIndex]?.imageLink} 
-                    className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
-                    controls
-                    onLoadedData={() => setIsImageLoaded(true)}
-                  >
-                    <source
-                      src={images[selectedImgIndex]?.imageLink}
-                      type="video/mp4"
-                    />
-                    Your browser does not support the video tag.
-                  </video>
+                  <div className="relative w-full h-full">
+                    <video
+                      key={images[selectedImgIndex]?.imageLink}
+                      className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
+                      controls
+                      controlsList="nodownload nofullscreen"
+                      autoPlay
+                      playsInline
+                      loop
+                      onEnded={(e) => e.target.play()}
+                    >
+                      <source
+                        src={images[selectedImgIndex]?.imageLink}
+                        type="video/mp4"
+                      />
+                      Your browser does not support the video tag.
+                    </video>
+                    <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                      <img
+                        src={watermarkImage}
+                        className="opacity-50 w-1/3 h-auto"
+                        alt="Watermark"
+                      />
+                    </div>
+                  </div>
                 ) : (
                   <img
                     className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
@@ -253,24 +232,20 @@ const ImgSlider = ({
                   />
                 )}
                 {/* Tap to Zoom Text */}
-                {!isVideo(images[selectedImgIndex]) && (
-                  <div
-                    onClick={isImageLoaded ? toggleZoom : null}
-                    className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 cursor-pointer"
-                  >
-                    <span className="text-white text-sm md:text-xl font-semibold">
-                      {selectedContent[localizationKeys.tapToZoom]}
-                    </span>
-                  </div>
-                )}
+                <div
+                  onClick={isImageLoaded ? toggleZoom : null}
+                  className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100 cursor-pointer"
+                >
+                  <span className="text-white text-sm md:text-xl font-semibold">
+                    {selectedContent[localizationKeys.tapToZoom]}
+                  </span>
+                </div>
               </div>
-            )
-          )}
+            )}
 
           <div
-            className={`absolute top-1/2 w-full flex ${
-              isArabic ? "justify-between flex-row-reverse" : "justify-between"
-            } px-4 transform -translate-y-1/2 z-20`}
+            className={`absolute top-1/2 w-full flex ${isArabic ? "justify-between flex-row-reverse" : "justify-between"
+              } px-4 transform -translate-y-1/2 z-20`}
           >
             <button
               onClick={isArabic ? handleNext : handlePrevious}
@@ -293,9 +268,8 @@ const ImgSlider = ({
           </div>
 
           <div
-            className={`absolute top-5 z-20 flex items-center ${
-              isArabic ? "left-5 space-x-reverse" : "right-5"
-            } space-x-2`}
+            className={`absolute top-5 z-20 flex items-center ${isArabic ? "left-5 space-x-reverse" : "right-5"
+              } space-x-2`}
           >
             {!isMyAuction && (
               <button
@@ -322,7 +296,7 @@ const ImgSlider = ({
             <div className="bg-opacity-70 p-2 flex gap-2 relative w-full max-w-[90%]">
               {/* Left scroll button */}
               {images?.length > 8 && (
-                <button 
+                <button
                   onClick={() => {
                     const container = document.getElementById('thumbnail-container');
                     container.scrollLeft -= 200;
@@ -336,7 +310,7 @@ const ImgSlider = ({
               )}
 
               {/* Thumbnails container */}
-              <div 
+              <div
                 id="thumbnail-container"
                 className="flex gap-2 overflow-x-auto scroll-smooth hide-scrollbar"
                 style={{
@@ -349,7 +323,7 @@ const ImgSlider = ({
                   <div
                     key={index}
                     className={`flex-shrink-0 w-[70px] h-[70px] rounded-lg cursor-pointer border-2 relative group/thumb
-                      ${index === selectedImgIndex && !showPdf
+                      ${index === selectedImgIndex
                         ? "border-primary border-4 shadow-lg"
                         : "border-transparent hover:border-primary/50"}
                     `}
@@ -360,6 +334,10 @@ const ImgSlider = ({
                         src={image.imageLink}
                         className="w-full h-full object-cover rounded-lg"
                         muted
+                        autoPlay
+                        playsInline
+                        loop
+                        onEnded={(e) => e.target.play()}
                       />
                     ) : (
                       <img
@@ -373,7 +351,7 @@ const ImgSlider = ({
                     <div className="absolute top-1 right-1 bg-black/60 text-white text-xs px-1.5 py-0.5 rounded-full opacity-0 group-hover/thumb:opacity-100 transition-opacity">
                       {index + 1}
                     </div>
-                    {index === selectedImgIndex && !showPdf && (
+                    {index === selectedImgIndex && (
                       <div className="absolute inset-0 bg-gray-500/50 rounded-lg transition-all duration-300" />
                     )}
                   </div>
@@ -382,7 +360,7 @@ const ImgSlider = ({
 
               {/* Right scroll button */}
               {images?.length > 8 && (
-                <button 
+                <button
                   onClick={() => {
                     const container = document.getElementById('thumbnail-container');
                     container.scrollLeft += 200;
@@ -407,118 +385,83 @@ const ImgSlider = ({
             }
           `}</style>
 
-          {/* Related Documents Section */}
-          {relatedDocument?.length > 0 && (
-            <div className="flex items-center space-x-2">
-              <div className="h-full w-[1px] bg-gray-300 mx-2" />
-              <div
-                onClick={handlePdfClick}
-                className={`min-w-[4rem] h-full flex items-center justify-center bg-white rounded-md cursor-pointer border-2 ${
-                  showPdf
-                    ? "border-primary border-4"
-                    : "border-transparent hover:border-primary/50"
-                } transition-all `}
-              >
-                <div className="flex flex-col items-center justify-center">
-                  <div className="w-10 h-10 text-red-500 flex items-center justify-center">
-                    <BiSolidFilePdf className="w-8 h-8" />
+          {isZoomed && (
+            <div
+              className="fixed inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50"
+              onClick={toggleZoom}
+              style={{
+                cursor: "zoom-out",
+                height: "70vh",
+              }}
+            >
+              {isVideo(images[selectedImgIndex]) ? (
+                <div className="relative">
+                  <video
+                    key={images[selectedImgIndex]?.imageLink}
+                    className="w-full h-full object-contain"
+                    controls
+                    controlsList="nodownload nofullscreen"
+                    autoPlay
+                    playsInline   
+                    style={{
+                      width: "90vw",
+                      height: "70vh",
+                      objectFit: "contain",
+                    }}
+                  >
+                    <source
+                      src={images[selectedImgIndex]?.imageLink}
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+                  <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                    <img
+                      src={watermarkImage}
+                      className="opacity-50 w-1/3 h-auto"
+                      alt="Watermark"
+                    />
                   </div>
-                  <span className="text-sm mt-1 text-gray-700">
-                    {" "}
-                    {selectedContent[localizationKeys.document]}
-                  </span>
                 </div>
-              </div>
+              ) : (
+                <img
+                  src={images[selectedImgIndex]?.imageLink}
+                  alt=""
+                  className="object-contain"
+                  style={{
+                    width: "90vw",
+                    height: "70vh",
+                    objectFit: "contain",
+                  }}
+                />
+              )}
+              <button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handlePrevious();
+                }}
+                className="absolute left-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
+              >
+                <BsChevronLeft
+                  style={{ stroke: "currentColor", strokeWidth: 1 }}
+                  className="text-white text-xl transition-colors duration-300"
+                />
+              </button>
+              <button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  handleNext();
+                }}
+                className="absolute right-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
+              >
+                <BsChevronRight
+                  style={{ stroke: "currentColor", strokeWidth: 1 }}
+                  className="text-white text-xl transition-colors duration-300"
+                />
+              </button>
             </div>
           )}
         </div>
-
-        {isZoomed && (
-          <div
-            className="fixed inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50"
-            onClick={toggleZoom}
-            style={{
-              cursor: "zoom-out",
-              height: "80vh",
-            }}
-          >
-            {showPdf ? (
-              <iframe
-                src={relatedDocument[0]?.imageLink}
-                title="PDF Preview"
-                className="w-full h-full object-contain"
-                style={{
-                  width: "90vw",
-                  height: "80vh",
-                  objectFit: "contain",
-                }}
-              />
-            ) : isVideo(images[selectedImgIndex]) ? (
-              <video
-                key={images[selectedImgIndex]?.imageLink} 
-                className="w-full h-full object-contain"
-                controls
-                style={{
-                  width: "90vw",
-                  height: "80vh",
-                  objectFit: "contain",
-                }}
-              >
-                <source
-                  src={images[selectedImgIndex]?.imageLink}
-                  type="video/mp4"
-                />
-                Your browser does not support the video tag.
-              </video>
-            ) : (
-              <img
-                src={images[selectedImgIndex]?.imageLink}
-                alt=""
-                className="object-contain"
-                style={{
-                  width: "90vw",
-                  height: "80vh",
-                  objectFit: "contain",
-                }}
-              />
-            )}
-            {isZoomed && showPdf && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleZoom();
-                }}
-                className="absolute top-24 right-4 transform -translate-x-1/2 -translate-y-1/2 bg-red-700 text-white px-4 py-2 rounded-lg shadow-xl z-50 hover:bg-red-600"
-              >
-                {selectedContent[localizationKeys.close]}
-              </button>
-            )}
-            <button
-              onClick={(event) => {
-                event.stopPropagation();
-                handlePrevious();
-              }}
-              className="absolute left-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
-            >
-              <BsChevronLeft
-                style={{ stroke: "currentColor", strokeWidth: 1 }}
-                className="text-white text-xl transition-colors duration-300"
-              />
-            </button>
-            <button
-              onClick={(event) => {
-                event.stopPropagation();
-                handleNext();
-              }}
-              className="absolute right-5 bg-primary hover:bg-primary/40 p-3 rounded-full shadow-lg transition-all duration-300"
-            >
-              <BsChevronRight
-                style={{ stroke: "currentColor", strokeWidth: 1 }}
-                className="text-white text-xl transition-colors duration-300"
-              />
-            </button>
-          </div>
-        )}
       </div>
     </>
   );

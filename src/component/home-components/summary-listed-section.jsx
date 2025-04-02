@@ -111,7 +111,7 @@ const SummaryListedSection = () => {
       >
         <LodingTestAllatre />
       </Dimmer>
-      <div className="grid md:grid-cols-2 grid-cols-1 mt-44 animate-in mx-5 mx-auto px-4">
+      <div className="grid md:grid-cols-2 grid-cols-1 mt-44 animate-in mx-5 px-4">
         <div className="w-full md:w-auto">
           <div className="px-4 mx-auto h-14 px-4 py-4 sm:block  ">
             <ListProductsBreadcrumb details={productId} />
@@ -350,7 +350,7 @@ const SummaryListedSection = () => {
           )}
         </div>
       </div>
-      <div className="mt-9 px-4 col-span-2">
+      <div className="mt-28 px-4">
         <AuctionDetailsTabs
           dataTabs={listedProductsData}
           activeIndexTab={activeIndexTab}
