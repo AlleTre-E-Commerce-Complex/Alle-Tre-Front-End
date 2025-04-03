@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { Dimmer } from "semantic-ui-react";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
-import { ReactComponent as EmtyHome } from "../../../../src/assets/icons/emty-home-page.svg";
 import listicon from "../../../../src/assets/icons/bullet.svg";
 import menuicon from "../../../../src/assets/icons/grid-06.svg";
 import api from "../../../api";
@@ -160,7 +159,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       if (user) {
         runCategories(
           axios.get(`${api.app.productListing.getAllListedProducts}?${queryStr}`).then((res) => {
-            console.log('cateogires ***> :', res.data.data)
             setListedProducts(res?.data?.data);
             setTotalPagesListed(res?.data?.pagination?.totalPages);
             // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -461,7 +459,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 key={e?.id}
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
-                                imageLink={e?.product?.images}
+                                adsImg={e?.product?.images}
                                 userId={e?.userId}
                                 id={e?.product?.id}
                                 city={
@@ -515,7 +513,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
                                 userId={e?.userId}
-                                imageLink={e?.product?.images}
+                                adsImg={e?.product?.images}
                                 id={e?.product?.id}
                                 city={
                                   lang === "en"
@@ -611,7 +609,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
                                 userId={e?.userId}
-                                imageLink={e?.product?.images}
+                                adsImg={e?.product?.images}
                                 id={e?.product?.id}
                                 city={
                                   lang === "en"
@@ -696,7 +694,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               price={e?.ProductListingPrice}
                               title={e?.product?.title}
                               userId={e?.userId}
-                              imageLink={e?.product?.images}
+                              adsImg={e?.product?.images}
                               id={e?.product?.id}
                               city={
                                 lang === "en"
