@@ -361,7 +361,8 @@ const ImageMedia = ({
   const compressImage = async (file) => {
     try {
       let processedFile = file;
-
+  
+      // Convert HEIC/HEIF to JPEG first
       if (
         file.type.toLowerCase().includes("heic") ||
         file.type.toLowerCase().includes("heif")
@@ -370,7 +371,7 @@ const ImageMedia = ({
           const blob = await heic2any({
             blob: file,
             toType: "image/jpeg",
-            quality: 0.8,
+            quality: 0.7,  // Reduced from 0.8
           });
           processedFile = new File(
             [blob],
@@ -385,29 +386,33 @@ const ImageMedia = ({
           return file;
         }
       }
-
-      if (processedFile.size <= 800 * 1024) {
+  
+      // Skip compression if already small enough
+      if (processedFile.size <= 500 * 1024) {  // Reduced from 800KB to 500KB
         return processedFile;
       }
-
+  
       const options = {
-        maxSizeMB: 0.8,
-        maxWidthOrHeight: 1920,
-        initialQuality: 0.7,
+        maxSizeMB: 0.5,  // Reduced from 0.8
+        maxWidthOrHeight: 1600,  // Reduced from 1920
+        initialQuality: 0.6,  // Reduced from 0.7
         useWebWorker: true,
         fileType: "image/jpeg",
         preserveExif: false,
-        alwaysKeepResolution: true,
+        alwaysKeepResolution: false,  // Changed to false to allow downscaling
         exifOrientation: true,
       };
-
+  
       let compressedFile = await imageCompression(processedFile, options);
-      if (compressedFile.size > processedFile.size * 0.9) {
-        options.maxSizeMB = 0.5;
-        options.initialQuality = 0.6;
+      
+      // If still too large, compress further
+      if (compressedFile.size > 500 * 1024) {  // Target 500KB max
+        options.maxSizeMB = 0.3;
+        options.initialQuality = 0.5;
+        options.maxWidthOrHeight = 1200;
         compressedFile = await imageCompression(processedFile, options);
       }
-
+  
       return new File([compressedFile], processedFile.name, {
         type: "image/jpeg",
         lastModified: new Date().getTime(),
@@ -430,8 +435,8 @@ const ImageMedia = ({
       <div className="image-upload-container">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-y-4 gap-x-4">
-            {[...images, null]
-              .slice(0, Math.min(50, images.length + 1))
+            {[...images, ...Array(Math.max(3 - images.length, 1)).fill(null)]
+              .slice(0, Math.min(50, Math.max(images.length + 1, 3)))
               .map((img, index) => {
                 const isCoverPhoto = index === 0;
                 const existingVideo = images.some((img) =>
@@ -488,7 +493,6 @@ const ImageMedia = ({
                                   />
                                   Your browser does not support the video tag.
                                 </video>
-                                {/* Watermark overlay for video */}
                                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
                                   <img
                                     src={watermarkImage}

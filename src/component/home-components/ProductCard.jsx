@@ -190,6 +190,7 @@ const ProductCard = ({
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onClick={() => handelGoDetails(id)}
           >
             {isLoading && (
               <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-10">

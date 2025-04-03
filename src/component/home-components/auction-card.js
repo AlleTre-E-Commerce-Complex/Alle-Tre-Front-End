@@ -318,6 +318,7 @@ const AuctionCard = ({
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          onClick={() => handelGoDetails(auctionId)}
         >
           {isLoading && (
             <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-10">
