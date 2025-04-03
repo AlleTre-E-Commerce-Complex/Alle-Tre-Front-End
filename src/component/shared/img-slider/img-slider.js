@@ -29,6 +29,7 @@ const ImgSlider = ({
   const [isZoomed, setIsZoomed] = useState(false);
   const [isWatshlist, setWatshlist] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [loadedImages, setLoadedImages] = useState({});
 
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -178,6 +179,10 @@ const ImgSlider = ({
 
   const isVideo = (media) => {
     return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
+  };
+
+  const handleImageLoad = (index) => {
+    setLoadedImages((prev) => ({ ...prev, [index]: true }));
   };
 
   return (
@@ -330,22 +335,35 @@ const ImgSlider = ({
                     onClick={() => handleThumbnailClick(index)}
                   >
                     {isVideo(image) ? (
-                      <video
-                        src={image.imageLink}
-                        className="w-full h-full object-cover rounded-lg"
-                        muted
-                        autoPlay
-                        playsInline
-                        loop
-                        onEnded={(e) => e.target.play()}
-                      />
+                      <>
+                        <video
+                          src={image.imageLink}
+                          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${loadedImages[index] ? 'opacity-100' : 'opacity-0'}`}
+                          muted
+                          onLoadedData={() => handleImageLoad(index)}
+                          onEnded={(e) => e.target.play()}
+                        />
+                        {!loadedImages[index] && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
+                            <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent"></div>
+                          </div>
+                        )}
+                      </>
                     ) : (
-                      <img
-                        src={image.imageLink}
-                        alt={`Image ${index + 1}`}
-                        className="w-full h-full object-cover rounded-lg"
-                        loading="lazy"
-                      />
+                      <>
+                        <img
+                          src={image.imageLink}
+                          alt={`Product ${index + 1}`}
+                          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${loadedImages[index] ? 'opacity-100' : 'opacity-0'}`}
+                          loading="lazy"
+                          onLoad={() => handleImageLoad(index)}
+                        />
+                        {!loadedImages[index] && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
+                            <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent"></div>
+                          </div>
+                        )}
+                      </>
                     )}
                     {/* Image number indicator */}
                     <div className="absolute top-1 right-1 bg-black/60 text-white text-xs px-1.5 py-0.5 rounded-full opacity-0 group-hover/thumb:opacity-100 transition-opacity">
