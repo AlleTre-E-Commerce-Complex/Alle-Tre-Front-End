@@ -9,7 +9,7 @@ const TermAndConditionData = [
     title: { en: "Terms and Conditions:", ar: "الشروط و الأحكام :" },
     parag: {
       en: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             "ALLE TRE E-COMMERCE COMPLEX LLC OPC" welcomes you to the "ALLE TRE"
             platform, where we provide electronic auction services. By using the
@@ -21,7 +21,7 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             "ألي تري" مجمع للتعامل الإلكتروني ذ م م نرحب بكم في منصة “ألي تري”،
             حيث نقدم خدمات المزاد الإلكتروني. باستخدامك للمنصة، فإنك توافق على
@@ -37,13 +37,13 @@ const TermAndConditionData = [
     title: { en: "1- Definitions", ar: "١- تعريفات : " },
     parag: {
       en: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
-            <span className="font-extrabold ">The platform :</span>The site of
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">The platform :</span>The site of
             the ALLE TRE E-COMMERCE COMPLEX LLC OPC.
           </li>
           <li>
-            <span className="font-extrabold ">Personal data :</span>Is any
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Personal data :</span>Is any
             information or data related personally to the user and includes, but
             is not limited to (name - nationality. Gender - age - job title -
             address - phone number - email - payment card numbers - financial
@@ -53,18 +53,18 @@ const TermAndConditionData = [
             or through or through the website).
           </li>
           <li>
-            <span className="font-extrabold ">Auction service :</span>Is the
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Auction service :</span>Is the
             process of accessing the electronic application or website to create
             an auction or to view the exhibits.
           </li>
           <li>
-            <span className="font-extrabold ">Exhibit/ Exhibits :</span>Means
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Exhibit/ Exhibits :</span>Means
             all the goods on the website of ALLE TRE E-COMMERCE COMPLEX LLC OPC
             and the electronic application offered for sale and bidding on, for
             example, but not limited to (smart phones - and electronic devices).
           </li>
           <li>
-            <span className="font-extrabold ">
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
               Seller/ First Party Supplier :
             </span>
             Means the owner , the requester of execution , their representatives
@@ -73,7 +73,7 @@ const TermAndConditionData = [
             are permitted to sell goods and services through the platform.
           </li>
           <li>
-            <span className="font-extrabold ">
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
               Buyer / Second Party / Customer :
             </span>
             Means the person who want to purchase any of the exhibits on the
@@ -81,14 +81,14 @@ const TermAndConditionData = [
             application.
           </li>
           <li>
-            <span className="font-extrabold ">Bidder :</span>
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Bidder :</span>
             Means the person who bids on the displayed goods at the highest
             price and the auction was awarded to him and is allowed to purchase
             the goods through the platform displayed by the user on the platform
             without intervention by ALLE TRE E-COMMERCE COMPLEX LLC OPC.
           </li>
           <li>
-            <span className="font-extrabold ">Third Party :</span>
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Third Party :</span>
             Means the role and scope of responsibility of ALLE TRE E-COMMERCE
             COMPLEX LLC OPC as an intermediary in the sales process between the
             seller and the buyer through the platform, without obligation or
@@ -99,13 +99,13 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
-            <span className="font-extrabold ">المنصة :</span>موقع ألي تري مجمع
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">المنصة :</span>موقع ألي تري مجمع
             للتعامل الإلكتروني ذ م م ش ش و .
           </li>
           <li>
-            <span className="font-extrabold ">البيانات الشخصية :</span>هي أي
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">البيانات الشخصية :</span>هي أي
             معلومات أو بيانات تتعلق شخصياً باللمستخدم وتضمن علي سبيل المثال لا
             الحصر ( الأسم - الجنسية – الجنس – العمر – المسمي الوظيفي – العنوان –
             رقم الهاتف – البريد الالكتروني – أرقام بطاقات الدفع – البيانات
@@ -115,19 +115,19 @@ const TermAndConditionData = [
             الإلكتروني .
           </li>
           <li>
-            <span className="font-extrabold ">خدمة المزاد :</span>هي عملية
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">خدمة المزاد :</span>هي عملية
             الوصول الى التطبيق الإلكتروني أو الموقع الإلكتروني لإنشاء مزاد او
             للاطلاع على المعروضات .
           </li>
           <li>
-            <span className="font-extrabold ">المعروض / المعروضات:</span>ه.يقصد
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">المعروض / المعروضات:</span>ه.يقصد
             بها جميع السلع الموجودة على موقع ألي تري مجمع للتعامل الإلكتروني ذ م
             م ش ش و و و التطبيق الإلكتروني المعروضة للبيع و المزايدة عليها على
             سبيل المثال لا الحصر ( الهواتف الذكية - و الأجهزة الالكترونية ).
             للاطلاع على المعروضات .
           </li>
           <li>
-            <span className="font-extrabold ">
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
               البائع / الطرف الأول المورد :
             </span>
             يقصد به مالك أو طالب التنفيذ أو من ينوب عنهم أو الجهات الحكومية أو
@@ -136,20 +136,20 @@ const TermAndConditionData = [
             .
           </li>
           <li>
-            <span className="font-extrabold ">
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
               المشتري / الطرف الثاني / العميل:
             </span>
             يقصد به الشخص الذي يرغب في شراء أياً من المعروضات على موقع ألي تري
             مجمع للتعامل الإلكتروني أوالتطبيق الإلكتروني .
           </li>
           <li>
-            <span className="font-extrabold ">المزايد:</span> يقصد به الشخص الذي
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">المزايد:</span> يقصد به الشخص الذي
             قام بالمزايدة على السلع المعروضة بأعلي سعر و تم ترسيه المزاد عليه و
             المسموح له بشراء السلع من خلال المنصة المعروضة من قبل المستخدم على
             المنصة دون تدخل من قبل ألي تري مجمع للتعامل الإلكتروني .
           </li>
           <li>
-            <span className="font-extrabold ">الطرف الثالث:</span> يقصد به الشخص
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">الطرف الثالث:</span> يقصد به الشخص
             الذي قام بالمزايدة على السلع المعروضة بأعلي سعر و تم ترسيه المزاد
             عليه و المسموح له بشراء السلع من خلال المنصة المعروضة من قبل
             المستخدم على المنصة دون تدخل من قبل ألي تري مجمع للتعامل الإلكتروني
@@ -163,7 +163,7 @@ const TermAndConditionData = [
     title: { en: "2- Registration", ar: "٢-التسجيل :" },
     parag: {
       en: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             By using this site, you acknowledge that you are of legal age to
             enter into binding contracts and are not a person barred from
@@ -191,7 +191,7 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             باستخدامك لهذا الموقع، أنت تقر أنك قد بلغت السن القانونية لإبرام
             عقود مُلزمه ولست شخصاً ممنوعاً من تلقي الخدمات بموجب قوانين دولة
@@ -220,7 +220,7 @@ const TermAndConditionData = [
     title: { en: "3- Service Description ", ar: "٣-وصف الخدمة : " },
     parag: {
       en: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             The "ALLE TRE" platform is an electronic market that provides users
             with the ability to participate in auctions for electronic products.
@@ -230,7 +230,7 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             منصة “ألي تري” هي سوق إلكتروني توفر للمستخدمين إمكانية المشاركة في
             المزادات الخاصة بالمنتجات الإلكترونية. تقدم المنصة للمستخدمين فرص
@@ -244,7 +244,7 @@ const TermAndConditionData = [
     title: { en: "4- License and limited use ", ar: "٣-وصف الخدمة : " },
     parag: {
       en: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             ALLE TRE" grants you a limited license to use the platform for
             personal purposes. You may not:
@@ -259,7 +259,7 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             منصة “ألي تري” هي سوق إلكتروني توفر للمستخدمين إمكانية المشاركة في
             المزادات الخاصة بالمنتجات الإلكترونية. تقدم المنصة للمستخدمين فرص
@@ -273,7 +273,7 @@ const TermAndConditionData = [
     title: { en: "5-Content provided", ar: " ٥-المحتوى المقدّم :" },
     parag: {
       en: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             The content you provide on the platform remains your property, but
             you grant "ALLE TRE" a non-exclusive global license to use this
@@ -284,7 +284,7 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             يبقى المحتوى الذي تقدمه على المنصة ملكًا لك، ولكنك تمنح “ألي تري”
             ترخيصًا عالميًا غير حصري لاستخدام هذا المحتوى في إطار تقديم الخدمة.
@@ -300,17 +300,17 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-bold">The role of the platform:</span>
               "ALLE TRE" acts as an intermediary to facilitate auction
               operations between sellers and bidders. The platform is not a
               party to the transactions and is not responsible for the quality
               or authenticity of the products offered.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">Limited Liability</span>
-              <ul className="list-disc ml-6 mt-2">
+              <ul className="list-disc ml-3 sm:ml-6 mt-2">
                 <li>
                   Any misleading or inaccurate information provided by sellers.
                 </li>
@@ -327,9 +327,9 @@ const TermAndConditionData = [
                 </li>
               </ul>
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">Platform Obligations</span>
-              <ul className="list-disc ml-6 mt-2">
+              <ul className="list-disc ml-3 sm:ml-6 mt-2">
                 <li>
                   <span className="font-bold">
                     Providing a secure environment:
@@ -349,17 +349,17 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="rtl text-right">
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+        <div className="rtl text-right px-2 sm:px-4">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-bold">دور المنصة:</span>
               تعمل [ألي تري] كوسيط لتسهيل عمليات المزاد بين البائعين والمزايدين.
               المنصة ليست طرفًا في المعاملات، ولا تتحمل المسؤولية عن جودة أو صحة
               المنتجات المعروضة.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">المسؤولية المحدودة:</span>
-              <ul className="list-disc ml-6 mt-2">
+              <ul className="list-disc ml-3 sm:ml-6 mt-2">
                 <li>أي معلومات مضللة أو غير دقيقة مقدمة من البائعين.</li>
                 <li>أي مشاكل تتعلق بعمليات الدفع أو التحويلات المالية.</li>
                 <li>
@@ -368,9 +368,9 @@ const TermAndConditionData = [
                 <li>الأضرار غير المباشرة أو التبعية الناجمة عن الإخلال.</li>
               </ul>
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">التزامات المنصة:</span>
-              <ul className="list-disc ml-6 mt-2">
+              <ul className="list-disc ml-3 sm:ml-6 mt-2">
                 <li>
                   <span className="font-bold">تقديم بيئة آمنة:</span>
                   تسعى المنصة لضمان أمان المعلومات وحماية بيانات المستخدمين من
@@ -396,15 +396,15 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-bold">Pledge not to hack:</span>
               You must not use any hacking or piracy programs to access the site
               or application, and adhere to the laws related to information
               technology, including Federal Decree-Law No. 5 of 2012 and its
               amendments.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">
                 Not to affect the infrastructure:
               </span>
@@ -417,14 +417,14 @@ const TermAndConditionData = [
       ),
       ar: (
         <div>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-bold">التعهد بعدم القرصنة:</span>
               يجب عدم استخدام أي برامج اختراق أو قرصنة للدخول إلى الموقع أو
               التطبيق، والالتزام بالقوانين المتعلقة بتقنية المعلومات، بما في ذلك
               المرسوم بقانون اتحادي رقم 5 لسنة 2012 وتعديلاته .
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">عدم التأثير على البنية التحتية</span>
               يجب عدم القيام بأي نشاط يؤثر سلبًا على البنية التحتية للموقع أو
               التطبيق، أو يمنع المستخدمين من الوصول إليه.
@@ -438,7 +438,7 @@ const TermAndConditionData = [
     title: { en: "8- Auction Integrity", ar: "٨- نزاهة المزاد:" },
     parag: {
       en: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             The ALLE TRE E-COMMERCE COMPLEX LLC OPC platform is committed to
             ensuring the integrity and transparency of auctions. Therefore, it
@@ -455,7 +455,7 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             تلتزم منصة الي تري بضمان نزاهة وشفافية المزادات. لذا، يُمنع تمامًا
             على البائع سواء بشكل مباشر أو غير مباشر، المشاركة كمزايد في المزاد
@@ -477,22 +477,22 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-bold"> No guarantees provided:</span>: ALLE
               TRE Company does not provide any guarantees for the items offered
               in the auction and acts as an intermediary to display the goods
               only. The buyer is responsible for verifying the item and its
               conformity to the specifications.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">
                 No responsibility for the information provided:
               </span>
               The company is not responsible for any statements, specifications
               or information provided by the seller.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">Bidder's responsibility:</span>: The
               bidder or buyer is solely responsible for reviewing all data and
               information related to the condition of the item before bidding or
@@ -503,21 +503,21 @@ const TermAndConditionData = [
       ),
       ar: (
         <div>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-bold">عدم تقديم ضمانات:</span>
               شركة ألي تري لا تقدم أي ضمانات للمعروضات في المزاد وتعمل كوسيط
               لعرض السلع فقط.و يكون على عاتق المشتري التأكد من المعروض و مطابقته
               للمواصفات .
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">
                 عدم المسؤولية عن المعلومات المقدمة
               </span>
               يالشركة ليست مسؤولة عن أي إقرارات أو مواصفات أو معلومات يقدمها
               البائع.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-bold">مسؤولية المزايد</span>: المزايد أو
               المشتري هو المسؤول الوحيد عن مراجعة جميع البيانات والمعلومات
               المتعلقة بحالة المعروض قبل المزايدة أو الشراء.
@@ -535,15 +535,15 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-semibold">Insurance Payment Method:</span>
-              <ul className="list-disc ml-6 mt-1">
+              <ul className="list-disc ml-3 sm:ml-6 mt-1">
                 <li>
                   Both the seller and the bidder must pay the insurance amount
                   in the manner specified by the platform, such as:
                 </li>
-                <ul className="list-disc ml-6">
+                <ul className="list-disc ml-3 sm:ml-6">
                   <li>Credit card</li>
                   <li>Cash</li>
                   <li>Check</li>
@@ -554,7 +554,7 @@ const TermAndConditionData = [
                 </li>
               </ul>
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">Insurance Percentage:</span>
               The insurance amount is displayed with each offer separately.
             </li>
@@ -563,20 +563,20 @@ const TermAndConditionData = [
           <h3 className="text-lg font-semibold mt-6">
             Procedures related to the insurance amount:
           </h3>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-semibold">
                 Confiscation of the insurance amount:
               </span>
-              <ul className="list-disc ml-6 mt-1">
+              <ul className="list-disc ml-3 sm:ml-6 mt-1">
                 <li>
                   <span className="font-semibold">For the seller:</span>
-                  <ul className="list-disc ml-6">
+                  <ul className="list-disc ml-3 sm:ml-6">
                     <li>
                       In the event of cancellation of the auction before its
                       expiration:
                     </li>
-                    <ul className="list-disc ml-6">
+                    <ul className="list-disc ml-3 sm:ml-6">
                       <li>
                         If there are no bidders, the insurance amount will be
                         refunded in full.
@@ -589,7 +589,7 @@ const TermAndConditionData = [
                       </li>
                     </ul>
                     <li>After the end of the auction:</li>
-                    <ul className="list-disc ml-6">
+                    <ul className="list-disc ml-3 sm:ml-6">
                       <li>
                         If the seller does not comply, the insurance amount will
                         be confiscated in full.
@@ -605,7 +605,7 @@ const TermAndConditionData = [
                   <span className="font-semibold">
                     For the bidder or buyer:
                   </span>
-                  <ul className="list-disc ml-6">
+                  <ul className="list-disc ml-3 sm:ml-6">
                     <li>
                       The bidder is obligated to pay the full amounts within the
                       specified period and for the bidder or buyer, the
@@ -622,17 +622,17 @@ const TermAndConditionData = [
                 </li>
               </ul>
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">Platform Charges:</span> ALLE TRE
               platform applies only 0.5% on each successful transaction within
               the platform for each user.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">Legal Responsibility:</span> ALLE
               TRE is not legally responsible for these violations, and legal
               action may be taken before the state courts.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">Deposit the Bid Amount:</span>
               In the event that the bidder wins, they must deposit the bid
               amount into ALLE TRE’s bank account within 72 hours from the date
@@ -643,15 +643,15 @@ const TermAndConditionData = [
       ),
       ar: (
         <div>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-semibold">طريقة دفع التأمين:</span>
-              <ul className="list-disc ml-6 mt-1">
+              <ul className="list-disc ml-3 sm:ml-6 mt-1">
                 <li>
                   يجب على البائع والمزايد دفع مبلغ التأمين بالطريقة المحددة من
                   قبل المنصة، مثل:
                 </li>
-                <ul className="list-disc ml-6">
+                <ul className="list-disc ml-3 sm:ml-6">
                   <li>بطاقة ائتمان</li>
                   <li>نقدًا</li>
                   <li>شيك</li>
@@ -659,7 +659,7 @@ const TermAndConditionData = [
                 <li>يتم التصرف بمبلغ التأمين وفقًا لشروط وأحكام المنصة.</li>
               </ul>
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">نسبة التأمين:</span>
               عرض مبلغ التأمين مع كل معروض بشكل منفصل .
             </li>
@@ -668,15 +668,15 @@ const TermAndConditionData = [
           <h3 className="text-lg font-semibold mt-6">
             الإجراءات المتعلقة بمبلغ التأمين:
           </h3>
-          <ul className="list-decimal ml-6">
-            <li className="mt-2">
+          <ul className="list-decimal ml-3 sm:ml-6">
+            <li className="mt-2 text-sm sm:text-base">
               <span className="font-semibold">مصادرة مبلغ التأمين:</span>
-              <ul className="list-disc ml-6 mt-1">
+              <ul className="list-disc ml-3 sm:ml-6 mt-1">
                 <li>
                   <span className="font-semibold">بالنسبة للبائع :</span>
-                  <ul className="list-disc ml-6">
+                  <ul className="list-disc ml-3 sm:ml-6">
                     <li>في حالة إلغاء المزاد قبل انتهاء موعده:</li>
-                    <ul className="list-disc ml-6">
+                    <ul className="list-disc ml-3 sm:ml-6">
                       <li>
                         إذا لم يكن هناك مزايدون، سيتم استرداد مبلغ التأمين
                         بالكامل.
@@ -688,7 +688,7 @@ const TermAndConditionData = [
                       </li>
                     </ul>
                     <li>بعد انتهاء المزاد:</li>
-                    <ul className="list-disc ml-6">
+                    <ul className="list-disc ml-3 sm:ml-6">
                       <li>
                         اذا لم يكن هناك أي مزايدين في المزاد سيتم رد مبلغ
                         التـأمين كاملاً
@@ -704,7 +704,7 @@ const TermAndConditionData = [
                   <span className="font-semibold">
                     بالنسبة للمزايد او المشتري
                   </span>
-                  <ul className="list-disc ml-6">
+                  <ul className="list-disc ml-3 sm:ml-6">
                     <li>
                       يلتزم المزايد بسداد كامل المبالغ خلال المدة المحددة و سيتم
                       عرض نسبة التآأمين بشكل منفصل على حسب كل معروض.
@@ -718,17 +718,17 @@ const TermAndConditionData = [
                 </li>
               </ul>
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">رسوم المنصة:</span> تطبق منصة
               Alletre نسبة 0.5% فقط على كل عملية ناجحة داخل المنصة، عن كل مستخدم
               .
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">المسؤولية القانونية:</span> لا
               تعتبر شركة ألي تري غير مسؤولة قانونًا عن هذه المخالفات، ويمكن
               اتخاذ إجراءات قانونية أمام محاكم الدولة.
             </li>
-            <li className="mt-4">
+            <li className="mt-3 sm:mt-4">
               <span className="font-semibold">إيداع مبلغ المعروض:</span>
               في حال فوز المزايد، يجب عليه إيداع مبلغ المزايدة في الحساب البنكي
               في حال فوز المزايد، يجب عليه إيداع مبلغ المعروض في الحساب البنكي
@@ -740,10 +740,111 @@ const TermAndConditionData = [
     },
   },
   {
-    title: { en: "11- Compensation", ar: " ١١- التعويض :" },
+    title: { en: "11- Security Deposit", ar: " ١١- مبلغ التأمين :" },
     parag: {
       en: (
-        <div className="ml-4">
+        <div>
+          <p className="mb-4">
+            To protect the rights of all parties (seller and buyer) and ensure secure transactions, Alletre imposes a security deposit on certain categories of products listed for auction. The deposit amount is determined based on the type of product as follows:
+          </p>
+          <div className="ml-3 sm:ml-6">
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">1. Electronic Products:</h3>
+              <ul className="list-disc ml-4">
+                <li>A security deposit of 100 AED is required for all electronic products listed in the auction (such as smartphones, computers, home appliances, etc.).</li>
+              </ul>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">2. Cars:</h3>
+              <ul className="list-disc ml-4">
+                <li>A security deposit of 500 AED is required for cars listed in the auction.</li>
+                <li>The seller must provide all legal documents related to the car, including proof of ownership and valid paperwork.</li>
+              </ul>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">3. Real Estate:</h3>
+              <ul className="list-disc ml-4">
+                <li>A security deposit of 2% of the total property value is required, with a minimum deposit of 5000 AED.</li>
+                <li>The seller must submit all legal documents confirming ownership of the property.</li>
+              </ul>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">4. Antiques & Furniture:</h3>
+              <ul className="list-disc ml-4">
+                <li>A security deposit of 200 AED is required for antiques listed in the auction if the product value is 5000 AED or less.</li>
+                <li>If the value of the antique exceeds 5000 AED, a 2% security deposit of the product's value is required.</li>
+                <li>Minimum security deposit for antiques: 200 AED.</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-6">
+            <h3 className="font-semibold mb-2">Refund of the Security Deposit:</h3>
+            <ul className="list-disc ml-4">
+              <li>The security deposit will be refunded after the successful completion of the transaction or upon the successful conclusion of the auction, in accordance with the terms outlined in the contract between the buyer and the seller.</li>
+              <li>In case of a failed transaction, the security deposit will only be refunded if it is proven that the failure was not due to the fault or negligence of either the buyer or the seller.</li>
+            </ul>
+          </div>
+          <div className="mt-6">
+            <p className="font-semibold">Important Note:</p>
+            <p>Alletre reserves the right to modify the security deposit amounts at any time at its sole discretion. All contracting parties must stay updated on any changes.</p>
+          </div>
+        </div>
+      ),
+      ar: (
+        <div className="rtl">
+          <p className="mb-4">
+            لحماية حقوق جميع الأطراف (البائع والمشتري) وضمان سير المعاملات بشكل آمن، تفرض منصة Alletre مبلغ تأمين على بعض الفئات من المنتجات التي يتم عرضها للبيع من خلال المزادات الإلكترونية. يتم تحديد مبلغ التأمين بناءً على نوع المنتج المعروض كما يلي:
+          </p>
+          <div className="mr-3 sm:mr-6">
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">١. المنتجات الإلكترونية:</h3>
+              <ul className="list-disc mr-4">
+                <li>يتم فرض مبلغ تأمين قدره 100 درهم إماراتي على جميع المنتجات الإلكترونية المعروضة في المزاد (مثل الهواتف الذكية، أجهزة الكمبيوتر، الأجهزة المنزلية، وغيرها).</li>
+              </ul>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">٢. السيارات:</h3>
+              <ul className="list-disc mr-4">
+                <li>يتم فرض مبلغ تأمين قدره 500 درهم إماراتي على السيارات المعروضة في المزاد.</li>
+                <li>يجب أن يكون البائع قد قدم كافة الأوراق القانونية المتعلقة بالسيارة، بما في ذلك ملكيتها ووثائقها الصالحة.</li>
+              </ul>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">٣. العقارات:</h3>
+              <ul className="list-disc mr-4">
+                <li>يتم فرض مبلغ تأمين بنسبة 2% من القيمة الإجمالية للعقار المعروض للبيع في المزاد، مع حد أدنى قدره 5000 درهم إماراتي.</li>
+                <li>على البائع تقديم جميع المستندات القانونية الخاصة بالعقار وتأكيد ملكيته.</li>
+              </ul>
+            </div>
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">٤. التحف والأثاث:</h3>
+              <ul className="list-disc mr-4">
+                <li>يتم فرض مبلغ تأمين قدره 200 درهم إماراتي على التحف المعروضة في المزاد في حال كانت قيمة المنتج 5000 درهم أو أقل.</li>
+                <li>في حال كانت قيمة التحفة تتجاوز 5000 درهم إماراتي، يتم فرض مبلغ تأمين قدره 2% من قيمة المنتج.</li>
+                <li>حد أدنى لمبلغ التأمين على التحف: 200 درهم إماراتي.</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-6">
+            <h3 className="font-semibold mb-2">استرداد مبلغ التأمين:</h3>
+            <ul className="list-disc mr-4">
+              <li>سيتم استرداد مبلغ التأمين بعد الانتهاء من المعاملة بنجاح أو في حال تم إنهاء المزاد بنجاح ووفقًا للشروط التي يتم تحديدها في العقد بين البائع والمشتري.</li>
+              <li>في حال فشل المعاملة، سيُعاد مبلغ التأمين فقط في حال ثبت أن السبب لم يكن ناتجًا عن خطأ أو تقصير من طرف المشتري أو البائع.</li>
+            </ul>
+          </div>
+          <div className="mt-6">
+            <p className="font-semibold">ملاحظة هامة:</p>
+            <p>يحق لمنصة Alletre تعديل مبالغ التأمين في أي وقت حسب تقديرها، ويجب على جميع الأطراف المتعاقدة متابعة التحديثات المتعلقة بذلك.</p>
+          </div>
+        </div>
+      ),
+    },
+  },
+  {
+    title: { en: "12- Compensation", ar: " ١٢- التعويض :" },
+    parag: {
+      en: (
+        <div className="mx-2 sm:mx-4">
           <li>
             By accepting these terms, you agree to compensate ALLE TRE for any
             claims or lawsuits arising as a result of your violation of the
@@ -752,7 +853,7 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
+        <div className="mx-2 sm:mx-4">
           <li>
             بقبولك لتلك الشروط فأنك توافقلى تعويض “ألي تري” عن أي مطالبات أو
             دعاوى تنشأ نتيجة انتهاكك للشروط أو مخالفتك لأي قانون أو حقوق طرف
@@ -766,15 +867,15 @@ const TermAndConditionData = [
     title: { en: "", ar: "" },
     parag: {
       en: (
-        <div className="ml-4">
-          <span className="text-lg font-bold text-gray-verydark">12-</span>
+        <div className="mx-2 sm:mx-4">
+          <span className="text-lg font-bold text-gray-verydark">13-</span>
           <span>
             External links The platform may contain links to external sites.
             ALLE TRE is not responsible for the content of these links or any
             damages that may result from their use.
           </span>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">13-</span>
+          <div className="mt-3 sm:mt-4">
+            <span className="text-lg font-bold text-gray-verydark">14-</span>
             <span>
               Protection of intellectual property rights ALLE TRE respects
               intellectual property rights. Please contact us if you have a
@@ -785,17 +886,17 @@ const TermAndConditionData = [
         </div>
       ),
       ar: (
-        <div className="ml-4">
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٢- </span>
+        <div className="mx-2 sm:mx-4">
+          <div className="mt-3 sm:mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٣- </span>
             <span>
               الروابط الخارجية قد تحتوي المنصة على روابط لمواقع خارجية. لا تتحمل
               “ألي تري” مسؤولية محتوى هذه الروابط أو أي أضرار قد تنتج عن
               استخدامها.
             </span>
           </div>
-          <div className="mt-4">
-            <span className="text-lg font-bold text-gray-verydark">١٣- </span>
+          <div className="mt-3 sm:mt-4">
+            <span className="text-lg font-bold text-gray-verydark">١٤- </span>
             <span>
               حماية حقوق الملكية الفكرية تحترم “ألي تري” حقوق الملكية الفكرية
               يُرجى التواصل معنا إذا كانت لديك شكوى تتعلق بانتهاك حقوق الملكية
@@ -811,13 +912,13 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div className="ml-4 -mt-5">
-          <span className="text-lg font-bold text-gray-verydark">14- </span>
+          <span className="text-lg font-bold text-gray-verydark">15- </span>
           <span>
             Laws and jurisdiction These terms and conditions are subject to and
             construed in accordance with the laws of [the Emirates] . This
             country is considered the legal seat for resolving disputes.
           </span>
-          <ul className="list-disc ml-6 ">
+          <ul className="list-disc ml-3 sm:ml-6 ">
             <li>
               <span className="font-semibold">Arbitration Condition:</span>
               <ul className="list-disc mt-1 ml-6">
@@ -851,13 +952,13 @@ const TermAndConditionData = [
       ),
       ar: (
         <div className="ml-4 -mt-5">
-          <span className="text-lg font-bold text-gray-verydark">١٤- </span>
+          <span className="text-lg font-bold text-gray-verydark">١٥- </span>
           <span>
             القوانين والاختصاص القضائي تخضع هذه الشروط والأحكام لقوانين
             [الامارات ] وتُفسر وفقًا لها. تُعتبر هذه الدولة مقرًا قانونيًا لفض
             النزاعات.
           </span>
-          <ul className="list-disc ml-6 ">
+          <ul className="list-disc ml-3 sm:ml-6 ">
             <li>
               <span className="font-semibold">شرط التحكيم :</span>
               <ul className="list-disc mt-1 ml-6">
@@ -890,7 +991,7 @@ const TermAndConditionData = [
     parag: {
       en: (
         <div className="ml-4 -mt-8">
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-black">15- </span>
             <span>
               Value Added Tax Compliance: The ALLE TRE E-COMMERCE COMPLEX LLC
@@ -931,7 +1032,7 @@ const TermAndConditionData = [
               </ul>
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">16- </span>
             <span>
               Amendments and Notifications: ALLE TRE reserves the right to amend
@@ -940,7 +1041,7 @@ const TermAndConditionData = [
               continued use of the site constitutes acceptance of the new terms.
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">17- </span>
             <span>
               Termination of Service: ALLE TRE reserves the right to suspend or
@@ -949,7 +1050,7 @@ const TermAndConditionData = [
               manner that is harmful to the platform or other users.
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">18- </span>
             <span>
               Electronic Communication: By using the platform, you agree to
@@ -958,14 +1059,14 @@ const TermAndConditionData = [
               official notice.
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">19- </span>
             <span>
               Headquarters: The headquarters of the company ALLE TRE is one of
               the properties of ALLE TRE E-COMMERCE COMPLEX LLC OPC.
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">20- </span>
             <span>
               Inquiries: In the event of any questions or inquiries regarding
@@ -979,7 +1080,7 @@ const TermAndConditionData = [
       ),
       ar: (
         <div className="ml-4 -mt-8">
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-black">١٥- </span>
             <span>
               الامتثال لضريبة القيمة المضافة: تؤكد منصة الي تري أن جميع
@@ -1016,7 +1117,7 @@ const TermAndConditionData = [
               </ul>
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">١٦- </span>
             <span>
               التعديلات والإخطارات تحتفظ “ألي تري” بحقها في تعديل الشروط
@@ -1025,7 +1126,7 @@ const TermAndConditionData = [
               للشروط الجديدة.
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">١٧- </span>
             <span>
               إنهاء الخدمة تحتفظ “ألي تري” بالحق في تعليق أو إنهاء حساب
@@ -1033,7 +1134,7 @@ const TermAndConditionData = [
               سلوكهم بشكل ضار بالمنصة أو المستخدمين الآخرين.
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">١٨- </span>
             <span>
               التواصل الإلكتروني باستخدامكم للمنصة، فإنكم توافقون على استقبال
@@ -1041,14 +1142,14 @@ const TermAndConditionData = [
               على الموقع. يُعتبر أي إشعار صادر عن “ألي تري” بمثابة إشعار رسمي.
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">١٩- </span>
             <span>
               - مقر الشركة “ألي تري” هي من ممتلكات [ألي تري مجمع للتعامل
               الالكتروني].
             </span>
           </div>
-          <div className="mt-4">
+          <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">٢٠- </span>
             <span>
               - الاستفسارات في حال وجود أي أسئلة أو استفسارات بخصوص هذه الشروط
@@ -1073,7 +1174,7 @@ const TermAndConditionData = [
             Please note that posts or advertisements containing any of the
             following are not permitted in any of the Alletre Platform sections:
           </p>
-          <ul className="list-disc ml-6">
+          <ul className="list-disc ml-3 sm:ml-6">
             <li>
               <span className="font-semibold">Prohibited Materials</span>
               <ul className="list-disc mt-1 ml-6">
@@ -1149,7 +1250,7 @@ const TermAndConditionData = [
             نرجو ملاحظة أنه لا يسمح بالمشاركات أو الإعلانات التي تحتوي على أي
             مما يلي في أي من أقسام منصة "Alletre":
           </p>
-          <ul className="list-disc ml-6">
+          <ul className="list-disc ml-3 sm:ml-6">
             <li>
               <span className="font-semibold">المواد الممنوعة:</span>
               <ul className="list-disc mt-1 ml-6">

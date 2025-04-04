@@ -15,10 +15,34 @@ const SliderRow = () => {
       prevEl: `.swiper-button-prev`,
     },
     slidesPerView: "auto",
-    mousewheel: true, // Enables mouse wheel scrolling
-    keyboard: true, // Allows navigation with keyboard arrows
-    simulateTouch: true, // Enable touch-like interactions for mouse drag
-    freeMode: true, // Allows free scrolling of slides
+    mousewheel: true,
+    keyboard: true,
+    simulateTouch: true,
+    freeMode: {
+      enabled: true,
+      momentum: true,
+      momentumRatio: 0.8,
+      momentumBounce: false
+    },
+    spaceBetween: 8, // Add small gap between slides
+    breakpoints: {
+      320: {
+        slidesPerView: "auto",
+        spaceBetween: 8
+      },
+      640: {
+        slidesPerView: "auto",
+        spaceBetween: 12
+      },
+      768: {
+        slidesPerView: "auto",
+        spaceBetween: 16
+      },
+      1024: {
+        slidesPerView: "auto",
+        spaceBetween: 24
+      }
+    }
   };
 
   const swiperRef4 = useRef(null);
@@ -50,7 +74,7 @@ const SliderRow = () => {
         <div className="ezd-snapslider">
           <div className="snapslider-wrapper">
             <div ref={swiperRef4} className="snapslider-overflow">
-              <div className="snapslider-scroll swiper-wrapper py-2 px-6 md:px-10 lg:px-20 flex justify-center gap-x-0.5 sm:gap-x-3 md:gap-x-6">
+              <div className="snapslider-scroll swiper-wrapper py-2 px-2 sm:px-4 md:px-6 lg:px-10 flex justify-start sm:justify-center">
                 {GatogryOptions?.map((e, index) => (
                   <div key={index} className="snapslider-card swiper-slide">
                     <Category
@@ -59,8 +83,8 @@ const SliderRow = () => {
                       id={e?.value}
                       className={
                         GatogryOptions.length <= 4
-                          ? "md:px-20 lg:px-40"
-                          : " md:px-13 lg:px-14 "
+                          ? "px-2 sm:px-4 md:px-8 lg:px-12"
+                          : "px-2 sm:px-3 md:px-6 lg:px-8"
                       }
                       // isSubCategory={false}
                     />
