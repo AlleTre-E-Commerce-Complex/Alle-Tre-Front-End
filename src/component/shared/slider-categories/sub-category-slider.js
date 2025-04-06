@@ -67,7 +67,7 @@ const  SubCategorySlider = ({ SubGatogryOptions }) => {
                   className={`swiper-button-next absolute top-1/2 -right-3`}
                 >
                   <img
-                    className="rounded-full cursor-pointer z-20 w-14 h-14 "
+                    className="rounded-full cursor-pointer z-20 w-14 h-14  overflow-hidden md:block hidden"
                     src={AnglesRight}
                     alt="AnglesRight"
                   />
@@ -77,7 +77,7 @@ const  SubCategorySlider = ({ SubGatogryOptions }) => {
                   className={`swiper-button-prev absolute top-1/2 -left-5 `}
                 >
                   <img
-                    className="rounded-full  cursor-pointer z-20 w-14 h-14 "
+                    className="rounded-full  cursor-pointer z-20 w-14 h-14 overflow-hidden md:block hidden "
                     src={AnglesLeft}
                     alt="AnglesLeft"
                   />

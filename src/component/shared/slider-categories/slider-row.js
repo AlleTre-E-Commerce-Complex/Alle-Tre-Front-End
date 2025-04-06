@@ -22,27 +22,27 @@ const SliderRow = () => {
       enabled: true,
       momentum: true,
       momentumRatio: 0.8,
-      momentumBounce: false
+      momentumBounce: false,
     },
     spaceBetween: 8, // Add small gap between slides
     breakpoints: {
       320: {
         slidesPerView: "auto",
-        spaceBetween: 8
+        spaceBetween: 8,
       },
       640: {
         slidesPerView: "auto",
-        spaceBetween: 12
+        spaceBetween: 12,
       },
       768: {
         slidesPerView: "auto",
-        spaceBetween: 16
+        spaceBetween: 16,
       },
       1024: {
         slidesPerView: "auto",
-        spaceBetween: 24
-      }
-    }
+        spaceBetween: 24,
+      },
+    },
   };
 
   const swiperRef4 = useRef(null);
@@ -91,27 +91,27 @@ const SliderRow = () => {
                   </div>
                 ))}
               </div>
-              <button
-                onClick={handleNextClick}
-                className="swiper-button-next absolute top-1/2 -right-3 overflow-hidden md:block hidden"
-              >
-                <img
-                  className="rounded-full cursor-pointer z-20 w-14 h-14"
-                  src={AnglesRight}
-                  alt="Next"
-                />
-              </button>
-              <button
-                onClick={handlePrevClick}
-                className="swiper-button-prev absolute top-1/2 -left-5 overflow-hidden md:block hidden"
-              >
-                <img
-                  className="rounded-full cursor-pointer z-20 w-14 h-14"
-                  src={AnglesLeft}
-                  alt="Previous"
-                />
-              </button>
             </div>
+            <button
+              onClick={handleNextClick}
+              className="swiper-button-next absolute top-1/2 -right-3 overflow-hidden md:block hidden"
+            >
+              <img
+                className="rounded-full cursor-pointer z-20 w-14 h-14"
+                src={AnglesRight}
+                alt="Next"
+              />
+            </button>
+            <button
+              onClick={handlePrevClick}
+              className="swiper-button-prev absolute top-1/2 -left-5 overflow-hidden md:block hidden"
+            >
+              <img
+                className="rounded-full cursor-pointer z-20 w-14 h-14"
+                src={AnglesLeft}
+                alt="Previous"
+              />
+            </button>
           </div>
         </div>
       </div>
