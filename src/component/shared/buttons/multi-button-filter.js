@@ -3,12 +3,11 @@ import useFilter from "../../../hooks/use-filter";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
-import { useHistory, useLocation } from "react-router-dom";
-import queryString from "query-string";
+import DropdownButtonFilter from "./dropdown-button-filter";
 
 const removeFromArray = (arr, v) => arr.filter((a) => a !== v);
 
-const MultiButtonFilter = ({ name, values = [], myRef, isMultiSelect = true }) => {
+const MultiButtonFilter = ({ name, values = [], myRef, isMultiSelect = true ,subCategories}) => {
   const [filter, setFilter] = useFilter(name, isMultiSelect ? [] : "");
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -51,24 +50,46 @@ const MultiButtonFilter = ({ name, values = [], myRef, isMultiSelect = true }) =
       <h4 className="text-md font-semibold text-gray-900 mb-3">
         {selectedContent[localizationKeys.selectOptions]}
       </h4>
-      <div className="grid grid-cols-2 gap-2 px-0.1 max-h-[350px] overflow-y-auto">
+      <div className="flex flex-col space-y-2 max-h-[350px] overflow-y-auto pr-2">
         {filterValues.map((v, index) => (
-          <div key={index} className="flex items-center justify-center ">
-            <p
+          <React.Fragment key={index}>
+            <div 
               onClick={() => handleClick(v?.value.toString())}
-              className={`text-base font-medium p-1 cursor-pointer rounded-lg transition-all duration-200 ease-in-out
-                min-w-[100px] min-h-[45px] flex justify-center items-center text-center
+              className={`flex items-center p-3 cursor-pointer rounded-lg transition-all duration-200 ease-in-out
                 ${
                   isSelected(v?.value.toString())
                     ? "bg-primary text-white shadow-md"
-                    : "bg-white text-gray-dark border border-gray-300 hover:border-primary hover:text-primary"
+                    : "bg-white text-gray-dark border border-gray-300 hover:bg-gray-50 hover:border-primary"
                 }`}
             >
-              {v?.name || ''}
-            </p>
-          </div>
+              <div className="flex items-center space-x-3 w-full">
+                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center relative
+                  ${isSelected(v?.value.toString()) 
+                    ? "border-white" 
+                    : "border-gray-400"
+                  }`}
+                >
+                  {isSelected(v?.value.toString()) && (
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white" />
+                  )}
+                </div>
+                <span className="font-medium">{v?.name || ''}</span>
+              </div>
+            </div>
+            {isSelected(v?.value.toString()) && subCategories?.length > 0 && (
+              <div className="ml-6">
+                <DropdownButtonFilter 
+                  myRef={myRef}
+                  values={subCategories}
+                  name='subCategory'
+                  isMultiSelect={true}
+                />
+              </div>
+            )}
+          </React.Fragment>
         ))}
       </div>
+      
     </div>
   );
 };

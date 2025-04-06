@@ -89,7 +89,7 @@ const FilterSections = ({
         {isFullPage && (
           <div className="flex items-center justify-between">
             <div className={`${lang === "ar" ? "ml-2" : "mr-2"}`}>
-              <ShowFilterSections />
+              {/* <ShowFilterSections /> */}
             </div>
             <div className="flex items-center gap-3">
               <button
@@ -149,13 +149,9 @@ const FilterSections = ({
                   name="categories"
                   isMultiSelect={true}
                   myRef={myRef}
+                  subCategories={SubGatogryOptions}
                 />
-                {SubGatogryOptions.length > 0 && <DropdownButtonFilter 
-                myRef={myRef}
-                values={SubGatogryOptions}
-                name='subCategory'
-                isMultiSelect={true}
-                />}
+           
               </motion.div>
             )}
           </div>
