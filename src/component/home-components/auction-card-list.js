@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import AuctionsStatus from "component/shared/status/auctions-status";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
@@ -19,6 +19,25 @@ import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import { Open } from "../../redux-store/auth-model-slice";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+
+
+const CountdownDisplay = memo(
+  ({ timeLeft, status, formattedstartDate, selectedContent }) => {
+    const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
+      } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+    ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} : 
+    ${timeLeft.seconds} ${selectedContent[localizationKeys.sec]}`;
+
+    return (
+      <p
+        className={`${timeLeft.days === 0 ? "text-red" : "text-gray-800"} font-medium text-[10px] md:text-xs`}
+      >
+
+        {status === "IN_SCHEDULED" ? formattedstartDate : formattedTimeLeft}
+      </p>
+    );
+  }
+);
 
 const AuctionCardList = ({
   title,
@@ -54,9 +73,8 @@ const AuctionCardList = ({
   const dispatch = useDispatch();
   const { user } = useAuthState();
   const { run } = useAxios([]);
-  const formattedTimeLeft = `${timeLeft.days} ${
-    selectedContent[localizationKeys.days]
-  } :
+  const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
+    } :
   ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
   ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
@@ -66,11 +84,9 @@ const AuctionCardList = ({
 
   const startDate = useCountdown(StartDate);
 
-  const formattedstartDate = `${startDate.days} ${
-    selectedContent[localizationKeys.days]
-  } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
-    startDate.minutes
-  } ${selectedContent[localizationKeys.min]}`;
+  const formattedstartDate = `${startDate.days} ${selectedContent[localizationKeys.days]
+    } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${startDate.minutes
+    } ${selectedContent[localizationKeys.min]}`;
 
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
@@ -173,8 +189,8 @@ const AuctionCardList = ({
               setWatshlist(false);
               toast.success(
                 selectedContent[
-                  localizationKeys
-                    .thisAuctionDeleteFromWatchListBeenSuccessfully
+                localizationKeys
+                  .thisAuctionDeleteFromWatchListBeenSuccessfully
                 ]
               );
               onReload();
@@ -191,7 +207,7 @@ const AuctionCardList = ({
               setWatshlist(true);
               toast.success(
                 selectedContent[
-                  localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
+                localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
                 ]
               );
               onReload();
@@ -226,41 +242,15 @@ const AuctionCardList = ({
       }
     } else history.push(routes.app.homeDetails(id));
   };
-  return (
-    <div className="cursor-pointer relative group">
-      <div
-        className={`absolute top-4 ${
-          lang === "ar" ? "left-4" : "right-5"
-        } z-20 flex items-center  ${
-          lang === "ar" ? "gap-2" : "space-x-1 sm:space-x-2"
-        } opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-      >
-        {!isMyAuction && (
-          <button
-            onClick={() => handelAddNewWatshlist(auctionId)}
-            className="border-primary border-2 bg-white/90 rounded-lg w-8 h-9 md:w-11 md:h-12 group/watchlist hover:bg-primary transition-all duration-300 flex items-center justify-center"
-          >
-            {isWatshlist ? (
-              <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-lg md:text-xl" />
-            ) : (
-              <BsBookmark className="text-primary group-hover/watchlist:text-white text-lg md:text-xl" />
-            )}
-          </button>
-        )}
-        <div
-          onClick={handleShare}
-          className="border-primary border-2 bg-white/90 rounded-lg w-8 h-9 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 flex items-center justify-center"
-        >
-          <RiShareForwardFill className="text-primary group-hover/share:text-white text-lg md:text-2xl" />
-        </div>
-      </div>
 
-      <div
-        className="h-auto my-2 rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg group p-4 flex flex-col mb-4"
-        onClick={() => handelGoDetails(auctionId)}
-      >
-        <div className="flex gap-x-4">
-          <div className="w-[103px] min-w-[80px] md:h-[112px] h-[100px] rounded-lg relative overflow-hidden bg-gray-light">
+  return (
+    <div className="flex flex-wrap gap-4">
+      <div className="flex-1 my-2 group rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 lg:p-3">
+        <div
+          className="flex flex-col sm:flex-row gap-4"
+          onClick={() => handelGoDetails(auctionId)}
+        >
+          <div className="w-full sm:w-[200px] h-[180px] sm:h-[150px] min-w-full sm:min-w-[200px] rounded-lg relative overflow-hidden bg-gray-light">
             <div
               className="relative w-full h-full group"
               onTouchStart={handleTouchStart}
@@ -274,8 +264,8 @@ const AuctionCardList = ({
               )}
 
               {Array.isArray(adsImg) &&
-              adsImg.length > 0 &&
-              adsImg[currentImageIndex]?.imageLink ? (
+                adsImg.length > 0 &&
+                adsImg[currentImageIndex]?.imageLink ? (
                 <>
                   {adsImg[currentImageIndex].imagePath.match(
                     /\.(mp4|mov|webm|avi)$/i
@@ -320,7 +310,7 @@ const AuctionCardList = ({
                       alt={`Product ${currentImageIndex + 1}`}
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = "fallback-image-url.jpg"; // You can add a fallback image URL here
+                        e.target.src = "fallback-image-url.jpg";
                       }}
                       onLoad={handleImageLoad}
                     />
@@ -357,11 +347,10 @@ const AuctionCardList = ({
                               e.stopPropagation();
                               setCurrentImageIndex(index);
                             }}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                              index === currentImageIndex
+                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${index === currentImageIndex
                                 ? "bg-primary w-3"
                                 : "bg-white/80 hover:bg-white"
-                            }`}
+                              }`}
                           />
                         ))}
                       </div>
@@ -371,108 +360,148 @@ const AuctionCardList = ({
               ) : null}
             </div>
             <div
-              onClick={() => handelGoDetails(auctionId)}
-              className="price-button-list absolute bg-[#e04868] text-white text-[10px] top-0 w-auto px-1 h-[24px] flex justify-center items-center"
+              className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-1 sm:px-2 py-0.5 sm:py-1 rounded-br-lg shadow-sm backdrop-blur-sm bg-opacity-75"
             >
-              {formattedBid}
+              <span className="text-white font-medium text-xs sm:text-sm flex items-center">
+
+                {formattedBid}
+              </span>
             </div>
           </div>
 
           <div className="flex-1">
-            <div className="flex items-center  gap-x-2 md:gap-x-4">
-              <h1
-                onClick={() => handelGoDetails(auctionId)}
-                className="text-gray-dark font-medium text-sm pt-3 min-h-[30px] line-clamp-2 overflow-hidden"
-              >
-                {truncateString(title, 70)}
-              </h1>
-              <div
-                className={`state-button px-2 mt-2 py-0.5 rounded-md text-xs font-medium text-white transition-colors ${
-                  usageStatus === "NEW"
-                    ? "bg-primary-light hover:bg-primary bg-opacity-70"
-                    : "bg-gray-dark hover:bg-gray-verydark bg-opacity-80"
-                }`}
-              >
-                {usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
-              </div>
-            </div>
-
-            <div>
-              <AuctionsStatus status={status} small />
-            </div>
-            <div className="flex md:gap-x-10 gap-x-6 mt-2">
-              <div>
-                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-                  {selectedContent[localizationKeys.totalBids]}
-                </h6>
-                <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
-                  {totalBods || 0} {selectedContent[localizationKeys.bid]}
-                </p>
-              </div>
-              <div>
-                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-                  {selectedContent[localizationKeys.lastestPrice]}
-                </h6>
-                <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
-                  {formattedBid}
-                </p>
-              </div>
-              <div>
-                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-                  {status === "IN_SCHEDULED"
-                    ? selectedContent[localizationKeys.startDate]
-                    : status === "SOLD"
-                    ? "Purchased Time"
-                    : selectedContent[localizationKeys.endingTime]}
-                </h6>
-                {status === "SOLD" ? (
-                  <p className="font-medium md:text-[10px] text-[8px] text-gray-dark">
-                    {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
-                  </p>
-                ) : (
-                  <p
-                    className={`${
-                      timeLeft.days === 0 ? "text-red" : "text-gray-dark"
-                    } font-medium md:text-[10px] text-[8px] `}
-                  >
-                    {status === "IN_SCHEDULED"
-                      ? formattedstartDate
-                      : formattedTimeLeft}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-2 flex flex-col md:flex-row md:justify-end gap-2">
-          <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
-            {isMyAuction ? (
-              <button
-                onClick={() => handelGoDetails(auctionId)}
-                className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-[32px] rounded-lg"
-              >
-                {selectedContent[localizationKeys.viewDetails]}
-              </button>
-            ) : (
-              <>
-                {isBuyNowAllowed && (
-                  <button
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1">
+                <div className="flex items-start justify-between gap-2">
+                  <h1
                     onClick={() => handelGoDetails(auctionId)}
-                    className="border-primary border-[1px] text-primary w-full md:w-[128px] h-[32px] rounded-lg"
+                    className="text-gray-dark font-medium text-sm sm:text-lg flex-1 line-clamp-2 hover:text-primary transition-colors duration-200 w-20 h-12"
                   >
-                    {selectedContent[localizationKeys.buyNow]}
+                    {truncateString(title, 70)}
+                  </h1>
+                  <div
+                    className={`state-button shrink-0 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium transition-colors ${usageStatus === "NEW"
+                      ? "bg-primary-veryLight text-primary"
+                      : "bg-gray-100 text-gray-700"
+                      }`}
+                  >
+                    {usageStatus?.charAt(0).toUpperCase() +
+                      usageStatus?.slice(1).toLowerCase()}
+                  </div>
+                </div>
+
+                <div className="mt-2">
+                  <AuctionsStatus status={status} small />
+                </div>
+
+                <div className="flex flex-wrap gap-y-3 gap-x-6 mt-3">
+                  <div className="min-w-[80px]">
+                    <h6 className="text-gray-med font-normal text-xs">
+                      {selectedContent[localizationKeys.totalBids]}
+                    </h6>
+                    <p className="text-gray-800 font-medium text-xs">
+                      {totalBods || 0} {selectedContent[localizationKeys.bid]}
+                    </p>
+                  </div>
+                  <div className="min-w-[80px]">
+                    <h6 className="text-gray-med font-normal text-xs">
+                      {selectedContent[localizationKeys.lastestPrice]}
+                    </h6>
+                    <p className="text-gray-800 font-medium text-xs">
+                      {formattedBid}
+                    </p>
+                  </div>
+                  <div className="min-w-[80px]">
+                    <h6 className="text-gray-med font-normal text-xs">
+                      {status === "IN_SCHEDULED"
+                        ? selectedContent[localizationKeys.startDate]
+                        : status === "SOLD"
+                          ? "Purchased Time"
+                          : selectedContent[localizationKeys.endingTime]}
+                    </h6>
+                    {status === "SOLD" ? (
+                      <p className="font-medium text-xs text-gray-dark">
+                        {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
+                      </p>
+                    ) : (
+                      <CountdownDisplay
+                        timeLeft={timeLeft}
+                        status={status}
+                        formattedstartDate={formattedstartDate}
+                        selectedContent={selectedContent}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex sm:flex-col gap-2 sm:h-full sm:justify-between">
+                <div className="hidden sm:block" /> {/* This pushes content to the bottom on desktop */}
+                <div className="flex sm:flex-col gap-2">
+                  {!isMyAuction && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handelAddNewWatshlist(auctionId);
+                      }}
+                      className="border-primary border-2 bg-white rounded-lg w-9 h-9 sm:w-10 sm:h-10 group/watchlist hover:bg-primary transition-all duration-300 flex items-center justify-center"
+                    >
+                      {isWatshlist ? (
+                        <BsBookmarkFill className="text-primary group-hover/watchlist:text-white text-lg sm:text-xl" />
+                      ) : (
+                        <BsBookmark className="text-primary group-hover/watchlist:text-white text-lg sm:text-xl" />
+                      )}
+                    </button>
+                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShare();
+                    }}
+                    className="border-primary border-2 bg-white rounded-lg w-9 h-9 sm:w-10 sm:h-10 group/share hover:bg-primary transition-all duration-300 flex items-center justify-center"
+                  >
+                    <RiShareForwardFill className="text-primary group-hover/share:text-white text-xl sm:text-2xl" />
                   </button>
-                )}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-row  gap-2 w-full">
+              {isMyAuction ? (
                 <button
-                  onClick={() => handelGoDetails(auctionId)}
-                  className="bg-primary hover:bg-primary-dark text-white w-full md:w-[128px] h-[32px] rounded-lg"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handelGoDetails(auctionId);
+                  }}
+                  className="flex-1 bg-primary hover:bg-primary-dark text-white px-6 h-11 rounded-lg text-sm font-medium"
                 >
-                  {selectedContent[localizationKeys.bidNow]}
+                  {selectedContent[localizationKeys.viewDetails]}
                 </button>
-              </>
-            )}
+              ) : (
+                <>
+                  {isBuyNowAllowed && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handelGoDetails(auctionId);
+                      }}
+                      className="flex-1 border-primary border text-primary px-6 h-11 rounded-lg text-sm font-medium hover:bg-primary hover:text-white transition-colors"
+                    >
+                      {selectedContent[localizationKeys.buyNow]}
+                    </button>
+                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handelGoDetails(auctionId);
+                    }}
+                    className="flex-1 bg-primary hover:bg-primary-dark text-white px-6 h-11 rounded-lg text-sm font-medium"
+                  >
+                    {selectedContent[localizationKeys.bidNow]}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

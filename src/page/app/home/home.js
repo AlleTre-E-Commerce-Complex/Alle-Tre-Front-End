@@ -401,7 +401,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <NoAuctionImg className="w-40 h-40" />
                           </div>
                         ) : (
-                          <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                          <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-2">
                             {mainAuctions?.map((e) => (
                               <AuctionCardList
                                 key={e?.id}
@@ -505,7 +505,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             <NoProductImg className="w-40 h-40" />
                           </div>
                         ) : (
-                          <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                          <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-2">
                             {listedProducts?.map((e) => (
                               <ProductCardList
                                 key={e?.id}
@@ -646,7 +646,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
                           {selectedContent[localizationKeys.trendingAuctions]}
                         </h1>
-                        <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-2">
                           {mainAuctions?.map((e) => (
                             <AuctionCardList
                               key={e?.id}
@@ -686,7 +686,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         >
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
-                        <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                        <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-2">
                           {listedProducts?.map((e) => (
                             <ProductCardList
                               key={e?.id}
