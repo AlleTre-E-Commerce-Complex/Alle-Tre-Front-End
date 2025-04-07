@@ -119,10 +119,10 @@ const ar = {
   [localizationKeys.bid]: "مزاد",
   [localizationKeys.startingTime]: "وقت البدء",
   [localizationKeys.endingTime]: "نهاية الوقت",
-  [localizationKeys.days]: "أيام",
-  [localizationKeys.hrs]: "ساعة",
-  [localizationKeys.min]: "دقيقة",
-  [localizationKeys.sec]: "ثانية",
+  [localizationKeys.days]: "ي",
+  [localizationKeys.hrs]: "س",
+  [localizationKeys.min]: "د",
+  [localizationKeys.sec]: "ث",
   [localizationKeys.achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily]:
     "حقق مزادًا مثيرًا للإعجاب من الناحية المرئية وجذب المزايدين بسهولة أكبر.",
   [localizationKeys.YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder]:

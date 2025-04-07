@@ -124,10 +124,10 @@ const en = {
     "Your pending payments are listed here",
   [localizationKeys.bid]: "Bid",
   [localizationKeys.endingTime]: "Ending Time",
-  [localizationKeys.days]: "days",
-  [localizationKeys.hrs]: "hrs",
-  [localizationKeys.min]: "min",
-  [localizationKeys.sec]: "sec",
+  [localizationKeys.days]: "d",
+  [localizationKeys.hrs]: "h",
+  [localizationKeys.min]: "m",
+  [localizationKeys.sec]: "s",
   [localizationKeys.achieveVisuallyImpressiveAuctionAttractBiddersMoreEasily]:
     "Achieve a visually impressive auction & attract bidders more easily.",
   [localizationKeys.YouCanMakeYourAuctionAdPriorityAndDisplayItFirstToIncreaseBidder]:

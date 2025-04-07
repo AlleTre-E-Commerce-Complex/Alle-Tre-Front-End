@@ -9,6 +9,8 @@ import { truncateString } from "../../utils/truncate-string";
 import { RiShareForwardFill } from "react-icons/ri";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { BsPlayCircleFill } from "react-icons/bs";
+import { GoLocation } from "react-icons/go";
+import { useAuthState } from "context/auth-context";
 
 const ProductCardList = ({
   adsImg,
@@ -19,6 +21,7 @@ const ProductCardList = ({
   id,
   createdAt,
   usageStatus,
+  userId,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
@@ -28,6 +31,7 @@ const ProductCardList = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
+  const { user } = useAuthState();
 
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -136,24 +140,10 @@ const ProductCardList = ({
     history.push(routes.app.listProduct.details(id));
   };
   return (
-    <div className="flex flex-wrap gap-4 ">
-      <div className="flex-1 my-2 group rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 lg:p-3 flex flex-col justify-between">
-        <div className="relative group">
-          <div
-            className={`absolute ${
-              lang === "ar" ? "left-0" : "right-0"
-            }  top-0 z-30  space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-          >
-            <div
-              onClick={handleShare}
-              className="border-primary border-2 border-solid bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
-            >
-              <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg md:text-2xl " />
-            </div>
-          </div>
-        </div>
-        <div className="flex  gap-x-4" onClick={() => handelGoDetails(id)}>
-          <div className="w-[103px] min-w-[80px] md:h-[112px] h-[100px] rounded-lg relative overflow-hidden bg-gray-light ">
+    <div className="flex flex-wrap gap-4">
+      <div className="flex-1 my-2 group rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 lg:p-3">
+        <div className="flex gap-3 sm:gap-4" onClick={() => handelGoDetails(id)}>
+          <div className="w-[120px] h-[120px] sm:w-[200px] sm:h-[150px] min-w-[120px] sm:min-w-[200px] rounded-lg relative overflow-hidden bg-gray-light">
             <div
               className="relative w-full h-full group"
               onTouchStart={handleTouchStart}
@@ -167,8 +157,8 @@ const ProductCardList = ({
               )}
 
               {Array.isArray(adsImg) &&
-              adsImg.length > 0 &&
-              adsImg[currentImageIndex]?.imageLink ? (
+                adsImg.length > 0 &&
+                adsImg[currentImageIndex]?.imageLink ? (
                 <>
                   {adsImg[currentImageIndex].imagePath.match(
                     /\.(mp4|mov|webm|avi)$/i
@@ -227,7 +217,7 @@ const ProductCardList = ({
                             e.stopPropagation();
                             handlePrevious();
                           }}
-                          className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.3 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                          className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
                         >
                           <MdNavigateBefore className="flex justify-center text-white text-sm item-center" />
                         </button>
@@ -237,7 +227,7 @@ const ProductCardList = ({
                             e.stopPropagation();
                             handleNext();
                           }}
-                          className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.3 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                          className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
                         >
                           <MdNavigateNext className="flex justify-center text-white text-sm item-center" />
                         </button>
@@ -250,11 +240,10 @@ const ProductCardList = ({
                               e.stopPropagation();
                               setCurrentImageIndex(index);
                             }}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                              index === currentImageIndex
-                                ? "bg-primary w-3"
-                                : "bg-white/80 hover:bg-white"
-                            }`}
+                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${index === currentImageIndex
+                              ? "bg-primary w-3"
+                              : "bg-white/80 hover:bg-white"
+                              }`}
                           />
                         ))}
                       </div>
@@ -264,85 +253,93 @@ const ProductCardList = ({
               ) : null}
             </div>
             <div
-              onClick={() => handelGoDetails(id)}
-              className="price-button-list absolute  bg-[#e04868]  text-white text-[10px] top-0 w-auto px-1  h-[24px] flex justify-center items-center "
+              className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-1 sm:px-2 py-0.5 sm:py-1 rounded-br-lg shadow-sm backdrop-blur-sm bg-opacity-75"
             >
-              {formatCurrency(price)}
+              <span className="text-white font-medium text-xs sm:text-sm flex items-center">
+                <span className="text-white/80 text-[10px] sm:text-xs mr-1">AED</span>
+                {formatCurrency(price).replace('AED', '')}
+              </span>
             </div>
           </div>
 
-          <div>
-            <div className="flex items-center  gap-x-2 md:gap-x-4">
-              <h1
-                onClick={() => handelGoDetails(id)}
-                className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[40px] ltr:pr-4 rtl:pl-4 line-clamp-2 md:line-clamp-2"
-              >
-                {truncateString(title, 70)}
-              </h1>
+          <div className="flex flex-col flex-1 justify-between relative">
+            <div className="space-y-2 sm:space-y-4">
+              <div className="flex items-start justify-between gap-2">
+                <h1
+                  onClick={() => handelGoDetails(id)}
+                  className="text-gray-dark font-medium text-sm sm:text-lg flex-1 line-clamp-2 hover:text-primary transition-colors duration-200"
+                >
+                  {truncateString(title, 70)}
+                </h1>
+                <div
+                  className={`state-button shrink-0 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium transition-colors ${usageStatus === "NEW"
+                    ? "bg-primary-veryLight text-primary"
+                    : "bg-gray-100 text-gray-700"
+                    }`}
+                >
+                  {usageStatus?.charAt(0).toUpperCase() +
+                    usageStatus?.slice(1).toLowerCase()}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 sm:grid sm:grid-cols-3 sm:gap-4">
+                <div className="flex items-center justify-start sm:flex sm:items-start sm:gap-2 h-[40px] sm:h-auto gap-1">
+                  <GoLocation className="text-primary/80 text-[12px] sm:text-sm mt-0.5" />
+                  <p
+                    className="text-gray-dark font-medium text-xs sm:text-sm"
+                    onClick={() => handelGoDetails(id)}
+                  >
+                    {city}, {country}
+                  </p>
+                </div>
+                <div className="flex items-center justify-end sm:flex sm:items-start sm:justify-start sm:gap-2">
+                  <p
+                    className="text-gray-dark font-medium text-xs sm:text-sm"
+                    onClick={() => handelGoDetails(id)}
+                  >
+                    {difference.days > 0 && `${difference.days} days ago`}
+                    {difference.days === 0 &&
+                      difference.weeks > 0 &&
+                      `${difference.weeks} weeks ago`}
+                    {difference.weeks === 0 &&
+                      difference.months > 0 &&
+                      `${difference.months} months ago`}
+                    {difference.days === 0 &&
+                      difference.weeks === 0 &&
+                      difference.months === 0 &&
+                      `Today`}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-2 sm:mt-4 flex items-center justify-between">
+              {user?.id === userId ? (
+                <button
+                  onClick={() => handelGoDetails(id)}
+                  className="bg-primary-veryLight text-primary hover:bg-primary hover:text-white rounded-lg w-full py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1"
+                >
+                  {selectedContent[localizationKeys.viewDetails]}
+                </button>
+              ) : (
+                <button
+                  onClick={() => handelGoDetails(id)}
+                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
+                >
+                  {selectedContent[localizationKeys.buyNow]}
+                </button>
+              )}
+
               <div
-                className={`state-button px-2 mt-2 py-0.5 rounded-md text-xs font-medium text-white transition-colors ${
-                  usageStatus === "NEW"
-                    ? "bg-primary-light hover:bg-primary bg-opacity-70"
-                    : "bg-gray-dark hover:bg-gray-verydark bg-opacity-80"
-                }`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleShare();
+                }}
+                className="border-primary border-2 border-solid bg-white/90 rounded-lg w-7 h-7 sm:w-9 sm:h-10 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center ml-2"
               >
-                {usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
+                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-sm sm:text-lg" />
               </div>
             </div>
-            <div className="flex md:gap-x-10 gap-x-6 mt-4">
-              <div>
-                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-                  {selectedContent[localizationKeys.lastestPrice]}
-                </h6>
-                <p className="text-gray-dark font-medium md:text-[10px] text-[8px]">
-                  {formatCurrency(price)}
-                </p>
-              </div>
-              <div>
-                <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-                  {selectedContent[localizationKeys.location]}
-                </h6>
-                <p
-                  className="text-gray-dark font-medium md:text-[11px] text-[10px] mt-1"
-                  onClick={() => handelGoDetails(id)}
-                >
-                  {city}, {country}
-                </p>
-              </div>
-              <div>
-                <h6 className="text-gray-med font-normal md:text-[11px] text-[8px]">
-                  {selectedContent[localizationKeys.listed]}
-                </h6>
-                <p
-                  className="text-gray-dark font-medium md:text-[11px] text-[8px]"
-                  onClick={() => handelGoDetails(id)}
-                >
-                  {difference.days > 0 && `${difference.days} days ago`}
-                  {difference.days === 0 &&
-                    difference.weeks > 0 &&
-                    `${difference.weeks} weeks ago`}
-                  {difference.weeks === 0 &&
-                    difference.months > 0 &&
-                    `${difference.months} months ago`}
-                  {difference.days === 0 &&
-                    difference.weeks === 0 &&
-                    difference.months === 0 &&
-                    `Today`}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative my-auto flex flex-col mx-2">
-          <div className="flex  justify-end">
-            <button
-              onClick={() => handelGoDetails(id)}
-              className="border-primary border-[1px] text-primary w-full md:w-[128px] h-[32px] rounded-lg"
-            >
-              {selectedContent[localizationKeys.buyNow]}
-            </button>
           </div>
         </div>
       </div>

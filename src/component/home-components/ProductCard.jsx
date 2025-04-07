@@ -120,47 +120,47 @@ const ProductCard = ({
     }
   };
 
-  const getTimeDifference = (createdAt) => {
-    const createdDate = new Date(createdAt);
-    const today = new Date();
-    const diffInMs = today - createdDate;
+  // const getTimeDifference = (createdAt) => {
+  //   const createdDate = new Date(createdAt);
+  //   const today = new Date();
+  //   const diffInMs = today - createdDate;
 
-    // Convert milliseconds to different units
-    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-    const diffInWeeks = Math.floor(diffInDays / 7);
-    const diffInMonths = Math.floor(diffInDays / 30);
-    const diffInYears = Math.floor(diffInDays / 365);
+  //   // Convert milliseconds to different units
+  //   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  //   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  //   const diffInWeeks = Math.floor(diffInDays / 7);
+  //   const diffInMonths = Math.floor(diffInDays / 30);
+  //   const diffInYears = Math.floor(diffInDays / 365);
 
-    return {
-      hours: diffInHours,
-      days: diffInDays,
-      weeks: diffInWeeks,
-      months: diffInMonths,
-      years: diffInYears,
-    };
-  };
+  //   return {
+  //     hours: diffInHours,
+  //     days: diffInDays,
+  //     weeks: diffInWeeks,
+  //     months: diffInMonths,
+  //     years: diffInYears,
+  //   };
+  // };
 
-  const getTimeDisplay = (diff) => {
-    if (diff.years > 0) {
-      return `${diff.years} ${diff.years === 1 ? "year" : "years"} ago`;
-    }
-    if (diff.months > 0) {
-      return `${diff.months} ${diff.months === 1 ? "month" : "months"} ago`;
-    }
-    if (diff.weeks > 0) {
-      return `${diff.weeks} ${diff.weeks === 1 ? "week" : "weeks"} ago`;
-    }
-    if (diff.days > 0) {
-      return `${diff.days} ${diff.days === 1 ? "day" : "days"} ago`;
-    }
-    if (diff.hours > 0) {
-      return `${diff.hours} ${diff.hours === 1 ? "hour" : "hours"} ago`;
-    }
-    return "Just now";
-  };
+  // const getTimeDisplay = (diff) => {
+  //   if (diff.years > 0) {
+  //     return `${diff.years} ${diff.years === 1 ? "year" : "years"} ago`;
+  //   }
+  //   if (diff.months > 0) {
+  //     return `${diff.months} ${diff.months === 1 ? "month" : "months"} ago`;
+  //   }
+  //   if (diff.weeks > 0) {
+  //     return `${diff.weeks} ${diff.weeks === 1 ? "week" : "weeks"} ago`;
+  //   }
+  //   if (diff.days > 0) {
+  //     return `${diff.days} ${diff.days === 1 ? "day" : "days"} ago`;
+  //   }
+  //   if (diff.hours > 0) {
+  //     return `${diff.hours} ${diff.hours === 1 ? "hour" : "hours"} ago`;
+  //   }
+  //   return "Just now";
+  // };
 
-  const difference = getTimeDifference(createdAt);
+  // const difference = getTimeDifference(createdAt);
 
   const handelGoDetails = (id) => {
     history.push(routes.app.listProduct.details(id));
@@ -168,32 +168,29 @@ const ProductCard = ({
 
   return (
     <div>
-      <div className="group w-full max-w-[240px] h-auto rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 sm:p-4 cursor-pointer">
-        <div className="w-full group rounded-lg bg-[#F9F9F9] relative overflow-hidden aspect-[10/10]">
-          <div className=" group">
+      <div className="group w-full max-w-[240px] h-[400px] rounded-lg bg-white border border-gray-100 hover:border-primary hover:border-opacity-20 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden p-1 sm:p-2">
+        <div className="relative  w-full h-[70%] bg-primary-veryLight">
+          <div className="absolute right-2 top-2 z-30 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300">
             <div
-              className={`absolute ${
-                lang === "ar" ? "left-0" : "right-0"
-              }  top-0 z-30  space-x-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleShare();
+              }}
+              className="bg-white shadow-md rounded-full w-8 h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
             >
-              <div
-                onClick={handleShare}
-                className="border-primary border-2 border-solid bg-white/90 rounded-lg w-9 h-10 md:w-11 md:h-12 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
-              >
-                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-2xl md:text-2xl" />
-              </div>
+              <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg" />
             </div>
           </div>
 
           <div
-            className="relative w-full h-full group"
+            className="relative w-full h-full"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
             onClick={() => handelGoDetails(id)}
           >
             {isLoading && (
-              <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-10">
+              <div className="absolute inset-0 rflex flex-col justify-center items-center bg-black bg-opacity-50 z-10">
                 <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
               </div>
             )}
@@ -205,7 +202,7 @@ const ProductCard = ({
                 {adsImg[currentImageIndex].imagePath.match(
                   /\.(mp4|mov|webm|avi)$/i
                 ) ? (
-                  <div className="relative w-full h-full group/video">
+                  <div className="relative w-full h-full group/video rounded-lg">
                     <video
                       key={adsImg[currentImageIndex].imageLink}
                       onClick={() => handelGoDetails(id)}
@@ -240,7 +237,7 @@ const ProductCard = ({
                 ) : (
                   <img
                     onClick={() => handelGoDetails(id)}
-                    className="w-full h-full object-cover transition-transform duration-300"
+                    className="w-full h-full  rounded-lg object-cover transition-transform duration-300"
                     src={adsImg[currentImageIndex].imageLink}
                     alt={`Product ${currentImageIndex + 1}`}
                     onError={(e) => {
@@ -259,7 +256,7 @@ const ProductCard = ({
                           e.stopPropagation();
                           handlePrevious();
                         }}
-                        className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                        className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-1 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
                       >
                         <MdNavigateBefore className="flex justify-center text-white text-md item-center" />
                       </button>
@@ -268,7 +265,7 @@ const ProductCard = ({
                           e.stopPropagation();
                           handleNext();
                         }}
-                        className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
+                        className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-1 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
                       >
                         <MdNavigateNext className="flex justify-center text-white text-md item-center" />
                       </button>
@@ -295,75 +292,54 @@ const ProductCard = ({
             ) : null}
           </div>
           <div
-            onClick={() => handelGoDetails(id)}
-            className="price-button absolute bg-[#e04868]  text-white text-[10px] top-0 w-auto px-2 h-[24px] flex justify-center items-center"
+            className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-2 sm:px-3 py-1.5 sm:py-2 rounded-md shadow-sm backdrop-blur-sm bg-opacity-75"
           >
-            {formatCurrency(price)}
+            <span className="text-white font-medium text-xs sm:text-sm flex items-center">
+              <span className="text-white/80 text-[10px] sm:text-xs mr-1">AED</span>
+              {formatCurrency(price).replace('AED', '')}
+            </span>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-x-2">
-          <h1
-            onClick={() => handelGoDetails(id)}
-            className="text-gray-dark font-medium text-sm pt-3 mb-2 min-h-[45px] line-clamp-2 overflow-hidden cursor-pointer"
-          >
-            {truncateString(title, 250)}
-          </h1>
-          <div
-            className={`state-button px-2 py-0.5 rounded-md text-xs font-medium text-white transition-colors ${
-              usageStatus === "NEW"
-                ? "bg-primary-light hover:bg-primary bg-opacity-70"
-                : "bg-gray-dark hover:bg-gray-verydark bg-opacity-80"
-            }`}
-          >
-            {usageStatus?.charAt(0).toUpperCase() +
-              usageStatus?.slice(1).toLowerCase()}
-          </div>
-        </div>
-
-        <div className="mt-0" onClick={() => handelGoDetails(id)}>
-          <div className="h-[40px]">
-            <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-              {selectedContent[localizationKeys.location]}
-            </h6>
-            <p
-              className="text-gray-dark font-medium md:text-[11px] text-[10px] mt-0.2 line-clamp-2"
+        <div className="flex flex-col h-[30%] p-3 justify-between">
+          <div className="space-y-2">
+            <h1
               onClick={() => handelGoDetails(id)}
+              className="text-gray-800 font-medium text-base leading-tight line-clamp-2 hover:text-primary transition-colors duration-200 cursor-pointer"
             >
-              {city}, {country}
-            </p>
-          </div>
-          <div className="flex justify-between mt-3">
-            <div>
-              <h6 className="text-gray-med font-normal md:text-[10px] text-[8px]">
-                {selectedContent[localizationKeys.listed]}
-              </h6>
-              <p
-                className="text-gray-dark font-medium md:text-[10px] text-[8px]"
-                onClick={() => handelGoDetails(id)}
+              {truncateString(title, 100)}
+            </h1>
+            
+            <div className="flex items-center gap-2">
+              <div
+                className={`px-2 py-0.5 rounded-md text-xs font-medium ${
+                  usageStatus === "NEW"
+                    ? "bg-primary-veryLight text-primary"
+                    : "bg-gray-100 text-gray-700"
+                }`}
               >
-                {getTimeDisplay(difference)}
-              </p>
+                {usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
+              </div>
             </div>
           </div>
-          {user?.id === userId ? (
-            <div className="mt-2 flex items-end justify-end">
+
+          <div className="mt-auto">
+            {user?.id === userId ? (
               <button
                 onClick={() => handelGoDetails(id)}
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center "
+                className="bg-primary-veryLight text-primary hover:bg-primary hover:text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1"
               >
                 {selectedContent[localizationKeys.viewDetails]}
               </button>
-            </div>
-          ) : (
-            <div className="mt-3 flex items-end justify-end">
+            ) : (
               <button
                 onClick={() => handelGoDetails(id)}
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full sm:w-auto h-[30px] sm:h-[35px] px-4 sm:px-6 text-sm sm:text-base flex items-center justify-center"
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
               >
                 {selectedContent[localizationKeys.buyNow]}
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
