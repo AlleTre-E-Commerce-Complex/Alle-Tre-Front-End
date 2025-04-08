@@ -446,7 +446,7 @@ const AuctionCard = ({
             <div className="flex items-center gap-1">
               {hideButton ? (
                 <img
-                  className="w-3 h-3 sm:w-4 sm:h-4 object-contain"
+                  className="w-20 h-20 sm:w-24 sm:h-16 object-contain"
                   src={expiredImg}
                   alt="Footer Banner"
                 />
@@ -486,7 +486,7 @@ const AuctionCard = ({
               )}
             </div>
             <div className="flex items-center gap-0.5 sm:gap-1">
-              {status === "IN_SCHEDULED" ? <img
+              {status === "IN_SCHEDULED" || status === "SOLD" || status === "EXPIRED"  ? <img
                 src={Hummer}
                 alt="Gavel Icon"
                 className="w-3 h-3 sm:w-4 sm:h-4 object-contain"
