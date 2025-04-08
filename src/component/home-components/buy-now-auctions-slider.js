@@ -118,12 +118,12 @@ const BuyNowAuctionsSlider = () => {
                     auctions?.length > 4
                       ? ""
                       : "md:justify-center justify-start"
-                  } snapslider-scroll swiper-wrapper gap-1`}
+                  } snapslider-scroll swiper-wrapper gap-3`}
                 >
                   {auctions?.map((e) => (
                     <div
                       key={e?.id}
-                      className="snapslider-card swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%]"
+                      className="snapslider-card swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%]"
                     >
                       <AuctionCard
                         isExpired={e?.status === "EXPIRED"}

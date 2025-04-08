@@ -411,7 +411,7 @@ const AuctionCard = ({
           ) : null}
         </div>
 
-        <div className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-2 py-1 sm:px-3 sm:py-2 rounded-md shadow-sm backdrop-blur-sm bg-opacity-75">
+        <div className="absolute top-0  z-20 bg-gradient-to-r from-primary to-primary-light px-2 py-1 sm:px-3 sm:py-2 rounded-md shadow-sm backdrop-blur-sm bg-opacity-75">
           <span className="text-white font-medium text-[11px] sm:text-sm flex items-center">
             <span className="text-white/80 text-[9px] sm:text-xs mr-1">
               AED
