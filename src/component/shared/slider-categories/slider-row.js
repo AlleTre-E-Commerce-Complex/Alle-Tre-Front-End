@@ -67,7 +67,6 @@ const SliderRow = () => {
   const handlePrevClick = () => {
     swiper4?.slidePrev();
   };
-
   return (
     <div className="px-4 mx-auto">
       <div className="ezd-content relative ltr:ml-2 rtl:mr-2">
