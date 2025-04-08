@@ -109,28 +109,28 @@ const UpComingAuctionsSlider = () => {
                     auctions?.length > 4
                       ? ""
                       : "md:justify-center justify-start"
-                  } snapslider-scroll swiper-wrapper gap-4`}
+                  } snapslider-scroll swiper-wrapper gap-3`}
                 >
                   {auctions?.map((e) => (
-                    <div
-                      key={e?.id}
-                      className="snapslider-card swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%]"
-                    >
-                      <AuctionCard
-                        auctionId={e?.id}
-                        startBidAmount={e?.startBidAmount || e?.acceptedAmount}
-                        title={e?.product?.title}
-                        status={e?.status}
-                        adsImg={e?.product?.images}
-                        totalBods={e?._count?.bids}
-                        WatshlistState={e?.isSaved}
-                        endingTime={e?.expiryDate}
-                        StartDate={e?.startDate}
-                        isBuyNowAllowed={e?.isBuyNowAllowed}
-                        isMyAuction={e?.isMyAuction}
-                        usageStatus={e?.product?.usageStatus}
-                      />
-                    </div>
+                   <div
+                   key={e?.id}
+                   className="snapslider-card swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%]"
+                 >
+                   <AuctionCard
+                     auctionId={e?.id}
+                     startBidAmount={e?.startBidAmount || e?.acceptedAmount}
+                     title={e?.product?.title}
+                     status={e?.status}
+                     adsImg={e?.product?.images}
+                     totalBods={e?._count?.bids}
+                     WatshlistState={e?.isSaved}
+                     endingTime={e?.expiryDate}
+                     StartDate={e?.startDate}
+                     isBuyNowAllowed={e?.isBuyNowAllowed}
+                     isMyAuction={e?.isMyAuction}
+                     usageStatus={e?.product?.usageStatus}
+                   />
+                 </div>
                   ))}
                   {auctions?.length >= 2 && (
                     <div className="swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%] flex items-center justify-center">
