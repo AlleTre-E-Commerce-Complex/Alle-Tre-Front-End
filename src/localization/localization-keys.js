@@ -200,6 +200,7 @@ const localizationKeys = {
   shopSustainableChoosePreOwned: "shopSustainableChoosePreOwned",
   getItNewFeeltheDifference: "getItNewFeeltheDifference",
   locationNotAvailable: "locationNotAvailable",
+  selectSubCategory:"selectSubCategory",
   // create auctions
   drafts: "drafts",
   proceed: "proceed",

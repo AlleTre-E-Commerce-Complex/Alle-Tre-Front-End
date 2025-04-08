@@ -219,7 +219,8 @@ const ar = {
   [localizationKeys.getItNewFeeltheDifference]:
     "احصل عليه جديدًا، واشعر بالفرق",
   [localizationKeys.locationNotAvailable]: "الموقع غير متاح",
-
+  [localizationKeys.selectSubCategory]:"حدد الفئة الفرعية",
+  
   // create auctions
   [localizationKeys.drafts]: "المسودات",
   [localizationKeys.proceed]: "متابعة",

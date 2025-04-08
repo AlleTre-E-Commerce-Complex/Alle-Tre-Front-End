@@ -1,19 +1,23 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import routes from "../../../routes";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
-import queryString from "query-string";
+import { useAuthState } from "../../../context/auth-context";
+import { useDispatch } from "react-redux";
+import { Open } from "../../../redux-store/auth-model-slice";
+
 const Category = ({ img, title, id, view, className, isSubCategory }) => {
   const history = useHistory();
-  const {search} = useLocation()
-   // Parse existing query parameters
+  const { user } = useAuthState();
+  const dispatch = useDispatch();
  
-   const handleClick = ()=>{
-    {
-      history.push(`${routes.app.categories(title, id)}?categories[]=${id}`)
+  const handleClick = () => {
+    if (user) {
+      history.push(`${routes.app.categories(title, id)}?categories[]=${id}`);
+    } else {
+      dispatch(Open());
     }
-   
-   }
+  };
   
   return (
     <div

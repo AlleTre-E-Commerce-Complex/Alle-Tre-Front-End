@@ -71,8 +71,7 @@ const DropdownButtonFilter = ({ name, values = [], myRef, isMultiSelect = true }
   return (
     <div className="mb-4">
       <h4 className="text-sm font-semibold text-gray-700 mb-3">
-        {/* {selectedContent[localizationKeys.selectOptions]} */}
-        Select Sub-category
+        {selectedContent[localizationKeys.selectSubCategory]}
       </h4>
       <div className="flex flex-col space-y-2 max-h-[350px] overflow-y-auto pr-2">
         <AnimatePresence>

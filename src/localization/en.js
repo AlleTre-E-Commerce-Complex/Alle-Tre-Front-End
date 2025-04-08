@@ -224,6 +224,7 @@ const en = {
   [localizationKeys.getItNewFeeltheDifference]:
     "Get It New, Feel the Difference",
   [localizationKeys.locationNotAvailable]: "Location not available",
+  [localizationKeys.selectSubCategory]:"Select sub-category",
   // create auctions
   [localizationKeys.drafts]: "Drafts",
   [localizationKeys.proceed]: "Proceed",
