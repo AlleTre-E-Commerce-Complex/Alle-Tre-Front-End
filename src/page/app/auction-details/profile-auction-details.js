@@ -33,7 +33,6 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
         authAxios
           .get(api.app.auctions.getAuctionsDetails(auctionId))
           .then((res) => {
-            console.log('***---***>>> ',res.data.data)
             setAuctionsDetailsData(res?.data?.data);
           })
       );

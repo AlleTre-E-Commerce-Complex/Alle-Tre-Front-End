@@ -168,7 +168,6 @@ const ImgSlider = ({
           text: "Check out this auction!",
           url: shareUrl,
         });
-        console.log("Post shared successfully!");
       } catch (error) {
         console.error("Error sharing post:", error);
       }

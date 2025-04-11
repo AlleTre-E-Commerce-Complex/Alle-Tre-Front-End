@@ -29,7 +29,6 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   const { run: runAuctions, isLoading: isLoadingAuctions } = useAxios([]);
 
   const [auctions, setAuctions] = useState();
-  console.log("auction", auctions)
   const [pagination, setpagination] = useState();
   const [page, setPage] = useState(20);
   // const loginData = useSelector((state) => state?.loginDate?.loginDate);
@@ -135,7 +134,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
             >
               {auctions?.map((e) => (
                 <div
-                  className="snapslider-card swiper-slide"
+                  className="snapslider-card swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%]"
                   onClick={() =>
                     window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
                   }

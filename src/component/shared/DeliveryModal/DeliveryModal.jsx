@@ -11,7 +11,6 @@ import LodingTestAllatre from '../lotties-file/loding-test-allatre.js';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.js';
 import routes from 'routes.js';
 const DeliveryModal = ({open,setOpen,auctionId,setSuccessModal}) => {
-    console.log('auctoin Id in Delevery  Modal:',auctionId);
     const [message,setMessage]= useState('')
     const [lang] = useLanguage(""); 
     const selectedContent = content[lang];
@@ -30,7 +29,6 @@ const DeliveryModal = ({open,setOpen,auctionId,setSuccessModal}) => {
             authAxios
             .put(api.app.auctions.send_item_forDelivery(auctionId),{message})
             .then(res=>{
-                console.log('response from backnend of complaints : ',res)
                 if(res?.data?.success){
                     // setSuccessModal(true) 
                     toast.success(selectedContent[localizationKeys.YouHaveSuccessfullyNotifiedTheWinner]);

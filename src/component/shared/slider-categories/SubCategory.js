@@ -10,7 +10,6 @@ const SubCategory = ({ img, title, id, view, className }) => {
 
 
    const handleClick = ()=>{
-    console.log('subCategory queery "',parsed)
     let updatedQuery = { ...parsed };
     updatedQuery.subCategory = [id];
     const updatedSearch = queryString.stringify(updatedQuery, { arrayFormat: "bracket" });

@@ -52,10 +52,8 @@ const Footer = () => {
             selectedContent[localizationKeys.subscribedSuccessfully]
           );
         }
-        console.log("response of runNewSubscriber", res);
       })
       .catch((err) => {
-        console.log("error of runNewSubscriber", err);
         if (lang === "en") {
           toast.error(err.message.en || err.message[0]);
         } else {

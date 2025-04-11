@@ -52,7 +52,6 @@ const AuctionDetails = () => {
    const productDetailsint = useSelector(
       (state) => state.productDetails.productDetails
     );
-    console.log('productDetails ***>:', productDetailsint)
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
   useEffect(() => {
     runPofile(

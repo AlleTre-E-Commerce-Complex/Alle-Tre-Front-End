@@ -324,7 +324,7 @@ const ProductCard = ({
           </div>
 
           <div className="mt-auto">
-            {user?.id === userId ? (
+            {/* {user?.id === userId ? (
               <button
                 onClick={() => handelGoDetails(id)}
                 className="bg-primary-veryLight text-primary hover:bg-primary hover:text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1"
@@ -338,7 +338,13 @@ const ProductCard = ({
               >
                 {selectedContent[localizationKeys.buyNow]}
               </button>
-            )}
+            )} */}
+               <button
+                onClick={() => handelGoDetails(id)}
+              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
+              >
+                {selectedContent[localizationKeys.viewDetails]}
+              </button>
           </div>
         </div>
       </div>

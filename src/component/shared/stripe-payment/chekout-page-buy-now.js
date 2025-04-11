@@ -63,7 +63,6 @@ export default function CheckoutPageBuyNow() {
             // const pendingPeymentData =
             //   await authAxios.get(`${api.app.auctions.isPendingPayment(
             //     auctionId,'BUY_NOW_PURCHASE')}`)
-            // console.log('pending payment data :',pendingPeymentData)
 
             // if(!pendingPeymentData?.data?.isPendingPaymentData){
             run(

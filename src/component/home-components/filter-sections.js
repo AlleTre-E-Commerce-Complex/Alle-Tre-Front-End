@@ -35,15 +35,7 @@ const FilterSections = ({
   const categories = parsed?.categories || [];
   const category_Id = categories.length >= 1  ? categories[categories.length -1] : null
   const { SubGatogryOptions } = useGetSubGatogry(category_Id);
-  
-  
-  const [subCategories, setSubCategories] = useState([]);
-  // console.log("Fetched subcategories:1--", category_Id);
-  // console.log("Fetched subcategories:2", GatogryOptions);
-  // console.log("Fetched subcategories:3", SubGatogryOptions);
-  
-  
-  const toggleSection = (section) => {
+    const toggleSection = (section) => {
     setExpandedSections((prevState) => ({
       ...prevState,
       [section]: !prevState[section],

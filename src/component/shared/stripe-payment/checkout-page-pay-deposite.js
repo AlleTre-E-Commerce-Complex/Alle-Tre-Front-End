@@ -140,7 +140,6 @@ export default function CheckoutPagePayDeposite() {
         api.app.auctions.PayDepositByBidder(auctionId),
         body
       );
-      console.log("Stripe payment response:", response);
       if (response?.data?.data?.clientSecret) {
         setClientSecret(response.data.data.clientSecret);
       } else {

@@ -1370,7 +1370,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
               checked={isTermsAccepted}
               onChange={openModal}
             />
-            {selectedContent[localizationKeys.iAcceptThe]}
+            {selectedContent[localizationKeys.iAcceptThe]}{" "}
             <span
               className="text-blue-500 underline cursor-pointer"
               onClick={openModal}

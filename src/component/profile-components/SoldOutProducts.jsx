@@ -21,13 +21,7 @@ const SoldOutProducts = () => {
 
   const [activeProductData, setActiveProductData] = useState();
   const [totalPages, setTotalPages] = useState();
-
   const { search } = useLocation();
-
-  const [openIncreaseModel, setOpenIncreaseModel] = useState(false);
-  const [auctionId, setAuctionId] = useState();
-  const [compareValue, setCompareValue] = useState();
-
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
     if (search.includes("page") && search.includes("perPage"))
@@ -35,7 +29,6 @@ const SoldOutProducts = () => {
         authAxios
           .get(`${api.app.productListing.getAllListedProducts}${search}&status=SOLD_OUT`)
           .then((res) => {
-            console.log('inprogress product : ',res.data.data)
             setActiveProductData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
