@@ -109,7 +109,6 @@ const ShippingDetails = () => {
   // }
 
   const creatAuction = () => {
-    console.log('location Id :',locationId)
     if (locationId) {
       const formData = new FormData();
       formData.append("product[title]", productDetailsInt.itemName);
@@ -208,7 +207,6 @@ const ShippingDetails = () => {
 
       // Handle images once
       const images = productDetailsInt.images || [];
-      console.log("iiii", images.length);
       images.forEach(image => {
         if (image && image.file) {
           formData.append("images", image.file);
@@ -265,10 +263,6 @@ const ShippingDetails = () => {
         );
       }
       if(productDetailsInt?.auctionState === 'LISTED_PRODUCT'){
-        console.log('LISTED_PRODUCT :',productDetailsInt)
-        for (let [key, value] of formData.entries()) {
-          console.log(`** ${key}: ${value}`);
-        }
         runCreatAuction(
           authAxios
             .post(
@@ -288,7 +282,6 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
-              console.log('convert product to auction err in shipping details :', err)
               toast.error(selectedContent[localizationKeys.oops]);
             })
         );
@@ -332,7 +325,6 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
-              console.log('create auction error : ',err)
               toast.error(
                 // err?.response?.data?.message.map((e) => e) ||
                 //   err?.message.map((e) => e) ||

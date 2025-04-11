@@ -61,7 +61,6 @@ class Auth {
       }
 
       if (this.hasExpired(accessToken)) {
-        console.log("Token expired or expiring soon, refreshing...");
         return await this.refreshToken();
       }
 

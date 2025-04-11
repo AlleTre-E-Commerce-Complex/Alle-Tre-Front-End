@@ -52,11 +52,11 @@ const Purchased = () => {
             </div>
           </div>
         ) : (
-          <h1 className="text-gray-dark pb-14 pt-4 font-bold">
+          <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
             {selectedContent[localizationKeys.yourPurchased]}
           </h1>
         )}
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 sm:gap-5 gap-3 h-fit mx-auto pb-5 animate-in ">
+          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-30 mx-auto w-full">
           {purchased?.map((e) => (
             <AuctionCard
               auctionId={e?.id}
@@ -70,6 +70,7 @@ const Purchased = () => {
               onReload={onReload}
               latestBidAmount={e?.bids[0]?.amount}
               startBidAmount={e?.startBidAmount}
+              usageStatus={e?.product?.usageStatus}
             />
           ))}
         </div>

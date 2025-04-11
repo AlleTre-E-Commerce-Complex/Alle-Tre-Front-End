@@ -57,7 +57,6 @@ const DeliverySelectingModal = ({
         })
       )
         .then((res) => {
-          console.log("DeliverySelectingModal", res);
           if (res.data.success) {
             toast.success("Delivery type updated successfully");
             setOpen(false);

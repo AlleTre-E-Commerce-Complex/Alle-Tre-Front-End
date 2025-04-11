@@ -22,9 +22,7 @@ const UploadeImgModel = ({
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [editor, setEditor] = useState(null);
-  const [dropzoneActive, setDropzoneActive] = useState(true);
-  console.log('is image modal open:',IsImgModelOpen,open)
-  
+  const [dropzoneActive, setDropzoneActive] = useState(true);  
   const handleDrop = (acceptedFiles) => {
     setFile(acceptedFiles[0]);
     setDropzoneActive(false);

@@ -24,20 +24,23 @@ import expiredImg from "../../../src/assets/images/expired auction-03.svg";
 import Hummer from "../../../src/assets/icons/bid.png";
 import Timer from "../../../src/assets/icons/time.png";
 import HummerGif from "../../../src/assets/icons/HummerGifFin.gif";
-import TimmerGif from "../../../src/assets/icons/timer2.gif"
+import TimmerGif from "../../../src/assets/icons/timer2.gif";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import { BiSolidPurchaseTag } from "react-icons/bi";
 
 const CountdownDisplay = memo(
   ({ timeLeft, status, formattedstartDate, selectedContent }) => {
-    const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
-      } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+    const formattedTimeLeft = `${timeLeft.days} ${
+      selectedContent[localizationKeys.days]
+    } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
     ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} : 
     ${timeLeft.seconds} ${selectedContent[localizationKeys.sec]}`;
 
     return (
       <p
-        className={`${timeLeft.days === 0 ? "text-red" : "text-gray-800"
-          } font-medium text-[10px] md:text-xs`}
+        className={`${
+          timeLeft.days === 0 ? "text-red" : "text-gray-800"
+        } font-medium text-[10px] md:text-xs`}
       >
         {status === "IN_SCHEDULED" ? formattedstartDate : formattedTimeLeft}
       </p>
@@ -148,10 +151,13 @@ const AuctionCard = ({
     latestBidAmount || CurrentBid || startBidAmount
   );
 
-  const formattedstartDate = `${startDate.days} ${selectedContent[localizationKeys.days]
-    } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${startDate.minutes
-    } ${selectedContent[localizationKeys.min]}: ${startDate.seconds} ${selectedContent[localizationKeys.sec]
-    }`;
+  const formattedstartDate = `${startDate.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    startDate.minutes
+  } ${selectedContent[localizationKeys.min]}: ${startDate.seconds} ${
+    selectedContent[localizationKeys.sec]
+  }`;
 
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
@@ -206,8 +212,8 @@ const AuctionCard = ({
               setWatshlist(false);
               toast.success(
                 selectedContent[
-                localizationKeys
-                  .thisAuctionDeleteFromWatchListBeenSuccessfully
+                  localizationKeys
+                    .thisAuctionDeleteFromWatchListBeenSuccessfully
                 ]
               );
               onReload();
@@ -224,7 +230,7 @@ const AuctionCard = ({
               setWatshlist(true);
               toast.success(
                 selectedContent[
-                localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
+                  localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
                 ]
               );
               onReload();
@@ -283,9 +289,11 @@ const AuctionCard = ({
       <div className="relative w-full h-[63%]  bg-primary-veryLight rounded-lg">
         <div className="relative group">
           <div
-            className={`absolute top-2 ${lang === "ar" ? "left-2" : "right-2"
-              } z-20 flex items-center ${lang === "ar" ? "gap-2" : "space-x-2"
-              } opacity-100 transition-opacity duration-300`}
+            className={`absolute top-2 ${
+              lang === "ar" ? "left-2" : "right-2"
+            } z-20 flex items-center ${
+              lang === "ar" ? "gap-2" : "space-x-2"
+            } opacity-100 transition-opacity duration-300`}
           >
             {!isMyAuction && (
               <button
@@ -328,8 +336,8 @@ const AuctionCard = ({
           )}
 
           {Array.isArray(adsImg) &&
-            adsImg.length > 0 &&
-            adsImg[currentImageIndex]?.imageLink ? (
+          adsImg.length > 0 &&
+          adsImg[currentImageIndex]?.imageLink ? (
             <>
               {adsImg[currentImageIndex].imagePath.match(
                 /\.(mp4|mov|webm|avi)$/i
@@ -398,10 +406,11 @@ const AuctionCard = ({
                           e.stopPropagation();
                           setCurrentImageIndex(index);
                         }}
-                        className={`w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full transition-all duration-300 cursor-pointer ${index === currentImageIndex
-                          ? "bg-primary w-2.5 sm:w-3"
-                          : "bg-white/80 hover:bg-white"
-                          }`}
+                        className={`w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                          index === currentImageIndex
+                            ? "bg-primary w-2.5 sm:w-3"
+                            : "bg-white/80 hover:bg-white"
+                        }`}
                       />
                     ))}
                   </div>
@@ -423,18 +432,19 @@ const AuctionCard = ({
 
       <div className="flex flex-col h-[40%] justify-between py-1.5 sm:py-2">
         <div className="space-y-1.5 sm:space-y-2">
-          <div className="flex items-start justify-between gap-1.5 sm:gap-2">
-            <h1
-              onClick={() => handelGoDetails(auctionId)}
-              className="text-gray-dark font-medium text-sm sm:text-sm line-clamp-2 hover:text-primary transition-colors duration-200 h-[2.8em] sm:h-11"
-            >
+          <div
+            className="flex items-start justify-between gap-1.5 sm:gap-2"
+            onClick={() => handelGoDetails(auctionId)}
+          >
+            <h1 className="text-gray-dark font-medium text-sm sm:text-sm line-clamp-2 hover:text-primary transition-colors duration-200 h-[2.8em] sm:h-11">
               {truncateString(title, 50)}
             </h1>
             <div
-              className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${usageStatus === "NEW"
-                ? "bg-primary-veryLight text-primary"
-                : "bg-gray-100 text-gray-700"
-                }`}
+              className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${
+                usageStatus === "NEW"
+                  ? "bg-primary-veryLight text-primary"
+                  : "bg-gray-100 text-gray-700"
+              }`}
             >
               {usageStatus?.charAt(0).toUpperCase() +
                 usageStatus?.slice(1).toLowerCase()}
@@ -460,19 +470,20 @@ const AuctionCard = ({
                         alt="Footer Banner"
                       />
                     ) : status === "SOLD" ? (
-                      "Purchased Time"
+                      <div className="text-primary ">
+                        <BiSolidPurchaseTag />
+                      </div>
                     ) : (
                       <img
-                         className="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] object-contain"
+                        className="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] object-contain"
                         src={TimmerGif}
                         alt="Footer Banner"
-                       
                       />
                     )}
                   </h6>
                   {status === "SOLD" ? (
-                    <p className="text-gray-800 text-[10px] sm:text-xs">
-                      {moment(PurchasedTime).local().format("MMMM, DD YYYY")}
+                    <p className="text-gray-800 text-[10px] sm:text-md text-sm py-8">
+                      {moment(PurchasedTime).local().format("DD-MMMM-YYYY")}
                     </p>
                   ) : (
                     <CountdownDisplay
@@ -486,15 +497,22 @@ const AuctionCard = ({
               )}
             </div>
             <div className="flex items-center gap-0.5 sm:gap-1">
-              {status === "IN_SCHEDULED" || status === "SOLD" || status === "EXPIRED"  ? <img
-                src={Hummer}
-                alt="Gavel Icon"
-                className="w-3 h-3 sm:w-4 sm:h-4 object-contain"
-              /> : <img
-                src={HummerGif}
-                alt="Gavel Icon"
-               className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] object-contain"
-              />}
+              {status === "IN_SCHEDULED" ||
+              status === "SOLD" ||
+              status === "EXPIRED" ||
+              status === "WAITING_FOR_PAYMENT" ? (
+                <img
+                  src={Hummer}
+                  alt="Gavel Icon"
+                  className="w-3 h-3 sm:w-4 sm:h-4 object-contain"
+                />
+              ) : (
+                <img
+                  src={HummerGif}
+                  alt="Gavel Icon"
+                  className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] object-contain"
+                />
+              )}
               <p className="text-gray-800 font-semibold text-[10px] sm:text-xs inline-block">
                 {totalBods || 0}
               </p>
@@ -522,8 +540,9 @@ const AuctionCard = ({
                 className={
                   isPurchased || isExpired
                     ? "hidden"
-                    : `flex gap-2 ${!hideButton && !isBuyNowAllowed ? "justify-end" : ""
-                    }`
+                    : `flex gap-2 ${
+                        !hideButton && !isBuyNowAllowed ? "justify-end" : ""
+                      }`
                 }
               >
                 {!hideButton && isBuyNowAllowed && (

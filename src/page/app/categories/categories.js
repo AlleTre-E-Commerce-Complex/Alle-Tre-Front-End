@@ -97,7 +97,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         const queryStr = queryString.stringify(filterParams, {
           arrayFormat: "bracket",
         });
-        console.log('filterParams 1:',queryStr)
     // if (search.includes("page") && search.includes("perPage"))
       if (user) {
         runCategories(
@@ -154,7 +153,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         const queryStr = queryString.stringify(filterParams, {
           arrayFormat: "bracket",
         });
-        console.log('filterParams :',queryStr)
     // if (search.includes("page") && search.includes("perPage"))
       if (user) {
         runCategories(

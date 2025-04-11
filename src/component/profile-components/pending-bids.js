@@ -47,7 +47,6 @@ const PendingBids = () => {
             `${api.app.auctions.getAllMyBids}${search}&status=PENDING_PAYMENT`
           )
           .then((res) => {
-            console.log('res***123>',res?.data?.data)
             setActiveAuctionData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
@@ -63,7 +62,6 @@ const PendingBids = () => {
 
   const handelCompletePayment = (auctionsId, lastPrice, location) => {
     if (JSON.parse(hasCompletedProfile)) {
-      console.log('openDeliverySelectingModal')
       setOpenDeliverySelectingModal(true)
       setAuctionId(auctionsId)
       setLastPrice(lastPrice)

@@ -35,7 +35,6 @@ const InProgressProducts = () => {
         authAxios
           .get(`${api.app.productListing.getAllListedProducts}${search}&status=IN_PROGRESS`)
           .then((res) => {
-            console.log('inprogress product : ',res.data.data)
             setActiveProductData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })

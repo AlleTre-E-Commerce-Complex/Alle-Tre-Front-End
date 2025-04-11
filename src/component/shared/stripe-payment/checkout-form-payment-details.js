@@ -83,7 +83,6 @@ export default function CheckoutFormPaymentDetails({
     // redirected to the `return_url`.
 
     if (error.type === "card_error" || error.type === "validation_error") {
-      console.log("stripe error :", error);
       toast.error(error.message);
     } else {
       toast.error("An unexpected error occurred.");
