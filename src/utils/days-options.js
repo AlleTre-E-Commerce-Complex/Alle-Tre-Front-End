@@ -5,4 +5,5 @@ export const daysOptions = [
   { key: "4", text: "4 days", value: "4" },
   { key: "5", text: "5 days", value: "5" },
   { key: "6", text: "6 days", value: "6" },
+  { key: "7", text: "7 days", value: "7" },
 ];
