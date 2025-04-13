@@ -320,7 +320,7 @@ const AuctionDetails = () => {
                             label={
                               selectedContent[localizationKeys.auctionDuration]
                             }
-                            placeholder="3 days"
+                            placeholder="6 days"
                             options={daysOptions}
                           />
                         </div>
