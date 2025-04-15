@@ -59,6 +59,24 @@ const UpComingAuctionsSlider = () => {
     slidesPerView: "auto",
     mousewheel: true,
     keyboard: true,
+    breakpoints: {
+      320: {
+        spaceBetween: 8,
+        slidesPerView: "auto",
+      },
+      480: {
+        spaceBetween: 12,
+        slidesPerView: "auto",
+      },
+      768: {
+        spaceBetween: 16,
+        slidesPerView: "auto",
+      },
+      1024: {
+        spaceBetween: 18,
+        slidesPerView: "auto",
+      },
+    },
   };
 
   const swiperRef2 = useRef(null);
@@ -109,7 +127,7 @@ const UpComingAuctionsSlider = () => {
                     auctions?.length > 4
                       ? ""
                       : "md:justify-center justify-start"
-                  } snapslider-scroll swiper-wrapper gap-3`}
+                  } snapslider-scroll swiper-wrapper py-2`}
                 >
                   {auctions?.map((e) => (
                    <div
@@ -133,7 +151,7 @@ const UpComingAuctionsSlider = () => {
                  </div>
                   ))}
                   {auctions?.length >= 2 && (
-                    <div className="swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%] flex items-center justify-center">
+                    <div className="swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%] flex items-center justify-center">
                       <div className="text-center p-4">
                         <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
                           <svg

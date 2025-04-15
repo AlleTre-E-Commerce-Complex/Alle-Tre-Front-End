@@ -83,14 +83,32 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
     slidesPerView: "auto",
     mousewheel: true,
     keyboard: true,
+    breakpoints: {
+      320: {
+        spaceBetween: 8,
+        slidesPerView: "auto",
+      },
+      480: {
+        spaceBetween: 12,
+        slidesPerView: "auto",
+      },
+      768: {
+        spaceBetween: 16,
+        slidesPerView: "auto",
+      },
+      1024: {
+        spaceBetween: 18,
+        slidesPerView: "auto",
+      },
+    },
   };
 
-  const swiperRef6 = useRef(null);
-  const swiper6 = new Swiper(swiperRef6?.current, { ...swiperOptions });
+  const swiperRef = useRef(null);
+  const swiper = new Swiper(swiperRef?.current, { ...swiperOptions });
 
   useEffect(() => {
     return () => {
-      swiper6 && swiper6?.destroy();
+      swiper?.destroy();
     };
   }, []);
 
@@ -100,108 +118,152 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
 
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
-      swiper6?.slideNext();
+      swiper?.slideNext();
       setPage(page + 5);
-    } else swiper6?.slideNext();
+    } else swiper?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiper6?.slidePrev();
+    swiper?.slidePrev();
   };
+
   return (
-    <div
-      className={auctions?.length === 0 ? "hidden" : "ezd-content relative  "}
-    >
-      <div className="text-center">
-        <h1 className="text-gray-dark text-base font-bold">
-          {selectedContent[localizationKeys.similarProducts]}
-        </h1>
-        <p className="text-gray-med text-base font-normal">
-          {selectedContent[localizationKeys.exploreRelatedFind]}
-        </p>
-      </div>
+    <>
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
-        {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div className="ezd-snapslider pt-10">
-        <div className="snapslider-wrapper">
-          <div ref={swiperRef6} className={`snapslider-overflow`}>
-            <div
-              className={`${
-                auctions?.length > 4 ? "" : "md:justify-center justify-start"
-              } snapslider-scroll swiper-wrapper py-2`}
-            >
-              {auctions?.map((e) => (
+      {auctions?.length === 0 ? null : (
+        <div
+          className={
+            auctions?.length === 0 ? "hidden" : "ezd-content relative  "
+          }
+        >
+          <div className="text-center">
+            <h1 className="text-gray-dark text-base font-bold">
+              {selectedContent[localizationKeys.similarProducts]}
+            </h1>
+            <p className="text-gray-med text-base font-normal">
+              {selectedContent[localizationKeys.exploreRelatedFind]}
+            </p>
+          </div>
+
+          <div className="ezd-snapslider pt-10">
+            <div className="snapslider-wrapper relative ">
+              <div ref={swiperRef} className="snapslider-overflow">
                 <div
-                  className="snapslider-card swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%]"
-                  onClick={() =>
-                    window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
-                  }
+                  className={`${
+                    auctions?.length > 4
+                      ? ""
+                      : "md:justify-center justify-start"
+                  } snapslider-scroll swiper-wrapper py-2`}
                 >
-                  {isListProduct ? (
-                    <ProductCard
-                      key={e?.id}
-                      price={e?.product?.ProductListingPrice}
-                      title={e?.product?.title}
-                      adsImg={e?.product?.images}
-                      id={e?.product?.id}
-                      city={
-                        lang === "en"
-                          ? e?.location?.city?.nameEn
-                          : e?.location?.city?.nameAr
+                  {auctions?.map((e) => (
+                    <div
+                      className="snapslider-card swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%]"
+                      onClick={() =>
+                        window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
                       }
-                      country={
-                        lang === "en"
-                          ? e?.location?.country?.nameEn
-                          : e?.location?.country?.nameEn
-                      }
-                      createdAt={e?.createdAt}
-                      usageStatus={e?.product?.usageStatus}
-                    />
-                  ) : (
-                    <AuctionCard
-                      auctionId={e?.id}
-                      startBidAmount={e?.acceptedAmount || e?.startBidAmount}
-                      title={e?.product?.title}
-                      status={e?.status}
-                      adsImg={e?.product?.images}
-                      totalBods={e?._count?.bids}
-                      WatshlistState={e?.isSaved}
-                      endingTime={e?.expiryDate}
-                      isBuyNowAllowed={e?.isBuyNowAllowed}
-                      isMyAuction={e?.isMyAuction}
-                      latestBidAmount={e?.bids[0]?.amount || 0}
-                      usageStatus={e?.product?.usageStatus}
-                    />
+                    >
+                      {isListProduct ? (
+                        <ProductCard
+                          key={e?.id}
+                          price={e?.product?.ProductListingPrice}
+                          title={e?.product?.title}
+                          adsImg={e?.product?.images}
+                          id={e?.product?.id}
+                          city={
+                            lang === "en"
+                              ? e?.location?.city?.nameEn
+                              : e?.location?.city?.nameAr
+                          }
+                          country={
+                            lang === "en"
+                              ? e?.location?.country?.nameEn
+                              : e?.location?.country?.nameEn
+                          }
+                          createdAt={e?.createdAt}
+                          usageStatus={e?.product?.usageStatus}
+                        />
+                      ) : (
+                        <AuctionCard
+                          auctionId={e?.id}
+                          startBidAmount={
+                            e?.acceptedAmount || e?.startBidAmount
+                          }
+                          title={e?.product?.title}
+                          status={e?.status}
+                          adsImg={e?.product?.images}
+                          totalBods={e?._count?.bids}
+                          WatshlistState={e?.isSaved}
+                          endingTime={e?.expiryDate}
+                          StartDate={e?.startDate}
+                          isBuyNowAllowed={e?.isBuyNowAllowed}
+                          isMyAuction={e?.isMyAuction}
+                          latestBidAmount={e?.bids[0]?.amount || 0}
+                          usageStatus={e?.product?.usageStatus}
+                        />
+                      )}
+                    </div>
+                  ))}
+                   {auctions?.length >= 2 && (
+                    <div className="swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%] flex items-center justify-center">
+                      <div className="text-center p-4">
+                        <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                          <svg
+                            className="w-8 h-8 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d={
+                                lang === "ar"
+                                  ? "M19 12H5M12 19l-7-7 7-7"
+                                  : "M5 12h14M12 5l7 7-7 7"
+                              }
+                            />
+                          </svg>
+                        </div>
+                        <p className="text-gray-500 text-sm font-medium">
+                          {selectedContent[localizationKeys.noMoreAuctions]}
+                        </p>
+                      </div>
+                    </div>
                   )}
                 </div>
-              ))}
+                <button
+                  onClick={lang === "ar" ? handlePrevClick : handleNextClick}
+                  className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
+                >
+                  <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                    <img
+                      className="w-6 h-6 md:w-8 md:h-8"
+                      src={AnglesRight}
+                      alt="Next"
+                    />
+                  </div>
+                </button>
+                <button
+                  onClick={lang === "ar" ? handleNextClick : handlePrevClick}
+                  className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
+                >
+                  <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                    <img
+                      className="w-6 h-6 md:w-8 md:h-8"
+                      src={AnglesLeft}
+                      alt="Previous"
+                    />
+                  </div>
+                </button>
+              </div>
             </div>
-            <button
-              onClick={handleNextClick}
-              className={`swiper-button-next absolute top-1/2 -right-3 `}
-            >
-              <img
-                className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
-                src={AnglesRight}
-                alt="AnglesRight"
-              />
-            </button>
-            <button
-              onClick={handlePrevClick}
-              className={`swiper-button-prev absolute top-1/2 -left-5  `}
-            >
-              <img
-                className="rounded-full bg-white cursor-pointer z-20 w-14 h-14 "
-                src={AnglesLeft}
-                alt="AnglesLeft"
-              />
-            </button>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

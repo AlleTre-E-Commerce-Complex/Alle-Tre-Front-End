@@ -384,20 +384,26 @@ const ActionsRowTable = ({
               </button>
             )}
 
-            {status === "PENDING_PAYMENT" && isBankStatementUploaded && 
-            <button
-              className={`border-primary border-[1px] text-primary text-sm font-normal font-si sm:w-[228px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
-            >
-              Status : Bank statement submitted
-            </button>}
+            {status === "PENDING_PAYMENT" && isBankStatementUploaded && (
+              <button
+                className={`border-primary border-[1px] text-primary text-sm font-normal font-si sm:w-[228px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
+              >
+                Status : Bank statement submitted
+              </button>
+            )}
 
-           { !isBankStatementUploaded &&
-            <button
-              onClick={buttonActions}
-              className={`${textButton === 'Delivery by company'? 'border-secondery border-[1px] text-primary font-bold cursor-auto' : 'border-primary border-[1px] text-primary font-normal cursor-pointer' } text-sm  sm:w-[158px]  w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
-            >
-              {textButton}
-            </button>}
+            {!isBankStatementUploaded && (
+              <button
+                onClick={buttonActions}
+                className={`${
+                  textButton === "Delivery by company"
+                    ? "border-secondery border-[1px] text-primary font-bold cursor-auto"
+                    : "border-primary border-[1px] text-primary font-normal cursor-pointer"
+                } text-sm  sm:w-[158px]  w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
+              >
+                {textButton}
+              </button>
+            )}
 
             <button
               onClick={() => history.push(goToDetails)}
@@ -417,7 +423,7 @@ const ActionsRowTable = ({
               </button>
             )}
 
-            {(status === "ACTIVE" || status === "PENDING_OWNER_DEPOIST") && (
+            {(status === "ACTIVE" || status === "PENDING_OWNER_DEPOIST" ||status === "IN_SCHEDULED") && (
               <button
                 onClick={() => {
                   setCancelAuctionModal(true);
@@ -435,7 +441,7 @@ const ActionsRowTable = ({
                         ]
                       );
                 }}
-                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 mx-3 "
               >
                 {selectedContent[localizationKeys.cancelTheAuction]}
               </button>

@@ -22,7 +22,7 @@ const AuctionsStatus = ({ status, small, big, absolute }) => {
     text-xs
     ${small ? "px-2 py-0.5 text-[10px]" : ""}
     ${big ? "px-4 py-1.5 text-xs" : "px-2.5 py-1 text-[11px]"}
-    ${absolute ? "absolute" : ""}
+    ${absolute ? "absolute top-0 z-10" : ""}
   `;
 
   const statusStyles = {
