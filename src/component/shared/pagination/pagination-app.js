@@ -4,10 +4,26 @@ import useFilter from "../../../hooks/use-filter";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import "../../../../src/assets/style/pagination-app.css";
 
-const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, setListedPageNumber, perPage }) => {
-  const pageParam = type === 'auction' ? 'auctionPage' : type === "products" ? 'productPage' : 'page';
+const PaginationApp = ({
+  totalPages,
+  myRef,
+  myRef1,
+  type,
+  setAuctionPageNumber,
+  setListedPageNumber,
+  setUpcomingAuctionPageNumber,
+  perPage,
+}) => {
+  const pageParam =
+    type === "auction"
+      ? "auctionPage"
+      : type === "products"
+      ? "productPage"
+      : type === "upcomingAuction"
+      ? "UpcomingauctionPage"
+      : "page";
   const [page, setPage] = useFilter(pageParam, DEFAULT_PAGE);
-  const per_Page = perPage ? perPage : getDefaultPerPage()
+  const per_Page = perPage ? perPage : getDefaultPerPage();
   const [perpage, setPerPage] = useFilter("perPage", per_Page);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -20,8 +36,8 @@ const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, 
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [perpage, setPerPage]);
 
   const handlePageChange = (e, { activePage }) => {
@@ -31,17 +47,19 @@ const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, 
 
     // Ensure we don't exceed boundaries
     let newPage = Math.min(Math.max(1, targetPage), maxPages);
-    
+
     // Convert to string for consistency with URL parameters
     const newPageStr = newPage.toString();
-    
+
     if (newPageStr !== page) {
       setPage(newPageStr);
-      
-      if (type === 'auction') {
+
+      if (type === "auction") {
         setAuctionPageNumber(newPageStr);
-      } else if (type === 'products') {
+      } else if (type === "products") {
         setListedPageNumber(newPageStr);
+      } else if (type === "upcomingAuction") {
+        setUpcomingAuctionPageNumber(newPageStr);
       }
 
       // Smooth scroll to ref
@@ -68,8 +86,8 @@ const PaginationApp = ({ totalPages, myRef, myRef1, type, setAuctionPageNumber, 
       ellipsisItem={windowWidth < 768 ? null : undefined}
       firstItem={null}
       lastItem={null}
-      prevItem={{ 'aria-label': 'Previous page'}} 
-      nextItem={{ 'aria-label': 'Next page'}} 
+      prevItem={{ "aria-label": "Previous page" }}
+      nextItem={{ "aria-label": "Next page" }}
       secondary
       totalPages={parseInt(totalPages) || 1}
       onPageChange={handlePageChange}

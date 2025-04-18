@@ -31,7 +31,7 @@ const ProductCardList = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-  const { user } = useAuthState();
+  // const { user } = useAuthState();
 
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -142,7 +142,10 @@ const ProductCardList = ({
   return (
     <div className="flex flex-wrap gap-4">
       <div className="flex-1 my-2 group rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 lg:p-3">
-        <div className="flex gap-3 sm:gap-4" onClick={() => handelGoDetails(id)}>
+        <div
+          className="flex gap-3 sm:gap-4"
+          onClick={() => handelGoDetails(id)}
+        >
           <div className="w-[120px] h-[120px] sm:w-[200px] sm:h-[150px] min-w-[120px] sm:min-w-[200px] rounded-lg relative overflow-hidden bg-gray-light">
             <div
               className="relative w-full h-full group"
@@ -157,8 +160,8 @@ const ProductCardList = ({
               )}
 
               {Array.isArray(adsImg) &&
-                adsImg.length > 0 &&
-                adsImg[currentImageIndex]?.imageLink ? (
+              adsImg.length > 0 &&
+              adsImg[currentImageIndex]?.imageLink ? (
                 <>
                   {adsImg[currentImageIndex].imagePath.match(
                     /\.(mp4|mov|webm|avi)$/i
@@ -240,10 +243,11 @@ const ProductCardList = ({
                               e.stopPropagation();
                               setCurrentImageIndex(index);
                             }}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${index === currentImageIndex
-                              ? "bg-primary w-3"
-                              : "bg-white/80 hover:bg-white"
-                              }`}
+                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                              index === currentImageIndex
+                                ? "bg-primary w-3"
+                                : "bg-white/80 hover:bg-white"
+                            }`}
                           />
                         ))}
                       </div>
@@ -252,12 +256,12 @@ const ProductCardList = ({
                 </>
               ) : null}
             </div>
-            <div
-              className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-1 sm:px-2 py-0.5 sm:py-1 rounded-br-lg shadow-sm backdrop-blur-sm bg-opacity-75"
-            >
+            <div className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-1 sm:px-2 py-0.5 sm:py-1 rounded-br-lg shadow-sm backdrop-blur-sm bg-opacity-75">
               <span className="text-white font-medium text-xs sm:text-sm flex items-center">
-                <span className="text-white/80 text-[10px] sm:text-xs mr-1">AED</span>
-                {formatCurrency(price).replace('AED', '')}
+                <span className="text-white/80 text-[10px] sm:text-xs mr-1">
+                  AED
+                </span>
+                {formatCurrency(price).replace("AED", "")}
               </span>
             </div>
           </div>
@@ -272,17 +276,18 @@ const ProductCardList = ({
                   {truncateString(title, 70)}
                 </h1>
                 <div
-                  className={`state-button shrink-0 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium transition-colors ${usageStatus === "NEW"
-                    ? "bg-primary-veryLight text-primary"
-                    : "bg-gray-100 text-gray-700"
-                    }`}
+                  className={`state-button shrink-0 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium transition-colors ${
+                    usageStatus === "NEW"
+                      ? "bg-primary-veryLight text-primary"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
                 >
                   {usageStatus?.charAt(0).toUpperCase() +
                     usageStatus?.slice(1).toLowerCase()}
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2 sm:grid sm:grid-cols-3 sm:gap-4">
+              <div className="flex flex-col gap-2 sm:grid sm:grid-cols-3 sm:gap-6">
                 <div className="flex items-center justify-start sm:flex sm:items-start sm:gap-2 h-[40px] sm:h-auto gap-1">
                   <GoLocation className="text-primary/80 text-[12px] sm:text-sm mt-0.5" />
                   <p
@@ -314,7 +319,7 @@ const ProductCardList = ({
             </div>
 
             <div className="mt-2 sm:mt-4 flex items-center justify-between">
-              {user?.id === userId ? (
+              {/* {user?.id === userId ? (
                 <button
                   onClick={() => handelGoDetails(id)}
                   className="bg-primary-veryLight text-primary hover:bg-primary hover:text-white rounded-lg w-full py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1"
@@ -328,14 +333,19 @@ const ProductCardList = ({
                 >
                   {selectedContent[localizationKeys.buyNow]}
                 </button>
-              )}
-
+              )} */}
+              <button
+                onClick={() => handelGoDetails(id)}
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
+              >
+                {selectedContent[localizationKeys.viewDetails]}
+              </button>
               <div
                 onClick={(e) => {
                   e.stopPropagation();
                   handleShare();
                 }}
-                className="border-primary border-2 border-solid bg-white/90 rounded-lg w-7 h-7 sm:w-9 sm:h-10 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center ml-2"
+                className="border-primary border-2 border-solid bg-white/90 rounded-lg w-6 h-6 sm:w-9 sm:h-9 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center ml-2"
               >
                 <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-sm sm:text-lg" />
               </div>
