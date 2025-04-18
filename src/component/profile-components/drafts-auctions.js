@@ -13,26 +13,32 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import PaginationApp from "component/shared/pagination/pagination-app";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const DraftsAuctions = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const [draftAuctionData, setDraftAuctionData] = useState();
+  const [totalPages, setTotalPages] = useState();
 
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-
+  const { search } = useLocation();
   const history = useHistory();
 
   const { run, isLoading } = useAxios([]);
 
   useEffect(() => {
-    run(
-      authAxios.get(api.app.auctions.getAlldraft).then((res) => {
-        setDraftAuctionData(res?.data?.data);
-      })
-    );
-  }, [run, forceReload]);
+    if (search.includes("page") && search.includes("perPage")) {
+      run(
+        authAxios.get(`${api.app.auctions.getAlldraft}${search}&status=DRAFTED`).then((res) => {
+          setDraftAuctionData(res?.data?.data);
+          setTotalPages(res?.data?.pagination?.totalPages);
+        })
+      );
+    }
+  }, [run, forceReload, search]);
 
   return (
     <div className="">
@@ -72,6 +78,7 @@ const DraftsAuctions = () => {
         <div className="grid lg:grid-cols-7 md:grid-cols-4 grid-cols-2 animate-in">
           {draftAuctionData?.map((e) => (
             <DraftsItem
+              key={e?.id}
               auctionId={e?.id}
               img={e && e?.product?.images[0]?.imageLink}
               itemName={e?.product?.title}
@@ -81,6 +88,9 @@ const DraftsAuctions = () => {
           ))}
         </div>
       )}
+      <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
+        <PaginationApp totalPages={totalPages} perPage={14} />
+      </div>
     </div>
   );
 };
