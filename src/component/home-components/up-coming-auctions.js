@@ -4,7 +4,7 @@ import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
 import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
 import "./auctions-slider.scss";
 import AuctionCard from "./auction-card";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useAuthState } from "../../context/auth-context";
 import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
@@ -16,38 +16,109 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import { ReactComponent as NoUpcomingImg } from "../../../src/assets/images/noUpcoming Auction.svg";
+import AuctionCardList from "./auction-card-list";
+import PaginationApp from "../shared/pagination/pagination-app";
+import { DEFAULT_PAGE, getDefaultPerPage } from "../../constants/pagination";
+import queryString from "query-string";
 
-const UpComingAuctionsSlider = () => {
+const UpComingAuctionsSlider = (isGrid) => {
+  // const queryParams = new URLSearchParams(search);
+
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { search } = useLocation();
   const { user } = useAuthState();
+    const myRef = useRef();
   const { run: runAuctions, isLoading: isLoadingAuctions } = useAxios([]);
   const [auctions, setAuctions] = useState();
   const [pagination, setPagination] = useState();
-  const [page, setPage] = useState(20);
+  const history = useHistory();
+  const queryParams = new URLSearchParams(search);
+  const [perPage, setPerPage] = useState(Number(queryParams.get("perPage") || getDefaultPerPage()));
+  const [upcomingAuctionPageNumber, setUpcomingAuctionPageNumber] = useState(
+    Number(queryParams.get("UpcomingauctionPage") || DEFAULT_PAGE)
+  );
+  console.log("papa", pagination);
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("UpcomingauctionPage") || upcomingAuctionPageNumber);
+    let urlPerPage = Number(queryParams.get("perPage") || perPage);
+  
+    if (!queryParams.has("UpcomingauctionPage") || !queryParams.has("perPage")) {
+      queryParams.set("UpcomingauctionPage", page.toString());
+      queryParams.set("perPage", urlPerPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+        const filterParams = {
+          page: page,
+          perPage: perPage,
+          categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+          subCategory: parsed.subCategory
+            ? parsed.subCategory.map(Number)
+            : undefined,
+          brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+          sellingType: parsed.sellingType || undefined,
+          auctionStatus: parsed.auctionStatus || undefined,
+          usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+          priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+          priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+        };
+    
+        Object.keys(filterParams).forEach((key) => {
+          if (filterParams[key] === undefined) {
+            delete filterParams[key];
+          }
+        });
+    
+        const queryStr = queryString.stringify(filterParams, {
+          arrayFormat: "bracket",
+        });
     if (search.includes("page") && search.includes("perPage") && user) {
       runAuctions(
         authAxios
-          .get(`${api.app.auctions.getUpComming}?page=1&perPage=${page}`)
+          .get(`${api.app.auctions.getUpComming}?page=${page}&perPage=${urlPerPage}`)
           .then((res) => {
             setAuctions(res?.data?.data);
-            setPagination(res?.data?.pagination);
+            setPagination(res?.data?.pagination?.totalPages);
           })
       );
     } else {
       runAuctions(
         axios
-          .get(`${api.app.auctions.getUpComming}?page=1&perPage=${page}`)
+          .get(`${api.app.auctions.getUpComming}?page=${page}&perPage=${urlPerPage}`)
           .then((res) => {
             setAuctions(res?.data?.data);
-            setPagination(res?.data?.pagination);
+            setPagination(res?.data?.pagination?.totalPages);
           })
       );
     }
-  }, [page, runAuctions, search, user]);
+  }, [runAuctions, search, user, upcomingAuctionPageNumber, perPage]);
+
+  // Handler to change page and sync with URL
+  const handleUpcomingAuctionPageChange = (newPage) => {
+    setUpcomingAuctionPageNumber(Number(newPage));
+    const queryParams = new URLSearchParams(search);
+    queryParams.set("UpcomingauctionPage", newPage.toString());
+    history.replace({ search: queryParams.toString() });
+  };
+
+  // Listen for screen resize and update perPage in URL and state
+  useEffect(() => {
+    const handleResize = () => {
+      const newPerPage = Number(getDefaultPerPage());
+      if (newPerPage !== perPage) {
+        setPerPage(newPerPage);
+        const queryParams = new URLSearchParams(search);
+        queryParams.set("perPage", newPerPage.toString());
+        history.replace({ search: queryParams.toString() });
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [perPage, search, history]);
 
   const swiperOptions = {
     cssMode: true,
@@ -88,16 +159,16 @@ const UpComingAuctionsSlider = () => {
     };
   }, []);
 
-  const handleNextClick = () => {
-    if (pagination?.totalItems > pagination?.perPage) {
-      swiper2?.slideNext();
-      setPage(page + 5);
-    } else swiper2?.slideNext();
-  };
+  // const handleNextClick = () => {
+  //   if (pagination?.totalItems > pagination?.perPage) {
+  //     swiper2?.slideNext();
+  //     setPage(page + 5);
+  //   } else swiper2?.slideNext();
+  // };
 
-  const handlePrevClick = () => {
-    swiper2?.slidePrev();
-  };
+  // const handlePrevClick = () => {
+  //   swiper2?.slidePrev();
+  // };
 
   return (
     <div>
@@ -119,92 +190,64 @@ const UpComingAuctionsSlider = () => {
           <Dimmer className="bg-white/50" active={isLoadingAuctions} inverted>
             <LodingTestAllatre />
           </Dimmer>
-          <div className="ezd-snapslider pt-6 pb-4">
-            <div className="snapslider-wrapper relative px-4 md:px-8">
-              <div ref={swiperRef2} className="snapslider-overflow">
-                <div
-                  className={`${
-                    auctions?.length > 4
-                      ? ""
-                      : "md:justify-center justify-start"
-                  } snapslider-scroll swiper-wrapper py-2`}
-                >
-                  {auctions?.map((e) => (
-                   <div
-                   key={e?.id}
-                   className="snapslider-card swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%]"
-                 >
-                   <AuctionCard
-                     auctionId={e?.id}
-                     startBidAmount={e?.startBidAmount || e?.acceptedAmount}
-                     title={e?.product?.title}
-                     status={e?.status}
-                     adsImg={e?.product?.images}
-                     totalBods={e?._count?.bids}
-                     WatshlistState={e?.isSaved}
-                     endingTime={e?.expiryDate}
-                     StartDate={e?.startDate}
-                     isBuyNowAllowed={e?.isBuyNowAllowed}
-                     isMyAuction={e?.isMyAuction}
-                     usageStatus={e?.product?.usageStatus}
-                   />
-                 </div>
-                  ))}
-                  {auctions?.length >= 2 && (
-                    <div className="swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%] flex items-center justify-center">
-                      <div className="text-center p-4">
-                        <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
-                          <svg
-                            className="w-8 h-8 text-gray-400"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d={
-                                lang === "ar"
-                                  ? "M19 12H5M12 19l-7-7 7-7"
-                                  : "M5 12h14M12 5l7 7-7 7"
-                              }
-                            />
-                          </svg>
-                        </div>
-                        <p className="text-gray-500 text-sm font-medium">
-                          {selectedContent[localizationKeys.noMoreAuctions]}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                <button
-                  onClick={lang === "ar" ? handlePrevClick : handleNextClick}
-                  className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
-                >
-                  <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-                    <img
-                      className="w-6 h-6 md:w-8 md:h-8"
-                      src={AnglesRight}
-                      alt="Next"
+          <div className="pt-6 pb-4 ">
+            {isGrid.isGrid ? (
+              <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                {auctions?.map((e) => (
+                  <div key={e?.id} className="snapslider-card">
+                    <AuctionCard
+                      auctionId={e?.id}
+                      startBidAmount={e?.startBidAmount || e?.acceptedAmount}
+                      title={e?.product?.title}
+                      status={e?.status}
+                      adsImg={e?.product?.images}
+                      totalBods={e?._count?.bids}
+                      WatshlistState={e?.isSaved}
+                      endingTime={e?.expiryDate}
+                      StartDate={e?.startDate}
+                      isBuyNowAllowed={e?.isBuyNowAllowed}
+                      isMyAuction={e?.isMyAuction}
+                      usageStatus={e?.product?.usageStatus}
                     />
                   </div>
-                </button>
-                <button
-                  onClick={lang === "ar" ? handleNextClick : handlePrevClick}
-                  className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
-                >
-                  <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-                    <img
-                      className="w-6 h-6 md:w-8 md:h-8"
-                      src={AnglesLeft}
-                      alt="Previous"
-                    />
-                  </div>
-                </button>
+                ))}
               </div>
-            </div>
+            ) : (
+              <div className="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-2">
+                {auctions?.map((e) => (
+                  <AuctionCardList
+                    key={e?.id}
+                    auctionId={e?.id}
+                    price={e?.acceptedAmount || e?.startBidAmount}
+                    title={e?.product?.title}
+                    status={e?.status}
+                    adsImg={e?.product?.images}
+                    totalBods={e?._count?.bids}
+                    WatshlistState={e?.isSaved}
+                    endingTime={e?.expiryDate}
+                    StartDate={e?.startDate}
+                    isBuyNowAllowed={e?.isBuyNowAllowed}
+                    isMyAuction={e?.isMyAuction}
+                    CurrentBid={e?.currentBid?.bidAmount}
+                    startBidAmount={e?.startBidAmount}
+                    usageStatus={e?.product?.usageStatus}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Pagination for upcoming auctions */}
+          <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+            {auctions?.length !== 0 ? (
+              <PaginationApp
+                totalPages={pagination}
+                myRef={myRef}
+                perPage={perPage}
+                type={"upcomingAuction"}
+                setUpcomingAuctionPageNumber={handleUpcomingAuctionPageChange}
+                activePage={upcomingAuctionPageNumber}
+              />
+            ) : null}
           </div>
         </div>
       )}

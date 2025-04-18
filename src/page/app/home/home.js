@@ -97,7 +97,9 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       page: page,
       perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
-      subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
       brands: parsed.brands ? parsed.brands.map(Number) : undefined,
       sellingType: parsed.sellingType || undefined,
       auctionStatus: parsed.auctionStatus || undefined,
@@ -161,7 +163,9 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       page: page,
       perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
-      subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
       brands: parsed.brands ? parsed.brands.map(Number) : undefined,
       sellingType: parsed.sellingType || undefined,
       auctionStatus: parsed.auctionStatus || undefined,
@@ -388,6 +392,9 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             />
                           ) : null}
                         </div>
+                        <div>
+                          <UpComingAuctionsSlider isGrid={isGrid} />
+                        </div>
                       </div>
                     );
                   } else if (!isGrid && selectedType === "auction") {
@@ -435,6 +442,9 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               setListedPageNumber={setListedPageNumber}
                             />
                           ) : null}
+                        </div>
+                        <div>
+                          <UpComingAuctionsSlider isGrid={isGrid} />
                         </div>
                       </div>
                     );
@@ -590,9 +600,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             />
                           ) : null}
                         </div>
+                        <div>
+                          <UpComingAuctionsSlider isGrid={isGrid}/>
+                        </div>
                         <h1
                           ref={myRef1}
-                          className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                          className="pt-14 pb-4 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
                         >
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
@@ -680,9 +693,12 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             />
                           ) : null}
                         </div>
+                             <div>
+                          <UpComingAuctionsSlider isGrid={isGrid}/>
+                        </div>
                         <h1
                           ref={myRef1}
-                          className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                          className="pt-14 pb-4 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md "
                         >
                           {selectedContent[localizationKeys.listedProduct]}
                         </h1>
@@ -731,9 +747,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
               </div>
             </div>
           </div>
-          <div className="px-4 mx-auto py-10">
-            <UpComingAuctionsSlider />
-          </div>
+
           <div className="px-4 mx-auto py-10">
             <BuyNowAuctionsSlider />
           </div>

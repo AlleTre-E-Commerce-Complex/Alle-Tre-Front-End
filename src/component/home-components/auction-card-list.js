@@ -73,10 +73,10 @@ const AuctionCardList = ({
   const dispatch = useDispatch();
   const { user } = useAuthState();
   const { run } = useAxios([]);
-  const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
-    } :
-  ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
-  ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
+  // const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
+  //   } :
+  // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+  // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
   const formattedBid = formatCurrency(
     latestBidAmount || CurrentBid || startBidAmount

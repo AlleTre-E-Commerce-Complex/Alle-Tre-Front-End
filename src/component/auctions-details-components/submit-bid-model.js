@@ -102,7 +102,7 @@ const SubmitBidModel = ({
           <Button
             loading={isLoading}
             onClick={() => handelSubmitBid()}
-            className="w-full md:w-[200px] h-[40px] md:h-[48px] rounded-lg bg-primary hover:bg-primary-dark text-white opacity-100 ltr:font-serifEN rtl:font-serifAR text-sm md:text-base"
+            className="w-full md:w-[200px] h-[40px] md:h-[48px] rounded-lg bg-primary hover:bg-primary-dark text-white opacity-100 ltr:font-serifEN rtl:font-serifAR text-xs md:text-sm"
           >
             {`${selectedContent[localizationKeys.pay]} ${
               isDepostPay
