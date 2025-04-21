@@ -232,6 +232,7 @@ const ar = {
   [localizationKeys.confirmDeletedraft]: "تأكيد حذف المسودة",
   [localizationKeys.cancel]: "إلغاء",
   [localizationKeys.logOut]: "تسجيل الخروج",
+  [localizationKeys.updatedSuccessfully]:"تم تحديث المزاد بنجاح",
   [localizationKeys.areYouSureYouWantToLogOut]:
     "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   [localizationKeys.confirmLogout]: "تأكيد تسجيل الخروج",
@@ -292,6 +293,8 @@ const ar = {
   [localizationKeys.fileConversionFailed]:"فشل تحويل الملف",
   [localizationKeys.setAsCover]: "تعيين كصورة غلاف",
   [localizationKeys.cover]: "صورة غلاف",
+  [localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction]:"تم تعطيل تحرير الصور والمستندات أثناء تحديث المزاد",
+  [localizationKeys.editingDisabled]:"تم تعطيل التحرير",
   //List product
   [localizationKeys.call]: "يتصل",
   [localizationKeys.chat]: "محادثة",
