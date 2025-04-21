@@ -237,6 +237,7 @@ const en = {
     "Are you sure you want to delete this draft",
   [localizationKeys.cancel]: "Cancel",
   [localizationKeys.logOut]: "Log Out",
+  [localizationKeys.updatedSuccessfully]:"Auction updated successfully",
   [localizationKeys.areYouSureYouWantToLogOut]:
     "Are you sure you want to log out?",
   [localizationKeys.confirmLogout]: "Confirm Logout",
@@ -297,6 +298,9 @@ const en = {
   [localizationKeys.fileConversionFailed]:"File conversion failed",
   [localizationKeys.setAsCover]: "Set as cover",
   [localizationKeys.cover]: "Cover",
+  [localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction]:"Editing images and documents is disabled while updating the auction",
+  [localizationKeys.editingDisabled]:"Editing disabled",
+
   //List product
   [localizationKeys.call]: "Call",
   [localizationKeys.chat]: "Chat",

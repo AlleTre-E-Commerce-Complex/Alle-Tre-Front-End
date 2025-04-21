@@ -33,6 +33,7 @@ const api = {
       setAssdraft: "/auctions/save-draft",
       setUpdatedraft: (auctionsId) => `auctions/user/${auctionsId}/details`,
       convertListedProductToAuction: (productId) => `auctions/user/${productId}/convertListedProductToAuction`,
+      updateAuction: (auctionId) => `/auctions/user/${auctionId}/update`,
       completeUpdatedraft: (auctionsId) =>
         `auctions/user/${auctionsId}/draft-details`,
       cancell_auction: (auctionId) =>

@@ -36,7 +36,7 @@ import useGetAllCities from "../../../hooks/use-get-all-cities";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import { IoCameraOutline } from "react-icons/io5";
-import { MdArrowDropDown, MdDelete } from "react-icons/md";
+import { MdArrowDropDown, MdDelete, MdLock } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 
@@ -44,8 +44,10 @@ const ProductDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { state } = useLocation();
-  const [auctionState, setAuctionState] = useState();
+  const isEditing = state?.isEditing || false;
 
+  const [auctionState, setAuctionState] = useState();
+  const [isUpdating, setIsUpdating] = useState(false);
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [listedProductVal, setListedProductVal] = useState();
   const [loadingImg, setLoadingImg] = useState();
@@ -59,11 +61,85 @@ const ProductDetails = () => {
   );
   const dispatch = useDispatch();
 
+
   const history = useHistory();
 
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
-  const { run: runFetchListedProduct, isLoading: isLoadingFetchListedProduct } =
-    useAxios([]);
+
+    const handleUpdate = async (values) => {
+      setIsUpdating(true);
+      try {
+        const formData = new FormData();
+        // Append all images to formData
+        const allImages = imgtest || [];
+        allImages.forEach((image) => {
+          if (image?.file) {
+            formData.append("images", image.file);
+          }
+        });
+        // Append all other fields from values
+        formData.append('product[title]', values.itemName);
+        formData.append("product[categoryId]", values.category);
+        if (values.subCategory) formData.append("product[subCategoryId]", values.subCategory);
+        if (values.brand) formData.append("product[brand]", values.brand);
+        if (valueRadio) formData.append("product[usageStatus]", valueRadio);
+        if (values.color) formData.append("product[color]", values.color);
+        if (values.age) formData.append("product[age]", values.age);
+        if (values.landType) formData.append("product[landType]", values.landType);
+        if (values.cameraType) formData.append("product[cameraType]", values.cameraType);
+        if (values.carType) formData.append("product[carType]", values.carType);
+        if (values.material) formData.append("product[material]", values.material);
+        if (values.memory) formData.append("product[memory]", values.memory);
+        if (values.model) formData.append("product[model]", values.model);
+        if (values.processor) formData.append("product[processor]", values.processor);
+        if (values.ramSize) formData.append("product[ramSize]", values.ramSize);
+        if (values.releaseYear) formData.append("product[releaseYear]", values.releaseYear);
+        if (values.screenSize) formData.append("product[screenSize]", values.screenSize);
+        if (values.totalArea) formData.append("product[totalArea]", values.totalArea);
+        if (values.operatingSystem) formData.append("product[operatingSystem]", values.operatingSystem);
+        if (values.regionOfManufacture) formData.append("product[regionOfManufacture]", values.regionOfManufacture);
+        if (values.numberOfFloors) formData.append("product[numberOfFloors]", values.numberOfFloors);
+        if (values.numberOfRooms) formData.append("product[numberOfRooms]", values.numberOfRooms);
+        if (values.itemDescription) formData.append("product[description]", values.itemDescription);
+        if (values.countryId) formData.append("product[countryId]", values.countryId);
+        if (values.cityId) formData.append("product[cityId]", values.cityId);
+    
+        // Handle related documents if any
+        if (relatedDocuments?.length > 0) {
+          relatedDocuments.forEach((doc) => {
+            formData.append("relatedDocuments", doc);
+          });
+        }
+    
+        // Add auctionId if needed for the update API
+        if (auctionId) {
+          formData.append("auctionId", auctionId);
+        }
+    
+        // Send the update request
+        const response = await authAxios.put(
+          api.app.auctions.updateAuction(auctionId),
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+    
+        if (response.status === 200) {
+          toast.success(selectedContent[localizationKeys.updatedSuccessfully]);
+          history.push(routes.app.profile.myAuctions.default);
+          dispatch(productDetails({}));
+        } else {
+          toast.error(selectedContent[localizationKeys.updateFailed] || "Update failed");
+        }
+      } catch (error) {
+        toast.error(
+          error?.response?.data?.message ||
+          selectedContent[localizationKeys.updateFailed] ||
+          "An error occurred while updating."
+        );
+      } finally {
+        setIsUpdating(false);
+      }
+    };
 
   const addImageWatermark = async (file) => {
     if (file.type.startsWith("video/")) {
@@ -300,8 +376,8 @@ const ProductDetails = () => {
   const [relatedDocuments, setRelatedDocuments] = useState([]);
   const [valueRadio, setRadioValue] = useState(
     completeDraftVal?.product?.usageStatus ||
-      productDetailsint.valueRadio ||
-      null
+    productDetailsint.valueRadio ||
+    null
   );
 
   const [countriesId, setCountriesId] = useState();
@@ -310,8 +386,8 @@ const ProductDetails = () => {
 
   const [hasUsageCondition, setHasUsageCondition] = useState(
     completeDraftVal?.product?.category?.hasUsageCondition ||
-      productDetailsint.hasUsageCondition ||
-      true
+    productDetailsint.hasUsageCondition ||
+    true
   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
@@ -353,8 +429,8 @@ const ProductDetails = () => {
     const newVideos = Array.isArray(files)
       ? files.filter((file) => file.type.startsWith("video/"))
       : files.type.startsWith("video/")
-      ? [files]
-      : [];
+        ? [files]
+        : [];
 
     // If trying to upload a video as first item
     if (currentImages.length === 0 && newVideos.length > 0) {
@@ -550,7 +626,7 @@ const ProductDetails = () => {
     if (filesCount < 3) {
       toast.error(
         selectedContent[
-          localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+        localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
         ]
       );
       return;
@@ -564,7 +640,7 @@ const ProductDetails = () => {
       if (hasUsageCondition) {
         toast.error(
           selectedContent[
-            localizationKeys.makeSureThatYouChooseItemConditionValue
+          localizationKeys.makeSureThatYouChooseItemConditionValue
           ]
         );
         return;
@@ -790,7 +866,8 @@ const ProductDetails = () => {
           isLoading ||
           loadingSubGatogry ||
           isLoadingAuctionById ||
-          loadingAllBranOptions
+          loadingAllBranOptions ||
+          isUpdating 
         }
         inverted
       >
@@ -842,7 +919,7 @@ const ProductDetails = () => {
                 countryId: productDetailsint.countryId || "",
                 itemDescription: productDetailsint.itemDescription || "",
               }}
-              onSubmit={handelProductDetailsdata}
+              onSubmit={isEditing ? handleUpdate : handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}
               enableReinitialize
             >
@@ -954,8 +1031,8 @@ const ProductDetails = () => {
                                       e?.key === "countryId"
                                         ? AllCountriesOptions
                                         : e?.key === "cityId"
-                                        ? AllCitiesOptions
-                                        : allCustomFileOptions[e?.key]?.map(
+                                          ? AllCitiesOptions
+                                          : allCustomFileOptions[e?.key]?.map(
                                             (option) => ({
                                               ...option,
                                               text: isArabic
@@ -1004,18 +1081,16 @@ const ProductDetails = () => {
                             >
                               <FormikMultiDropdown
                                 name={field.key}
-                                label={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
-                                placeholder={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
+                                label={`${lang === "en" ? field.labelEn : field.labelAr
+                                  }`}
+                                placeholder={`${lang === "en" ? field.labelEn : field.labelAr
+                                  }`}
                                 options={
                                   field.key === "countryId"
                                     ? AllCountriesOptions
                                     : field.key === "cityId"
-                                    ? AllCitiesOptions
-                                    : allCustomFileOptions[field.key]?.map(
+                                      ? AllCitiesOptions
+                                      : allCustomFileOptions[field.key]?.map(
                                         (option) => ({
                                           ...option,
                                           text: isArabic
@@ -1122,13 +1197,38 @@ const ProductDetails = () => {
                       />
                     </div>
                   </div>
+                 {isEditing ? (
+                  <div className="flex items-start justify-start my-8">
+                    <div className="flex items-center bg-primary/10 border border-secondary-light rounded-lg p-4 shadow-sm w-full max-w-2xl">
+                      <span className="mr-3 text-primary">
+                        <MdLock className="w-7 h-7" />
+                      </span>
+                      <div>
+                        <div className="font-semibold text-primary text-base mb-1">
+                        {
+                          selectedContent[
+                          localizationKeys.editingDisabled
+                          ]
+                        } 
+                        </div>
+                        <div className="text-primary text-sm">
+                        {
+                          selectedContent[
+                          localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction
+                          ]
+                        }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                 ) : (
                   <div>
                     <h1 className="font-bold text-base text-black pt-6">
                       {selectedContent[localizationKeys.addMedia]}{" "}
                       <span className="text-gray-600 text-sm font-normal px-1">
                         {
                           selectedContent[
-                            localizationKeys.uploadOneImageAndOneVideo
+                          localizationKeys.uploadOneImageAndOneVideo
                           ]
                         }
                       </span>
@@ -1180,6 +1280,7 @@ const ProductDetails = () => {
                       />
                     </div>
                   </div>
+                 )}
                   {[
                     "Cars",
                     "Jewellers",
@@ -1191,139 +1292,138 @@ const ProductDetails = () => {
                     GatogryOptions.find(
                       (opt) => opt.value === formik.values.category
                     )?.name
-                  ) && (
-                    <div className="mb-6">
-                      <label className="block font-bold text-base text-black pt-6">
-                        {selectedContent[localizationKeys.uploadPdfDocument]}
-                        <span className="text-gray-med text-base font-normal px-1">
-                          ({selectedContent[localizationKeys.maxSize]}
-                          10MB)
-                        </span>
-                      </label>
-                      <div
-                        className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-200 ease-in-out max-w-3xl
-                          ${
-                            formik.touched.pdfDocument &&
-                            formik.errors.pdfDocument
+                  ) && !isEditing && (
+                      <div className="mb-6">
+                        <label className="block font-bold text-base text-black pt-6">
+                          {selectedContent[localizationKeys.uploadPdfDocument]}
+                          <span className="text-gray-med text-base font-normal px-1">
+                            ({selectedContent[localizationKeys.maxSize]}
+                            10MB)
+                          </span>
+                        </label>
+                        <div
+                          className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-200 ease-in-out max-w-3xl
+                          ${formik.touched.pdfDocument &&
+                              formik.errors.pdfDocument
                               ? "border-primary text-primary bg-primary-veryLight"
                               : relatedDocuments.length > 0
-                              ? "border-primary-light bg-primary-veryLight"
-                              : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
-                          }`}
-                      >
-                        <input
-                          name="relatedDocument"
-                          type="file"
-                          accept=".pdf"
-                          onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file) {
-                              if (file.type === "application/pdf") {
-                                if (file.size <= 10 * 1024 * 1024) {
-                                  // 10MB limit
-                                  formik.setFieldValue("pdfDocument", file);
-                                  setRelatedDocuments([file]); // Reset array with new file
+                                ? "border-primary-light bg-primary-veryLight"
+                                : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
+                            }`}
+                        >
+                          <input
+                            name="relatedDocument"
+                            type="file"
+                            accept=".pdf"
+                            onChange={(e) => {
+                              const file = e.target.files[0];
+                              if (file) {
+                                if (file.type === "application/pdf") {
+                                  if (file.size <= 10 * 1024 * 1024) {
+                                    // 10MB limit
+                                    formik.setFieldValue("pdfDocument", file);
+                                    setRelatedDocuments([file]); // Reset array with new file
+                                  } else {
+                                    toast.error(
+                                      selectedContent[
+                                      localizationKeys
+                                        .fileSizeShouldBeLessThan10MB
+                                      ]
+                                    );
+                                  }
                                 } else {
                                   toast.error(
                                     selectedContent[
-                                      localizationKeys
-                                        .fileSizeShouldBeLessThan10MB
+                                    localizationKeys.pleaseUploadPdfOnly
                                     ]
                                   );
                                 }
-                              } else {
-                                toast.error(
-                                  selectedContent[
-                                    localizationKeys.pleaseUploadPdfOnly
-                                  ]
-                                );
                               }
-                            }
-                          }}
-                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                        />
-                        <div className="text-center">
-                          <svg
-                            className="mx-auto h-12 w-12 text-gray-med"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 48 48"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 015.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          <div className="mt-4">
-                            <p className="text-sm text-gray-dark">
-                              {
-                                selectedContent[
-                                  localizationKeys.dragAndDropYourPdfHereOr
-                                ]
-                              }{" "}
-                              <span className="text-primary font-medium hover:text-primary-dark">
+                            }}
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                          />
+                          <div className="text-center">
+                            <svg
+                              className="mx-auto h-12 w-12 text-gray-med"
+                              stroke="currentColor"
+                              fill="none"
+                              viewBox="0 0 48 48"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 015.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            <div className="mt-4">
+                              <p className="text-sm text-gray-dark">
                                 {
                                   selectedContent[
-                                    localizationKeys.clickToBrowse
+                                  localizationKeys.dragAndDropYourPdfHereOr
                                   ]
-                                }
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                        {relatedDocuments.length > 0 && relatedDocuments[0] && (
-                          <div className="mt-4 p-3 bg-white rounded border border-gray-veryLight">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center flex-1 min-w-0">
-                                <svg
-                                  className="h-6 w-6 flex-shrink-0 text-primary"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                                  <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
-                                </svg>
-                                <span className="ml-2 text-sm text-gray-verydark truncate max-w-xs">
-                                  {relatedDocuments[0].name}
-                                </span>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setRelatedDocuments([]);
-                                  formik.setFieldValue("pdfDocument", null);
-                                  const input =
-                                    document.querySelector(
-                                      'input[type="file"]'
-                                    );
-                                  if (input) {
-                                    input.value = "";
+                                }{" "}
+                                <span className="text-primary font-medium hover:text-primary-dark">
+                                  {
+                                    selectedContent[
+                                    localizationKeys.clickToBrowse
+                                    ]
                                   }
-                                }}
-                                className="ml-2 p-1 text-primary hover:text-red-600 focus:outline-none flex-shrink-0 relative z-20"
-                              >
-                                <MdDelete className="h-5 w-5" />
-                              </button>
+                                </span>
+                              </p>
                             </div>
                           </div>
-                        )}
+                          {relatedDocuments.length > 0 && relatedDocuments[0] && (
+                            <div className="mt-4 p-3 bg-white rounded border border-gray-veryLight">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center flex-1 min-w-0">
+                                  <svg
+                                    className="h-6 w-6 flex-shrink-0 text-primary"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                                    <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                                  </svg>
+                                  <span className="ml-2 text-sm text-gray-verydark truncate max-w-xs">
+                                    {relatedDocuments[0].name}
+                                  </span>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setRelatedDocuments([]);
+                                    formik.setFieldValue("pdfDocument", null);
+                                    const input =
+                                      document.querySelector(
+                                        'input[type="file"]'
+                                      );
+                                    if (input) {
+                                      input.value = "";
+                                    }
+                                  }}
+                                  className="ml-2 p-1 text-primary hover:text-red-600 focus:outline-none flex-shrink-0 relative z-20"
+                                >
+                                  <MdDelete className="h-5 w-5" />
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                        {formik.touched.pdfDocument &&
+                          formik.errors.pdfDocument && (
+                            <div className="text-primary text-sm mt-2">
+                              {formik.errors.pdfDocument}
+                            </div>
+                          )}
                       </div>
-                      {formik.touched.pdfDocument &&
-                        formik.errors.pdfDocument && (
-                          <div className="text-primary text-sm mt-2">
-                            {formik.errors.pdfDocument}
-                          </div>
-                        )}
-                    </div>
-                  )}
+                    )}
                   <div
                     className={
                       hasUsageCondition ||
-                      completeDraftVal?.product?.category?.hasUsageCondition ||
-                      productDetailsint?.hasUsageCondition
+                        completeDraftVal?.product?.category?.hasUsageCondition ||
+                        productDetailsint?.hasUsageCondition
                         ? "w-full"
                         : "hidden"
                     }
@@ -1334,9 +1434,9 @@ const ProductDetails = () => {
                     <div
                       className={
                         hasUsageCondition ||
-                        completeDraftVal?.product?.category
-                          ?.hasUsageCondition ||
-                        productDetailsint?.hasUsageCondition
+                          completeDraftVal?.product?.category
+                            ?.hasUsageCondition ||
+                          productDetailsint?.hasUsageCondition
                           ? "mt-6 w-full"
                           : "hidden"
                       }
@@ -1356,9 +1456,13 @@ const ProductDetails = () => {
                         {selectedContent[localizationKeys.saveAsDraft]}
                       </div>
                     </div>
-                    <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                      {selectedContent[localizationKeys.next]}
-                    </button>
+                    {isEditing ?
+                      <button type="submit" className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                        {selectedContent[localizationKeys.Submit]}
+                      </button>
+                      : <button  className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                        {selectedContent[localizationKeys.next]}
+                      </button>}
                   </div>
                 </Form>
               )}

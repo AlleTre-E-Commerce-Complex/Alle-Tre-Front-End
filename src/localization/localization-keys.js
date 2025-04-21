@@ -210,6 +210,7 @@ const localizationKeys = {
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
   cancel: "cancel",
   logOut: "logOut",
+  updatedSuccessfully:"auctionUpdatedSuccessfully",
   areYouSureYouWantToLogOut: "areYouSureYouWantToLogOut",
   confirmLogout: "confirmLogout",
   skip: "skip",
@@ -268,6 +269,8 @@ const localizationKeys = {
   fileConversionFailed:"fileConversionFailed",
   setAsCover: "setAsCover",
   cover: "cover",
+  editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction:"editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction",
+  editingDisabled:"editingDisabled",
   //List product
   call: "call",
   chat: "chat",

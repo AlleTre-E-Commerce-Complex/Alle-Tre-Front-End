@@ -58,16 +58,12 @@ const ActionsRowTable = ({
   const [openTotalBid, setOpenTotalBidsModel] = useState(false);
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
-  const startingDateLeft = `${starting_Date.days} ${
-    selectedContent[localizationKeys.days]
-  } : ${starting_Date.hours} ${selectedContent[localizationKeys.hrs]} : ${
-    starting_Date.minutes
-  } ${selectedContent[localizationKeys.min]}`;
-  const endingTimeLeft = `${ending_Time.days} ${
-    selectedContent[localizationKeys.days]
-  } : ${ending_Time.hours} ${selectedContent[localizationKeys.hrs]} : ${
-    ending_Time.minutes
-  } ${selectedContent[localizationKeys.min]}`;
+  const startingDateLeft = `${starting_Date.days} ${selectedContent[localizationKeys.days]
+    } : ${starting_Date.hours} ${selectedContent[localizationKeys.hrs]} : ${starting_Date.minutes
+    } ${selectedContent[localizationKeys.min]}`;
+  const endingTimeLeft = `${ending_Time.days} ${selectedContent[localizationKeys.days]
+    } : ${ending_Time.hours} ${selectedContent[localizationKeys.hrs]} : ${ending_Time.minutes
+    } ${selectedContent[localizationKeys.min]}`;
 
   const handleContactDetailsModal = (userType) => {
     setUserType(userType);
@@ -75,25 +71,25 @@ const ActionsRowTable = ({
   };
   return (
     <div className="bg-background drop-shadow rounded-lg py-4 px-4 mb-2 animate-in">
-      <div className="flex flex-wrap justify-between overflow-clip ">
-        <div className="flex gap-x-4">
-          <div className="relative w-28 h-20 rounded-lg bg-[#F9F9F9] cursor-default  ">
+      <div className="flex flex-col lg:flex-row justify-between overflow-clip gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative w-full sm:w-28 h-48 sm:h-20 rounded-lg bg-[#F9F9F9] cursor-default">
             {img ? (
               <img
-                className="w-28 h-20 object-cover rounded-lg "
+                className="w-full sm:w-28 h-48 sm:h-20 object-cover rounded-lg"
                 src={img ? img : emtyPhotosIcon}
                 alt="img"
               />
             ) : (
               <img
-                className="w-8 h-8 mx-auto mt-7 object-cover rounded-lg  "
+                className="w-8 h-8 mx-auto mt-7 object-cover rounded-lg"
                 src={emtyPhotosIcon}
                 alt="img"
               />
             )}
             <AuctionsStatus status={status} small absolute />
           </div>
-          <div className="flex flex-col md:w-[400px] w-full ">
+          <div className="flex flex-col w-full lg:w-[400px]">
             <div>
               <h1 className="text-gray-dark text-sm font-medium">
                 {truncateString(title, 80)}
@@ -223,7 +219,7 @@ const ActionsRowTable = ({
               ""
             )}
             {status === "CANCELLED_AFTER_EXP_DATE" ||
-            status === "CANCELLED_BEFORE_EXP_DATE" ? (
+              status === "CANCELLED_BEFORE_EXP_DATE" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
@@ -290,9 +286,9 @@ const ActionsRowTable = ({
             )}
 
             {status === "PENDING_PAYMENT" ||
-            status === "WAITING_FOR_DELIVERY" ||
-            status === "PAYMENT_EXPIRED" ||
-            status === "COMPLETED" ? (
+              status === "WAITING_FOR_DELIVERY" ||
+              status === "PAYMENT_EXPIRED" ||
+              status === "COMPLETED" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div
                   className={
@@ -312,7 +308,7 @@ const ActionsRowTable = ({
                 </div>
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
-                    {selectedContent[localizationKeys.lastPrice]}
+                    {selectedContent[localizationKeys.lastestPrice]}
                   </h1>
                   <p className="text-gray-dark text-[10px] font-normal">
                     {formatCurrency(lastPrice)}
@@ -353,24 +349,24 @@ const ActionsRowTable = ({
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-y-2 gap-x-4">
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-2 w-full">
           {status === "SOLD" && (
-            <h1 className="cursor-default  text-primary mx-3 text-sm font-normal sm:w-[145px] w-full  sm:mt-14 mt-5 ">
+            <h1 className="cursor-default text-primary text-sm font-normal w-full sm:w-[145px] mt-2 sm:mt-14">
               <b>Delivery Type</b> :{" "}
               {deliveryType === "DELIVERY"
                 ? "Delivery Will be handled by company"
                 : deliveryType === "PICKUP"
-                ? "The buyer will pick up the item"
-                : "Not selected"}
+                  ? "The buyer will pick up the item"
+                  : "Not selected"}
             </h1>
           )}
         </div>
         {isBidsButtons ? (
-          <div className="flex gap-x-2">
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-2 w-full">
             {status === "WAITING_FOR_DELIVERY" && (
               <button
                 onClick={() => setDeleveryIssueModal(true)}
-                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5"
+                className="border-primary border text-primary text-sm font-normal w-full sm:w-[145px] py-2 rounded-lg"
               >
                 {selectedContent[localizationKeys.AnyCompliants]}
               </button>
@@ -378,7 +374,7 @@ const ActionsRowTable = ({
             {status === "WAITING_FOR_DELIVERY" && (
               <button
                 onClick={() => handleContactDetailsModal("SELLER")}
-                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+                className="border-primary border text-primary text-sm font-normal w-full sm:w-[145px] py-2 rounded-lg"
               >
                 {selectedContent[localizationKeys.sellerContactDetails]}
               </button>
@@ -386,7 +382,7 @@ const ActionsRowTable = ({
 
             {status === "PENDING_PAYMENT" && isBankStatementUploaded && (
               <button
-                className={`border-primary border-[1px] text-primary text-sm font-normal font-si sm:w-[228px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
+                className={`border-primary border text-primary text-sm font-normal font-si sm:w-[228px] w-full py-2 rounded-lg`}
               >
                 Status : Bank statement submitted
               </button>
@@ -395,11 +391,10 @@ const ActionsRowTable = ({
             {!isBankStatementUploaded && (
               <button
                 onClick={buttonActions}
-                className={`${
-                  textButton === "Delivery by company"
-                    ? "border-secondery border-[1px] text-primary font-bold cursor-auto"
-                    : "border-primary border-[1px] text-primary font-normal cursor-pointer"
-                } text-sm  sm:w-[158px]  w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 `}
+                className={`${textButton === "Delivery by company"
+                    ? "border-secondery border text-primary font-bold cursor-auto"
+                    : "border-primary border text-primary font-normal cursor-pointer"
+                  } text-sm  w-full sm:w-[158px] py-2 rounded-lg`}
               >
                 {textButton}
               </button>
@@ -407,45 +402,59 @@ const ActionsRowTable = ({
 
             <button
               onClick={() => history.push(goToDetails)}
-              className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+              className="bg-primary hover:bg-primary-dark text-white text-sm font-normal w-full sm:w-[128px] py-2 rounded-lg"
             >
               {selectedContent[localizationKeys.viewDetails]}
             </button>
           </div>
         ) : (
-          <div>
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-2 w-full sm:mt-10 sm:h-10">
             {status === "COMPLETED" && (
               <button
                 onClick={() => setBuyerObjectionModal(true)}
-                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+                className="border-primary border text-primary text-sm font-normal w-full sm:w-[145px] py-2 rounded-lg"
               >
                 {selectedContent[localizationKeys.AnyObjection]}
               </button>
             )}
-
-            {(status === "ACTIVE" || status === "PENDING_OWNER_DEPOIST" ||status === "IN_SCHEDULED") && (
+            {(status === "ACTIVE" || status === "PENDING_OWNER_DEPOIST" || status === "IN_SCHEDULED") && (
               <button
                 onClick={() => {
                   setCancelAuctionModal(true);
                   Number(totalBids) > 0
                     ? setCancelWarningMessage(
                         selectedContent[
-                          localizationKeys
-                            .CancellAuctionWarningMessageWithBidders
+                          localizationKeys.CancellAuctionWarningMessageWithBidders
                         ]
                       )
                     : setCancelWarningMessage(
                         selectedContent[
-                          localizationKeys
-                            .CancellAuctionWarningMessageWithZeroBidders
+                          localizationKeys.CancellAuctionWarningMessageWithZeroBidders
                         ]
                       );
                 }}
-                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 mx-3 "
+                className="border-primary border text-primary text-sm font-normal w-full sm:w-[145px] py-2 rounded-lg"
               >
                 {selectedContent[localizationKeys.cancelTheAuction]}
               </button>
             )}
+            {(status === 'ACTIVE' || status === 'IN_SCHEDULED') && (
+              <button
+                className="bg-primary text-white text-sm font-normal px-8 py-2 rounded-lg transition hover:bg-primary-dark"
+                onClick={() => history.push({
+                  pathname: routes.app.createAuction.productDetails,
+                  state: { auctionId: auctionsId, isEditing: true }
+                })}
+              >
+                {selectedContent[localizationKeys.edit]}
+              </button>
+            )}
+            <button
+              onClick={() => history.push(goToDetails)}
+              className="bg-primary-dark hover:bg-primary text-white text-sm font-normal w-full sm:w-[128px] py-2 rounded-lg"
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </button>
             {status === "WAITING_FOR_PAYMENT" && (
               <button
                 onClick={() => {
@@ -456,7 +465,7 @@ const ActionsRowTable = ({
                     ]
                   );
                 }}
-                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+                className="border-primary border text-primary text-sm font-normal px-4 py-2 rounded-lg transition hover:bg-primary hover:text-white "
               >
                 {selectedContent[localizationKeys.cancelTheAuction]}
               </button>
@@ -464,7 +473,7 @@ const ActionsRowTable = ({
             {status === "SOLD" && (
               <button
                 onClick={() => handleContactDetailsModal("BUYER")}
-                className="border-primary border-[1px] text-primary text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
+                className="border-primary border text-primary text-sm font-normal w-full sm:w-[145px] py-2 rounded-lg"
               >
                 {selectedContent[localizationKeys.buyerContactDetails]}
               </button>
@@ -489,17 +498,11 @@ const ActionsRowTable = ({
                   window.localStorage.setItem("auctionId", auctionsId);
                   history.push(routes.app.createAuction.paymentDetails);
                 }}
-                className="border-primary border-[1px] text-primary mx-3 text-sm font-normal sm:w-[145px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5"
+                className="border-primary border text-primary text-sm font-normal w-full sm:w-[145px] py-2 rounded-lg"
               >
                 {selectedContent[localizationKeys.completePayment]}
               </button>
             )}
-            <button
-              onClick={() => history.push(goToDetails)}
-              className="bg-primary hover:bg-primary-dark text-white text-sm font-normal sm:w-[128px] w-full sm:h-8 h-10 rounded-lg sm:mt-14 mt-5 "
-            >
-              {selectedContent[localizationKeys.viewDetails]}
-            </button>
           </div>
         )}
       </div>
