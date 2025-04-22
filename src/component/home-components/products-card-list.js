@@ -302,17 +302,10 @@ const ProductCardList = ({
                     className="text-gray-dark font-medium text-xs sm:text-sm"
                     onClick={() => handelGoDetails(id)}
                   >
-                    {difference.days > 0 && `${difference.days} days ago`}
-                    {difference.days === 0 &&
-                      difference.weeks > 0 &&
-                      `${difference.weeks} weeks ago`}
-                    {difference.weeks === 0 &&
-                      difference.months > 0 &&
-                      `${difference.months} months ago`}
-                    {difference.days === 0 &&
-                      difference.weeks === 0 &&
-                      difference.months === 0 &&
-                      `Today`}
+                    {difference.months > 0 && `${difference.months} months ago`}
+                    {difference.months === 0 && difference.weeks > 0 && `${difference.weeks} weeks ago`}
+                    {difference.months === 0 && difference.weeks === 0 && difference.days > 0 && `${difference.days} days ago`}
+                    {difference.months === 0 && difference.weeks === 0 && difference.days === 0 && `Today`}
                   </p>
                 </div>
               </div>

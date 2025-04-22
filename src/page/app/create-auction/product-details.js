@@ -62,85 +62,103 @@ const ProductDetails = () => {
   );
   const dispatch = useDispatch();
 
-
   const history = useHistory();
 
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
 
-    const handleUpdate = async (values) => {
-      setIsUpdating(true);
-      try {
-        const formData = new FormData();
-        // Append all images to formData
-        const allImages = imgtest || [];
-        allImages.forEach((image) => {
-          if (image?.file) {
-            formData.append("images", image.file);
-          }
-        });
-        // Append all other fields from values
-        formData.append('product[title]', values.itemName);
-        formData.append("product[categoryId]", values.category);
-        if (values.subCategory) formData.append("product[subCategoryId]", values.subCategory);
-        if (values.brand) formData.append("product[brand]", values.brand);
-        if (valueRadio) formData.append("product[usageStatus]", valueRadio);
-        if (values.color) formData.append("product[color]", values.color);
-        if (values.age) formData.append("product[age]", values.age);
-        if (values.landType) formData.append("product[landType]", values.landType);
-        if (values.cameraType) formData.append("product[cameraType]", values.cameraType);
-        if (values.carType) formData.append("product[carType]", values.carType);
-        if (values.material) formData.append("product[material]", values.material);
-        if (values.memory) formData.append("product[memory]", values.memory);
-        if (values.model) formData.append("product[model]", values.model);
-        if (values.processor) formData.append("product[processor]", values.processor);
-        if (values.ramSize) formData.append("product[ramSize]", values.ramSize);
-        if (values.releaseYear) formData.append("product[releaseYear]", values.releaseYear);
-        if (values.screenSize) formData.append("product[screenSize]", values.screenSize);
-        if (values.totalArea) formData.append("product[totalArea]", values.totalArea);
-        if (values.operatingSystem) formData.append("product[operatingSystem]", values.operatingSystem);
-        if (values.regionOfManufacture) formData.append("product[regionOfManufacture]", values.regionOfManufacture);
-        if (values.numberOfFloors) formData.append("product[numberOfFloors]", values.numberOfFloors);
-        if (values.numberOfRooms) formData.append("product[numberOfRooms]", values.numberOfRooms);
-        if (values.itemDescription) formData.append("product[description]", values.itemDescription);
-        if (values.countryId) formData.append("product[countryId]", values.countryId);
-        if (values.cityId) formData.append("product[cityId]", values.cityId);
-    
-        // Handle related documents if any
-        if (relatedDocuments?.length > 0) {
-          relatedDocuments.forEach((doc) => {
-            formData.append("relatedDocuments", doc);
-          });
+  const handleUpdate = async (values) => {
+    setIsUpdating(true);
+    try {
+      const formData = new FormData();
+      // Append all images to formData
+      const allImages = imgtest || [];
+      allImages.forEach((image) => {
+        if (image?.file) {
+          formData.append("images", image.file);
         }
-    
-        // Add auctionId if needed for the update API
-        if (auctionId) {
-          formData.append("auctionId", auctionId);
-        }
-    
-        // Send the update request
-        const response = await authAxios.put(
-          api.app.auctions.updateAuction(auctionId),
-          formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
+      });
+      // Append all other fields from values
+      formData.append("product[title]", values.itemName);
+      formData.append("product[categoryId]", values.category);
+      if (values.subCategory)
+        formData.append("product[subCategoryId]", values.subCategory);
+      if (values.brand) formData.append("product[brand]", values.brand);
+      if (valueRadio) formData.append("product[usageStatus]", valueRadio);
+      if (values.color) formData.append("product[color]", values.color);
+      if (values.age) formData.append("product[age]", values.age);
+      if (values.landType)
+        formData.append("product[landType]", values.landType);
+      if (values.cameraType)
+        formData.append("product[cameraType]", values.cameraType);
+      if (values.carType) formData.append("product[carType]", values.carType);
+      if (values.material)
+        formData.append("product[material]", values.material);
+      if (values.memory) formData.append("product[memory]", values.memory);
+      if (values.model) formData.append("product[model]", values.model);
+      if (values.processor)
+        formData.append("product[processor]", values.processor);
+      if (values.ramSize) formData.append("product[ramSize]", values.ramSize);
+      if (values.releaseYear)
+        formData.append("product[releaseYear]", values.releaseYear);
+      if (values.screenSize)
+        formData.append("product[screenSize]", values.screenSize);
+      if (values.totalArea)
+        formData.append("product[totalArea]", values.totalArea);
+      if (values.operatingSystem)
+        formData.append("product[operatingSystem]", values.operatingSystem);
+      if (values.regionOfManufacture)
+        formData.append(
+          "product[regionOfManufacture]",
+          values.regionOfManufacture
         );
-    
-        if (response.status === 200) {
-          toast.success(selectedContent[localizationKeys.updatedSuccessfully]);
-          history.push(routes.app.profile.myAuctions.default);
-          dispatch(productDetails({}));
-        } else {
-          toast.error(selectedContent[localizationKeys.updateFailed] || "Update failed");
-        }
-      } catch (error) {
+      if (values.numberOfFloors)
+        formData.append("product[numberOfFloors]", values.numberOfFloors);
+      if (values.numberOfRooms)
+        formData.append("product[numberOfRooms]", values.numberOfRooms);
+      if (values.itemDescription)
+        formData.append("product[description]", values.itemDescription);
+      if (values.countryId)
+        formData.append("product[countryId]", values.countryId);
+      if (values.cityId) formData.append("product[cityId]", values.cityId);
+
+      // Handle related documents if any
+      if (relatedDocuments?.length > 0) {
+        relatedDocuments.forEach((doc) => {
+          formData.append("relatedDocuments", doc);
+        });
+      }
+
+      // Add auctionId if needed for the update API
+      if (auctionId) {
+        formData.append("auctionId", auctionId);
+      }
+
+      // Send the update request
+      const response = await authAxios.put(
+        api.app.auctions.updateAuction(auctionId),
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      if (response.status === 200) {
+        toast.success(selectedContent[localizationKeys.updatedSuccessfully]);
+        history.push(routes.app.profile.myAuctions.default);
+        dispatch(productDetails({}));
+      } else {
         toast.error(
-          error?.response?.data?.message ||
+          selectedContent[localizationKeys.updateFailed] || "Update failed"
+        );
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message ||
           selectedContent[localizationKeys.updateFailed] ||
           "An error occurred while updating."
-        );
-      } finally {
-        setIsUpdating(false);
-      }
-    };
+      );
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const addImageWatermark = async (file) => {
     if (file.type.startsWith("video/")) {
@@ -377,8 +395,8 @@ const ProductDetails = () => {
   const [relatedDocuments, setRelatedDocuments] = useState([]);
   const [valueRadio, setRadioValue] = useState(
     completeDraftVal?.product?.usageStatus ||
-    productDetailsint.valueRadio ||
-    null
+      productDetailsint.valueRadio ||
+      null
   );
 
   const [countriesId, setCountriesId] = useState();
@@ -387,8 +405,8 @@ const ProductDetails = () => {
 
   const [hasUsageCondition, setHasUsageCondition] = useState(
     completeDraftVal?.product?.category?.hasUsageCondition ||
-    productDetailsint.hasUsageCondition ||
-    true
+      productDetailsint.hasUsageCondition ||
+      true
   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
@@ -430,8 +448,8 @@ const ProductDetails = () => {
     const newVideos = Array.isArray(files)
       ? files.filter((file) => file.type.startsWith("video/"))
       : files.type.startsWith("video/")
-        ? [files]
-        : [];
+      ? [files]
+      : [];
 
     // If trying to upload a video as first item
     if (currentImages.length === 0 && newVideos.length > 0) {
@@ -627,7 +645,7 @@ const ProductDetails = () => {
     if (filesCount < 3) {
       toast.error(
         selectedContent[
-        localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+          localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
         ]
       );
       return;
@@ -641,7 +659,7 @@ const ProductDetails = () => {
       if (hasUsageCondition) {
         toast.error(
           selectedContent[
-          localizationKeys.makeSureThatYouChooseItemConditionValue
+            localizationKeys.makeSureThatYouChooseItemConditionValue
           ]
         );
         return;
@@ -831,14 +849,14 @@ const ProductDetails = () => {
         history.push(routes.app.profile.myAuctions.drafts);
         dispatch(productDetails({}));
       } else {
-        toast.error(selectedContent[localizationKeys.errorSavingDraft] || 'Error saving draft');
+        toast.error(
+          selectedContent[localizationKeys.errorSavingDraft] ||
+            "Error saving draft"
+        );
       }
     } catch (error) {
-      console.error('Error saving draft:', error);
-      toast.error(
-        error.response?.data?.message ||
-        'Error while saving draft'
-      );
+      console.error("Error saving draft:", error);
+      toast.error(error.response?.data?.message || "Error while saving draft");
     } finally {
       setIsSavingDraft(false);
     }
@@ -882,7 +900,7 @@ const ProductDetails = () => {
           loadingSubGatogry ||
           isLoadingAuctionById ||
           loadingAllBranOptions ||
-          isUpdating 
+          isUpdating
         }
         inverted
       >
@@ -1046,8 +1064,8 @@ const ProductDetails = () => {
                                       e?.key === "countryId"
                                         ? AllCountriesOptions
                                         : e?.key === "cityId"
-                                          ? AllCitiesOptions
-                                          : allCustomFileOptions[e?.key]?.map(
+                                        ? AllCitiesOptions
+                                        : allCustomFileOptions[e?.key]?.map(
                                             (option) => ({
                                               ...option,
                                               text: isArabic
@@ -1096,16 +1114,18 @@ const ProductDetails = () => {
                             >
                               <FormikMultiDropdown
                                 name={field.key}
-                                label={`${lang === "en" ? field.labelEn : field.labelAr
-                                  }`}
-                                placeholder={`${lang === "en" ? field.labelEn : field.labelAr
-                                  }`}
+                                label={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
                                 options={
                                   field.key === "countryId"
                                     ? AllCountriesOptions
                                     : field.key === "cityId"
-                                      ? AllCitiesOptions
-                                      : allCustomFileOptions[field.key]?.map(
+                                    ? AllCitiesOptions
+                                    : allCustomFileOptions[field.key]?.map(
                                         (option) => ({
                                           ...option,
                                           text: isArabic
@@ -1212,90 +1232,87 @@ const ProductDetails = () => {
                       />
                     </div>
                   </div>
-                 {isEditing ? (
-                  <div className="flex items-start justify-start my-8">
-                    <div className="flex items-center bg-primary/10 border border-secondary-light rounded-lg p-4 shadow-sm w-full max-w-2xl">
-                      <span className="mr-3 text-primary">
-                        <MdLock className="w-7 h-7" />
-                      </span>
-                      <div>
-                        <div className="font-semibold text-primary text-base mb-1">
-                        {
-                          selectedContent[
-                          localizationKeys.editingDisabled
-                          ]
-                        } 
-                        </div>
-                        <div className="text-primary text-sm">
-                        {
-                          selectedContent[
-                          localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction
-                          ]
-                        }
+                  {isEditing ? (
+                    <div className="flex items-start justify-start my-8">
+                      <div className="flex items-center bg-primary/10 border border-secondary-light rounded-lg p-4 shadow-sm w-full max-w-2xl">
+                        <span className="mr-3 text-primary">
+                          <MdLock className="w-7 h-7" />
+                        </span>
+                        <div>
+                          <div className="font-semibold text-primary text-base mb-1">
+                            {selectedContent[localizationKeys.editingDisabled]}
+                          </div>
+                          <div className="text-primary text-sm">
+                            {
+                              selectedContent[
+                                localizationKeys
+                                  .editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction
+                              ]
+                            }
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                 ) : (
-                  <div>
-                    <h1 className="font-bold text-base text-black pt-6">
-                      {selectedContent[localizationKeys.addMedia]}{" "}
-                      <span className="text-gray-600 text-sm font-normal px-1">
-                        {
-                          selectedContent[
-                          localizationKeys.uploadOneImageAndOneVideo
-                          ]
-                        }
-                      </span>
-                    </h1>
-                    <div className="relative">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        max="50"
-                        maxLength="50"
-                        onChange={handleFileChange}
-                        className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
-                        style={{
-                          width: "100%",
-                          maxWidth: "680px",
-                          height: "50px",
-                          boxSizing: "border-box",
-                        }}
-                      />
-                      <input
-                        id="camera-input-file"
-                        name="camera-input-file"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleCameraChange}
-                        capture="environment"
-                        className="hidden"
-                      />
-                      <label
-                        htmlFor="camera-input-file"
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
-                      >
-                        <IoCameraOutline className="w-7 h-7 text-primary" />
-                      </label>
+                  ) : (
+                    <div>
+                      <h1 className="font-bold text-base text-black pt-6">
+                        {selectedContent[localizationKeys.addMedia]}{" "}
+                        <span className="text-gray-600 text-sm font-normal px-1">
+                          {
+                            selectedContent[
+                              localizationKeys.uploadOneImageAndOneVideo
+                            ]
+                          }
+                        </span>
+                      </h1>
+                      <div className="relative">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          max="50"
+                          maxLength="50"
+                          onChange={handleFileChange}
+                          className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
+                          style={{
+                            width: "100%",
+                            maxWidth: "680px",
+                            height: "50px",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                        <input
+                          id="camera-input-file"
+                          name="camera-input-file"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleCameraChange}
+                          capture="environment"
+                          className="hidden"
+                        />
+                        <label
+                          htmlFor="camera-input-file"
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
+                        >
+                          <IoCameraOutline className="w-7 h-7 text-primary" />
+                        </label>
+                      </div>
+                      <div className="mt-6 w-full">
+                        <ImageMedia
+                          auctionId={state?.auctionId}
+                          setimgtest={setimgtest}
+                          images={imgtest || []}
+                          onReload={onReload}
+                          setLoadingImg={setLoadingImg}
+                          isEditMode={
+                            state?.auctionId || productDetailsint?.auctionId
+                              ? true
+                              : false
+                          }
+                        />
+                      </div>
                     </div>
-                    <div className="mt-6 w-full">
-                      <ImageMedia
-                        auctionId={state?.auctionId}
-                        setimgtest={setimgtest}
-                        images={imgtest || []}
-                        onReload={onReload}
-                        setLoadingImg={setLoadingImg}
-                        isEditMode={
-                          state?.auctionId || productDetailsint?.auctionId
-                            ? true
-                            : false
-                        }
-                      />
-                    </div>
-                  </div>
-                 )}
+                  )}
                   {[
                     "Cars",
                     "Jewellers",
@@ -1307,7 +1324,8 @@ const ProductDetails = () => {
                     GatogryOptions.find(
                       (opt) => opt.value === formik.values.category
                     )?.name
-                  ) && !isEditing && (
+                  ) &&
+                    !isEditing && (
                       <div className="mb-6">
                         <label className="block font-bold text-base text-black pt-6">
                           {selectedContent[localizationKeys.uploadPdfDocument]}
@@ -1318,13 +1336,14 @@ const ProductDetails = () => {
                         </label>
                         <div
                           className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-200 ease-in-out max-w-3xl
-                          ${formik.touched.pdfDocument &&
-                              formik.errors.pdfDocument
+                          ${
+                            formik.touched.pdfDocument &&
+                            formik.errors.pdfDocument
                               ? "border-primary text-primary bg-primary-veryLight"
                               : relatedDocuments.length > 0
-                                ? "border-primary-light bg-primary-veryLight"
-                                : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
-                            }`}
+                              ? "border-primary-light bg-primary-veryLight"
+                              : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
+                          }`}
                         >
                           <input
                             name="relatedDocument"
@@ -1341,15 +1360,15 @@ const ProductDetails = () => {
                                   } else {
                                     toast.error(
                                       selectedContent[
-                                      localizationKeys
-                                        .fileSizeShouldBeLessThan10MB
+                                        localizationKeys
+                                          .fileSizeShouldBeLessThan10MB
                                       ]
                                     );
                                   }
                                 } else {
                                   toast.error(
                                     selectedContent[
-                                    localizationKeys.pleaseUploadPdfOnly
+                                      localizationKeys.pleaseUploadPdfOnly
                                     ]
                                   );
                                 }
@@ -1376,55 +1395,56 @@ const ProductDetails = () => {
                               <p className="text-sm text-gray-dark">
                                 {
                                   selectedContent[
-                                  localizationKeys.dragAndDropYourPdfHereOr
+                                    localizationKeys.dragAndDropYourPdfHereOr
                                   ]
                                 }{" "}
                                 <span className="text-primary font-medium hover:text-primary-dark">
                                   {
                                     selectedContent[
-                                    localizationKeys.clickToBrowse
+                                      localizationKeys.clickToBrowse
                                     ]
                                   }
                                 </span>
                               </p>
                             </div>
                           </div>
-                          {relatedDocuments.length > 0 && relatedDocuments[0] && (
-                            <div className="mt-4 p-3 bg-white rounded border border-gray-veryLight">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center flex-1 min-w-0">
-                                  <svg
-                                    className="h-6 w-6 flex-shrink-0 text-primary"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
+                          {relatedDocuments.length > 0 &&
+                            relatedDocuments[0] && (
+                              <div className="mt-4 p-3 bg-white rounded border border-gray-veryLight">
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center flex-1 min-w-0">
+                                    <svg
+                                      className="h-6 w-6 flex-shrink-0 text-primary"
+                                      fill="currentColor"
+                                      viewBox="0 0 20 20"
+                                    >
+                                      <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                                      <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                                    </svg>
+                                    <span className="ml-2 text-sm text-gray-verydark truncate max-w-xs">
+                                      {relatedDocuments[0].name}
+                                    </span>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setRelatedDocuments([]);
+                                      formik.setFieldValue("pdfDocument", null);
+                                      const input =
+                                        document.querySelector(
+                                          'input[type="file"]'
+                                        );
+                                      if (input) {
+                                        input.value = "";
+                                      }
+                                    }}
+                                    className="ml-2 p-1 text-primary hover:text-red-600 focus:outline-none flex-shrink-0 relative z-20"
                                   >
-                                    <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
-                                    <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
-                                  </svg>
-                                  <span className="ml-2 text-sm text-gray-verydark truncate max-w-xs">
-                                    {relatedDocuments[0].name}
-                                  </span>
+                                    <MdDelete className="h-5 w-5" />
+                                  </button>
                                 </div>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setRelatedDocuments([]);
-                                    formik.setFieldValue("pdfDocument", null);
-                                    const input =
-                                      document.querySelector(
-                                        'input[type="file"]'
-                                      );
-                                    if (input) {
-                                      input.value = "";
-                                    }
-                                  }}
-                                  className="ml-2 p-1 text-primary hover:text-red-600 focus:outline-none flex-shrink-0 relative z-20"
-                                >
-                                  <MdDelete className="h-5 w-5" />
-                                </button>
                               </div>
-                            </div>
-                          )}
+                            )}
                         </div>
                         {formik.touched.pdfDocument &&
                           formik.errors.pdfDocument && (
@@ -1437,8 +1457,8 @@ const ProductDetails = () => {
                   <div
                     className={
                       hasUsageCondition ||
-                        completeDraftVal?.product?.category?.hasUsageCondition ||
-                        productDetailsint?.hasUsageCondition
+                      completeDraftVal?.product?.category?.hasUsageCondition ||
+                      productDetailsint?.hasUsageCondition
                         ? "w-full"
                         : "hidden"
                     }
@@ -1449,9 +1469,9 @@ const ProductDetails = () => {
                     <div
                       className={
                         hasUsageCondition ||
-                          completeDraftVal?.product?.category
-                            ?.hasUsageCondition ||
-                          productDetailsint?.hasUsageCondition
+                        completeDraftVal?.product?.category
+                          ?.hasUsageCondition ||
+                        productDetailsint?.hasUsageCondition
                           ? "mt-6 w-full"
                           : "hidden"
                       }
@@ -1464,20 +1484,28 @@ const ProductDetails = () => {
                   </div>
                   <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
                     <div className="mt-auto w-full sm:w-auto ">
-                      <div
-                        onClick={(e) => SaveAuctionAsDraft(e)}
-                        className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
-                      >
-                        {selectedContent[localizationKeys.saveAsDraft]}
-                      </div>
+                      {!(auctionState === "DRAFTED" ||
+                        productDetailsint?.auctionState === "DRAFTED") && (
+                        <div
+                          onClick={(e) => SaveAuctionAsDraft(e)}
+                          className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                        >
+                          {selectedContent[localizationKeys.saveAsDraft]}
+                        </div>
+                      )}
                     </div>
-                    {isEditing ?
-                      <button type="submit" className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                    {isEditing ? (
+                      <button
+                        type="submit"
+                        className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                      >
                         {selectedContent[localizationKeys.Submit]}
                       </button>
-                      : <button  className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                    ) : (
+                      <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
                         {selectedContent[localizationKeys.next]}
-                      </button>}
+                      </button>
+                    )}
                   </div>
                 </Form>
               )}
