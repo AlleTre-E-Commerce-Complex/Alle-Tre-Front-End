@@ -32,6 +32,7 @@ import { BsClockHistory } from "react-icons/bs";
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
   const [mainLocation, setMainLocation] = useState();
+  const [date, setDate] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [lang] = useLanguage("");
@@ -40,7 +41,6 @@ const SummaryListedSection = () => {
   const { pathname } = useLocation();
   const { productId } = useParams();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
-  const [difference, setDifference] = useState({ days: 0, weeks: 0, months: 0 });
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -80,28 +80,32 @@ const SummaryListedSection = () => {
       authAxios
         .get(`${api.app.productListing.listedProduct(productId)}`)
         .then((res) => {
+          setDate(res?.data?.data?.createdAt);
           setListedProductsData(res?.data?.data?.product);
           setMainLocation(res?.data?.data?.location);
-          // Calculate time difference
-          if (res?.data?.data?.product?.createdAt) {
-            const createdDate = new Date(res.data.data.product.createdAt);
-            const currentDate = new Date();
-            const diffTime = Math.abs(currentDate - createdDate);
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            const diffWeeks = Math.floor(diffDays / 7);
-            const diffMonths = Math.floor(diffDays / 30);
-            setDifference({
-              days: diffDays,
-              weeks: diffWeeks,
-              months: diffMonths
-            });
-          }
         })
         .catch((error) => {
           console.log("summery listed section error:", error);
         })
     );
   }, [run, productId]);
+
+  const getTimeDifference = (createdAt) => {
+    const createdDate = new Date(createdAt);
+    const today = new Date();
+    const diffInMs = today - createdDate;
+
+    // Convert milliseconds to different units
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    const diffInMonths = Math.floor(diffInDays / 30);
+
+    return {
+      days: diffInDays,
+      weeks: diffInWeeks,
+      months: diffInMonths,
+    };
+  };
 
   const handelUserDetails = () => {
     const userData = listedProductsData?.user;
@@ -113,11 +117,10 @@ const SummaryListedSection = () => {
     }).toString();
     history.push(`${routes.app.listProduct.userDetails}?${queryParams}`);
   };
-
+  const difference = getTimeDifference(date);
   const mapUrl = ` https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
     `${mainLocation?.lat},${mainLocation?.lng}`
   )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`;
-
   return (
     <div>
       <Dimmer
@@ -211,9 +214,17 @@ const SummaryListedSection = () => {
             <BsClockHistory className="text-primary text-sm" />
             <p className="text-primary font-medium text-xs sm:text-sm">
               {difference.months > 0 && `${difference.months} months ago`}
-              {difference.months === 0 && difference.weeks > 0 && `${difference.weeks} weeks ago`}
-              {difference.months === 0 && difference.weeks === 0 && difference.days > 0 && `${difference.days} days ago`}
-              {difference.months === 0 && difference.weeks === 0 && difference.days === 0 && `Today`}
+              {difference.months === 0 &&
+                difference.weeks > 0 &&
+                `${difference.weeks} weeks ago`}
+              {difference.months === 0 &&
+                difference.weeks === 0 &&
+                difference.days > 0 &&
+                `${difference.days} days ago`}
+              {difference.months === 0 &&
+                difference.weeks === 0 &&
+                difference.days === 0 &&
+                `Today`}
             </p>
           </div>
           {/* Category sections */}
@@ -222,7 +233,7 @@ const SummaryListedSection = () => {
               <p className="text-sm text-gray-500 mb-2.5">
                 {selectedContent[localizationKeys.category]}
               </p>
-              <div className="px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
+              <div className="text-center px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
                 {lang === "en"
                   ? listedProductsData?.category?.nameEn
                   : listedProductsData?.category?.nameAr}
@@ -234,7 +245,7 @@ const SummaryListedSection = () => {
                 <p className="text-sm text-gray-500 mb-2.5">
                   {selectedContent[localizationKeys.subCategory]}
                 </p>
-                <div className="px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
+                <div className="text-center px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
                   {lang === "en"
                     ? listedProductsData?.subCategory?.nameEn
                     : listedProductsData?.subCategory?.nameAr}

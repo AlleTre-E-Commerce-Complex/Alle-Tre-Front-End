@@ -1485,7 +1485,7 @@ const ProductDetails = () => {
                   <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
                     <div className="mt-auto w-full sm:w-auto ">
                       {!(auctionState === "DRAFTED" ||
-                        productDetailsint?.auctionState === "DRAFTED") && (
+                        productDetailsint?.auctionState === "DRAFTED") && !isEditing &&(
                         <div
                           onClick={(e) => SaveAuctionAsDraft(e)}
                           className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"

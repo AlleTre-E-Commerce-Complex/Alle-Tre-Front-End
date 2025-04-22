@@ -57,22 +57,22 @@ const ProductCardList = ({
     }
   };
 
-  const getTimeDifference = (createdAt) => {
-    const createdDate = new Date(createdAt);
-    const today = new Date();
-    const diffInMs = today - createdDate;
+  // const getTimeDifference = (createdAt) => {
+  //   const createdDate = new Date(createdAt);
+  //   const today = new Date();
+  //   const diffInMs = today - createdDate;
 
-    // Convert milliseconds to different units
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-    const diffInWeeks = Math.floor(diffInDays / 7);
-    const diffInMonths = Math.floor(diffInDays / 30);
+  //   // Convert milliseconds to different units
+  //   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+  //   const diffInWeeks = Math.floor(diffInDays / 7);
+  //   const diffInMonths = Math.floor(diffInDays / 30);
 
-    return {
-      days: diffInDays,
-      weeks: diffInWeeks,
-      months: diffInMonths,
-    };
-  };
+  //   return {
+  //     days: diffInDays,
+  //     weeks: diffInWeeks,
+  //     months: diffInMonths,
+  //   };
+  // };
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
   };
@@ -134,7 +134,7 @@ const ProductCardList = ({
     preloadVideo(prevIndex);
   }, [currentImageIndex, adsImg, preloadedVideos]);
 
-  const difference = getTimeDifference(createdAt);
+  // const difference = getTimeDifference(createdAt);
 
   const handelGoDetails = (id) => {
     history.push(routes.app.listProduct.details(id));
@@ -297,7 +297,7 @@ const ProductCardList = ({
                     {city}, {country}
                   </p>
                 </div>
-                <div className="flex items-center justify-end sm:flex sm:items-start sm:justify-start sm:gap-2">
+                {/* <div className="flex items-center justify-end sm:flex sm:items-start sm:justify-start sm:gap-2">
                   <p
                     className="text-gray-dark font-medium text-xs sm:text-sm"
                     onClick={() => handelGoDetails(id)}
@@ -307,7 +307,7 @@ const ProductCardList = ({
                     {difference.months === 0 && difference.weeks === 0 && difference.days > 0 && `${difference.days} days ago`}
                     {difference.months === 0 && difference.weeks === 0 && difference.days === 0 && `Today`}
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
 
