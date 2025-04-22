@@ -41,6 +41,7 @@ import ImageMedia from "component/create-auction-components/ImageMedia";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 
 const ProductDetails = () => {
+  const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { state } = useLocation();
@@ -813,20 +814,33 @@ const ProductDetails = () => {
       });
     }
 
-    const response = await authAxios.post(
-      api.app.auctions.setAssdraft,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    setIsSavingDraft(true);
+    try {
+      const response = await authAxios.post(
+        api.app.auctions.setAssdraft,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    if (response.data.status === 200) {
-      toast.success(selectedContent[localizationKeys.draftSavedSuccessfully]);
-      history.push(routes.app.createAuction.default);
-      dispatch(productDetails({}));
+      if (response.status === 200 || response.data?.success) {
+        toast.success(selectedContent[localizationKeys.draftSavedSuccessfully]);
+        history.push(routes.app.profile.myAuctions.drafts);
+        dispatch(productDetails({}));
+      } else {
+        toast.error(selectedContent[localizationKeys.errorSavingDraft] || 'Error saving draft');
+      }
+    } catch (error) {
+      console.error('Error saving draft:', error);
+      toast.error(
+        error.response?.data?.message ||
+        'Error while saving draft'
+      );
+    } finally {
+      setIsSavingDraft(false);
     }
   };
 
@@ -863,6 +877,7 @@ const ProductDetails = () => {
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={
+          isSavingDraft ||
           isLoading ||
           loadingSubGatogry ||
           isLoadingAuctionById ||
@@ -1450,7 +1465,7 @@ const ProductDetails = () => {
                   <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
                     <div className="mt-auto w-full sm:w-auto ">
                       <div
-                        onClick={() => SaveAuctionAsDraft()}
+                        onClick={(e) => SaveAuctionAsDraft(e)}
                         className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
                       >
                         {selectedContent[localizationKeys.saveAsDraft]}

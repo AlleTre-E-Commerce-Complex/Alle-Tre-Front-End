@@ -25,7 +25,7 @@ const SoldAuctions = () => {
 
   const [soldAuctionsData, setSoldAuctionsData] = useState();
   const [totalPages, setTotalPages] = useState();
-
+  
   const history = useHistory();
   const { search } = useLocation();
 
@@ -96,7 +96,7 @@ const SoldAuctions = () => {
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
-            <PaginationApp totalPages={totalPages} perPage={5} />
+            <PaginationApp totalPages={totalPages} perPage={10} />
           </div>
         </div>
       )}

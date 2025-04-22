@@ -42,7 +42,7 @@ const api = {
         `/auctions/user/${auctionId}/sendItem-forDelivery`,
       getAllOwnesAuctions: "auctions/user/ownes",
       getOtherUsersAuction: (userId) => `/auctions/user/user-details/?userId=${userId}`,
-      getAlldraft: "auctions/user/ownes?status=DRAFTED",
+      getAlldraft: "auctions/user/ownes",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       getUserAuctionsDetails: (auctionsId) =>
         `/auctions/user/${auctionsId}/details`,
