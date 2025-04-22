@@ -160,11 +160,11 @@ const Footer = () => {
                     icon: FaSnapchatGhost,
                     link: "https://www.snapchat.com/add/alletre",
                   },
-                  { icon: FaWhatsapp, link: "https://wa.me/97172663004" },
-                  {
-                    icon: FaWhatsappSquare,
-                    link: "https://whatsapp.com/channel/0029Valpc9dLI8YQT9VNDk1R",
-                  },
+                  { icon: FaWhatsapp, link: "https://wa.me/9712663180" },
+                  // {
+                  //   icon: FaWhatsappSquare,
+                  //   link: "https://whatsapp.com/channel/0029Valpc9dLI8YQT9VNDk1R",
+                  // },
                   { icon: FaTelegramPlane, link: "http://t.me/Alletre" },
                 ].map(({ icon: Icon, link }, index) => (
                   <a
