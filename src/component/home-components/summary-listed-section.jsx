@@ -27,6 +27,7 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
+import { BsClockHistory } from "react-icons/bs";
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
@@ -39,6 +40,7 @@ const SummaryListedSection = () => {
   const { pathname } = useLocation();
   const { productId } = useParams();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
+  const [difference, setDifference] = useState({ days: 0, weeks: 0, months: 0 });
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -80,6 +82,20 @@ const SummaryListedSection = () => {
         .then((res) => {
           setListedProductsData(res?.data?.data?.product);
           setMainLocation(res?.data?.data?.location);
+          // Calculate time difference
+          if (res?.data?.data?.product?.createdAt) {
+            const createdDate = new Date(res.data.data.product.createdAt);
+            const currentDate = new Date();
+            const diffTime = Math.abs(currentDate - createdDate);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const diffWeeks = Math.floor(diffDays / 7);
+            const diffMonths = Math.floor(diffDays / 30);
+            setDifference({
+              days: diffDays,
+              weeks: diffWeeks,
+              months: diffMonths
+            });
+          }
         })
         .catch((error) => {
           console.log("summery listed section error:", error);
@@ -190,6 +206,15 @@ const SummaryListedSection = () => {
                 />
               </svg>
             </HashLink>
+          </div>
+          <div className="inline-flex items-center gap-2 bg-primary/5 hover:bg-primary/10 transition-all duration-300 rounded-full px-4 py-1.5 border border-primary/10">
+            <BsClockHistory className="text-primary text-sm" />
+            <p className="text-primary font-medium text-xs sm:text-sm">
+              {difference.months > 0 && `${difference.months} months ago`}
+              {difference.months === 0 && difference.weeks > 0 && `${difference.weeks} weeks ago`}
+              {difference.months === 0 && difference.weeks === 0 && difference.days > 0 && `${difference.days} days ago`}
+              {difference.months === 0 && difference.weeks === 0 && difference.days === 0 && `Today`}
+            </p>
           </div>
           {/* Category sections */}
           <div className="py-6 flex flex-wrap gap-6">

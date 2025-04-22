@@ -8,7 +8,8 @@ import { getDefaultPaginationString } from "../constants/pagination";
 
 const AuthContext = React.createContext();
 
-const WHITE_LIST = [routes.auth.default, routes.auth.forgetpass.default];
+const WHITE_LIST = [routes.auth.default, routes.auth.forgetpass.default, routes.auth.forgetpass.restpass];
+
 function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
@@ -37,15 +38,21 @@ function AuthProvider({ children }) {
   const searchParams = new URLSearchParams(search).toString();
 
   React.useEffect(() => {
+    if (pathname.startsWith(routes.auth.forgetpass.restpass)) {
+      setIsLoading(false);
+      return;
+    }
     async function fetchUser() {
       try {
         const user = await Auth.getUser();
         if (!user) {
-          if (!WHITE_LIST.some((route) => pathname.startsWith(route))) {
-            if (
-              !searchParams.includes("page") &&
-              !searchParams.includes("perPage")
-            ) {
+          const isWhiteListed = WHITE_LIST.some(route => 
+            pathname.startsWith(route) || 
+            pathname.includes(route) || 
+            window.location.pathname.startsWith(route)
+          );
+          if (!isWhiteListed) {
+            if (!searchParams.includes("page") && !searchParams.includes("perPage")) {
               const redirectPath = window.location.pathname.includes("details")
                 ? window.location.pathname
                 : `${routes.app.home}?${getDefaultPaginationString()}`;
@@ -65,9 +72,8 @@ function AuthProvider({ children }) {
         setIsLoading(false);
       }
     }
-
     fetchUser();
-  }, [pathname]); // Only re-run when pathname changes
+  }, [pathname,searchParams,history]); 
 
   return (
     <AuthContext.Provider

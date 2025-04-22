@@ -40,13 +40,10 @@ function App() {
     <HelmetProvider>
       <div className="App">
         <Switch>
-          <Route path={routes.app.default} component={AppLayouts} />
-
+          <Route exact path={routes.auth.forgetpass.restpass} component={CredentialsuUpdateLayout} />
+          <Route exact path={routes.auth.forgetpass.default} component={CredentialsuUpdateLayout} />
           <Route path={routes.auth.default} component={AuthLayouts} />
-          <Route
-            path={routes.auth.forgetpass.default}
-            component={CredentialsuUpdateLayout}
-          />
+          <Route path={routes.app.default} component={AppLayouts} />
           <Redirect to={`${routes.app.home}?${getDefaultPaginationString()}`} />
         </Switch>
         {/* Blocked Modal */}

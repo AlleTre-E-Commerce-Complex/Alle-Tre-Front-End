@@ -98,7 +98,7 @@ const ScheduledAuctions = () => {
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
-            <PaginationApp totalPages={totalPages} perPage={10} />
+            <PaginationApp totalPages={totalPages} perPage={14} />
           </div>
         </div>
       )}
