@@ -160,7 +160,7 @@ const Footer = () => {
                     icon: FaSnapchatGhost,
                     link: "https://www.snapchat.com/add/alletre",
                   },
-                  { icon: FaWhatsapp, link: "https://wa.me/9712663180" },
+                  { icon: FaWhatsapp, link: "https://wa.me/971502663180" },
                   // {
                   //   icon: FaWhatsappSquare,
                   //   link: "https://whatsapp.com/channel/0029Valpc9dLI8YQT9VNDk1R",
