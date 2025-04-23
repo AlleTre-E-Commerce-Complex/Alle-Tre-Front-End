@@ -194,6 +194,7 @@ const ar = {
   [localizationKeys.pendingAuctions]: "المزادات المعلقة",
   [localizationKeys.expiredAuctions]: "المزادات المنتهية",
   [localizationKeys.payDeposite]: "إيداع الدفع",
+  [localizationKeys.yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck]:"تم إيداعك بنجاح وتم وضع عرضك. بالتوفيق!",
   [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
     "لكي تتمكن من إتمام نشر مزادك بنجاح، يرجى دفع رسوم المزاد والبدء في تلقي العطاءات على الفور.",
   [localizationKeys.adPreview]: "معاينة الإعلان",

@@ -199,6 +199,7 @@ const en = {
   [localizationKeys.pendingAuctions]: "Pending Auctions",
   [localizationKeys.expiredAuctions]: "Expired Auctions",
   [localizationKeys.payDeposite]: "Pay Deposite",
+  [localizationKeys.yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck]:"Your deposit has been successfully made and your bid has been placed. Good luck!",
   [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
     "In order to complete publishing your auction successfully, please pay the auction fee and start receiving bids immediately.",
   [localizationKeys.adPreview]: "Ad Preview",

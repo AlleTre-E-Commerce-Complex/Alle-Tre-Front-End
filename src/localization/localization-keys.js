@@ -180,6 +180,7 @@ const localizationKeys = {
   soldAuctions: "soldAuctions",
   pendingAuctions: "pendingAuctions",
   payDeposite: "payDeposite",
+  yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck:"yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck",
   inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately:
     "inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately",
   adPreview: "adPreview",

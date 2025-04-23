@@ -59,6 +59,11 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
             ? selectedContent[
                 localizationKeys.yourPurchaseHasBeenSuccessfullyCompleted
               ]
+            : pathname.endsWith(`${routes.app.home}/payDeposite`)
+            ? selectedContent[
+                localizationKeys
+                  .yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck
+              ]
             : selectedContent[
                 localizationKeys
                   .yourDepositHasBeenSuccessfullyTransferredAndYourAuctionIsActiveNow
@@ -84,7 +89,9 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
               : selectedContent[localizationKeys.viewAuction]}
           </button>
           <button
-            onClick={() => history.push(`${routes.app.home}?${getDefaultPaginationString()}`)}
+            onClick={() =>
+              history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
+            }
             className="bg-primary text-white w-[136px] h-[48px] rounded-lg text-base font-normal"
           >
             {selectedContent[localizationKeys.backToHome]}
