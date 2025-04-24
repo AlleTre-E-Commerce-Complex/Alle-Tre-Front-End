@@ -17,11 +17,15 @@ const WalletPayment = ({
   paymentAPI,
   setShwoPaymentSelection,
   setShowWalletPaymentMethod,
+  setIsAlreadyPaid,
+  setIsAcutionExpired,
+  setExpiredMessage
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { run, isLoading } = useAxios([]);
   const submitWalletPayment = () => {
+    if (isLoading) return; // Prevent multiple clicks
     const body = {
       auctionId,
       amount,
@@ -38,10 +42,21 @@ const WalletPayment = ({
             // history.push(routes.app.profile.myAuctions.active);
           }
         })
-        .catch((error) => {
+        .catch((err) => {
+          console.log('payment failed :',err)
           toast.error("Payment Failed", {
             position: "top-right",
           });
+          if(err?.response?.data?.message[lang]){
+            toast.error(err?.response?.data?.message[lang]);
+           setShowWalletPaymentMethod(); 
+           if(err?.response?.data?.message?.en === 'Payment cannot be processed for an expired auction.'){
+            setIsAcutionExpired(true)
+            setExpiredMessage(err?.response?.data?.message[lang])
+           }else{
+             setIsAlreadyPaid(true)
+           }
+          }
         })
     );
   };
@@ -67,6 +82,7 @@ const WalletPayment = ({
         <Button
           className="bg-primary text-white w-full md:w-[155px] h-[48px] md:h-[56px] rounded-lg text-base font-normal"
           loading={isLoading}
+          disabled={isLoading}
           id="submit"
           onClick={submitWalletPayment}
         >

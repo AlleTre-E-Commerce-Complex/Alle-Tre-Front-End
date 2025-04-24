@@ -28,6 +28,7 @@ const api = {
     },
     auctions: {
       default: "/auctions",
+      oneClickAuction:'/auctions/one-click-auction',
       setDeliveryType: (auctionId) =>
         `/auctions/user/${auctionId}/set-delivery-type`,
       setAssdraft: "/auctions/save-draft",

@@ -58,12 +58,19 @@ const ActionsRowTable = ({
   const [openTotalBid, setOpenTotalBidsModel] = useState(false);
   const ending_Time = useCountdown(endingTime);
   const starting_Date = useCountdown(startingDate);
-  const startingDateLeft = `${starting_Date.days} ${selectedContent[localizationKeys.days]
-    } : ${starting_Date.hours} ${selectedContent[localizationKeys.hrs]} : ${starting_Date.minutes
-    } ${selectedContent[localizationKeys.min]}`;
-  const endingTimeLeft = `${ending_Time.days} ${selectedContent[localizationKeys.days]
-    } : ${ending_Time.hours} ${selectedContent[localizationKeys.hrs]} : ${ending_Time.minutes
-    } ${selectedContent[localizationKeys.min]}`;
+  const startingDateLeft = `${starting_Date.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${starting_Date.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    starting_Date.minutes
+  } ${selectedContent[localizationKeys.min]}`;
+  const endingTimeLeft = `${ending_Time.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${ending_Time.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    ending_Time.minutes
+  } ${selectedContent[localizationKeys.min]} : ${
+    ending_Time.seconds
+  } ${selectedContent[localizationKeys.sec]}` 
+  ;
 
   const handleContactDetailsModal = (userType) => {
     setUserType(userType);
@@ -315,10 +322,10 @@ const ActionsRowTable = ({
                   </p>
                 </div>
                 <div>
-                  <h1 className="text-gray-veryLight text-[10px] font-normal">
+                  <h1 className="text-red-dark text-[10px] font-normal">
                     {selectedContent[localizationKeys.endingTime]}
                   </h1>
-                  <p className="text-gray-dark text-[10px] font-normal">
+                  <p className="text-red text-[10px] font-normal">
                     {/* 02 days.05 hrs.02 min */}
                     {status === "COMPLETED" || status === "PAYMENT_EXPIRED"
                       ? moment(endingDate).local().format("MMMM, DD YYYY")

@@ -25,6 +25,7 @@ const WalletPaymentBuyNow = ({
   const { run, isLoading } = useAxios([]);
 
   const submitWalletPayment = () => {
+    if (isLoading) return; // Prevent multiple clicks
     const body = {
       auctionId,
     };
@@ -73,6 +74,7 @@ const WalletPaymentBuyNow = ({
         <Button
           className="bg-primary text-white w-full md:w-[155px] h-[48px] md:h-[56px] rounded-lg text-base font-normal"
           loading={isLoading}
+          disabled={isLoading}
           id="submit"
           onClick={submitWalletPayment}
         >

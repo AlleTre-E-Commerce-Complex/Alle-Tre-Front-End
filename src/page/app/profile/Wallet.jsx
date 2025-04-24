@@ -47,7 +47,15 @@ const Wallet = () => {
   
 
   const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      // second: "numeric", // optional
+      hour12: true, // set to false if you prefer 24-hour time
+    };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
