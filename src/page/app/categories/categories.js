@@ -222,7 +222,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         />
       )}
       <div className="">
-        <div className="px-4 mx-auto mt-[120px] sm:mt-[132px] ">
+        <div className=" mx-auto mt-[120px] sm:mt-[132px] ">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
             active={loadingSubGatogry || isLoadingCategories || loadingGatogry}

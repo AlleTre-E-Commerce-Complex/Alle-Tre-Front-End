@@ -481,6 +481,17 @@ const ProductDetails = () => {
       return;
     }
 
+    // Check video file size (50MB = 50 * 1024 * 1024 bytes)
+    const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB in bytes
+    const oversizedVideos = files.filter(
+      file => file.type.startsWith("video/") && file.size > MAX_VIDEO_SIZE
+    );
+    if (oversizedVideos.length > 0) {
+      toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded]);
+      event.target.value = null;
+      return;
+    }
+
     // Check video validation
     const videoError = checkVideoValidation(files, currentImages);
     if (videoError) {

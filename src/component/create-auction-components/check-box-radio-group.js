@@ -19,7 +19,7 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue, categor
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label={isProperty ?   [localizationKeys.sell] : selectedContent[localizationKeys.new]}
+          label={isProperty ?  selectedContent[localizationKeys.sell] : selectedContent[localizationKeys.new]}
           name="checkboxRadioGroup"
           value="NEW"
           checked={valueRadio === "NEW"}
