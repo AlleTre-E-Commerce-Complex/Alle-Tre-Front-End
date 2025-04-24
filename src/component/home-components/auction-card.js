@@ -69,6 +69,7 @@ const AuctionCard = ({
   latestBidAmount,
   hideButton,
   usageStatus,
+  category,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -446,8 +447,12 @@ const AuctionCard = ({
                   : "bg-gray-100 text-gray-700"
               }`}
             >
-              {usageStatus?.charAt(0).toUpperCase() +
-                usageStatus?.slice(1).toLowerCase()}
+              {category === 3
+                ? usageStatus === "NEW"
+                  ? selectedContent[localizationKeys.sell]
+                  : selectedContent[localizationKeys.rent]
+                : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
             </div>
           </div>
 

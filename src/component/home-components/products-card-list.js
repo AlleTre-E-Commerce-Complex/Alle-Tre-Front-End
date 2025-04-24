@@ -7,10 +7,12 @@ import routes from "../../routes";
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 import { RiShareForwardFill } from "react-icons/ri";
-import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import {
+  MdLocationPin,
+  MdNavigateBefore,
+  MdNavigateNext,
+} from "react-icons/md";
 import { BsPlayCircleFill } from "react-icons/bs";
-import { GoLocation } from "react-icons/go";
-import { useAuthState } from "context/auth-context";
 
 const ProductCardList = ({
   adsImg,
@@ -22,6 +24,7 @@ const ProductCardList = ({
   createdAt,
   usageStatus,
   userId,
+  category,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
@@ -282,14 +285,18 @@ const ProductCardList = ({
                       : "bg-gray-100 text-gray-700"
                   }`}
                 >
-                  {usageStatus?.charAt(0).toUpperCase() +
-                    usageStatus?.slice(1).toLowerCase()}
+                  {category === 3
+                    ? usageStatus === "NEW"
+                      ? selectedContent[localizationKeys.sell]
+                      : selectedContent[localizationKeys.rent]
+                    : usageStatus?.charAt(0).toUpperCase() +
+                      usageStatus?.slice(1).toLowerCase()}
                 </div>
               </div>
 
               <div className="flex flex-col gap-2 sm:grid sm:grid-cols-3 sm:gap-6">
                 <div className="flex items-center justify-start sm:flex sm:items-start sm:gap-2 h-[40px] sm:h-auto gap-1">
-                  <GoLocation className="text-primary/80 text-[12px] sm:text-sm mt-0.5" />
+                  <MdLocationPin className="text-primary/80 text-md sm:text-md mt-0.5" />
                   <p
                     className="text-gray-dark font-medium text-xs sm:text-sm"
                     onClick={() => handelGoDetails(id)}
