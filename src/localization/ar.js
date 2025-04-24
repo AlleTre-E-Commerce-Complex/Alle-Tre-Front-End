@@ -170,7 +170,11 @@ const ar = {
   [localizationKeys.dragAndDropYourPdfHereOr]:
     "اسحب ملف PDF الخاص بك وأفلِته هنا، أو",
   [localizationKeys.clickToBrowse]: "انقر للتصفح",
-  [localizationKeys.document]: "Document",
+  [localizationKeys.document]: "وثيقة",
+  [localizationKeys.tapToZoom]: "انقر للتكبير",
+  [localizationKeys.listYourPropertyForSale]  :"قم بإدراج عقارك للبيع",
+  [localizationKeys.rent]:"إيجار",
+  [localizationKeys.listYourPropertyForRent]:"أدرج عقارك للإيجار" ,
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",

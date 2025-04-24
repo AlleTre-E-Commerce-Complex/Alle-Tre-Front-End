@@ -71,6 +71,7 @@ const Purchased = () => {
               latestBidAmount={e?.bids[0]?.amount}
               startBidAmount={e?.startBidAmount}
               usageStatus={e?.product?.usageStatus}
+              category={e?.product?.categoryId}
             />
           ))}
         </div>

@@ -157,6 +157,9 @@ const localizationKeys = {
   clickToBrowse: "clickToBrowse",
   document: "document",
   tapToZoom: "tapToZoom",
+  listYourPropertyForSale: "listYourPropertyForSale",
+  rent: "rent",
+  listYourPropertyForRent:"listYourPropertyForRent",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -180,7 +183,8 @@ const localizationKeys = {
   soldAuctions: "soldAuctions",
   pendingAuctions: "pendingAuctions",
   payDeposite: "payDeposite",
-  yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck:"yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck",
+  yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck:
+    "yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck",
   inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately:
     "inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately",
   adPreview: "adPreview",
@@ -201,7 +205,7 @@ const localizationKeys = {
   shopSustainableChoosePreOwned: "shopSustainableChoosePreOwned",
   getItNewFeeltheDifference: "getItNewFeeltheDifference",
   locationNotAvailable: "locationNotAvailable",
-  selectSubCategory:"selectSubCategory",
+  selectSubCategory: "selectSubCategory",
   // create auctions
   drafts: "drafts",
   proceed: "proceed",
@@ -211,7 +215,7 @@ const localizationKeys = {
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
   cancel: "cancel",
   logOut: "logOut",
-  updatedSuccessfully:"auctionUpdatedSuccessfully",
+  updatedSuccessfully: "auctionUpdatedSuccessfully",
   areYouSureYouWantToLogOut: "areYouSureYouWantToLogOut",
   confirmLogout: "confirmLogout",
   skip: "skip",
@@ -252,26 +256,30 @@ const localizationKeys = {
   saveAsDraft: "saveAsDraft",
   next: "next",
   youCanOnlySelectUpToFiftyImages: "youCanOnlySelectUpTo50Images",
-  relatedDocument:"relatedDocument",
-  Pdfdocument:"Pdfdocument",
-  videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover:"videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover",
-  onlyOneVideoFileIsAllowed:"onlyOneVideoFileIsAllowed",
-  errorInWatermarkProcess:"errorInWatermarkProcess",
-  uploadOneImageAndOneVideo:"uploadOneImageAndOneVideo",
-  fileSizeShouldBeLessThan10MB:"fileSizeShouldBeLessThan10MB",
-  thisAuctionAddedToWatchListSuccessfully:"thisAuctionAddedToWatchListSuccessfully",
-  thisAuctionRemovedFromWatchListSuccessfully:"thisAuctionRemovedFromWatchListSuccessfully",
-  imageDeletedSuccessfully:"imageDeletedSuccessfully",
-  failedToDeleteImage:"failedToDeleteImage",
-  coverPhotoUpdatedSuccessfully:"coverPhotoUpdatedSuccessfully",
-  failedToUpdateCoverPhoto:"failedToUpdateCoverPhoto",
-  cannotMixVideoAndImages:"cannotMixVideoAndImages",
-  videoSizeLimitExceeded:"videoSizeLimitExceeded",
-  fileConversionFailed:"fileConversionFailed",
+  relatedDocument: "relatedDocument",
+  Pdfdocument: "Pdfdocument",
+  videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover:
+    "videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover",
+  onlyOneVideoFileIsAllowed: "onlyOneVideoFileIsAllowed",
+  errorInWatermarkProcess: "errorInWatermarkProcess",
+  uploadOneImageAndOneVideo: "uploadOneImageAndOneVideo",
+  fileSizeShouldBeLessThan10MB: "fileSizeShouldBeLessThan10MB",
+  thisAuctionAddedToWatchListSuccessfully:
+    "thisAuctionAddedToWatchListSuccessfully",
+  thisAuctionRemovedFromWatchListSuccessfully:
+    "thisAuctionRemovedFromWatchListSuccessfully",
+  imageDeletedSuccessfully: "imageDeletedSuccessfully",
+  failedToDeleteImage: "failedToDeleteImage",
+  coverPhotoUpdatedSuccessfully: "coverPhotoUpdatedSuccessfully",
+  failedToUpdateCoverPhoto: "failedToUpdateCoverPhoto",
+  cannotMixVideoAndImages: "cannotMixVideoAndImages",
+  videoSizeLimitExceeded: "videoSizeLimitExceeded",
+  fileConversionFailed: "fileConversionFailed",
   setAsCover: "setAsCover",
   cover: "cover",
-  editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction:"editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction",
-  editingDisabled:"editingDisabled",
+  editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction:
+    "editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction",
+  editingDisabled: "editingDisabled",
   //List product
   call: "call",
   chat: "chat",
@@ -339,7 +347,8 @@ const localizationKeys = {
   // paymemt details
   paymentMethod: "paymentMethod",
   PaymentCompleted: "PaymentCompleted",
-  YouveAlreadyCompletedThePaymentForThisAuction: "YouveAlreadyCompletedThePaymentForThisAuction",
+  YouveAlreadyCompletedThePaymentForThisAuction:
+    "YouveAlreadyCompletedThePaymentForThisAuction",
   backToHome: "backToHome",
   yourPurchaseHasBeenSuccessfullyCompleted:
     "yourPurchaseHasBeenSuccessfullyCompleted",
@@ -523,7 +532,8 @@ const localizationKeys = {
   bidAmount: "bidAmount",
   startingBidAmount: "startingBidAmount",
   currentBid: "currentBid",
-  YourMaximumBidAllowedForThisAuctionIsAED: "YourMaximumBidAllowedForThisAuctionIsAED",
+  YourMaximumBidAllowedForThisAuctionIsAED:
+    "YourMaximumBidAllowedForThisAuctionIsAED",
   submitValueIsRequiredAndMustBeBiggerThanCurrentBid:
     "submitValueIsRequiredAndMustBeBiggerThanCurrentBid",
   yourAddNewSubmitValueSuccessfully: " NewBidSubmittedSuccessfully",

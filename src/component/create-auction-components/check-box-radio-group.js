@@ -7,37 +7,40 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
-export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue }) => {
+export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue, categoryId }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+
+  const isProperty = categoryId === 3;
+
   return (
     <Form className="flex md:flex-row flex-col gap-x-72">
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label={selectedContent[localizationKeys.new]}
+          label={isProperty ?   [localizationKeys.sell] : selectedContent[localizationKeys.new]}
           name="checkboxRadioGroup"
           value="NEW"
           checked={valueRadio === "NEW"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          {selectedContent[localizationKeys.getItNewFeeltheDifference]}
+          {isProperty ? [localizationKeys.listYourPropertyForSale]  : selectedContent[localizationKeys.getItNewFeeltheDifference]}
         </p>
       </Form.Field>
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label={selectedContent[localizationKeys.used]}
+          label={isProperty ? selectedContent[localizationKeys.rent] : selectedContent[localizationKeys.used]}
           name="checkboxRadioGroup"
           value="USED"
           checked={valueRadio === "USED"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          {selectedContent[localizationKeys.shopSustainableChoosePreOwned]}
+          {isProperty ?  selectedContent[localizationKeys.listYourPropertyForRent]: selectedContent[localizationKeys.shopSustainableChoosePreOwned]}
         </p>
       </Form.Field>
       {/* <Form.Field>

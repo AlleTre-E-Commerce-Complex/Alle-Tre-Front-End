@@ -78,6 +78,7 @@ const Watshlist = () => {
               className=""
               startBidAmount={e?.auction?.startBidAmount}
               latestBidAmount={e?.auction?.bids[0]?.amount}
+              category={e?.product?.categoryId}
             />
           ))}
         </div>

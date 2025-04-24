@@ -177,6 +177,9 @@ const en = {
   [localizationKeys.clickToBrowse]: "click to browse",
   [localizationKeys.document]: "Document",
   [localizationKeys.tapToZoom]: "Tap to zoom",
+  [localizationKeys.listYourPropertyForSale]  :"List your property for sale",
+  [localizationKeys.rent]:"Rent",
+  [localizationKeys.listYourPropertyForRent]:"List your property for rent" ,
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",

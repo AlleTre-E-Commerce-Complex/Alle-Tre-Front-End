@@ -183,6 +183,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                           }
                           createdAt={e?.createdAt}
                           usageStatus={e?.product?.usageStatus}
+                          category={e?.product?.categoryId}
                         />
                       ) : (
                         <AuctionCard
@@ -201,6 +202,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                           isMyAuction={e?.isMyAuction}
                           latestBidAmount={e?.bids[0]?.amount || 0}
                           usageStatus={e?.product?.usageStatus}
+                          category={e?.product?.categoryId}
                         />
                       )}
                     </div>
