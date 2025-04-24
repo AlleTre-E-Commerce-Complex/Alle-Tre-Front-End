@@ -115,7 +115,7 @@ const ProductDetails = () => {
         formData.append("product[numberOfFloors]", values.numberOfFloors);
       if (values.numberOfRooms)
         formData.append("product[numberOfRooms]", values.numberOfRooms);
-      if (values.itemDescription)
+            if (values.itemDescription)
         formData.append("product[description]", values.itemDescription);
       if (values.countryId)
         formData.append("product[countryId]", values.countryId);
@@ -477,6 +477,17 @@ const ProductDetails = () => {
       toast.error(
         selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
       );
+      event.target.value = null;
+      return;
+    }
+
+    // Check video file size (50MB = 50 * 1024 * 1024 bytes)
+    const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB in bytes
+    const oversizedVideos = files.filter(
+      file => file.type.startsWith("video/") && file.size > MAX_VIDEO_SIZE
+    );
+    if (oversizedVideos.length > 0) {
+      toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded]);
       event.target.value = null;
       return;
     }
@@ -1479,20 +1490,24 @@ const ProductDetails = () => {
                       <CheckboxRadioProductDetails
                         valueRadio={valueRadio}
                         setRadioValue={setRadioValue}
+                        categoryId={categoryId}
                       />
                     </div>
                   </div>
                   <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
                     <div className="mt-auto w-full sm:w-auto ">
-                      {!(auctionState === "DRAFTED" ||
-                        productDetailsint?.auctionState === "DRAFTED") && !isEditing &&(
-                        <div
-                          onClick={(e) => SaveAuctionAsDraft(e)}
-                          className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
-                        >
-                          {selectedContent[localizationKeys.saveAsDraft]}
-                        </div>
-                      )}
+                      {!(
+                        auctionState === "DRAFTED" ||
+                        productDetailsint?.auctionState === "DRAFTED"
+                      ) &&
+                        !isEditing && (
+                          <div
+                            onClick={(e) => SaveAuctionAsDraft(e)}
+                            className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                          >
+                            {selectedContent[localizationKeys.saveAsDraft]}
+                          </div>
+                        )}
                     </div>
                     {isEditing ? (
                       <button

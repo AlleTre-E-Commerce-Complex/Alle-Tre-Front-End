@@ -168,6 +168,7 @@ const UserDetailsPage = () => {
                           CurrentBid={e?.currentBid?.bidAmount}
                           startBidAmount={e?.startBidAmount}
                           usageStatus={e?.product?.usageStatus}
+                          category={e?.product?.categoryId}
                         />
                       ))}
                     </div>
@@ -227,6 +228,7 @@ const UserDetailsPage = () => {
                           }
                           createdAt={e?.createdAt}
                           usageStatus={e?.product?.usageStatus}
+                          category={e?.product?.categoryId}
                         />
                       ))}
                     </div>

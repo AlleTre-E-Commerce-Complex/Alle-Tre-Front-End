@@ -140,6 +140,7 @@ const LiveAuctionsSlider = ({ type }) => {
                         endingTime={e?.expiryDate}
                         isBuyNowAllowed={e?.isBuyNowAllowed}
                         isMyAuction={e?.isMyAuction}
+                        category={e?.product?.categoryId}
                       />
                     </div>
                   ))}

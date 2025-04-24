@@ -22,6 +22,7 @@ const ProductCard = ({
   createdAt,
   userId,
   usageStatus,
+  category,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -291,12 +292,12 @@ const ProductCard = ({
               </>
             ) : null}
           </div>
-          <div
-            className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-2 sm:px-3 py-1.5 sm:py-2 rounded-md shadow-sm backdrop-blur-sm bg-opacity-75"
-          >
+          <div className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-2 sm:px-3 py-1.5 sm:py-2 rounded-md shadow-sm backdrop-blur-sm bg-opacity-75">
             <span className="text-white font-medium text-xs sm:text-sm flex items-center">
-              <span className="text-white/80 text-[10px] sm:text-xs mr-1">AED</span>
-              {formatCurrency(price).replace('AED', '')}
+              <span className="text-white/80 text-[10px] sm:text-xs mr-1">
+                AED
+              </span>
+              {formatCurrency(price).replace("AED", "")}
             </span>
           </div>
         </div>
@@ -308,7 +309,7 @@ const ProductCard = ({
             >
               {truncateString(title, 100)}
             </h1>
-            
+
             <div className="flex items-center gap-2">
               <div
                 className={`px-2 py-0.5 rounded-md text-xs font-medium ${
@@ -317,8 +318,12 @@ const ProductCard = ({
                     : "bg-gray-100 text-gray-700"
                 }`}
               >
-                {usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
+                {category === 3
+                  ? usageStatus === "NEW"
+                    ? selectedContent[localizationKeys.sell]
+                    : selectedContent[localizationKeys.rent]
+                  : usageStatus?.charAt(0).toUpperCase() +
+                    usageStatus?.slice(1).toLowerCase()}
               </div>
             </div>
           </div>
@@ -339,12 +344,12 @@ const ProductCard = ({
                 {selectedContent[localizationKeys.buyNow]}
               </button>
             )} */}
-               <button
-                onClick={() => handelGoDetails(id)}
+            <button
+              onClick={() => handelGoDetails(id)}
               className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
-              >
-                {selectedContent[localizationKeys.viewDetails]}
-              </button>
+            >
+              {selectedContent[localizationKeys.viewDetails]}
+            </button>
           </div>
         </div>
       </div>

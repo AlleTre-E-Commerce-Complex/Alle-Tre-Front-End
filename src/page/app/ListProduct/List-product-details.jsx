@@ -761,6 +761,7 @@ const ListProductDetails = () => {
                       <CheckboxRadioProductDetails
                         valueRadio={valueRadio}
                         setRadioValue={setRadioValue}
+                        categoryId={categoryId}
                       />
                     </div>
                   </div>

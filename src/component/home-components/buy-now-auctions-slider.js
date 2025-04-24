@@ -140,6 +140,7 @@ const BuyNowAuctionsSlider = () => {
                           startBidAmount={e?.startBidAmount}
                           hideButton={true}
                           usageStatus={e?.product?.usageStatus}
+                          category={e?.product?.categoryId}
                         />
                       </div>
                     ))}

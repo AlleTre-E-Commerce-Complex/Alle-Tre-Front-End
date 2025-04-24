@@ -59,6 +59,7 @@ const AuctionCardList = ({
   latestBidAmount,
   PurchasedTime,
   usageStatus,
+  category
 }) => {
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -380,14 +381,19 @@ const AuctionCardList = ({
                     {truncateString(title, 70)}
                   </h1>
                   <div
-                    className={`state-button shrink-0 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium transition-colors ${usageStatus === "NEW"
-                      ? "bg-primary-veryLight text-primary"
-                      : "bg-gray-100 text-gray-700"
-                      }`}
-                  >
-                    {usageStatus?.charAt(0).toUpperCase() +
-                      usageStatus?.slice(1).toLowerCase()}
-                  </div>
+              className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${
+                usageStatus === "NEW"
+                  ? "bg-primary-veryLight text-primary"
+                  : "bg-gray-100 text-gray-700"
+              }`}
+            >
+              {category === 3 
+                ? usageStatus === "NEW" 
+                  ? selectedContent[localizationKeys.sell] 
+                  : selectedContent[localizationKeys.rent]
+                : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
+            </div>
                 </div>
 
                 <div className="mt-2">

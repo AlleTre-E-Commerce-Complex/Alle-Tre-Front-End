@@ -41,12 +41,12 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const myRef = useRef();
   const myRef1 = useRef();
   const dispatch = useDispatch();
-   const [auctionPageNumber, setAuctionPageNumber] = useState(
-      Number(DEFAULT_PAGE)
-    );
-    const [listedPageNumber, setListedPageNumber] = useState(
-      Number(DEFAULT_PAGE)
-    );
+  const [auctionPageNumber, setAuctionPageNumber] = useState(
+    Number(DEFAULT_PAGE)
+  );
+  const [listedPageNumber, setListedPageNumber] = useState(
+    Number(DEFAULT_PAGE)
+  );
 
   const [isGrid, setIsGrid] = useState(() => {
     return JSON.parse(localStorage.getItem("isGrid")) ?? true;
@@ -62,117 +62,124 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const { run: runCategories, isLoading: isLoadingCategories } = useAxios([]);
 
   useEffect(() => {
-     const queryParams = new URLSearchParams(search);
-        let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
-        let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-    
-        if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
-          queryParams.set("auctionPage", page.toString());
-          queryParams.set("perPage", perPage.toString());
-          history.replace({ search: queryParams.toString() });
-          return;
-        }
-    
-        const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    
-        const filterParams = {
-          page: page,
-          perPage: perPage,
-          categories: parsed.categories ? parsed.categories.map(Number) : undefined,
-          subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
-          brands: parsed.brands ? parsed.brands.map(Number) : undefined,
-          sellingType: parsed.sellingType || undefined,
-          auctionStatus: parsed.auctionStatus || undefined,
-          usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
-          priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-          priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-        };
-     
-        Object.keys(filterParams).forEach((key) => {
-          if (filterParams[key] === undefined) {
-            delete filterParams[key];
-          }
-        });
-        
-        const queryStr = queryString.stringify(filterParams, {
-          arrayFormat: "bracket",
-        });
-    // if (search.includes("page") && search.includes("perPage"))
-      if (user) {
-        runCategories(
-          authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
-            setMainAuctions(res?.data?.data);
-            setTotalpagesAuction(res?.data?.pagination?.totalPages);
-            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-          })
-        );
-      } else {
-        runCategories(
-          axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
-            setMainAuctions(res?.data?.data);
-            setTotalpagesAuction(res?.data?.pagination?.totalPages);
-            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-          })
-        );
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+    if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
+      queryParams.set("auctionPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+    const filterParams = {
+      page: page,
+      perPage: perPage,
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+    };
+
+    Object.keys(filterParams).forEach((key) => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
       }
+    });
+
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
+    // if (search.includes("page") && search.includes("perPage"))
+    if (user) {
+      runCategories(
+        authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+          // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        })
+      );
+    } else {
+      runCategories(
+        axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+          // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        })
+      );
+    }
   }, [categoryId, runCategories, search, user, auctionPageNumber]);
 
   useEffect(() => {
-     const queryParams = new URLSearchParams(search);
-        let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
-        let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-    
-        if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
-          queryParams.set("productPage", page.toString());
-          queryParams.set("perPage", perPage.toString());
-          history.replace({ search: queryParams.toString() });
-          return;
-        }
-    
-        const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    
-        const filterParams = {
-          page: page,
-          perPage: perPage,
-          categories: parsed.categories ? parsed.categories.map(Number) : undefined,
-          subCategory: parsed.subCategory ? parsed.subCategory.map(Number) : undefined,
-          brands: parsed.brands ? parsed.brands.map(Number) : undefined,
-          sellingType: parsed.sellingType || undefined,
-          auctionStatus: parsed.auctionStatus || undefined,
-          usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
-          priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-          priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-        };
-        
-        Object.keys(filterParams).forEach((key) => {
-          if (filterParams[key] === undefined) {
-            delete filterParams[key];
-          }
-        });
-        
-        const queryStr = queryString.stringify(filterParams, {
-          arrayFormat: "bracket",
-        });
-    // if (search.includes("page") && search.includes("perPage"))
-      if (user) {
-        runCategories(
-          axios.get(`${api.app.productListing.getAllListedProducts}?${queryStr}`).then((res) => {
-            setListedProducts(res?.data?.data);
-            setTotalPagesListed(res?.data?.pagination?.totalPages);
-            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-          })
-        );
-      } else {
-        runCategories(
-          axios.get(`${api.app.productListing.getAllListedProducts}?${queryStr}`).then((res) => {
-            setListedProducts(res?.data?.data);
-            setTotalPagesListed(res?.data?.pagination?.totalPages);
-            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-          })
-        );
-      }
-  }, [categoryId, runCategories, search, user, listedPageNumber]);
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
 
+    if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
+      queryParams.set("productPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+    const filterParams = {
+      page: page,
+      perPage: perPage,
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+    };
+
+    Object.keys(filterParams).forEach((key) => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
+
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
+    // if (search.includes("page") && search.includes("perPage"))
+    if (user) {
+      runCategories(
+        axios
+          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+          .then((res) => {
+            setListedProducts(res?.data?.data);
+            setTotalPagesListed(res?.data?.pagination?.totalPages);
+            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          })
+      );
+    } else {
+      runCategories(
+        axios
+          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+          .then((res) => {
+            setListedProducts(res?.data?.data);
+            setTotalPagesListed(res?.data?.pagination?.totalPages);
+            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          })
+      );
+    }
+  }, [categoryId, runCategories, search, user, listedPageNumber]);
 
   const [selectedCategor, SetselectedCategor] = useState([]);
 
@@ -215,68 +222,72 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         />
       )}
       <div className="">
-        <div className="px-4 mx-auto mt-[120px] sm:mt-[132px] ">
-      <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
-        active={loadingSubGatogry || isLoadingCategories || loadingGatogry}
-        inverted
-      >
-        {/* <Loader active /> */}
-        <LodingTestAllatre />
-      </Dimmer>
-      <div className="h-[320px] relative">
-        <img
-          className="w-full h-full object-fill pb-4"
-          src={selectedCategor?.bannerLink || addImage}
-          alt="bannerLink"
-        />
-        {/* <div className="bg-gray/50 text-white text-5xl absolute top-0 w-full h-[305px]">
+        <div className=" mx-auto mt-[120px] sm:mt-[132px] ">
+          <Dimmer
+            className="fixed w-full h-full top-0 bg-white/50"
+            active={loadingSubGatogry || isLoadingCategories || loadingGatogry}
+            inverted
+          >
+            {/* <Loader active /> */}
+            <LodingTestAllatre />
+          </Dimmer>
+          <div className="h-[320px] relative">
+            <img
+              className="w-full h-full object-fill pb-4"
+              src={selectedCategor?.bannerLink || addImage}
+              alt="bannerLink"
+            />
+            {/* <div className="bg-gray/50 text-white text-5xl absolute top-0 w-full h-[305px]">
           <p className="flex justify-center items-center  h-full">
             {selectedCategor?.text}
           </p>
         </div> */}
-      </div>
-      <div className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}>
-        <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
-      </div>
-      <div className="flex justify-between px-4 lg:mx-auto mx-2 px-2 pb-4 ">
-        <div className="flex  gap-x-60">
-          <h6 className=" text-gray-med text-base font-normal pt-3 ">
-            {mainAuctions?.length} {selectedContent[localizationKeys.results]}
-          </h6>
-        </div>
-        <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
-          {isGrid ? (
-            <button
-              onClick={() => setIsGrid((prev) => !prev)}
-              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
-            >
-              <img src={menuicon} alt="menuicon" />
-              <p className="flex items-center">
-                {selectedContent[localizationKeys.Grid]}
-              </p>
-            </button>
-          ) : (
-            <button
-              onClick={() => setIsGrid((prev) => !prev)}
-              className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
-            >
-              <img src={listicon} alt="listicon" />
-              <p className="flex items-center">
-                {selectedContent[localizationKeys.List]}
-              </p>
-            </button>
-          )}
-        </div>
-      </div>
-      <div className="flex gap-3 px-4 lg:mx-auto md:mx-12 ">
-        {/* left filter sections */}
-        <FilterSections 
-        myRef={myRef} 
-        categoryId={categoryId} 
-        hiddenGatogry />
-        {/* right card sections */}
-        {/* {mainAuctions?.length === 0 ? (
+          </div>
+          <div
+            className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}
+          >
+            <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
+          </div>
+          <div className="flex justify-between px-4 lg:mx-auto mx-2 px-2 pb-4 ">
+            <div className="flex  gap-x-60">
+              <h6 className=" text-gray-med text-base font-normal pt-3 ">
+                {mainAuctions?.length}{" "}
+                {selectedContent[localizationKeys.results]}
+              </h6>
+            </div>
+            <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
+              {isGrid ? (
+                <button
+                  onClick={() => setIsGrid((prev) => !prev)}
+                  className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
+                >
+                  <img src={menuicon} alt="menuicon" />
+                  <p className="flex items-center">
+                    {selectedContent[localizationKeys.Grid]}
+                  </p>
+                </button>
+              ) : (
+                <button
+                  onClick={() => setIsGrid((prev) => !prev)}
+                  className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
+                >
+                  <img src={listicon} alt="listicon" />
+                  <p className="flex items-center">
+                    {selectedContent[localizationKeys.List]}
+                  </p>
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="flex gap-3 px-4 lg:mx-auto md:mx-12 ">
+            {/* left filter sections */}
+            <FilterSections
+              myRef={myRef}
+              categoryId={categoryId}
+              hiddenGatogry
+            />
+            {/* right card sections */}
+            {/* {mainAuctions?.length === 0 ? (
           <div className="w-full flex justify-center pt-52 bg-[#E5E5E51A] rounded-2xl">
             <div className="mx-auto text-center">
               <EmtyHome className="mx-auto " />
@@ -340,311 +351,67 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         )} */}
 
             <div className="w-full">
-                {(() => {
-                  if (isGrid && selectedType === "auction" ) {
-                    return (
-                      <div>
-                        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                          {selectedContent[localizationKeys.trendingAuctions]}
-                        </h1>
-                        {mainAuctions?.length === 0 ? (
-                          <div className="flex flex-col items-center mt-20">
-                            <NoAuctionImg className="w-40 h-40" />
-                          </div>
-                        ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
-                            {mainAuctions?.map((e) => (
-                              <AuctionCard
-                                key={e?.id}
-                                auctionId={e?.id}
-                                price={e?.acceptedAmount || e?.startBidAmount}
-                                title={e?.product?.title}
-                                status={e?.status}
-                                adsImg={e?.product?.images}
-                                totalBods={e?._count?.bids}
-                                WatshlistState={e?.isSaved}
-                                endingTime={e?.expiryDate}
-                                StartDate={e?.startDate}
-                                isBuyNowAllowed={e?.isBuyNowAllowed}
-                                isMyAuction={e?.isMyAuction}
-                                latestBidAmount={e?.bids[0]?.amount}
-                                CurrentBid={e?.currentBid?.bidAmount}
-                                startBidAmount={e?.startBidAmount}
-                                usageStatus={e?.product?.usageStatus}
-                              />
-                            ))}
-                          </div>
-                        )}
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {mainAuctions?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalpagesAuction}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef}
-                              type={"auction"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
+              {(() => {
+                if (isGrid && selectedType === "auction") {
+                  return (
+                    <div>
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        {selectedContent[localizationKeys.trendingAuctions]}
+                      </h1>
+                      {mainAuctions?.length === 0 ? (
+                        <div className="flex flex-col items-center mt-20">
+                          <NoAuctionImg className="w-40 h-40" />
                         </div>
+                      ) : (
+                        <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                          {mainAuctions?.map((e) => (
+                            <AuctionCard
+                              key={e?.id}
+                              auctionId={e?.id}
+                              price={e?.acceptedAmount || e?.startBidAmount}
+                              title={e?.product?.title}
+                              status={e?.status}
+                              adsImg={e?.product?.images}
+                              totalBods={e?._count?.bids}
+                              WatshlistState={e?.isSaved}
+                              endingTime={e?.expiryDate}
+                              StartDate={e?.startDate}
+                              isBuyNowAllowed={e?.isBuyNowAllowed}
+                              isMyAuction={e?.isMyAuction}
+                              latestBidAmount={e?.bids[0]?.amount}
+                              CurrentBid={e?.currentBid?.bidAmount}
+                              startBidAmount={e?.startBidAmount}
+                              usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {mainAuctions?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalpagesAuction}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef}
+                            type={"auction"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
                       </div>
-                    );
-                  } else if (!isGrid && selectedType === "auction") {
-                    return (
-                      <div>
-                        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                          {selectedContent[localizationKeys.trendingAuctions]}
-                        </h1>
-                        {mainAuctions?.length === 0 ? (
-                          <div className="flex flex-col items-center mt-20">
-                            <NoAuctionImg className="w-40 h-40" />
-                          </div>
-                        ) : (
-                          <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
-                            {mainAuctions?.map((e) => (
-                              <AuctionCardList
-                                key={e?.id}
-                                auctionId={e?.id}
-                                price={e?.acceptedAmount || e?.startBidAmount}
-                                title={e?.product?.title}
-                                status={e?.status}
-                                adsImg={e?.product?.images}
-                                totalBods={e?._count?.bids}
-                                WatshlistState={e?.isSaved}
-                                endingTime={e?.expiryDate}
-                                StartDate={e?.startDate}
-                                isBuyNowAllowed={e?.isBuyNowAllowed}
-                                isMyAuction={e?.isMyAuction}
-                                latestBidAmount={e?.bids[0]?.amount}
-                                CurrentBid={e?.currentBid?.bidAmount}
-                                startBidAmount={e?.startBidAmount}
-                                usageStatus={e?.product?.usageStatus}
-                              />
-                            ))}
-                          </div>
-                        )}
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {mainAuctions?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalpagesAuction}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef}
-                              type={"auction"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
+                    </div>
+                  );
+                } else if (!isGrid && selectedType === "auction") {
+                  return (
+                    <div>
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        {selectedContent[localizationKeys.trendingAuctions]}
+                      </h1>
+                      {mainAuctions?.length === 0 ? (
+                        <div className="flex flex-col items-center mt-20">
+                          <NoAuctionImg className="w-40 h-40" />
                         </div>
-                      </div>
-                    );
-                  } else if (isGrid && selectedType === "products") {
-                    return (
-                      <div>
-                        <h1
-                          ref={myRef1}
-                          className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                        >
-                          {selectedContent[localizationKeys.listedProduct]}
-                        </h1>
-                        {listedProducts?.length === 0 ? (
-                          <div className="flex flex-col items-center mt-20">
-                            <NoProductImg className="w-40 h-40" />
-                          </div>
-                        ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
-                            {listedProducts?.map((e) => (
-                              <ProductCard
-                                key={e?.id}
-                                price={e?.ProductListingPrice}
-                                title={e?.product?.title}
-                                adsImg={e?.product?.images}
-                                userId={e?.userId}
-                                id={e?.product?.id}
-                                city={
-                                  lang === "en"
-                                    ? e?.location?.city?.nameEn
-                                    : e?.location?.city?.nameEn
-                                }
-                                country={
-                                  lang === "en"
-                                    ? e?.location?.country?.nameEn
-                                    : e?.location?.country?.nameEn
-                                }
-                                createdAt={e?.createdAt}
-                                usageStatus={e?.product?.usageStatus}
-                              />
-                            ))}
-                          </div>
-                        )}
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {listedProducts?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalPagesListed}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef1}
-                              type={"products"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
-                        </div>
-                      </div>
-                    );
-                  } else if (!isGrid && selectedType === "products") {
-                    return (
-                      <div>
-                        <h1
-                          ref={myRef1}
-                          className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                        >
-                          {selectedContent[localizationKeys.listedProduct]}
-                        </h1>
-                        {listedProducts?.length === 0 ? (
-                          <div className="flex flex-col items-center mt-20">
-                            <NoProductImg className="w-40 h-40" />
-                          </div>
-                        ) : (
-                          <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
-                            {listedProducts?.map((e) => (
-                              <ProductCardList
-                                key={e?.id}
-                                price={e?.ProductListingPrice}
-                                title={e?.product?.title}
-                                userId={e?.userId}
-                                adsImg={e?.product?.images}
-                                id={e?.product?.id}
-                                city={
-                                  lang === "en"
-                                    ? e?.location?.city?.nameEn
-                                    : e?.location?.city?.nameEn
-                                }
-                                country={
-                                  lang === "en"
-                                    ? e?.location?.country?.nameEn
-                                    : e?.location?.country?.nameEn
-                                }
-                                createdAt={e?.createdAt}
-                                usageStatus={e?.product?.usageStatus}
-                              />
-                            ))}
-                          </div>
-                        )}
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {listedProducts?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalPagesListed}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef1}
-                              type={"products"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
-                        </div>
-                      </div>
-                    );
-                  } else if (isGrid && selectedType === "all") {
-                    return (
-                      <>
-                        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                          {selectedContent[localizationKeys.trendingAuctions]}
-                        </h1>
-                        {mainAuctions?.length === 0 ? (
-                          <div className="flex flex-col items-center mt-20">
-                            <NoAuctionImg className="w-40 h-40" />
-                          </div>
-                        ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
-                            {mainAuctions?.map((e) => (
-                              <AuctionCard
-                                key={e?.id}
-                                auctionId={e?.id}
-                                price={e?.acceptedAmount || e?.startBidAmount}
-                                title={e?.product?.title}
-                                status={e?.status}
-                                adsImg={e?.product?.images}
-                                totalBods={e?._count?.bids}
-                                WatshlistState={e?.isSaved}
-                                endingTime={e?.expiryDate}
-                                StartDate={e?.startDate}
-                                isBuyNowAllowed={e?.isBuyNowAllowed}
-                                isMyAuction={e?.isMyAuction}
-                                latestBidAmount={e?.bids[0]?.amount}
-                                CurrentBid={e?.currentBid?.bidAmount}
-                                startBidAmount={e?.startBidAmount}
-                                usageStatus={e?.product?.usageStatus}
-                              />
-                            ))}
-                          </div>
-                        )}
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {mainAuctions?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalpagesAuction}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef}
-                              type={"auction"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
-                        </div>
-                        <h1
-                          ref={myRef1}
-                          className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                        >
-                          {selectedContent[localizationKeys.listedProduct]}
-                        </h1>
-                        {listedProducts?.length === 0 ? (
-                          <div className="flex flex-col items-center mt-20">
-                            <NoProductImg className="w-40 h-40" />
-                          </div>
-                        ) : (
-                          <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
-                            {listedProducts?.map((e) => (
-                              <ProductCard
-                                key={e?.id}
-                                price={e?.ProductListingPrice}
-                                title={e?.product?.title}
-                                userId={e?.userId}
-                                adsImg={e?.product?.images}
-                                id={e?.product?.id}
-                                city={
-                                  lang === "en"
-                                    ? e?.location?.city?.nameEn
-                                    : e?.location?.city?.nameEn
-                                }
-                                country={
-                                  lang === "en"
-                                    ? e?.location?.country?.nameEn
-                                    : e?.location?.country?.nameEn
-                                }
-                                createdAt={e?.createdAt}
-                                usageStatus={e?.product?.usageStatus}
-                              />
-                            ))}
-                          </div>
-                        )}
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {listedProducts?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalPagesListed}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef1}
-                              type={"products"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
-                        </div>
-                      </>
-                    );
-                  } else if (!isGrid && selectedType === "all" ) {
-                    return (
-                      <>
-                        <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                          {selectedContent[localizationKeys.trendingAuctions]}
-                        </h1>
+                      ) : (
                         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                           {mainAuctions?.map((e) => (
                             <AuctionCardList
@@ -664,27 +431,93 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
                               usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
                             />
                           ))}
                         </div>
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {mainAuctions?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalpagesAuction}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef}
-                              type={"auction"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
+                      )}
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {mainAuctions?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalpagesAuction}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef}
+                            type={"auction"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
+                    </div>
+                  );
+                } else if (isGrid && selectedType === "products") {
+                  return (
+                    <div>
+                      <h1
+                        ref={myRef1}
+                        className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                      >
+                        {selectedContent[localizationKeys.listedProduct]}
+                      </h1>
+                      {listedProducts?.length === 0 ? (
+                        <div className="flex flex-col items-center mt-20">
+                          <NoProductImg className="w-40 h-40" />
                         </div>
-                        <h1
-                          ref={myRef1}
-                          className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                        >
-                          {selectedContent[localizationKeys.listedProduct]}
-                        </h1>
+                      ) : (
+                        <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                          {listedProducts?.map((e) => (
+                            <ProductCard
+                              key={e?.id}
+                              price={e?.ProductListingPrice}
+                              title={e?.product?.title}
+                              adsImg={e?.product?.images}
+                              userId={e?.userId}
+                              id={e?.product?.id}
+                              city={
+                                lang === "en"
+                                  ? e?.location?.city?.nameEn
+                                  : e?.location?.city?.nameEn
+                              }
+                              country={
+                                lang === "en"
+                                  ? e?.location?.country?.nameEn
+                                  : e?.location?.country?.nameEn
+                              }
+                              createdAt={e?.createdAt}
+                              usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {listedProducts?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalPagesListed}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef1}
+                            type={"products"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
+                    </div>
+                  );
+                } else if (!isGrid && selectedType === "products") {
+                  return (
+                    <div>
+                      <h1
+                        ref={myRef1}
+                        className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                      >
+                        {selectedContent[localizationKeys.listedProduct]}
+                      </h1>
+                      {listedProducts?.length === 0 ? (
+                        <div className="flex flex-col items-center mt-20">
+                          <NoProductImg className="w-40 h-40" />
+                        </div>
+                      ) : (
                         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                           {listedProducts?.map((e) => (
                             <ProductCardList
@@ -706,39 +539,225 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
                             />
                           ))}
                         </div>
-                        <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
-                          {listedProducts?.length !== 0 ? (
-                            <PaginationApp
-                              totalPages={totalPagesListed}
-                              perPage={getDefaultPerPage()}
-                              myRef={myRef1}
-                              type={"products"}
-                              setAuctionPageNumber={setAuctionPageNumber}
-                              setListedPageNumber={setListedPageNumber}
-                            />
-                          ) : null}
+                      )}
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {listedProducts?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalPagesListed}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef1}
+                            type={"products"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
+                    </div>
+                  );
+                } else if (isGrid && selectedType === "all") {
+                  return (
+                    <>
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        {selectedContent[localizationKeys.trendingAuctions]}
+                      </h1>
+                      {mainAuctions?.length === 0 ? (
+                        <div className="flex flex-col items-center mt-20">
+                          <NoAuctionImg className="w-40 h-40" />
                         </div>
-                      </>
-                    );
-                  } else {
-                    return null;
-                  }
-                })()}
-              </div>
-      </div>
-      {/* <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 px-4 mx-auto ">
+                      ) : (
+                        <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                          {mainAuctions?.map((e) => (
+                            <AuctionCard
+                              key={e?.id}
+                              auctionId={e?.id}
+                              price={e?.acceptedAmount || e?.startBidAmount}
+                              title={e?.product?.title}
+                              status={e?.status}
+                              adsImg={e?.product?.images}
+                              totalBods={e?._count?.bids}
+                              WatshlistState={e?.isSaved}
+                              endingTime={e?.expiryDate}
+                              StartDate={e?.startDate}
+                              isBuyNowAllowed={e?.isBuyNowAllowed}
+                              isMyAuction={e?.isMyAuction}
+                              latestBidAmount={e?.bids[0]?.amount}
+                              CurrentBid={e?.currentBid?.bidAmount}
+                              startBidAmount={e?.startBidAmount}
+                              usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {mainAuctions?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalpagesAuction}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef}
+                            type={"auction"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
+                      <h1
+                        ref={myRef1}
+                        className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                      >
+                        {selectedContent[localizationKeys.listedProduct]}
+                      </h1>
+                      {listedProducts?.length === 0 ? (
+                        <div className="flex flex-col items-center mt-20">
+                          <NoProductImg className="w-40 h-40" />
+                        </div>
+                      ) : (
+                        <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
+                          {listedProducts?.map((e) => (
+                            <ProductCard
+                              key={e?.id}
+                              price={e?.ProductListingPrice}
+                              title={e?.product?.title}
+                              userId={e?.userId}
+                              adsImg={e?.product?.images}
+                              id={e?.product?.id}
+                              city={
+                                lang === "en"
+                                  ? e?.location?.city?.nameEn
+                                  : e?.location?.city?.nameEn
+                              }
+                              country={
+                                lang === "en"
+                                  ? e?.location?.country?.nameEn
+                                  : e?.location?.country?.nameEn
+                              }
+                              createdAt={e?.createdAt}
+                              usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {listedProducts?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalPagesListed}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef1}
+                            type={"products"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
+                    </>
+                  );
+                } else if (!isGrid && selectedType === "all") {
+                  return (
+                    <>
+                      <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
+                        {selectedContent[localizationKeys.trendingAuctions]}
+                      </h1>
+                      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                        {mainAuctions?.map((e) => (
+                          <AuctionCardList
+                            key={e?.id}
+                            auctionId={e?.id}
+                            price={e?.acceptedAmount || e?.startBidAmount}
+                            title={e?.product?.title}
+                            status={e?.status}
+                            adsImg={e?.product?.images}
+                            totalBods={e?._count?.bids}
+                            WatshlistState={e?.isSaved}
+                            endingTime={e?.expiryDate}
+                            StartDate={e?.startDate}
+                            isBuyNowAllowed={e?.isBuyNowAllowed}
+                            isMyAuction={e?.isMyAuction}
+                            latestBidAmount={e?.bids[0]?.amount}
+                            CurrentBid={e?.currentBid?.bidAmount}
+                            startBidAmount={e?.startBidAmount}
+                            usageStatus={e?.product?.usageStatus}
+                            category={e?.product?.categoryId}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {mainAuctions?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalpagesAuction}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef}
+                            type={"auction"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
+                      <h1
+                        ref={myRef1}
+                        className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
+                      >
+                        {selectedContent[localizationKeys.listedProduct]}
+                      </h1>
+                      <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                        {listedProducts?.map((e) => (
+                          <ProductCardList
+                            key={e?.id}
+                            price={e?.ProductListingPrice}
+                            title={e?.product?.title}
+                            userId={e?.userId}
+                            adsImg={e?.product?.images}
+                            id={e?.product?.id}
+                            city={
+                              lang === "en"
+                                ? e?.location?.city?.nameEn
+                                : e?.location?.city?.nameEn
+                            }
+                            country={
+                              lang === "en"
+                                ? e?.location?.country?.nameEn
+                                : e?.location?.country?.nameEn
+                            }
+                            createdAt={e?.createdAt}
+                            usageStatus={e?.product?.usageStatus}
+                            category={e?.product?.categoryId}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {listedProducts?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalPagesListed}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef1}
+                            type={"products"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
+                    </>
+                  );
+                } else {
+                  return null;
+                }
+              })()}
+            </div>
+          </div>
+          {/* <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 px-4 mx-auto ">
         <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div> */}
-      <AddLocationModel
-        open={open}
-        setOpen={setOpen}
-        TextButton={selectedContent[localizationKeys.proceed]}
-      />
-    </div>
-    </div>
+          <AddLocationModel
+            open={open}
+            setOpen={setOpen}
+            TextButton={selectedContent[localizationKeys.proceed]}
+          />
+        </div>
+      </div>
     </div>
   );
 };

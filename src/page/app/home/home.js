@@ -342,7 +342,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             </div>
           </div>
           <div className=" lg:mx-auto mx-2">
-            <div className="flex gap-5  px-2 sm:px-4 mx-2 ">
+            <div className="flex gap-5 sm:px-4 mx-2 ">
               <FilterSections myRef={myRef} />
               <div className="w-full">
                 {(() => {
@@ -376,6 +376,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
                                 usageStatus={e?.product?.usageStatus}
+                                category={e?.product?.categoryId}
                               />
                             ))}
                           </div>
@@ -427,6 +428,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
                                 usageStatus={e?.product?.usageStatus}
+                                category={e?.product?.categoryId}
                               />
                             ))}
                           </div>
@@ -483,6 +485,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 }
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
+                                category={e?.product?.categoryId}
                               />
                             ))}
                           </div>
@@ -536,6 +539,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 }
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
+                                category={e?.product?.categoryId}
                               />
                             ))}
                           </div>
@@ -584,6 +588,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
                                 usageStatus={e?.product?.usageStatus}
+                                category={e?.product?.categoryId}
                               />
                             ))}
                           </div>
@@ -601,7 +606,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           ) : null}
                         </div>
                         <div>
-                          <UpComingAuctionsSlider isGrid={isGrid}/>
+                          <UpComingAuctionsSlider isGrid={isGrid} />
                         </div>
                         <h1
                           ref={myRef1}
@@ -635,6 +640,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                 }
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
+                                category={e?.product?.categoryId}
                               />
                             ))}
                           </div>
@@ -678,6 +684,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
                               usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
                             />
                           ))}
                         </div>
@@ -693,8 +700,8 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             />
                           ) : null}
                         </div>
-                             <div>
-                          <UpComingAuctionsSlider isGrid={isGrid}/>
+                        <div>
+                          <UpComingAuctionsSlider isGrid={isGrid} />
                         </div>
                         <h1
                           ref={myRef1}
@@ -723,6 +730,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
+                              category={e?.product?.categoryId}
                             />
                           ))}
                         </div>

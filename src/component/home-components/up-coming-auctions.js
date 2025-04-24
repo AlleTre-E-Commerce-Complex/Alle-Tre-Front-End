@@ -38,8 +38,7 @@ const UpComingAuctionsSlider = (isGrid) => {
   const [upcomingAuctionPageNumber, setUpcomingAuctionPageNumber] = useState(
     Number(queryParams.get("UpcomingauctionPage") || DEFAULT_PAGE)
   );
-  console.log("papa", pagination);
-
+  
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
     let page = Number(queryParams.get("UpcomingauctionPage") || upcomingAuctionPageNumber);
@@ -208,6 +207,7 @@ const UpComingAuctionsSlider = (isGrid) => {
                       isBuyNowAllowed={e?.isBuyNowAllowed}
                       isMyAuction={e?.isMyAuction}
                       usageStatus={e?.product?.usageStatus}
+                      category={e?.product?.categoryId}
                     />
                   </div>
                 ))}
