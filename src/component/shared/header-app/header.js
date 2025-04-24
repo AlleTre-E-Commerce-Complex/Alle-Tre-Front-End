@@ -34,6 +34,8 @@ import {
   getDefaultPerPage,
   getDefaultPaginationString,
 } from "../../../constants/pagination";
+import axios from "axios";
+import api from "api";
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
 const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
@@ -462,6 +464,9 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
       document.removeEventListener("mousedown", handleTypeDropdownClickOutside);
     };
   }, []);
+  const handleOneClickauction = ()=>{
+    axios.post(api.app.auctions.oneClickAuction)
+  }
   return (
     <div className="w-full fixed top-0 z-50 bg-white/90 backdrop-blur-md">
       <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4 w-full px-4 md:px-6 lg:px-8">
@@ -472,6 +477,14 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
               history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
             }
           />
+        </div>
+        <div>
+          {/* <button 
+          
+          onClick={handleOneClickauction}
+          >
+            onclik auction
+          </button> */}
         </div>
         <div className="flex items-center space-x-3 md:hidden ">
           <BiMenu

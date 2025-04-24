@@ -338,6 +338,8 @@ const localizationKeys = {
   confirmDeleteAddressHeading: "confirmDeleteAddress",
   // paymemt details
   paymentMethod: "paymentMethod",
+  PaymentCompleted: "PaymentCompleted",
+  YouveAlreadyCompletedThePaymentForThisAuction: "YouveAlreadyCompletedThePaymentForThisAuction",
   backToHome: "backToHome",
   yourPurchaseHasBeenSuccessfullyCompleted:
     "yourPurchaseHasBeenSuccessfullyCompleted",

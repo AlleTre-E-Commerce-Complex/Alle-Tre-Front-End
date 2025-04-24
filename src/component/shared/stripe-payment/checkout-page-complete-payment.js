@@ -217,15 +217,19 @@ useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  // const payingAmount = Number(completedPaymentData?.lastPrice) + (Number(completedPaymentData?.lastPrice) * 0.5)/100
   const baseValue = Number(completedPaymentData?.lastPrice);
   const auctionFee = ((baseValue * 0.5) / 100)
-  const stripeFee = (((baseValue * 2.9) /100) + 1 )
-  const payingAmount = !walletBalance ?
-  baseValue + auctionFee+ stripeFee
-  : showStripePayment ?
-  baseValue + auctionFee + stripeFee
+  const stripeFee = ((((baseValue + auctionFee) * 3) /100) + 4 )
+  
+  const payingAmount = !walletBalance 
+  ? baseValue + auctionFee + stripeFee
+  : showStripePayment 
+  ? baseValue + auctionFee + stripeFee
   : baseValue + auctionFee;
+  
+
+  const winnerSecurityDeposit = Number(pendingAuctionData?.winnerSecurityDeposite?.amount)
+  const totalPayingAmount = payingAmount - winnerSecurityDeposit
 
   return (
     <>
@@ -333,6 +337,22 @@ useEffect(() => {
                         {formatCurrency(payingAmount)}
                       </p>
                     </p>
+                    <p className="flex justify-between px-4 py-1.5">
+                      <h1 className="text-gray-dark font-medium text-sm">
+                        Your Security Deposit
+                      </h1>
+                      <p className="text-gray-med font-normal text-base">
+                        {formatCurrency(winnerSecurityDeposit)} -
+                      </p>
+                    </p>
+                    <p className="flex justify-between px-4 py-1.5">
+                      <h1 className="text-gray-dark font-medium text-sm">
+                        All Total
+                      </h1>
+                      <p className="text-gray-med font-normal text-base">
+                        {formatCurrency(totalPayingAmount)}
+                      </p>
+                    </p>
                 </div>
                 <p className="text-gray-med text-xs mt-11 text-center">
                   If you want to check Auctions policy you can check{" "}
@@ -368,7 +388,7 @@ useEffect(() => {
                 //     <Elements options={options} stripe={stripePromise}>
                 //       <CheckoutFromCompletePayment
                 //         auctionId={completedPaymentData?.auctionsId}
-                //         payPrice={payingAmount}
+                //         payPrice={totalPayingAmount}
                 //       />
                 //     </Elements>
                 //   )
@@ -377,7 +397,7 @@ useEffect(() => {
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutFromCompletePayment
                     auctionId={completedPaymentData?.auctionsId}
-                    payPrice={payingAmount}
+                    payPrice={totalPayingAmount}
                   />
                 </Elements>
 
@@ -385,7 +405,7 @@ useEffect(() => {
               {showWalletPaymentMethod && (
                 <WalletPaymentForBidderFullPayment
                   auctionId={completedPaymentData?.auctionsId}
-                  amount={payingAmount}
+                  amount={totalPayingAmount}
                   walletBalance={walletBalance}
                   //need to change the payment API
                   paymentAPI={api.app.auctions.WalletPayForBidderFullPayment(
@@ -400,7 +420,7 @@ useEffect(() => {
                 setShowBankDetails={()=>setShowBankDetails(false)}
                 setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
                 auctionId={completedPaymentData?.auctionsId}
-                amount={payingAmount}
+                amount={totalPayingAmount}
               />
             }
             </div>

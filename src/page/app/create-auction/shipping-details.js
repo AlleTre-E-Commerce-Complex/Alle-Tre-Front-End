@@ -305,6 +305,7 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
+              console.error('Error in shipping deatails :',err)
               toast.error(selectedContent[localizationKeys.oops]);
             })
         );
@@ -313,11 +314,18 @@ const ShippingDetails = () => {
           authAxios
             .post(api.app.auctions.default, formData)
             .then((res) => {
+              const auctionId = res?.data?.data?.id
               window.localStorage.setItem("auctionId", res?.data?.data.id);
               toast.success(
                 selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
               );
-              history.push(routes.app.createAuction.paymentDetails);
+              const specialCategory = [4]
+              // const specialCategoryPrice = [5000]
+              if(specialCategory.includes(productDetailsInt.category) && auctionDetailsInt.MinimumPrice < 5000){
+                history.push(`${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`)
+              }else{
+                history.push(routes.app.createAuction.paymentDetails);
+              }
               dispatch(productDetails({}));
               dispatch(auctionDetails({}));
               dispatch(type({}));

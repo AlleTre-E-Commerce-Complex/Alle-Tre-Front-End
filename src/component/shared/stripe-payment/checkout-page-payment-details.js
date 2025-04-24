@@ -15,7 +15,7 @@ import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import { toast } from "react-hot-toast";
 import useLocalStorage from "../../../hooks/use-localstorage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
 import CheckoutFormPaymentDetails from "./checkout-form-payment-details";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
@@ -24,15 +24,29 @@ import routes from "../../../routes";
 import WalletPayment from "../WalletPayment/WalletPayment";
 import PaymentSelection from "../PaymentSelection/PaymentSelection";
 import { AiOutlineAlert } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
+import { useAuthState } from "context/auth-context";
+import { Open } from "redux-store/auth-model-slice";
+import { FaCheckCircle } from 'react-icons/fa';
+import { ImCross } from "react-icons/im";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 export default function CheckoutPagePaymentDetails() {
   //pay deposit of the seller
   const [lang] = useLanguage("");
+  const dispatch = useDispatch()
   const selectedContent = content[lang];
   const history = useHistory();
-
+  const query = useQuery();
+  const auctionIdFromURL = query.get("auctionId");
+  console.log('auctionIdFromURL',auctionIdFromURL)
+  if(auctionIdFromURL){
+    localStorage.setItem('auctionId',"")
+  }
   const bidAmountValue = useSelector((state) => state?.bidAmount?.bidAmount);
   // const walletBalance = useSelector((state) => state.walletBalance.walletBalance);
   // const isWalletPayment = useSelector((state) => state.walletBalance.isWalletPayment);
@@ -41,27 +55,40 @@ export default function CheckoutPagePaymentDetails() {
   const [showWalletPaymentMethod, setShowWalletPaymentMethod] = useState(null);
   const [showStripePayment, setShowStripePayment] = useState(null);
   const [showPaymentSelecton, setShwoPaymentSelection] = useState(null);
-  const [auctionId, setAuctionId] = useLocalStorage("auctionId", "");
+  const [isAlreadyPaid, setIsAlreadyPaid] = useState(false)
+  const [isAuctionExpired, setIsAcutionExpired] = useState(false)
+  const [auctionExpiredMessage,setExpiredMessage] = useState('')
+  // const [auctionId, setAuctionId] = useLocalStorage("auctionId", "");
+
+  const [auctionId, setAuctionId] = useLocalStorage("auctionId", auctionIdFromURL || "");
+  console.log('auctionId',auctionId)
   const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
 
   const [showModal, setShowModal] = useState(false);
+  const { user } = useAuthState();
+
 
   useEffect(() => {
     let isNavigating = false;
-
+    let isAlreadyPaid_ = false
     if (isPaymentCompleted && auctionId) {
       isNavigating = true;
       history.push(`${routes.app.home}/paymentdetails?auctionId=${auctionId}`);
     }
 
-    return () => {
-      // Only redirect to pending if we're not already navigating to payment details
-      if (!isNavigating && !isPaymentCompleted) {
-        history.push(routes.app.profile.myAuctions.pending);
-      }
-    };
+    console.log('isAlreadyPaid3',isAlreadyPaid)
+    if(isAlreadyPaid){
+      isAlreadyPaid_ = true
+    }
+      return () => {
+        // Only redirect to pending if we're not already navigating to payment details
+        if (!isNavigating && !isPaymentCompleted && !isAlreadyPaid_) {
+            history.push(routes.app.profile.myAuctions.pending);
+        }
+      };
+    
   }, [isPaymentCompleted, auctionId, history]);
   // Modify your handle functions to control navigation
   const handleConfirm = () => {
@@ -86,6 +113,11 @@ export default function CheckoutPagePaymentDetails() {
   };
 
   useEffect(() => {
+
+    if(!user){
+       dispatch(Open())
+      return 
+    }
     runPendingAuctionData(
       authAxios
         .get(api.app.auctions.getUserAuctionsDetails(auctionId))
@@ -125,7 +157,7 @@ export default function CheckoutPagePaymentDetails() {
           }
         })
     );
-  }, [auctionId, run, bidAmountValue, lang, runPendingAuctionData]);
+  }, [auctionId, run, bidAmountValue, lang, runPendingAuctionData, user]);
 
   const stripePaymentApiCall = () => {
     const body = {
@@ -139,6 +171,15 @@ export default function CheckoutPagePaymentDetails() {
         })
         .catch((err) => {
           toast.error(err?.response?.data?.message[lang]);
+          if(err?.response?.data?.message[lang]){ 
+          if(err?.response?.data?.message?.en === 'Payment cannot be processed for an expired auction.'){
+
+            setIsAcutionExpired(true)
+            setExpiredMessage(err?.response?.data?.message[lang])
+           }else{
+             setIsAlreadyPaid(true)
+           }
+          }
         })
     );
   };
@@ -373,7 +414,25 @@ export default function CheckoutPagePaymentDetails() {
                   paymentAPI={api.app.auctions.walletPayForAuction}
                   setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
                   setShowWalletPaymentMethod={ ()=>(setShowWalletPaymentMethod(false))}
+                  setIsAlreadyPaid={setIsAlreadyPaid}
+                  setIsAcutionExpired={setIsAcutionExpired}
+                  setExpiredMessage={setExpiredMessage}
                 />
+              )}
+
+              {(isAlreadyPaid || isAuctionExpired) &&(
+              <div className={` ${isAuctionExpired ? "bg-red-50  border-red-200 text-red-800":"bg-green-50  border-green-200 text-green-800"} border  p-6 rounded-2xl shadow-md flex flex-col items-center text-center max-w-md mx-auto mt-10`}>
+             {isAlreadyPaid && <FaCheckCircle className={`w-12 h-12 mb-4 ${"text-green-600"}`} />}
+             {isAuctionExpired && <ImCross className={`w-12 h-12 mb-4 ${"text-red-600"}`}/>}
+              <h2 className="text-2xl font-semibold mb-2">{isAuctionExpired ? 'Payment Failed': selectedContent[localizationKeys.PaymentCompleted]}</h2>
+              <p className="mb-4">{auctionExpiredMessage || selectedContent[localizationKeys.YouveAlreadyCompletedThePaymentForThisAuction]}</p>
+              <button
+                onClick={() => history.push(routes.app.home)}
+                className={`${isAuctionExpired ?"bg-red-600 hover:bg-red-700":"bg-green-600 hover:bg-green-700"} text-white px-5 py-2 rounded-xl  transition duration-300`}
+              >
+                {selectedContent[localizationKeys.home]}
+              </button>
+            </div>
               )}
             </div>
             <div></div>

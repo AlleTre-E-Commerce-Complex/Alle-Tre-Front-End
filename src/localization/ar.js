@@ -204,6 +204,8 @@ const ar = {
   [localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck]:
     "إذا كنت تريد التحقق من سياسة المزاد، يمكنك التحقق",
   [localizationKeys.paymentMethod]: "طريقة الدفع",
+  [localizationKeys.PaymentCompleted]: "تم الدفع",
+  [localizationKeys.YouveAlreadyCompletedThePaymentForThisAuction]: "لقد قمت بالفعل بإكمال الدفع لهذا المزاد",
   [localizationKeys.viewPendingPayments]: "عرض المدفوعات المعلقة",
   [localizationKeys.continuePayment]: "متابعة الدفع",
   [localizationKeys.yourPaymentDetailsAreSaved]:

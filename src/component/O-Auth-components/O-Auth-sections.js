@@ -107,7 +107,9 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
 
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
-
+    provider.setCustomParameters({
+      prompt:'select_account'
+    })
     signInWithPopup(authentications, provider)
       .then((res) => {
         run(

@@ -49,6 +49,10 @@ const ShowBankDetailsModal = ({
   }, [openAddNewBank, run]);
 
   const handleSubmit = async (e) => {
+    if(amount <= 1){
+      toast.error(selectedContent[localizationKeys.AmountMustBeMoreThan1AED])
+      return
+    }
     e.preventDefault();
     if (user.id <= 100 && Number(accountBalance) - Number(amount) < 100) {
       if (Number(accountBalance) <= 100) {
@@ -69,7 +73,7 @@ const ShowBankDetailsModal = ({
     } else if (amount === "") {
       toast.error("The withdrawal amount must not be empty");
     } else if (amount === 0) {
-      toast.error("The withdrawal amount must be greater than zero");
+      toast.error(selectedContent[localizationKeys.AmountMustBeMoreThan1AED]);
     } else {
       try {
         run(
@@ -199,6 +203,7 @@ const ShowBankDetailsModal = ({
                 min={1}
                 name="withdrawalAmount"
                 id="withdrawalAmount"
+                value={amount}
               />
               <span
                 className={`text-gray-500 text-xs mt-1 block ${

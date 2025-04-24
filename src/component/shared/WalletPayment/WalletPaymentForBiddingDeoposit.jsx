@@ -26,6 +26,7 @@ const WalletPaymentForBiddingDeoposit = ({
   const [isWalletPaymentSuccess, setIsWalletPaymentSuccess] = useState(null);
   const { run, isLoading } = useAxios([]);
   const submitWalletPayment = () => {
+    if (isLoading) return; // Prevent multiple clicks
     const body = {
       auctionId,
       amount,
@@ -44,12 +45,20 @@ const WalletPaymentForBiddingDeoposit = ({
           }
         })
         .catch((error) => {
+          console.log('WalletPymentForBiddingDeposit Error:',error)
+          console.log('WalletPymentForBiddingDeposit Error:',error?.response?.data?.message)
+          if(error?.response?.data?.message === 'Internal server error'){
+            toast.error('Payment Failed! please try once again', {
+              position: "top-right",
+            });
+            return
+          }
           const errorMessage1 =
             lang === "en"
               ? error?.response?.data?.message?.en
               : error?.response?.data?.message?.ar;
           const errorMessage2 = error?.response?.data?.message[0];
-          toast.error(errorMessage1 || errorMessage2 || "Payment Failed", {
+          toast.error(errorMessage1 || errorMessage2  || "Payment Failed", {
             position: "top-right",
           });
         })
@@ -77,6 +86,7 @@ const WalletPaymentForBiddingDeoposit = ({
         <Button
           className="bg-primary text-white w-full md:w-[155px] h-[48px] md:h-[56px] rounded-lg text-base font-normal"
           loading={isLoading}
+          disabled={isLoading}
           id="submit"
           onClick={submitWalletPayment}
         >

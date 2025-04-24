@@ -136,7 +136,7 @@ export default function CheckoutPageBuyNow() {
 
   const baseValue = Number(buyNowValue ?? pendingAuctionData?.acceptedAmount);
   const auctionFee = (baseValue * 0.5) / 100;
-  const stripeFee = (baseValue * 2.9) / 100 + 1; // stripe takes 2.9% of the base value and additionally 1 dirham
+  const stripeFee = ((((baseValue+ auctionFee) * 3) / 100) + 4); // stripe takes 3% of the base value and additionally 1 usd (4 dirham)
 
   const payingAmount = !walletBalance
     ? baseValue + auctionFee + stripeFee

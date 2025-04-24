@@ -134,7 +134,7 @@ const PendingBids = () => {
               img={e?.auction?.product?.images[0]?.imageLink}
               totalBids={e?.auction?._count?.bids}
               lastPrice={e?.auction?.bids[0]?.amount}
-              endingTime={e?.auction?.expiryDate}
+              endingTime={e?.paymentExpiryDate}
               goToDetails={routes.app.profile.myBids.pendingDetails(
                 e?.auction?.id
               )}

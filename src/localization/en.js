@@ -209,6 +209,8 @@ const en = {
   [localizationKeys.ifYouWantToCheckAuctionsPolicyYouCanCheck]:
     "If you want to check auction's policy, you can check",
   [localizationKeys.paymentMethod]: "Payment Method",
+  [localizationKeys.PaymentCompleted]: "Payment Completed",
+  [localizationKeys.YouveAlreadyCompletedThePaymentForThisAuction]: "You've already completed the payment for this auction",
   [localizationKeys.viewPendingPayments]: "View Pending Payments",
   [localizationKeys.continuePayment]: "Continue Payment",
   [localizationKeys.yourPaymentDetailsAreSaved]:
