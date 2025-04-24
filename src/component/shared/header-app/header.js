@@ -469,7 +469,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
   }
   return (
     <div className="w-full fixed top-0 z-50 bg-white/90 backdrop-blur-md">
-      <div className="md:h-[72px] h-[60px] flex justify-between gap-x-4 w-full px-4 md:px-6 lg:px-8">
+      <div className="md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full pr-3 md:px-4 lg:px-6">
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
             className="cursor-pointer hidden md:block"
@@ -486,7 +486,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
             onclik auction
           </button> */}
         </div>
-        <div className="flex items-center space-x-3 md:hidden ">
+        <div className="flex items-center space-x-3 md:hidden">
           <BiMenu
             onClick={() => SetSid(true)}
             className="text-primary cursor-pointer"
@@ -503,8 +503,8 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
             size={25}
           />
         </div>
-        <div className="flex">
-          <div className="flex justify-center items-center my-auto">
+        <div className="flex items-center justify-center flex-1 md:flex-none">
+          <div className="flex justify-center items-center">
             {showIcon && (
               <AllatreLogoIcon className="cursor-pointer w-[35px] block md:hidden text-primary" />
             )}
@@ -685,7 +685,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="py-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-6 lg:px-8">
+        <div className="py-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-6">
           {(currentPath === routes.app.home ||
             currentPath.includes("/alletre/categories")) && (
             <button

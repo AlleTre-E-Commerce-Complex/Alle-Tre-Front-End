@@ -342,7 +342,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             </div>
           </div>
           <div className=" lg:mx-auto mx-2">
-            <div className="flex gap-5  px-2 sm:px-4 mx-2 ">
+            <div className="flex gap-5 sm:px-4 mx-2 ">
               <FilterSections myRef={myRef} />
               <div className="w-full">
                 {(() => {
