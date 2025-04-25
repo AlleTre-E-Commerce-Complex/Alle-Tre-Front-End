@@ -275,7 +275,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         />
       )}
       <div className="">
-        <div className="lg:mt-36 md:mt-32 mt-24 py-6 home ">
+        <div className="lg:mt-28 md:mt-26 mt-24 py-6 home ">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
             active={
@@ -287,10 +287,10 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           >
             <LodingTestAllatre />
           </Dimmer>
-          <div className="z-20  w-full px-4 mx-auto py-5">
+          <div className="z-20  w-full px-4 mx-auto py-2">
             <BannerTop />
           </div>
-          <div className="text-center mt-1 md:mt-3 lg:mt-5">
+          <div className="text-center mt-1 md:mt-2 lg:mt-3">
             <h1
               ref={myRef}
               className=" text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md "
@@ -301,7 +301,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
               {selectedContent[localizationKeys.PopularPicksPerfectChoices]}
             </p>
           </div>
-          <div className="mt-8 mb-20">
+          <div className="mt-4 mb-10">
             <SliderRow />
           </div>
           <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">

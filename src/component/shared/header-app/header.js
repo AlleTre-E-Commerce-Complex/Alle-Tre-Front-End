@@ -685,7 +685,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         </div>
       </div>
       <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="py-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-6">
+        <div className="pb-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-6">
           {(currentPath === routes.app.home ||
             currentPath.includes("/alletre/categories")) && (
             <button

@@ -49,9 +49,9 @@ const AuctionDetails = () => {
   const auctionDetailsInt = useSelector(
     (state) => state.auctionDetails.auctionDetails
   );
-   const productDetailsint = useSelector(
-      (state) => state.productDetails.productDetails
-    );
+  const productDetailsint = useSelector(
+    (state) => state.productDetails.productDetails
+  );
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
   useEffect(() => {
     runPofile(
@@ -61,22 +61,12 @@ const AuctionDetails = () => {
     );
   }, [runPofile]);
 
-  useEffect(()=>{
-    if(productDetailsint.category === 4){
-      setBuyNowShow(false)
+  useEffect(() => {
+    if (productDetailsint.category === 4) {
+      setBuyNowShow(false);
     }
   },[])
 
-
-
-
-  const handlePurchasingPriceChange = e => {
-    const val = Number(e.target.value);
-    console.log(val)
-  
-    if (!isBuyNowShow && val > 5000) setBuyNowShow(true);
-  
-  };
   const [valueRadio, setRadioValue] = useState(
     auctionDetailsInt.valueRadio || "Quick Auction"
   );
@@ -88,8 +78,8 @@ const AuctionDetails = () => {
   const [IsWaranty, setIsWaranty] = useState(false);
   const [IsOfferPrice, setIsOfferPrice] = useState(false);
   const [selectedDateTime, setSelectedDateTime] = useState(null);
-  const [isBuyNowShow, setBuyNowShow]  = useState(true)
- 
+  const [isBuyNowShow, setBuyNowShow] = useState(true);
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -119,21 +109,19 @@ const AuctionDetails = () => {
       otherwise: Yup.string().notRequired(),
     }),
     MinimumPrice: Yup.number()
-    .min(1, "Price must be at least 1")
-    .test(
-      "max-start-price",
-      (value, context) => {
-        const maxPrice = productDetailsint?.maxStartPrice;
-        return maxPrice ? `Allowed only below ${maxPrice}` : true;
-      },
-      (value) => {
-        const maxPrice = productDetailsint?.maxStartPrice;
-        return maxPrice ? value <= maxPrice : true;
-      }
-    )
-    .required(
-      selectedContent[localizationKeys.required]
-    ),
+      .min(1, "Price must be at least 1")
+      .test(
+        "max-start-price",
+        (value, context) => {
+          const maxPrice = productDetailsint?.maxStartPrice;
+          return maxPrice ? `Allowed only below ${maxPrice}` : true;
+        },
+        (value) => {
+          const maxPrice = productDetailsint?.maxStartPrice;
+          return maxPrice ? value <= maxPrice : true;
+        }
+      )
+      .required(selectedContent[localizationKeys.required]),
     PurchasingPrice: Yup.number().when([], {
       is: () => IsBuyNow,
       then: Yup.number()
@@ -277,7 +265,6 @@ const AuctionDetails = () => {
     history.push(routes.app.createAuction.shippingDetails);
   };
 
-  
   return (
     <div className="mt-44 animate-in mx-5 ">
       <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
@@ -287,9 +274,9 @@ const AuctionDetails = () => {
         <Stepper />
       </div>
       <div className="max-w-[1366px] mx-auto mt-10">
-      <h1 className="font-bold text-base sm:text-xl text-gray-800 pb-4">
-                      {selectedContent[localizationKeys.timing]}
-                    </h1>
+        <h1 className="font-bold text-base sm:text-xl text-gray-800 pb-4">
+          {selectedContent[localizationKeys.timing]}
+        </h1>
         <div>
           <CheckboxRadioAuctionDetails
             valueRadio={valueRadio}
@@ -401,11 +388,14 @@ const AuctionDetails = () => {
                           placeholder="AED XXX"
                           onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
                           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
-                          validate={(value)=> {
-                            if(value > 5000){
-                              return 'allowed only below 5000'; 
+                          validate={(value) => {
+                            if (value > 5000) {
+                              return "allowed only below 5000";
                             }
-                            if (value < 5000 && productDetailsint?.category === 4) {
+                            if (
+                              value < 5000 &&
+                              productDetailsint?.category === 4
+                            ) {
                               setIsBuyNow(false);
                             }
                           }}
@@ -413,7 +403,14 @@ const AuctionDetails = () => {
                       </div>
                     </div>
                     <div>
-                      <div className={`flex mt-7 ${productDetailsint?.category === 4 && formik.values?.MinimumPrice < 5000 ? 'hidden' : ''}`}>
+                      <div
+                        className={`flex mt-7 ${
+                          productDetailsint?.category === 4 &&
+                          formik.values?.MinimumPrice < 5000
+                            ? "hidden"
+                            : ""
+                        }`}
+                      >
                         <h1 className="font-bold text-base sm:text-xl text-gray-800 mb-1 ltr:mr-16 rtl:ml-16">
                           {selectedContent[localizationKeys.buyNow]}
                           <span className="text-gray-med text-base font-normal mx-2">
@@ -452,8 +449,7 @@ const AuctionDetails = () => {
                               selectedContent[localizationKeys.purchasingPrice]
                             }
                             placeholder="AEDXXX"
-                            onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
-                            // onChange={handlePurchasingPriceChange}
+                            onWheel={(e) => e.target.blur()} 
                           />
                           <p className="text-gray-dark text-xs font-normal px-2">
                             {
@@ -464,7 +460,7 @@ const AuctionDetails = () => {
                           </p>
                         </div>
                       </div>
-                    </div>}
+                    </div>
                     {/* =============================================== */}
                     <div>
                       {/* <div className="flex mt-7">
