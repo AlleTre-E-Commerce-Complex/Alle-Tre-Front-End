@@ -60,6 +60,23 @@ const AuctionDetails = () => {
       })
     );
   }, [runPofile]);
+
+  useEffect(()=>{
+    if(productDetailsint.category === 4){
+      setBuyNowShow(false)
+    }
+  },[])
+
+
+
+
+  const handlePurchasingPriceChange = e => {
+    const val = Number(e.target.value);
+    console.log(val)
+  
+    if (!isBuyNowShow && val > 5000) setBuyNowShow(true);
+  
+  };
   const [valueRadio, setRadioValue] = useState(
     auctionDetailsInt.valueRadio || "Quick Auction"
   );
@@ -71,7 +88,8 @@ const AuctionDetails = () => {
   const [IsWaranty, setIsWaranty] = useState(false);
   const [IsOfferPrice, setIsOfferPrice] = useState(false);
   const [selectedDateTime, setSelectedDateTime] = useState(null);
-
+  const [isBuyNowShow, setBuyNowShow]  = useState(true)
+ 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -427,7 +445,7 @@ const AuctionDetails = () => {
                       >
                         <div className="w-full">
                           <FormikInput
-                            min={0}
+                            min={1}
                             type="number"
                             name="PurchasingPrice"
                             label={
@@ -435,6 +453,7 @@ const AuctionDetails = () => {
                             }
                             placeholder="AEDXXX"
                             onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
+                            // onChange={handlePurchasingPriceChange}
                           />
                           <p className="text-gray-dark text-xs font-normal px-2">
                             {
@@ -445,7 +464,7 @@ const AuctionDetails = () => {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </div>}
                     {/* =============================================== */}
                     <div>
                       {/* <div className="flex mt-7">
