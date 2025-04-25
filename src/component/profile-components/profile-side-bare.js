@@ -117,11 +117,15 @@ const ProfileSideBare = ({ SetSid, sid }) => {
               isActive={pathname.startsWith(routes.app.profile.myBids.default)}
               onClick={() => history.push(routes.app.profile.myBids.default)}
             />
-              <NavLink
-               title={selectedContent[localizationKeys.myProducts]}
-               isActive={pathname.startsWith(routes.app.profile.myProducts.default)}
-               onClick={() => history.push(routes.app.profile.myProducts.default)}
-             />
+            <NavLink
+              title={selectedContent[localizationKeys.myProducts]}
+              isActive={pathname.startsWith(
+                routes.app.profile.myProducts.default
+              )}
+              onClick={() =>
+                history.push(routes.app.profile.myProducts.default)
+              }
+            />
             <NavLink
               title={selectedContent[localizationKeys.watchlist]}
               isActive={pathname.startsWith(routes.app.profile.watchlist)}
@@ -137,7 +141,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
               isActive={pathname.startsWith(routes.app.profile.wallet)}
               onClick={() => history.push(routes.app.profile.wallet)}
             />
-              <NavLink
+            <NavLink
               title={selectedContent[localizationKeys.notifications]}
               isActive={pathname.startsWith(routes.app.profile.notifications)}
               onClick={() => history.push(routes.app.profile.notifications)}
@@ -169,7 +173,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
           onClick={() => SetSid(false)}
         />
         <motion.div
-          className="h-full fixed top-0 z-50 w-[255px] bg-white flex flex-col"
+       className="hidden md:flex h-full fixed top-0 z-50 w-[255px] bg-white flex-col"
           variants={sidebarVariants}
           initial={lang === "en" ? "closedEn" : "closedAr"}
           animate={sid ? "open" : lang === "en" ? "closedEn" : "closedAr"}
@@ -292,7 +296,7 @@ export const NavLink = ({ title, onClick, isActive }) => {
         isActive
           ? "bg-primary-light/10 text-primary mx-0 px-10 font-bold "
           : "mx-10 px-4 border-b-gray-veryLight border-b-[1px] "
-      } text-base text-gray-dark font-normal py-5 cursor-pointer flex`}
+      } hidden sm:flex text-base text-gray-dark font-normal py-5 cursor-pointer`}
     >
       <span
         className={`${

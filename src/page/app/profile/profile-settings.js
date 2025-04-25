@@ -128,7 +128,7 @@ const ProfileSettings = () => {
             </button>
           </div>
         </div>
-        <div className="bg-background-profile rounded-2xl md:px-20 px-10 pt-16 mt-5 ">
+        <div className=" rounded-2xl md:px-2 px-0 pt-6">
           <div className="flex gap-x-5 pb-8 border-b-[1px] border-gray-veryLight mx-2">
             <img
               className="w-28 h-28 rounded-full object-cover"
@@ -223,7 +223,7 @@ const ProfileSettings = () => {
                   pofileData?.isVerified
                     ? "text-green-500"
                     : "text-gray-veryLight"
-                } flex gap-x-1 ltr:md:ml-[210px] rtl:md:mr-[210px] ltr:ml-auto rtl:mr-auto`}
+                } hidden md:flex gap-x-1 ltr:md:ml-[210px] rtl:md:mr-[210px] ltr:ml-auto rtl:mr-auto`}
               >
                 <IoMdCheckmarkCircle size={16} className="mt-0.5" />
                 <p className="text-base font-normal">
