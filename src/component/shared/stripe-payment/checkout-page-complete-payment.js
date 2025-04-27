@@ -126,6 +126,7 @@ useEffect(() => {
       // Handle auction data
       if (auctionRes.status === "fulfilled") {
         const auctionData = auctionRes.value?.data?.data;
+        console.log('auctionData**', auctionData)
         setPendingAuctionData(auctionData);
       } else {
         console.error("Error fetching auction details:", auctionRes.reason);
@@ -228,7 +229,7 @@ useEffect(() => {
   : baseValue + auctionFee;
   
 
-  const winnerSecurityDeposit = Number(pendingAuctionData?.winnerSecurityDeposite?.amount)
+  const winnerSecurityDeposit = Number(pendingAuctionData?.winnerSecurityDeposite?.amount) || 0
   const totalPayingAmount = payingAmount - winnerSecurityDeposit
 
   return (

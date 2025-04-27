@@ -95,6 +95,12 @@ const Wallet = () => {
                    <th scope="col" className="px-6 py-3">
                    {selectedContent[localizationKeys.Description]}
                    </th>
+                   <th scope="col" className="px-6 py-4 font-semibold tracking-wider bg-primary">
+                       Auction Product
+                     </th>
+                     <th scope="col" className="px-6 py-4 font-semibold tracking-wider bg-primary">
+                       Image
+                     </th>
                    <th scope="col" className="px-6 py-3">
                    {selectedContent[localizationKeys.Withdrawals]}
                    </th>
@@ -107,7 +113,7 @@ const Wallet = () => {
                  </tr>
                </thead>
                <tbody className="">
-                 {[...walletHistory].reverse().map((data, index) => (
+                 {[...walletHistory].map((data, index) => (
                    <tr
                      key={index}
                      className={`bg-white border-b ${
@@ -116,6 +122,10 @@ const Wallet = () => {
                    >
                      <th scope="row" className="px-6 py-4 ">{formatDate(data.date)}</th>
                      <td className="px-6 py-4">{data.description}</td>
+                     <td className="px-6 py-4 text-sm text-gray-600">{data?.auction?.product?.title}</td>
+                     <td className="px-6 py-4 text-sm text-gray-600">
+                      <img  className="w-52 h-20 object-cover rounded-lg "  src={data?.auction?.product?.images[0]?.imageLink} alt="img" />
+                     </td>
                      <td className="px-6 py-4 ">{data.status === "WITHDRAWAL" ? 'AED '+ data.amount:"--------------------------"}</td>
                      <td className="px-6 py-4">{data.status === "DEPOSIT" ? 'AED ' + data.amount:"-------------------"}</td>
                      <td className="px-6 py-4">AED {data.balance}</td>

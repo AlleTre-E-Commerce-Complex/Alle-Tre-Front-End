@@ -176,7 +176,7 @@ const SummaryHomeAuctionSections = ({
       categoryData.luxuaryAmount &&
       Number(startBidAmount) < Number(categoryData.luxuaryAmount)
     ) {
-      if (newValue > Number(categoryData.maxBidLimit)) {
+      if (categoryData.maxBidLimit && (newValue > Number(categoryData.maxBidLimit))) {
         toast.error(
           `${
             selectedContent[
@@ -190,10 +190,16 @@ const SummaryHomeAuctionSections = ({
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
-
+    const specialCategory = [4]
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
         if (validateBidAmount(newValue)) {
+        if(specialCategory.includes(categoryData.id)){
+          if(categoryData.id === 4 && newValue < 5000){
+            sendSubmitBid(newValue);
+            return 
+          }
+        }
           if (isDepositPaid) {
             sendSubmitBid(newValue);
           } else {
