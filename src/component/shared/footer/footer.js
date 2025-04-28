@@ -24,13 +24,14 @@ import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import toast from "react-hot-toast";
 import TermsAndConditions from "../terms-and-condition/TermsAndCondition";
+import PrivacyPolicy from "../privacy-policy/privacy-policy";
 
 const Footer = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { pathname } = useLocation();
   const [email, setEmail] = useState("");
-  const [isMobile, setIsMobile] = useState(window.innerWidth <=968);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 968);
 
   useEffect(() => {
     const handleResize = () => {
@@ -183,8 +184,10 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="bg-[#6e1f30] h-[20x] text-gray-med/50 flex justify-center items-center">
+      <div className="bg-[#6e1f30] h-[20x] text-gray-med/50 flex justify-center items-center space-x-2">
         <TermsAndConditions isFooter={true} />
+        <span className=" mt-6">|</span>
+        <PrivacyPolicy isFooter={true} />
       </div>
     </div>
   );

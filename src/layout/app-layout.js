@@ -7,7 +7,6 @@ import FAQs from "../page/app/FAQs/FAQs";
 import Categories from "../page/app/categories/categories";
 import Home from "../page/app/home/home";
 import Support from "../page/app/support/support";
-
 import AuctionDetails from "../page/app/create-auction/auction-details";
 import CreateAuction from "../page/app/create-auction/create-auction";
 import PaymentDetails from "../page/app/create-auction/payment-details";
@@ -39,6 +38,7 @@ import { FaPlus } from "react-icons/fa6";
 import SummaryListedSection from "component/home-components/summary-listed-section";
 import UserDetailsPage from "component/profile-components/user-details-page";
 import ListingProductsLocationDetails from "page/app/ListProduct/List-location-details";
+import PrivacyPolicy from "../component/shared/privacy-policy/privacy-policy";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState("");
@@ -240,6 +240,7 @@ const AppLayouts = () => {
               />
               <Route path={routes.app.faqs} component={FAQs} />
               <Route path={routes.app.support} component={Support} />
+              <Route path={routes.app.privacyPolicy} component={PrivacyPolicy} />
             </Switch>
           </div>
           <Footer />
