@@ -436,9 +436,9 @@ const ar = {
   [localizationKeys.thereAreNoWatchlistYet]: "لا توجد قائمة المراقبة حتى الآن.",
   [localizationKeys.ChangedDefaultAdrress]: " تغيير العنوان الافتراضي",
   [localizationKeys.invalidLocationId]: "معرف الموقع غير صالح",
-  [localizationKeys.accessBlocked]: "تم حظر الوصول",
+  [localizationKeys.accessBlocked]: "تم حظر الوصول/تم حذف الحساب",
   [localizationKeys.yourAccountIsBlockedByAdminPleaseContactSupport]:
-    "تم حظر حسابك من قبل المسؤول. يرجى الاتصال بالدعم.",
+    "تم حظر حسابك أو حذفه من قِبل الإدارة. يُرجى التواصل مع الدعم.",
   // myauctions
   [localizationKeys.createNow]: "أنشئ الآن",
   [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:

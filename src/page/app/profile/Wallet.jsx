@@ -5,7 +5,7 @@ import content from "localization/content";
 import localizationKeys from "localization/localization-keys";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
-
+import AddImageIcon from '../../../../src/assets/icons/add-image.svg'; 
 import api from "api";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
@@ -122,10 +122,10 @@ const Wallet = () => {
                    >
                      <th scope="row" className="px-6 py-4 ">{formatDate(data.date)}</th>
                      <td className="px-6 py-4">{data.description}</td>
-                     <td className="px-6 py-4 text-sm text-gray-600">{data?.auction?.product?.title}</td>
+                     <td className="px-6 py-4 text-sm text-gray-600">{data?.auction?.product?.title || '--------------'}</td>
                      <td className="px-6 py-4 text-sm text-gray-600">
-                      <img  className="w-52 h-20 object-cover rounded-lg "  src={data?.auction?.product?.images[0]?.imageLink} alt="img" />
-                     </td>
+                      <img  className="w-20 h-20 object-cover rounded-lg "   src={data?.auction?.product?.images[0]?.imageLink || AddImageIcon} alt="Preview" />
+                     </td> 
                      <td className="px-6 py-4 ">{data.status === "WITHDRAWAL" ? 'AED '+ data.amount:"--------------------------"}</td>
                      <td className="px-6 py-4">{data.status === "DEPOSIT" ? 'AED ' + data.amount:"-------------------"}</td>
                      <td className="px-6 py-4">AED {data.balance}</td>
