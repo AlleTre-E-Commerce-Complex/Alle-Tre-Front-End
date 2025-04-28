@@ -443,9 +443,9 @@ const en = {
   [localizationKeys.thereAreNoWatchlistYet]: "  There are no Watchlist yet.",
   [localizationKeys.ChangedDefaultAdrress]: " Changed Default Adrress",
   [localizationKeys.invalidLocationId]: "Invalid location ID",
-  [localizationKeys.accessBlocked]: "Access Blocked",
+  [localizationKeys.accessBlocked]: "Access Blocked/Account Deleted",
   [localizationKeys.yourAccountIsBlockedByAdminPleaseContactSupport]:
-    "Your account is blocked by admin.Please contact support.",
+    "Your account is blocked or deleted by admin. Please contact support.",
   // myauctions
   [localizationKeys.createNow]: "Create Now",
   [localizationKeys.thereAreNoAuctionsCurrentlyMakeYourFirstAuctionRightAway]:

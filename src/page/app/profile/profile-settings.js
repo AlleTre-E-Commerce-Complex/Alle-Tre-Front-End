@@ -33,6 +33,9 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import routes from "routes";
+import { useAuthState } from "context/auth-context";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage("");
@@ -40,7 +43,6 @@ const ProfileSettings = () => {
   const [open, setOpen] = useState(false);
   const [pofileData, setPofileData] = useState();
   const [locationData, setLocationData] = useState();
-
   const [IsImgModelOpen, setImgModelOpen] = useState(false);
   // const [IsLocationModelOpen, setLocationModelOpen] = useState(false);
 
@@ -88,6 +90,8 @@ const ProfileSettings = () => {
     if (window.location.hash.slice(1) === "AddressBook") {
     } else window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
+
 
   return (
     <>
@@ -366,6 +370,9 @@ const ProfileSettings = () => {
                 onReload={onReload}
               />
             </div>
+            <div className="deleteAccountSection mt-12" >
+              <DeleteAccountSection />
+            </div>
           </div>
         </div>
       </div>
@@ -540,4 +547,68 @@ export const LocationDetailsCard = ({
   );
 };
 
+
+export  function DeleteAccountSection() {
+  const [showModal, setShowModal] = useState(false);
+  const history = useHistory()
+  const { run: runDeletePofile, isLoading: isLoadingPofile } = useAxios([]);
+  const { logout } = useAuthState();
+  const handleUpdateUserBlockStatus = () => {
+    const isBlocked = false
+    runDeletePofile(
+      authAxios.patch(`${api.app.updateUserBlockStatus(isBlocked)}`).then((res) => {
+        if (res?.data?.success) {
+          toast.success('Deletion success')
+          logout()
+          // history.push(routes.app.home)
+        } else {
+          toast.error(`Deletion failed`);
+        }
+      })
+    );
+    setShowModal(false);
+  };
+
+  return (
+    <div className="deleteAccount">
+      <button
+        onClick={() => setShowModal(true)}
+        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Delete Account
+      </button>
+
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h2 className="text-xl font-semibold mb-4 text-red-600">
+              Confirm Deletion
+            </h2>
+            <p className="mb-6 text-gray-700">
+              Are you sure you want to delete your account? <br /> You will lose your data.
+            </p>
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleUpdateUserBlockStatus}
+                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
 export default ProfileSettings;
+
+

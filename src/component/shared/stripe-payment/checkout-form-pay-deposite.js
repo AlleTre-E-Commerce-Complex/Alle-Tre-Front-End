@@ -70,7 +70,7 @@ export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError }
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite`,
+          return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite?auctionId=${auctionId}`,
         },
       });
 

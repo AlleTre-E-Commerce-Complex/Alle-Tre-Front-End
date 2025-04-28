@@ -155,6 +155,8 @@ const api = {
       subscribe: "/notifications/subscribe",
       markAsRead: "/notifications/mark-as-read",
     },
+    updateUserBlockStatus :(currentStatus) => 
+      `users/updateUserBlockStatus?currentStatus=${currentStatus}`,
   },
 };
 
