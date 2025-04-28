@@ -29,6 +29,7 @@ const routes = {
 
     faqs: `/alletre/FAQs`,
     support: `/alletre/support`,
+    privacyPolicy: `/alletre/privacy-policy`,
 
     createAuction: {
       default: `/alletre/home/create-auction`,

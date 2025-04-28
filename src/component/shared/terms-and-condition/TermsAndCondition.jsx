@@ -1315,7 +1315,7 @@ const TermsAndConditions = (isFooter) => {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="p-4 pr-0">
       <TermsAndConditionsModal
         data={TermAndConditionData}
         isFooter={isFooter}
@@ -1435,7 +1435,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
                   <span>
                     {
                       selectedContent[
-                        localizationKeys.iAgreetotheTermsConditions
+                      localizationKeys.iAgreetotheTermsConditions
                       ]
                     }
                   </span>
