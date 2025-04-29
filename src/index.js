@@ -15,6 +15,7 @@ import { AuthProvider } from "./context/auth-context";
 import "react-toastify/dist/ReactToastify.css";
 import "semantic-ui-css/semantic.min.css";
 import "./index.css";
+import * as serviceWorkerRegistration from './serviceFiles/serviceWorkerRegistration'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -30,3 +31,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+serviceWorkerRegistration.register();

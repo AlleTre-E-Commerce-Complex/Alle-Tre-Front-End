@@ -50,5 +50,17 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+          .then(function(registration) {
+            console.log('Push SW registered:', registration);
+          })
+          .catch(function(err) {
+            console.error('Push SW registration failed:', err);
+          });
+      }
+    </script>
+    
   </body>
 </html>
