@@ -585,7 +585,7 @@ export  function DeleteAccountSection() {
               Confirm Deletion
             </h2>
             <p className="mb-6 text-gray-700">
-              Are you sure you want to delete your account? <br /> You will lose your data.
+              Are you sure you want to delete your account? <br /> You will lose your data from our server.
             </p>
             <div className="flex justify-end space-x-4">
               <button

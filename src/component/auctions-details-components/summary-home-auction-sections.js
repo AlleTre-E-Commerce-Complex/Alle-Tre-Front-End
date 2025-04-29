@@ -287,6 +287,7 @@ const SummaryHomeAuctionSections = ({
           setSubmitBidValue("");
         })
         .catch((err) => {
+          console.log('submit bid error : ',err)
           toast.error(
             lang === "en"
               ? err.message.en || err.message
