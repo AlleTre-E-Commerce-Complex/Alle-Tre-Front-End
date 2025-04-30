@@ -12,6 +12,9 @@ import BlockedModal from "component/shared/UserBlockedModal/BlockedModal";
 import { HelmetProvider } from "react-helmet-async";
 import { initGA, logPageView } from "./utils/analytics";
 import { getDefaultPaginationString } from "./constants/pagination";
+import InstallPromptButton from "component/shared/installPropt/InstallPromptButton";
+
+
 
 function App() {
   const location = useLocation();
@@ -74,6 +77,7 @@ function App() {
             },
           }}
         />
+        <InstallPromptButton />
       </div>
     </HelmetProvider>
   );
