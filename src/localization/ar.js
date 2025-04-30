@@ -172,9 +172,12 @@ const ar = {
   [localizationKeys.clickToBrowse]: "انقر للتصفح",
   [localizationKeys.document]: "وثيقة",
   [localizationKeys.tapToZoom]: "انقر للتكبير",
-  [localizationKeys.listYourPropertyForSale]  :"قم بإدراج عقارك للبيع",
-  [localizationKeys.rent]:"إيجار",
-  [localizationKeys.listYourPropertyForRent]:"أدرج عقارك للإيجار" ,
+  [localizationKeys.listYourPropertyForSale]: "قم بإدراج عقارك للبيع",
+  [localizationKeys.rent]: "إيجار",
+  [localizationKeys.listYourPropertyForRent]: "أدرج عقارك للإيجار",
+  [localizationKeys.discoverTrendingAuctionsWithExclusiveDeals]:
+    "اكتشف المزادات الرائجة مع العروض الحصرية",
+  [localizationKeys.hotAuctions]: "المزادات المميزة",
   // status
   [localizationKeys.activeNow]: "نشط الآن",
   [localizationKeys.Scheduled]: "  مجدولة",
@@ -198,7 +201,8 @@ const ar = {
   [localizationKeys.pendingAuctions]: "المزادات المعلقة",
   [localizationKeys.expiredAuctions]: "المزادات المنتهية",
   [localizationKeys.payDeposite]: "إيداع الدفع",
-  [localizationKeys.yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck]:"تم إيداعك بنجاح وتم وضع عرضك. بالتوفيق!",
+  [localizationKeys.yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck]:
+    "تم إيداعك بنجاح وتم وضع عرضك. بالتوفيق!",
   [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
     "لكي تتمكن من إتمام نشر مزادك بنجاح، يرجى دفع رسوم المزاد والبدء في تلقي العطاءات على الفور.",
   [localizationKeys.adPreview]: "معاينة الإعلان",
@@ -209,7 +213,8 @@ const ar = {
     "إذا كنت تريد التحقق من سياسة المزاد، يمكنك التحقق",
   [localizationKeys.paymentMethod]: "طريقة الدفع",
   [localizationKeys.PaymentCompleted]: "تم الدفع",
-  [localizationKeys.YouveAlreadyCompletedThePaymentForThisAuction]: "لقد قمت بالفعل بإكمال الدفع لهذا المزاد",
+  [localizationKeys.YouveAlreadyCompletedThePaymentForThisAuction]:
+    "لقد قمت بالفعل بإكمال الدفع لهذا المزاد",
   [localizationKeys.viewPendingPayments]: "عرض المدفوعات المعلقة",
   [localizationKeys.continuePayment]: "متابعة الدفع",
   [localizationKeys.yourPaymentDetailsAreSaved]:
@@ -226,8 +231,8 @@ const ar = {
   [localizationKeys.getItNewFeeltheDifference]:
     "احصل عليه جديدًا، واشعر بالفرق",
   [localizationKeys.locationNotAvailable]: "الموقع غير متاح",
-  [localizationKeys.selectSubCategory]:"حدد الفئة الفرعية",
-  
+  [localizationKeys.selectSubCategory]: "حدد الفئة الفرعية",
+
   // create auctions
   [localizationKeys.drafts]: "المسودات",
   [localizationKeys.proceed]: "متابعة",
@@ -239,7 +244,7 @@ const ar = {
   [localizationKeys.confirmDeletedraft]: "تأكيد حذف المسودة",
   [localizationKeys.cancel]: "إلغاء",
   [localizationKeys.logOut]: "تسجيل الخروج",
-  [localizationKeys.updatedSuccessfully]:"تم تحديث المزاد بنجاح",
+  [localizationKeys.updatedSuccessfully]: "تم تحديث المزاد بنجاح",
   [localizationKeys.areYouSureYouWantToLogOut]:
     "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   [localizationKeys.confirmLogout]: "تأكيد تسجيل الخروج",
@@ -285,23 +290,32 @@ const ar = {
     "يمكنك فقط تحديد ما يصل إلى خمسين صورة",
   [localizationKeys.relatedDocument]: "وثيقة ذات صلة",
   [localizationKeys.Pdfdocument]: "وثيقة PDF",
-  [localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]: "لا يُمكن تحميل الفيديو أولاً. يُرجى تحميل صورة أولاً لاستخدامها كغلاف.",
-  [localizationKeys.onlyOneVideoFileIsAllowed]:"يُسمح بملف فيديو واحد فقط",
-  [localizationKeys.uploadOneImageAndOneVideo]: "* يمكنك تحميل ما يصل إلى ٥٠ صورة وفيديو واحد (بحد أقصى ٥٠ ميجابايت). يجب تحميل الفيديوهات بشكل منفصل عن الصور.",
-  [localizationKeys.fileSizeShouldBeLessThan10MB]:"يجب أن يكون حجم الملف أقل من 10 ميجا بايت",
-  [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:"تمت إضافة هذا المزاد إلى قائمة المراقبة بنجاح",
-  [localizationKeys.thisAuctionRemovedFromWatchListSuccessfully]:"تم إزالة هذا المزاد من قائمة المراقبة بنجاح",
-  [localizationKeys.imageDeletedSuccessfully]:"تم حذف الصورة بنجاح",
-  [localizationKeys.coverPhotoUpdatedSuccessfully]:"تم تحديث صورة الغلاف بنجاح",
-  [localizationKeys.failedToUpdateCoverPhoto]:"فشل في تحديث صورة الغلاف",
-  [localizationKeys.cannotMixVideoAndImages]:"يرجى تحميل الفيديو أو الصور، وليس كليهما في وقت واحد.",
-  [localizationKeys.videoSizeLimitExceeded]: "يجب أن يكون حجم الفيديو أقل من 50 ميجابايت",
-  [localizationKeys.errorInWatermarkProcess]:"خطأ في عملية العلامة المائية",
-  [localizationKeys.fileConversionFailed]:"فشل تحويل الملف",
+  [localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]:
+    "لا يُمكن تحميل الفيديو أولاً. يُرجى تحميل صورة أولاً لاستخدامها كغلاف.",
+  [localizationKeys.onlyOneVideoFileIsAllowed]: "يُسمح بملف فيديو واحد فقط",
+  [localizationKeys.uploadOneImageAndOneVideo]:
+    "* يمكنك تحميل ما يصل إلى ٥٠ صورة وفيديو واحد (بحد أقصى ٥٠ ميجابايت). يجب تحميل الفيديوهات بشكل منفصل عن الصور.",
+  [localizationKeys.fileSizeShouldBeLessThan10MB]:
+    "يجب أن يكون حجم الملف أقل من 10 ميجا بايت",
+  [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:
+    "تمت إضافة هذا المزاد إلى قائمة المراقبة بنجاح",
+  [localizationKeys.thisAuctionRemovedFromWatchListSuccessfully]:
+    "تم إزالة هذا المزاد من قائمة المراقبة بنجاح",
+  [localizationKeys.imageDeletedSuccessfully]: "تم حذف الصورة بنجاح",
+  [localizationKeys.coverPhotoUpdatedSuccessfully]:
+    "تم تحديث صورة الغلاف بنجاح",
+  [localizationKeys.failedToUpdateCoverPhoto]: "فشل في تحديث صورة الغلاف",
+  [localizationKeys.cannotMixVideoAndImages]:
+    "يرجى تحميل الفيديو أو الصور، وليس كليهما في وقت واحد.",
+  [localizationKeys.videoSizeLimitExceeded]:
+    "يجب أن يكون حجم الفيديو أقل من 50 ميجابايت",
+  [localizationKeys.errorInWatermarkProcess]: "خطأ في عملية العلامة المائية",
+  [localizationKeys.fileConversionFailed]: "فشل تحويل الملف",
   [localizationKeys.setAsCover]: "تعيين كصورة غلاف",
   [localizationKeys.cover]: "صورة غلاف",
-  [localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction]:"تم تعطيل تحرير الصور والمستندات أثناء تحديث المزاد",
-  [localizationKeys.editingDisabled]:"تم تعطيل التحرير",
+  [localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction]:
+    "تم تعطيل تحرير الصور والمستندات أثناء تحديث المزاد",
+  [localizationKeys.editingDisabled]: "تم تعطيل التحرير",
   //List product
   [localizationKeys.call]: "يتصل",
   [localizationKeys.chat]: "محادثة",

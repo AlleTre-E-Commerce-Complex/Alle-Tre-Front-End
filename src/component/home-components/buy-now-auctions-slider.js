@@ -4,14 +4,13 @@ import AnglesRight from "../../../src/assets/icons/arrow-right.svg";
 import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
 import "./auctions-slider.scss";
 import AuctionCard from "./auction-card";
-import { useLocation } from "react-router-dom";
-import { useAuthState } from "../../context/auth-context";
+// import { useLocation } from "react-router-dom";
+// import { useAuthState } from "../../context/auth-context";
 import useAxios from "../../hooks/use-axios";
 import { useState } from "react";
 import { authAxios } from "../../config/axios-config";
-import axios from "axios";
 import api from "../../api";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
@@ -22,42 +21,31 @@ import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre
 const BuyNowAuctionsSlider = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const { search } = useLocation();
-  const { user } = useAuthState();
+  // const { search } = useLocation();
+  // const { user } = useAuthState();
+  const { isLoading: isLoadingAuctions } = useAxios([]);
 
-  const { run: runAuctions, isLoading: isLoadingAuctions } = useAxios([]);
-
-  const [auctions, setAuctions] = useState();
-  const [pagination, setpagination] = useState();
+  const [auctions, setAuctions] = useState([]);
+  const [pagination, setpagination] = useState(null);
   const [page, setPage] = useState(20);
-  // const loginData = useSelector((state) => state?.loginDate?.loginDate);
 
   useEffect(() => {
-    if (search.includes("page") && search.includes("perPage"))
-      if (user) {
-        runAuctions(
-          authAxios
-            .get(
-              `${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`
-            )
-            .then((res) => {
-              setAuctions(res?.data?.data);
-              setpagination(res?.data?.pagination);
-            })
+    const fetchAuctions = async () => {
+      try {
+        const response = await authAxios.get(
+          `${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`
         );
-      } else {
-        runAuctions(
-          axios
-            .get(
-              `${api.app.auctions.getExpiredAuctions}?page=1&perPage=${page}`
-            )
-            .then((res) => {
-              setAuctions(res?.data?.data);
-              setpagination(res?.data?.pagination);
-            })
-        );
+        const auctionsData = response?.data?.data || [];
+        setAuctions(auctionsData);
+        setpagination(response?.data?.pagination);
+      } catch (error) {
+        console.error('Error fetching auctions:', error);
+        setAuctions([]);
       }
-  }, [page, runAuctions, search, user]);
+    };
+
+    fetchAuctions();
+  }, [page]);
 
   const swiperOptions = {
     cssMode: true,
@@ -72,29 +60,36 @@ const BuyNowAuctionsSlider = () => {
   };
 
   const swiperRef2 = useRef(null);
-  const swiper2 = new Swiper(swiperRef2?.current, { ...swiperOptions });
+  const swiper2 = useRef(null);
 
   useEffect(() => {
+    if (swiperRef2.current) {
+      swiper2.current = new Swiper(swiperRef2.current, swiperOptions);
+    }
     return () => {
-      swiper2?.destroy();
+      if (swiper2.current) {
+        swiper2.current.destroy();
+      }
     };
-  }, []);
+  }, [auctions]);
 
   const handleNextClick = () => {
     if (pagination?.totalItems > pagination?.perPage) {
-      swiper2?.slideNext();
+      swiper2.current?.slideNext();
       setPage(page + 5);
-    } else swiper2?.slideNext();
+    } else swiper2.current?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiper2?.slidePrev();
+    swiper2.current?.slidePrev();
   };
 
   return (
-    <> <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
-      <LodingTestAllatre />
-    </Dimmer>
+    <>
+      {" "}
+      <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
+        <LodingTestAllatre />
+      </Dimmer>
       <div>
         <div className="text-center">
           <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md ">
@@ -114,10 +109,11 @@ const BuyNowAuctionsSlider = () => {
               <div className="snapslider-wrapper relative px-4 md:px-8">
                 <div ref={swiperRef2} className="snapslider-overflow">
                   <div
-                    className={`${auctions?.length > 4
-                      ? ""
-                      : "md:justify-center justify-start"
-                      } snapslider-scroll swiper-wrapper gap-3`}
+                    className={`${
+                      auctions?.length > 4
+                        ? ""
+                        : "md:justify-center justify-start"
+                    } snapslider-scroll swiper-wrapper gap-3`}
                   >
                     {auctions?.map((e) => (
                       <div
@@ -145,9 +141,9 @@ const BuyNowAuctionsSlider = () => {
                       </div>
                     ))}
                     {auctions?.length >= 2 && (
-                      <div className="swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%] flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                      <div className="swiper-slide !w-[48%] sm:!w-[31%] md:!w-[19%] lg:!w-[15.6%] flex items-center justify-center mx-auto h-full mt-32">
+                        <div className="text-center p-4 pt-12 w-full self-center my-auto">
+                          <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-gray-100 flex items-center justify-center">
                             <svg
                               className="w-8 h-8 text-gray-400"
                               fill="none"

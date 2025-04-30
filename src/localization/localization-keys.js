@@ -159,7 +159,10 @@ const localizationKeys = {
   tapToZoom: "tapToZoom",
   listYourPropertyForSale: "listYourPropertyForSale",
   rent: "rent",
-  listYourPropertyForRent:"listYourPropertyForRent",
+  listYourPropertyForRent: "listYourPropertyForRent",
+  discoverTrendingAuctionsWithExclusiveDeals:
+    "discoverTrendingAuctionsWithExclusiveDeals",
+  hotAuctions: "hotAuctions",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",

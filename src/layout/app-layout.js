@@ -46,6 +46,7 @@ const AppLayouts = () => {
   const [showRewardModal, setShowRewardModal] = useState(false);
   const [showUnSubscribeModal, setUnSubscribeModal] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname } = useLocation();
@@ -102,6 +103,8 @@ const AppLayouts = () => {
           SetSid={SetSid}
           setSelectedType={setSelectedType}
           onFilterClick={() => setIsFilterOpen(true)}
+          isOpen={isDropdownOpen}
+          onDropdownChange={setIsDropdownOpen}
         />
         <Sidebar SetSid={SetSid} sid={sid} />
         {showRewardModal && (
@@ -129,6 +132,7 @@ const AppLayouts = () => {
                     selectedType={selectedType}
                     isFilterOpen={isFilterOpen}
                     setIsFilterOpen={setIsFilterOpen}
+                    isDropdownOpen={isDropdownOpen}
                   />
                 )}
               />

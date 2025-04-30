@@ -177,9 +177,12 @@ const en = {
   [localizationKeys.clickToBrowse]: "click to browse",
   [localizationKeys.document]: "Document",
   [localizationKeys.tapToZoom]: "Tap to zoom",
-  [localizationKeys.listYourPropertyForSale]  :"List your property for sale",
-  [localizationKeys.rent]:"Rent",
-  [localizationKeys.listYourPropertyForRent]:"List your property for rent" ,
+  [localizationKeys.listYourPropertyForSale]: "List your property for sale",
+  [localizationKeys.rent]: "Rent",
+  [localizationKeys.listYourPropertyForRent]: "List your property for rent",
+  [localizationKeys.discoverTrendingAuctionsWithExclusiveDeals]:
+    "Discover trending auctions with exclusive deals",
+  [localizationKeys.hotAuctions]: "Hot Auctions",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",
@@ -202,7 +205,8 @@ const en = {
   [localizationKeys.pendingAuctions]: "Pending Auctions",
   [localizationKeys.expiredAuctions]: "Expired Auctions",
   [localizationKeys.payDeposite]: "Pay Deposite",
-  [localizationKeys.yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck]:"Your deposit has been successfully made and your bid has been placed. Good luck!",
+  [localizationKeys.yourDepositHasBeenSuccessfullyMadeAndYourBidHasBeenPlacedGoodLuck]:
+    "Your deposit has been successfully made and your bid has been placed. Good luck!",
   [localizationKeys.inOrderToCompletePublishingYourAdSuccessfullyPleasePayTheAdFeeAndStartReceivingBidsImmediately]:
     "In order to complete publishing your auction successfully, please pay the auction fee and start receiving bids immediately.",
   [localizationKeys.adPreview]: "Ad Preview",
@@ -213,7 +217,8 @@ const en = {
     "If you want to check auction's policy, you can check",
   [localizationKeys.paymentMethod]: "Payment Method",
   [localizationKeys.PaymentCompleted]: "Payment Completed",
-  [localizationKeys.YouveAlreadyCompletedThePaymentForThisAuction]: "You've already completed the payment for this auction",
+  [localizationKeys.YouveAlreadyCompletedThePaymentForThisAuction]:
+    "You've already completed the payment for this auction",
   [localizationKeys.viewPendingPayments]: "View Pending Payments",
   [localizationKeys.continuePayment]: "Continue Payment",
   [localizationKeys.yourPaymentDetailsAreSaved]:
@@ -230,7 +235,7 @@ const en = {
   [localizationKeys.getItNewFeeltheDifference]:
     "Get It New, Feel the Difference",
   [localizationKeys.locationNotAvailable]: "Location not available",
-  [localizationKeys.selectSubCategory]:"Select sub-category",
+  [localizationKeys.selectSubCategory]: "Select sub-category",
   // create auctions
   [localizationKeys.drafts]: "Drafts",
   [localizationKeys.proceed]: "Proceed",
@@ -243,7 +248,7 @@ const en = {
     "Are you sure you want to delete this draft",
   [localizationKeys.cancel]: "Cancel",
   [localizationKeys.logOut]: "Log Out",
-  [localizationKeys.updatedSuccessfully]:"Auction updated successfully",
+  [localizationKeys.updatedSuccessfully]: "Auction updated successfully",
   [localizationKeys.areYouSureYouWantToLogOut]:
     "Are you sure you want to log out?",
   [localizationKeys.confirmLogout]: "Confirm Logout",
@@ -287,25 +292,35 @@ const en = {
   [localizationKeys.youCanOnlySelectUpToFiftyImages]:
     "You can only select up to 50 images",
   [localizationKeys.relatedDocument]: "Related document",
-  [localizationKeys.Pdfdocument]:"PDF Document",
-  [localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]: "Video cannot be the first upload. Please upload an image first as it will be used as the cover.",
-  [localizationKeys.onlyOneVideoFileIsAllowed]:"Only one video file is allowed",
-  [localizationKeys.uploadOneImageAndOneVideo]: "* You can upload up to 50 images and 1 video (max 50MB). Videos must be uploaded separately from images.",
-  [localizationKeys.fileSizeShouldBeLessThan10MB]:"File size should be less than 10MB",
-  [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:"This auction added to WatchList successfully",
-  [localizationKeys.thisAuctionRemovedFromWatchListSuccessfully]:"This auction removed from WatchList successfully",
-  [localizationKeys.imageDeletedSuccessfully]:"Image deleted successfully",
-  [localizationKeys.failedToDeleteImage]:"Failed to delete image",
-  [localizationKeys.coverPhotoUpdatedSuccessfully]:"Cover photo updated successfully",
-  [localizationKeys.failedToUpdateCoverPhoto]:"Failed to update cover photo",
-  [localizationKeys.cannotMixVideoAndImages]:"Please upload either video or images, not both at once.",
-  [localizationKeys.videoSizeLimitExceeded]: "Video size must be less than 50 MB",
-  [localizationKeys.errorInWatermarkProcess]:"Error in watermark process",
-  [localizationKeys.fileConversionFailed]:"File conversion failed",
+  [localizationKeys.Pdfdocument]: "PDF Document",
+  [localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]:
+    "Video cannot be the first upload. Please upload an image first as it will be used as the cover.",
+  [localizationKeys.onlyOneVideoFileIsAllowed]:
+    "Only one video file is allowed",
+  [localizationKeys.uploadOneImageAndOneVideo]:
+    "* You can upload up to 50 images and 1 video (max 50MB). Videos must be uploaded separately from images.",
+  [localizationKeys.fileSizeShouldBeLessThan10MB]:
+    "File size should be less than 10MB",
+  [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:
+    "This auction added to WatchList successfully",
+  [localizationKeys.thisAuctionRemovedFromWatchListSuccessfully]:
+    "This auction removed from WatchList successfully",
+  [localizationKeys.imageDeletedSuccessfully]: "Image deleted successfully",
+  [localizationKeys.failedToDeleteImage]: "Failed to delete image",
+  [localizationKeys.coverPhotoUpdatedSuccessfully]:
+    "Cover photo updated successfully",
+  [localizationKeys.failedToUpdateCoverPhoto]: "Failed to update cover photo",
+  [localizationKeys.cannotMixVideoAndImages]:
+    "Please upload either video or images, not both at once.",
+  [localizationKeys.videoSizeLimitExceeded]:
+    "Video size must be less than 50 MB",
+  [localizationKeys.errorInWatermarkProcess]: "Error in watermark process",
+  [localizationKeys.fileConversionFailed]: "File conversion failed",
   [localizationKeys.setAsCover]: "Set as cover",
   [localizationKeys.cover]: "Cover",
-  [localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction]:"Editing images and documents is disabled while updating the auction",
-  [localizationKeys.editingDisabled]:"Editing disabled",
+  [localizationKeys.editingImagesAndDocumentsIsDisabledWhileUpdatingTheAuction]:
+    "Editing images and documents is disabled while updating the auction",
+  [localizationKeys.editingDisabled]: "Editing disabled",
 
   //List product
   [localizationKeys.call]: "Call",

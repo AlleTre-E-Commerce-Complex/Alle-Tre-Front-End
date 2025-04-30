@@ -1,84 +1,78 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Dimmer } from "semantic-ui-react";
 import api from "../../../api";
-import AuctionCard from "../../../component/home-components/auction-card";
-import BuyNowAuctionsSlider from "../../../component/home-components/buy-now-auctions-slider";
-import FilterSections from "../../../component/home-components/filter-sections";
+// import FilterSections from "../../../component/home-components/filter-sections";
 import SliderRow from "../../../component/shared/slider-categories/slider-row";
 import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import { useDispatch } from "react-redux";
-import UpComingAuctionsSlider from "../../../component/home-components/up-coming-auctions";
-import PaginationApp from "../../../component/shared/pagination/pagination-app";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
-import listicon from "../../../../src/assets/icons/bullet.svg";
-import menuicon from "../../../../src/assets/icons/grid-06.svg";
-import AuctionCardList from "../../../component/home-components/auction-card-list";
 import BannerTop from "component/home-components/BannerTop";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 import { welcomeBonus } from "redux-store/welcom-bonus-slice";
 // import { useSocket } from "context/socket-context";
 import { useSocket } from "context/socket-context";
 // import LiveAuctionsSlider from "component/home-components/live-auctions-slider";
-import ProductCard from "component/home-components/ProductCard";
-import ProductCardList from "component/home-components/products-card-list";
-import { ReactComponent as NoAuctionImg } from "../../../../src/assets/images/no auction new.svg";
-import { ReactComponent as NoProductImg } from "../../../../src/assets/images/no products new.svg";
 import queryString from "query-string";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
+import SideBanner from "../../../component/home-components/SideBanner";
+import BannerBottom from "component/home-components/BannerBottom";
 
-const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
+const Home = ({
+  selectedType,
+  isFilterOpen,
+  setIsFilterOpen,
+  isDropdownOpen,
+}) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { search } = useLocation();
   const history = useHistory();
   const { user } = useAuthState();
-  const myRef = useRef();
-  const myRef1 = useRef();
   const dispatch = useDispatch();
   const isWelcomeBonus = useSelector(
     (state) => state.welcomeBonus.welcomeBonus
   );
-  const [isGrid, setIsGrid] = useState(() => {
-    return JSON.parse(localStorage.getItem("isGrid")) ?? true;
-  });
+  // const [isGrid, setIsGrid] = useState(() => {
+  //   return JSON.parse(localStorage.getItem("isGrid")) ?? true;
+  // });
   const socket = useSocket();
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState([]);
-  const [listedProducts, setListedProducts] = useState([]);
-  const [totalPagesListed, setTotalPagesListed] = useState();
-  const [totalpagesAuction, setTotalpagesAuction] = useState();
-  const [sponsoredAuctions, SetSponsoredAuctions] = useState([]);
-  const [auctionPageNumber, setAuctionPageNumber] = useState(
-    Number(DEFAULT_PAGE)
-  );
-  const [listedPageNumber, setListedPageNumber] = useState(
-    Number(DEFAULT_PAGE)
-  );
+  // const [listedProducts, setListedProducts] = useState([]);
+  // const [totalPagesListed, setTotalPagesListed] = useState();
+  // const [totalpagesAuction, setTotalpagesAuction] = useState();
+  // const [sponsoredAuctions, SetSponsoredAuctions] = useState([]);
+  // const [auctionPageNumber, setAuctionPageNumber] = useState(
+  //   Number(DEFAULT_PAGE)
+  // );
+  // const [listedPageNumber, setListedPageNumber] = useState(
+  //   Number(DEFAULT_PAGE)
+  // );
 
   const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
   );
-  const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
-    []
-  );
-  const {
-    run: runSponsoredAuctions,
-    isLoading: isLoadingrunSponsoredAuctions,
-  } = useAxios([]);
+  // const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
+  //   []
+  // );
+  // const {
+  //   run: runSponsoredAuctions,
+  //   isLoading: isLoadingrunSponsoredAuctions,
+  // } = useAxios([]);
 
-  useEffect(() => {
-    localStorage.setItem("isGrid", JSON.stringify(isGrid));
-  }, [isGrid]);
+  // useEffect(() => {
+  //   localStorage.setItem("isGrid", JSON.stringify(isGrid));
+  // }, [isGrid]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
@@ -122,88 +116,88 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       runMainAuctions(
         axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
           setMainAuctions(res?.data?.data);
-          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+          // setTotalpagesAuction(res?.data?.pagination?.totalPages);
         })
       );
-      runSponsoredAuctions(
-        axios.get(`${api.app.auctions.sponsored}`).then((res) => {
-          SetSponsoredAuctions(res?.data?.data);
-        })
-      );
+      // runSponsoredAuctions(
+      //   axios.get(`${api.app.auctions.sponsored}`).then((res) => {
+      //     SetSponsoredAuctions(res?.data?.data);
+      //   })
+      // );
     } else {
       runMainAuctions(
         authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
           setMainAuctions(res?.data?.data);
-          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+          // setTotalpagesAuction(res?.data?.pagination?.totalPages);
         })
       );
-      runSponsoredAuctions(
-        authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
-          SetSponsoredAuctions(res?.data?.data);
-        })
-      );
+      // runSponsoredAuctions(
+      //   authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
+      //     SetSponsoredAuctions(res?.data?.data);
+      //   })
+      // );
     }
-  }, [search, user, auctionPageNumber, history, runMainAuctions]);
+  }, [search, user, history, runMainAuctions]);
 
-  useEffect(() => {
-    const queryParams = new URLSearchParams(search);
-    let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
-    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams(search);
+  //   let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
+  //   let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
 
-    if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
-      queryParams.set("productPage", page.toString());
-      queryParams.set("perPage", perPage.toString());
-      history.replace({ search: queryParams.toString() });
-      return;
-    }
+  //   if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
+  //     queryParams.set("productPage", page.toString());
+  //     queryParams.set("perPage", perPage.toString());
+  //     history.replace({ search: queryParams.toString() });
+  //     return;
+  //   }
 
-    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+  //   const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
-    const filterParams = {
-      page: page,
-      perPage: perPage,
-      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
-      subCategory: parsed.subCategory
-        ? parsed.subCategory.map(Number)
-        : undefined,
-      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
-      sellingType: parsed.sellingType || undefined,
-      auctionStatus: parsed.auctionStatus || undefined,
-      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
-      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-    };
+  //   const filterParams = {
+  //     page: page,
+  //     perPage: perPage,
+  //     categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+  //     subCategory: parsed.subCategory
+  //       ? parsed.subCategory.map(Number)
+  //       : undefined,
+  //     brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+  //     sellingType: parsed.sellingType || undefined,
+  //     auctionStatus: parsed.auctionStatus || undefined,
+  //     usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+  //     priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+  //     priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+  //   };
 
-    Object.keys(filterParams).forEach((key) => {
-      if (filterParams[key] === undefined) {
-        delete filterParams[key];
-      }
-    });
+  //   Object.keys(filterParams).forEach((key) => {
+  //     if (filterParams[key] === undefined) {
+  //       delete filterParams[key];
+  //     }
+  //   });
 
-    const queryStr = queryString.stringify(filterParams, {
-      arrayFormat: "bracket",
-    });
+  //   const queryStr = queryString.stringify(filterParams, {
+  //     arrayFormat: "bracket",
+  //   });
 
-    if (!user) {
-      runListedProduct(
-        axios
-          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
-          .then((res) => {
-            setListedProducts(res?.data?.data);
-            setTotalPagesListed(res?.data?.pagination?.totalPages);
-          })
-      );
-    } else {
-      runListedProduct(
-        axios
-          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
-          .then((res) => {
-            setListedProducts(res?.data?.data);
-            setTotalPagesListed(res?.data?.pagination?.totalPages);
-          })
-      );
-    }
-  }, [search, user, listedPageNumber, history, runListedProduct]);
+  //   if (!user) {
+  //     runListedProduct(
+  //       axios
+  //         .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+  //         .then((res) => {
+  //           setListedProducts(res?.data?.data);
+  //           setTotalPagesListed(res?.data?.pagination?.totalPages);
+  //         })
+  //     );
+  //   } else {
+  //     runListedProduct(
+  //       axios
+  //         .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+  //         .then((res) => {
+  //           setListedProducts(res?.data?.data);
+  //           setTotalPagesListed(res?.data?.pagination?.totalPages);
+  //         })
+  //     );
+  //   }
+  // }, [search, user, listedPageNumber, history, runListedProduct]);
 
   useEffect(() => {
     if (!socket) return;
@@ -267,30 +261,30 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   }, [isWelcomeBonus, dispatch]);
 
   return (
-    <div className="relative">
-      {isFilterOpen && (
+    <div
+      className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white ${
+        isDropdownOpen ? "blur-sm pointer-events-none" : ""
+      } transition-all duration-300`}
+    >
+      {/* {isFilterOpen && (
         <FilterSections
           isFullPage={true}
           onClose={() => setIsFilterOpen(false)}
         />
-      )}
+      )} */}
       <div className="">
-        <div className="lg:mt-28 md:mt-26 mt-24 py-6 home ">
+        <div className="lg:mt-28 md:mt-26 mt-24 py-3 md:py-6 home">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
-            active={
-              isLoadingMainAuctions ||
-              isLoadingrunSponsoredAuctions ||
-              isLoadingListedProduct
-            }
+            active={isLoadingMainAuctions}
             inverted
           >
             <LodingTestAllatre />
           </Dimmer>
-          <div className="z-20  w-full px-4 mx-auto py-2">
-            <BannerTop />
+          <div className="w-full px-0 sm:px-4 mx-auto py-2">
+            <BannerTop auctions={mainAuctions} />
           </div>
-          <div className="text-center mt-1 md:mt-2 lg:mt-3">
+          {/* <div className="text-center mt-1 md:mt-2 lg:mt-3">
             <h1
               ref={myRef}
               className=" text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md "
@@ -300,11 +294,19 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             <p className="text-gray-med text-base font-normal md:text-lg lg:text-xl">
               {selectedContent[localizationKeys.PopularPicksPerfectChoices]}
             </p>
+          </div> */}
+          <div className="flex md:flex-row flex-col gap-4 px-4 ">
+            <div className="md:w-4/5 w-full ">
+              <div className="mb-10">
+                <SliderRow />
+              </div>
+              <div className="w-full mx-auto py-2">
+                <BannerBottom />
+              </div>
+            </div>
+            <SideBanner />
           </div>
-          <div className="mt-4 mb-10">
-            <SliderRow />
-          </div>
-          <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
+          {/* <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
             <div className="flex  ">
               <h6 className="text-gray-dark text-base font-normal pt-3 lg:pl-3 px-4 lg:px-0 w-full lg:w-auto">
                 {mainAuctions?.length}{" "}
@@ -758,7 +760,7 @@ const Home = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
 
           <div className="px-4 mx-auto py-10">
             <BuyNowAuctionsSlider />
-          </div>
+          </div> */}
 
           <AddLocationModel
             open={open}

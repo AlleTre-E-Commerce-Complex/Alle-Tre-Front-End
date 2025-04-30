@@ -39,29 +39,38 @@ const TermAndConditionData = [
       en: (
         <div className="mx-2 sm:mx-4">
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">The platform :</span>The site of
-            the ALLE TRE E-COMMERCE COMPLEX LLC OPC.
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              The platform :
+            </span>
+            The site of the ALLE TRE E-COMMERCE COMPLEX LLC OPC.
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Personal data :</span>Is any
-            information or data related personally to the user and includes, but
-            is not limited to (name - nationality. Gender - age - job title -
-            address - phone number - email - payment card numbers - financial
-            data - purchases. Participation in previous auctions - any other
-            information) that is not available to the public in any form
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              Personal data :
+            </span>
+            Is any information or data related personally to the user and
+            includes, but is not limited to (name - nationality. Gender - age -
+            job title - address - phone number - email - payment card numbers -
+            financial data - purchases. Participation in previous auctions - any
+            other information) that is not available to the public in any form
             (received orally or collected through the use of non-printed forms
             or through or through the website).
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Auction service :</span>Is the
-            process of accessing the electronic application or website to create
-            an auction or to view the exhibits.
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              Auction service :
+            </span>
+            Is the process of accessing the electronic application or website to
+            create an auction or to view the exhibits.
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Exhibit/ Exhibits :</span>Means
-            all the goods on the website of ALLE TRE E-COMMERCE COMPLEX LLC OPC
-            and the electronic application offered for sale and bidding on, for
-            example, but not limited to (smart phones - and electronic devices).
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              Exhibit/ Exhibits :
+            </span>
+            Means all the goods on the website of ALLE TRE E-COMMERCE COMPLEX
+            LLC OPC and the electronic application offered for sale and bidding
+            on, for example, but not limited to (smart phones - and electronic
+            devices).
           </li>
           <li>
             <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
@@ -81,14 +90,18 @@ const TermAndConditionData = [
             application.
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Bidder :</span>
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              Bidder :
+            </span>
             Means the person who bids on the displayed goods at the highest
             price and the auction was awarded to him and is allowed to purchase
             the goods through the platform displayed by the user on the platform
             without intervention by ALLE TRE E-COMMERCE COMPLEX LLC OPC.
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">Third Party :</span>
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              Third Party :
+            </span>
             Means the role and scope of responsibility of ALLE TRE E-COMMERCE
             COMPLEX LLC OPC as an intermediary in the sales process between the
             seller and the buyer through the platform, without obligation or
@@ -101,30 +114,38 @@ const TermAndConditionData = [
       ar: (
         <div className="mx-2 sm:mx-4">
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">المنصة :</span>موقع ألي تري مجمع
-            للتعامل الإلكتروني ذ م م ش ش و .
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              المنصة :
+            </span>
+            موقع ألي تري مجمع للتعامل الإلكتروني ذ م م ش ش و .
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">البيانات الشخصية :</span>هي أي
-            معلومات أو بيانات تتعلق شخصياً باللمستخدم وتضمن علي سبيل المثال لا
-            الحصر ( الأسم - الجنسية – الجنس – العمر – المسمي الوظيفي – العنوان –
-            رقم الهاتف – البريد الالكتروني – أرقام بطاقات الدفع – البيانات
-            المالية – المشتريات – المشاركات فى مزادات سابقة ) أية معلومات أخرى
-            لا تكون متاحه للعامة بأي شكل كان يتم تلقيها شفهياً أو يتم جمعها من
-            خلال استخدام النماذج غير المطبوعه أو عن طريق أو من خلال الموقع
-            الإلكتروني .
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              البيانات الشخصية :
+            </span>
+            هي أي معلومات أو بيانات تتعلق شخصياً باللمستخدم وتضمن علي سبيل
+            المثال لا الحصر ( الأسم - الجنسية – الجنس – العمر – المسمي الوظيفي –
+            العنوان – رقم الهاتف – البريد الالكتروني – أرقام بطاقات الدفع –
+            البيانات المالية – المشتريات – المشاركات فى مزادات سابقة ) أية
+            معلومات أخرى لا تكون متاحه للعامة بأي شكل كان يتم تلقيها شفهياً أو
+            يتم جمعها من خلال استخدام النماذج غير المطبوعه أو عن طريق أو من خلال
+            الموقع الإلكتروني .
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">خدمة المزاد :</span>هي عملية
-            الوصول الى التطبيق الإلكتروني أو الموقع الإلكتروني لإنشاء مزاد او
-            للاطلاع على المعروضات .
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              خدمة المزاد :
+            </span>
+            هي عملية الوصول الى التطبيق الإلكتروني أو الموقع الإلكتروني لإنشاء
+            مزاد او للاطلاع على المعروضات .
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">المعروض / المعروضات:</span>ه.يقصد
-            بها جميع السلع الموجودة على موقع ألي تري مجمع للتعامل الإلكتروني ذ م
-            م ش ش و و و التطبيق الإلكتروني المعروضة للبيع و المزايدة عليها على
-            سبيل المثال لا الحصر ( الهواتف الذكية - و الأجهزة الالكترونية ).
-            للاطلاع على المعروضات .
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              المعروض / المعروضات:
+            </span>
+            ه.يقصد بها جميع السلع الموجودة على موقع ألي تري مجمع للتعامل
+            الإلكتروني ذ م م ش ش و و و التطبيق الإلكتروني المعروضة للبيع و
+            المزايدة عليها على سبيل المثال لا الحصر ( الهواتف الذكية - و الأجهزة
+            الالكترونية ). للاطلاع على المعروضات .
           </li>
           <li>
             <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
@@ -143,17 +164,22 @@ const TermAndConditionData = [
             مجمع للتعامل الإلكتروني أوالتطبيق الإلكتروني .
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">المزايد:</span> يقصد به الشخص الذي
-            قام بالمزايدة على السلع المعروضة بأعلي سعر و تم ترسيه المزاد عليه و
-            المسموح له بشراء السلع من خلال المنصة المعروضة من قبل المستخدم على
-            المنصة دون تدخل من قبل ألي تري مجمع للتعامل الإلكتروني .
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              المزايد:
+            </span>{" "}
+            يقصد به الشخص الذي قام بالمزايدة على السلع المعروضة بأعلي سعر و تم
+            ترسيه المزاد عليه و المسموح له بشراء السلع من خلال المنصة المعروضة
+            من قبل المستخدم على المنصة دون تدخل من قبل ألي تري مجمع للتعامل
+            الإلكتروني .
           </li>
           <li>
-            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">الطرف الثالث:</span> يقصد به الشخص
-            الذي قام بالمزايدة على السلع المعروضة بأعلي سعر و تم ترسيه المزاد
-            عليه و المسموح له بشراء السلع من خلال المنصة المعروضة من قبل
-            المستخدم على المنصة دون تدخل من قبل ألي تري مجمع للتعامل الإلكتروني
-            .
+            <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
+              الطرف الثالث:
+            </span>{" "}
+            يقصد به الشخص الذي قام بالمزايدة على السلع المعروضة بأعلي سعر و تم
+            ترسيه المزاد عليه و المسموح له بشراء السلع من خلال المنصة المعروضة
+            من قبل المستخدم على المنصة دون تدخل من قبل ألي تري مجمع للتعامل
+            الإلكتروني .
           </li>
         </div>
       ),
@@ -745,82 +771,147 @@ const TermAndConditionData = [
       en: (
         <div>
           <p className="mb-4">
-            To protect the rights of all parties (seller and buyer) and ensure secure transactions, Alletre imposes a security deposit on certain categories of products listed for auction. The deposit amount is determined based on the type of product as follows:
+            To protect the rights of all parties (seller and buyer) and ensure
+            secure transactions, Alletre imposes a security deposit on certain
+            categories of products listed for auction. The deposit amount is
+            determined based on the type of product as follows:
           </p>
           <div className="ml-3 sm:ml-6">
             <div className="mb-4">
               <h3 className="font-semibold mb-2">1. Electronic Products:</h3>
               <ul className="list-disc ml-4">
-                <li>A security deposit of 100 AED is required for all electronic products listed in the auction (such as smartphones, computers, home appliances, etc.).</li>
+                <li>
+                  A security deposit of 100 AED is required for all electronic
+                  products listed in the auction (such as smartphones,
+                  computers, home appliances, etc.).
+                </li>
               </ul>
             </div>
             <div className="mb-4">
               <h3 className="font-semibold mb-2">2. Cars:</h3>
               <ul className="list-disc ml-4">
-                <li>A security deposit of 500 AED is required for cars listed in the auction.</li>
-                <li>The seller must provide all legal documents related to the car, including proof of ownership and valid paperwork.</li>
+                <li>
+                  A security deposit of 500 AED is required for cars listed in
+                  the auction.
+                </li>
+                <li>
+                  The seller must provide all legal documents related to the
+                  car, including proof of ownership and valid paperwork.
+                </li>
               </ul>
             </div>
             <div className="mb-4">
               <h3 className="font-semibold mb-2">3. Real Estate:</h3>
               <ul className="list-disc ml-4">
-                <li>A security deposit of 2% of the total property value is required, with a minimum deposit of 5000 AED.</li>
-                <li>The seller must submit all legal documents confirming ownership of the property.</li>
+                <li>
+                  A security deposit of 2% of the total property value is
+                  required, with a minimum deposit of 5000 AED.
+                </li>
+                <li>
+                  The seller must submit all legal documents confirming
+                  ownership of the property.
+                </li>
               </ul>
             </div>
             <div className="mb-4">
               <h3 className="font-semibold mb-2">4. Antiques & Furniture:</h3>
               <ul className="list-disc ml-4">
-                <li>A security deposit of 200 AED is required for antiques listed in the auction if the product value is 5000 AED or less.</li>
-                <li>If the value of the antique exceeds 5000 AED, a 2% security deposit of the product's value is required.</li>
+                <li>
+                  A security deposit of 200 AED is required for antiques listed
+                  in the auction if the product value is 5000 AED or less.
+                </li>
+                <li>
+                  If the value of the antique exceeds 5000 AED, a 2% security
+                  deposit of the product's value is required.
+                </li>
                 <li>Minimum security deposit for antiques: 200 AED.</li>
               </ul>
             </div>
           </div>
           <div className="mt-6">
-            <h3 className="font-semibold mb-2">Refund of the Security Deposit:</h3>
+            <h3 className="font-semibold mb-2">
+              Refund of the Security Deposit:
+            </h3>
             <ul className="list-disc ml-4">
-              <li>The security deposit will be refunded after the successful completion of the transaction or upon the successful conclusion of the auction, in accordance with the terms outlined in the contract between the buyer and the seller.</li>
-              <li>In case of a failed transaction, the security deposit will only be refunded if it is proven that the failure was not due to the fault or negligence of either the buyer or the seller.</li>
+              <li>
+                The security deposit will be refunded after the successful
+                completion of the transaction or upon the successful conclusion
+                of the auction, in accordance with the terms outlined in the
+                contract between the buyer and the seller.
+              </li>
+              <li>
+                In case of a failed transaction, the security deposit will only
+                be refunded if it is proven that the failure was not due to the
+                fault or negligence of either the buyer or the seller.
+              </li>
             </ul>
           </div>
           <div className="mt-6">
             <p className="font-semibold">Important Note:</p>
-            <p>Alletre reserves the right to modify the security deposit amounts at any time at its sole discretion. All contracting parties must stay updated on any changes.</p>
+            <p>
+              Alletre reserves the right to modify the security deposit amounts
+              at any time at its sole discretion. All contracting parties must
+              stay updated on any changes.
+            </p>
           </div>
         </div>
       ),
       ar: (
         <div className="rtl">
           <p className="mb-4">
-            لحماية حقوق جميع الأطراف (البائع والمشتري) وضمان سير المعاملات بشكل آمن، تفرض منصة Alletre مبلغ تأمين على بعض الفئات من المنتجات التي يتم عرضها للبيع من خلال المزادات الإلكترونية. يتم تحديد مبلغ التأمين بناءً على نوع المنتج المعروض كما يلي:
+            لحماية حقوق جميع الأطراف (البائع والمشتري) وضمان سير المعاملات بشكل
+            آمن، تفرض منصة Alletre مبلغ تأمين على بعض الفئات من المنتجات التي
+            يتم عرضها للبيع من خلال المزادات الإلكترونية. يتم تحديد مبلغ التأمين
+            بناءً على نوع المنتج المعروض كما يلي:
           </p>
           <div className="mr-3 sm:mr-6">
             <div className="mb-4">
               <h3 className="font-semibold mb-2">١. المنتجات الإلكترونية:</h3>
               <ul className="list-disc mr-4">
-                <li>يتم فرض مبلغ تأمين قدره 100 درهم إماراتي على جميع المنتجات الإلكترونية المعروضة في المزاد (مثل الهواتف الذكية، أجهزة الكمبيوتر، الأجهزة المنزلية، وغيرها).</li>
+                <li>
+                  يتم فرض مبلغ تأمين قدره 100 درهم إماراتي على جميع المنتجات
+                  الإلكترونية المعروضة في المزاد (مثل الهواتف الذكية، أجهزة
+                  الكمبيوتر، الأجهزة المنزلية، وغيرها).
+                </li>
               </ul>
             </div>
             <div className="mb-4">
               <h3 className="font-semibold mb-2">٢. السيارات:</h3>
               <ul className="list-disc mr-4">
-                <li>يتم فرض مبلغ تأمين قدره 500 درهم إماراتي على السيارات المعروضة في المزاد.</li>
-                <li>يجب أن يكون البائع قد قدم كافة الأوراق القانونية المتعلقة بالسيارة، بما في ذلك ملكيتها ووثائقها الصالحة.</li>
+                <li>
+                  يتم فرض مبلغ تأمين قدره 500 درهم إماراتي على السيارات المعروضة
+                  في المزاد.
+                </li>
+                <li>
+                  يجب أن يكون البائع قد قدم كافة الأوراق القانونية المتعلقة
+                  بالسيارة، بما في ذلك ملكيتها ووثائقها الصالحة.
+                </li>
               </ul>
             </div>
             <div className="mb-4">
               <h3 className="font-semibold mb-2">٣. العقارات:</h3>
               <ul className="list-disc mr-4">
-                <li>يتم فرض مبلغ تأمين بنسبة 2% من القيمة الإجمالية للعقار المعروض للبيع في المزاد، مع حد أدنى قدره 5000 درهم إماراتي.</li>
-                <li>على البائع تقديم جميع المستندات القانونية الخاصة بالعقار وتأكيد ملكيته.</li>
+                <li>
+                  يتم فرض مبلغ تأمين بنسبة 2% من القيمة الإجمالية للعقار المعروض
+                  للبيع في المزاد، مع حد أدنى قدره 5000 درهم إماراتي.
+                </li>
+                <li>
+                  على البائع تقديم جميع المستندات القانونية الخاصة بالعقار
+                  وتأكيد ملكيته.
+                </li>
               </ul>
             </div>
             <div className="mb-4">
               <h3 className="font-semibold mb-2">٤. التحف والأثاث:</h3>
               <ul className="list-disc mr-4">
-                <li>يتم فرض مبلغ تأمين قدره 200 درهم إماراتي على التحف المعروضة في المزاد في حال كانت قيمة المنتج 5000 درهم أو أقل.</li>
-                <li>في حال كانت قيمة التحفة تتجاوز 5000 درهم إماراتي، يتم فرض مبلغ تأمين قدره 2% من قيمة المنتج.</li>
+                <li>
+                  يتم فرض مبلغ تأمين قدره 200 درهم إماراتي على التحف المعروضة في
+                  المزاد في حال كانت قيمة المنتج 5000 درهم أو أقل.
+                </li>
+                <li>
+                  في حال كانت قيمة التحفة تتجاوز 5000 درهم إماراتي، يتم فرض مبلغ
+                  تأمين قدره 2% من قيمة المنتج.
+                </li>
                 <li>حد أدنى لمبلغ التأمين على التحف: 200 درهم إماراتي.</li>
               </ul>
             </div>
@@ -828,13 +919,23 @@ const TermAndConditionData = [
           <div className="mt-6">
             <h3 className="font-semibold mb-2">استرداد مبلغ التأمين:</h3>
             <ul className="list-disc mr-4">
-              <li>سيتم استرداد مبلغ التأمين بعد الانتهاء من المعاملة بنجاح أو في حال تم إنهاء المزاد بنجاح ووفقًا للشروط التي يتم تحديدها في العقد بين البائع والمشتري.</li>
-              <li>في حال فشل المعاملة، سيُعاد مبلغ التأمين فقط في حال ثبت أن السبب لم يكن ناتجًا عن خطأ أو تقصير من طرف المشتري أو البائع.</li>
+              <li>
+                سيتم استرداد مبلغ التأمين بعد الانتهاء من المعاملة بنجاح أو في
+                حال تم إنهاء المزاد بنجاح ووفقًا للشروط التي يتم تحديدها في
+                العقد بين البائع والمشتري.
+              </li>
+              <li>
+                في حال فشل المعاملة، سيُعاد مبلغ التأمين فقط في حال ثبت أن السبب
+                لم يكن ناتجًا عن خطأ أو تقصير من طرف المشتري أو البائع.
+              </li>
             </ul>
           </div>
           <div className="mt-6">
             <p className="font-semibold">ملاحظة هامة:</p>
-            <p>يحق لمنصة Alletre تعديل مبالغ التأمين في أي وقت حسب تقديرها، ويجب على جميع الأطراف المتعاقدة متابعة التحديثات المتعلقة بذلك.</p>
+            <p>
+              يحق لمنصة Alletre تعديل مبالغ التأمين في أي وقت حسب تقديرها، ويجب
+              على جميع الأطراف المتعاقدة متابعة التحديثات المتعلقة بذلك.
+            </p>
           </div>
         </div>
       ),
@@ -1329,6 +1430,18 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const [lang] = useLanguage("");
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isModalOpen]);
+
   const selectedContent = content[lang];
 
   const openModal = () => {
@@ -1349,13 +1462,13 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
   const isArabic = lang === "ar" ? "rtl text-right" : "";
 
   return (
-    <div className={`mt-4 mx-1 flex justify-start ${isArabic}`}>
-      <div className="mt-2">
+    <div className={`mt-4 mx-1 flex justify-start ${isArabic} `}>
+      <div className="mt-2 ">
         {Footer ? (
           <div>
             {selectedContent[localizationKeys.allRightsReserved]}
             <span
-              className="text-blue-500 underline cursor-pointer"
+              className="text-blue-500 underline cursor-pointer "
               onClick={openModal}
             >
               {selectedContent[localizationKeys.termsAndCondition]}
@@ -1383,12 +1496,12 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 overflow-visible"
+          className="fixed inset-0 bg-black flex items-center justify-center z-[9999] overflow-visible"
           role="dialog"
           onClick={closeModal}
         >
           <div
-            className="border-primary border-2 border-solid bg-white rounded-2xl shadow-2xl w-11/12 max-w-lg overflow-hidden"
+            className="border-primary border-2 border-solid bg-white rounded-2xl shadow-2xl w-11/12 max-w-lg overflow-hidden z-[10000]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6 text-sm">
@@ -1435,7 +1548,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
                   <span>
                     {
                       selectedContent[
-                      localizationKeys.iAgreetotheTermsConditions
+                        localizationKeys.iAgreetotheTermsConditions
                       ]
                     }
                   </span>
