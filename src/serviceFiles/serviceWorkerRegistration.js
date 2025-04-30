@@ -46,11 +46,13 @@ const isLocalhost = Boolean(
           response.status === 404 ||
           (contentType && !contentType.includes('javascript'))
         ) {
+            if (process.env.NODE_ENV === 'production') {
           navigator.serviceWorker.ready.then(registration => {
             registration.unregister().then(() => {
               window.location.reload();
             });
           });
+        }
         } else {
           registerValidSW(swUrl);
         }
