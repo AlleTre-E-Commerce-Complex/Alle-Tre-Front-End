@@ -100,7 +100,8 @@ const Footer = () => {
 
       {/* Footer Content Section */}
       <div className="bg-gradient-to-t from-[#681224] to-secondary opacity-95 h-[200] overflow-hidden">
-        <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[60px]">
+        <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[30px] md:pt-[60px]">
+
           <AllatreLogoWhite />
           <div className="flex gap-x-20 mt-5 md:mt-0 ml-auto">
             {/* Address Section */}
@@ -133,8 +134,8 @@ const Footer = () => {
         </div>
 
         {/* Social Media Icons Section */}
-        <div className="relative rtl:left-[10px] h-[150px]">
-          <div className="relative h-[200px]">
+        <div className="relative rtl:left-[10px] h-[100px]">
+          <div className="relative h-[100px]">
             <div className="absolute inset-0 flex items-center">
               <hr className="w-full border-t border-white" />
             </div>
@@ -182,12 +183,11 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="bg-[#6e1f30] h-[20x] text-gray-med/50 flex justify-center items-center space-x-2">
-        <TermsAndConditions isFooter={true} />
-        <span className=" mt-6">|</span>
-        <PrivacyPolicy isFooter={true} />
+        <div className="h-[10x] text-gray-med/50 flex justify-center items-center space-x-2 ">
+          <TermsAndConditions isFooter={true} />
+          <span className=" mt-6">|</span>
+          <PrivacyPolicy isFooter={true} />
+        </div>
       </div>
     </div>
   );

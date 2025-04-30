@@ -30,6 +30,7 @@ import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import ProductCard from "component/home-components/ProductCard";
 import ProductCardList from "component/home-components/products-card-list";
 import queryString from "query-string";
+import BuyNowAuctionsSlider from "component/home-components/buy-now-auctions-slider";
 
 const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [lang] = useLanguage("");
@@ -271,7 +272,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   onClick={() => setIsGrid((prev) => !prev)}
                   className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
                 >
-                  <img src={listicon} alt="listicon" />
+                  <img src={listicon} alt="listicon" className="w-5 h-5" />
                   <p className="flex items-center">
                     {selectedContent[localizationKeys.List]}
                   </p>
@@ -747,6 +748,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                 }
               })()}
             </div>
+          </div>
+          <div className="px-4 mx-auto py-10">
+            <BuyNowAuctionsSlider />
           </div>
           {/* <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 px-4 mx-auto ">
         <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />

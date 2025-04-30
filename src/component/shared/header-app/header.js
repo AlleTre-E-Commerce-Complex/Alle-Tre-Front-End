@@ -34,28 +34,35 @@ import {
   getDefaultPerPage,
   getDefaultPaginationString,
 } from "../../../constants/pagination";
-import axios from "axios";
-import api from "api";
+import useGetGatogry from "../../../hooks/use-get-category";
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
-const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
+const Header = ({
+  SetSid,
+  setSelectedType,
+  onFilterClick,
+  isOpen,
+  onDropdownChange,
+}) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
   const { pathname } = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuthState();
+  const dispatch = useDispatch();
+  // const socketauctionId = useSelector((state) => state.socket.auct);
   const [notificationCount, setNotificationCount] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const [notificationData, setNotificationData] = useState(null);
-  const [serchShow, setSerchShow] = useState(false);
+  const [searchShow, setSearchShow] = useState(false);
+
   const [isListing, setIsListing] = useState(false);
   const [open, setOpen] = useState(false);
   const { run } = useAxios();
-  const { user } = useAuthState();
   const [name, setTitle] = useFilter("title", "");
   const [selectedOption, setSelectedOption] = useState(
     selectedContent[localizationKeys.all]
   );
+  const { GatogryOptions, loadingGatogry } = useGetGatogry();
 
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
@@ -107,7 +114,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         break;
     }
     setSelectedType(type);
-    setIsOpen(false);
+    onDropdownChange?.(false);
   };
 
   useEffect(() => {
@@ -297,8 +304,6 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
     });
   }, 850);
 
-  const dispatch = useDispatch();
-
   const handelMyPfofile = () => {
     if (user) {
       history.push(routes.app.profile.profileSettings);
@@ -418,7 +423,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
+        onDropdownChange?.(false);
       }
     };
 
@@ -446,7 +451,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
 
   const handleTypeDropdownClick = (e) => {
     e.preventDefault();
-    setIsOpen(!isOpen);
+    onDropdownChange?.(!isOpen);
   };
 
   useEffect(() => {
@@ -455,7 +460,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
         typeDropdownRef.current &&
         !typeDropdownRef.current.contains(event.target)
       ) {
-        setIsOpen(false);
+        onDropdownChange?.(false);
       }
     };
 
@@ -464,12 +469,25 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
       document.removeEventListener("mousedown", handleTypeDropdownClickOutside);
     };
   }, []);
+
+  // Handle scroll blocking when dropdown is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   return (
     <div className="w-full fixed top-0 z-50 bg-white/90 backdrop-blur-md">
       <div
         className={`md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full ${
           lang === "en" ? "pr-3" : "pl-3"
-        } md:px-4 lg:px-6`}
+        } md:px-4 lg:px-5`}
       >
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
@@ -479,8 +497,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
             }
           />
         </div>
-        <div>
-        </div>
+        <div></div>
         <div className="flex items-center space-x-3 md:hidden">
           <BiMenu
             onClick={() => SetSid(true)}
@@ -679,10 +696,9 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
           </div>
         </div>
       </div>
-      <div className={` ${serchShow ? "h-[60px]" : ""} bg-white`}>
-        <div className="pb-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-6">
-          {(currentPath === routes.app.home ||
-            currentPath.includes("/alletre/categories")) && (
+      <div className={` ${searchShow ? "h-[60px]" : ""} bg-white`}>
+        <div className="pb-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-5">
+          {currentPath.includes("/alletre/categories") && (
             <button
               onClick={onFilterClick}
               className="md:hidden text-primary rounded-full flex items-center justify-center"
@@ -714,8 +730,7 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
             }}
           />
 
-          {(currentPath === routes.app.home ||
-            currentPath.includes("/alletre/categories")) && (
+          {currentPath.includes("/alletre/categories") && (
             <div className="relative" ref={typeDropdownRef}>
               <button
                 className="bg-primary hover:bg-primary-dark text-white rounded-lg 
@@ -778,6 +793,75 @@ const Header = ({ SetSid, setSelectedType, onFilterClick }) => {
                       </button>
                     </li>
                   </ul>
+                </div>
+              )}
+            </div>
+          )}
+          {currentPath === routes.app.home && (
+            <div className="relative" ref={typeDropdownRef}>
+              <button
+                className="bg-primary hover:bg-primary-dark text-white rounded-lg 
+             w-[90px] h-[48px] sm:w-[110px] sm:h-[48px] md:w-[160px] xs:h-[48px]
+             flex items-center justify-between px-4 py-2 text-md font-medium 
+             transition-all duration-300 shadow-md"
+                onClick={handleTypeDropdownClick}
+              >
+                <span className="flex-1 text-center text-sm sm:text-base">
+                  {selectedContent[localizationKeys.categories]}
+                </span>
+
+                <span
+                  className={`transform transition-transform duration-300 ${
+                    isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
+                  }`}
+                >
+                  <RiArrowDownSFill size={20} />
+                </span>
+              </button>
+
+              {isOpen && (
+                <div
+                  className={`absolute ${
+                    lang === "ar" ? "-right-44" : "-left-44"
+                  } mt-2 w-[240px] xs:w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md border rounded-lg shadow-lg z-50 p-2 xs:p-3 transition-all duration-300 ease-out origin-top ${
+                    isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                  }`}
+                >
+                  <div className="grid grid-cols-2 gap-2 xs:gap-3 max-h-[calc(3*84px+62px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
+                    {GatogryOptions?.map((e, index) => (
+                      <div
+                        key={index}
+                        className="relative h-20 xs:h-24 sm:h-28 cursor-pointer group overflow-hidden rounded-lg"
+                        onClick={() => {
+                          if (user) {
+                            history.push(
+                              `${routes.app.categories(
+                                e.text,
+                                e.value
+                              )}?categories[]=${e.value}`
+                            );
+                          } else {
+                            dispatch(Open());
+                          }
+                          onDropdownChange?.(false);
+                        }}
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 group-hover:from-black/30 group-hover:to-black/70 transition-all duration-500 z-10"></div>
+                        <div className="absolute inset-0 border border-white/0 group-hover:border-white/20 rounded-lg transition-all duration-500 z-20"></div>
+                        <img
+                          className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-all duration-500 ease-out"
+                          src={e?.sliderLink}
+                          alt={e.text}
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-x-1 xs:inset-x-2 bottom-1 xs:bottom-2 p-1 xs:p-1.5 backdrop-blur-sm bg-black/30 rounded-md transform group-hover:translate-y-0 transition-all duration-500 z-30">
+                          <p className="text-white font-bold text-xs xs:text-sm sm:text-base text-center group-hover:scale-105 transition-transform duration-300">
+                            {e.text}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

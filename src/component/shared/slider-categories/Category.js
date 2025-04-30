@@ -21,27 +21,26 @@ const Category = ({ img, title, id, view, className, isSubCategory }) => {
   
   return (
     <div
-      className={`flex flex-col items-center justify-center px-0.5 sm:px-8 relative w-full  ${className}`}
+      className={`relative w-full h-48 sm:h-56 md:h-80  cursor-pointer group overflow-hidden rounded-xl ${className}`}
+      onClick={handleClick}
     >
-      <div className="group relative">
-        <div
-          onClick={handleClick}
-          className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 bg-white hover:bg-primary/10 cursor-pointer transition-all duration-300 ease-in-out rounded-full flex items-center justify-center custom-sm-padding custom-lg-padding"
-        >
-          <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full bg-primary group-hover:bg-primary-dark transition-all duration-300 ease-in-out flex items-center justify-center">
-            <img
-              className="w-18 h-18 sm:w-22 sm:h-22 md:w-24 md:h-24 group-hover:scale-110 transition-transform duration-300 ease-in-out rounded-full"
-              src={img || addImage}
-              alt={title}
-            />
-          </div>
-        </div>
-      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 group-hover:from-black/30 group-hover:to-black/70 transition-all duration-500 z-10"></div>
+      <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/20 rounded-xl transition-all duration-500 z-20"></div>
 
-      <p className="mt-1 sm:mt-3 text-gray-700 font-medium text-xs sm:text-sm md:text-base text-center group-hover:text-primary">
-        {title}
-      </p>
+      <img
+        className="w-full h-full object-cover object-center transform group-hover:scale-110 transition-all duration-700 ease-out"
+        src={img || addImage}
+        alt={title}
+        loading="lazy"
+      />
+
+      <div className="absolute inset-x-3 bottom-4 p-2.5 backdrop-blur-sm bg-black/30 rounded-lg transform group-hover:translate-y-0 transition-all duration-500 z-30">
+        <p className="text-white font-bold text-base sm:text-lg md:text-xl text-center group-hover:scale-105 transition-transform duration-300">
+          {title}
+        </p>
+      </div>
     </div>
+  
   );
 };
 
