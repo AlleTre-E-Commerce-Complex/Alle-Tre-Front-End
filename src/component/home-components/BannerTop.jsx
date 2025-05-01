@@ -223,7 +223,7 @@ const BannerTop = ({ auctions = [] }) => {
             loop={auctions.length > 1}
             initialSlide={Math.floor(auctions.length / 2)}
             loopedSlides={auctions.length}
-            width={lang === 'ar' ? 1060 : 965}
+            width={lang === 'ar' ? 1070 : 965}
             dir={lang === 'ar' ? 'rtl' : 'ltr'}
             coverflowEffect={{
               stretch: 0,

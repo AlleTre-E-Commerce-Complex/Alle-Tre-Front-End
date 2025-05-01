@@ -4,7 +4,7 @@ import ProfileSettings from "./profile-settings";
 import Watshlist from "./watshlist";
 import ProfileSideBare from "../../../component/profile-components/profile-side-bare";
 import routes from "../../../routes";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import MyBids from "./my-bids";
 import MyBidsCompletePayment from "../../../component/profile-components/my-bids-complete-payment";
 import Purchased from "./purchased";
@@ -35,17 +35,19 @@ const ProfileLayouts = () => {
       <ProfileSideBare SetSid={SetSid} sid={sid} />
 
       <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0">
-        <div className="flex justify-end md:hidden">
-          <button
-            onClick={() => setLogoutModalOpen(true)}
-            className="mx-2  border-[1px] border-primary text-red-600 flex items-center gap-2 px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition duration-200"
-          >
-            <MdLogout className="text-xl" />
-            <span className="font-medium">
-              {selectedContent[localizationKeys.logout]}
-            </span>
-          </button>
-        </div>
+        {useLocation().pathname === '/alletre/profile/settings' && (
+          <div className="flex justify-end md:hidden">
+            <button
+              onClick={() => setLogoutModalOpen(true)}
+              className="mx-2  border-[1px] border-primary text-red-600 flex items-center gap-2 px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition duration-200"
+            >
+              <MdLogout className="text-xl" />
+              <span className="font-medium">
+                {selectedContent[localizationKeys.logout]}
+              </span>
+            </button>
+          </div>
+        )}
 
 
         <Switch>

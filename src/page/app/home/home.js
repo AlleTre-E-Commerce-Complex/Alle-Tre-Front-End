@@ -48,22 +48,22 @@ const Home = ({
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState([]);
   const [listedProducts, setListedProducts] = useState([]);
-  
+
   // Calculate counts per category
   const getCategoryCounts = () => {
     const counts = {};
-    
+
     // Count auctions per category
-    mainAuctions.forEach(auction => {
+    mainAuctions.forEach((auction) => {
       const categoryId = auction.product?.categoryId;
       if (categoryId) {
         counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
         counts[categoryId].auctions++;
       }
     });
-    
+
     // Count listings per category
-    listedProducts.forEach(listing => {
+    listedProducts.forEach((listing) => {
       const categoryId = listing.product?.categoryId;
       if (categoryId) {
         counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
@@ -325,8 +325,7 @@ const Home = ({
           <div className="flex md:flex-row flex-col gap-4 px-4 ">
             <div className="md:w-4/5 w-full ">
               <div className="mb-10">
-                <SliderRow
-            categoryCounts={categoryCounts} />
+                <SliderRow categoryCounts={categoryCounts} />
               </div>
               <div className="w-full mx-auto py-2">
                 <BannerBottom />
