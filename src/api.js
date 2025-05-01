@@ -155,6 +155,9 @@ const api = {
       subscribe: "/notifications/subscribe",
       markAsRead: "/notifications/mark-as-read",
     },
+    whatsApp:{
+      sendInspectionDetails: (auctionid) => `/whatsapp/Send-Inspection-Details?auctionId=${auctionid}`
+    },
     updateUserBlockStatus :(currentStatus) => 
       `users/updateUserBlockStatus?currentStatus=${currentStatus}`,
   },

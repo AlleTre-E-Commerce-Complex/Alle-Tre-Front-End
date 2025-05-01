@@ -12,7 +12,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { PiWarningCircle } from "react-icons/pi";
 
-const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
+const EditPhoneNumberModel = ({ onReload, oldPhoneNumber,isOpen,setShowMobileNumber }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
 
@@ -36,6 +36,7 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
               localizationKeys.thePhoneNumberHasBeenEditSuccessfully
             ]
           );
+          localStorage.setItem('userPhone', values.phoneNumber)
           setOpen(false);
           onReload();
         })
@@ -53,9 +54,10 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
       className="sm:w-[368px] w-full h-auto bg-transparent scale-in shadow-none"
       onClose={() => {
         setOpen(false);
+        setShowMobileNumber(false)
       }}
       onOpen={() => setOpen(true)}
-      open={open}
+      open={open || isOpen}
       trigger={
         <Button className="bg-secondary-veryLight text-secondary opacity-100 w-[73px] h-[23px] p-0 text-sm font-normal rounded-lg mt-2 ltr:font-serifEN rtl:font-serifAR">
           {oldPhoneNumber
@@ -157,6 +159,7 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber }) => {
                     className="border-primary border-[1px] text-primary w-[136px] h-[48px] rounded-lg"
                     onClick={() => {
                       setOpen(false);
+                      setShowMobileNumber(false)
                     }}
                   >
                     {selectedContent[localizationKeys.cancel]}

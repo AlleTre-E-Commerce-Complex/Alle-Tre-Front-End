@@ -17,33 +17,66 @@ const InstallPromptButton = () => {
   const [showInstall, setShowInstall] = useState(false);
   const [isIOSDevice, setIsIOSDevice] = useState(false);
   const [showIOSModal, setShowIOSModal] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = useState(window.innerWidth < 726);
 
-  useEffect(() => {
-    setIsIOSDevice(isIOS());
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setShowInstall(true);
-    });
-
-    if (isIOS() && !isInStandaloneMode()) {
-      setShowIOSModal(true);
-    }
-  }, []);
-
-  const handleInstallClick = () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        }
-        setDeferredPrompt(null);
-        setShowInstall(false);
-      });
-    }
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobileScreen(window.innerWidth < 726);
   };
+
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
+
+useEffect(() => {
+  const installDismissed = localStorage.getItem('installDismissed');
+  const alreadyInstalled = localStorage.getItem('appInstalled');
+  const iosPromptDismissed = localStorage.getItem('iosPromptDismissed');
+
+  if (alreadyInstalled === 'true' || installDismissed === 'true') {
+    return; // Don't show Android prompt again
+  }
+
+  const handleBeforeInstallPrompt = (e) => {
+    e.preventDefault();
+    setDeferredPrompt(e);
+    setShowInstall(true);
+  };
+
+  window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+  // iOS manual install modal
+  if (isIOS() && !isInStandaloneMode() && iosPromptDismissed !== 'true') {
+    setShowIOSModal(true);
+  }
+
+  return () => {
+    window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  };
+}, []);
+
+
+
+const handleInstallClick = () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+        localStorage.setItem('appInstalled', 'true'); // ✅ Save that it's installed
+      } else {
+        console.log('User dismissed the install prompt');
+        localStorage.setItem('installDismissed', 'true'); // ✅ Save that it's dismissed
+      }
+      setDeferredPrompt(null);
+      setShowInstall(false);
+    });
+  }
+};
+
+  if (!isMobileScreen) return null;
+
 
   return (
     <>
@@ -65,11 +98,15 @@ const InstallPromptButton = () => {
               <span className="font-bold">"Add to Home Screen"</span>.
             </p>
             <button
-              className="w-full py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition"
-              onClick={() => setShowIOSModal(false)}
-            >
-              Got it
-            </button>
+                className="w-full py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition"
+                onClick={() => {
+                  localStorage.setItem('iosPromptDismissed', 'true');
+                  setShowIOSModal(false);
+                }}
+              >
+                Got it
+              </button>
+
           </div>
         </div>
       )}
@@ -103,11 +140,15 @@ const InstallPromptButton = () => {
           Install App
         </button>
         <button
-          onClick={() => setShowInstall(false)}
+          onClick={() => {
+            localStorage.setItem('installDismissed', 'true'); // ✅ Save dismissal
+            setShowInstall(false);
+          }}
           className="flex-1 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
         >
           Not now
         </button>
+
       </div>
     </div>
   </div>
