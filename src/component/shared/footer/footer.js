@@ -3,16 +3,7 @@ import axios from "axios";
 import footerImg from "../../../../src/assets/images/footerImg2.jpg";
 import footerMob from "../../../../src/assets/images/footerMob.jpg";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaYoutube,
-  FaTiktok,
-  FaSnapchatGhost,
-  FaWhatsapp,
-  FaWhatsappSquare,
-  FaTelegramPlane,
-} from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok, FaSnapchatGhost, FaWhatsapp, FaWhatsappSquare, FaTelegramPlane, FaFileAlt } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
@@ -129,6 +120,20 @@ const Footer = () => {
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
                 {selectedContent[localizationKeys.phoneNumber]}: +971 72663004
               </p>
+              <div className="mt-4">
+                <a
+                  href="https://firebasestorage.googleapis.com/v0/b/alletre-auctions.firebasestorage.app/o/company%20profile.pdf?alt=media&token=50e5e0cd-156a-4231-8fbe-2008ec81d26c"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/30  text-white px-3 py-1.5 rounded transition-all duration-300 group"
+                >
+                  <FaFileAlt className="text-sm" />
+                  <span className="text-sm">{selectedContent[localizationKeys.companyProfile]}</span>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-black/50 rounded">
+                    PDF
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

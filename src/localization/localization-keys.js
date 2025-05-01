@@ -38,6 +38,7 @@ const localizationKeys = {
   payAED: "PayAED",
   fromWallet: "fromWallet",
   // home
+  companyProfile:"companyProfile",
   changeStatus: "changeStatus",
   convertToAuction: "convertToAuction",
   viewContactDetails: "viewContactDetails",

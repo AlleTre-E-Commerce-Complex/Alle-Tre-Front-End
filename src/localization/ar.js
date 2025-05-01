@@ -41,6 +41,7 @@ const ar = {
   [localizationKeys.yourWalletBalanceIsAED]: " رصيد محفظتك هو درهم إماراتي ",
   [localizationKeys.payAED]: "ادفع درهم",
   [localizationKeys.fromWallet]: "من المحفظة",
+  [localizationKeys.companyProfile]: "نبذة عن الشركة",
 
   // home
   [localizationKeys.changeStatus]: "تغيير الحالة",
