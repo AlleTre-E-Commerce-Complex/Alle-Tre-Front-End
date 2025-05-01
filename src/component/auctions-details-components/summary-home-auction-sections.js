@@ -337,7 +337,7 @@ const SummaryHomeAuctionSections = ({
           return 
         }
     const userPhone = user.phone || localStorage.getItem('userPhone')
-    if (userPhone) {
+    if (!userPhone) {
       toast.error(selectedContent[localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding])
       setShowMobileNumber(true)
       return;
