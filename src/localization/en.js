@@ -42,6 +42,7 @@ const en = {
   [localizationKeys.yourWalletBalanceIsAED]: "Your Wallet Balance is AED",
   [localizationKeys.payAED]: "Pay AED",
   [localizationKeys.fromWallet]: "From Wallet",
+  [localizationKeys.companyProfile]:"Company profile",
   // home
   [localizationKeys.changeStatus]: "Change status",
   [localizationKeys.convertToAuction]: "Convert to auction",
