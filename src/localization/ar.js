@@ -14,6 +14,8 @@ const ar = {
   [localizationKeys.somethingWentWrongPleaseTryAgainLater]:
     "هناك خطأ ما يرجى المحاولة مرة أخرى في او وقت لاحق",
   [localizationKeys.rememberPassword]: "تذكر كلمة المرور",
+  [localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding]: "يرجى تسجيل رقم هاتفك قبل المتابعة.",
+  [localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp]: "لقد أرسلنا تفاصيل  الفحص والمعاينة إلى WhatsApp الخاص بك.",
   [localizationKeys.forgetPassword]: "نسيت كلمة المرور",
   [localizationKeys.name]: "الاسم",
   [localizationKeys.email]: "البريد الإلكتروني",
@@ -319,6 +321,7 @@ const ar = {
   //List product
   [localizationKeys.call]: "يتصل",
   [localizationKeys.chat]: "محادثة",
+  [localizationKeys.GetInspectionDetails]: "الفحص والمعاينة",
   [localizationKeys.sellingPrice]: "سعر البيع",
   [localizationKeys.listed]: "مُدرج",
   [localizationKeys.listedProduct]: "الإعلانات",
@@ -635,6 +638,7 @@ const ar = {
     "تم تعديل كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]: "تم جعله افتراضيًا بنجاح",
+  [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]: "تم تعديل رقم الهاتف بنجاح",
   [localizationKeys.imageUpdatedSuccessfully]: "تم تحديث الصورة بنجاح",
   [localizationKeys.nameHasBeenEditSuccessfully]: "تم تحرير الاسم بنجاح",
   [localizationKeys.yourAuctionSuccessfullySavedAsDraft]:

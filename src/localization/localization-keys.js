@@ -15,6 +15,8 @@ const localizationKeys = {
   email: "email",
   password: "password",
   phone: "phone",
+  PleaseRegisterYourPhoneNumberBeforeProceeding: "PleaseRegisterYourPhoneNumberBeforeProceeding",
+  WeHaveSentTheInspectionDetailsToYourWhatsApp: "WeHaveSentTheInspectionDetailsToYourWhatsApp",
   rememberPassword: "rememberPassword",
   forgetPassword: "forgetPassword",
   iAgreetotheTermsConditions: "iAgreetotheTermsConditions",
@@ -286,6 +288,7 @@ const localizationKeys = {
   //List product
   call: "call",
   chat: "chat",
+  GetInspectionDetails: "GetInspectionDetails",
   sellingPrice: "sellingPrice",
   listed: "Listed",
   listedProduct: "listedProduct",

@@ -172,7 +172,9 @@ const AddLocationModel = ({
       className="sm:w-[471px] w-full h-auto bg-transparent scale-in"
       onClose={() => {
         setOpen(false);
-        setIsListing(false);
+        if(setIsListing){
+          setIsListing(false);
+        }
       }}
       open={open}
     >
@@ -187,7 +189,9 @@ const AddLocationModel = ({
           <button
             onClick={() => {
               setOpen(false);
-              setIsListing(false);
+              if(setIsListing){
+                setIsListing(false);
+              }
             }}
             className={`absolute top-4 ${
               isArabic ? "left-4" : "right-4"

@@ -12,6 +12,8 @@ const en = {
   [localizationKeys.signupwithGoogle]: "Sign up With Google",
   [localizationKeys.signupwithFacebook]: "Sign up With Facebook",
   [localizationKeys.rememberPassword]: "Remember Password",
+  [localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding]: "Please register your phone number before proceeding.",
+  [localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp]: "We've sent the inspection details to your WhatsApp.",
   [localizationKeys.forgetPassword]: "Forget Password",
   [localizationKeys.somethingWentWrongPleaseTryAgainLater]:
     "Something went wrong, please try again later",
@@ -325,6 +327,7 @@ const en = {
   //List product
   [localizationKeys.call]: "Call",
   [localizationKeys.chat]: "Chat",
+  [localizationKeys.GetInspectionDetails]: "Get inspection details",
   [localizationKeys.sellingPrice]: "Selling Price",
   [localizationKeys.listed]: "Listed",
   [localizationKeys.listedProduct]: "Listed Product",
@@ -647,6 +650,7 @@ const en = {
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]:
     "has been Make Default successfully",
+  [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]: "The phone number has been edited successfully",
   [localizationKeys.imageUpdatedSuccessfully]: "Image updated successfully",
   [localizationKeys.nameHasBeenEditSuccessfully]:
     "Name has been edit successfully",

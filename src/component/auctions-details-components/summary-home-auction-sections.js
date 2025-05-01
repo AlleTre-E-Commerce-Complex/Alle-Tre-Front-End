@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { formatCurrency } from "../../utils/format-currency";
 import { truncateString } from "../../utils/truncate-string";
 import { useDispatch } from "react-redux";
@@ -29,6 +30,9 @@ import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleveryS
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import { FaRegUser } from "react-icons/fa";
 import { BiSolidFilePdf } from "react-icons/bi";
+import { FaWhatsapp } from "react-icons/fa";
+import EditPhoneNumberModel from "component/profile-components/edit-phone-number-model";
+
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -325,6 +329,31 @@ const SummaryHomeAuctionSections = ({
       behavior: "smooth",
     });
   };
+  const [showMobileNumber, setShowMobileNumber] = useState(false)
+
+  const handleSendInspectionDetails =()=>{
+    if(!user){
+           dispatch(Open())
+          return 
+        }
+    const userPhone = user.phone || localStorage.getItem('userPhone')
+    if (userPhone) {
+      toast.error(selectedContent[localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding])
+      setShowMobileNumber(true)
+      return;
+    }
+    run(
+      authAxios.post(api.app.whatsApp.sendInspectionDetails(auctionId))
+      .then((res)=>{
+        console.log('handleSendInspectionDetails resoponse:',res)
+        if(res.data.success){
+          toast.success(selectedContent[localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp])
+        }
+      }).catch((error)=>{
+        console.log('handle Send inpecton Details:',error)
+      })
+    )
+  }
 
   return (
     <>
@@ -335,7 +364,7 @@ const SummaryHomeAuctionSections = ({
       >
         <LodingTestAllatre />
       </Dimmer>
-
+     
       {/* Cancellation Modal */}
       <Modal
         size="tiny"
@@ -438,7 +467,24 @@ const SummaryHomeAuctionSections = ({
               </svg>
             </HashLink>
           </div>
-
+          <div className="getSellerDetailsOnWhatsApp"> 
+          <button
+                onClick={handleSendInspectionDetails}
+                className="border-primary border-[1px] text-primary md:w-[220px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-green hover:text-green"
+              >
+                <span><FaWhatsapp /></span>
+                <span> {selectedContent[localizationKeys.GetInspectionDetails]}</span>
+              </button>
+               {/* Hidden trigger button to open the modal */}
+              <div style={{ display: "none" }}>
+              <EditPhoneNumberModel
+                  onReload={onReload}
+                  oldPhoneNumber={user?.phone}
+                  isOpen={showMobileNumber}
+                  setShowMobileNumber={setShowMobileNumber}
+                />
+              </div>
+        </div>
           {/* Documents Section */}
           {relatedDocuments?.length > 0 && (
           <div className="mt-6">

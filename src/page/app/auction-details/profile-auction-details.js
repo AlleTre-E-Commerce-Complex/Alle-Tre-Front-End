@@ -35,10 +35,16 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
           .then((res) => {
             setAuctionsDetailsData(res?.data?.data);
           })
+          .catch((err)=>{
+            console.log('profile auction details error when  user 1:',err)
+          })
       );
     run(
       axios.get(api.app.auctions.getAuctionsDetails(auctionId)).then((res) => {
         setAuctionsDetailsData(res?.data?.data);
+      })
+      .catch((err)=>{
+        console.log('profile auction details error when no user 2:',err)
       })
     );
   }, [auctionId, run]);
