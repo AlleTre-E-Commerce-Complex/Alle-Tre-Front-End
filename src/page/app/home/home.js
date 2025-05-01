@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Dimmer } from "semantic-ui-react";
@@ -47,7 +47,34 @@ const Home = ({
   const socket = useSocket();
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState([]);
-  // const [listedProducts, setListedProducts] = useState([]);
+  const [listedProducts, setListedProducts] = useState([]);
+  
+  // Calculate counts per category
+  const getCategoryCounts = () => {
+    const counts = {};
+    
+    // Count auctions per category
+    mainAuctions.forEach(auction => {
+      const categoryId = auction.product?.categoryId;
+      if (categoryId) {
+        counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
+        counts[categoryId].auctions++;
+      }
+    });
+    
+    // Count listings per category
+    listedProducts.forEach(listing => {
+      const categoryId = listing.product?.categoryId;
+      if (categoryId) {
+        counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
+        counts[categoryId].listings++;
+      }
+    });
+    
+    return counts;
+  };
+  
+  const categoryCounts = getCategoryCounts();
   // const [totalPagesListed, setTotalPagesListed] = useState();
   // const [totalpagesAuction, setTotalpagesAuction] = useState();
   // const [sponsoredAuctions, SetSponsoredAuctions] = useState([]);
@@ -62,9 +89,9 @@ const Home = ({
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
     []
   );
-  // const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
-  //   []
-  // );
+  const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
+    []
+  );
   // const {
   //   run: runSponsoredAuctions,
   //   isLoading: isLoadingrunSponsoredAuctions,
@@ -139,65 +166,65 @@ const Home = ({
     }
   }, [search, user, history, runMainAuctions]);
 
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(search);
-  //   let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
-  //   let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+  useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
 
-  //   if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
-  //     queryParams.set("productPage", page.toString());
-  //     queryParams.set("perPage", perPage.toString());
-  //     history.replace({ search: queryParams.toString() });
-  //     return;
-  //   }
+    if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
+      queryParams.set("productPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
 
-  //   const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
-  //   const filterParams = {
-  //     page: page,
-  //     perPage: perPage,
-  //     categories: parsed.categories ? parsed.categories.map(Number) : undefined,
-  //     subCategory: parsed.subCategory
-  //       ? parsed.subCategory.map(Number)
-  //       : undefined,
-  //     brands: parsed.brands ? parsed.brands.map(Number) : undefined,
-  //     sellingType: parsed.sellingType || undefined,
-  //     auctionStatus: parsed.auctionStatus || undefined,
-  //     usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
-  //     priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-  //     priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-  //   };
+    const filterParams = {
+      page: page,
+      perPage: perPage,
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+    };
 
-  //   Object.keys(filterParams).forEach((key) => {
-  //     if (filterParams[key] === undefined) {
-  //       delete filterParams[key];
-  //     }
-  //   });
+    Object.keys(filterParams).forEach((key) => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
 
-  //   const queryStr = queryString.stringify(filterParams, {
-  //     arrayFormat: "bracket",
-  //   });
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
 
-  //   if (!user) {
-  //     runListedProduct(
-  //       axios
-  //         .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
-  //         .then((res) => {
-  //           setListedProducts(res?.data?.data);
-  //           setTotalPagesListed(res?.data?.pagination?.totalPages);
-  //         })
-  //     );
-  //   } else {
-  //     runListedProduct(
-  //       axios
-  //         .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
-  //         .then((res) => {
-  //           setListedProducts(res?.data?.data);
-  //           setTotalPagesListed(res?.data?.pagination?.totalPages);
-  //         })
-  //     );
-  //   }
-  // }, [search, user, listedPageNumber, history, runListedProduct]);
+    if (!user) {
+      runListedProduct(
+        axios
+          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+          .then((res) => {
+            setListedProducts(res?.data?.data);
+            // setTotalPagesListed(res?.data?.pagination?.totalPages);
+          })
+      );
+    } else {
+      runListedProduct(
+        axios
+          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+          .then((res) => {
+            setListedProducts(res?.data?.data);
+            // setTotalPagesListed(res?.data?.pagination?.totalPages);
+          })
+      );
+    }
+  }, [search, user, history, runListedProduct]);
 
   useEffect(() => {
     if (!socket) return;
@@ -276,12 +303,12 @@ const Home = ({
         <div className="lg:mt-28 md:mt-26 mt-24 py-3 md:py-6 home">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
-            active={isLoadingMainAuctions}
+            active={isLoadingMainAuctions || isLoadingListedProduct}
             inverted
           >
             <LodingTestAllatre />
           </Dimmer>
-          <div className="w-full px-0 sm:px-4 mx-auto py-2">
+          <div className="w-full px-3 sm:px-4  py-2">
             <BannerTop auctions={mainAuctions} />
           </div>
           {/* <div className="text-center mt-1 md:mt-2 lg:mt-3">
@@ -298,7 +325,8 @@ const Home = ({
           <div className="flex md:flex-row flex-col gap-4 px-4 ">
             <div className="md:w-4/5 w-full ">
               <div className="mb-10">
-                <SliderRow />
+                <SliderRow
+            categoryCounts={categoryCounts} />
               </div>
               <div className="w-full mx-auto py-2">
                 <BannerBottom />

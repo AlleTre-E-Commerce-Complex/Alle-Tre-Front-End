@@ -15,7 +15,14 @@ const useGetGatogry = () => {
       const GatogryOptions = data.data;
       const options = [];
 
-      GatogryOptions.sort((a, b) => a.id - b.id).forEach((d) => {
+      // Custom sort to show Cars first, then sort by ID
+      GatogryOptions.sort((a, b) => {
+        // If one is Cars category (id: 4), prioritize it
+        if (a.id === 4) return -1;
+        if (b.id === 4) return 1;
+        // Otherwise sort by ID
+        return a.id - b.id;
+      }).forEach((d) => {
         if (d.status === true) {
           options.push({
             name: lang === "en" ? d?.nameEn : d?.nameAr,
