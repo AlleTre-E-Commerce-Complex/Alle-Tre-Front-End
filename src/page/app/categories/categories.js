@@ -31,6 +31,7 @@ import ProductCard from "component/home-components/ProductCard";
 import ProductCardList from "component/home-components/products-card-list";
 import queryString from "query-string";
 import BuyNowAuctionsSlider from "component/home-components/buy-now-auctions-slider";
+import UpComingAuctionsSlider from "component/home-components/up-coming-auctions";
 
 const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [lang] = useLanguage("");
@@ -256,7 +257,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                 {selectedContent[localizationKeys.results]}
               </h6>
             </div>
-            <div className={mainAuctions?.length === 0 ? "hidden" : "mt-auto"}>
+            <div className="mt-auto">
               {isGrid ? (
                 <button
                   onClick={() => setIsGrid((prev) => !prev)}
@@ -400,6 +401,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           />
                         ) : null}
                       </div>
+                      <div>
+                        <UpComingAuctionsSlider isGrid={isGrid} />
+                      </div>
                     </div>
                   );
                 } else if (!isGrid && selectedType === "auction") {
@@ -448,6 +452,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             setListedPageNumber={setListedPageNumber}
                           />
                         ) : null}
+                      </div>
+                      <div>
+                        <UpComingAuctionsSlider isGrid={isGrid} />
                       </div>
                     </div>
                   );
@@ -606,6 +613,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                           />
                         ) : null}
                       </div>
+                      <div>
+                        <UpComingAuctionsSlider isGrid={isGrid} />
+                      </div>
                       <h1
                         ref={myRef1}
                         className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
@@ -697,6 +707,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                             setListedPageNumber={setListedPageNumber}
                           />
                         ) : null}
+                      </div>
+                      <div>
+                        <UpComingAuctionsSlider isGrid={isGrid} />
                       </div>
                       <h1
                         ref={myRef1}

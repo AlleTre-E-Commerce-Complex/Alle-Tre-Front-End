@@ -7,7 +7,7 @@ import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 // import content from "../../../localization/content";
 // import localizationKeys from "../../../localization/localization-keys";
 
-const SliderRow = () => {
+const SliderRow = ({ categoryCounts = {} }) => {
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   // const [lang] = useLanguage();
   // const selectedContent = content[lang]
@@ -22,21 +22,23 @@ const SliderRow = () => {
       </Dimmer>
       <div className="container mx-auto mt-20 px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-11 gap-6 sm:gap-12 md:gap-16 lg:gap-20">
+          <div className="grid grid-cols-2 md:grid-cols-11 gap-4 sm:gap-6 md:gap-16 lg:gap-20">
             {GatogryOptions?.map((e, index) => (
               <div
                 key={index}
-                className={`${
+                className={`group bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 ${
                   index % 2 === 0
-                    ? "col-start-2 col-end-6"
-                    : "col-start-7 col-end-11"
-                } group bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1`}
+                    ? "col-span-1 md:col-start-2 md:col-end-6"
+                    : "col-span-1 md:col-start-7 md:col-end-11"
+                }`}
               >
                 <Category
                   img={e?.sliderLink}
                   title={e?.text}
                   id={e?.value}
                   className=""
+                  auctionCount={categoryCounts[e?.value]?.auctions || 0}
+                  listingCount={categoryCounts[e?.value]?.listings || 0}
                 />
               </div>
             ))}

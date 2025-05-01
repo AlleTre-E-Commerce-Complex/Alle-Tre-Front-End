@@ -40,7 +40,7 @@ const BannerTop = ({ auctions = [] }) => {
   const [forceReload, setForceReload] = useState(false);
   const [lang] = useLanguage();
   const selectedContent = content[lang];
-   const history = useHistory();
+  const history = useHistory();
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   useEffect(() => {
@@ -80,13 +80,14 @@ const BannerTop = ({ auctions = [] }) => {
   }, [auctions, onReload, lang]);
 
   return isMobile ? (
-    <div className="w-full px-1 py-1 ">
-      <div className="mb-3 flex justify-between items-center">
+    <div className="w-full px-2 py-1 bg-gradient-to-br from-primary via-primary/95 to-primary/90 rounded-lg shadow-lg mt-4 pb-4">
+      <div className="mb-3 flex justify-between items-center px-4 pt-2">
+        <h2 className="text-2xl font-bold text-white">{selectedContent[localizationKeys.hotAuctions]}</h2>
       </div>
       <Swiper
         key={`swiper-mobile-${forceReload}-${auctions.length}`}
-        slidesPerView={1.05}
-        spaceBetween={12}
+        slidesPerView={1}
+        spaceBetween={0}
         centeredSlides={true}
         loop={true}
         autoplay={{
@@ -103,8 +104,8 @@ const BannerTop = ({ auctions = [] }) => {
       >
         {auctions?.slice(0, 6).map((auction, index) => (
           <SwiperSlide key={auction?.id || index}>
-            <div className="w-full h-[180px] rounded-xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 mx-auto flex">
-              <div className="w-[45%] h-full relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 group">
+            <div className="w-[95%] h-[180px] rounded-xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 mx-auto flex">
+              <div onClick={() => handelGoDetails(auction)} className="w-[47%] h-full relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 group">
                 <img
                   src={auction?.product?.images?.[0]?.imageLink}
                   alt={auction?.product?.title || 'Auction item'}
@@ -207,7 +208,7 @@ const BannerTop = ({ auctions = [] }) => {
 
           </h1>
           <p className="mt-4 text-white/80 text-lg sm:text-xl font-medium max-w-lg transition-all duration-300 group-hover:text-white group-hover:translate-x-2">
-          {selectedContent[localizationKeys.discoverTrendingAuctionsWithExclusiveDeals]} 
+            {selectedContent[localizationKeys.discoverTrendingAuctionsWithExclusiveDeals]}
           </p>
 
         </div>
@@ -217,12 +218,12 @@ const BannerTop = ({ auctions = [] }) => {
             effect="coverflow"
             grabCursor={true}
             centeredSlides={true}
-            slidesPerView={lang === "ar" ? 3.3 : 3.5}
+            slidesPerView={Math.min(auctions.length, 4)}
             spaceBetween={0}
-            loop={true}
-            initialSlide={1}
-            loopedSlides={6}
-            width={lang === 'ar' ? 900 : 880}
+            loop={auctions.length > 1}
+            initialSlide={Math.floor(auctions.length / 2)}
+            loopedSlides={auctions.length}
+            width={lang === 'ar' ? 1060 : 965}
             dir={lang === 'ar' ? 'rtl' : 'ltr'}
             coverflowEffect={{
               stretch: 0,
@@ -236,7 +237,7 @@ const BannerTop = ({ auctions = [] }) => {
               disableOnInteraction: false,
               pauseOnMouseEnter: false,
               enabled: true,
-              reverseDirection: false,
+              reverseDirection: true,
             }}
             pagination={{ clickable: true }}
             modules={[EffectCoverflow, Pagination, Autoplay]}
