@@ -37,12 +37,14 @@ const localizationKeys = {
   yourWalletBalanceIsAED: "yourWalletBalanceIsAED",
   payAED: "PayAED",
   fromWallet: "fromWallet",
-  deleteAccount:"deleteAccount",
-  confirmDeletion:"confirmDeletion",
-  areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData:"areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData",
+  deleteAccount: "deleteAccount",
+  confirmDeletion: "confirmDeletion",
+  areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData: "areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData",
 
   // home
-  companyProfile:"companyProfile",
+  auctions: "auctions",
+  listings: "listings",
+  companyProfile: "companyProfile",
   changeStatus: "changeStatus",
   convertToAuction: "convertToAuction",
   viewContactDetails: "viewContactDetails",

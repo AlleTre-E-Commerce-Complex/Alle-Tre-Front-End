@@ -5,12 +5,17 @@ import addImage from "../../../../src/assets/icons/add-image-icon.png";
 import { useAuthState } from "../../../context/auth-context";
 import { useDispatch } from "react-redux";
 import { Open } from "../../../redux-store/auth-model-slice";
+import { useLanguage } from "../../../context/language-context";
+import content from "../../../localization/content";
+import localizationKeys from "../../../localization/localization-keys";
 
 const Category = ({ img, title, id, view, className, isSubCategory, auctionCount = 0, listingCount = 0 }) => {
   const history = useHistory();
   const { user } = useAuthState();
   const dispatch = useDispatch();
- 
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
+
   const handleClick = () => {
     if (user) {
     history.push(`${routes.app.categories(title, id)}?categories[]=${id}`);
@@ -33,7 +38,7 @@ const Category = ({ img, title, id, view, className, isSubCategory, auctionCount
         />
       </div>
 
-      <div className="w-full bg-gradient-to-br from-secondary/90 to-primary/90 p-3 rounded-b-xl shadow-lg border-t border-gray-light/10">
+      <div className="w-full bg-gradient-to-br from-secondary/90 to-primary/90  p-3 rounded-b-xl shadow-lg border-t border-gray-light/10">
         <p className="text-gray-light font-bold text-base sm:text-lg md:text-xl text-center mb-3 group-hover:text-white transition-colors duration-300">
           {title}
         </p>
@@ -43,7 +48,7 @@ const Category = ({ img, title, id, view, className, isSubCategory, auctionCount
               {auctionCount}
             </span>
             <span className="block text-gray-med text-xs">
-              Auctions
+            {selectedContent[localizationKeys.auctions]}  
             </span>
           </div>
           <div className="bg-secondary/50 hover:bg-secondary/70 rounded-lg py-2 px-3 text-center transition-all duration-300 border border-gray-dark/20">
@@ -51,7 +56,7 @@ const Category = ({ img, title, id, view, className, isSubCategory, auctionCount
               {listingCount}
             </span>
             <span className="block text-gray-med text-xs">
-              Listings
+                {selectedContent[localizationKeys.listings]}  
             </span>
           </div>
         </div>

@@ -1,0 +1,17 @@
+.swiper {
+  width: 100%;
+}
+
+.swiper-slide {
+  height: 0;
+  padding-bottom: 75%; /* Match the aspect ratio from SubCategory component */
+  position: relative;
+}
+
+.swiper-slide > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
