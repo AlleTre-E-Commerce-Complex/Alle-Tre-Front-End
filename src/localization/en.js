@@ -12,8 +12,10 @@ const en = {
   [localizationKeys.signupwithGoogle]: "Sign up With Google",
   [localizationKeys.signupwithFacebook]: "Sign up With Facebook",
   [localizationKeys.rememberPassword]: "Remember Password",
-  [localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding]: "Please register your phone number before proceeding.",
-  [localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp]: "We've sent the inspection details to your WhatsApp.",
+  [localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding]:
+    "Please register your phone number before proceeding.",
+  [localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp]:
+    "We've sent the inspection details to your WhatsApp.",
   [localizationKeys.forgetPassword]: "Forget Password",
   [localizationKeys.somethingWentWrongPleaseTryAgainLater]:
     "Something went wrong, please try again later",
@@ -42,7 +44,10 @@ const en = {
   [localizationKeys.yourWalletBalanceIsAED]: "Your Wallet Balance is AED",
   [localizationKeys.payAED]: "Pay AED",
   [localizationKeys.fromWallet]: "From Wallet",
-  [localizationKeys.companyProfile]:"Company profile",
+  [localizationKeys.companyProfile]: "Company profile",
+  [localizationKeys.deleteAccount]: "Delete Account",
+  [localizationKeys.confirmDeletion]: "Confirm Deletion",
+  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:"Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
   // home
   [localizationKeys.changeStatus]: "Change status",
   [localizationKeys.convertToAuction]: "Convert to auction",
@@ -651,7 +656,8 @@ const en = {
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]:
     "has been Make Default successfully",
-  [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]: "The phone number has been edited successfully",
+  [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]:
+    "The phone number has been edited successfully",
   [localizationKeys.imageUpdatedSuccessfully]: "Image updated successfully",
   [localizationKeys.nameHasBeenEditSuccessfully]:
     "Name has been edit successfully",

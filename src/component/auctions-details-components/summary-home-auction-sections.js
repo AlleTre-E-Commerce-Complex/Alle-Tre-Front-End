@@ -470,7 +470,7 @@ const SummaryHomeAuctionSections = ({
           <div className="getSellerDetailsOnWhatsApp"> 
           <button
                 onClick={handleSendInspectionDetails}
-                className="border-primary border-[1px] text-primary md:w-[220px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-green hover:text-green"
+                className="border-primary border-[1px] text-primary md:w-[220px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
               >
                 <span><FaWhatsapp /></span>
                 <span> {selectedContent[localizationKeys.GetInspectionDetails]}</span>

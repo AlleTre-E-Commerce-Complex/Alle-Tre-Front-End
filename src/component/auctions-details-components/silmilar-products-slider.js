@@ -210,7 +210,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                    {auctions?.length >= 2 && (
                     <div className="swiper-slide !w-[44%] sm:!w-[28%] md:!w-[17%] lg:!w-[13%] flex items-center justify-center">
                       <div className="text-center p-4">
-                        <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center">
+                        <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-100 flex items-center justify-center mt-36">
                           <svg
                             className="w-8 h-8 text-gray-400"
                             fill="none"
