@@ -224,7 +224,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         />
       )}
       <div className="">
-        <div className=" mx-auto mt-[120px] sm:mt-[132px] ">
+        <div className="mx-auto mt-32 py-3 md:py-6 py-3 ">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
             active={loadingSubGatogry || isLoadingCategories || loadingGatogry}
@@ -233,20 +233,23 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             {/* <Loader active /> */}
             <LodingTestAllatre />
           </Dimmer>
-          <div className="h-[320px] relative">
+          <div className="relative w-full aspect-[21/9] max-h-[370px] mb-6 overflow-hidden rounded-lg px-4">
             <img
-              className="w-full h-full object-fill pb-4"
+              className="w-full h-full object-fill object-center rounded-lg"
               src={selectedCategor?.bannerLink || addImage}
-              alt="bannerLink"
+              alt={selectedCategor?.text || 'Category Banner'}
+              loading="eager"
             />
-            {/* <div className="bg-gray/50 text-white text-5xl absolute top-0 w-full h-[305px]">
-          <p className="flex justify-center items-center  h-full">
-            {selectedCategor?.text}
-          </p>
-        </div> */}
+            <div className="">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
+                  {selectedCategor?.text}
+                </h1>
+              </div>
+            </div>
           </div>
           <div
-            className={SubGatogryOptions.length === 0 ? "hidden" : "h-[238px]"}
+            className={SubGatogryOptions.length === 0 ? "hidden" : "mb-6"}
           >
             <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
           </div>
@@ -277,7 +280,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   <p className="flex items-center">
                     {selectedContent[localizationKeys.List]}
                   </p>
-                </button>
+           </button>
               )}
             </div>
           </div>

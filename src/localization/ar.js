@@ -48,6 +48,8 @@ const ar = {
 
 
   // home
+  [localizationKeys.listings]:"القوائم",
+  [localizationKeys.auctions]:"المزادات",
   [localizationKeys.changeStatus]: "تغيير الحالة",
   [localizationKeys.convertToAuction]: "تحويل إلى المزاد",
   [localizationKeys.viewContactDetails]: " عرض تفاصيل الاتصال",

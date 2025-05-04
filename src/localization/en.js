@@ -47,8 +47,10 @@ const en = {
   [localizationKeys.companyProfile]: "Company profile",
   [localizationKeys.deleteAccount]: "Delete Account",
   [localizationKeys.confirmDeletion]: "Confirm Deletion",
-  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:"Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
+  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]: "Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
   // home
+  [localizationKeys.listings]: "Listings",
+  [localizationKeys.auctions]: "Auctions",
   [localizationKeys.changeStatus]: "Change status",
   [localizationKeys.convertToAuction]: "Convert to auction",
   [localizationKeys.viewContactDetails]: " View contact details",

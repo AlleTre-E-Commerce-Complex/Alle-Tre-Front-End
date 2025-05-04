@@ -300,7 +300,7 @@ const Home = ({
         />
       )} */}
       <div className="">
-        <div className="lg:mt-28 md:mt-26 mt-24 py-3 md:py-6 home">
+        <div className="lg:mt-32 md:mt-32 mt-28 py-3 md:py-6 home">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
             active={isLoadingMainAuctions || isLoadingListedProduct}

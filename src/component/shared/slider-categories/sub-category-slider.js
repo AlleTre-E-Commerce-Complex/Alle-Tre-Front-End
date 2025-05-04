@@ -1,91 +1,108 @@
 import { React, useEffect, useRef } from "react";
+import SubCategory from "./SubCategory";
+import Swiper from "swiper";
+import "swiper/css";
 import AnglesRight from "../../../../src/assets/icons/arrow-right.svg";
 import AnglesLeft from "../../../../src/assets/icons/arrow-left.svg";
-import Category from "./Category";
-import Swiper from "swiper";
-import SubCategory from "./SubCategory";
+import { useLanguage } from "../../../context/language-context";
 
-const  SubCategorySlider = ({ SubGatogryOptions }) => {
+const SubCategorySlider = ({ SubGatogryOptions }) => {
+  const swiperRef = useRef(null);
+  const swiper = useRef(null);
+  const [lang] = useLanguage("");
   const swiperOptions = {
-    cssMode: true,
-    speed: 1000,
+    slidesPerView: 2.2,
+    spaceBetween: 12,
     navigation: {
-      nextEl: `.swiper-button-next`,
-      prevEl: `.swiper-button-prev`,
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
     },
-    slidesPerView: "auto",
-    mousewheel: true,
-    keyboard: true,
+    breakpoints: {
+      480: {
+        slidesPerView: 2.5,
+        spaceBetween: 12
+      },
+      640: {
+        slidesPerView: 3.5,
+        spaceBetween: 16
+      },
+      768: {
+        slidesPerView: 4.5,
+        spaceBetween: 16
+      },
+      1024: {
+        slidesPerView: 5.5,
+        spaceBetween: 16
+      },
+      1280: {
+        slidesPerView: 6,
+        spaceBetween: 16
+      }
+    }
   };
 
-  const swiperRef = useRef(null);
-  const swiper = new Swiper(swiperRef?.current, { ...swiperOptions });
-
   useEffect(() => {
+    if (swiperRef.current) {
+      swiper.current = new Swiper(swiperRef.current, swiperOptions);
+    }
+
     return () => {
-      swiper?.destroy();
+      if (swiper.current) {
+        swiper.current.destroy();
+      }
     };
   }, []);
 
   const handleNextClick = () => {
-    if (SubGatogryOptions?.length) {
-      swiper?.slideNext();
-    } else swiper?.slideNext();
+    swiper.current?.slideNext();
   };
 
   const handlePrevClick = () => {
-    swiper?.slidePrev();
+    swiper.current?.slidePrev();
   };
+
   return (
-    <div className="px-4 mx-auto">
-      <div className="ezd-content relative tr:ml-2 rtl:mr-2 ">
-        <div className="ezd-snapslider pt-10">
-          <div className="snapslider-wrapper">
-            <div ref={swiperRef} className={`snapslider-overflow`}>
-              <div
-                className={`${
-                  SubGatogryOptions?.length > 3
-                    ? ""
-                    : "md:justify-center justify-start"
-                } snapslider-scroll swiper-wrapper py-2`}
-              >
-                {/* slider */}
-                {SubGatogryOptions.map((e, index) => (
-                  <div key={index} className="snapslider-card swiper-slide ">
-                    <SubCategory
-                      view
-                      img={e?.imageLink}
-                      title={e?.text}
-                      id={e?.value}
-                      className={"md:px-20 lg:px-32"}
-                      // isSubCategory={true}
-                    />
-                  </div>
-                ))}
-                <button
-                  onClick={handleNextClick}
-                  className={`swiper-button-next absolute top-1/2 -right-3`}
-                >
-                  <img
-                    className="rounded-full cursor-pointer z-20 w-14 h-14  overflow-hidden md:block hidden"
-                    src={AnglesRight}
-                    alt="AnglesRight"
-                  />
-                </button>
-                <button
-                  onClick={handlePrevClick}
-                  className={`swiper-button-prev absolute top-1/2 -left-5 `}
-                >
-                  <img
-                    className="rounded-full  cursor-pointer z-20 w-14 h-14 overflow-hidden md:block hidden "
-                    src={AnglesLeft}
-                    alt="AnglesLeft"
-                  />
-                </button>
+    <div className="container mx-auto px-2 sm:px-4 lg:px-6 my-8 relative">
+      <div className="max-w-[1400px] mx-auto overflow-hidden">
+        <div ref={swiperRef} className="swiper">
+          <div className="swiper-wrapper h-full">
+            {SubGatogryOptions?.map((e, index) => (
+              <div key={index} className="swiper-slide h-auto">
+                <SubCategory
+                  view
+                  img={e?.imageLink}
+                  title={e?.text}
+                  id={e?.value}
+                  className="shadow-lg hover:shadow-xl transition-shadow duration-300"
+                />
               </div>
-            </div>
+            ))}
           </div>
         </div>
+        <button
+                    onClick={lang === "ar" ? handlePrevClick : handleNextClick}
+                    className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
+                  >
+                    <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                      <img
+                        className="w-6 h-6 md:w-8 md:h-8"
+                        src={AnglesRight}
+                        alt="Next"
+                      />
+                    </div>
+                  </button>
+                  <button
+                    onClick={lang === "ar" ? handleNextClick : handlePrevClick}
+                    className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
+                  >
+                    <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+                      <img
+                        className="w-6 h-6 md:w-8 md:h-8"
+                        src={AnglesLeft}
+                        alt="Previous"
+                      />
+                    </div>
+                  </button>
       </div>
     </div>
   );
