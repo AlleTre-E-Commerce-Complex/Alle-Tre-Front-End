@@ -351,6 +351,7 @@ export default function CheckoutPagePayDeposite() {
                   // }
                   payPrice={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
                   onError={(msg) => setError(msg)}
+                  bidAmount={bidAmountValue}
                 />
               </Elements>
             ) : error ? (
@@ -370,6 +371,7 @@ export default function CheckoutPagePayDeposite() {
                   // }
                   payPrice={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
                   onError={(msg) => setError(msg)}
+                  bidAmount={bidAmountValue}
                 />
               </Elements>
             )}

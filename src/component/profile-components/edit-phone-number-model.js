@@ -12,7 +12,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { PiWarningCircle } from "react-icons/pi";
 
-const EditPhoneNumberModel = ({ onReload, oldPhoneNumber,isOpen,setShowMobileNumber }) => {
+const EditPhoneNumberModel = ({ onReload,oldPhoneNumber,isOpen,setShowMobileNumber }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
 
@@ -54,7 +54,9 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber,isOpen,setShowMobileNum
       className="sm:w-[368px] w-full h-auto bg-transparent scale-in shadow-none"
       onClose={() => {
         setOpen(false);
+        if(setShowMobileNumber){
         setShowMobileNumber(false)
+        }
       }}
       onOpen={() => setOpen(true)}
       open={open || isOpen}
@@ -159,7 +161,9 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber,isOpen,setShowMobileNum
                     className="border-primary border-[1px] text-primary w-[136px] h-[48px] rounded-lg"
                     onClick={() => {
                       setOpen(false);
-                      setShowMobileNumber(false)
+                      if(setShowMobileNumber){
+                        setShowMobileNumber(false)
+                        }
                     }}
                   >
                     {selectedContent[localizationKeys.cancel]}
