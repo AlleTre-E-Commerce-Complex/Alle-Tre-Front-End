@@ -33,9 +33,7 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import routes from "routes";
-import { useAuthState } from "context/auth-context";
+import { DeleteAccountModal } from "../../../component/shared/delete-account-modal/delete-account-modal";
 
 const ProfileSettings = () => {
   const [lang] = useLanguage("");
@@ -90,8 +88,6 @@ const ProfileSettings = () => {
     if (window.location.hash.slice(1) === "AddressBook") {
     } else window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-
-
 
   return (
     <>
@@ -370,7 +366,7 @@ const ProfileSettings = () => {
                 onReload={onReload}
               />
             </div>
-            <div className="deleteAccountSection mt-12" >
+            <div className="deleteAccountSection mt-12">
               <DeleteAccountSection />
             </div>
           </div>
@@ -547,68 +543,39 @@ export const LocationDetailsCard = ({
   );
 };
 
-
-export  function DeleteAccountSection() {
+export function DeleteAccountSection() {
   const [showModal, setShowModal] = useState(false);
-  const history = useHistory()
-  const { run: runDeletePofile, isLoading: isLoadingPofile } = useAxios([]);
-  const { logout } = useAuthState();
-  const handleUpdateUserBlockStatus = () => {
-    const isBlocked = false
-    runDeletePofile(
-      authAxios.patch(`${api.app.updateUserBlockStatus(isBlocked)}`).then((res) => {
-        if (res?.data?.success) {
-          toast.success('Deletion success')
-          logout()
-          // history.push(routes.app.home)
-        } else {
-          toast.error(`Deletion failed`);
-        }
-      })
-    );
-    setShowModal(false);
-  };
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
 
   return (
-    <div className="deleteAccount">
+    <div className="flex items-center space-x-4">
       <button
         onClick={() => setShowModal(true)}
-        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        className="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2"
       >
-        Delete Account
+        <svg
+          className="w-5 h-5 mb-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+          />
+        </svg>
+        {selectedContent[localizationKeys.deleteAccount]}
       </button>
 
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-            <h2 className="text-xl font-semibold mb-4 text-red-600">
-              Confirm Deletion
-            </h2>
-            <p className="mb-6 text-gray-700">
-              Are you sure you want to delete your account? <br /> You will lose your data from our server.
-            </p>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdateUserBlockStatus}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              >
-                Yes, Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <DeleteAccountModal
+        open={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </div>
   );
 }
 
-
 export default ProfileSettings;
-
-

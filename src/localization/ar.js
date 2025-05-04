@@ -42,6 +42,10 @@ const ar = {
   [localizationKeys.payAED]: "ادفع درهم",
   [localizationKeys.fromWallet]: "من المحفظة",
   [localizationKeys.companyProfile]: "نبذة عن الشركة",
+  [localizationKeys.deleteAccount]: "حذف الحساب",
+  [localizationKeys.confirmDeletion]: "تأكيد الحذف",
+  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:"هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وستفقد جميع بياناتك.",
+
 
   // home
   [localizationKeys.changeStatus]: "تغيير الحالة",

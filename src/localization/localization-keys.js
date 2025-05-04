@@ -37,6 +37,10 @@ const localizationKeys = {
   yourWalletBalanceIsAED: "yourWalletBalanceIsAED",
   payAED: "PayAED",
   fromWallet: "fromWallet",
+  deleteAccount:"deleteAccount",
+  confirmDeletion:"confirmDeletion",
+  areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData:"areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData",
+
   // home
   companyProfile:"companyProfile",
   changeStatus: "changeStatus",
