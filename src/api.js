@@ -85,6 +85,7 @@ const api = {
         `auctions/user/${auctionId}/buyer-location-details`,
       payByBank_uploadBankStatement:
         "/auctions/user/pay-by-banck/upload-bank-statement",
+      lockAuction:'/auctions/lock-auction',
     },
     Imagees: {
       upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
