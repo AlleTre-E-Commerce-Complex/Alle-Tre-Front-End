@@ -71,27 +71,35 @@ export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError,b
     setMessage(null);
     
     try {
-      const lockAuctionRes = await authAxios.post(api.app.auctions.lockAuction,{auctionId, bidAmount})
-      if(lockAuctionRes.data.success){
-        const { error } = await stripe.confirmPayment({
-          elements,
-          confirmParams: {
-            return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite?auctionId=${auctionId}`,
-          },
-        });
-  
-        if (error) {
-          const errorMessage = error.message || "An unexpected error occurred.";
-          setMessage(errorMessage);
-          toast.error(errorMessage);
-          if (onError) {
-            onError(errorMessage);
+     await authAxios.post(api.app.auctions.lockAuction,{auctionId, bidAmount}).then(async (res)=>{
+      console.log('lockauctionCalled')
+        console.log('res',res)
+        if(res.data.success){
+          const { error } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+              return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite?auctionId=${auctionId}`,
+            },
+          });
+    
+          if (error) {
+            const errorMessage = error.message || "An unexpected error occurred.";
+            setMessage(errorMessage);
+            toast.error(errorMessage);
+            if (onError) {
+              onError(errorMessage);
+            }
           }
+        }else {
+  
+          toast.error("Failed to lock the auction. Please try again.");
         }
-      }else {
-
-        toast.error("Failed to lock the auction. Please try again.");
-      }
+      }) 
+      .catch((error)=>{
+        console.log('lock auction error:', error)
+      })
+    
+   
      
     } catch (err) {
       console.error("Payment confirmation error:", err);
