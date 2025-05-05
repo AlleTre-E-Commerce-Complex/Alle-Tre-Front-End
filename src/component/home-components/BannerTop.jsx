@@ -1,6 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
+import { EffectCoverflow, Pagination, Autoplay, Navigation } from "swiper/modules";
+import "swiper/css/navigation";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -92,8 +93,68 @@ const BannerTop = ({ auctions = [] }) => {
     }
   }, [auctions, onReload, lang]);
 
+  const swiperBreakpoints = {
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 12,
+      centeredSlides: true, 
+      effect: "coverflow",
+      coverflowEffect: {
+        rotate: 5,
+        stretch: 0,
+        depth: 50,
+        modifier: 1,
+        slideShadows: true,
+      },
+    },
+    480: {
+      slidesPerView: 1,
+      spaceBetween: 15,
+    },
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 20,
+    },
+    768: {
+      slidesPerView: Math.min(auctions.length, 4),
+      spaceBetween: 15,
+      effect: "coverflow",
+      coverflowEffect: {
+        rotate: 5,
+        stretch: 0,
+        depth: 72,
+        modifier: 2,
+        slideShadows: false,
+      },
+    },
+    1024: {
+      slidesPerView: Math.min(auctions.length, 4),
+      spaceBetween: 20,
+      effect: "coverflow",
+      coverflowEffect: {
+        rotate: 5,
+        stretch: 0,
+        depth: 75,
+        modifier: 2,
+        slideShadows: false,
+      },
+    },
+    1280: {
+      slidesPerView: Math.min(auctions.length, 4),
+      spaceBetween: 25,
+      effect: "coverflow",
+      coverflowEffect: {
+        rotate: 5,
+        stretch: 0,
+        depth: lang === "ar" ? 60 : 72,
+        modifier: lang === "ar" ? 2.5 : 2,
+        slideShadows: true,
+      },
+    },
+  };
+
   return isMobile ? (
-    <div className="w-full px-2 py-1 bg-gradient-to-br from-primary via-primary/95 to-primary/90 rounded-lg shadow-lg mt-4 pb-4">
+    <div className="w-full px-2 sm:px-4 py-2 sm:py-4 bg-gradient-to-br from-primary via-primary/95 to-primary/90 rounded-lg shadow-lg mt-4 pb-4">
       <div className="mb-3 flex justify-between items-center px-4 pt-2">
         <h2 className="text-2xl font-bold text-white">
           {selectedContent[localizationKeys.hotAuctions]}
@@ -101,26 +162,30 @@ const BannerTop = ({ auctions = [] }) => {
       </div>
       <Swiper
         key={`swiper-mobile-${forceReload}-${auctions.length}`}
-        slidesPerView={1}
-        spaceBetween={0}
-        centeredSlides={true}
+        effect="coverflow"
+        breakpoints={swiperBreakpoints}
         loop={true}
+        grabCursor={true}
+        speed={1000}
         autoplay={{
           delay: 3000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
+          stopOnLastSlide: false,
           pauseOnMouseEnter: true,
+          waitForTransition: true
         }}
+        simulateTouch={false}
         pagination={{
           clickable: true,
           dynamicBullets: true,
         }}
-        modules={[Autoplay, Pagination]}
-        className="!pb-3 "
+        modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
+        className="!pb-3"
       >
         {auctions?.slice(0, 6).map((auction, index) => (
           console.log("qqq",     auction?.bids[0]?.amount),
           <SwiperSlide key={auction?.id || index}>
-            <div className="w-[95%] h-[180px] rounded-xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 mx-auto flex">
+            <div className="w-[95%] sm:w-[90%] h-[180px] sm:h-[200px] md:h-[220px] rounded-xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 mx-auto flex">
               <div
                 onClick={() => handelGoDetails(auction)}
                 className="w-[47%] h-full relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 group"
@@ -266,7 +331,7 @@ const BannerTop = ({ auctions = [] }) => {
   ) : (
     <div className="rounded-lg bg-gradient-to-br from-primary via-primary/95 to-primary/90 relative w-full mx-auto py-2 md:py-4 lg:py-6 shadow-lg">
       <div className="w-full mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-16">
-        <div className="w-full md:w-1/3 relative group">
+        <div className="w-full md:w-1/3 relative group px-4 md:px-0">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/90 pb-3 mb-8 transition-all duration-500 group-hover:translate-x-2">
             {selectedContent[localizationKeys.hotAuctions]}
             <span className="absolute -bottom-4 left-0 w-3/4 h-1 bg-gradient-to-r from-[#ff4d6d] via-[#ff758f] to-[#ff8fa3] rounded-full shadow-lg shadow-[#ff4d6d]/30 group-hover:w-2/4 group-hover:from-[#ff758f] group-hover:to-[#ff4d6d] transition-all duration-500"></span>
@@ -279,35 +344,35 @@ const BannerTop = ({ auctions = [] }) => {
             }
           </p>
         </div>
-        <div className="w-full md:w-2/3 pl-32 md:pl-44">
+        <div className="w-full md:w-2/3 px-4 md:px-8 lg:px-10">
           <Swiper
             key={`swiper-${forceReload}-${auctions.length}`}
             effect="coverflow"
+            breakpoints={swiperBreakpoints}
             grabCursor={true}
             centeredSlides={true}
-            slidesPerView={Math.min(auctions.length, 4)}
-            spaceBetween={0}
             loop={auctions.length > 1}
             initialSlide={Math.floor(auctions.length / 2)}
             loopedSlides={auctions.length}
-            width={lang === "ar" ? 1070 : 965}
             dir={lang === "ar" ? "rtl" : "ltr"}
             coverflowEffect={{
+              rotate: 5,
               stretch: 0,
               depth: lang === "ar" ? 100 : 80,
-              rotate: 5,
               modifier: lang === "ar" ? 2.5 : 2,
-              slideShadows: false,
+              slideShadows: false
             }}
+            speed={1000}
             autoplay={{
               delay: 3000,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: false,
-              enabled: true,
-              reverseDirection: true,
+              disableOnInteraction: true,
+              stopOnLastSlide: false,
+              pauseOnMouseEnter: true,
+              waitForTransition: false
             }}
+            simulateTouch={false}
             pagination={{ clickable: true }}
-            modules={[EffectCoverflow, Pagination, Autoplay]}
+            modules={[EffectCoverflow, Pagination, Autoplay, Navigation]}
             className="swiper-container py-4"
           >
             {auctions?.slice(0, 6).map((auction, index) => (
