@@ -14,31 +14,31 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
     slidesPerView: 2.2,
     spaceBetween: 12,
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
     },
     breakpoints: {
       480: {
         slidesPerView: 2.5,
-        spaceBetween: 12
+        spaceBetween: 12,
       },
       640: {
         slidesPerView: 3.5,
-        spaceBetween: 16
+        spaceBetween: 16,
       },
       768: {
         slidesPerView: 4.5,
-        spaceBetween: 16
+        spaceBetween: 16,
       },
       1024: {
         slidesPerView: 5.5,
-        spaceBetween: 16
+        spaceBetween: 16,
       },
       1280: {
         slidesPerView: 6,
-        spaceBetween: 16
-      }
-    }
+        spaceBetween: 16,
+      },
+    },
   };
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
         swiper.current.destroy();
       }
     };
-  }, []);
+  }, [lang]);
 
   const handleNextClick = () => {
     swiper.current?.slideNext();
@@ -80,29 +80,29 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
           </div>
         </div>
         <button
-                    onClick={lang === "ar" ? handlePrevClick : handleNextClick}
-                    className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
-                  >
-                    <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-                      <img
-                        className="w-6 h-6 md:w-8 md:h-8"
-                        src={AnglesRight}
-                        alt="Next"
-                      />
-                    </div>
-                  </button>
-                  <button
-                    onClick={lang === "ar" ? handleNextClick : handlePrevClick}
-                    className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
-                  >
-                    <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-                      <img
-                        className="w-6 h-6 md:w-8 md:h-8"
-                        src={AnglesLeft}
-                        alt="Previous"
-                      />
-                    </div>
-                  </button>
+          onClick={lang === "ar" ? handlePrevClick : handleNextClick}
+          className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
+        >
+          <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+            <img
+              className="w-6 h-6 md:w-8 md:h-8"
+              src={AnglesRight}
+              alt="Next"
+            />
+          </div>
+        </button>
+        <button
+          onClick={lang === "ar" ? handleNextClick : handlePrevClick}
+          className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
+        >
+          <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
+            <img
+              className="w-6 h-6 md:w-8 md:h-8"
+              src={AnglesLeft}
+              alt="Previous"
+            />
+          </div>
+        </button>
       </div>
     </div>
   );
