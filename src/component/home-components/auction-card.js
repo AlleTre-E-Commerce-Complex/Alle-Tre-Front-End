@@ -168,14 +168,33 @@ const AuctionCard = ({
     dispatch(socketAuctionId(auctionId));
   }, [auctionId, dispatch]);
 
+  // useEffect(() => {
+  //   if (!socket) return;
+
+  //   socket.on("bid:submitted");
+  //   return () => {
+  //     socket.off("bid:submitted");
+  //   };
+  // }, [socket, auctionId]);
   useEffect(() => {
     if (!socket) return;
-
-    socket.on("bid:submitted");
+  
+    const handleBidSubmitted = (data) => {
+      try {
+        console.log("New bid submitted:", data);
+        // Optionally: reload auction info or update state here
+      } catch (error) {
+        console.error("Error in bid:submitted handler:", error);
+      }
+    };
+  
+    socket.on("bid:submitted", handleBidSubmitted);
+  
     return () => {
-      socket.off("bid:submitted");
+      socket.off("bid:submitted", handleBidSubmitted);
     };
   }, [socket, auctionId]);
+  
 
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;

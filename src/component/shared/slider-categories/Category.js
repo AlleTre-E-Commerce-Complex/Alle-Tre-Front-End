@@ -1,27 +1,20 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import routes from "../../../routes";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
-import { useAuthState } from "../../../context/auth-context";
-import { useDispatch } from "react-redux";
-import { Open } from "../../../redux-store/auth-model-slice";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 
 const Category = ({ img, title, id, view, className, isSubCategory, auctionCount = 0, listingCount = 0 }) => {
   const history = useHistory();
-  const { user } = useAuthState();
-  const dispatch = useDispatch();
+    const { search } = useLocation();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const handleClick = () => {
-    if (user) {
-    history.push(`${routes.app.categories(title, id)}?categories[]=${id}`);
-    } else {
-      dispatch(Open());
-    }
+      const queryParams = new URLSearchParams(search);
+      history.push(`${routes.app.categories(title, id)}?categories[]=${id}&${queryParams}`);
   };
   
   return (

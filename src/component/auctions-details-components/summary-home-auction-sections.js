@@ -94,20 +94,27 @@ const SummaryHomeAuctionSections = ({
       dispatch(Open());
     }
   };
-  const socket = useSocket();
+const socket = useSocket();
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("bid:submitted", (data) => {
-        setLastestBid(data);
-      });
+useEffect(() => {
+  if (!socket) return;
+
+  const handleBidSubmitted = (data) => {
+    try {
+      // You can validate `data` here if needed
+      setLastestBid(data);
+    } catch (error) {
+      console.error("Error handling bid:submitted event:", error);
     }
-    return () => {
-      if (socket) {
-        socket.off("bid:submitted");
-      }
-    };
-  }, [socket]);
+  };
+
+  socket.on("bid:submitted", handleBidSubmitted);
+
+  return () => {
+    socket.off("bid:submitted", handleBidSubmitted);
+  };
+}, [socket]);
+
 
   useEffect(() => {
     if (category === undefined) {
