@@ -524,6 +524,14 @@ const TermAndConditionData = [
               information related to the condition of the item before bidding or
               purchasing.
             </li>
+            <li className="mt-3 sm:mt-4">
+              <span className="font-bold"></span>The buyer shall bear all costs
+              related to the inspection and registration of the
+              vehicle/property/item. Alletre platform and the seller shall not
+              be held legally or financially responsible for these fees. This is
+              considered part of the buyer’s obligations upon
+              completing the purchase
+            </li>
           </ul>
         </div>
       ),
@@ -547,6 +555,13 @@ const TermAndConditionData = [
               <span className="font-bold">مسؤولية المزايد</span>: المزايد أو
               المشتري هو المسؤول الوحيد عن مراجعة جميع البيانات والمعلومات
               المتعلقة بحالة المعروض قبل المزايدة أو الشراء.
+            </li>
+            <li className="mt-3 sm:mt-4">
+              <span className="font-bold"></span>"يتحمّل المشتري منفردًا كافة
+              الرسوم المتعلقة بعمليات الفحص والتسجيل للمركبة/العقار/المنتج، ولا
+              تتحمل منصة Alletre أو البائع أي مسؤولية قانونية أو مالية بشأن هذه
+              الرسوم. ويُعتبر ذلك جزءًا من التزامات المشتري عند إتمام عملية
+              الشراء."
             </li>
           </ul>
         </div>
