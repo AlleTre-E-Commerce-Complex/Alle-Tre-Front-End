@@ -79,7 +79,7 @@ class Auth {
 
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
-      if(!window.location.pathname.includes("details")){
+      if(!window.location.pathname.includes("details") && !window.location.pathname.includes('/alletre/categories/')){
         await this.logout();
       }
       return null;

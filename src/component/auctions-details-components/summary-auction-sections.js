@@ -56,19 +56,38 @@ const SummaryAuctionSections = ({
 
   const { isLoading: isLoadingAuctionById } = useAxios([]);
   const socket = useSocket();
-  useEffect(() => {
-    if (socket) {
-      socket.on("bid:submitted", (data) => {
-        setLastestBid(data);
-      });
-    }
+  // useEffect(() => {
+  //   if (socket) {
+  //     socket.on("bid:submitted", (data) => {
+  //       setLastestBid(data);
+  //     });
+  //   }
 
-    return () => {
-      if (socket) {
-        socket.off("bid:submitted");
+  //   return () => {
+  //     if (socket) {
+  //       socket.off("bid:submitted");
+  //     }
+  //   };
+  // }, [socket]);
+  
+  useEffect(() => {
+    if (!socket) return;
+  
+    const handleBidSubmitted = (data) => {
+      try {
+        setLastestBid(data);
+      } catch (error) {
+        console.error("Error handling bid:submitted:", error);
       }
     };
+  
+    socket.on("bid:submitted", handleBidSubmitted);
+  
+    return () => {
+      socket.off("bid:submitted", handleBidSubmitted);
+    };
   }, [socket]);
+  
 
   return (
     <>
