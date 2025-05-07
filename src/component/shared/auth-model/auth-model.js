@@ -8,6 +8,7 @@ import localizationKeys from "../../../localization/localization-keys";
 import LogIn from "../../O-Auth-components/log-in";
 import SignUp from "../../O-Auth-components/sign-up";
 import oAuthFooterImg from "../../../../src/assets/img/o-auth-path-footer.svg";
+import routes from "routes";
 
 function AuthModel({ currentPAth }) {
   const [lang, setLang] = useLanguage("");
@@ -54,7 +55,13 @@ function AuthModel({ currentPAth }) {
   return (
     <Modal
       className="m-0 p-0 md:w-[824px] w-auto h-[493px] sm:h-auto bg-transparent shadow-none rounded-2xl scale-in overflow-y-scroll scrollbar-hide "
-      onClose={() => dispatch(Close())}
+      onClose={() => {
+        dispatch(Close());
+        if (window.location.pathname === "/alletre/profile/my-bids/pending") {
+          window.location.href = `${routes.app.home}?page=1&perPage=24&productPage=1&auctionPage=1`;
+        }
+      }}
+      
       onOpen={() => dispatch(Open())}
       open={AuthModelTggle}
     >

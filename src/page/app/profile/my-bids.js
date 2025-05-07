@@ -31,7 +31,11 @@ const MyBids = () => {
       authAxios.get(api.app.auctions.bidAnalytics).then((res) => {
         setAnalyticsData(res?.data?.data);
       })
+      .catch((error)=>{
+        console.log('MyBids error',error)
+      })
     );
+    
   }, [runAlyticsData, forceReload]);
 
   const analyticsDataObject = {};

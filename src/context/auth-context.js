@@ -5,12 +5,15 @@ import useAxios from "../hooks/use-axios";
 import routes from "../routes";
 import Auth from "../utils/auth";
 import { getDefaultPaginationString } from "../constants/pagination";
+import { useDispatch } from "react-redux";
+import { Open } from "redux-store/auth-model-slice";
 
 const AuthContext = React.createContext();
 
 const WHITE_LIST = [routes.auth.default, routes.auth.forgetpass.default, routes.auth.forgetpass.restpass];
 
 function AuthProvider({ children }) {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = React.useState(true);
   const [user, setUser] = React.useState(null);
 
@@ -46,6 +49,11 @@ function AuthProvider({ children }) {
       try {
         const user = await Auth.getUser();
         if (!user) {
+          if(window.location.pathname.includes("/alletre/profile/my-bids/pending")){
+            dispatch(Open());
+            setIsLoading(false); // ensure the app renders children instead of loading screen
+            // return;
+        }else{
           const isWhiteListed = WHITE_LIST.some(route => 
             pathname.startsWith(route) || 
             pathname.includes(route) || 
@@ -59,8 +67,9 @@ function AuthProvider({ children }) {
               history.push(`${redirectPath}?${searchParams}`);
             } else {
               history.push(window.location.pathname + window.location.search);
+    
             }
-          }
+          }}
           setUser(null);
         } else {
           setUser(user);
