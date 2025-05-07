@@ -162,7 +162,10 @@ const AddLocationModel = ({
           }
         })
         .catch((err) => {
-          toast.error(err.message[0] || selectedContent[localizationKeys.oops]);
+          const errorMessage = err.message[0] || 
+            (lang === "ar" ? err.message.ar : err.message.en) || 
+            selectedContent[localizationKeys.oops];
+          toast.error(errorMessage);
         });
     }
   };
@@ -172,7 +175,7 @@ const AddLocationModel = ({
       className="sm:w-[471px] w-full h-auto bg-transparent scale-in"
       onClose={() => {
         setOpen(false);
-        if(setIsListing){
+        if (setIsListing) {
           setIsListing(false);
         }
       }}
@@ -189,7 +192,7 @@ const AddLocationModel = ({
           <button
             onClick={() => {
               setOpen(false);
-              if(setIsListing){
+              if (setIsListing) {
                 setIsListing(false);
               }
             }}

@@ -61,7 +61,6 @@ export default function CheckoutPagePaymentDetails() {
   // const [auctionId, setAuctionId] = useLocalStorage("auctionId", "");
 
   const [auctionId, setAuctionId] = useLocalStorage("auctionId", auctionIdFromURL || "");
-  console.log('auctionId',auctionId)
   const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [pendingAuctionData, setPendingAuctionData] = useState("");
