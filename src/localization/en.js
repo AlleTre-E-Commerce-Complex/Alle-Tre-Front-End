@@ -47,7 +47,8 @@ const en = {
   [localizationKeys.companyProfile]: "Company profile",
   [localizationKeys.deleteAccount]: "Delete Account",
   [localizationKeys.confirmDeletion]: "Confirm Deletion",
-  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]: "Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
+  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
+    "Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
@@ -347,7 +348,9 @@ const en = {
   [localizationKeys.DontForgetToMention]: "Don't forget to mention",
   [localizationKeys.alletre]: "Alletre",
   [localizationKeys.whenYouCall]: "When you call!",
-
+  [localizationKeys.inspectionDetails]: "Inspection Details",
+  [localizationKeys.contactPerson]: "Contact Person",
+  [localizationKeys.dateAndTime]: "Date & Time",
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",

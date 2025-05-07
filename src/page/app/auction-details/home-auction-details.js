@@ -80,11 +80,12 @@ const HomeAuctionDetails = () => {
   }, []);
 
   const images = auctionsDetailsData?.product?.images.filter(
-    image => image.imagePath && !image.imagePath.toLowerCase().endsWith('.pdf')
+    (image) =>
+      image.imagePath && !image.imagePath.toLowerCase().endsWith(".pdf")
   );
   const relatedDocuments = auctionsDetailsData?.product?.images.filter(
-    image => image.imagePath && image.imagePath.toLowerCase().endsWith('.pdf')
-  );  
+    (image) => image.imagePath && image.imagePath.toLowerCase().endsWith(".pdf")
+  );
 
   // Get the main image URL for sharing
   const mainImageUrl = auctionsDetailsData?.product?.images?.[0]?.imageLink;
@@ -104,31 +105,46 @@ const HomeAuctionDetails = () => {
     return "image/jpeg"; // default for unknown
   };
 
-  const calculateSecurityDeposit = (auction,auctionCategory)=>{
-    const categoryName = auctionCategory?.nameEn
+  const calculateSecurityDeposit = (auction, auctionCategory) => {
+    const categoryName = auctionCategory?.nameEn;
 
     //calculate the seller security deposite
-    const startBidAmount = auction?.startBidAmount
-    let amount = Number(auctionCategory?.bidderDepositFixedAmount)
+    const startBidAmount = auction?.startBidAmount;
+    let amount = Number(auctionCategory?.bidderDepositFixedAmount);
     //checking whether the auction is luxuary or not
-    if(auctionCategory?.luxuaryAmount && Number(startBidAmount) > Number(auctionCategory?.luxuaryAmount)){
+    if (
+      auctionCategory?.luxuaryAmount &&
+      Number(startBidAmount) > Number(auctionCategory?.luxuaryAmount)
+    ) {
+      let total;
+      //calculating the security deposite
+      total = Number(
+        (Number(startBidAmount) *
+          Number(auctionCategory?.percentageOfLuxuarySD_forBidder)) /
+          100
+      );
 
-      let total
-      //calculating the security deposite 
-       total = Number(((Number(startBidAmount) )* Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
-      
-      if(categoryName === 'Cars' || categoryName === 'Properties'){
-       total = Number(((auctionsDetailsData?.latestBidAmount? auctionsDetailsData?.latestBidAmount: Number(startBidAmount) )* Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
-       }
-      //checking the total is less than minimum security deposite 
-      if(auctionCategory?.minimumLuxuarySD_forBidder && total < Number(auctionCategory?.minimumLuxuarySD_forBidder)){
-        amount = Number(auctionCategory?.minimumLuxuarySD_forBidder)
-      }else{
-        amount = total
+      if (categoryName === "Cars" || categoryName === "Properties") {
+        total = Number(
+          ((auctionsDetailsData?.latestBidAmount
+            ? auctionsDetailsData?.latestBidAmount
+            : Number(startBidAmount)) *
+            Number(auctionCategory?.percentageOfLuxuarySD_forBidder)) /
+            100
+        );
+      }
+      //checking the total is less than minimum security deposite
+      if (
+        auctionCategory?.minimumLuxuarySD_forBidder &&
+        total < Number(auctionCategory?.minimumLuxuarySD_forBidder)
+      ) {
+        amount = Number(auctionCategory?.minimumLuxuarySD_forBidder);
+      } else {
+        amount = total;
       }
     }
-    return amount
-  }
+    return amount;
+  };
   return (
     <div>
       <Helmet prioritizeSeoTags={true}>
@@ -267,7 +283,10 @@ const HomeAuctionDetails = () => {
                     //   auctionsDetailsData?.product?.category
                     //     ?.bidderDepositFixedAmount
                     // }
-                    bidderDepositFixedAmount = {calculateSecurityDeposit(auctionsDetailsData, auctionsDetailsData?.product?.category)}
+                    bidderDepositFixedAmount={calculateSecurityDeposit(
+                      auctionsDetailsData,
+                      auctionsDetailsData?.product?.category
+                    )}
                     isDepositPaid={auctionsDetailsData?.isDepositPaid || false}
                     numberStare={3}
                     totalReviews={20}

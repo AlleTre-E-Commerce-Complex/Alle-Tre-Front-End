@@ -5,7 +5,8 @@ import { truncateString } from "../../utils/truncate-string";
 import { useDispatch } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { Button, Dimmer, Modal } from "semantic-ui-react";
+import { Button, Dimmer, Modal, Icon } from "semantic-ui-react";
+import InspectionDetailsModal from "../shared/inspection-details/InspectionDetailsModal";
 import useCountdown from "../../hooks/use-countdown";
 import AuctionsStatus from "../shared/status/auctions-status";
 import SubmitBidModel from "./submit-bid-model";
@@ -30,9 +31,8 @@ import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleveryS
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import { FaRegUser } from "react-icons/fa";
 import { BiSolidFilePdf } from "react-icons/bi";
-import { FaWhatsapp } from "react-icons/fa";
-import EditPhoneNumberModel from "component/profile-components/edit-phone-number-model";
-
+// import { FaWhatsapp } from "react-icons/fa";
+// import EditPhoneNumberModel from "component/profile-components/edit-phone-number-model";
 
 const SummaryHomeAuctionSections = ({
   bidderDepositFixedAmount,
@@ -94,27 +94,26 @@ const SummaryHomeAuctionSections = ({
       dispatch(Open());
     }
   };
-const socket = useSocket();
+  const socket = useSocket();
 
-useEffect(() => {
-  if (!socket) return;
+  useEffect(() => {
+    if (!socket) return;
 
-  const handleBidSubmitted = (data) => {
-    try {
-      // You can validate `data` here if needed
-      setLastestBid(data);
-    } catch (error) {
-      console.error("Error handling bid:submitted event:", error);
-    }
-  };
+    const handleBidSubmitted = (data) => {
+      try {
+        // You can validate `data` here if needed
+        setLastestBid(data);
+      } catch (error) {
+        console.error("Error handling bid:submitted event:", error);
+      }
+    };
 
-  socket.on("bid:submitted", handleBidSubmitted);
+    socket.on("bid:submitted", handleBidSubmitted);
 
-  return () => {
-    socket.off("bid:submitted", handleBidSubmitted);
-  };
-}, [socket]);
-
+    return () => {
+      socket.off("bid:submitted", handleBidSubmitted);
+    };
+  }, [socket]);
 
   useEffect(() => {
     if (category === undefined) {
@@ -187,7 +186,10 @@ useEffect(() => {
       categoryData.luxuaryAmount &&
       Number(startBidAmount) < Number(categoryData.luxuaryAmount)
     ) {
-      if (categoryData.maxBidLimit && (newValue > Number(categoryData.maxBidLimit))) {
+      if (
+        categoryData.maxBidLimit &&
+        newValue > Number(categoryData.maxBidLimit)
+      ) {
         toast.error(
           `${
             selectedContent[
@@ -201,16 +203,16 @@ useEffect(() => {
     const isCompletedProfile = window.localStorage.getItem(
       "hasCompletedProfile"
     );
-    const specialCategory = [4]
+    const specialCategory = [4];
     if (user) {
       if (JSON.parse(isCompletedProfile)) {
         if (validateBidAmount(newValue)) {
-        if(specialCategory.includes(categoryData.id)){
-          if(categoryData.id === 4 && newValue < 5000){
-            sendSubmitBid(newValue);
-            return 
+          if (specialCategory.includes(categoryData.id)) {
+            if (categoryData.id === 4 && newValue < 5000) {
+              sendSubmitBid(newValue);
+              return;
+            }
           }
-        }
           if (isDepositPaid) {
             sendSubmitBid(newValue);
           } else {
@@ -298,7 +300,7 @@ useEffect(() => {
           setSubmitBidValue("");
         })
         .catch((err) => {
-          console.log('submit bid error : ',err)
+          console.log("submit bid error : ", err);
           toast.error(
             lang === "en"
               ? err.message.en || err.message
@@ -336,31 +338,42 @@ useEffect(() => {
       behavior: "smooth",
     });
   };
-  const [showMobileNumber, setShowMobileNumber] = useState(false)
-
-  const handleSendInspectionDetails =()=>{
-    if(!user){
-           dispatch(Open())
-          return 
-        }
-    const userPhone = user.phone || localStorage.getItem('userPhone')
-    if (!userPhone) {
-      toast.error(selectedContent[localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding])
-      setShowMobileNumber(true)
-      return;
-    }
-    run(
-      authAxios.post(api.app.whatsApp.sendInspectionDetails(auctionId))
-      .then((res)=>{
-        console.log('handleSendInspectionDetails resoponse:',res)
-        if(res.data.success){
-          toast.success(selectedContent[localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp])
-        }
-      }).catch((error)=>{
-        console.log('handle Send inpecton Details:',error)
-      })
-    )
-  }
+  const [isInspectionModalOpen, setIsInspectionModalOpen] = useState(false);
+  
+  // const [showMobileNumber, setShowMobileNumber] = useState(false);
+  // const handleSendInspectionDetails = () => {
+  //   if (!user) {
+  //     dispatch(Open());
+  //     return;
+  //   }
+  //   const userPhone = user.phone || localStorage.getItem("userPhone");
+  //   if (!userPhone) {
+  //     toast.error(
+  //       selectedContent[
+  //         localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding
+  //       ]
+  //     );
+  //     setShowMobileNumber(true);
+  //     return;
+  //   }
+  //   run(
+  //     authAxios
+  //       .post(api.app.whatsApp.sendInspectionDetails(auctionId))
+  //       .then((res) => {
+  //         console.log("handleSendInspectionDetails resoponse:", res);
+  //         if (res.data.success) {
+  //           toast.success(
+  //             selectedContent[
+  //               localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp
+  //             ]
+  //           );
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log("handle Send inpecton Details:", error);
+  //       })
+  //   );
+  // };
 
   return (
     <>
@@ -371,7 +384,7 @@ useEffect(() => {
       >
         <LodingTestAllatre />
       </Dimmer>
-     
+
       {/* Cancellation Modal */}
       <Modal
         size="tiny"
@@ -474,61 +487,106 @@ useEffect(() => {
               </svg>
             </HashLink>
           </div>
-          <div className="getSellerDetailsOnWhatsApp"> 
-          <button
-                onClick={handleSendInspectionDetails}
-                className="border-primary border-[1px] text-primary md:w-[220px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
-              >
-                <span><FaWhatsapp /></span>
-                <span> {selectedContent[localizationKeys.GetInspectionDetails]}</span>
-              </button>
-               {/* Hidden trigger button to open the modal */}
-              <div style={{ display: "none" }}>
+          {/* <div className="getSellerDetailsOnWhatsApp">
+            <button
+              onClick={handleSendInspectionDetails}
+              className="border-primary border-[1px] text-primary md:w-[220px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
+            >
+              <span>
+                <FaWhatsapp />
+              </span>
+              <span>
+                {" "}
+                {selectedContent[localizationKeys.GetInspectionDetails]}
+              </span>
+            </button>
+       
+            <div style={{ display: "none" }}>
               <EditPhoneNumberModel
-                  onReload={onReload}
-                  oldPhoneNumber={user?.phone}
-                  isOpen={showMobileNumber}
-                  setShowMobileNumber={setShowMobileNumber}
-                />
-              </div>
-        </div>
-          {/* Documents Section */}
-          {relatedDocuments?.length > 0 && (
-          <div className="mt-6">
-            <h3 className="text-gray-dark text-base font-normal">
-              {selectedContent[localizationKeys.relatedDocument]}
-            </h3>
+                onReload={onReload}
+                oldPhoneNumber={user?.phone}
+                isOpen={showMobileNumber}
+                setShowMobileNumber={setShowMobileNumber}
+              />
+            </div>
+          </div> */}
+          <div className="getInspectionDetails mt-4">
+            <button
+              onClick={() => setIsInspectionModalOpen(true)}
+              className="border-primary border-[1px] text-primary md:w-[220px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark transition-colors duration-200"
+            >
+              <span>
+                <Icon name="search" />
+              </span>
+              <span>
+                {selectedContent[localizationKeys.GetInspectionDetails]}
+              </span>
+            </button>
 
-            <div className="max-w-md">
-                 <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
-                {/* Document Header */}
-                <div className="p-4 bg-white border-b border-gray-100">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <BiSolidFilePdf className="w-8 h-8 text-red-500" />
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-medium text-gray-900 truncate">
-              {selectedContent[localizationKeys.document]}
-                        </h4>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                        {selectedContent[localizationKeys.Pdfdocument]}
-                        </p>
+            <InspectionDetailsModal
+              open={isInspectionModalOpen}
+              onClose={() => setIsInspectionModalOpen(false)}
+              inspectionDetails={{
+                name: userName,
+                cityEn: sellerLocation?.city?.nameEn,
+                cityAr: sellerLocation?.city?.nameAr,
+                countryEn: sellerLocation?.country?.nameEn,
+                countryAr: sellerLocation?.country?.nameAr,
+                
+                lat: sellerLocation?.lat,
+                lng: sellerLocation?.lng,
+                date: new Date(StartDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }),
+                time: new Date(StartDate).toLocaleTimeString("en-US", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                }),
+                contactPerson: userName,
+                phone: userPhone,
+              }}
+            />
+          </div>
+
+          {relatedDocuments?.length > 0 && (
+            <div className="mt-6">
+              <h3 className="text-gray-dark text-base font-normal">
+                {selectedContent[localizationKeys.relatedDocument]}
+              </h3>
+
+              <div className="max-w-md">
+                <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
+                  {/* Document Header */}
+                  <div className="p-4 bg-white border-b border-gray-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <BiSolidFilePdf className="w-8 h-8 text-red-500" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-medium text-gray-900 truncate">
+                            {selectedContent[localizationKeys.document]}
+                          </h4>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            {selectedContent[localizationKeys.Pdfdocument]}
+                          </p>
+                        </div>
                       </div>
+                      <a
+                        href={relatedDocuments[0].imageLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md text-white bg-primary hover:bg-primary/80 transition-colors duration-300"
+                      >
+                        {selectedContent[localizationKeys.view]}
+                      </a>
                     </div>
-                    <a
-                      href={relatedDocuments[0].imageLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-md text-white bg-primary hover:bg-primary/80 transition-colors duration-300"
-                    >
-                      {selectedContent[localizationKeys.view]}
-                    </a>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
           {/* Category Section */}
           <div className="py-6 flex flex-wrap gap-6">
