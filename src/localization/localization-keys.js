@@ -347,7 +347,9 @@ const localizationKeys = {
   auctionCancelledBySellerMessage: "auctionCancelledBySellerMessage",
   auctionCancelledByAdminMessage: "auctionCancelledByAdminMessage",
   auctionCancelled: "auctionCancelled",
-
+  inspectionDetails:"inspectionDetails",
+  contactPerson:"contactPerson",
+  dateAndTime:"dateAndTime",
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",

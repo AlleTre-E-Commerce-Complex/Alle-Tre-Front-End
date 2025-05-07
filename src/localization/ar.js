@@ -14,8 +14,10 @@ const ar = {
   [localizationKeys.somethingWentWrongPleaseTryAgainLater]:
     "هناك خطأ ما يرجى المحاولة مرة أخرى في او وقت لاحق",
   [localizationKeys.rememberPassword]: "تذكر كلمة المرور",
-  [localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding]: "يرجى تسجيل رقم هاتفك قبل المتابعة.",
-  [localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp]: "لقد أرسلنا تفاصيل  الفحص والمعاينة إلى WhatsApp الخاص بك.",
+  [localizationKeys.PleaseRegisterYourPhoneNumberBeforeProceeding]:
+    "يرجى تسجيل رقم هاتفك قبل المتابعة.",
+  [localizationKeys.WeHaveSentTheInspectionDetailsToYourWhatsApp]:
+    "لقد أرسلنا تفاصيل  الفحص والمعاينة إلى WhatsApp الخاص بك.",
   [localizationKeys.forgetPassword]: "نسيت كلمة المرور",
   [localizationKeys.name]: "الاسم",
   [localizationKeys.email]: "البريد الإلكتروني",
@@ -44,12 +46,12 @@ const ar = {
   [localizationKeys.companyProfile]: "نبذة عن الشركة",
   [localizationKeys.deleteAccount]: "حذف الحساب",
   [localizationKeys.confirmDeletion]: "تأكيد الحذف",
-  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:"هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وستفقد جميع بياناتك.",
-
+  [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
+    "هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وستفقد جميع بياناتك.",
 
   // home
-  [localizationKeys.listings]:"القوائم",
-  [localizationKeys.auctions]:"المزادات",
+  [localizationKeys.listings]: "القوائم",
+  [localizationKeys.auctions]: "المزادات",
   [localizationKeys.changeStatus]: "تغيير الحالة",
   [localizationKeys.convertToAuction]: "تحويل إلى المزاد",
   [localizationKeys.viewContactDetails]: " عرض تفاصيل الاتصال",
@@ -340,6 +342,9 @@ const ar = {
   [localizationKeys.DontForgetToMention]: "لا تنسى أن تذكر",
   [localizationKeys.alletre]: "آلي تري",
   [localizationKeys.whenYouCall]: "عندما تتصل!",
+  [localizationKeys.inspectionDetails]: "تفاصيل التفتيش",
+  [localizationKeys.contactPerson]: "الشخص الذي يمكن الاتصال به",
+  [localizationKeys.dateAndTime]: "التاريخ والوقت",
   // auction details
   [localizationKeys.quickAuction]: "المزاد السريع",
   [localizationKeys.maximumDurationMustBeDay]:
@@ -645,7 +650,8 @@ const ar = {
     "تم تعديل كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]: "تم جعله افتراضيًا بنجاح",
-  [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]: "تم تعديل رقم الهاتف بنجاح",
+  [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]:
+    "تم تعديل رقم الهاتف بنجاح",
   [localizationKeys.imageUpdatedSuccessfully]: "تم تحديث الصورة بنجاح",
   [localizationKeys.nameHasBeenEditSuccessfully]: "تم تحرير الاسم بنجاح",
   [localizationKeys.yourAuctionSuccessfullySavedAsDraft]:
