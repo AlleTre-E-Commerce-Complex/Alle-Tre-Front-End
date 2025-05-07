@@ -39,6 +39,9 @@ const InProgressBids = () => {
             setActiveAuctionData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
+          .catch((error)=>{
+            console.log('InProgressBids error',error)
+          })
       );
   }, [run, forceReload, search]);
 

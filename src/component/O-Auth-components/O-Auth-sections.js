@@ -160,11 +160,14 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
       })
       .catch((err) => {
         console.log("google auth error ==>:", err);
-        toast.error(
-          selectedContent[
-            localizationKeys.somethingWentWrongPleaseTryAgainLater
-          ]
-        );
+        console.log("google auth error ==>:2", err?.code);
+        if (err.code !== "auth/cancelled-popup-request") {
+          toast.error(
+            selectedContent[
+              localizationKeys.somethingWentWrongPleaseTryAgainLater
+            ]
+          );
+        }
       });
   };
 

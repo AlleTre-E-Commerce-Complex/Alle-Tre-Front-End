@@ -50,6 +50,9 @@ const PendingBids = () => {
             setActiveAuctionData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
           })
+          .catch((error)=>{
+            console.log('PendingBids error',error)
+          })
       );
   }, [run, forceReload, search]);
 

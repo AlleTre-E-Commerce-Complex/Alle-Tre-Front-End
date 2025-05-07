@@ -32,6 +32,9 @@ const ProfileSideBare = ({ SetSid, sid }) => {
       authAxios.get(api.app.profile.default).then((res) => {
         setPofileData(res?.data?.data);
       })
+      .catch((error)=>{
+        console.log('ProfileSideBare erroe',error)
+      })
     );
   }, [runPofile, forceReload]);
 

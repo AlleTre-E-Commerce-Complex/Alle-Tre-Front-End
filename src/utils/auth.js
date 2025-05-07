@@ -79,7 +79,14 @@ class Auth {
 
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
-      if(!window.location.pathname.includes("details") && !window.location.pathname.includes('/alletre/categories/')){
+      // alert('window.location.pathname'+window.location.pathname)
+      if(window.location.pathname.includes("/alletre/profile/my-bids/pending")){
+        return null
+      }
+     if(
+        !window.location.pathname.includes("details") &&
+        !window.location.pathname.includes("/alletre/categories/"
+       )){
         await this.logout();
       }
       return null;
