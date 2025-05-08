@@ -1,4 +1,4 @@
-import { useEffect, useRef,useState, useCallback } from "react";
+import { useEffect,useRef, useState, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
@@ -33,8 +33,6 @@ const ImgSlider = ({
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [loadedImages, setLoadedImages] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isVideoReady, setIsVideoReady] = useState(false);
-  const [videoLoadingState, setVideoLoadingState] = useState('initial'); // 'initial', 'loading', 'ready', 'error'
   const videoRef = useRef(null);
   const [isAppleDevice] = useState(() => /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent));
 
@@ -240,31 +238,7 @@ const ImgSlider = ({
                       preload="auto"
                       webkit-playsinline
                       playsinline
-                      onLoadStart={() => {
-                        console.log('Video load started');
-                        setVideoLoadingState('loading');
-                        setIsVideoReady(false);
-                      }}
-                      onLoadedMetadata={(e) => {
-                        console.log('Video metadata loaded', {
-                          duration: e.target.duration,
-                          videoWidth: e.target.videoWidth,
-                          videoHeight: e.target.videoHeight
-                        });
-                      }}
-                      onCanPlay={() => {
-                        console.log('Video can play now');
-                        setVideoLoadingState('ready');
-                        setIsVideoReady(true);
-                      }}
-                      onError={(e) => {
-                        console.error('Video error:', e.target.error);
-                        setVideoLoadingState('error');
-                      }}
-                      onPlay={(e) => {
-                        console.log('Video started playing');
-                        setIsPlaying(true);
-                      }}
+                      onPlay={() => setIsPlaying(true)}
                       onPause={() => setIsPlaying(false)}
                     >
                       <source
@@ -281,34 +255,8 @@ const ImgSlider = ({
                       />
                     </div>
 
-                    {/* Loading indicator */}
-                    {videoLoadingState === 'loading' && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
-                      </div>
-                    )}
-
-                    {/* Error message */}
-                    {videoLoadingState === 'error' && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                        <div className="bg-white/90 rounded-lg p-4 text-red-500 text-center">
-                          <p>Error loading video</p>
-                          <button 
-                            className="mt-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary/80"
-                            onClick={() => {
-                              if (videoRef.current) {
-                                videoRef.current.load();
-                              }
-                            }}
-                          >
-                            Retry
-                          </button>
-                        </div>
-                      </div>
-                    )}
-
                     {/* Play button overlay for iOS */}
-                    {isAppleDevice && !isPlaying && isVideoReady && (
+                    {isAppleDevice && !isPlaying && (
                       <div 
                         className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer"
                         onClick={() => {
