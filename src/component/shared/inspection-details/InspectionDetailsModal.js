@@ -22,7 +22,9 @@ const InspectionDetailsModal = ({ open, onClose, inspectionDetails }) => {
         <div className="bg-primary text-white px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Icon name="search" className="!text-md !block !m-0 " />
-            <h2 className="text-xl font-semibold">{selectedContent[localizationKeys.inspectionDetails]}</h2>
+            <h2 className="text-xl font-semibold">
+              {selectedContent[localizationKeys.inspectionDetails]}
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -44,18 +46,22 @@ const InspectionDetailsModal = ({ open, onClose, inspectionDetails }) => {
                   />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">
-                {selectedContent[localizationKeys.contactPerson]}  
+                  {selectedContent[localizationKeys.contactPerson]}
                 </h3>
               </div>
               <div className="space-y-3 pl-2">
                 <p className="text-gray-700 flex items-center gap-2">
-                  <span className="font-medium">{selectedContent[localizationKeys.name]}:</span>
+                  <span className="font-medium">
+                    {selectedContent[localizationKeys.name]}:
+                  </span>
                   <span>
                     {inspectionDetails?.contactPerson || "Not specified"}
                   </span>
                 </p>
                 <p className="text-gray-700 flex items-center gap-2">
-                  <span className="font-medium">{selectedContent[localizationKeys.phone]}:</span>
+                  <span className="font-medium">
+                    {selectedContent[localizationKeys.phone]}:
+                  </span>
                   <span>
                     {inspectionDetails?.phone || "No phone number available"}
                   </span>
@@ -73,20 +79,28 @@ const InspectionDetailsModal = ({ open, onClose, inspectionDetails }) => {
                   />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900">
-                {selectedContent[localizationKeys.dateAndTime]}
+                  {selectedContent[localizationKeys.dateAndTime]}
                 </h3>
               </div>
               <div className="space-y-3 pl-2">
                 <p className="text-gray-700 flex items-center gap-2">
-                  <span className="font-medium">{selectedContent[localizationKeys.Date]}:</span>
+                  <span className="font-medium">
+                    {selectedContent[localizationKeys.Date]}:
+                  </span>
                   <span>
-                    <p className="text-gray-700">{inspectionDetails?.date || "Not specified"}</p>
+                    <p className="text-gray-700">
+                      {inspectionDetails?.date || "Not specified"}
+                    </p>
                   </span>
                 </p>
                 <p className="text-gray-700 flex items-center gap-2">
-                  <span className="font-medium">{selectedContent[localizationKeys.time]}:</span>
+                  <span className="font-medium">
+                    {selectedContent[localizationKeys.time]}:
+                  </span>
                   <span>
-                    <p className="text-gray-700">{inspectionDetails?.time || "Not specified"}</p>
+                    <p className="text-gray-700">
+                      {inspectionDetails?.time || "Not specified"}
+                    </p>
                   </span>
                 </p>
               </div>
@@ -100,13 +114,24 @@ const InspectionDetailsModal = ({ open, onClose, inspectionDetails }) => {
                     className="!text-xl text-primary !block !m-0"
                   />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">{selectedContent[localizationKeys.location]}</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {selectedContent[localizationKeys.location]}
+                </h3>
               </div>
               <p className="text-gray-700 pl-2">
-                {(inspectionDetails?.cityEn || inspectionDetails?.cityAr) && 
-                 (inspectionDetails?.countryEn || inspectionDetails?.countryAr) ? (
+                {(inspectionDetails?.cityEn || inspectionDetails?.cityAr) &&
+                (inspectionDetails?.countryEn ||
+                  inspectionDetails?.countryAr) ? (
                   <span className="flex items-center gap-2">
-                    <span>{`${lang === "en" ? inspectionDetails?.cityEn : inspectionDetails?.cityAr}, ${lang === "en" ? inspectionDetails?.countryEn : inspectionDetails?.countryAr}`}</span>
+                    <span>{`${
+                      lang === "en"
+                        ? inspectionDetails?.cityEn
+                        : inspectionDetails?.cityAr
+                    }, ${
+                      lang === "en"
+                        ? inspectionDetails?.countryEn
+                        : inspectionDetails?.countryAr
+                    }`}</span>
                   </span>
                 ) : (
                   selectedContent[localizationKeys.locationNotAvailable]
@@ -123,14 +148,7 @@ const InspectionDetailsModal = ({ open, onClose, inspectionDetails }) => {
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                     />
-                  ) : (
-                    <div className="flex items-center justify-center h-[200px] text-gray-500">
-                      <p className="flex items-center gap-2">
-                        <MdLocationOn className="text-xl" />
-                        {selectedContent[localizationKeys.locationNotAvailable]}
-                      </p>
-                    </div>
-                  )}
+                  ) : null}
                 </div>
               </div>
             </div>
