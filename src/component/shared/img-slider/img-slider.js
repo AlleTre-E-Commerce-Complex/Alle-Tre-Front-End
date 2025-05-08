@@ -209,13 +209,18 @@ const ImgSlider = ({
                       playsInline
                       loop
                       preload="auto"
-                      webkit-playsinline="true"
-                      x-webkit-airplay="allow"
-                      onCanPlay={(e) => {
+                      webkit-playsinline
+                      x5-playsinline
+                      x5-video-player-type="h5"
+                      onPlay={(e) => console.log('Video started playing')}
+                      onError={(e) => console.log('Video error:', e.target.error)}
+                      onClick={(e) => {
                         const playPromise = e.target.play();
                         if (playPromise !== undefined) {
                           playPromise.catch(error => {
-                            console.log('Auto-play prevented:', error);
+                            console.log('Play prevented:', error);
+                            // Try playing again with user interaction
+                            e.target.play();
                           });
                         }
                       }}
@@ -349,8 +354,17 @@ const ImgSlider = ({
                           src={image.imageLink}
                           className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${loadedImages[index] ? 'opacity-100' : 'opacity-0'}`}
                           muted
-                          onLoadedData={() => handleImageLoad(index)}
-                          onEnded={(e) => e.target.play()}
+                          playsInline
+                          webkit-playsinline
+                          x5-playsinline
+                          preload="metadata"
+                          onLoadedData={() => {
+                            handleImageLoad(index);
+                            const playPromise = e.target.play();
+                            if (playPromise !== undefined) {
+                              playPromise.catch(() => {});
+                            }
+                          }}
                         />
                         {!loadedImages[index] && (
                           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
