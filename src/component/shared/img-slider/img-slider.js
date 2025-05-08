@@ -358,7 +358,7 @@ const ImgSlider = ({
                           webkit-playsinline
                           x5-playsinline
                           preload="metadata"
-                          onLoadedData={() => {
+                          onLoadedData={(e) => {
                             handleImageLoad(index);
                             const playPromise = e.target.play();
                             if (playPromise !== undefined) {
