@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef,useState, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
@@ -16,6 +16,8 @@ import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 
+import { BsPlayFill } from 'react-icons/bs';
+
 const ImgSlider = ({
   images,
   auctionId,
@@ -30,6 +32,11 @@ const ImgSlider = ({
   const [isWatshlist, setWatshlist] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [loadedImages, setLoadedImages] = useState({});
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [videoLoadingState, setVideoLoadingState] = useState('initial'); // 'initial', 'loading', 'ready', 'error'
+  const videoRef = useRef(null);
+  const [isAppleDevice] = useState(() => /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent));
 
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -47,6 +54,27 @@ const ImgSlider = ({
   useEffect(() => {
     if (images && images.length > 0) setSelectedImgIndex(0);
   }, [images]);
+
+  useEffect(() => {
+    // Check if it's an Apple device
+    const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
+    
+    if (isAppleDevice && images?.[selectedImgIndex] && isVideo(images[selectedImgIndex])) {
+      const mainVideo = document.querySelector('.main-video-player');
+      if (mainVideo) {
+        mainVideo.defaultMuted = true;
+        mainVideo.muted = true;
+        mainVideo.playsInline = true;
+        
+        // Small delay to ensure video is ready
+        setTimeout(() => {
+          mainVideo.play().catch(error => {
+            console.log('Autoplay prevented on Apple device:', error);
+          });
+        }, 100);
+      }
+    }
+  }, [selectedImgIndex, images, isVideo]);
 
   useEffect(() => {
     setWatshlist(WatshlistState);
@@ -201,8 +229,9 @@ const ImgSlider = ({
                 {isVideo(images[selectedImgIndex]) ? (
                   <div className="relative w-full h-full">
                     <video
+                      ref={videoRef}
+                      className="main-video-player w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
                       key={images[selectedImgIndex]?.imageLink}
-                      className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
                       controls
                       controlsList="nodownload nofullscreen"
                       muted
@@ -210,20 +239,33 @@ const ImgSlider = ({
                       loop
                       preload="auto"
                       webkit-playsinline
-                      x5-playsinline
-                      x5-video-player-type="h5"
-                      onPlay={(e) => console.log('Video started playing')}
-                      onError={(e) => console.log('Video error:', e.target.error)}
-                      onClick={(e) => {
-                        const playPromise = e.target.play();
-                        if (playPromise !== undefined) {
-                          playPromise.catch(error => {
-                            console.log('Play prevented:', error);
-                            // Try playing again with user interaction
-                            e.target.play();
-                          });
-                        }
+                      playsinline
+                      onLoadStart={() => {
+                        console.log('Video load started');
+                        setVideoLoadingState('loading');
+                        setIsVideoReady(false);
                       }}
+                      onLoadedMetadata={(e) => {
+                        console.log('Video metadata loaded', {
+                          duration: e.target.duration,
+                          videoWidth: e.target.videoWidth,
+                          videoHeight: e.target.videoHeight
+                        });
+                      }}
+                      onCanPlay={() => {
+                        console.log('Video can play now');
+                        setVideoLoadingState('ready');
+                        setIsVideoReady(true);
+                      }}
+                      onError={(e) => {
+                        console.error('Video error:', e.target.error);
+                        setVideoLoadingState('error');
+                      }}
+                      onPlay={(e) => {
+                        console.log('Video started playing');
+                        setIsPlaying(true);
+                      }}
+                      onPause={() => setIsPlaying(false)}
                     >
                       <source
                         src={images[selectedImgIndex]?.imageLink}
@@ -238,6 +280,50 @@ const ImgSlider = ({
                         alt="Watermark"
                       />
                     </div>
+
+                    {/* Loading indicator */}
+                    {videoLoadingState === 'loading' && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+                      </div>
+                    )}
+
+                    {/* Error message */}
+                    {videoLoadingState === 'error' && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                        <div className="bg-white/90 rounded-lg p-4 text-red-500 text-center">
+                          <p>Error loading video</p>
+                          <button 
+                            className="mt-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary/80"
+                            onClick={() => {
+                              if (videoRef.current) {
+                                videoRef.current.load();
+                              }
+                            }}
+                          >
+                            Retry
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Play button overlay for iOS */}
+                    {isAppleDevice && !isPlaying && isVideoReady && (
+                      <div 
+                        className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer"
+                        onClick={() => {
+                          if (videoRef.current) {
+                            videoRef.current.play()
+                              .then(() => setIsPlaying(true))
+                              .catch(error => console.log('Play error:', error));
+                          }
+                        }}
+                      >
+                        <div className="bg-white/80 rounded-full p-4 hover:bg-white transition-colors duration-300">
+                          <BsPlayFill className="text-primary text-4xl" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <img
@@ -351,19 +437,24 @@ const ImgSlider = ({
                     {isVideo(image) ? (
                       <>
                         <video
+                          ref={(el) => {
+                            if (el) {
+                              el.defaultMuted = true;
+                              el.muted = true;
+                              el.playsInline = true;
+                            }
+                          }}
                           src={image.imageLink}
                           className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${loadedImages[index] ? 'opacity-100' : 'opacity-0'}`}
                           muted
                           playsInline
                           webkit-playsinline
                           x5-playsinline
+                          playsinline
                           preload="metadata"
-                          onLoadedData={() => {
+                          onLoadedData={(e) => {
                             handleImageLoad(index);
-                            const playPromise = e.target.play();
-                            if (playPromise !== undefined) {
-                              playPromise.catch(() => {});
-                            }
+                            e.target.play().catch(() => {});
                           }}
                         />
                         {!loadedImages[index] && (
