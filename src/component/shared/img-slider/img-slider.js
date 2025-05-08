@@ -1,4 +1,4 @@
-import { useEffect,useRef, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { toast } from "react-hot-toast";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
@@ -15,9 +15,6 @@ import content from "../../../localization/content";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
-
-import { BsPlayFill } from 'react-icons/bs';
-
 const ImgSlider = ({
   images,
   auctionId,
@@ -32,74 +29,41 @@ const ImgSlider = ({
   const [isWatshlist, setWatshlist] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [loadedImages, setLoadedImages] = useState({});
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef(null);
-  const [isAppleDevice] = useState(() => /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent));
-
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const isArabic = lang === "ar";
   const { user } = useAuthState();
   const dispatch = useDispatch();
-
   const toggleZoom = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
       setIsZoomed(!isZoomed);
     }, 300);
   }, [isZoomed]);
-
   useEffect(() => {
     if (images && images.length > 0) setSelectedImgIndex(0);
   }, [images]);
-
-  useEffect(() => {
-    // Check if it's an Apple device
-    const isAppleDevice = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
-    
-    if (isAppleDevice && images?.[selectedImgIndex] && isVideo(images[selectedImgIndex])) {
-      const mainVideo = document.querySelector('.main-video-player');
-      if (mainVideo) {
-        mainVideo.defaultMuted = true;
-        mainVideo.muted = true;
-        mainVideo.playsInline = true;
-        
-        // Small delay to ensure video is ready
-        setTimeout(() => {
-          mainVideo.play().catch(error => {
-            console.log('Autoplay prevented on Apple device:', error);
-          });
-        }, 100);
-      }
-    }
-  }, [selectedImgIndex, images, isVideo]);
-
   useEffect(() => {
     setWatshlist(WatshlistState);
   }, [WatshlistState]);
-
   useEffect(() => {
     const handleScroll = () => {
       if (isZoomed) {
         toggleZoom();
       }
     };
-
     const handleScrollEvent = () => {
       requestAnimationFrame(handleScroll);
     };
-
     if (isZoomed) {
       window.addEventListener("scroll", handleScrollEvent);
     } else {
       window.removeEventListener("scroll", handleScrollEvent);
     }
-
     return () => {
       window.removeEventListener("scroll", handleScrollEvent);
     };
   }, [isZoomed, toggleZoom]);
-
   const handleNext = () => {
     setSelectedImgIndex((prev) => {
       const nextIndex = (prev + 1) % images.length;
@@ -107,7 +71,6 @@ const ImgSlider = ({
       return nextIndex;
     });
   };
-
   const handlePrevious = () => {
     setSelectedImgIndex((prev) => {
       const nextIndex = prev === 0 ? images.length - 1 : prev - 1;
@@ -115,7 +78,6 @@ const ImgSlider = ({
       return nextIndex;
     });
   };
-
   const scrollThumbnailIntoView = (index) => {
     const container = document.getElementById('thumbnail-container');
     const thumbnail = container?.children[index];
@@ -124,10 +86,8 @@ const ImgSlider = ({
       const thumbnailWidth = thumbnail.offsetWidth;
       const scrollPosition = container.scrollLeft;
       const thumbnailPosition = thumbnail.offsetLeft;
-
       const isOutOfViewRight = thumbnailPosition + thumbnailWidth > scrollPosition + containerWidth;
       const isOutOfViewLeft = thumbnailPosition < scrollPosition;
-
       if (isOutOfViewRight) {
         container.scrollTo({
           left: thumbnailPosition - containerWidth + thumbnailWidth + 16,
@@ -141,12 +101,10 @@ const ImgSlider = ({
       }
     }
   };
-
   const handleThumbnailClick = (index) => {
     setSelectedImgIndex(index);
     scrollThumbnailIntoView(index);
   };
-
   const { run, isLoading } = useAxios([]);
   const handelAddNewWatshlist = () => {
     if (user) {
@@ -174,19 +132,16 @@ const ImgSlider = ({
       dispatch(Open());
     }
   };
-
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
     return port
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
-
   const handleShare = async () => {
     const shareUrl = isListProduct
       ? `${getDomain()}/alletre/my-product/${auctionId}/details`
       : `${getDomain()}/alletre/home/${auctionId}/details`;
-
     if (navigator.share) {
       try {
         await navigator.share({
@@ -201,15 +156,12 @@ const ImgSlider = ({
       alert("Sharing is not supported in this browser.");
     }
   };
-
   const isVideo = (media) => {
     return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
   };
-
   const handleImageLoad = (index) => {
     setLoadedImages((prev) => ({ ...prev, [index]: true }));
   };
-
   return (
     <>
       <Dimmer
@@ -227,19 +179,17 @@ const ImgSlider = ({
                 {isVideo(images[selectedImgIndex]) ? (
                   <div className="relative w-full h-full">
                     <video
-                      ref={videoRef}
-                      className="main-video-player w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
                       key={images[selectedImgIndex]?.imageLink}
+                      className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
                       controls
                       controlsList="nodownload nofullscreen"
+                      autoPlay
                       muted
                       playsInline
                       loop
-                      preload="auto"
-                      webkit-playsinline
-                      playsinline
-                      onPlay={() => setIsPlaying(true)}
-                      onPause={() => setIsPlaying(false)}
+                      preload="metadata"
+                      onLoadedMetadata={(e) => e.target.play()}
+                      onEnded={(e) => e.target.play()}
                     >
                       <source
                         src={images[selectedImgIndex]?.imageLink}
@@ -254,24 +204,6 @@ const ImgSlider = ({
                         alt="Watermark"
                       />
                     </div>
-
-                    {/* Play button overlay for iOS */}
-                    {isAppleDevice && !isPlaying && (
-                      <div 
-                        className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer"
-                        onClick={() => {
-                          if (videoRef.current) {
-                            videoRef.current.play()
-                              .then(() => setIsPlaying(true))
-                              .catch(error => console.log('Play error:', error));
-                          }
-                        }}
-                      >
-                        <div className="bg-white/80 rounded-full p-4 hover:bg-white transition-colors duration-300">
-                          <BsPlayFill className="text-primary text-4xl" />
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ) : (
                   <img
@@ -295,7 +227,6 @@ const ImgSlider = ({
                 </div>
               </div>
             )}
-
           <div
             className={`absolute top-1/2 w-full flex ${isArabic ? "justify-between flex-row-reverse" : "justify-between"
               } px-4 transform -translate-y-1/2 z-20`}
@@ -319,7 +250,6 @@ const ImgSlider = ({
               />
             </button>
           </div>
-
           <div
             className={`absolute top-5 z-20 flex items-center ${isArabic ? "left-5 space-x-reverse" : "right-5"
               } space-x-2`}
@@ -343,7 +273,6 @@ const ImgSlider = ({
               <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg md:text-2xl" />
             </div>
           </div>
-
           {/* Thumbnail Section */}
           <div className="h-[18%] w-full flex justify-center items-center bg-secondary/10">
             <div className="bg-opacity-70 p-2 flex gap-2 relative w-full max-w-[90%]">
@@ -361,7 +290,6 @@ const ImgSlider = ({
                   </svg>
                 </button>
               )}
-
               {/* Thumbnails container */}
               <div
                 id="thumbnail-container"
@@ -385,25 +313,11 @@ const ImgSlider = ({
                     {isVideo(image) ? (
                       <>
                         <video
-                          ref={(el) => {
-                            if (el) {
-                              el.defaultMuted = true;
-                              el.muted = true;
-                              el.playsInline = true;
-                            }
-                          }}
                           src={image.imageLink}
                           className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${loadedImages[index] ? 'opacity-100' : 'opacity-0'}`}
                           muted
-                          playsInline
-                          webkit-playsinline
-                          x5-playsinline
-                          playsinline
-                          preload="metadata"
-                          onLoadedData={(e) => {
-                            handleImageLoad(index);
-                            e.target.play().catch(() => {});
-                          }}
+                          onLoadedData={() => handleImageLoad(index)}
+                          onEnded={(e) => e.target.play()}
                         />
                         {!loadedImages[index] && (
                           <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-lg">
@@ -437,7 +351,6 @@ const ImgSlider = ({
                   </div>
                 ))}
               </div>
-
               {/* Right scroll button */}
               {images?.length > 8 && (
                 <button
@@ -454,7 +367,6 @@ const ImgSlider = ({
               )}
             </div>
           </div>
-
           <style jsx>{`
             .hide-scrollbar::-webkit-scrollbar {
               display: none;
@@ -464,7 +376,6 @@ const ImgSlider = ({
               scrollbar-width: none;
             }
           `}</style>
-
           {isZoomed && (
             <div
               className="fixed inset-0 bg-white bg-opacity-60 flex items-center justify-center z-50"
@@ -481,20 +392,11 @@ const ImgSlider = ({
                     className="w-full h-full object-contain"
                     controls
                     controlsList="nodownload nofullscreen"
+                    autoPlay
+                    playsInline   
                     muted
-                    playsInline
-                    loop
-                    preload="auto"
-                    webkit-playsinline="true"
-                    x-webkit-airplay="allow"
-                    onCanPlay={(e) => {
-                      const playPromise = e.target.play();
-                      if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                          console.log('Auto-play prevented:', error);
-                        });
-                      }
-                    }}
+                    preload="metadata"
+                    onLoadedMetadata={(e) => e.target.play()}
                     style={{
                       width: "90vw",
                       height: "70vh",
@@ -558,5 +460,4 @@ const ImgSlider = ({
     </>
   );
 };
-
 export default ImgSlider;
