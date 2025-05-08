@@ -187,9 +187,19 @@ const ImgSlider = ({
                       muted
                       playsInline
                       loop
-                      preload="metadata"
-                      onLoadedMetadata={(e) => e.target.play()}
-                      onEnded={(e) => e.target.play()}
+                      preload="auto"
+                      webkit-playsinline
+                      x-webkit-airplay="allow"
+                      onLoadedMetadata={(e) => {
+                        e.target.play().catch(error => {
+                          console.log('Playback failed:', error);
+                        });
+                      }}
+                      onEnded={(e) => {
+                        e.target.play().catch(error => {
+                          console.log('Loop playback failed:', error);
+                        });
+                      }}
                     >
                       <source
                         src={images[selectedImgIndex]?.imageLink}
@@ -393,10 +403,16 @@ const ImgSlider = ({
                     controls
                     controlsList="nodownload nofullscreen"
                     autoPlay
-                    playsInline   
+                    playsInline
+                    webkit-playsinline
+                    x-webkit-airplay="allow"
                     muted
-                    preload="metadata"
-                    onLoadedMetadata={(e) => e.target.play()}
+                    preload="auto"
+                    onLoadedMetadata={(e) => {
+                      e.target.play().catch(error => {
+                        console.log('Playback failed:', error);
+                      });
+                    }}
                     style={{
                       width: "90vw",
                       height: "70vh",
