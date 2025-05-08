@@ -205,13 +205,20 @@ const ImgSlider = ({
                       className="w-full h-full object-contain rounded-md shadow-lg transition-transform duration-300 ease-in-out"
                       controls
                       controlsList="nodownload nofullscreen"
-                      autoPlay
                       muted
                       playsInline
                       loop
-                      preload="metadata"
-                      onLoadedMetadata={(e) => e.target.play()}
-                      onEnded={(e) => e.target.play()}
+                      preload="auto"
+                      webkit-playsinline="true"
+                      x-webkit-airplay="allow"
+                      onCanPlay={(e) => {
+                        const playPromise = e.target.play();
+                        if (playPromise !== undefined) {
+                          playPromise.catch(error => {
+                            console.log('Auto-play prevented:', error);
+                          });
+                        }
+                      }}
                     >
                       <source
                         src={images[selectedImgIndex]?.imageLink}
@@ -421,11 +428,20 @@ const ImgSlider = ({
                     className="w-full h-full object-contain"
                     controls
                     controlsList="nodownload nofullscreen"
-                    autoPlay
-                    playsInline
                     muted
-                    preload="metadata"
-                    onLoadedMetadata={(e) => e.target.play()}
+                    playsInline
+                    loop
+                    preload="auto"
+                    webkit-playsinline="true"
+                    x-webkit-airplay="allow"
+                    onCanPlay={(e) => {
+                      const playPromise = e.target.play();
+                      if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                          console.log('Auto-play prevented:', error);
+                        });
+                      }
+                    }}
                     style={{
                       width: "90vw",
                       height: "70vh",

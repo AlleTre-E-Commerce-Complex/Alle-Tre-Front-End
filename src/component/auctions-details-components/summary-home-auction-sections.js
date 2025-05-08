@@ -532,7 +532,6 @@ const SummaryHomeAuctionSections = ({
                 cityAr: sellerLocation?.city?.nameAr,
                 countryEn: sellerLocation?.country?.nameEn,
                 countryAr: sellerLocation?.country?.nameAr,
-                
                 lat: sellerLocation?.lat,
                 lng: sellerLocation?.lng,
                 date: new Date(StartDate).toLocaleDateString("en-US", {
@@ -566,11 +565,11 @@ const SummaryHomeAuctionSections = ({
                         <BiSolidFilePdf className="w-8 h-8 text-red-500" />
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium text-gray-900 truncate">
-                            {selectedContent[localizationKeys.document]}
+                            {selectedContent[localizationKeys.inspetionReport]}
                           </h4>
-                          <p className="text-xs text-gray-500 mt-0.5">
+                          {/* <p className="text-xs text-gray-500 mt-0.5">
                             {selectedContent[localizationKeys.Pdfdocument]}
-                          </p>
+                          </p> */}
                         </div>
                       </div>
                       <a

@@ -351,6 +351,7 @@ const en = {
   [localizationKeys.inspectionDetails]: "Inspection Details",
   [localizationKeys.contactPerson]: "Contact Person",
   [localizationKeys.dateAndTime]: "Date & Time",
+  [localizationKeys.inspetionReport]:"Inspetion report",
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",
