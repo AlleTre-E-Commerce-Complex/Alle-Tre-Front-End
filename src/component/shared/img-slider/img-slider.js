@@ -206,8 +206,11 @@ const ImgSlider = ({
                       controls
                       controlsList="nodownload nofullscreen"
                       autoPlay
+                      muted
                       playsInline
                       loop
+                      preload="metadata"
+                      onLoadedMetadata={(e) => e.target.play()}
                       onEnded={(e) => e.target.play()}
                     >
                       <source
@@ -419,7 +422,10 @@ const ImgSlider = ({
                     controls
                     controlsList="nodownload nofullscreen"
                     autoPlay
-                    playsInline   
+                    playsInline
+                    muted
+                    preload="metadata"
+                    onLoadedMetadata={(e) => e.target.play()}
                     style={{
                       width: "90vw",
                       height: "70vh",
