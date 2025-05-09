@@ -234,6 +234,7 @@ const Home = ({
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      isHome: true, // ensure backend can parse this correctly!
     };
 
     Object.keys(filterParams).forEach((key) => {
