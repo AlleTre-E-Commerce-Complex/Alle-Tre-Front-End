@@ -145,22 +145,44 @@ const Home = ({
           axios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
         ]);
 
-        console.log('Live Response Structure:', {
-          status: liveRes?.status,
-          data: liveRes?.data,
-          hasData: Boolean(liveRes?.data?.data)
+        // Log detailed data structure
+        console.log('Live Data:', {
+          liveData: liveRes?.data?.data,
+          isArray: Array.isArray(liveRes?.data?.data),
+          length: liveRes?.data?.data?.length,
+          firstItem: liveRes?.data?.data?.[0]
         });
-        console.log('Upcoming Response Structure:', {
-          status: upcomingRes?.status,
-          data: upcomingRes?.data,
-          hasData: Boolean(upcomingRes?.data?.data)
+
+        console.log('Upcoming Data:', {
+          upcomingData: upcomingRes?.data?.data,
+          isArray: Array.isArray(upcomingRes?.data?.data),
+          length: upcomingRes?.data?.data?.length,
+          firstItem: upcomingRes?.data?.data?.[0]
         });
-        
-        // Ensure we have valid arrays before spreading
-        const liveData = Array.isArray(liveRes?.data?.data) ? liveRes.data.data : [];
-        const upcomingData = Array.isArray(upcomingRes?.data?.data) ? upcomingRes.data.data : [];
-        
-        setMainAuctions([...liveData, ...upcomingData]);
+
+        // Ensure we have valid arrays and validate each item
+        const liveData = Array.isArray(liveRes?.data?.data) 
+          ? liveRes.data.data.filter(item => item && typeof item === 'object')
+          : [];
+
+        const upcomingData = Array.isArray(upcomingRes?.data?.data)
+          ? upcomingRes.data.data.filter(item => item && typeof item === 'object')
+          : [];
+
+        // Log the filtered data
+        console.log('Filtered Data:', {
+          liveDataLength: liveData.length,
+          upcomingDataLength: upcomingData.length,
+          combinedLength: liveData.length + upcomingData.length
+        });
+
+        const combinedData = [...liveData, ...upcomingData].map(item => ({
+          ...item,
+          product: item.product || {},
+          _count: item._count || { bids: 0 }
+        }));
+
+        setMainAuctions(combinedData);
       } catch (error) {
         console.error('Error fetching auctions:', error);
         console.error('Error details:', {
