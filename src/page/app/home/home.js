@@ -148,20 +148,34 @@ const Home = ({
   
     Promise.all([mainRequest, upComingRequest])
     .then(([mainRes, upComingRes]) => {
-      console.log("mainRes:", mainRes?.data);
-      console.log("upComingRes:", upComingRes?.data);
+      // Add defensive checks for response structure
+      if (!mainRes?.data || !upComingRes?.data) {
+        console.warn('Invalid response structure received');
+        setMainAuctions([]);
+        return;
+      }
+
+      console.log("mainRes:", mainRes.data);
+      console.log("upComingRes:", upComingRes.data);
     
-      const mainData = Array.isArray(mainRes?.data?.data) ? mainRes.data.data : [];
-      const upcomingData = Array.isArray(upComingRes?.data?.data) ? upComingRes.data.data : [];
+      // Use optional chaining and provide empty array as fallback
+      const mainData = mainRes.data?.data ?? [];
+      const upcomingData = upComingRes.data?.data ?? [];
     
+      // Additional type check before spreading
+      if (!Array.isArray(mainData) || !Array.isArray(upcomingData)) {
+        console.warn('Response data is not in expected array format');
+        setMainAuctions([]);
+        return;
+      }
+
       const allAuctions = [...mainData, ...upcomingData];
       setMainAuctions(allAuctions);
     })
-    
-      .catch((err) => {
-        console.error("Auction fetch error:", err);
-        setMainAuctions([]);
-      });
+    .catch((err) => {
+      console.error("Auction fetch error:", err);
+      setMainAuctions([]);
+    });
   }, [search, user]);
   
 
@@ -501,7 +515,6 @@ const Home = ({
                                 key={e?.id}
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
-                                adsImg={e?.product?.images}
                                 userId={e?.userId}
                                 id={e?.product?.id}
                                 city={
