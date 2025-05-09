@@ -149,13 +149,19 @@ const Home = ({
       : axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
   
     Promise.all([mainRequest, upComingRequest])
-      .then(([mainRes, upComingRes]) => {
-        const allAuctions = [...(mainRes?.data?.data || []), ...(upComingRes?.data?.data || [])];
-        setMainAuctions(allAuctions);
-      })
+    .then(([mainRes, upComingRes]) => {
+      console.log("mainRes:", mainRes?.data);
+      console.log("upComingRes:", upComingRes?.data);
+    
+      const mainData = Array.isArray(mainRes?.data?.data) ? mainRes.data.data : [];
+      const upcomingData = Array.isArray(upComingRes?.data?.data) ? upComingRes.data.data : [];
+    
+      const allAuctions = [...mainData, ...upcomingData];
+      setMainAuctions(allAuctions);
+    })
+    
       .catch((err) => {
         console.error("Auction fetch error:", err);
-        console.log('Auction fetch error2',err)
       });
   }, [search, user]);
   
