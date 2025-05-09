@@ -142,49 +142,14 @@ const Home = ({
       });
 
       try {
-        const [liveRes, upcomingRes] = await Promise.all([
-          axios.get(`${api.app.auctions.getMain}?${queryStr}`),
-          axios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
-        ]);
-
-        // Log detailed data structure
-        console.log('Live Data:', {
-          liveData: liveRes?.data?.data,
-          isArray: Array.isArray(liveRes?.data?.data),
-          length: liveRes?.data?.data?.length,
-          firstItem: liveRes?.data?.data?.[0]
-        });
-
-        console.log('Upcoming Data:', {
-          upcomingData: upcomingRes?.data?.data,
-          isArray: Array.isArray(upcomingRes?.data?.data),
-          length: upcomingRes?.data?.data?.length,
-          firstItem: upcomingRes?.data?.data?.[0]
-        });
-
-        // Ensure we have valid arrays and validate each item
-        const liveData = Array.isArray(liveRes?.data?.data) 
-          ? liveRes.data.data.filter(item => item && typeof item === 'object')
-          : [];
-
-        const upcomingData = Array.isArray(upcomingRes?.data?.data)
-          ? upcomingRes.data.data.filter(item => item && typeof item === 'object')
-          : [];
-
-        // Log the filtered data
-        console.log('Filtered Data:', {
-          liveDataLength: liveData.length,
-          upcomingDataLength: upcomingData.length,
-          combinedLength: liveData.length + upcomingData.length
-        });
-
-        const combinedData = [...liveData, ...upcomingData].map(item => ({
-          ...item,
-          product: item.product || {},
-          _count: item._count || { bids: 0 }
-        }));
-
-        setMainAuctions(combinedData);
+        runMainAuctions(
+          axios
+            .get(`${api.app.auctions.getMain}?${queryStr}`)
+            .then((res) => {
+              setMainAuctions(res?.data?.data);
+              // setTotalPagesListed(res?.data?.pagination?.totalPages);
+            })
+        );
       } catch (error) {
         console.error('Error fetching auctions:', error);
         console.error('Error details:', {
@@ -193,7 +158,6 @@ const Home = ({
           response: error.response,
           request: error.request
         });
-        setMainAuctions([]);
       }
       } catch (error) {
         console.log(error)
