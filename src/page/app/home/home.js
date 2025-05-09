@@ -99,65 +99,68 @@ const Home = ({
   //   localStorage.setItem("isGrid", JSON.stringify(isGrid));
   // }, [isGrid]);
 
-  useEffect(async() => {
-    const queryParams = new URLSearchParams(search);
-    let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
-    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+  useEffect(() => {
+    const fetchAuctions = async () => {
+      const queryParams = new URLSearchParams(search);
+      let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+      let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
   
-    if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
-      queryParams.set("auctionPage", page.toString());
-      queryParams.set("perPage", perPage.toString());
-      history.replace({ search: queryParams.toString() });
-      return;
-    }
+      if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
+        queryParams.set("auctionPage", page.toString());
+        queryParams.set("perPage", perPage.toString());
+        history.replace({ search: queryParams.toString() });
+        return;
+      }
   
-    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+      const parsed = queryString.parse(search, { arrayFormat: "bracket" });
   
-    const filterParams = {
-      page,
-      perPage,
-      categories: parsed.categories?.map(Number),
-      subCategory: parsed.subCategory?.map(Number),
-      brands: parsed.brands?.map(Number),
-      sellingType: parsed.sellingType,
-      auctionStatus: parsed.auctionStatus,
-      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
-      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-      isHome: true, // ensure backend can parse this correctly!
+      const filterParams = {
+        page,
+        perPage,
+        categories: parsed.categories?.map(Number),
+        subCategory: parsed.subCategory?.map(Number),
+        brands: parsed.brands?.map(Number),
+        sellingType: parsed.sellingType,
+        auctionStatus: parsed.auctionStatus,
+        usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+        priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+        priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+        isHome: true,
+      };
+  
+      Object.keys(filterParams).forEach((key) => {
+        if (filterParams[key] === undefined) {
+          delete filterParams[key];
+        }
+      });
+  
+      const queryStr = queryString.stringify(filterParams, {
+        arrayFormat: "bracket",
+      });
+  
+      let mainData = [];
+      let upcomingData = [];
+  
+      try {
+        const mainRes = await axios.get(`${api.app.auctions.getMain}?${queryStr}`);
+        mainData = mainRes?.data?.data || [];
+      } catch (err) {
+        console.error("Error fetching main auctions", err);
+      }
+  
+      try {
+        const upcomingRes = await axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
+        upcomingData = upcomingRes?.data?.data || [];
+      } catch (err) {
+        console.error("Error fetching upcoming auctions", err);
+      }
+  
+      setMainAuctions([...mainData, ...upcomingData]);
     };
   
-    // Remove undefined keys
-    Object.keys(filterParams).forEach((key) => {
-      if (filterParams[key] === undefined) {
-        delete filterParams[key];
-      }
-    });
-  
-    const queryStr = queryString.stringify(filterParams, {
-      arrayFormat: "bracket",
-    });
-
-    const mainRequest = axios.get(`${api.app.auctions.getMain}?${queryStr}`);
-    const upcomingRequest = axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
-
-    
-     await Promise.all([mainRequest, upcomingRequest])
-        .then(([liveRes, upcomingRes]) => {
-          console.log('res......live', liveRes.data.data);
-          console.log('res......upComing', upcomingRes.data.data);
-          
-          const liveData = liveRes?.data?.data || [];
-          const upcomingData = upcomingRes?.data?.data || [];
-          
-          setMainAuctions([...liveData, ...upcomingData]);
-        })
-        .catch(error => {
-          console.error('Error fetching auctions:', error);
-          setMainAuctions([]);
-        })
- 
+    fetchAuctions();
   }, [search, user]);
+  
   
 
   useEffect(() => {
