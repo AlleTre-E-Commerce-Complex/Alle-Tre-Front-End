@@ -100,66 +100,83 @@ const Home = ({
   // }, [isGrid]);
 
   useEffect(() => {
-    const fetchAuctions = async () => {
+    async function fetchAuctions() {
       const queryParams = new URLSearchParams(search);
       let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
       let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-  
+    
       if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
         queryParams.set("auctionPage", page.toString());
         queryParams.set("perPage", perPage.toString());
         history.replace({ search: queryParams.toString() });
         return;
       }
-  
+    
       const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-  
+    
       const filterParams = {
         page,
         perPage,
-        categories: parsed.categories?.map(Number),
-        subCategory: parsed.subCategory?.map(Number),
-        brands: parsed.brands?.map(Number),
+        categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : undefined,
+        subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
+        brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
         sellingType: parsed.sellingType,
         auctionStatus: parsed.auctionStatus,
         usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
         priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
         priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-        isHome: true,
+        isHome: true, // ensure backend can parse this correctly!
       };
-  
+    
+      // Remove undefined keys
       Object.keys(filterParams).forEach((key) => {
         if (filterParams[key] === undefined) {
           delete filterParams[key];
         }
       });
-  
+    
       const queryStr = queryString.stringify(filterParams, {
         arrayFormat: "bracket",
       });
-  
-      let mainData = [];
-      let upcomingData = [];
-  
+
       try {
-        const mainRes = await axios.get(`${api.app.auctions.getMain}?${queryStr}`);
-        mainData = mainRes?.data?.data || [];
-      } catch (err) {
-        console.error("Error fetching main auctions", err);
+        const [liveRes, upcomingRes] = await Promise.all([
+          axios.get(`${api.app.auctions.getMain}?${queryStr}`),
+          axios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
+        ]);
+
+        console.log('Live Response Structure:', {
+          status: liveRes?.status,
+          data: liveRes?.data,
+          hasData: Boolean(liveRes?.data?.data)
+        });
+        console.log('Upcoming Response Structure:', {
+          status: upcomingRes?.status,
+          data: upcomingRes?.data,
+          hasData: Boolean(upcomingRes?.data?.data)
+        });
+        
+        // Ensure we have valid arrays before spreading
+        const liveData = Array.isArray(liveRes?.data?.data) ? liveRes.data.data : [];
+        const upcomingData = Array.isArray(upcomingRes?.data?.data) ? upcomingRes.data.data : [];
+        
+        setMainAuctions([...liveData, ...upcomingData]);
+      } catch (error) {
+        console.error('Error fetching auctions:', error);
+        console.error('Error details:', {
+          name: error.name,
+          message: error.message,
+          response: error.response,
+          request: error.request
+        });
+        setMainAuctions([]);
       }
-  
-      try {
-        const upcomingRes = await axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
-        upcomingData = upcomingRes?.data?.data || [];
-      } catch (err) {
-        console.error("Error fetching upcoming auctions", err);
-      }
-  
-      setMainAuctions([...mainData, ...upcomingData]);
-    };
-  
+    }
+
     fetchAuctions();
+ 
   }, [search, user]);
+  
   
   
 
