@@ -99,7 +99,7 @@ const Home = ({
   //   localStorage.setItem("isGrid", JSON.stringify(isGrid));
   // }, [isGrid]);
 
-  useEffect(() => {
+  useEffect(async() => {
     const queryParams = new URLSearchParams(search);
     let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
     let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
@@ -141,8 +141,8 @@ const Home = ({
     const mainRequest = axios.get(`${api.app.auctions.getMain}?${queryStr}`);
     const upcomingRequest = axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
 
-    runMainAuctions(
-      Promise.all([mainRequest, upcomingRequest])
+    
+     await Promise.all([mainRequest, upcomingRequest])
         .then(([liveRes, upcomingRes]) => {
           console.log('res......live', liveRes.data.data);
           // console.log('res......upComing', upcomingRes.data.data);
@@ -156,7 +156,7 @@ const Home = ({
           console.error('Error fetching auctions:', error);
           setMainAuctions([]);
         })
-    );
+ 
   }, [search, user]);
   
 
