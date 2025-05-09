@@ -145,7 +145,7 @@ const Home = ({
       Promise.all([mainRequest, upcomingRequest])
         .then(([liveRes, upcomingRes]) => {
           console.log('res......live', liveRes.data.data);
-          console.log('res......upComing', upcomingRes.data.data);
+          // console.log('res......upComing', upcomingRes.data.data);
           
           const liveData = liveRes?.data?.data || [];
           const upcomingData = upcomingRes?.data?.data || [];
