@@ -138,44 +138,52 @@ const Home = ({
       arrayFormat: "bracket",
     });
   
-    const mainRequest = user
-      ? authAxios.get(`${api.app.auctions.getMain}?${queryStr}`)
-      : axios.get(`${api.app.auctions.getMain}?${queryStr}`);
+    runListedProduct(
+      axios
+        .get(`${api.app.auctions.getMain}?${queryStr}`)
+        .then((res) => {
+          setMainAuctions(res?.data?.data);
+          // setTotalPagesListed(res?.data?.pagination?.totalPages);
+        })
+    );
+    // const mainRequest = user
+    //   ? authAxios.get(`${api.app.auctions.getMain}?${queryStr}`)
+    //   : axios.get(`${api.app.auctions.getMain}?${queryStr}`);
   
-    const upComingRequest = user
-      ? authAxios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
-      : axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
+    // const upComingRequest = user
+    //   ? authAxios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
+    //   : axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
   
-    Promise.all([mainRequest, upComingRequest])
-    .then(([mainRes, upComingRes]) => {
-      // Add defensive checks for response structure
-      if (!mainRes?.data || !upComingRes?.data) {
-        console.warn('Invalid response structure received');
-        setMainAuctions([]);
-        return;
-      }
+    // Promise.all([mainRequest, upComingRequest])
+    // .then(([mainRes, upComingRes]) => {
+    //   // Add defensive checks for response structure
+    //   if (!mainRes?.data || !upComingRes?.data) {
+    //     console.warn('Invalid response structure received');
+    //     setMainAuctions([]);
+    //     return;
+    //   }
 
-      console.log("mainRes:", mainRes.data);
-      console.log("upComingRes:", upComingRes.data);
+    //   console.log("mainRes:", mainRes.data);
+    //   console.log("upComingRes:", upComingRes.data);
     
-      // Use optional chaining and provide empty array as fallback
-      const mainData = mainRes.data?.data ?? [];
-      const upcomingData = upComingRes.data?.data ?? [];
+    //   // Use optional chaining and provide empty array as fallback
+    //   const mainData = mainRes.data?.data ?? [];
+    //   const upcomingData = upComingRes.data?.data ?? [];
     
-      // Additional type check before spreading
-      if (!Array.isArray(mainData) || !Array.isArray(upcomingData)) {
-        console.warn('Response data is not in expected array format');
-        setMainAuctions([]);
-        return;
-      }
+    //   // Additional type check before spreading
+    //   if (!Array.isArray(mainData) || !Array.isArray(upcomingData)) {
+    //     console.warn('Response data is not in expected array format');
+    //     setMainAuctions([]);
+    //     return;
+    //   }
 
-      const allAuctions = [...mainData, ...upcomingData];
-      setMainAuctions(allAuctions);
-    })
-    .catch((err) => {
-      console.error("Auction fetch error:", err);
-      setMainAuctions([]);
-    });
+    //   const allAuctions = [...mainData, ...upcomingData];
+    //   setMainAuctions(allAuctions);
+    // })
+    // .catch((err) => {
+    //   console.error("Auction fetch error:", err);
+    //   setMainAuctions([]);
+    // });
   }, [search, user]);
   
 
