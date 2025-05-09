@@ -55,7 +55,7 @@ const Home = ({
 
     // Count auctions per category
     mainAuctions.forEach((auction) => {
-      const categoryId = auction.product?.categoryId;
+      const categoryId = auction?.product?.categoryId;
       if (categoryId) {
         counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
         counts[categoryId].auctions++;
@@ -64,7 +64,7 @@ const Home = ({
 
     // Count listings per category
     listedProducts.forEach((listing) => {
-      const categoryId = listing.product?.categoryId;
+      const categoryId = listing?.product?.categoryId;
       if (categoryId) {
         counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
         counts[categoryId].listings++;
@@ -251,8 +251,11 @@ const Home = ({
                   bids: (auction._count.bids || 0) + 1,
                 },
                 currentBid: {
-                  bidAmount: data.auction.bids[0]?.amount,
+                  bidAmount: Array.isArray(data.auction.bids) && data.auction.bids.length > 0
+                    ? data.auction.bids[0].amount
+                    : auction.currentBid?.bidAmount ?? null,
                 },
+                
               }
             : auction
         );
