@@ -105,66 +105,59 @@ const Home = ({
     const queryParams = new URLSearchParams(search);
     let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
     let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-
+  
     if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
       queryParams.set("auctionPage", page.toString());
       queryParams.set("perPage", perPage.toString());
       history.replace({ search: queryParams.toString() });
       return;
     }
-
+  
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+  
     const filterParams = {
-      page: page,
-      perPage: perPage,
-      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
-      subCategory: parsed.subCategory
-        ? parsed.subCategory.map(Number)
-        : undefined,
-      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
-      sellingType: parsed.sellingType || undefined,
-      auctionStatus: parsed.auctionStatus || undefined,
+      page,
+      perPage,
+      categories: parsed.categories?.map(Number),
+      subCategory: parsed.subCategory?.map(Number),
+      brands: parsed.brands?.map(Number),
+      sellingType: parsed.sellingType,
+      auctionStatus: parsed.auctionStatus,
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      isHome: true, // ensure backend can parse this correctly!
     };
-
+  
+    // Remove undefined keys
     Object.keys(filterParams).forEach((key) => {
       if (filterParams[key] === undefined) {
         delete filterParams[key];
       }
     });
-
+  
     const queryStr = queryString.stringify(filterParams, {
       arrayFormat: "bracket",
     });
-
-    if (!user) {
-      runMainAuctions(
-        axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
-          setMainAuctions(res?.data?.data);
-          // setTotalpagesAuction(res?.data?.pagination?.totalPages);
-        })
-      );
-      // runSponsoredAuctions(
-      //   axios.get(`${api.app.auctions.sponsored}`).then((res) => {
-      //     SetSponsoredAuctions(res?.data?.data);
-      //   })
-      // );
-    } else {
-      runMainAuctions(
-        authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
-          setMainAuctions(res?.data?.data);
-          // setTotalpagesAuction(res?.data?.pagination?.totalPages);
-        })
-      );
-      // runSponsoredAuctions(
-      //   authAxios.get(`${api.app.auctions.sponsored}`).then((res) => {
-      //     SetSponsoredAuctions(res?.data?.data);
-      //   })
-      // );
-    }
-  }, [search, user, history, runMainAuctions]);
+  
+    const mainRequest = user
+      ? authAxios.get(`${api.app.auctions.getMain}?${queryStr}`)
+      : axios.get(`${api.app.auctions.getMain}?${queryStr}`);
+  
+    const upComingRequest = user
+      ? authAxios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
+      : axios.get(`${api.app.auctions.getUpComming}?${queryStr}`);
+  
+    Promise.all([mainRequest, upComingRequest])
+      .then(([mainRes, upComingRes]) => {
+        const allAuctions = [...(mainRes?.data?.data || []), ...(upComingRes?.data?.data || [])];
+        setMainAuctions(allAuctions);
+      })
+      .catch((err) => {
+        console.error("Auction fetch error:", err);
+      });
+  }, [search, user]);
+  
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
