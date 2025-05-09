@@ -49,30 +49,28 @@ const Home = ({
   const [mainAuctions, setMainAuctions] = useState([]);
   const [listedProducts, setListedProducts] = useState([]);
 
-  // Calculate counts per category
   const getCategoryCounts = () => {
     const counts = {};
-
-    // Count auctions per category
-    mainAuctions.forEach((auction) => {
+  
+    (mainAuctions || []).forEach((auction) => {
       const categoryId = auction?.product?.categoryId;
       if (categoryId) {
         counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
         counts[categoryId].auctions++;
       }
     });
-
-    // Count listings per category
-    listedProducts.forEach((listing) => {
+  
+    (listedProducts || []).forEach((listing) => {
       const categoryId = listing?.product?.categoryId;
       if (categoryId) {
         counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
         counts[categoryId].listings++;
       }
     });
-    
+  
     return counts;
   };
+  
   
   const categoryCounts = getCategoryCounts();
   // const [totalPagesListed, setTotalPagesListed] = useState();
@@ -162,6 +160,7 @@ const Home = ({
     
       .catch((err) => {
         console.error("Auction fetch error:", err);
+        setMainAuctions([]);
       });
   }, [search, user]);
   
