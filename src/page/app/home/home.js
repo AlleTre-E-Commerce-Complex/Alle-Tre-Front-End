@@ -155,6 +155,7 @@ const Home = ({
       })
       .catch((err) => {
         console.error("Auction fetch error:", err);
+        console.log('Auction fetch error2',err)
       });
   }, [search, user]);
   
