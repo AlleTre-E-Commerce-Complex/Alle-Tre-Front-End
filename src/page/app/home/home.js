@@ -101,6 +101,8 @@ const Home = ({
 
   useEffect(() => {
     async function fetchAuctions() {
+      try {
+        
       const queryParams = new URLSearchParams(search);
       let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
       let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
@@ -192,6 +194,9 @@ const Home = ({
           request: error.request
         });
         setMainAuctions([]);
+      }
+      } catch (error) {
+        console.log(error)
       }
     }
 
