@@ -32,7 +32,7 @@ const Category = ({ img, title, id, view, className, isSubCategory, auctionCount
       </div>
 
       <div className="w-full bg-gradient-to-br from-secondary/90 to-primary/90  p-3 rounded-b-xl shadow-lg border-t border-gray-light/10">
-        <p className="text-gray-light font-bold text-base sm:text-lg md:text-xl text-center mb-3 group-hover:text-white transition-colors duration-300">
+        <p className="text-gray-light font-bold text-base sm:text-lg md:text-xl text-center mb-3 group-hover:text-white transition-colors duration-300 min-h-[3rem] leading-tight flex items-center justify-center">
           {title}
         </p>
         <div className="grid grid-cols-2 gap-3">

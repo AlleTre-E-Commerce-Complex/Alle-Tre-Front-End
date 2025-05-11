@@ -339,7 +339,7 @@ const SummaryHomeAuctionSections = ({
     });
   };
   const [isInspectionModalOpen, setIsInspectionModalOpen] = useState(false);
-  
+
   // const [showMobileNumber, setShowMobileNumber] = useState(false);
   // const handleSendInspectionDetails = () => {
   //   if (!user) {
@@ -657,19 +657,18 @@ const SummaryHomeAuctionSections = ({
             }
           >
             <div>
-              <p className="text-gray-med text-base font-normal pb-2">
-                {!CurrentBid
-                  ? selectedContent[localizationKeys.startingBidAmount]
-                  : selectedContent[localizationKeys.currentBid]}
-              </p>
-              <p className="text-gray-verydark cursor-default text-2xl flex flex-wrap gap-12">
-                <p>
+              <div className="flex flex-col items-start space-y-2">
+                <p className="text-gray-med text-base font-normal">
+                  {!CurrentBid
+                    ? selectedContent[localizationKeys.startingBidAmount]
+                    : selectedContent[localizationKeys.currentBid]}
+                </p>
+                <p className="text-gray-verydark font-bold text-2xl">
                   {formatCurrency(
                     lastestBid?.bidAmount || CurrentBid || startBidAmount
                   )}
                 </p>
-                <div className="my-auto"></div>
-              </p>
+              </div>
             </div>
             {((Number(lastestBid?.bidAmount) || Number(CurrentBid)) <
               Number(acceptedAmount) ||
@@ -720,44 +719,64 @@ const SummaryHomeAuctionSections = ({
             )}
           </div>
           {/* Submit Bid sections */}
-          <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1">
-            <div className="flex items-center space-x-2 w-full">
-              <button
-                type="button"
-                disabled={
-                  Number(submitBidValue) <=
-                    Number(
-                      lastestBid?.bidAmount || CurrentBid || startBidAmount
-                    ) ||
-                  [
-                    "SOLD",
-                    "EXPIRED",
-                    "IN_SCHEDULED",
-                    "WAITING_FOR_PAYMENT",
-                  ].includes(status)
-                }
-                onClick={handleDecrement}
-                className={`h-[48px] min-w-[48px] flex items-center justify-center rounded-lg transition-all duration-200 ${
-                  Number(submitBidValue) <=
-                  Number(lastestBid?.bidAmount || CurrentBid || startBidAmount)
-                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-primary/10 text-primary hover:bg-primary hover:text-white active:scale-95"
-                }`}
-              >
-                <FiMinus size={20} className="stroke-[2.5]" />
-              </button>
+          <div className="pt-6 flex flex-col space-y-4 md:space-y-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+              <div className="flex items-center space-x-2 w-full order-1 md:order-none">
+                <button
+                  type="button"
+                  disabled={
+                    Number(submitBidValue) <=
+                      Number(
+                        lastestBid?.bidAmount || CurrentBid || startBidAmount
+                      ) ||
+                    [
+                      "SOLD",
+                      "EXPIRED",
+                      "IN_SCHEDULED",
+                      "WAITING_FOR_PAYMENT",
+                    ].includes(status)
+                  }
+                  onClick={handleDecrement}
+                  className={`h-[48px] min-w-[48px] flex items-center justify-center rounded-lg transition-all duration-200 
+    ${
+      Number(submitBidValue) <=
+      Number(lastestBid?.bidAmount || CurrentBid || startBidAmount)
+        ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+        : "bg-primary/10 text-primary hover:bg-primary hover:text-white active:scale-95"
+    }
+    ${lang === "ar" ? "ml-2" : ""}`}
+                >
+                  <FiMinus size={20} className="stroke-[2.5]" />
+                </button>
 
-              <input
-                className="min-w-[0px] flex-1 h-[48px] px-4 rounded-lg border-2 border-gray-200 focus:border-primary outline-none transition-colors duration-200"
-                type="number"
-                value={submitBidValue}
-                onChange={(e) => setSubmitBidValue(e?.target?.value)}
-                placeholder={`min. ${formatCurrency(
-                  lastestBid?.bidAmount || CurrentBid || startBidAmount
-                )}`}
-              />
+                <input
+                  className="min-w-[0px] flex-1 h-[48px] px-4 rounded-lg border-2 border-gray-200 focus:border-primary outline-none transition-colors duration-200"
+                  type="number"
+                  value={submitBidValue}
+                  onChange={(e) => setSubmitBidValue(e?.target?.value)}
+                  placeholder={`min. ${formatCurrency(
+                    lastestBid?.bidAmount || CurrentBid || startBidAmount
+                  )}`}
+                />
 
-              <button
+                <button
+                  disabled={
+                    status === "SOLD" ||
+                    status === "EXPIRED" ||
+                    status === "IN_SCHEDULED" ||
+                    status === "WAITING_FOR_PAYMENT"
+                      ? true
+                      : false
+                  }
+                  type="button"
+                  onClick={handleIncrement}
+                  className="h-[48px] min-w-[48px] flex items-center justify-center bg-primary/10 text-primary hover:bg-primary hover:text-white rounded-lg transition-all duration-200 active:scale-95 "
+                >
+                  <FiPlus size={20} className="stroke-[2.5] " />
+                </button>
+              </div>
+
+              <Button
                 disabled={
                   status === "SOLD" ||
                   status === "EXPIRED" ||
@@ -766,30 +785,38 @@ const SummaryHomeAuctionSections = ({
                     ? true
                     : false
                 }
-                type="button"
-                onClick={handleIncrement}
-                className="h-[48px] min-w-[48px] flex items-center justify-center bg-primary/10 text-primary hover:bg-primary hover:text-white rounded-lg transition-all duration-200 active:scale-95 "
+                loading={isLoading}
+                onClick={handelSubmitBidButton}
+                className="w-full h-[48px] bg-primary hover:bg-primary-dark text-white rounded-lg 
+            opacity-100 ltr:font-serifEN rtl:font-serifAR text-base order-2 md:order-none"
               >
-                <FiPlus size={20} className="stroke-[2.5] " />
-              </button>
+                {selectedContent[localizationKeys.submitBid]}
+              </Button>
             </div>
-
-            <Button
-              disabled={
-                status === "SOLD" ||
-                status === "EXPIRED" ||
-                status === "IN_SCHEDULED" ||
-                status === "WAITING_FOR_PAYMENT"
-                  ? true
-                  : false
-              }
-              loading={isLoading}
-              onClick={handelSubmitBidButton}
-              className="w-full h-[48px] bg-primary hover:bg-primary-dark text-white rounded-lg 
-            mt-6 md:mt-0 md:ml-3 opacity-100 ltr:font-serifEN rtl:font-serifAR text-base"
-            >
-              {selectedContent[localizationKeys.submitBid]}
-            </Button>
+            {(category === "Cars" || category === "سيارات") &&
+              Math.max(
+                Number(lastestBid?.bidAmount || 0),
+                Number(CurrentBid || 0),
+                Number(startBidAmount || 0),
+                Number(submitBidValue || 0)
+              ) < 5000 && (
+                <div className="md:w-1/2 w-full">
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-0 md:mt-3">
+                    <p
+                      className={`text-yellow-800 text-md text-center ${
+                        lang === "ar" ? "md:text-right rtl" : "md:text-left ltr"
+                      }`}
+                    >
+                      {
+                        selectedContent[
+                          localizationKeys
+                            .above5000YouHaveToPayASecurityDepositToContinueBidding
+                        ]
+                      }
+                    </p>
+                  </div>
+                </div>
+              )}
           </div>
           <TotalBidsTableModel setOpen={setTotalBidOpen} open={openTotaltBid} />
           <SubmitBidModel

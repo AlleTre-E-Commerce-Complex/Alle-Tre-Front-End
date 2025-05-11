@@ -48,7 +48,8 @@ const ar = {
   [localizationKeys.confirmDeletion]: "تأكيد الحذف",
   [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
     "هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وستفقد جميع بياناتك.",
-
+  [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
+    "للمزايدة اعلى من 5000 درهم، سيتوجب دفع تأمين المزاد.",
   // home
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",
@@ -346,7 +347,7 @@ const ar = {
   [localizationKeys.contactPerson]: "الشخص الذي يمكن الاتصال به",
   [localizationKeys.dateAndTime]: "التاريخ والوقت",
   [localizationKeys.inspetionReport]: "تقرير التفتيش",
-  
+
   // auction details
   [localizationKeys.quickAuction]: "المزاد السريع",
   [localizationKeys.maximumDurationMustBeDay]:
