@@ -49,6 +49,8 @@ const en = {
   [localizationKeys.confirmDeletion]: "Confirm Deletion",
   [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
     "Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
+  [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
+    "Above 5000, you have to pay a security deposit to continue bidding.",
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
@@ -351,7 +353,7 @@ const en = {
   [localizationKeys.inspectionDetails]: "Inspection Details",
   [localizationKeys.contactPerson]: "Contact Person",
   [localizationKeys.dateAndTime]: "Date & Time",
-  [localizationKeys.inspetionReport]:"Inspetion report",
+  [localizationKeys.inspetionReport]: "Inspetion report",
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",
