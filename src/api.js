@@ -42,7 +42,7 @@ const api = {
       send_item_forDelivery: (auctionId) =>
         `/auctions/user/${auctionId}/sendItem-forDelivery`,
       getAllOwnesAuctions: "auctions/user/ownes",
-      getOtherUsersAuction: (userId) => `/auctions/user/user-details/?userId=${userId}`,
+      getOtherUsersAuction: "/auctions/user/user-details",
       getAlldraft: "auctions/user/ownes",
       getAuctionsDetails: (auctionsId) => `/auctions/user/${auctionsId}`,
       getUserAuctionsDetails: (auctionsId) =>
@@ -96,7 +96,7 @@ const api = {
       listNewProduct: `auctions/product-listing`,
       productAnalytics: "auctions/user/product/analytics",
       getAllListedProducts: `auctions/listedProducts/getAllListed-products`,
-      getOtherUserProducts: (userId) => `/auctions/listedProducts/userProductdetails/?userId=${userId}`,
+      getOtherUserProducts: "/auctions/listedProducts/userProductdetails",
       listedProduct: (productId) =>
         `auctions/listedProducts/${productId}/details`,
       SimilarProduct: (productId) =>

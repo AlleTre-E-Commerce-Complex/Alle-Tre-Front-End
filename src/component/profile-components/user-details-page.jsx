@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import useAxios from "../../hooks/use-axios";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { authAxios } from "../../config/axios-config";
@@ -11,10 +11,16 @@ import ProductCard from "component/home-components/ProductCard";
 import { useLanguage } from "../../context/language-context";
 import localizationKeys from "../../localization/localization-keys";
 import content from "../../localization/content";
+import PaginationApp from "component/shared/pagination/pagination-app";
+import { DEFAULT_PAGE, getDefaultPerPage } from "../../constants/pagination";
+import queryString from "query-string";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const UserDetailsPage = () => {
   const [activeProductData, setActiveProductData] = useState();
   const [activeAuctionData, setActiveAuctionData] = useState();
+  const [totalpagesAuction, setTotalpagesAuction] = useState();
+  const [totalPagesListed, setTotalPagesListed] = useState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const [activeTab, setActiveTab] = useState("auctions");
@@ -28,36 +34,147 @@ const UserDetailsPage = () => {
   const userId = searchParams.get("id");
   const userImage = searchParams.get("imageLink");
   const userPhone = searchParams.get("phone");
+  const myRef = useRef();
+  const history = useHistory();
+
+  const [auctionPageNumber, setAuctionPageNumber] = useState(
+    Number(DEFAULT_PAGE)
+  );
+  const [listedPageNumber, setListedPageNumber] = useState(
+    Number(DEFAULT_PAGE)
+  );
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+    if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
+      queryParams.set("auctionPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+    const filterParams = {
+      page: page,
+      perPage: perPage,
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      userId: userId,
+    };
+
+    Object.keys(filterParams).forEach((key) => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
+
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
     if (userId) {
       run(
-        authAxios.get(`${api.app.auctions.getOtherUsersAuction(userId)}`)
+        authAxios.get(`${api.app.auctions.getOtherUsersAuction}?${queryStr}`)
       ).then((res) => {
+        console.log("auction", res?.data?.data);
         setActiveAuctionData(res?.data?.data);
+        setTotalpagesAuction(res?.data?.pagination?.totalPages);
         // setTotalPages(res?.data?.pagination?.totalPages);
       });
     }
-  }, [username, run, forceReload]);
+  }, [
+    username,
+    run,
+    forceReload,
+    auctionPageNumber,
+    listedPageNumber,
+    history,
+    search,
+    userId,
+    onReload,
+  ]);
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+    if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
+      queryParams.set("auctionPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+    const filterParams = {
+      page: page,
+      perPage: perPage,
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      userId: userId,
+    };
+
+    Object.keys(filterParams).forEach((key) => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
+
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
     if (userId) {
       run(
-        authAxios.get(`${api.app.productListing.getOtherUserProducts(userId)}`)
+        authAxios.get(
+          `${api.app.productListing.getOtherUserProducts}?${queryStr}`
+        )
       )
         .then((res) => {
+          console.log("list", res?.data?.data);
           setActiveProductData(res?.data?.data);
+          setTotalPagesListed(res?.data?.pagination?.totalPages);
         })
         .catch((err) => {
           console.error("Error fetching products:", err);
         });
     }
-  }, [username, run, forceReload]);
+  }, [
+    username,
+    run,
+    forceReload,
+    listedPageNumber,
+    history,
+    search,
+    userId,
+    auctionPageNumber,
+    onReload,
+  ]);
 
   if (!userId) {
     return (
       <div className="mt-40 pt-4">
-        {selectedContent[localizationKeys.noUserSpecified]} 
+        {selectedContent[localizationKeys.noUserSpecified]}
       </div>
     );
   }
@@ -71,7 +188,7 @@ const UserDetailsPage = () => {
       >
         <LodingTestAllatre />
       </Dimmer>
-      <div className="mt-40 pt-4 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mt-40 pt-4 ">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Profile Card */}
           <div className="md:w-1/4">
@@ -120,7 +237,7 @@ const UserDetailsPage = () => {
                     }`}
                     onClick={() => setActiveTab("auctions")}
                   >
-                    {selectedContent[localizationKeys.activeAuctions]}
+                    {selectedContent[localizationKeys.hotAuctions]}
                   </button>
                   <button
                     className={`py-3 px-4 rounded-xl font-medium transition-all ${
@@ -142,35 +259,49 @@ const UserDetailsPage = () => {
             <div className="bg-white rounded-xl shadow-md p-6">
               <h2 className="text-xl font-semibold text-gray-900 mb-6">
                 {activeTab === "auctions"
-                  ? "Active Auctions"
-                  : "Listed Products"}
+                  ? selectedContent[localizationKeys.hotAuctions]
+                  : selectedContent[localizationKeys.listedProducts]}
               </h2>
 
               {activeTab === "auctions" && (
                 <div className="space-y-6">
                   {activeAuctionData?.length > 0 ? (
-                    <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
-                      {activeAuctionData?.map((e) => (
-                        <AuctionCard
-                          key={e?.id}
-                          auctionId={e?.id}
-                          price={e?.acceptedAmount || e?.startBidAmount}
-                          title={e?.product?.title}
-                          status={e?.status}
-                          adsImg={e?.product?.images}
-                          totalBods={e?._count?.bids}
-                          WatshlistState={e?.isSaved}
-                          endingTime={e?.expiryDate}
-                          StartDate={e?.startDate}
-                          isBuyNowAllowed={e?.isBuyNowAllowed}
-                          isMyAuction={e?.isMyAuction}
-                          latestBidAmount={e?.bids[0]?.amount}
-                          CurrentBid={e?.currentBid?.bidAmount}
-                          startBidAmount={e?.startBidAmount}
-                          usageStatus={e?.product?.usageStatus}
-                          category={e?.product?.categoryId}
-                        />
-                      ))}
+                    <div>
+                      <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                        {activeAuctionData?.map((e) => (
+                          <AuctionCard
+                            key={e?.id}
+                            auctionId={e?.id}
+                            price={e?.acceptedAmount || e?.startBidAmount}
+                            title={e?.product?.title}
+                            status={e?.status}
+                            adsImg={e?.product?.images}
+                            totalBods={e?._count?.bids}
+                            WatshlistState={e?.isSaved}
+                            endingTime={e?.expiryDate}
+                            StartDate={e?.startDate}
+                            isBuyNowAllowed={e?.isBuyNowAllowed}
+                            isMyAuction={e?.isMyAuction}
+                            latestBidAmount={e?.bids[0]?.amount}
+                            CurrentBid={e?.currentBid?.bidAmount}
+                            startBidAmount={e?.startBidAmount}
+                            usageStatus={e?.product?.usageStatus}
+                            category={e?.product?.categoryId}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {activeAuctionData?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalpagesAuction}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef}
+                            type={"auction"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
                     </div>
                   ) : (
                     <div className="text-center py-12 bg-gray-50 rounded-xl">
@@ -207,30 +338,44 @@ const UserDetailsPage = () => {
               {activeTab === "products" && (
                 <div className="mb-8">
                   {activeProductData?.length > 0 ? (
-                    <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
-                      {activeProductData?.map((e) => (
-                        <ProductCard
-                          key={e?.id}
-                          price={e?.ProductListingPrice}
-                          title={e?.product?.title}
-                          adsImg={e?.product?.images}
-                          userId={e?.userId}
-                          id={e?.product?.id}
-                          city={
-                            lang === "en"
-                              ? e?.location?.city?.nameEn
-                              : e?.location?.city?.nameEn
-                          }
-                          country={
-                            lang === "en"
-                              ? e?.location?.country?.nameEn
-                              : e?.location?.country?.nameEn
-                          }
-                          createdAt={e?.createdAt}
-                          usageStatus={e?.product?.usageStatus}
-                          category={e?.product?.categoryId}
-                        />
-                      ))}
+                    <div>
+                      <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                        {activeProductData?.map((e) => (
+                          <ProductCard
+                            key={e?.id}
+                            price={e?.ProductListingPrice}
+                            title={e?.product?.title}
+                            adsImg={e?.product?.images}
+                            userId={e?.userId}
+                            id={e?.product?.id}
+                            city={
+                              lang === "en"
+                                ? e?.location?.city?.nameEn
+                                : e?.location?.city?.nameEn
+                            }
+                            country={
+                              lang === "en"
+                                ? e?.location?.country?.nameEn
+                                : e?.location?.country?.nameEn
+                            }
+                            createdAt={e?.createdAt}
+                            usageStatus={e?.product?.usageStatus}
+                            category={e?.product?.categoryId}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex justify-end mt-7 mb-12 ltr:mr-2 rtl:ml-2 ">
+                        {activeAuctionData?.length !== 0 ? (
+                          <PaginationApp
+                            totalPages={totalPagesListed}
+                            perPage={getDefaultPerPage()}
+                            myRef={myRef}
+                            type={"products"}
+                            setAuctionPageNumber={setAuctionPageNumber}
+                            setListedPageNumber={setListedPageNumber}
+                          />
+                        ) : null}
+                      </div>
                     </div>
                   ) : (
                     <div className="text-center py-12 bg-gray-50 rounded-xl">
