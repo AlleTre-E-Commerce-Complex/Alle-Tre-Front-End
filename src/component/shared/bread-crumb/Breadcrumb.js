@@ -812,7 +812,7 @@ export const ListProductsBreadcrumb = ({ details, category }) => {
   return (
     <Breadcrumb
       className="Edit_Breadcrumb"
-      sections={ListProductSections(pathname, details)}
+      sections={ListProductSections(pathname, details, category)}
     />
   );
 };
