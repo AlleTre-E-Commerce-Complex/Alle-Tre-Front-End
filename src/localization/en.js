@@ -50,7 +50,8 @@ const en = {
   [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
     "Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
   [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
-    "For bidding above 5000, security deposit is required",
+    "For bidding above 5000, security deposit is required",
+  [localizationKeys.noResultsFound]: "No results found",
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",

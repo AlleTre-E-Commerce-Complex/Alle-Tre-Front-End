@@ -59,6 +59,7 @@ const Header = ({
   const [open, setOpen] = useState(false);
   const { run } = useAxios();
   const [name, setTitle] = useFilter("title", "");
+  const [searchValue, setSearchValue] = useState("");
   const [selectedOption, setSelectedOption] = useState(
     selectedContent[localizationKeys.all]
   );
@@ -76,6 +77,12 @@ const Header = ({
   useEffect(() => {
     setSelectedOption(selectedContent[localizationKeys.all]);
   }, [selectedContent, localizationKeys]);
+
+  // Clear search input on route change or page reload
+  useEffect(() => {
+    setSearchValue("");
+    setTitle("");
+  }, [pathname]);
 
   // Show the AllatreLogo after a delay
   useEffect(() => {
@@ -297,12 +304,18 @@ const Header = ({
     queryParams.set("page", DEFAULT_PAGE);
     queryParams.set("perPage", getDefaultPerPage());
     queryParams.set("title", value);
-    history.push(`${routes.app.home}?${queryParams.toString()}`);
+    
+    const currentPathname = window.location.pathname;
+    const targetPath = currentPathname.includes("/alletre/categories") 
+      ? `${currentPathname}` // Keep the current category path
+      : routes.app.home;
+    
+    history.push(`${targetPath}?${queryParams.toString()}`);
     window.scrollTo({
       behavior: "smooth",
       top: 600,
     });
-  }, 850);
+  }, 500);
 
   const handelMyPfofile = () => {
     if (user) {
@@ -485,9 +498,8 @@ const Header = ({
   return (
     <div className="w-full fixed top-0 z-50 bg-white/90 backdrop-blur-md">
       <div
-        className={`md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full ${
-          lang === "en" ? "pr-3" : "pl-3"
-        } md:px-4 lg:px-5`}
+        className={`md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full ${lang === "en" ? "pr-3" : "pl-3"
+          } md:px-4 lg:px-5`}
       >
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
@@ -614,9 +626,8 @@ const Header = ({
               <div>
                 <button
                   type="button"
-                  className={` w-[120px] h-[48px] hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-bold rounded-lg px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ${
-                    lang === "ar" ? "-mr-7" : "-ml-7"
-                  } ltr:font-serifEN rtl:font-serifAR items-center justify-center`}
+                  className={` w-[120px] h-[48px] hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-bold rounded-lg px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ${lang === "ar" ? "-mr-7" : "-ml-7"
+                    } ltr:font-serifEN rtl:font-serifAR items-center justify-center`}
                   id="menu-button"
                   aria-expanded={isDropdownOpen ? "true" : "false"}
                   aria-haspopup="true"
@@ -629,11 +640,9 @@ const Header = ({
 
               {isDropdownOpen && (
                 <div
-                  className={`absolute  ${
-                    lang === "ar" ? "left-0 -translate-x-7" : "right-0"
-                  } z-10 mt-1 w-56 origin-top-${
-                    lang === "ar" ? "left" : "right"
-                  } rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100`}
+                  className={`absolute  ${lang === "ar" ? "left-0 -translate-x-7" : "right-0"
+                    } z-10 mt-1 w-56 origin-top-${lang === "ar" ? "left" : "right"
+                    } rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100`}
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
@@ -725,7 +734,9 @@ const Header = ({
              w-full min-w-[120px] sm:w-[40%] md:w-[50%]"
             icon="search"
             placeholder={selectedContent[localizationKeys.search]}
+            value={searchValue}
             onChange={(e, { value }) => {
+              setSearchValue(value);
               debounced(value);
             }}
           />
@@ -742,9 +753,8 @@ const Header = ({
                 <span className="flex-1 text-center ">{selectedOption}</span>
 
                 <span
-                  className={`transform transition-transform duration-300 ${
-                    isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
-                  }`}
+                  className={`transform transition-transform duration-300 ${isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
+                    }`}
                 >
                   <RiArrowDownSFill size={20} />
                 </span>
@@ -755,12 +765,11 @@ const Header = ({
                   <ul className="py-2">
                     <li>
                       <button
-                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption ===
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${selectedOption ===
                           selectedContent[localizationKeys.viewAuction]
-                            ? "bg-gray-med"
-                            : ""
-                        }`}
+                          ? "bg-gray-med"
+                          : ""
+                          }`}
                         onClick={() => handleTypeChange("auction")}
                       >
                         {selectedContent[localizationKeys.viewAuction]}
@@ -768,12 +777,11 @@ const Header = ({
                     </li>
                     <li>
                       <button
-                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption ===
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${selectedOption ===
                           selectedContent[localizationKeys.viewProducts]
-                            ? "bg-gray-med"
-                            : ""
-                        }`}
+                          ? "bg-gray-med"
+                          : ""
+                          }`}
                         onClick={() => handleTypeChange("products")}
                       >
                         {selectedContent[localizationKeys.viewProducts]}
@@ -781,12 +789,11 @@ const Header = ({
                     </li>
                     <li>
                       <button
-                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
-                          selectedOption ===
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${selectedOption ===
                           selectedContent[localizationKeys.viewAll]
-                            ? "bg-gray-med"
-                            : ""
-                        }`}
+                          ? "bg-gray-med"
+                          : ""
+                          }`}
                         onClick={() => handleTypeChange("all")}
                       >
                         {selectedContent[localizationKeys.viewAll]}
@@ -811,9 +818,8 @@ const Header = ({
                 </span>
 
                 <span
-                  className={`transform transition-transform duration-300 ${
-                    isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
-                  }`}
+                  className={`transform transition-transform duration-300 ${isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
+                    }`}
                 >
                   <RiArrowDownSFill size={20} />
                 </span>
@@ -821,11 +827,9 @@ const Header = ({
 
               {isOpen && (
                 <div
-                  className={`absolute ${
-                    lang === "ar" ? "-right-44" : "-left-44"
-                  } mt-2 w-[240px] xs:w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md border rounded-lg shadow-lg z-50 p-2 xs:p-3 transition-all duration-300 ease-out origin-top ${
-                    isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                  }`}
+                  className={`absolute ${lang === "ar" ? "-right-44" : "-left-44"
+                    } mt-2 w-[240px] xs:w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md border rounded-lg shadow-lg z-50 p-2 xs:p-3 transition-all duration-300 ease-out origin-top ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    }`}
                 >
                   <div className="grid grid-cols-2 gap-2 xs:gap-3 max-h-[calc(3*84px+62px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
                     {GatogryOptions?.map((e, index) => (
@@ -866,7 +870,7 @@ const Header = ({
               )}
             </div>
           )}
-          <DropdownLang className="text-black  md:hidden bg-white/90  hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600" />
+          <DropdownLang className="text-black md:hidden bg-white/90 hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600" />
 
           {/* <PopupCategoriesModel
             isOpen={isOpen}
