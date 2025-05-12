@@ -62,6 +62,7 @@ const SummaryHomeAuctionSections = ({
   usageStatus,
   relatedDocuments,
 }) => {
+  console.log("category ", category);
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -421,14 +422,18 @@ const SummaryHomeAuctionSections = ({
               {title}
             </h1>
             <div
-              className={`state-button w-14 py-1 rounded-md text-sm font-medium text-white transition-colors text-center ${
+              className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${
                 usageStatus === "NEW"
-                  ? "bg-primary-light hover:bg-primary"
-                  : "bg-gray-dark hover:bg-gray-verydark"
+                  ? "bg-primary-veryLight text-primary"
+                  : "bg-gray-100 text-gray-700"
               }`}
             >
-              {usageStatus?.charAt(0).toUpperCase() +
-                usageStatus?.slice(1).toLowerCase()}
+              {category === "Properties" || category === "عقارات"
+                ? usageStatus === "NEW"
+                  ? selectedContent[localizationKeys.sell]
+                  : selectedContent[localizationKeys.rent]
+                : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
             </div>
           </div>
 

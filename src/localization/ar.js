@@ -49,7 +49,7 @@ const ar = {
   [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
     "هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وستفقد جميع بياناتك.",
   [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
-    "للمزايدة اعلى من 5000 درهم، سيتوجب دفع تأمين المزاد.",
+    "للمزايدة فوق 5000، مطلوب وديعة تأمين",
   // home
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",
