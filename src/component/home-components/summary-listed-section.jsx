@@ -147,15 +147,21 @@ const SummaryListedSection = () => {
             <h1 className="text-3xl font-bold text-gray-800">
               {listedProductsData?.title}
             </h1>
-            <div
-              className={`state-button px-6 py-1 rounded-md text-sm font-medium text-white transition-colors ${
-                listedProductsData?.usageStatus === "NEW"
-                  ? "bg-primary-light hover:bg-primary"
-                  : "bg-gray-dark hover:bg-gray-verydark"
-              }`}
-            >
-              {listedProductsData?.usageStatus?.charAt(0).toUpperCase() +
-                listedProductsData?.usageStatus?.slice(1).toLowerCase()}
+            <div className="flex items-center gap-2">
+              <div
+                className={`px-2 py-0.5 rounded-md text-xs font-medium ${
+                  listedProductsData.usageStatus === "NEW"
+                    ? "bg-primary-veryLight text-primary"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                {listedProductsData.categoryId === 3
+                  ? listedProductsData.usageStatus === "NEW"
+                    ? selectedContent[localizationKeys.sell]
+                    : selectedContent[localizationKeys.rent]
+                  : listedProductsData.usageStatus?.charAt(0).toUpperCase() +
+                    listedProductsData.usageStatus?.slice(1).toLowerCase()}
+              </div>
             </div>
           </div>
 
