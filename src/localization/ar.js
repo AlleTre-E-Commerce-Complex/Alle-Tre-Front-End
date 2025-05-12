@@ -50,6 +50,7 @@ const ar = {
     "هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وستفقد جميع بياناتك.",
   [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
     "للمزايدة فوق 5000، مطلوب وديعة تأمين",
+  [localizationKeys.noResultsFound]: "لم يتم العثور على نتائج",
   // home
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",

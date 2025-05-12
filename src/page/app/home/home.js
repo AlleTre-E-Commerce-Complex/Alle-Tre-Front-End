@@ -25,6 +25,7 @@ import queryString from "query-string";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import SideBanner from "../../../component/home-components/SideBanner";
 import BannerBottom from "component/home-components/BannerBottom";
+import SearchResults from "component/home-components/search-results";
 
 const Home = ({
   selectedType,
@@ -48,10 +49,18 @@ const Home = ({
   const [open, setOpen] = useState(false);
   const [mainAuctions, setMainAuctions] = useState([]);
   const [listedProducts, setListedProducts] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    const searchQuery = queryParams.get('title') || '';
+    handleSearch(searchQuery);
+  }, [search]);
 
   const getCategoryCounts = () => {
     const counts = {};
-  
+
     (mainAuctions || []).forEach((auction) => {
       const categoryId = auction?.product?.categoryId;
       if (categoryId) {
@@ -59,7 +68,7 @@ const Home = ({
         counts[categoryId].auctions++;
       }
     });
-  
+
     (listedProducts || []).forEach((listing) => {
       const categoryId = listing?.product?.categoryId;
       if (categoryId) {
@@ -67,11 +76,11 @@ const Home = ({
         counts[categoryId].listings++;
       }
     });
-  
+
     return counts;
   };
-  
-  
+
+
   const categoryCounts = getCategoryCounts();
   // const [totalPagesListed, setTotalPagesListed] = useState();
   // const [totalpagesAuction, setTotalpagesAuction] = useState();
@@ -99,113 +108,163 @@ const Home = ({
   //   localStorage.setItem("isGrid", JSON.stringify(isGrid));
   // }, [isGrid]);
 
+  const handleSearch = async (query) => {
+    setIsSearching(true);
+    setSearchQuery(query);
+
+    try {
+      const params = queryString.parse(search);
+      const [auctionsResponse, productsResponse] = await Promise.all([
+        authAxios.get(`/auctions`, {
+          params: {
+            ...params,
+            title: query,
+            page: DEFAULT_PAGE,
+            perPage: getDefaultPerPage(),
+          },
+        }),
+        authAxios.get(`/product-listings`, {
+          params: {
+            ...params,
+            title: query,
+            page: DEFAULT_PAGE,
+            perPage: getDefaultPerPage(),
+          },
+        }),
+      ]);
+
+      // Filter results based on the search term
+      const searchTerm = query?.toLowerCase() || '';
+      const filteredAuctions = auctionsResponse.data.data.filter(auction =>
+        !searchTerm || auction?.product?.title?.toLowerCase().includes(searchTerm)
+      );
+      const filteredProducts = productsResponse.data.data.filter(product =>
+        !searchTerm || product?.product?.title?.toLowerCase().includes(searchTerm)
+      );
+
+      setMainAuctions(filteredAuctions);
+      setListedProducts(filteredProducts);
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
+
+    setIsSearching(false);
+  };
+
+  useEffect(() => {
+    const params = queryString.parse(search);
+    if (params.title) {
+      handleSearch(params.title);
+    }
+  }, [search]);
+
   useEffect(() => {
     async function fetchAuctions() {
       try {
-        
-      const queryParams = new URLSearchParams(search);
-      let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
-      let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-    
-      if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
-        queryParams.set("auctionPage", page.toString());
-        queryParams.set("perPage", perPage.toString());
-        history.replace({ search: queryParams.toString() });
-        return;
-      }
-    
-      const parsed = queryString.parse(search, { arrayFormat: "bracket" });
-    
-      const filterParams = {
-        page,
-        perPage,
-        categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : undefined,
-        subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
-        brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
-        sellingType: parsed.sellingType,
-        auctionStatus: parsed.auctionStatus,
-        usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
-        priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
-        priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-        isHome: true, // ensure backend can parse this correctly!
-      };
-    
-      // Remove undefined keys
-      Object.keys(filterParams).forEach((key) => {
-        if (filterParams[key] === undefined) {
-          delete filterParams[key];
+
+        const queryParams = new URLSearchParams(search);
+        let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+        let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+        if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
+          queryParams.set("auctionPage", page.toString());
+          queryParams.set("perPage", perPage.toString());
+          history.replace({ search: queryParams.toString() });
+          return;
         }
-      });
-    
-      const queryStr = queryString.stringify(filterParams, {
-        arrayFormat: "bracket",
-      });
 
-      try {
-        const [liveRes, upcomingRes] = await Promise.all([
-          axios.get(`${api.app.auctions.getMain}?${queryStr}`),
-          axios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
-        ]);
+        const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
-        // Log detailed data structure
-        console.log('Live Data:', {
-          liveData: liveRes?.data?.data,
-          isArray: Array.isArray(liveRes?.data?.data),
-          length: liveRes?.data?.data?.length,
-          firstItem: liveRes?.data?.data?.[0]
+        const filterParams = {
+          page,
+          perPage,
+          categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : undefined,
+          subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
+          brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+          sellingType: parsed.sellingType,
+          auctionStatus: parsed.auctionStatus,
+          usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+          priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+          priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+          isHome: true, // ensure backend can parse this correctly!
+        };
+
+        // Remove undefined keys
+        Object.keys(filterParams).forEach((key) => {
+          if (filterParams[key] === undefined) {
+            delete filterParams[key];
+          }
         });
 
-        console.log('Upcoming Data:', {
-          upcomingData: upcomingRes?.data?.data,
-          isArray: Array.isArray(upcomingRes?.data?.data),
-          length: upcomingRes?.data?.data?.length,
-          firstItem: upcomingRes?.data?.data?.[0]
+        const queryStr = queryString.stringify(filterParams, {
+          arrayFormat: "bracket",
         });
 
-        // Ensure we have valid arrays and validate each item
-        const liveData = Array.isArray(liveRes?.data?.data) 
-          ? liveRes.data.data.filter(item => item && typeof item === 'object')
-          : [];
+        try {
+          const [liveRes, upcomingRes] = await Promise.all([
+            axios.get(`${api.app.auctions.getMain}?${queryStr}`),
+            axios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
+          ]);
 
-        const upcomingData = Array.isArray(upcomingRes?.data?.data)
-          ? upcomingRes.data.data.filter(item => item && typeof item === 'object')
-          : [];
+          // Log detailed data structure
+          console.log('Live Data:', {
+            liveData: liveRes?.data?.data,
+            isArray: Array.isArray(liveRes?.data?.data),
+            length: liveRes?.data?.data?.length,
+            firstItem: liveRes?.data?.data?.[0]
+          });
 
-        // Log the filtered data
-        console.log('Filtered Data:', {
-          liveDataLength: liveData.length,
-          upcomingDataLength: upcomingData.length,
-          combinedLength: liveData.length + upcomingData.length
-        });
+          console.log('Upcoming Data:', {
+            upcomingData: upcomingRes?.data?.data,
+            isArray: Array.isArray(upcomingRes?.data?.data),
+            length: upcomingRes?.data?.data?.length,
+            firstItem: upcomingRes?.data?.data?.[0]
+          });
 
-        const combinedData = [...liveData, ...upcomingData].map(item => ({
-          ...item,
-          product: item.product || {},
-          _count: item._count || { bids: 0 }
-        }));
+          // Ensure we have valid arrays and validate each item
+          const liveData = Array.isArray(liveRes?.data?.data)
+            ? liveRes.data.data.filter(item => item && typeof item === 'object')
+            : [];
 
-        setMainAuctions(combinedData);
-      } catch (error) {
-        console.error('Error fetching auctions:', error);
-        console.error('Error details:', {
-          name: error.name,
-          message: error.message,
-          response: error.response,
-          request: error.request
-        });
-        setMainAuctions([]);
-      }
+          const upcomingData = Array.isArray(upcomingRes?.data?.data)
+            ? upcomingRes.data.data.filter(item => item && typeof item === 'object')
+            : [];
+
+          // Log the filtered data
+          console.log('Filtered Data:', {
+            liveDataLength: liveData.length,
+            upcomingDataLength: upcomingData.length,
+            combinedLength: liveData.length + upcomingData.length
+          });
+
+          const combinedData = [...liveData, ...upcomingData].map(item => ({
+            ...item,
+            product: item.product || {},
+            _count: item._count || { bids: 0 }
+          }));
+
+          setMainAuctions(combinedData);
+        } catch (error) {
+          console.error('Error fetching auctions:', error);
+          console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            response: error.response,
+            request: error.request
+          });
+          setMainAuctions([]);
+        }
       } catch (error) {
         console.log(error)
       }
     }
 
     fetchAuctions();
- 
+
   }, [search, user]);
-  
-  
-  
+
+
+
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
@@ -292,20 +351,20 @@ const Home = ({
         const updatedAuctions = prev.map((auction) =>
           auction.id === data.auction.id
             ? {
-                ...auction,
-                bids: data.auction.bids,
-                startBidAmount: data.auction.startBidAmount,
-                _count: {
-                  ...auction._count,
-                  bids: (auction._count.bids || 0) + 1,
-                },
-                currentBid: {
-                  bidAmount: Array.isArray(data.auction.bids) && data.auction.bids.length > 0
-                    ? data.auction.bids[0].amount
-                    : auction.currentBid?.bidAmount ?? null,
-                },
-                
-              }
+              ...auction,
+              bids: data.auction.bids,
+              startBidAmount: data.auction.startBidAmount,
+              _count: {
+                ...auction._count,
+                bids: (auction._count.bids || 0) + 1,
+              },
+              currentBid: {
+                bidAmount: Array.isArray(data.auction.bids) && data.auction.bids.length > 0
+                  ? data.auction.bids[0].amount
+                  : auction.currentBid?.bidAmount ?? null,
+              },
+
+            }
             : auction
         );
         return updatedAuctions;
@@ -334,9 +393,8 @@ const Home = ({
 
   return (
     <div
-      className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white ${
-        isDropdownOpen ? "blur-sm pointer-events-none" : ""
-      } transition-all duration-300`}
+      className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white ${isDropdownOpen ? "blur-sm pointer-events-none" : ""
+        } transition-all duration-300`}
     >
       {/* {isFilterOpen && (
         <FilterSections
@@ -348,7 +406,7 @@ const Home = ({
         <div className="lg:mt-32 md:mt-32 mt-28 py-3 md:py-6 home">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
-            active={isLoadingMainAuctions || isLoadingListedProduct}
+            active={isLoadingMainAuctions || isLoadingListedProduct|| isSearching}
             inverted
           >
             <LodingTestAllatre />
@@ -367,17 +425,26 @@ const Home = ({
               {selectedContent[localizationKeys.PopularPicksPerfectChoices]}
             </p>
           </div> */}
-          <div className="flex md:flex-row flex-col gap-4 px-4 ">
-            <div className="md:w-4/5 w-full ">
-              <div className="mb-10">
-                <SliderRow categoryCounts={categoryCounts} />
-              </div>
-              <div className="w-full mx-auto py-2">
+          <div className="flex md:flex-row flex-col gap-4 px-4">
+            <div className={`${searchQuery ? 'w-full' : 'md:w-4/5 w-full'}`}>
+              {!searchQuery && (
+                <div className="mb-10">
+                  <SliderRow categoryCounts={categoryCounts} />
+                </div>
+              )}
+              <div className="container mx-auto px-4 py-8">
+                {searchQuery && (
+                  <SearchResults
+                    auctions={mainAuctions}
+                    products={listedProducts}
+                    isLoading={isSearching}
+                    searchQuery={searchQuery}
+                  />
+                )}
                 <BannerBottom />
               </div>
             </div>
-            <SideBanner />
-          </div>
+            {!searchQuery && <SideBanner />}          </div>
           {/* <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
             <div className="flex  ">
               <h6 className="text-gray-dark text-base font-normal pt-3 lg:pl-3 px-4 lg:px-0 w-full lg:w-auto">

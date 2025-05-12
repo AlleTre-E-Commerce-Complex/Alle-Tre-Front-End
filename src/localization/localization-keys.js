@@ -41,6 +41,7 @@ const localizationKeys = {
   confirmDeletion: "confirmDeletion",
   areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData: "areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData",
   above5000YouHaveToPayASecurityDepositToContinueBidding: "above5000YouHaveToPayASecurityDepositToContinueBidding",
+  noResultsFound: "noResultsFound",
   // home
   auctions: "auctions",
   listings: "listings",
