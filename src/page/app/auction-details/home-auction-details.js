@@ -121,7 +121,7 @@ const HomeAuctionDetails = () => {
       total = Number(
         (Number(startBidAmount) *
           Number(auctionCategory?.percentageOfLuxuarySD_forBidder)) /
-          100
+        100
       );
 
       if (categoryName === "Cars" || categoryName === "Properties") {
@@ -130,7 +130,7 @@ const HomeAuctionDetails = () => {
             ? auctionsDetailsData?.latestBidAmount
             : Number(startBidAmount)) *
             Number(auctionCategory?.percentageOfLuxuarySD_forBidder)) /
-            100
+          100
         );
       }
       //checking the total is less than minimum security deposite
@@ -232,9 +232,13 @@ const HomeAuctionDetails = () => {
         <div className="sm:px-4 px-0 mx-auto">
           <div className="px-4 mx-auto h-14 px-4 py-4  ">
             {pathname.startsWith(routes.app.home) ? (
-              <AuctionHomeDetailsBreadcrumb details={auctionId} />
+              <AuctionHomeDetailsBreadcrumb details={auctionId} category={lang === "en"
+                ? auctionsDetailsData?.product?.category?.nameEn
+                : auctionsDetailsData?.product?.category?.nameAr} />
             ) : (
-              <MyBidsBreadcrumb details={auctionId} />
+              <MyBidsBreadcrumb details={auctionId} category={lang === "en"
+                ? auctionsDetailsData?.product?.category?.nameEn
+                : auctionsDetailsData?.product?.category?.nameAr} />
             )}
           </div>
           {/* up sections */}

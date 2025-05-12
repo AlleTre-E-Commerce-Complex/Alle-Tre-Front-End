@@ -11,7 +11,7 @@ import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
 import { RiArrowDownSFill, RiHome2Line } from "react-icons/ri";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaSearch } from "react-icons/fa";
 // import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
 import useFilter from "../../../hooks/use-filter";
@@ -728,18 +728,26 @@ const Header = ({
               </svg>
             </button>
           )}
-          <Input
-            className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input 
-             ltr:font-serifEN rtl:font-serifAR 
-             w-full min-w-[120px] sm:w-[40%] md:w-[50%]"
-            icon="search"
-            placeholder={selectedContent[localizationKeys.search]}
-            value={searchValue}
-            onChange={(e, { value }) => {
-              setSearchValue(value);
-              debounced(value);
-            }}
-          />
+          <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%]">
+            <Input
+              className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input 
+               ltr:font-serifEN rtl:font-serifAR 
+               w-full pr-10"
+              placeholder={selectedContent[localizationKeys.search]}
+              value={searchValue}
+              onChange={(e, { value }) => setSearchValue(value)}
+            />
+            <button
+              onClick={() => {
+                if (searchValue.trim()) {
+                  debounced(searchValue);
+                }
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              <FaSearch className="cursor-pointer text-primary hover:text-primary-dark" size={18} />
+            </button>
+          </div>
 
           {currentPath.includes("/alletre/categories") && (
             <div className="relative" ref={typeDropdownRef}>
