@@ -375,13 +375,13 @@ export const AuctionHomeDetailsBreadcrumb = ({ details }) => {
   const AuctionHomeDetailsSections = (pathname, details) =>
     [
       {
-        key: "Home",
+        key: "category",
         content: (
           <Link
             className="text-gray-med mx-2 text-base font-normal"
-            to={routes.app.home}
+            to={routes.app.categories()}
           >
-            {selectedContent[localizationKeys.home]}
+            {selectedContent[localizationKeys.category]}
           </Link>
         ),
       },
@@ -455,13 +455,13 @@ export const MyBidsBreadcrumb = ({ details }) => {
   const MyBidsSections = (pathname, details) =>
     [
       {
-        key: "Home",
+        key: "category",
         content: (
           <Link
             className="text-gray-med mx-2 text-base font-normal"
-            to={routes.app.home}
+            to={routes.app.categories()}
           >
-            {selectedContent[localizationKeys.home]}
+            {selectedContent[localizationKeys.category]}
           </Link>
         ),
       },
@@ -771,19 +771,19 @@ export const ListProductsBreadcrumb = ({ details }) => {
   const ListProductSections = (pathname, details) =>
     [
       {
-        key: "Home",
+        key: "category",
         content: (
           <Link
             className="text-gray-med mx-2 text-base font-normal"
-            to={routes.app.home}
+            to={routes.app.categories()}
           >
-            {selectedContent[localizationKeys.home]}
+            {selectedContent[localizationKeys.category]}
           </Link>
         ),
       },
       ...[
         pathname.startsWith(routes.app.listProduct.details(details)) && {
-          key: "Home",
+          key: "category",
           content: (
             <Link
               className={`${
