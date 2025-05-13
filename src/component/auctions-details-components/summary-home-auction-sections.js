@@ -686,13 +686,11 @@ const SummaryHomeAuctionSections = ({
               >
                 <div className="relative w-full">
                   <div className="relative w-full group">
-                    <button
+                  <button
                       disabled={
                         status === "SOLD" ||
                         status === "EXPIRED" ||
                         status === "IN_SCHEDULED"
-                          ? true
-                          : false
                       }
                       onClick={() => {
                         handelBuyNow();
@@ -702,13 +700,14 @@ const SummaryHomeAuctionSections = ({
                         status === "SOLD" ||
                         status === "EXPIRED" ||
                         status === "IN_SCHEDULED"
-                          ? "border-primary/50 text-primary/50 cursor-not-allowed"
-                          : "border-primary text-primary"
-                      } mx-2 mr-8 border-[1px] w-full h-[48px] rounded-lg font-bold hover:bg-primary hover:text-white`}
+                          ? "border-primary/50 text-primary/50 bg-primary/10 cursor-not-allowed"
+                          : "border-primary text-primary bg-primary/10 shadow-[0_4px_12px_rgba(176,2,47,0.3)] hover:bg-primary hover:text-white"
+                      } mx-2 mr-8 border-[1px] w-full h-[48px] rounded-lg font-bold transition duration-300`}
                     >
                       {selectedContent[localizationKeys.buyNow] + " "}
                       <span className="font-bold">{`${acceptedAmount} AED`}</span>
                     </button>
+
 
                     {/* Message directly under the button */}
                     <p className="ml-2 w-full text-gray-500 text-base font-normal pt-2 text-left ml-2">
