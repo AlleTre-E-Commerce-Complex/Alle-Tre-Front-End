@@ -5,6 +5,11 @@ import { useLanguage } from "../../../context/language-context";
 import routes from "../../../routes";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
+import useFilter from "hooks/use-filter";
+import queryString from "query-string";
+import { DEFAULT_PAGE, getDefaultPerPage } from "constants/pagination";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+
 
 export const CreateAuctionBreadcrumb = ({ edit }) => {
   const { pathname } = useLocation();
@@ -351,10 +356,40 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
   );
 };
 
-export const AuctionHomeDetailsBreadcrumb = ({ details, category }) => {
+export const AuctionHomeDetailsBreadcrumb = ({ details, category, categoryId }) => {
   const { pathname } = useLocation();
   const [lang] = useLanguage("");
+  const { search } = useLocation();
   const selectedContent = content[lang];
+  const queryParams = new URLSearchParams(search);
+  
+  let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+  let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+
+  const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+  const filterParams = {
+    page,
+    perPage,
+    categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : [categoryId], // Ensure categoryId is included if no categories
+    subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
+    brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+    sellingType: parsed.sellingType,
+    auctionStatus: parsed.auctionStatus,
+    usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+    priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+    priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+  };
+
+  // Remove undefined keys
+  Object.keys(filterParams).forEach((key) => {
+    if (filterParams[key] === undefined) {
+      delete filterParams[key];
+    }
+  });
+
+  const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
 
   const AuctionHomeDetailsSections = (pathname, details, category) =>
     [
@@ -374,7 +409,8 @@ export const AuctionHomeDetailsBreadcrumb = ({ details, category }) => {
         content: (
           <Link
             className="text-gray-med mx-2 text-base font-normal"
-            to={routes.app.categories(category)}
+            to={`${routes.app.categories(category, categoryId)}?${queryStr}`}
+
           >
             {category}
           </Link>
@@ -439,10 +475,41 @@ export const AuctionHomeDetailsBreadcrumb = ({ details, category }) => {
   );
 };
 
-export const MyBidsBreadcrumb = ({ details, category }) => {
+export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
   const { pathname } = useLocation();
   const [lang] = useLanguage("");
+  const { search } = useLocation();
   const selectedContent = content[lang];
+  const queryParams = new URLSearchParams(search);
+  
+  let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+  let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+
+  const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+  const filterParams = {
+    page,
+    perPage,
+    categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : [categoryId], // Ensure categoryId is included if no categories
+    subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
+    brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+    sellingType: parsed.sellingType,
+    auctionStatus: parsed.auctionStatus,
+    usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+    priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+    priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+  };
+
+  // Remove undefined keys
+  Object.keys(filterParams).forEach((key) => {
+    if (filterParams[key] === undefined) {
+      delete filterParams[key];
+    }
+  });
+
+  const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
+
 
   const MyBidsSections = (pathname, details, category) =>
     [ {
@@ -461,7 +528,7 @@ export const MyBidsBreadcrumb = ({ details, category }) => {
       content: (
         <Link
           className="text-gray-med mx-2 text-base font-normal"
-          to={routes.app.categories(category)}
+          to={`${routes.app.categories(category, categoryId)}?${queryStr}`}
         >
           {category}
         </Link>
@@ -762,20 +829,49 @@ export const FAQsBreadcrumb = ({ details }) => {
   );
 };
 
-export const ListProductsBreadcrumb = ({ details, category }) => {
+export const ListProductsBreadcrumb = ({ details, category, categoryId }) => {
   const { pathname } = useLocation();
+  const { search } = useLocation();
+  const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
+  const queryParams = new URLSearchParams(search);
+  
+  let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+  let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+
+  const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+  const filterParams = {
+    page,
+    perPage,
+    categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : [categoryId], // Ensure categoryId is included if no categories
+    subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
+    brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+    sellingType: parsed.sellingType,
+    auctionStatus: parsed.auctionStatus,
+    usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+    priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+    priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+    // ensure backend can parse this correctly!
+  };
+
+  // Remove undefined keys
+  Object.keys(filterParams).forEach((key) => {
+    if (filterParams[key] === undefined) {
+      delete filterParams[key];
+    }
+  });
+
+  const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
 
   const ListProductSections = (pathname, details, category) =>
     [
       {
         key: "home",
         content: (
-          <Link
-            className="text-gray-med mx-2 text-base font-normal"
-            to={routes.app.home}
-          >
+          <Link className="text-gray-med mx-2 text-base font-normal" to={routes.app.home}>
             {selectedContent[localizationKeys.home]}
           </Link>
         ),
@@ -785,7 +881,7 @@ export const ListProductsBreadcrumb = ({ details, category }) => {
         content: (
           <Link
             className="text-gray-med mx-2 text-base font-normal"
-            to={routes.app.categories(category)}
+            to={`${routes.app.categories(category, categoryId)}?${queryStr}`}
           >
             {category}
           </Link>
@@ -796,10 +892,11 @@ export const ListProductsBreadcrumb = ({ details, category }) => {
           key: "category",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.listProduct.details(details))
+              className={`${
+                pathname.startsWith(routes.app.listProduct.details(details))
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.listProduct.details(details)}
             >
               {selectedContent[localizationKeys.productDetails]}
@@ -809,10 +906,5 @@ export const ListProductsBreadcrumb = ({ details, category }) => {
       ],
     ].filter(Boolean);
 
-  return (
-    <Breadcrumb
-      className="Edit_Breadcrumb"
-      sections={ListProductSections(pathname, details, category)}
-    />
-  );
+  return <Breadcrumb className="Edit_Breadcrumb" sections={ListProductSections(pathname, details, category)} />;
 };
