@@ -736,6 +736,11 @@ const Header = ({
               placeholder={selectedContent[localizationKeys.search]}
               value={searchValue}
               onChange={(e, { value }) => setSearchValue(value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && searchValue.trim()) {
+                  debounced(searchValue);
+                }
+              }}
             />
             <button
               onClick={() => {

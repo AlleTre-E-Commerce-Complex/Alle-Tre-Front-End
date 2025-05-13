@@ -24,6 +24,7 @@ import localizationKeys from "../../localization/localization-keys";
 import content from "../../localization/content";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom";
+import { RiShareForwardFill } from "react-icons/ri";
 
 const CountdownTimer = memo(({ startDate, expiryDate, status }) => {
   const [lang] = useLanguage();
@@ -32,19 +33,15 @@ const CountdownTimer = memo(({ startDate, expiryDate, status }) => {
     status === "IN_SCHEDULED" ? startDate : expiryDate
   );
 
-  const formattedTime = `${timeLeft.days} ${
-    selectedContent[localizationKeys.days]
-  } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : ${
-    timeLeft.minutes
-  } ${selectedContent[localizationKeys.min]} : ${timeLeft.seconds} ${
-    selectedContent[localizationKeys.sec]
-  }`;
+  const formattedTime = `${timeLeft.days} ${selectedContent[localizationKeys.days]
+    } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : ${timeLeft.minutes
+    } ${selectedContent[localizationKeys.min]} : ${timeLeft.seconds} ${selectedContent[localizationKeys.sec]
+    }`;
 
   return (
     <p
-      className={`${
-        timeLeft.days === 0 ? "text-red" : "text-gray-800"
-      } font-medium text-[10px] md:text-xs`}
+      className={`${timeLeft.days === 0 ? "text-red" : "text-gray-800"
+        } font-medium text-[10px] md:text-xs`}
     >
       {formattedTime}
     </p>
@@ -89,6 +86,29 @@ const BannerTop = ({ auctions = [] }) => {
         history.push(routes.app.profile.myAuctions.activeDetails(auction.id));
       }
     } else history.push(routes.app.homeDetails(auction.id));
+  };
+  
+  const getDomain = () => {
+    const { protocol, hostname, port } = window.location;
+    return port
+      ? `${protocol}//${hostname}:${port}`
+      : `${protocol}//${hostname}`;
+  };
+
+  const handleShare = async (auction) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: auction?.product?.title,
+          text: "Check out this auction!",
+          url: `${getDomain()}/alletre/home/${auction?.id}/details`,
+        });
+      } catch (error) {
+        console.error("Error sharing post:", error);
+      }
+    } else {
+      alert("Sharing is not supported in this browser.");
+    }
   };
 
   useEffect(() => {
@@ -206,6 +226,15 @@ const BannerTop = ({ auctions = [] }) => {
                         <AuctionsStatus status={auction.status} />
                       </div>
                     )}
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleShare(auction);
+                      }}
+                      className={`absolute top-2 ${lang === "en" ? "right-2" : "left-2"} border-primary border-2 bg-white/95 shadow-md rounded-full w-7 h-7 sm:w-8 sm:h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center active:scale-95`}
+                    >
+                      <RiShareForwardFill className="text-primary group-hover/share:text-white text-xs sm:text-sm" />
+                    </div>
                   </div>
                   <div className="flex-1 p-3 flex flex-col justify-between bg-gradient-to-br from-white to-gray-50/80">
                     <div className="flex flex-col h-full justify-between py-1">
@@ -215,11 +244,10 @@ const BannerTop = ({ auctions = [] }) => {
                             {auction?.product?.title}
                           </h1>
                           <div
-                            className={`shrink-0 px-1.5 py-0.5 rounded-md text-[9px] font-medium ${
-                              auction?.product?.usageStatus === "NEW"
+                            className={`shrink-0 px-1.5 py-0.5 rounded-md text-[9px] font-medium ${auction?.product?.usageStatus === "NEW"
                                 ? "bg-primary-veryLight text-primary"
                                 : "bg-gray-100 text-gray-700"
-                            }`}
+                              }`}
                           >
                             {auction?.product?.usageStatus
                               ?.charAt(0)
@@ -290,8 +318,8 @@ const BannerTop = ({ auctions = [] }) => {
                           <div className="text-primary font-bold text-sm bg-primary-veryLight/50 px-2 py-1 rounded-md inline-block">
                             {formatCurrency(
                               auction?.bids?.[0]?.amount ||
-                                auction?.currentBid?.bidAmount ||
-                                auction?.startBidAmount
+                              auction?.currentBid?.bidAmount ||
+                              auction?.startBidAmount
                             )}
                           </div>
                         </div>
@@ -349,7 +377,7 @@ const BannerTop = ({ auctions = [] }) => {
           <p className="mt-4 text-white/80 text-lg sm:text-xl font-medium max-w-lg transition-all duration-300 group-hover:text-white group-hover:translate-x-2">
             {
               selectedContent[
-                localizationKeys.discoverTrendingAuctionsWithExclusiveDeals
+              localizationKeys.discoverTrendingAuctionsWithExclusiveDeals
               ]
             }
           </p>
@@ -379,7 +407,7 @@ const BannerTop = ({ auctions = [] }) => {
               stopOnLastSlide: false,
               pauseOnMouseEnter: true,
               waitForTransition: false,
-              reverseDirection:true,
+              reverseDirection: true,
             }}
             simulateTouch={false}
             pagination={{ clickable: true }}
