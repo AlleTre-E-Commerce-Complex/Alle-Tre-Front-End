@@ -392,25 +392,18 @@ const AuctionDetails = () => {
                             if (value > 5000) {
                               return "allowed only below 5000";
                             }
-                            if (
-                              value < 5000 &&
-                              productDetailsint?.category === 4
-                            ) {
-                              setIsBuyNow(false);
-                            }
+                            // if (
+                            //   value < 5000 &&
+                            //   productDetailsint?.category === 4
+                            // ) {
+                            //   setIsBuyNow(false);
+                            // }
                           }}
                         />
                       </div>
                     </div>
                     <div>
-                      <div
-                        className={`flex mt-7 ${
-                          productDetailsint?.category === 4 &&
-                          formik.values?.MinimumPrice < 5000
-                            ? "hidden"
-                            : ""
-                        }`}
-                      >
+                      <div className={`flex mt-7`}>
                         <h1 className="font-bold text-base sm:text-xl text-gray-800 mb-1 ltr:mr-16 rtl:ml-16">
                           {selectedContent[localizationKeys.buyNow]}
                           <span className="text-gray-med text-base font-normal mx-2">
