@@ -44,7 +44,6 @@ const SummaryListedSection = () => {
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
   const dispatch = useDispatch();
   const history = useHistory();
-
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -220;
@@ -135,7 +134,10 @@ const SummaryListedSection = () => {
           <div className="px-4 mx-auto h-14 px-4 py-4 sm:block  ">
             <ListProductsBreadcrumb details={productId} category={lang === "en"
               ? listedProductsData?.category?.nameEn
-              : listedProductsData?.category?.nameAr} />
+              : listedProductsData?.category?.nameAr} 
+              categoryId={listedProductsData?.categoryId}
+              />
+              
           </div>
           <ImgSlider
             images={listedProductsData?.images}

@@ -234,11 +234,15 @@ const HomeAuctionDetails = () => {
             {pathname.startsWith(routes.app.home) ? (
               <AuctionHomeDetailsBreadcrumb details={auctionId} category={lang === "en"
                 ? auctionsDetailsData?.product?.category?.nameEn
-                : auctionsDetailsData?.product?.category?.nameAr} />
+                : auctionsDetailsData?.product?.category?.nameAr} 
+                 categoryId={auctionsDetailsData?.product?.category?.id}
+                />
             ) : (
               <MyBidsBreadcrumb details={auctionId} category={lang === "en"
                 ? auctionsDetailsData?.product?.category?.nameEn
-                : auctionsDetailsData?.product?.category?.nameAr} />
+                : auctionsDetailsData?.product?.category?.nameAr} 
+                categoryId={auctionsDetailsData?.product?.category?.id}
+                />
             )}
           </div>
           {/* up sections */}
