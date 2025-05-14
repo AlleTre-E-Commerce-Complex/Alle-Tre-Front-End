@@ -35,7 +35,6 @@ import BuyNowAuctionsSlider from "component/home-components/buy-now-auctions-sli
 import UpComingAuctionsSlider from "component/home-components/up-coming-auctions";
 
 const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
-
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -188,7 +187,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   }, [categoryId, runCategories, search, user, listedPageNumber]);
 
   const [selectedCategor, SetselectedCategor] = useState([]);
-
   useEffect(() => {
     if (categoryId) {
       const selectedCategory = GatogryOptions.find(
@@ -240,7 +238,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           <div className="relative w-full aspect-[21/9] max-h-[370px] mb-6 overflow-hidden rounded-lg px-4">
             <img
               className="w-full h-full object-fill object-center rounded-lg"
-              src={selectedCategor?.bannerLink || addImage}
+              src={lang === "ar" ? (selectedCategor?.bannerLinkAr || selectedCategor?.bannerLink || addImage) : (selectedCategor?.bannerLink || selectedCategor?.bannerLinkAr || addImage)}
               alt={selectedCategor?.text || "Category Banner"}
               loading="eager"
             />
@@ -752,12 +750,15 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else {
                     return null;
                   }
-                })())}
+                })()
+              )}
             </div>
           </div>
-          {!titleParam && <div className="px-4 mx-auto py-10">
-            <BuyNowAuctionsSlider />
-          </div>}
+          {!titleParam && (
+            <div className="px-4 mx-auto py-10">
+              <BuyNowAuctionsSlider />
+            </div>
+          )}
           {/* <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 px-4 mx-auto ">
         <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div> */}

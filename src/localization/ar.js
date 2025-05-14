@@ -347,7 +347,7 @@ const ar = {
   [localizationKeys.inspectionDetails]: "تفاصيل التفتيش",
   [localizationKeys.contactPerson]: "الشخص الذي يمكن الاتصال به",
   [localizationKeys.dateAndTime]: "التاريخ والوقت",
-  [localizationKeys.inspetionReport]: "تقرير التفتيش",
+  [localizationKeys.inspectionReport]: "تقرير التفتيش",
 
   // auction details
   [localizationKeys.quickAuction]: "المزاد السريع",

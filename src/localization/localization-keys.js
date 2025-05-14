@@ -351,7 +351,7 @@ const localizationKeys = {
   inspectionDetails:"inspectionDetails",
   contactPerson:"contactPerson",
   dateAndTime:"dateAndTime",
-  inspetionReport:"inspetionReport",
+  inspectionReport:"inspectionReport",
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",
