@@ -238,8 +238,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           <div className="relative w-full aspect-[21/9] max-h-[370px] mb-6 overflow-hidden rounded-lg px-4">
             <img
               className="w-full h-full object-fill object-center rounded-lg"
-              src={selectedCategor?.bannerLink || addImage}
-              // src={lang === "ar" ? (selectedCategor?.bannerLinkAr || selectedCategor?.bannerLink || addImage) : (selectedCategor?.bannerLink || selectedCategor?.bannerLinkAr || addImage)}
+              src={lang === "ar" ? (selectedCategor?.bannerLinkAr || selectedCategor?.bannerLink || addImage) : (selectedCategor?.bannerLink || selectedCategor?.bannerLinkAr || addImage)}
               alt={selectedCategor?.text || "Category Banner"}
               loading="eager"
             />
