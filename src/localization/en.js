@@ -354,7 +354,7 @@ const en = {
   [localizationKeys.inspectionDetails]: "Inspection Details",
   [localizationKeys.contactPerson]: "Contact Person",
   [localizationKeys.dateAndTime]: "Date & Time",
-  [localizationKeys.inspetionReport]: "Inspetion report",
+  [localizationKeys.inspectionReport]: "Inspection report",
   // auction details
   [localizationKeys.quickAuction]: "Quick Auction",
   [localizationKeys.maximumDurationMustBeDay]: "Maximum duration must be day",
@@ -532,7 +532,7 @@ const en = {
   [localizationKeys.ContinueToCancel]: "Continue to cancel ?",
   [localizationKeys.discontinue]: "Discontinue",
   [localizationKeys.YouSuccessfullyCancelledTheAuction]:
-    "Succefully cancelled the auction..!",
+    "Successfully cancelled the auction..!",
   [localizationKeys.YouHaveSuccessfullyNotifiedTheWinner]:
     "You have successfully notified the winner",
   // mybids

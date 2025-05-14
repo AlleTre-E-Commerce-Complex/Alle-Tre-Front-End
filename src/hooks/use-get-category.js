@@ -31,6 +31,8 @@ const useGetGatogry = () => {
             value: d.id,
             sliderLink: d?.sliderLink,
             bannerLink: d?.bannerLink,
+            sliderLinkAr: d?.sliderLinkAr,
+            bannerLinkAr: d?.bannerLinkAr,
             hasUsageCondition: d?.hasUsageCondition,
             maxStartPrice: d?.maxStartPrice,
           });

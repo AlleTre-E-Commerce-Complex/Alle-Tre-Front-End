@@ -6,21 +6,32 @@ import BannerTopImage4 from "../../assets/images/mainImg4.jpg";
 import BannerMobImage1 from "../../assets/images/mobileeSIze3.jpg";
 import BannerMobImage2 from "../../assets/images/mobileeSiz1.jpg";
 import BannerMobImage3 from "../../assets/images/mobileeSize2.jpg";
+import BannerMobAr1 from "../../assets/images/MobAr01.jpg";
+import BannerMobAr2 from "../../assets/images/MobAr02.jpg";
+import BannerMobAr3 from "../../assets/images/MobAr03.jpg";
+import DecAr1 from "../../assets/images/DesAr1.jpg";
+import DecAr2 from "../../assets/images/DesAr2.jpg";
+import DecAr3 from "../../assets/images/DesAr3.jpg";
+
 // import BannerMobImage4 from "../../assets/images/BannerMob4.jpg";
 import { useLanguage } from "../../context/language-context";
 
 const BannerBottom = () => {
+  const [lang] = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState("right");
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const images = isMobile
-    ? [BannerMobImage1, BannerMobImage2, BannerMobImage3]
-    : [BannerTopImage1, BannerTopImage2, BannerTopImage3, BannerTopImage4];
+    ? lang === "en"
+      ? [BannerMobImage1, BannerMobImage2, BannerMobImage3]
+      : [BannerMobAr1, BannerMobAr2, BannerMobAr3]
+    : lang === "en"
+    ? [BannerTopImage1, BannerTopImage2, BannerTopImage3, BannerTopImage4]
+    : [DecAr1, DecAr2, DecAr3, BannerMobAr3];
 
-  const [lang] = useLanguage();
-  const autoSlideInterval = 6000; 
+  const autoSlideInterval = 6000;
   const handleSlide = (newDirection) => {
     if (animating) return;
     setDirection(newDirection);
@@ -51,7 +62,7 @@ const BannerBottom = () => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [lang]);
 
   const goToSlide = (index) => {
     if (index !== currentIndex) {
@@ -73,7 +84,7 @@ const BannerBottom = () => {
           bottom: 0px !important;
         }
         .swiper-pagination-bullet {
-          background: rgba(0,0,0,0.3) !important;
+          background: rgba(0, 0, 0, 0.3) !important;
           width: 8px !important;
           height: 8px !important;
           opacity: 1 !important;
@@ -130,8 +141,6 @@ const BannerBottom = () => {
           ))}
         </div>
       )}
-
-
     </div>
   );
 };

@@ -12,7 +12,7 @@ import localizationKeys from "../../../localization/localization-keys";
 // import { io } from "socket.io-client";
 import { useAuthState } from "context/auth-context";
 import { getDefaultPaginationString } from "../../../constants/pagination";
-const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
+const PaymentSucsessModel = ({ open, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -41,7 +41,7 @@ const PaymentSucsessModel = ({ open, setOpen, TextButton, onReload }) => {
     <Modal
       className="sm:w-[506px] w-full h-auto bg-transparent scale-in "
       onClose={() => {
-        setOpen(false);
+        // setOpen(false);
       }}
       open={open}
     >
