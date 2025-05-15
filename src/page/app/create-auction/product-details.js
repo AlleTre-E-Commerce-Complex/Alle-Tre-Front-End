@@ -630,11 +630,11 @@ const ProductDetails = () => {
       otherwise: Yup.mixed().notRequired(),
     }),
     ...arrayCustomFieldsvalidations,
-    model: Yup.string().when([], {
-      is: () => model,
-      then: Yup.string().required(selectedContent[localizationKeys.required]),
-      otherwise: Yup.string().notRequired(),
-    }),
+    // model: Yup.string().when([], {
+    //   is: () => model,
+    //   then: Yup.string().required(selectedContent[localizationKeys.required]),
+    //   otherwise: Yup.string().notRequired(),
+    // }),
     subCategory: Yup.string().when([], {
       is: () => SubGatogryOptions?.length === 0,
       then: Yup.string().notRequired(),
