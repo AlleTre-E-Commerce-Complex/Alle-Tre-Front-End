@@ -77,7 +77,7 @@ function App() {
             },
           }}
         />
-        <InstallPromptButton />
+        {/* <InstallPromptButton /> */}
       </div>
     </HelmetProvider>
   );
