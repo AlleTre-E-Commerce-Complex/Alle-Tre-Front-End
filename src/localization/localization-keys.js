@@ -15,8 +15,10 @@ const localizationKeys = {
   email: "email",
   password: "password",
   phone: "phone",
-  PleaseRegisterYourPhoneNumberBeforeProceeding: "PleaseRegisterYourPhoneNumberBeforeProceeding",
-  WeHaveSentTheInspectionDetailsToYourWhatsApp: "WeHaveSentTheInspectionDetailsToYourWhatsApp",
+  PleaseRegisterYourPhoneNumberBeforeProceeding:
+    "PleaseRegisterYourPhoneNumberBeforeProceeding",
+  WeHaveSentTheInspectionDetailsToYourWhatsApp:
+    "WeHaveSentTheInspectionDetailsToYourWhatsApp",
   rememberPassword: "rememberPassword",
   forgetPassword: "forgetPassword",
   iAgreetotheTermsConditions: "iAgreetotheTermsConditions",
@@ -39,9 +41,12 @@ const localizationKeys = {
   fromWallet: "fromWallet",
   deleteAccount: "deleteAccount",
   confirmDeletion: "confirmDeletion",
-  areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData: "areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData",
-  above5000YouHaveToPayASecurityDepositToContinueBidding: "above5000YouHaveToPayASecurityDepositToContinueBidding",
+  areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData:
+    "areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData",
+  above5000YouHaveToPayASecurityDepositToContinueBidding:
+    "above5000YouHaveToPayASecurityDepositToContinueBidding",
   noResultsFound: "noResultsFound",
+  adoption: "adoption",
   // home
   auctions: "auctions",
   listings: "listings",
@@ -173,6 +178,8 @@ const localizationKeys = {
   discoverTrendingAuctionsWithExclusiveDeals:
     "discoverTrendingAuctionsWithExclusiveDeals",
   hotAuctions: "hotAuctions",
+  listYourAnimalForSale: "listYourAnimalForSale",
+  listYourAnimalForAdoption: "listYourAnimalForAdoption",
   // status
   activeNow: "activeNow",
   Scheduled: "Scheduled",
@@ -348,10 +355,10 @@ const localizationKeys = {
   auctionCancelledBySellerMessage: "auctionCancelledBySellerMessage",
   auctionCancelledByAdminMessage: "auctionCancelledByAdminMessage",
   auctionCancelled: "auctionCancelled",
-  inspectionDetails:"inspectionDetails",
-  contactPerson:"contactPerson",
-  dateAndTime:"dateAndTime",
-  inspectionReport:"inspectionReport",
+  inspectionDetails: "inspectionDetails",
+  contactPerson: "contactPerson",
+  dateAndTime: "dateAndTime",
+  inspectionReport: "inspectionReport",
   // shiping details
   locationDetails: "locationDetails",
   addAddress: "addAddress",

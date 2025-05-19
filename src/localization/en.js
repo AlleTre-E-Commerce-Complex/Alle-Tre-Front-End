@@ -52,6 +52,7 @@ const en = {
   [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
     "For bidding above 5000, security deposit is required",
   [localizationKeys.noResultsFound]: "No results found",
+  [localizationKeys.adoption]: "Adoption",
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
@@ -197,6 +198,8 @@ const en = {
   [localizationKeys.discoverTrendingAuctionsWithExclusiveDeals]:
     "Discover trending auctions with exclusive deals",
   [localizationKeys.hotAuctions]: "Hot Auctions",
+  [localizationKeys.listYourAnimalForSale]: "List your animal for sale",
+  [localizationKeys.listYourAnimalForAdoption]: "List your animal for adoption",
   // status
   [localizationKeys.activeNow]: "Active Now",
   [localizationKeys.Scheduled]: "  Scheduled",

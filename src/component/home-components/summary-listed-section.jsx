@@ -132,12 +132,15 @@ const SummaryListedSection = () => {
       <div className="grid md:grid-cols-2 grid-cols-1 mt-44 animate-in mx-5 px-4">
         <div className="w-full md:w-auto">
           <div className="px-4 mx-auto h-14 px-4 py-4 sm:block  ">
-            <ListProductsBreadcrumb details={productId} category={lang === "en"
-              ? listedProductsData?.category?.nameEn
-              : listedProductsData?.category?.nameAr} 
+            <ListProductsBreadcrumb
+              details={productId}
+              category={
+                lang === "en"
+                  ? listedProductsData?.category?.nameEn
+                  : listedProductsData?.category?.nameAr
+              }
               categoryId={listedProductsData?.categoryId}
-              />
-              
+            />
           </div>
           <ImgSlider
             images={listedProductsData?.images}
@@ -153,17 +156,21 @@ const SummaryListedSection = () => {
             </h1>
             <div className="flex items-center gap-2">
               <div
-                className={`px-2 py-0.5 rounded-md text-xs font-medium ${listedProductsData.usageStatus === "NEW"
+                className={`px-2 py-0.5 rounded-md text-xs font-medium ${
+                  listedProductsData.usageStatus === "NEW"
                     ? "bg-primary-veryLight text-primary"
                     : "bg-gray-100 text-gray-700"
-                  }`}
+                }`}
               >
-                {listedProductsData.categoryId === 3
+                {listedProductsData.categoryId === 3 ||
+                listedProductsData.categoryId === 7
                   ? listedProductsData.usageStatus === "NEW"
                     ? selectedContent[localizationKeys.sell]
+                    : listedProductsData.categoryId === 7
+                    ? selectedContent[localizationKeys.adoption]
                     : selectedContent[localizationKeys.rent]
                   : listedProductsData.usageStatus?.charAt(0).toUpperCase() +
-                  listedProductsData.usageStatus?.slice(1).toLowerCase()}
+                    listedProductsData.usageStatus?.slice(1).toLowerCase()}
               </div>
             </div>
           </div>
@@ -250,17 +257,17 @@ const SummaryListedSection = () => {
             </div>
             {(listedProductsData?.subCategory?.nameEn ||
               listedProductsData?.subCategory?.nameAr) && (
-                <div>
-                  <p className="text-sm text-gray-500 mb-2.5">
-                    {selectedContent[localizationKeys.subCategory]}
-                  </p>
-                  <div className="text-center px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
-                    {lang === "en"
-                      ? listedProductsData?.subCategory?.nameEn
-                      : listedProductsData?.subCategory?.nameAr}
-                  </div>
+              <div>
+                <p className="text-sm text-gray-500 mb-2.5">
+                  {selectedContent[localizationKeys.subCategory]}
+                </p>
+                <div className="text-center px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
+                  {lang === "en"
+                    ? listedProductsData?.subCategory?.nameEn
+                    : listedProductsData?.subCategory?.nameAr}
                 </div>
-              )}
+              </div>
+            )}
           </div>
 
           {/* Prices  sections */}
@@ -298,7 +305,7 @@ const SummaryListedSection = () => {
                           <p className="text-base text-gray-600">
                             {
                               mainLocation?.city?.[
-                              lang === "ar" ? "nameAr" : "nameEn"
+                                lang === "ar" ? "nameAr" : "nameEn"
                               ]
                             }
                           </p>
@@ -306,7 +313,7 @@ const SummaryListedSection = () => {
                           <p className="text-base text-gray-600">
                             {
                               mainLocation?.country?.[
-                              lang === "ar" ? "nameAr" : "nameEn"
+                                lang === "ar" ? "nameAr" : "nameEn"
                               ]
                             }
                           </p>

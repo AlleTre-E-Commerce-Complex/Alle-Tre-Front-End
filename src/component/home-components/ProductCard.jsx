@@ -318,12 +318,14 @@ const ProductCard = ({
                     : "bg-gray-100 text-gray-700"
                 }`}
               >
-                {category === 3
-                  ? usageStatus === "NEW"
-                    ? selectedContent[localizationKeys.sell]
-                    : selectedContent[localizationKeys.rent]
-                  : usageStatus?.charAt(0).toUpperCase() +
-                    usageStatus?.slice(1).toLowerCase()}
+               {category === 3 || category === 7
+                ? usageStatus === "NEW"
+                  ? selectedContent[localizationKeys.sell]
+                  : category === 7 ? selectedContent[localizationKeys.adoption
+                    
+                  ] : selectedContent[localizationKeys.rent]
+                : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
               </div>
             </div>
           </div>

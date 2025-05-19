@@ -178,7 +178,7 @@ const AuctionCard = ({
   // }, [socket, auctionId]);
   useEffect(() => {
     if (!socket) return;
-  
+
     const handleBidSubmitted = (data) => {
       try {
         console.log("New bid submitted:", data);
@@ -187,14 +187,13 @@ const AuctionCard = ({
         console.error("Error in bid:submitted handler:", error);
       }
     };
-  
+
     socket.on("bid:submitted", handleBidSubmitted);
-  
+
     return () => {
       socket.off("bid:submitted", handleBidSubmitted);
     };
   }, [socket, auctionId]);
-  
 
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -466,9 +465,11 @@ const AuctionCard = ({
                   : "bg-gray-100 text-gray-700"
               }`}
             >
-              {category === 3
+              {category === 3 || category === 7
                 ? usageStatus === "NEW"
                   ? selectedContent[localizationKeys.sell]
+                  : category === 7
+                  ? selectedContent[localizationKeys.adoption]
                   : selectedContent[localizationKeys.rent]
                 : usageStatus?.charAt(0).toUpperCase() +
                   usageStatus?.slice(1).toLowerCase()}

@@ -7,11 +7,16 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 
-export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue, categoryId }) => {
+export const CheckboxRadioProductDetails = ({
+  valueRadio,
+  setRadioValue,
+  categoryId,
+}) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const isProperty = categoryId === 3;
+  const isAnimal = categoryId === 7;
 
   return (
     <Form className="flex md:flex-row flex-col gap-x-72">
@@ -19,28 +24,48 @@ export const CheckboxRadioProductDetails = ({ valueRadio, setRadioValue, categor
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label={isProperty ?  selectedContent[localizationKeys.sell] : selectedContent[localizationKeys.new]}
+          label={
+            isProperty
+              ? [localizationKeys.listYourPropertyForSale]
+              : isAnimal
+              ? selectedContent[localizationKeys.listYourAnimalForSale]
+              : selectedContent[localizationKeys.getItNewFeeltheDifference]
+          }
           name="checkboxRadioGroup"
           value="NEW"
           checked={valueRadio === "NEW"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          {isProperty ? [localizationKeys.listYourPropertyForSale]  : selectedContent[localizationKeys.getItNewFeeltheDifference]}
+          {isProperty
+            ? [localizationKeys.listYourPropertyForSale]
+            : isAnimal
+            ? selectedContent[localizationKeys.listYourAnimalForSale]
+            : selectedContent[localizationKeys.getItNewFeeltheDifference]}
         </p>
       </Form.Field>
       <Form.Field>
         <Checkbox
           className="Edit_checkboxRadioGroup"
           radio
-          label={isProperty ? selectedContent[localizationKeys.rent] : selectedContent[localizationKeys.used]}
+          label={
+            isProperty
+              ? selectedContent[localizationKeys.rent]
+              : isAnimal
+              ? selectedContent[localizationKeys.adoption]
+              : selectedContent[localizationKeys.used]
+          }
           name="checkboxRadioGroup"
           value="USED"
           checked={valueRadio === "USED"}
           onChange={(e, data) => setRadioValue(data.value)}
         />
         <p className="text-gray-med text-xs font-normal pt-3">
-          {isProperty ?  selectedContent[localizationKeys.listYourPropertyForRent]: selectedContent[localizationKeys.shopSustainableChoosePreOwned]}
+          {isProperty
+            ? selectedContent[localizationKeys.listYourPropertyForRent]
+            : isAnimal
+            ? selectedContent[localizationKeys.listYourAnimalForAdoption]
+            : selectedContent[localizationKeys.shopSustainableChoosePreOwned]}
         </p>
       </Form.Field>
       {/* <Form.Field>

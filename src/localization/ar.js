@@ -51,6 +51,9 @@ const ar = {
   [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
     "للمزايدة فوق 5000، مطلوب وديعة تأمين",
   [localizationKeys.noResultsFound]: "لم يتم العثور على نتائج",
+  [localizationKeys.adoption]: "التبني",
+  [localizationKeys.listYourAnimalForAdoption]: "قم بإدراج حيوانك للتبني",
+  [localizationKeys.listYourAnimalForSale]: "أدرج حيوانك للبيع",
   // home
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",
