@@ -314,6 +314,9 @@ const Home = ({
             setListedProducts(res?.data?.data);
             // setTotalPagesListed(res?.data?.pagination?.totalPages);
           })
+          .catch((error)=>{
+            console.log(error)
+          })
       );
     } else {
       runListedProduct(
@@ -322,6 +325,8 @@ const Home = ({
           .then((res) => {
             setListedProducts(res?.data?.data);
             // setTotalPagesListed(res?.data?.pagination?.totalPages);
+          }).catch((error)=>{
+            console.log(error)
           })
       );
     }

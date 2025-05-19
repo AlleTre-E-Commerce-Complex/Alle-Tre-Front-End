@@ -290,6 +290,9 @@ const SummaryListedSection = () => {
                         <p className="text-xl font-semibold leading-tight">
                           {mainLocation?.address}
                         </p>
+                        <p className="text-base text-gray-600">
+                          {mainLocation?.addressLabel}
+                        </p>
 
                         <div className="flex items-center space-x-1 mt-2">
                           <p className="text-base text-gray-600">
