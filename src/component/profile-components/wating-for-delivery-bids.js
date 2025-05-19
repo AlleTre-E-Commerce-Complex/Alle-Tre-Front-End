@@ -56,7 +56,9 @@ const WatingForDeliveryBids = ({ OnReload }) => {
           history.push(routes.app.profile.myBids.completed);
           toast.success("This auctions is Confirm Delivery success");
         })
-        .catch((err) => {})
+        .catch((err) => {
+          console.log('Confirm Delivery',err)
+        })
     );
   };
   return (
@@ -96,7 +98,7 @@ const WatingForDeliveryBids = ({ OnReload }) => {
               isBidsButtons
               auctionsId = {e?.auction?.id}
               textButton={e?.auction?.deliveryType === "PICKUP" ? selectedContent[localizationKeys.confirmDelivery] : selectedContent[localizationKeys.deliveryByCompany]}
-              buttonActions={e?.auction?.deliveryType === "PICKUP" ? () => handelConfirmDelivery(e?.auction?.id) : ""}
+              buttonActions={e?.auction?.deliveryType === "PICKUP" ? () => handelConfirmDelivery(e?.auction?.id) : undefined}
               status={"WAITING_FOR_DELIVERY"}
               title={e?.auction?.product?.title}
               description={e?.auction?.product?.description}
