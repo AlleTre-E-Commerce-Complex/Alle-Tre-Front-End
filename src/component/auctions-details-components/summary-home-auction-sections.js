@@ -428,9 +428,14 @@ const SummaryHomeAuctionSections = ({
                   : "bg-gray-100 text-gray-700"
               }`}
             >
-              {category === "Properties" || category === "عقارات"
+              {category === "Properties" ||
+              category === "عقارات" ||
+              category === "Animals" ||
+              category === "حيوانات"
                 ? usageStatus === "NEW"
                   ? selectedContent[localizationKeys.sell]
+                  : category === "Animals" || category === "حيوانات"
+                  ? selectedContent[localizationKeys.adoption]
                   : selectedContent[localizationKeys.rent]
                 : usageStatus?.charAt(0).toUpperCase() +
                   usageStatus?.slice(1).toLowerCase()}
@@ -570,7 +575,7 @@ const SummaryHomeAuctionSections = ({
                         <BiSolidFilePdf className="w-8 h-8 text-red-500" />
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium text-gray-900 truncate">
-                          {selectedContent[localizationKeys.inspectionReport]}
+                            {selectedContent[localizationKeys.inspectionReport]}
                           </h4>
                           {/* <p className="text-xs text-gray-500 mt-0.5">
                             {selectedContent[localizationKeys.Pdfdocument]}
@@ -686,7 +691,7 @@ const SummaryHomeAuctionSections = ({
               >
                 <div className="relative w-full">
                   <div className="relative w-full group">
-                  <button
+                    <button
                       disabled={
                         status === "SOLD" ||
                         status === "EXPIRED" ||
@@ -707,7 +712,6 @@ const SummaryHomeAuctionSections = ({
                       {selectedContent[localizationKeys.buyNow] + " "}
                       <span className="font-bold">{`${acceptedAmount} AED`}</span>
                     </button>
-
 
                     {/* Message directly under the button */}
                     <p className="ml-2 w-full text-gray-500 text-base font-normal pt-2 text-left ml-2">

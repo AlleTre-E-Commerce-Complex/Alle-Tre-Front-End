@@ -20,19 +20,20 @@ import api from "../../api";
 import { Open } from "../../redux-store/auth-model-slice";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
-
 const CountdownDisplay = memo(
   ({ timeLeft, status, formattedstartDate, selectedContent }) => {
-    const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
-      } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+    const formattedTimeLeft = `${timeLeft.days} ${
+      selectedContent[localizationKeys.days]
+    } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
     ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} : 
     ${timeLeft.seconds} ${selectedContent[localizationKeys.sec]}`;
 
     return (
       <p
-        className={`${timeLeft.days === 0 ? "text-red" : "text-gray-800"} font-medium text-[10px] md:text-xs`}
+        className={`${
+          timeLeft.days === 0 ? "text-red" : "text-gray-800"
+        } font-medium text-[10px] md:text-xs`}
       >
-
         {status === "IN_SCHEDULED" ? formattedstartDate : formattedTimeLeft}
       </p>
     );
@@ -59,7 +60,7 @@ const AuctionCardList = ({
   latestBidAmount,
   PurchasedTime,
   usageStatus,
-  category
+  category,
 }) => {
   const [isWatshlist, setWatshlist] = useState(WatshlistState);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -76,7 +77,7 @@ const AuctionCardList = ({
   const { run } = useAxios([]);
   // const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
   //   } :
-  // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : 
+  // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
   // ${timeLeft.minutes} ${selectedContent[localizationKeys.min]} `;
 
   const formattedBid = formatCurrency(
@@ -85,9 +86,11 @@ const AuctionCardList = ({
 
   const startDate = useCountdown(StartDate);
 
-  const formattedstartDate = `${startDate.days} ${selectedContent[localizationKeys.days]
-    } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${startDate.minutes
-    } ${selectedContent[localizationKeys.min]}`;
+  const formattedstartDate = `${startDate.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${startDate.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    startDate.minutes
+  } ${selectedContent[localizationKeys.min]}`;
 
   useEffect(() => {
     if (WatshlistState) setWatshlist(WatshlistState);
@@ -190,8 +193,8 @@ const AuctionCardList = ({
               setWatshlist(false);
               toast.success(
                 selectedContent[
-                localizationKeys
-                  .thisAuctionDeleteFromWatchListBeenSuccessfully
+                  localizationKeys
+                    .thisAuctionDeleteFromWatchListBeenSuccessfully
                 ]
               );
               onReload();
@@ -208,7 +211,7 @@ const AuctionCardList = ({
               setWatshlist(true);
               toast.success(
                 selectedContent[
-                localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
+                  localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
                 ]
               );
               onReload();
@@ -265,8 +268,8 @@ const AuctionCardList = ({
               )}
 
               {Array.isArray(adsImg) &&
-                adsImg.length > 0 &&
-                adsImg[currentImageIndex]?.imageLink ? (
+              adsImg.length > 0 &&
+              adsImg[currentImageIndex]?.imageLink ? (
                 <>
                   {adsImg[currentImageIndex].imagePath.match(
                     /\.(mp4|mov|webm|avi)$/i
@@ -348,10 +351,11 @@ const AuctionCardList = ({
                               e.stopPropagation();
                               setCurrentImageIndex(index);
                             }}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${index === currentImageIndex
+                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                              index === currentImageIndex
                                 ? "bg-primary w-3"
                                 : "bg-white/80 hover:bg-white"
-                              }`}
+                            }`}
                           />
                         ))}
                       </div>
@@ -360,11 +364,8 @@ const AuctionCardList = ({
                 </>
               ) : null}
             </div>
-            <div
-              className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-1 sm:px-2 py-0.5 sm:py-1 rounded-br-lg shadow-sm backdrop-blur-sm bg-opacity-75"
-            >
+            <div className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-1 sm:px-2 py-0.5 sm:py-1 rounded-br-lg shadow-sm backdrop-blur-sm bg-opacity-75">
               <span className="text-white font-medium text-xs sm:text-sm flex items-center">
-
                 {formattedBid}
               </span>
             </div>
@@ -381,19 +382,21 @@ const AuctionCardList = ({
                     {truncateString(title, 70)}
                   </h1>
                   <div
-              className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${
-                usageStatus === "NEW"
-                  ? "bg-primary-veryLight text-primary"
-                  : "bg-gray-100 text-gray-700"
-              }`}
-            >
-              {category === 3 
-                ? usageStatus === "NEW" 
-                  ? selectedContent[localizationKeys.sell] 
-                  : selectedContent[localizationKeys.rent]
-                : usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
-            </div>
+                    className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${
+                      usageStatus === "NEW"
+                        ? "bg-primary-veryLight text-primary"
+                        : "bg-gray-100 text-gray-700"
+                    }`}
+                  >
+                    {category === 3 || category === 7
+                      ? usageStatus === "NEW"
+                        ? selectedContent[localizationKeys.sell]
+                        : category === 7
+                        ? selectedContent[localizationKeys.adoption]
+                        : selectedContent[localizationKeys.rent]
+                      : usageStatus?.charAt(0).toUpperCase() +
+                        usageStatus?.slice(1).toLowerCase()}
+                  </div>
                 </div>
 
                 <div className="mt-2">
@@ -422,8 +425,8 @@ const AuctionCardList = ({
                       {status === "IN_SCHEDULED"
                         ? selectedContent[localizationKeys.startDate]
                         : status === "SOLD"
-                          ? "Purchased Time"
-                          : selectedContent[localizationKeys.endingTime]}
+                        ? "Purchased Time"
+                        : selectedContent[localizationKeys.endingTime]}
                     </h6>
                     {status === "SOLD" ? (
                       <p className="font-medium text-xs text-gray-dark">
@@ -442,7 +445,8 @@ const AuctionCardList = ({
               </div>
 
               <div className="flex sm:flex-col gap-2 sm:h-full sm:justify-between">
-                <div className="hidden sm:block" /> {/* This pushes content to the bottom on desktop */}
+                <div className="hidden sm:block" />{" "}
+                {/* This pushes content to the bottom on desktop */}
                 <div className="flex sm:flex-col gap-2">
                   {!isMyAuction && (
                     <button
