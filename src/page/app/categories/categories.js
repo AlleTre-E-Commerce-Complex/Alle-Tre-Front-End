@@ -48,13 +48,112 @@ const Categories = () => {
   const { run: runCategories, isLoading: isLoadingCategories } = useAxios([]);
 
   useEffect(() => {
-    if (search.includes("page") && search.includes("perPage"))
-      if (user) {
-        runCategories(
-          authAxios.get(`${api.app.auctions.getMain}${search}`).then((res) => {
-            setMainAuctions(res?.data?.data);
-            setTotalPages(res?.data?.pagination?.totalPages);
-            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+    if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
+      queryParams.set("auctionPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+    const filterParams = {
+      page: page,
+      perPage: perPage,
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      isHome: false,
+    };
+
+    Object.keys(filterParams).forEach((key) => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
+
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
+    // if (search.includes("page") && search.includes("perPage"))
+    if (user) {
+      runCategories(
+        authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+          // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        })
+      );
+    } else {
+      runCategories(
+        axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+          setMainAuctions(res?.data?.data);
+          setTotalpagesAuction(res?.data?.pagination?.totalPages);
+          // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        })
+      );
+    }
+  }, [categoryId, runCategories, search, user, auctionPageNumber]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(search);
+    let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
+    let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
+
+    if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
+      queryParams.set("productPage", page.toString());
+      queryParams.set("perPage", perPage.toString());
+      history.replace({ search: queryParams.toString() });
+      return;
+    }
+
+    const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+
+    const filterParams = {
+      page: page,
+      perPage: perPage,
+      categories: parsed.categories ? parsed.categories.map(Number) : undefined,
+      subCategory: parsed.subCategory
+        ? parsed.subCategory.map(Number)
+        : undefined,
+      brands: parsed.brands ? parsed.brands.map(Number) : undefined,
+      sellingType: parsed.sellingType || undefined,
+      auctionStatus: parsed.auctionStatus || undefined,
+      usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
+      priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
+      priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      isHome: false,
+    };
+
+    Object.keys(filterParams).forEach((key) => {
+      if (filterParams[key] === undefined) {
+        delete filterParams[key];
+      }
+    });
+
+    const queryStr = queryString.stringify(filterParams, {
+      arrayFormat: "bracket",
+    });
+    // if (search.includes("page") && search.includes("perPage"))
+    if (user) {
+      runCategories(
+        axios
+          .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
+          .then((res) => {
+            setListedProducts(res?.data?.data);
+            setTotalPagesListed(res?.data?.pagination?.totalPages);
+            // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           })
         );
       } else {
