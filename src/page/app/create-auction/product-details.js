@@ -1157,7 +1157,7 @@ const ProductDetails = () => {
                         })}
 
                     {(formik.values.subCategory || categoryId === 4) &&
-                      categoryId !== 3 && (
+                      categoryId !== 3 && categoryId !== 7 && (
                         <>
                           <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                             <FormikInput
