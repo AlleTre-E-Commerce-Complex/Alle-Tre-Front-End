@@ -93,7 +93,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-      isHome: false,
+      isHome:false,
     };
 
     Object.keys(filterParams).forEach((key) => {
@@ -124,6 +124,10 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       );
     }
   }, [categoryId, runCategories, search, user, auctionPageNumber]);
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
@@ -152,7 +156,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-      isHome: false,
+      isHome:false,
+
     };
 
     Object.keys(filterParams).forEach((key) => {
