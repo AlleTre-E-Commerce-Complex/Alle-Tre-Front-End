@@ -93,6 +93,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      isHome: false,
     };
 
     Object.keys(filterParams).forEach((key) => {
@@ -151,6 +152,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      isHome: false,
     };
 
     Object.keys(filterParams).forEach((key) => {
