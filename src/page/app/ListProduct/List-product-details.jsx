@@ -158,29 +158,35 @@ const ListProductDetails = () => {
     const currentImages = imgtest || [];
     if (currentImages.length + files.length > 50) {
       toast.error(
-        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages] 
+        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
       );
       event.target.value = null;
       return;
     }
 
     // Check if there's already a video in the current images
-    const hasExistingVideo = currentImages.some(img => img.file.type.startsWith("video/"));
-    
+    const hasExistingVideo = currentImages.some((img) =>
+      img.file.type.startsWith("video/")
+    );
+
     // Check if any of the new files is a video
-    const newVideos = files.filter(file => file.type.startsWith("video/"));
+    const newVideos = files.filter((file) => file.type.startsWith("video/"));
 
     // If trying to upload a video as first item
     if (currentImages.length === 0 && newVideos.length > 0) {
-      toast.error( selectedContent[localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover] 
-       );
+      toast.error(
+        selectedContent[
+          localizationKeys
+            .videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover
+        ]
+      );
       event.target.value = null;
       return;
     }
 
     // If there's already a video or if trying to upload multiple videos
     if ((hasExistingVideo && newVideos.length > 0) || newVideos.length > 1) {
-      toast.error( selectedContent[localizationKeys.onlyOneVideoFileIsAllowed] );
+      toast.error(selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]);
       event.target.value = null;
       return;
     }
@@ -191,7 +197,7 @@ const ListProductDetails = () => {
           const watermarkedFile = await addImageWatermark(file);
           return {
             file: watermarkedFile,
-            imageLink: URL.createObjectURL(watermarkedFile)
+            imageLink: URL.createObjectURL(watermarkedFile),
           };
         })
       );
@@ -209,24 +215,33 @@ const ListProductDetails = () => {
 
       if (currentImages.length >= 50) {
         toast.error(
-          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages] 
+          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
         );
         event.target.value = null;
         return;
       }
 
-      const hasExistingVideo = currentImages.some(img => img.file.type.startsWith("video/"));
-      
+      const hasExistingVideo = currentImages.some((img) =>
+        img.file.type.startsWith("video/")
+      );
+
       const isVideo = file.type.startsWith("video/");
 
       if (currentImages.length === 0 && isVideo) {
-        toast.error(selectedContent[localizationKeys.videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover]);
+        toast.error(
+          selectedContent[
+            localizationKeys
+              .videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover
+          ]
+        );
         event.target.value = null;
         return;
       }
 
       if (hasExistingVideo && isVideo) {
-        toast.error(selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]);
+        toast.error(
+          selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]
+        );
         event.target.value = null;
         return;
       }
@@ -235,7 +250,7 @@ const ListProductDetails = () => {
         const watermarkedFile = await addImageWatermark(file);
         const newImage = {
           file: watermarkedFile,
-          imageLink: URL.createObjectURL(watermarkedFile)
+          imageLink: URL.createObjectURL(watermarkedFile),
         };
         setimgtest([...currentImages, newImage]);
       } catch (error) {
@@ -315,10 +330,10 @@ const ListProductDetails = () => {
           listingProductDetails({
             ...values,
             valueRadio,
-            images: imgtest.map(img => ({
+            images: imgtest.map((img) => ({
               file: img.file,
               imageLink: img.imageLink,
-              imagePath: img.file.name
+              imagePath: img.file.name,
             })),
             auctionState,
             auctionId: completeDraftVal?.id,
@@ -568,14 +583,10 @@ const ListProductDetails = () => {
                               <FormikMultiDropdown
                                 name={field.key}
                                 label={`${
-                                  lang === "en"
-                                    ? field.labelEn
-                                    : field.labelAr
+                                  lang === "en" ? field.labelEn : field.labelAr
                                 }`}
                                 placeholder={`${
-                                  lang === "en"
-                                    ? field.labelEn
-                                    : field.labelAr
+                                  lang === "en" ? field.labelEn : field.labelAr
                                 }`}
                                 options={
                                   field.key === "countryId"
@@ -602,7 +613,8 @@ const ListProductDetails = () => {
                           );
                         })}
                     {(formik.values.subCategory || categoryId === 4) &&
-                      categoryId !== 3 && (
+                      categoryId !== 3 &&
+                      categoryId !== 7 && (
                         <>
                           <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                             <FormikInput
@@ -692,7 +704,11 @@ const ListProductDetails = () => {
                     <h1 className="font-bold text-base text-black pt-6">
                       {selectedContent[localizationKeys.addMedia]}{" "}
                       <span className="text-gray-600 text-sm font-normal px-1">
-                        {selectedContent[localizationKeys.uploadOneImageAndOneVideo]}
+                        {
+                          selectedContent[
+                            localizationKeys.uploadOneImageAndOneVideo
+                          ]
+                        }
                       </span>
                     </h1>
                     <div className="relative">
