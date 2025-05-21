@@ -761,9 +761,11 @@ const ListProductDetails = () => {
                   //     : "hidden"
                   // }
                   >
-                    <h1 className="font-bold text-base text-black pt-6">
-                      {selectedContent[localizationKeys.itemCondition]}
-                    </h1>
+                    {!(categoryId === 7 && subCategoryId === 23) && (
+                      <h1 className="font-bold text-base text-black pt-6">
+                        {selectedContent[localizationKeys.itemCondition]}
+                      </h1>
+                    )}
                     <div
                     //   className={
                     //     hasUsageCondition ||
