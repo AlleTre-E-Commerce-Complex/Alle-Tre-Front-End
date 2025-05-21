@@ -11,12 +11,17 @@ export const CheckboxRadioProductDetails = ({
   valueRadio,
   setRadioValue,
   categoryId,
+  subCategoryId,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const isProperty = categoryId === 3;
   const isAnimal = categoryId === 7;
+
+  if (isAnimal && subCategoryId === 23) {
+    return null;
+  }
 
   return (
     <Form className="flex md:flex-row flex-col gap-x-72">
@@ -25,11 +30,9 @@ export const CheckboxRadioProductDetails = ({
           className="Edit_checkboxRadioGroup"
           radio
           label={
-            isProperty
-              ? [localizationKeys.listYourPropertyForSale]
-              : isAnimal
-              ? selectedContent[localizationKeys.listYourAnimalForSale]
-              : selectedContent[localizationKeys.getItNewFeeltheDifference]
+            isProperty || (isAnimal && subCategoryId === 22)
+              ? selectedContent[localizationKeys.sell]
+              : selectedContent[localizationKeys.new]
           }
           name="checkboxRadioGroup"
           value="NEW"
@@ -39,7 +42,7 @@ export const CheckboxRadioProductDetails = ({
         <p className="text-gray-med text-xs font-normal pt-3">
           {isProperty
             ? [localizationKeys.listYourPropertyForSale]
-            : isAnimal
+            : isAnimal && subCategoryId === 22
             ? selectedContent[localizationKeys.listYourAnimalForSale]
             : selectedContent[localizationKeys.getItNewFeeltheDifference]}
         </p>
@@ -51,7 +54,7 @@ export const CheckboxRadioProductDetails = ({
           label={
             isProperty
               ? selectedContent[localizationKeys.rent]
-              : isAnimal
+              : isAnimal && subCategoryId === 22
               ? selectedContent[localizationKeys.adoption]
               : selectedContent[localizationKeys.used]
           }
@@ -63,7 +66,7 @@ export const CheckboxRadioProductDetails = ({
         <p className="text-gray-med text-xs font-normal pt-3">
           {isProperty
             ? selectedContent[localizationKeys.listYourPropertyForRent]
-            : isAnimal
+            : isAnimal && subCategoryId === 22
             ? selectedContent[localizationKeys.listYourAnimalForAdoption]
             : selectedContent[localizationKeys.shopSustainableChoosePreOwned]}
         </p>
