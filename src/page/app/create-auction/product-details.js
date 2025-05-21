@@ -115,7 +115,7 @@ const ProductDetails = () => {
         formData.append("product[numberOfFloors]", values.numberOfFloors);
       if (values.numberOfRooms)
         formData.append("product[numberOfRooms]", values.numberOfRooms);
-            if (values.itemDescription)
+      if (values.itemDescription)
         formData.append("product[description]", values.itemDescription);
       if (values.countryId)
         formData.append("product[countryId]", values.countryId);
@@ -484,7 +484,7 @@ const ProductDetails = () => {
     // Check video file size (50MB = 50 * 1024 * 1024 bytes)
     const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB in bytes
     const oversizedVideos = files.filter(
-      file => file.type.startsWith("video/") && file.size > MAX_VIDEO_SIZE
+      (file) => file.type.startsWith("video/") && file.size > MAX_VIDEO_SIZE
     );
     if (oversizedVideos.length > 0) {
       toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded]);
@@ -1157,7 +1157,8 @@ const ProductDetails = () => {
                         })}
 
                     {(formik.values.subCategory || categoryId === 4) &&
-                      categoryId !== 3 && categoryId !== 7 && (
+                      categoryId !== 3 &&
+                      categoryId !== 7 && (
                         <>
                           <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                             <FormikInput
@@ -1474,9 +1475,12 @@ const ProductDetails = () => {
                         : "hidden"
                     }
                   >
-                    <h1 className="font-bold text-base text-black pt-6">
-                      {selectedContent[localizationKeys.itemCondition]}
-                    </h1>
+                    {!(categoryId === 7 && subCategoryId === 23) && (
+                      <h1 className="font-bold text-base text-black pt-6">
+                        {selectedContent[localizationKeys.itemCondition]}
+                      </h1>
+                    )}
+
                     <div
                       className={
                         hasUsageCondition ||
@@ -1491,7 +1495,7 @@ const ProductDetails = () => {
                         valueRadio={valueRadio}
                         setRadioValue={setRadioValue}
                         categoryId={categoryId}
-                        subCategoryId = {subCategoryId}
+                        subCategoryId={subCategoryId}
                       />
                     </div>
                   </div>
