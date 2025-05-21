@@ -1475,7 +1475,7 @@ const ProductDetails = () => {
                         : "hidden"
                     }
                   >
-                    {!(categoryId === 7 && subCategoryId === 23) && (
+                    {!(categoryId === 7 ) && (
                       <h1 className="font-bold text-base text-black pt-6">
                         {selectedContent[localizationKeys.itemCondition]}
                       </h1>
@@ -1496,6 +1496,7 @@ const ProductDetails = () => {
                         setRadioValue={setRadioValue}
                         categoryId={categoryId}
                         subCategoryId={subCategoryId}
+                        isAuction
                       />
                     </div>
                   </div>

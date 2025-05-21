@@ -12,6 +12,7 @@ export const CheckboxRadioProductDetails = ({
   setRadioValue,
   categoryId,
   subCategoryId,
+  isAuction
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -19,7 +20,7 @@ export const CheckboxRadioProductDetails = ({
   const isProperty = categoryId === 3;
   const isAnimal = categoryId === 7;
 
-  if (isAnimal && subCategoryId === 23) {
+  if ((isAnimal && subCategoryId === 23) || (isAnimal && isAuction)) {
     return null;
   }
 

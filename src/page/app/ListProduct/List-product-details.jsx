@@ -780,6 +780,7 @@ const ListProductDetails = () => {
                         valueRadio={valueRadio}
                         setRadioValue={setRadioValue}
                         categoryId={categoryId}
+                        subCategoryId={subCategoryId}
                       />
                     </div>
                   </div>
