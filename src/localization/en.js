@@ -53,6 +53,7 @@ const en = {
     "For bidding above 5000, security deposit is required",
   [localizationKeys.noResultsFound]: "No results found",
   [localizationKeys.adoption]: "Adoption",
+  [localizationKeys.contactSeller]: "Contact seller",
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",

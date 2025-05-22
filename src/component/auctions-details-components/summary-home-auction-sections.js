@@ -31,6 +31,7 @@ import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleveryS
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import { FaRegUser } from "react-icons/fa";
 import { BiSolidFilePdf } from "react-icons/bi";
+import { IoCall } from "react-icons/io5";
 // import { FaWhatsapp } from "react-icons/fa";
 // import EditPhoneNumberModel from "component/profile-components/edit-phone-number-model";
 
@@ -525,12 +526,25 @@ const SummaryHomeAuctionSections = ({
               onClick={() => setIsInspectionModalOpen(true)}
               className="border-primary border-[1px] text-primary md:w-[220px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark transition-colors duration-200"
             >
-              <span>
-                <Icon name="search" />
-              </span>
-              <span>
-                {selectedContent[localizationKeys.GetInspectionDetails]}
-              </span>
+              {category === "Animals" || category === "حيوانات" ? (
+                <>
+                  <span>
+                    <IoCall />
+                  </span>
+                  <span>
+                   {selectedContent[localizationKeys.contactSeller]}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>
+                    <Icon name="search" />
+                  </span>
+                  <span>
+                    {selectedContent[localizationKeys.GetInspectionDetails]}
+                  </span>
+                </>
+              )}
             </button>
 
             <InspectionDetailsModal

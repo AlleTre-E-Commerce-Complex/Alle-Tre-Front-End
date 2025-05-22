@@ -47,6 +47,7 @@ const localizationKeys = {
     "above5000YouHaveToPayASecurityDepositToContinueBidding",
   noResultsFound: "noResultsFound",
   adoption: "adoption",
+  contactSeller: "contactSeller",
   // home
   auctions: "auctions",
   listings: "listings",
