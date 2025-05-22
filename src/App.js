@@ -17,16 +17,16 @@ import InstallPromptButton from "component/shared/installPropt/InstallPromptButt
 
 
 function App() {
-  // const location = useLocation();
+  const location = useLocation();
 
-  // useEffect(() => {
-  //   initGA();
-  //   logPageView();
-  // }, []);
+  useEffect(() => {
+    initGA();
+    logPageView();
+  }, []);
 
-  // useEffect(() => {
-  //   logPageView();
-  // }, [location.pathname]);
+  useEffect(() => {
+    logPageView();
+  }, [location.pathname]);
 
   //   useEffect(() => {
   //     const searchParams = new URLSearchParams(location.search);

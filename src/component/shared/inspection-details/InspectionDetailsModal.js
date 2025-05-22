@@ -70,7 +70,7 @@ const InspectionDetailsModal = ({ open, onClose, inspectionDetails }) => {
             </div>
 
             {/* Date & Time Section */}
-            <div className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
+            {/* <div className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                   <Icon
@@ -104,7 +104,7 @@ const InspectionDetailsModal = ({ open, onClose, inspectionDetails }) => {
                   </span>
                 </p>
               </div>
-            </div>
+            </div> */}
             {/* Location Section */}
             <div className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
               <div className="flex items-center gap-3 mb-4">
