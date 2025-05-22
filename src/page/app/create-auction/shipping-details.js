@@ -319,9 +319,13 @@ const ShippingDetails = () => {
               toast.success(
                 selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
               );
-              const specialCategory = [4]
-              // const specialCategoryPrice = [5000]
-              if(specialCategory.includes(productDetailsInt.category) && auctionDetailsInt.MinimumPrice < 5000){
+              const specialCategory = [[4,5000],[7,1000]]
+              const isSpecial = specialCategory.some(
+                ([cat, minPrice]) => 
+                  productDetailsInt.category === cat && auctionDetailsInt.MinimumPrice < minPrice
+              );
+              
+              if(isSpecial){
                 history.push(`${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`)
               }else{
                 history.push(routes.app.createAuction.paymentDetails);
