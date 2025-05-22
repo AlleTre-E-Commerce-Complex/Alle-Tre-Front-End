@@ -667,7 +667,7 @@ const ProductDetails = () => {
       !draftValue?.valueRadio &&
       !productDetailsint?.valueRadio
     ) {
-      if (hasUsageCondition) {
+      if (hasUsageCondition && categoryId !== 7) {
         toast.error(
           selectedContent[
             localizationKeys.makeSureThatYouChooseItemConditionValue
