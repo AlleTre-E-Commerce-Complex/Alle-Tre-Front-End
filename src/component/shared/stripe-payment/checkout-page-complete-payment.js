@@ -222,15 +222,17 @@ useEffect(() => {
   const auctionFee = ((baseValue * 0.5) / 100)
   const stripeFee = ((((baseValue + auctionFee) * 3) /100) + 4 )
   
-  const payingAmount = !walletBalance 
-  ? baseValue + auctionFee + stripeFee
-  : showStripePayment 
-  ? baseValue + auctionFee + stripeFee
+  const payingAmount = !walletBalance ? 
+   baseValue + auctionFee + stripeFee
+  : showStripePayment ?
+    baseValue + auctionFee + stripeFee
   : baseValue + auctionFee;
-  
 
+  
+  
   const winnerSecurityDeposit = Number(pendingAuctionData?.winnerSecurityDeposite?.amount) || 0
   const totalPayingAmount = payingAmount - winnerSecurityDeposit
+  const amountForBankTransfer = (baseValue + auctionFee) - winnerSecurityDeposit;
 
   return (
     <>
@@ -421,7 +423,7 @@ useEffect(() => {
                 setShowBankDetails={()=>setShowBankDetails(false)}
                 setShwoPaymentSelection={()=>setShwoPaymentSelection(true)}
                 auctionId={completedPaymentData?.auctionsId}
-                amount={totalPayingAmount}
+                amount={amountForBankTransfer}
               />
             }
             </div>
