@@ -63,7 +63,6 @@ const SummaryHomeAuctionSections = ({
   usageStatus,
   relatedDocuments,
 }) => {
-  console.log("category ", category);
   const { user } = useAuthState();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -422,7 +421,8 @@ const SummaryHomeAuctionSections = ({
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
               {title}
             </h1>
-            <div
+            {usageStatus && (
+              <div
               className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${
                 usageStatus === "NEW"
                   ? "bg-primary-veryLight text-primary"
@@ -441,6 +441,7 @@ const SummaryHomeAuctionSections = ({
                 : usageStatus?.charAt(0).toUpperCase() +
                   usageStatus?.slice(1).toLowerCase()}
             </div>
+          )}
           </div>
 
           <div className="flex items-center gap-x-6">
@@ -531,9 +532,7 @@ const SummaryHomeAuctionSections = ({
                   <span>
                     <IoCall />
                   </span>
-                  <span>
-                   {selectedContent[localizationKeys.contactSeller]}
-                  </span>
+                  <span>{selectedContent[localizationKeys.contactSeller]}</span>
                 </>
               ) : (
                 <>
@@ -719,8 +718,8 @@ const SummaryHomeAuctionSections = ({
                         status === "SOLD" ||
                         status === "EXPIRED" ||
                         status === "IN_SCHEDULED"
-                          ? "border-primary/50 text-primary/50 bg-primary/10 cursor-not-allowed"
-                          : "border-primary text-primary bg-primary/10 shadow-[0_4px_12px_rgba(176,2,47,0.3)] hover:bg-primary hover:text-white"
+                          ? "border-primary/50 text-primary/50 cursor-not-allowed"
+                          : "border-primary text-primary  hover:bg-primary hover:text-white"
                       } mx-2 mr-8 border-[1px] w-full h-[48px] rounded-lg font-bold transition duration-300`}
                     >
                       {selectedContent[localizationKeys.buyNow] + " "}
