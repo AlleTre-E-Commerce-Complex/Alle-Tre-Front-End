@@ -460,19 +460,23 @@ const AuctionCard = ({
             </h1>
             <div
               className={`state-button shrink-0 px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-xs font-medium transition-colors ${
-                usageStatus === "NEW"
-                  ? "bg-primary-veryLight text-primary"
-                  : "bg-gray-100 text-gray-700"
+                usageStatus
+                  ? usageStatus === "NEW"
+                    ? "bg-primary-veryLight text-primary"
+                    : "bg-gray-100 text-gray-700"
+                  : ""
               }`}
             >
-              {category === 3 || category === 7
-                ? usageStatus === "NEW"
-                  ? selectedContent[localizationKeys.sell]
-                  : category === 7
-                  ? selectedContent[localizationKeys.adoption]
-                  : selectedContent[localizationKeys.rent]
-                : usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
+              {usageStatus && (
+                category === 3 || category === 7
+                  ? usageStatus === "NEW"
+                    ? selectedContent[localizationKeys.sell]
+                    : category === 7
+                    ? selectedContent[localizationKeys.adoption]
+                    : selectedContent[localizationKeys.rent]
+                  : usageStatus.charAt(0).toUpperCase() +
+                    usageStatus.slice(1).toLowerCase()
+              )}
             </div>
           </div>
 
