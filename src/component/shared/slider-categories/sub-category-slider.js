@@ -64,8 +64,8 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
   return (
     <div className="container mx-auto px-2 sm:px-4 lg:px-6 my-8 relative">
       <div className="max-w-[1400px] mx-auto overflow-hidden">
-        <div ref={swiperRef} className="swiper">
-          <div className="swiper-wrapper h-full">
+        <div ref={swiperRef} className="swiper flex justify-center">
+          <div className="swiper-wrapper h-full flex justify-center">
             {SubGatogryOptions?.map((e, index) => (
               <div key={index} className="swiper-slide h-auto">
                 <SubCategory
