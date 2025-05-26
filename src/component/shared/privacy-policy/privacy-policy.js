@@ -21,11 +21,7 @@ const PrivacyPolicy = ({ isFooter }) => {
 
   const handlePrivacyClick = (e) => {
     e.preventDefault();
-    if (user) {
       history.push(routes.app.privacyPolicy);
-    } else {
-      dispatch(Open());
-    }
   };
 
   const handleCopyEmail = (e) => {

@@ -76,7 +76,6 @@ class Auth {
     if (this.refreshPromise) {
       return this.refreshPromise;
     }
-
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
       // alert('window.location.pathname'+window.location.pathname)
@@ -85,8 +84,8 @@ class Auth {
       }
      if(
         !window.location.pathname.includes("details") &&
-        !window.location.pathname.includes("/alletre/categories/"
-       )){
+        !window.location.pathname.includes("/alletre/categories/") &&
+        !window.location.pathname.includes("/privacy-policy")){
         await this.logout();
       }
       return null;

@@ -10,7 +10,7 @@ import { Open } from "redux-store/auth-model-slice";
 
 const AuthContext = React.createContext();
 
-const WHITE_LIST = [routes.auth.default, routes.auth.forgetpass.default, routes.auth.forgetpass.restpass];
+const WHITE_LIST = [routes.auth.default, routes.auth.forgetpass.default, routes.auth.forgetpass.restpass, routes.app.privacyPolicy];
 
 function AuthProvider({ children }) {
   const dispatch = useDispatch();
