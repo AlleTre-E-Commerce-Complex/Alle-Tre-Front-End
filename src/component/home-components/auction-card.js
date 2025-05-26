@@ -467,16 +467,15 @@ const AuctionCard = ({
                   : ""
               }`}
             >
-              {usageStatus && (
-                category === 3 || category === 7
+              {usageStatus &&
+                (category === 3 || category === 7
                   ? usageStatus === "NEW"
                     ? selectedContent[localizationKeys.sell]
                     : category === 7
                     ? selectedContent[localizationKeys.adoption]
                     : selectedContent[localizationKeys.rent]
                   : usageStatus.charAt(0).toUpperCase() +
-                    usageStatus.slice(1).toLowerCase()
-              )}
+                    usageStatus.slice(1).toLowerCase())}
             </div>
           </div>
 
