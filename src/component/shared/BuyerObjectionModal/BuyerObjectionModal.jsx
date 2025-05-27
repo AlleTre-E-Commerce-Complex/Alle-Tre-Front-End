@@ -107,7 +107,7 @@ const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
                 className="cursor-pointer border border-primary-dark block rounded-md px-2 text-primary hover:bg-primary hover:text-white"
                 htmlFor="uploadIssueImages"
               >
-                {selectedContent[localizationKeys.UploadYourImageshere]}
+                {selectedContent[localizationKeys.uploadImages]}
                 <span className="text-xs">
                   {" "}
                   ( {selectedContent[localizationKeys.YouCanSelectMultipleImagestogether]} )

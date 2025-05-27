@@ -45,6 +45,7 @@ const ProductDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const location = useLocation();
+  const [product_Id, setProductId] = useState(state?.productId || null)
   const { state } = location;
   const [isEditing, setIsEditing] = useState(false);
   useEffect(() => {
@@ -697,7 +698,7 @@ const ProductDetails = () => {
         relatedDocuments,
         auctionState,
         auctionId: completeDraftVal?.id,
-        productId: state?.productId,
+        productId: product_Id,
       })
     );
 
