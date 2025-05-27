@@ -448,10 +448,16 @@ const ActionsRowTable = ({
             {(status === 'ACTIVE' || status === 'IN_SCHEDULED') && (
               <button
                 className="bg-primary text-white text-sm font-normal px-8 py-2 rounded-lg transition hover:bg-primary-dark"
-                onClick={() => history.push({
-                  pathname: routes.app.createAuction.productDetails,
-                  state: { auctionId: auctionsId, isEditing: true }
-                })}
+                onClick={() => {
+                  const navigationState = {
+                    auctionId: auctionsId,
+                    isEditing: true
+                  };
+                  history.replace({
+                    pathname: routes.app.createAuction.productDetails,
+                    state: navigationState
+                  });
+                }}
               >
                 {selectedContent[localizationKeys.edit]}
               </button>

@@ -14,6 +14,7 @@ import { toast } from "react-hot-toast";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
 import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
+import {  BiPlayCircle } from "react-icons/bi";
 
 // Supported file types (images and videos)
 const fileTypes = ["JPG", "PNG", "JPEG", "HEIC", "MP4", "MOV"];
@@ -26,10 +27,17 @@ const ImageMedia = ({
   auctionId,
   onReload,
   setLoadingImg,
-  isEditMode = false,
+  isEditMode,
   setimgtest,
   images = [],
+  auctionState,
 }) => {
+  // Check if there's already a video in the images array
+  const hasExistingVideo = images.some(img =>
+    img?.imagePath?.includes("AlletreVideo") ||
+    img?.isVideo ||
+    img?.file?.type?.startsWith("video/")
+  );
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { run: runDelete, isLoading: isloadingDelete } = useAxios([]);
@@ -54,42 +62,48 @@ const ImageMedia = ({
           imageLink: img.file ? URL.createObjectURL(img.file) : img.imageLink,
         }));
 
-      // Update local state first for better UX
-      setimgtest(newImages);
-
-      if (isEditMode) {
-        if (imgId) {
+      // If in edit mode and the image has an ID (existing image), delete from backend
+      if (isEditMode && auctionId && imgId) {
+        try {
           await runDelete(
             authAxios.delete(api.app.Imagees.delete(auctionId, imgId))
           );
-        }
 
-        // Update backend with remaining files
-        const formData = new FormData();
-        newImages.forEach((img, i) => {
-          if (img?.file) {
-            formData.append(`image${i + 1}`, img.file);
+          // If delete succeeds and we have new files, update them
+          const hasNewFiles = newImages.some(img => img.file);
+          if (hasNewFiles) {
+            // Upload each image one at a time
+            for (const img of newImages) {
+              if (img?.file) {
+                const formData = new FormData();
+                formData.append('image', img.file);
+                await runUpload(
+                  authAxios.patch(api.app.Imagees.upload(auctionId), formData)
+                );
+              }
+            }
           }
-        });
 
-        await runUpload(
-          authAxios.patch(api.app.Imagees.upload(auctionId), formData)
-        );
+          toast.success(
+            selectedContent[localizationKeys.imageDeletedSuccessfully]
+          );
 
-        toast.success(
-          selectedContent[localizationKeys.imageDeletedSuccessfully]
-        );
-      }
-
-      // Call onReload after all operations are complete
-      if (typeof onReload === "function") {
-        onReload();
+          // Call onReload after successful backend operations
+          if (typeof onReload === "function") {
+            onReload();
+          }
+        } catch (backendError) {
+          console.error("Backend operation failed:", backendError);
+          throw backendError; // Re-throw to be caught by outer try-catch
+        }
+      } else {
+        // For new images or non-edit mode, just update local state
+        setimgtest(newImages);
       }
     } catch (error) {
       console.error("Delete error:", error);
+      setimgtest(images); // Revert state on error
       toast.error(selectedContent[localizationKeys.failedToDeleteImage]);
-      // Revert local state on error
-      setimgtest(images);
     }
   };
 
@@ -125,17 +139,26 @@ const ImageMedia = ({
       setimgtest(reorderedImages);
 
       if (isEditMode) {
-        const formData = new FormData();
-        reorderedImages.forEach((img, i) => {
-          if (img?.file) {
-            formData.append(`image${i + 1}`, img.file);
+        try {
+          // Upload each image one at a time
+          for (const img of reorderedImages) {
+            if (img?.file) {
+              const formData = new FormData();
+              formData.append('image', img.file); // Use 'image' as the key
+              await runUpload(
+                authAxios.patch(api.app.Imagees.upload(auctionId), formData)
+              );
+            }
           }
-        });
-
-        await authAxios.patch(api.app.Imagees.upload(auctionId), formData);
-        toast.success(
-          selectedContent[localizationKeys.coverPhotoUpdatedSuccessfully]
-        );
+          toast.success(
+            selectedContent[localizationKeys.coverPhotoUpdatedSuccessfully]
+          );
+        } catch (uploadError) {
+          console.error('Upload error:', uploadError);
+          toast.error(selectedContent[localizationKeys.failedToUpdateCoverPhoto]);
+          // Revert local state on error
+          setimgtest(images);
+        }
       }
 
       // Call onReload after all operations are complete
@@ -151,6 +174,11 @@ const ImageMedia = ({
   };
 
   const handleChange = async (files, index) => {
+    // Check if trying to add a video when one already exists
+    if (isEditMode && hasExistingVideo && Array.from(files).some(file => file.type.startsWith('video/'))) {
+      toast.error(selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]);
+      return;
+    }
     if (!files) return;
 
     try {
@@ -170,9 +198,9 @@ const ImageMedia = ({
         return;
       }
 
-      // Check for existing video first
+      // Check for existing video first - check both file and imageLink for video type
       const existingVideo = images.some((img) =>
-        img?.file?.type?.startsWith("video/")
+        (img?.file?.type?.startsWith("video/") || img?.isVideo)
       );
 
       // If trying to upload a video
@@ -216,31 +244,57 @@ const ImageMedia = ({
         const processedVideo = {
           file: videoFile,
           imageLink: URL.createObjectURL(videoFile),
-          id: videoFile.name,
+          id: isEditMode ? `temp_${Date.now()}` : videoFile.name, // Use temp ID in edit mode
           isVideo: true,
         };
 
-        // Update state with the video
-        const newImages =
-          index !== undefined
+        // In edit mode, ensure we're replacing any existing video
+        let newImages;
+        if (isEditMode) {
+          // Remove any existing video first
+          const withoutVideo = images.filter(img => !img.isVideo && !(img?.file?.type?.startsWith("video/")));
+          newImages = index !== undefined
+            ? [
+              ...withoutVideo.slice(0, index),
+              processedVideo,
+              ...withoutVideo.slice(index)
+            ]
+            : [...withoutVideo, processedVideo];
+        } else {
+          // Non-edit mode behavior
+          newImages = index !== undefined
             ? [
               ...images.slice(0, index),
               processedVideo,
               ...images.slice(index + 1),
             ]
             : [...images, processedVideo];
+        }
 
+        // Update state first
         setimgtest(newImages);
 
-        // Handle backend update
-        if (isEditMode) {
-          const formData = new FormData();
-          newImages.forEach((img, i) => {
-            if (img?.file) {
-              formData.append(`image${i + 1}`, img.file);
+        // Handle backend update in edit mode
+        if (isEditMode && auctionId) {
+          try {
+            // Upload each image one at a time
+            for (const img of newImages) {
+              if (img?.file) {
+                const formData = new FormData();
+                formData.append('image', img.file); // Use 'image' as the key
+                await runUpload(
+                  authAxios.patch(api.app.Imagees.upload(auctionId), formData)
+                );
+              }
             }
-          });
-          await authAxios.patch(api.app.Imagees.upload(auctionId), formData);
+            if (typeof onReload === "function") {
+              onReload();
+            }
+          } catch (uploadError) {
+            console.error("Upload error:", uploadError);
+            toast.error(selectedContent[localizationKeys.failedToUploadImage]);
+            setimgtest(images); // Revert on error
+          }
         }
       } else {
         // Handle image uploads
@@ -270,23 +324,31 @@ const ImageMedia = ({
           newImages = [...images, ...processedFiles].slice(0, 50);
         }
 
+        // Update state first
         setimgtest(newImages);
 
-        // Handle backend update
-        if (isEditMode) {
-          const formData = new FormData();
-          newImages.forEach((img, i) => {
-            if (img?.file) {
-              formData.append(`image${i + 1}`, img.file);
+        // Handle backend update in edit mode
+        if (isEditMode && auctionId) {
+          try {
+            // Upload each image one at a time
+            for (const img of newImages) {
+              if (img?.file) {
+                const formData = new FormData();
+                formData.append('image', img.file); // Use 'image' as the key
+                await runUpload(
+                  authAxios.patch(api.app.Imagees.upload(auctionId), formData)
+                );
+              }
             }
-          });
-          await authAxios.patch(api.app.Imagees.upload(auctionId), formData);
+            if (typeof onReload === "function") {
+              onReload();
+            }
+          } catch (uploadError) {
+            console.error("Upload error:", uploadError);
+            toast.error(selectedContent[localizationKeys.failedToUploadImage]);
+            setimgtest(images); // Revert on error
+          }
         }
-      }
-
-      // Call onReload after all operations are complete
-      if (typeof onReload === "function") {
-        onReload();
       }
     } catch (error) {
       console.error("Error handling files:", error);
@@ -361,7 +423,7 @@ const ImageMedia = ({
   const compressImage = async (file) => {
     try {
       let processedFile = file;
-  
+
       // Convert HEIC/HEIF to JPEG first
       if (
         file.type.toLowerCase().includes("heic") ||
@@ -386,12 +448,12 @@ const ImageMedia = ({
           return file;
         }
       }
-  
+
       // Skip compression if already small enough
       if (processedFile.size <= 500 * 1024) {  // Reduced from 800KB to 500KB
         return processedFile;
       }
-  
+
       const options = {
         maxSizeMB: 0.5,  // Reduced from 0.8
         maxWidthOrHeight: 1600,  // Reduced from 1920
@@ -402,9 +464,9 @@ const ImageMedia = ({
         alwaysKeepResolution: false,  // Changed to false to allow downscaling
         exifOrientation: true,
       };
-  
+
       let compressedFile = await imageCompression(processedFile, options);
-      
+
       // If still too large, compress further
       if (compressedFile.size > 500 * 1024) {  // Target 500KB max
         options.maxSizeMB = 0.3;
@@ -412,7 +474,7 @@ const ImageMedia = ({
         options.maxWidthOrHeight = 1200;
         compressedFile = await imageCompression(processedFile, options);
       }
-  
+
       return new File([compressedFile], processedFile.name, {
         type: "image/jpeg",
         lastModified: new Date().getTime(),
@@ -468,55 +530,64 @@ const ImageMedia = ({
                             </span>
                           </div>
                         )}
-                        <FileUploader
-                          handleChange={(files) => handleChange(files, index)}
-                          name={`file${index + 1}`}
-                          types={fileTypes}
-                          multiple={
-                            !existingVideo &&
-                            !img?.file?.type?.startsWith("video/")
-                          }
-                        >
-                          <div className="relative">
+                        {(isEditMode || auctionState === "DRAFTED") && (img?.imagePath?.includes("AlletreVideo") || img?.isVideo || img?.file?.type?.startsWith("video/")) ? (
+                          <div className="relative w-[154px] h-[139px] overflow-hidden rounded-lg group cursor-pointer">
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60 group-hover:from-black/30 group-hover:to-black/70 transition-all duration-300"></div>
+                            <div className="absolute inset-0 backdrop-blur-[2px] group-hover:backdrop-blur-none transition-all duration-300"></div>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                              <BiPlayCircle className="w-14 h-14 drop-shadow-lg transform group-hover:scale-110 text-white/70 transition-all duration-300 ease-out" />
+                            </div>
+                          </div>
+                        ) :
+                          (<FileUploader
+                            handleChange={(files) => handleChange(files, index)}
+                            name={`file${index + 1}`}
+                            types={isEditMode && hasExistingVideo ? fileTypes.filter(type => !['MP4', 'MOV'].includes(type)) : fileTypes}
+                            multiple={
+                              !existingVideo &&
+                              !(img?.file?.type?.startsWith("video/") || img?.isVideo)
+                            }
+                          >
+                            <div className="relative">
 
-                            {img?.file?.type?.startsWith("video/") ? (
-                              <div className="relative">
-                                <video
+                              {(img?.file?.type?.startsWith("video/") || img?.isVideo) ? (
+                                <div className="relative">
+                                  <video
+                                    className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${isCoverPhoto ? "ring-2 ring-primary" : ""
+                                      }`}
+                                    controls
+                                    poster={img.imageLink} // Use the watermarked thumbnail as poster
+                                  >
+                                    <source
+                                      src={img.file ? URL.createObjectURL(img.file) : img.imageLink}
+                                      type={img.file?.type || 'video/mp4'}
+                                    />
+                                    Your browser does not support the video tag.
+                                  </video>
+                                  <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                                    <img
+                                      src={watermarkImage}
+                                      className="opacity-50 w-1/3 h-auto"
+                                      alt="Watermark"
+                                    />
+                                  </div>
+                                </div>
+                              ) : (
+                                <img
                                   className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${isCoverPhoto ? "ring-2 ring-primary" : ""
                                     }`}
-                                  controls
-                                  poster={img.imageLink} // Use the watermarked thumbnail as poster
-                                >
-                                  <source
-                                    src={URL.createObjectURL(img.file)}
-                                    type={img.file.type}
-                                  />
-                                  Your browser does not support the video tag.
-                                </video>
-                                <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                                  <img
-                                    src={watermarkImage}
-                                    className="opacity-50 w-1/3 h-auto"
-                                    alt="Watermark"
-                                  />
-                                </div>
-                              </div>
-                            ) : (
-                              <img
-                                className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${isCoverPhoto ? "ring-2 ring-primary" : ""
-                                  }`}
-                                src={img.imageLink || addImage}
-                                alt="Product img"
-                                onError={(e) => {
-                                  console.error("Image failed to load:", e.target.src);
-                                  e.target.src = addImage;
-                                }}
-                              />
-                            )}
-                          </div>
-                        </FileUploader>
+                                  src={img.imageLink || addImage}
+                                  alt="Product img"
+                                  onError={(e) => {
+                                    console.error("Image failed to load:", e.target.src);
+                                    e.target.src = addImage;
+                                  }}
+                                />
+                              )}
+                            </div>
+                          </FileUploader>)}
 
-                        {!isCoverPhoto &&
+                        {!isCoverPhoto && !isEditMode &&
                           !img.file?.type?.startsWith("video/") && (
                             <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
                               <button

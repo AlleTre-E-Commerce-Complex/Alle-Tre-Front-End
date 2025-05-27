@@ -48,6 +48,7 @@ const localizationKeys = {
   noResultsFound: "noResultsFound",
   adoption: "adoption",
   contactSeller: "contactSeller",
+  draftSavedSuccessfully:"draftSavedSuccessfully",
   // home
   auctions: "auctions",
   listings: "listings",

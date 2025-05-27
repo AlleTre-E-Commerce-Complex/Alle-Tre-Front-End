@@ -54,6 +54,7 @@ const en = {
   [localizationKeys.noResultsFound]: "No results found",
   [localizationKeys.adoption]: "Adoption",
   [localizationKeys.contactSeller]: "Contact seller",
+  [localizationKeys.draftSavedSuccessfully]:"Draft saved successfully",
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
