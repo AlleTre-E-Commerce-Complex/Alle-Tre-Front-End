@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import footerImg from "../../../../src/assets/images/footerImg2.jpg";
+import footerImgAr from "../../../../src/assets/images/footerImgAr2.jpg";
 import footerMob from "../../../../src/assets/images/footerMob.jpg";
+import footerMobAr from "../../../../src/assets/images/footerMobAr.jpg";
 import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
-import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok, FaSnapchatGhost, FaWhatsapp, FaWhatsappSquare, FaTelegramPlane, FaFileAlt } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok, FaSnapchatGhost, FaWhatsapp,  FaTelegramPlane, FaFileAlt } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
@@ -70,7 +72,7 @@ const Footer = () => {
       <div className="relative">
         <img
           className="w-full h-[209px] object-fill"
-          src={isMobile ? footerMob : footerImg}
+          src={lang === "en" ? (isMobile ? footerMob : footerImg) : (isMobile ? footerMobAr : footerImgAr)}
           alt="Footer Banner"
         />
         <div className="absolute flex gap-5 bottom-5 right-4 lg:bottom-20 lg:ltr:right-24">
