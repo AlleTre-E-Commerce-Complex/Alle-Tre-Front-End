@@ -44,8 +44,14 @@ const ProductDetails = () => {
   const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const { state } = useLocation();
-  const isEditing = state?.isEditing || false;
+  const location = useLocation();
+  const { state } = location;
+  const [isEditing, setIsEditing] = useState(false);
+  useEffect(() => {
+    if (state?.isEditing) {
+      setIsEditing(true);
+    }
+  }, [state]);
 
   const [auctionState, setAuctionState] = useState();
   const [isUpdating, setIsUpdating] = useState(false);
@@ -152,8 +158,8 @@ const ProductDetails = () => {
     } catch (error) {
       toast.error(
         error?.response?.data?.message ||
-          selectedContent[localizationKeys.updateFailed] ||
-          "An error occurred while updating."
+        selectedContent[localizationKeys.updateFailed] ||
+        "An error occurred while updating."
       );
     } finally {
       setIsUpdating(false);
@@ -395,8 +401,8 @@ const ProductDetails = () => {
   const [relatedDocuments, setRelatedDocuments] = useState([]);
   const [valueRadio, setRadioValue] = useState(
     completeDraftVal?.product?.usageStatus ||
-      productDetailsint.valueRadio ||
-      null
+    productDetailsint.valueRadio ||
+    null
   );
 
   const [countriesId, setCountriesId] = useState();
@@ -405,8 +411,8 @@ const ProductDetails = () => {
 
   const [hasUsageCondition, setHasUsageCondition] = useState(
     completeDraftVal?.product?.category?.hasUsageCondition ||
-      productDetailsint.hasUsageCondition ||
-      true
+    productDetailsint.hasUsageCondition ||
+    true
   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
@@ -448,8 +454,8 @@ const ProductDetails = () => {
     const newVideos = Array.isArray(files)
       ? files.filter((file) => file.type.startsWith("video/"))
       : files.type.startsWith("video/")
-      ? [files]
-      : [];
+        ? [files]
+        : [];
 
     // If trying to upload a video as first item
     if (currentImages.length === 0 && newVideos.length > 0) {
@@ -558,6 +564,10 @@ const ProductDetails = () => {
   const { run, isLoading } = useAxios([]);
 
   useEffect(() => {
+    setCategoryId(productDetailsint.category);
+  }, [productDetailsint.category]);
+
+  useEffect(() => {
     if (
       categoryId ||
       subCategoryId ||
@@ -656,7 +666,7 @@ const ProductDetails = () => {
     if (filesCount < 3) {
       toast.error(
         selectedContent[
-          localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+        localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
         ]
       );
       return;
@@ -670,7 +680,7 @@ const ProductDetails = () => {
       if (hasUsageCondition && categoryId !== 7) {
         toast.error(
           selectedContent[
-            localizationKeys.makeSureThatYouChooseItemConditionValue
+          localizationKeys.makeSureThatYouChooseItemConditionValue
           ]
         );
         return;
@@ -862,7 +872,7 @@ const ProductDetails = () => {
       } else {
         toast.error(
           selectedContent[localizationKeys.errorSavingDraft] ||
-            "Error saving draft"
+          "Error saving draft"
         );
       }
     } catch (error) {
@@ -1024,6 +1034,7 @@ const ProductDetails = () => {
                             })
                           );
                         }}
+
                       />
                     </div>
                     <div
@@ -1075,8 +1086,8 @@ const ProductDetails = () => {
                                       e?.key === "countryId"
                                         ? AllCountriesOptions
                                         : e?.key === "cityId"
-                                        ? AllCitiesOptions
-                                        : allCustomFileOptions[e?.key]?.map(
+                                          ? AllCitiesOptions
+                                          : allCustomFileOptions[e?.key]?.map(
                                             (option) => ({
                                               ...option,
                                               text: isArabic
@@ -1125,18 +1136,16 @@ const ProductDetails = () => {
                             >
                               <FormikMultiDropdown
                                 name={field.key}
-                                label={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
-                                placeholder={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
+                                label={`${lang === "en" ? field.labelEn : field.labelAr
+                                  }`}
+                                placeholder={`${lang === "en" ? field.labelEn : field.labelAr
+                                  }`}
                                 options={
                                   field.key === "countryId"
                                     ? AllCountriesOptions
                                     : field.key === "cityId"
-                                    ? AllCitiesOptions
-                                    : allCustomFileOptions[field.key]?.map(
+                                      ? AllCitiesOptions
+                                      : allCustomFileOptions[field.key]?.map(
                                         (option) => ({
                                           ...option,
                                           text: isArabic
@@ -1244,7 +1253,7 @@ const ProductDetails = () => {
                       />
                     </div>
                   </div>
-                  {isEditing ? (
+                  {/* {isEditing ? (
                     <div className="flex items-start justify-start my-8">
                       <div className="flex items-center bg-primary/10 border border-secondary-light rounded-lg p-4 shadow-sm w-full max-w-2xl">
                         <span className="mr-3 text-primary">
@@ -1265,66 +1274,63 @@ const ProductDetails = () => {
                         </div>
                       </div>
                     </div>
-                  ) : (
-                    <div>
-                      <h1 className="font-bold text-base text-black pt-6">
-                        {selectedContent[localizationKeys.addMedia]}{" "}
-                        <span className="text-gray-600 text-sm font-normal px-1">
-                          {
-                            selectedContent[
-                              localizationKeys.uploadOneImageAndOneVideo
-                            ]
-                          }
-                        </span>
-                      </h1>
-                      <div className="relative">
-                        <input
-                          type="file"
-                          accept="image/*"
-                          multiple
-                          max="50"
-                          maxLength="50"
-                          onChange={handleFileChange}
-                          className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
-                          style={{
-                            width: "100%",
-                            maxWidth: "680px",
-                            height: "50px",
-                            boxSizing: "border-box",
-                          }}
-                        />
-                        <input
-                          id="camera-input-file"
-                          name="camera-input-file"
-                          type="file"
-                          accept="image/*"
-                          onChange={handleCameraChange}
-                          capture="environment"
-                          className="hidden"
-                        />
-                        <label
-                          htmlFor="camera-input-file"
-                          className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
-                        >
-                          <IoCameraOutline className="w-7 h-7 text-primary" />
-                        </label>
-                      </div>
-                      <div className="mt-6 w-full">
-                        <ImageMedia
-                          auctionId={state?.auctionId}
-                          setimgtest={setimgtest}
-                          images={imgtest || []}
-                          onReload={onReload}
-                          setLoadingImg={setLoadingImg}
-                          isEditMode={
-                            state?.auctionId || productDetailsint?.auctionId
-                              ? true
-                              : false
-                          }
-                        />
-                      </div>
+                  ) : ( */}
+                  <div>
+                    <h1 className="font-bold text-base text-black pt-6">
+                      {selectedContent[localizationKeys.addMedia]}{" "}
+                      <span className="text-gray-600 text-sm font-normal px-1">
+                        {
+                          selectedContent[
+                          localizationKeys.uploadOneImageAndOneVideo
+                          ]
+                        }
+                      </span>
+                    </h1>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        max="50"
+                        maxLength="50"
+                        onChange={handleFileChange}
+                        className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
+                        style={{
+                          width: "100%",
+                          maxWidth: "680px",
+                          height: "50px",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                      <input
+                        id="camera-input-file"
+                        name="camera-input-file"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleCameraChange}
+                        capture="environment"
+                        className="hidden"
+                      />
+                      <label
+                        htmlFor="camera-input-file"
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
+                      >
+                        <IoCameraOutline className="w-7 h-7 text-primary" />
+                      </label>
                     </div>
-                  )}
+                    <div className="mt-6 w-full">
+                      <ImageMedia
+                        auctionId={state?.auctionId}
+                        setimgtest={setimgtest}
+                        images={imgtest || []}
+                        onReload={onReload}
+                        setLoadingImg={setLoadingImg}
+                        isEditMode={isEditing}
+                        auctionState={auctionState}
+                      />
+                    </div>
+                  </div>
+                  {/* )} */}
                   {[
                     "Cars",
                     "Jewellers",
@@ -1348,14 +1354,13 @@ const ProductDetails = () => {
                         </label>
                         <div
                           className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-200 ease-in-out max-w-3xl
-                          ${
-                            formik.touched.pdfDocument &&
-                            formik.errors.pdfDocument
+                          ${formik.touched.pdfDocument &&
+                              formik.errors.pdfDocument
                               ? "border-primary text-primary bg-primary-veryLight"
                               : relatedDocuments.length > 0
-                              ? "border-primary-light bg-primary-veryLight"
-                              : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
-                          }`}
+                                ? "border-primary-light bg-primary-veryLight"
+                                : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
+                            }`}
                         >
                           <input
                             name="relatedDocument"
@@ -1372,15 +1377,15 @@ const ProductDetails = () => {
                                   } else {
                                     toast.error(
                                       selectedContent[
-                                        localizationKeys
-                                          .fileSizeShouldBeLessThan10MB
+                                      localizationKeys
+                                        .fileSizeShouldBeLessThan10MB
                                       ]
                                     );
                                   }
                                 } else {
                                   toast.error(
                                     selectedContent[
-                                      localizationKeys.pleaseUploadPdfOnly
+                                    localizationKeys.pleaseUploadPdfOnly
                                     ]
                                   );
                                 }
@@ -1407,13 +1412,13 @@ const ProductDetails = () => {
                               <p className="text-sm text-gray-dark">
                                 {
                                   selectedContent[
-                                    localizationKeys.dragAndDropYourPdfHereOr
+                                  localizationKeys.dragAndDropYourPdfHereOr
                                   ]
                                 }{" "}
                                 <span className="text-primary font-medium hover:text-primary-dark">
                                   {
                                     selectedContent[
-                                      localizationKeys.clickToBrowse
+                                    localizationKeys.clickToBrowse
                                     ]
                                   }
                                 </span>
@@ -1469,13 +1474,13 @@ const ProductDetails = () => {
                   <div
                     className={
                       hasUsageCondition ||
-                      completeDraftVal?.product?.category?.hasUsageCondition ||
-                      productDetailsint?.hasUsageCondition
+                        completeDraftVal?.product?.category?.hasUsageCondition ||
+                        productDetailsint?.hasUsageCondition
                         ? "w-full"
                         : "hidden"
                     }
                   >
-                    {!(categoryId === 7 ) && (
+                    {!(categoryId === 7) && (
                       <h1 className="font-bold text-base text-black pt-6">
                         {selectedContent[localizationKeys.itemCondition]}
                       </h1>
@@ -1484,9 +1489,9 @@ const ProductDetails = () => {
                     <div
                       className={
                         hasUsageCondition ||
-                        completeDraftVal?.product?.category
-                          ?.hasUsageCondition ||
-                        productDetailsint?.hasUsageCondition
+                          completeDraftVal?.product?.category
+                            ?.hasUsageCondition ||
+                          productDetailsint?.hasUsageCondition
                           ? "mt-6 w-full"
                           : "hidden"
                       }
