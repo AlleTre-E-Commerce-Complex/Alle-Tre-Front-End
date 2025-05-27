@@ -20,13 +20,18 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    initGA();
-    logPageView();
+    if (process.env.NODE_ENV === "production") {
+      initGA();
+      logPageView();
+    }
   }, []);
-
+  
   useEffect(() => {
-    logPageView();
+    if (process.env.NODE_ENV === "production") {
+      logPageView();
+    }
   }, [location.pathname]);
+  
 
   //   useEffect(() => {
   //     const searchParams = new URLSearchParams(location.search);
