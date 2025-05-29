@@ -56,6 +56,7 @@ const ar = {
   [localizationKeys.listYourAnimalForSale]: "أدرج حيوانك للبيع",
   [localizationKeys.contactSeller]: "اتصل بالبائع",
   [localizationKeys.draftSavedSuccessfully]: "تم حفظ المسودة بنجاح",
+  [localizationKeys.productUpdatedSuccessfully]: "تم تحديث المنتج بنجاح",
   // home
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",

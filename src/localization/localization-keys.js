@@ -49,6 +49,7 @@ const localizationKeys = {
   adoption: "adoption",
   contactSeller: "contactSeller",
   draftSavedSuccessfully:"draftSavedSuccessfully",
+  productUpdatedSuccessfully:"productUpdatedSuccessfully",
   // home
   auctions: "auctions",
   listings: "listings",

@@ -81,8 +81,8 @@ const InProgressProducts = () => {
               goToDetails={routes.app.listProduct.details(e?.product?.id)}
               createdAt={e?.createdAt}
               onReload={onReload}
-              productId={e?.id}
-
+              productId={e?.id} //listedProduct.id
+              Product_id={e?.product?.id} //listProduct.product.id
             />
           ))}
           <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">

@@ -25,6 +25,7 @@ const ProductRowTable = ({
   createdAt,
   productId,
   onReload,
+  Product_id,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -161,10 +162,27 @@ const ProductRowTable = ({
               </div>
 
               {/* View Details Button - Third Line */}
-              <div className="w-full flex justify-center">
+              <div className="w-full flex justify-center gap-2">
+                {status === "IN_PROGRESS" && (
+                  <button
+                    onClick={() => {
+                      const navigationState = {
+                        productId: Product_id,
+                        isEditing: true,
+                      };
+                      history.replace({
+                        pathname: routes.app.listProduct.default,
+                        state: navigationState,
+                      });
+                    }}
+                    className="bg-primary hover:bg-primary-dark text-white text-sm font-normal px-4 py-2 w-full sm:w-[120px] h-[40px] rounded-lg"
+                  >
+                    {selectedContent[localizationKeys.edit]}
+                  </button>
+                )}
                 <button
                   onClick={() => history.push(goToDetails)}
-                  className="bg-primary hover:bg-primary-dark text-white text-sm font-normal px-4 py-2 w-full sm:w-[120px] h-[40px] rounded-lg"
+                  className="bg-primary-dark hover:bg-primary text-white text-sm font-normal px-4 py-2 w-full sm:w-[120px] h-[40px] rounded-lg"
                 >
                   {selectedContent[localizationKeys.viewDetails]}
                 </button>

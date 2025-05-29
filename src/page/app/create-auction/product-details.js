@@ -45,9 +45,10 @@ const ProductDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const location = useLocation();
-  const [product_Id, setProductId] = useState(state?.productId || null)
   const { state } = location;
   const [isEditing, setIsEditing] = useState(false);
+  const [product_Id] = useState(state?.productId || null)   
+  
   useEffect(() => {
     if (state?.isEditing) {
       setIsEditing(true);
@@ -243,7 +244,7 @@ const ProductDetails = () => {
           setAuctionState(res?.data?.data?.status);
           setCompleteDraftValue(res?.data?.data);
           SetProductFunction(completeDraftValue?.product);
-          // setimgtest(completeDraftValue?.product?.images);
+   // setimgtest(completeDraftValue?.product?.images);
 
           // // Map draft images to fileOne, fileTwo, etc.
           // if (completeDraftValue?.product?.images) {
@@ -288,6 +289,35 @@ const ProductDetails = () => {
           //   })
           // );
           // setRadioValue(completeDraftValue?.product?.usageStatus);
+
+          // Set initial images if available
+          if (completeDraftValue?.product?.images?.length > 0) {
+            const formattedImages = completeDraftValue.product.images.map(img => {
+              const isVideo = img.imagePath?.toLowerCase().includes('video') || 
+                             img.imageLink?.toLowerCase().includes('video');
+              return {
+                id: img.id,
+                imageLink: img.imageLink,
+                imagePath: img.imagePath,
+                isVideo: isVideo,
+                isCoverPhoto: img.isCoverPhoto || false
+              };
+            });
+            setimgtest(formattedImages);
+          }
+
+          // Set initial usage status
+          if (completeDraftValue?.product?.usageStatus) {
+            setRadioValue(completeDraftValue.product.usageStatus);
+          }
+
+          // Set category and subcategory IDs
+          if (completeDraftValue?.product?.categoryId) {
+            setCategoryId(completeDraftValue.product.categoryId);
+          }
+          if (completeDraftValue?.product?.subCategoryId) {
+            setSubCategoryId(completeDraftValue.product.subCategoryId);
+          }
         })
       );
     }
@@ -1327,7 +1357,6 @@ const ProductDetails = () => {
                         onReload={onReload}
                         setLoadingImg={setLoadingImg}
                         isEditMode={isEditing}
-                        auctionState={auctionState}
                       />
                     </div>
                   </div>

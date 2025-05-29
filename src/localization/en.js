@@ -55,6 +55,7 @@ const en = {
   [localizationKeys.adoption]: "Adoption",
   [localizationKeys.contactSeller]: "Contact seller",
   [localizationKeys.draftSavedSuccessfully]:"Draft saved successfully",
+  [localizationKeys.productUpdatedSuccessfully]:"Product updated successfully",
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
