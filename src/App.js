@@ -1,5 +1,5 @@
 import { Toaster } from "react-hot-toast";
-
+// import './config/firebase-messaging';
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "./routes";
 
@@ -31,6 +31,16 @@ function App() {
       logPageView();
     }
   }, [location.pathname]);
+  
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/firebase-messaging-sw.js')
+        .then(() => {
+          import('./config/firebase-messaging');
+        });
+    }
+  }, []);
   
 
   //   useEffect(() => {
