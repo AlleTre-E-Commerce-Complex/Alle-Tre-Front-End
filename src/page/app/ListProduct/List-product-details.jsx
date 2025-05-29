@@ -48,7 +48,7 @@ const ListProductDetails = () => {
   const [loadingImg, setLoadingImg] = useState();
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-
+  const { run, isLoading } = useAxios([]);
   const dispatch = useDispatch();
   const history = useHistory();
   const [draftValue, setDraftValue] = useState();
@@ -58,13 +58,29 @@ const ListProductDetails = () => {
   const [fileThree, setFileThree] = useState(null);
   const [fileFour, setFileFour] = useState(null);
   const [fileFive, setFileFive] = useState(null);
-
+  const [listedProductVal, setListedProductVal] = useState();
+  console.log("listedProductVal", listedProductVal);
   const [valueRadio, setRadioValue] = useState(null);
 
   const [countriesId, setCountriesId] = useState();
   const [categoryId, setCategoryId] = useState();
   const [subCategoryId, setSubCategoryId] = useState();
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [product_Id] = useState(state?.productId || null);
 
+  useEffect(() => {
+    if (state?.isEditing) {
+      setIsEditing(true);
+    }
+  }, [state]);
+
+  useEffect(() => {
+    if (isEditing && listedProductVal) {
+      setCategoryId(listedProductVal.categoryId);
+      setSubCategoryId(listedProductVal.subCategory?.id);
+    }
+  }, [isEditing, listedProductVal]);
   //   const [hasUsageCondition, setHasUsageCondition] = useState(
   //     completeDraftVal?.product?.category?.hasUsageCondition ||
   //       productDetailsint.hasUsageCondition ||
@@ -90,6 +106,50 @@ const ListProductDetails = () => {
     // );
     // setBrandSuggestions(filteredBrands);
   };
+
+  useEffect(() => {
+    if (product_Id) {
+      run(
+        authAxios
+          .get(api.app.productListing.listedProduct(product_Id))
+          .then((res) => {
+            const productData = res?.data?.data?.product;
+            setListedProductVal(productData);
+
+            // Set initial images if available
+            if (productData?.images?.length > 0) {
+              const formattedImages = productData.images.map((img) => {
+                const isVideo =
+                  img.imagePath?.toLowerCase().includes("video") ||
+                  img.imageLink?.toLowerCase().includes("video");
+                return {
+                  id: img.id, // Keep the image ID for deletion
+                  imageLink: img.imageLink || img.imagePath,
+                  imagePath: img.imagePath,
+                  isVideo: isVideo,
+                  isCoverPhoto: img.isCoverPhoto || false,
+                };
+              });
+              setimgtest(formattedImages);
+            }
+
+            // Set initial usage status
+            if (productData?.usageStatus) {
+              setRadioValue(productData.usageStatus);
+            }
+
+            // Set category and subcategory IDs for dropdown population
+            if (productData?.categoryId) {
+              setCategoryId(productData.categoryId);
+            }
+            if (productData?.subCategoryId) {
+              setSubCategoryId(productData.subCategoryId);
+            }
+          })
+      );
+    }
+  }, [run, forceReload, product_Id]);
+
   const addImageWatermark = async (file) => {
     const loadImage = (src) => {
       return new Promise((resolve, reject) => {
@@ -258,7 +318,7 @@ const ListProductDetails = () => {
       }
     }
   };
-  const { run, isLoading } = useAxios([]);
+
   useEffect(() => {
     if (categoryId || subCategoryId || loadingImg) {
       if (SubGatogryOptions.length === 0) {
@@ -288,8 +348,99 @@ const ListProductDetails = () => {
       return acc;
     }, {});
 
-  const model = customFromData?.model?.key;
+
   const isArabic = lang === "ar";
+  const handleUpdate = async (values) => {
+    setIsUpdating(true);
+    try {
+      const formData = new FormData();
+      // Append all images to formData
+      const allImages = imgtest || [];
+      allImages.forEach((image) => {
+        if (image?.file) {
+          formData.append("images", image.file);
+        }
+      });
+      // Append all other fields from values
+      formData.append("product[title]", values.itemName);
+      formData.append("product[categoryId]", values.category);
+      formData.append("product[subCategoryId]", values.subCategory);
+      console.log(
+        "Updating with category:",
+        values.category,
+        "subcategory:",
+        values.subCategory
+      );
+      formData.append("product[ProductListingPrice]", values.itemPrice);
+      if (values.brand) formData.append("product[brand]", values.brand);
+      if (valueRadio) formData.append("product[usageStatus]", valueRadio);
+      if (values.color) formData.append("product[color]", values.color);
+      if (values.age) formData.append("product[age]", values.age);
+      if (values.landType)
+        formData.append("product[landType]", values.landType);
+      if (values.cameraType)
+        formData.append("product[cameraType]", values.cameraType);
+      if (values.carType) formData.append("product[carType]", values.carType);
+      if (values.material)
+        formData.append("product[material]", values.material);
+      if (values.memory) formData.append("product[memory]", values.memory);
+      if (values.model) formData.append("product[model]", values.model);
+      if (values.processor)
+        formData.append("product[processor]", values.processor);
+      if (values.ramSize) formData.append("product[ramSize]", values.ramSize);
+      if (values.releaseYear)
+        formData.append("product[releaseYear]", values.releaseYear);
+      if (values.screenSize)
+        formData.append("product[screenSize]", values.screenSize);
+      if (values.totalArea)
+        formData.append("product[totalArea]", values.totalArea);
+      if (values.operatingSystem)
+        formData.append("product[operatingSystem]", values.operatingSystem);
+      if (values.regionOfManufacture)
+        formData.append(
+          "product[regionOfManufacture]",
+          values.regionOfManufacture
+        );
+      if (values.numberOfFloors)
+        formData.append("product[numberOfFloors]", values.numberOfFloors);
+      if (values.numberOfRooms)
+        formData.append("product[numberOfRooms]", values.numberOfRooms);
+      if (values.itemDescription)
+        formData.append("product[description]", values.itemDescription);
+      if (values.countryId)
+        formData.append("product[countryId]", values.countryId);
+      if (values.cityId) formData.append("product[cityId]", values.cityId);
+
+      // Add productId if needed for the update API
+
+      if (product_Id) {
+        console.log("product_Id", product_Id);
+        formData.append("productId", product_Id);
+      }
+
+      // Send the update request
+      const response = await authAxios.put(
+        api.app.productListing.updateListedProduct(product_Id),
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      if (response.status === 200) {
+        toast.success(
+          selectedContent[localizationKeys.productUpdatedSuccessfully]
+        );
+        history.push(routes.app.profile.myProducts.default);
+      }
+    } catch (error) {
+      console.error("Error updating product:", error);
+      toast.error(
+        error?.response?.data?.message ||
+          selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+      );
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
@@ -317,9 +468,6 @@ const ListProductDetails = () => {
       otherwise: Yup.string().required(
         selectedContent[localizationKeys.required]
       ),
-      brand: Yup.string()
-        .trim()
-        .required(selectedContent[localizationKeys.required]),
     }),
   });
 
@@ -368,7 +516,7 @@ const ListProductDetails = () => {
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading || loadingSubGatogry}
+        active={isLoading || loadingSubGatogry || isUpdating}
         inverted
       >
         <LodingTestAllatre />
@@ -391,34 +539,54 @@ const ListProductDetails = () => {
           <div>
             <Formik
               initialValues={{
-                itemName: "",
-                itemPrice: "",
-                category: "",
-                subCategory: "",
-                operatingSystem: "",
-                releaseYear: "",
-                regionOfManufacture: "",
-                ramSize: "",
-                processor: "",
-                screenSize: "",
-                model: "",
-                color: "",
-                brand: "",
-                cameraType: "",
-                material: "",
-                type: "",
-                memory: "",
-                age: "",
-                totalArea: "",
-                numberOfRooms: "",
-                numberOfFloors: "",
-                landType: "",
-                carType: "",
-                cityId: "",
-                countryId: "",
-                itemDescription: "",
+                itemName: isEditing ? listedProductVal?.title || "" : "",
+                itemPrice: isEditing
+                  ? listedProductVal?.ProductListingPrice || ""
+                  : "",
+                category: isEditing ? listedProductVal?.categoryId || "" : "",
+                subCategory: isEditing
+                  ? listedProductVal?.subCategory?.id || ""
+                  : "",
+                operatingSystem: isEditing
+                  ? listedProductVal?.operatingSystem || ""
+                  : "",
+                releaseYear: isEditing
+                  ? listedProductVal?.releaseYear || ""
+                  : "",
+                regionOfManufacture: isEditing
+                  ? listedProductVal?.regionOfManufacture || ""
+                  : "",
+                ramSize: isEditing ? listedProductVal?.ramSize || "" : "",
+                processor: isEditing ? listedProductVal?.processor || "" : "",
+                screenSize: isEditing ? listedProductVal?.screenSize || "" : "",
+                model: isEditing ? listedProductVal?.model || "" : "",
+                color: isEditing ? listedProductVal?.color || "" : "",
+                brand: isEditing ? listedProductVal?.brand || "" : "",
+                cameraType: isEditing ? listedProductVal?.cameraType || "" : "",
+                material: isEditing ? listedProductVal?.material || "" : "",
+                type: isEditing ? listedProductVal?.type || "" : "",
+                memory: isEditing ? listedProductVal?.memory || "" : "",
+                age: isEditing ? listedProductVal?.age || "" : "",
+                totalArea: isEditing ? listedProductVal?.totalArea || "" : "",
+                numberOfRooms: isEditing
+                  ? listedProductVal?.numberOfRooms || ""
+                  : "",
+                numberOfFloors: isEditing
+                  ? listedProductVal?.numberOfFloors || ""
+                  : "",
+                landType: isEditing ? listedProductVal?.landType || "" : "",
+                carType: isEditing ? listedProductVal?.carType || "" : "",
+                cityId: isEditing
+                  ? listedProductVal?.cityId?.toString() || ""
+                  : "",
+                countryId: isEditing
+                  ? listedProductVal?.countryId?.toString() || ""
+                  : "",
+                itemDescription: isEditing
+                  ? listedProductVal?.description || ""
+                  : "",
               }}
-              onSubmit={handelProductDetailsdata}
+              onSubmit={isEditing ? handleUpdate : handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}
               enableReinitialize
             >
@@ -480,7 +648,8 @@ const ListProductDetails = () => {
                           // onReload();
                           setCustomFromData([]);
                           setSubCategoryId(undefined);
-                          formik.setFieldValue("subCategory", "");
+                          formik.setFieldValue("subCategory", "", false);
+                          formik.setFieldTouched("subCategory", false, false);
                         }}
                       />
                     </div>
@@ -499,7 +668,10 @@ const ListProductDetails = () => {
                         }
                         loading={loadingSubGatogry}
                         options={SubGatogryOptions}
-                        onChange={(e) => setSubCategoryId(e)}
+                        onChange={(value) => {
+                          setSubCategoryId(value);
+                          formik.setFieldValue("subCategory", value, true);
+                        }}
                       />
                     </div>
                     {formik.values.subCategory && (
@@ -743,12 +915,13 @@ const ListProductDetails = () => {
                     </div>
                     <div className="mt-6 w-full">
                       <ImageMedia
-                        auctionId={state?.auctionId}
+                        auctionId={state?.auctionId || product_Id}
                         setimgtest={setimgtest}
                         images={imgtest || []}
                         onReload={onReload}
                         setLoadingImg={setLoadingImg}
-                        isEditMode={auctionState === "DRAFTED"}
+                        isEditMode={isEditing}
+                        isListing={true}
                       />
                     </div>
                   </div>
@@ -793,9 +966,18 @@ const ListProductDetails = () => {
                         {selectedContent[localizationKeys.saveAsDraft]}
                       </div>
                     </div> */}
-                    <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                      {selectedContent[localizationKeys.next]}
-                    </button>
+                    {isEditing ? (
+                      <button
+                        type="submit"
+                        className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                      >
+                        {selectedContent[localizationKeys.Submit]}
+                      </button>
+                    ) : (
+                      <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                        {selectedContent[localizationKeys.next]}
+                      </button>
+                    )}
                   </div>
                 </Form>
               )}

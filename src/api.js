@@ -88,7 +88,7 @@ const api = {
       lockAuction:'/auctions/lock-auction',
     },
     Imagees: {
-      upload: (auctionsId) => `auctions/user/${auctionsId}/upload-image`,
+      upload: (auctionsId,isListing) => `auctions/user/${auctionsId}/upload-image?isListing=${isListing}`,
       delete: (auctionsId, imageId) =>
         `/auctions/user/${auctionsId}/remove-image?imageId=${imageId}`,
     },
@@ -104,6 +104,8 @@ const api = {
       getAllMyProduts: "auctions/user/get-all-myProducts",
       updateProductStatus: (productId) =>
         `auctions/products/updateProductStatus?productId=${productId}`,
+      updateListedProduct: (productId) => 
+        `auctions/listedProducts/${productId}/update`,
     },
     customField: {
       ByCategoryId: (categoryId) =>
