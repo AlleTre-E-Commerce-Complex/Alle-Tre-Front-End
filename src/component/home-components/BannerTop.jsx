@@ -25,6 +25,7 @@ import content from "../../localization/content";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom";
 import { RiShareForwardFill } from "react-icons/ri";
+import { ShareFallBack } from "component/shared/react-share/ShareFallback";
 
 const CountdownTimer = memo(({ startDate, expiryDate, status }) => {
   const [lang] = useLanguage();
@@ -88,12 +89,20 @@ const BannerTop = ({ auctions = [] }) => {
     } else history.push(routes.app.homeDetails(auction.id));
   };
   
+  const [showShareFallback, setShowShareFallback] = useState(false);
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
     return port
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
+  // const shareUrl = isListProduct
+  //     ? `${getDomain()}/alletre/my-product/${auctionId}/details`
+  //     : `${getDomain()}/alletre/home/${auctionId}/details`;
+
+  const shareUrl = (auction) =>{
+      return `${getDomain()}/alletre/home/${auction?.id}/details`
+  } 
 
   const handleShare = async (auction) => {
     if (navigator.share) {
@@ -101,13 +110,14 @@ const BannerTop = ({ auctions = [] }) => {
         await navigator.share({
           title: auction?.product?.title,
           text: "Check out this auction!",
-          url: `${getDomain()}/alletre/home/${auction?.id}/details`,
+          url: shareUrl(auction),
         });
       } catch (error) {
         console.error("Error sharing post:", error);
+        setShowShareFallback(true); // Show fallback if native share fails
       }
     } else {
-      alert("Sharing is not supported in this browser.");
+      setShowShareFallback(!showShareFallback);
     }
   };
 
@@ -226,14 +236,21 @@ const BannerTop = ({ auctions = [] }) => {
                         <AuctionsStatus status={auction.status} />
                       </div>
                     )}
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleShare(auction);
-                      }}
-                      className={`absolute top-2 ${lang === "en" ? "right-2" : "left-2"} border-primary border-2 bg-white/95 shadow-md rounded-full w-7 h-7 sm:w-8 sm:h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center active:scale-95`}
-                    >
-                      <RiShareForwardFill className="text-primary group-hover/share:text-white text-xs sm:text-sm" />
+                     <div className="relative">
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleShare(auction);
+                        }}
+                        className={`absolute top-2 ${lang === "en" ? "right-2" : "left-2"} border-primary border-2 bg-white/95 shadow-md rounded-full w-7 h-7 sm:w-8 sm:h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center active:scale-95`}
+                      >
+                        <RiShareForwardFill className="text-primary group-hover/share:text-white text-xs sm:text-sm" />
+                      </div>
+                       {showShareFallback && (
+                          <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
+                            <ShareFallBack shareUrl={shareUrl(auction)} title={auction?.product?.title}/>
+                          </div>
+                        )}
                     </div>
                   </div>
                   <div className="flex-1 p-3 flex flex-col justify-between bg-gradient-to-br from-white to-gray-50/80">

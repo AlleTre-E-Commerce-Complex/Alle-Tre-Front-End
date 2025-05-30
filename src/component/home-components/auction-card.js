@@ -27,6 +27,7 @@ import HummerGif from "../../../src/assets/icons/HummerGifFin.gif";
 import TimmerGif from "../../../src/assets/icons/timer2.gif";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { BiSolidPurchaseTag } from "react-icons/bi";
+import { ShareFallBack } from "component/shared/react-share/ShareFallback";
 
 const CountdownDisplay = memo(
   ({ timeLeft, status, formattedstartDate, selectedContent }) => {
@@ -86,7 +87,8 @@ const AuctionCard = ({
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [preloadedVideos, setPreloadedVideos] = useState(new Set());
-
+  const [showShareFallback, setShowShareFallback] = useState(false);
+  
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
   };
@@ -201,20 +203,24 @@ const AuctionCard = ({
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
+  const shareUrl = `${getDomain()}/alletre/home/${auctionId}/details`
 
-  const handleShare = async () => {
+  const handleShare = async (e) => {
+    e.stopPropagation();
     if (navigator.share) {
       try {
         await navigator.share({
           title: { title },
           text: "Check out this auction!",
-          url: `${getDomain()}/alletre/home/${auctionId}/details`,
+          // url: `${getDomain()}/alletre/home/${auctionId}/details`,
+          url: shareUrl,
         });
       } catch (error) {
         console.error("Error sharing post:", error);
+        setShowShareFallback(true); // Show fallback if native share fails
       }
     } else {
-      alert("Sharing is not supported in this browser.");
+      setShowShareFallback(!showShareFallback);
     }
   };
 
@@ -329,14 +335,18 @@ const AuctionCard = ({
                 )}
               </button>
             )}
-            <div
-              onClick={(e) => {
-                e.stopPropagation();
-                handleShare();
-              }}
-              className="border-primary border-2 bg-white/95 shadow-md rounded-full w-7 h-7 sm:w-8 sm:h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center active:scale-95"
-            >
-              <RiShareForwardFill className="text-primary group-hover/share:text-white text-xs sm:text-sm" />
+             <div className="relative">
+              <div
+                onClick={(e) => {handleShare(e)}}
+                className="border-primary border-2 bg-white/95 shadow-md rounded-full w-7 h-7 sm:w-8 sm:h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center active:scale-95"
+              >
+                <RiShareForwardFill className="text-primary group-hover/share:text-white text-xs sm:text-sm" />
+              </div>
+              {showShareFallback && (
+                <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
+                  <ShareFallBack shareUrl={shareUrl} title={title}/>
+                </div>
+              )}
             </div>
           </div>
         </div>
