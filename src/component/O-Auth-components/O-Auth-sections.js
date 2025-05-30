@@ -5,6 +5,7 @@ import {
   // FacebookAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
+  signInWithRedirect,
   // linkWithCredential,
   // fetchSignInMethodsForEmail,
 } from "firebase/auth";
@@ -46,65 +47,145 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   const { login } = useAuthState();
 
   const { run, isLoading } = useAxios();
+  // const signInWithApple = () => {
+  //   const provider = new OAuthProvider("apple.com");
+  //   signInWithPopup(authentications, provider)
+  //     .then((res) => {
+  //       run(
+  //         axios.post(api.auth.aAuth, {
+  //           userName: res?._tokenResponse?.displayName || null,
+  //           email: res?._tokenResponse?.email || null,
+  //           idToken: res?._tokenResponse?.idToken || null,
+  //           phone: res?._tokenResponse?.phoneNumber || null,
+  //           oAuthType: "APPLE",
+  //         })
+  //       )
+  //         .then((res) => {
+  //           const {
+  //             accessToken,
+  //             refreshToken,
+  //             hasCompletedProfile,
+  //             isAddedBonus,
+  //           } = res.data.data;
+  //           if (isAddedBonus) {
+  //             dispatch(welcomeBonus(true));
+  //           }
+  //           login({
+  //             accessToken: accessToken,
+  //             refreshToken: refreshToken,
+  //           });
+  //           window.localStorage.setItem(
+  //             "hasCompletedProfile",
+  //             JSON.stringify(hasCompletedProfile)
+  //           );
+  //           isAuthModel
+  //             ? history.push(currentPAth)
+  //             : history.push(routes.app.home);
+  //           dispatch(Close());
+  //         })
+  //         .catch((err) => {
+  //           console.log("google auth error --->", err);
+  //           // Check if the error is a 401 unauthorized
+  //           if (err?.message?.en === "You are not authorized") {
+  //             // Dispatch the action to show the modal
+  //             store.dispatch(setBlockedUser(true));
+  //           }
+  //           toast.error(
+  //             selectedContent[
+  //               localizationKeys.somethingWentWrongPleaseTryAgainLater
+  //             ]
+  //           );
+  //         });
+  //     })
+  //     .catch((err) => {
+  //       toast.error(
+  //         selectedContent[
+  //           localizationKeys.somethingWentWrongPleaseTryAgainLater
+  //         ]
+  //       );
+  //     });
+  // };
+
+
   const signInWithApple = () => {
     const provider = new OAuthProvider("apple.com");
-    signInWithPopup(authentications, provider)
-      .then((res) => {
-        run(
-          axios.post(api.auth.aAuth, {
-            userName: res?._tokenResponse?.displayName || null,
-            email: res?._tokenResponse?.email || null,
-            idToken: res?._tokenResponse?.idToken || null,
-            phone: res?._tokenResponse?.phoneNumber || null,
-            oAuthType: "APPLE",
-          })
-        )
-          .then((res) => {
-            const {
-              accessToken,
-              refreshToken,
-              hasCompletedProfile,
-              isAddedBonus,
-            } = res.data.data;
-            if (isAddedBonus) {
-              dispatch(welcomeBonus(true));
-            }
-            login({
-              accessToken: accessToken,
-              refreshToken: refreshToken,
-            });
-            window.localStorage.setItem(
-              "hasCompletedProfile",
-              JSON.stringify(hasCompletedProfile)
-            );
-            isAuthModel
-              ? history.push(currentPAth)
-              : history.push(routes.app.home);
-            dispatch(Close());
-          })
-          .catch((err) => {
-            console.log("google auth error --->", err);
-            // Check if the error is a 401 unauthorized
-            if (err?.message?.en === "You are not authorized") {
-              // Dispatch the action to show the modal
-              store.dispatch(setBlockedUser(true));
-            }
-            toast.error(
-              selectedContent[
-                localizationKeys.somethingWentWrongPleaseTryAgainLater
-              ]
-            );
-          });
-      })
-      .catch((err) => {
-        toast.error(
-          selectedContent[
-            localizationKeys.somethingWentWrongPleaseTryAgainLater
-          ]
-        );
-      });
+  
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isWebView = (() => {
+      const standalone = window.navigator.standalone;
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return (
+        (standalone === false || window.matchMedia('(display-mode: standalone)').matches) ||
+        (userAgent.includes('wv') || userAgent.includes('applix')) // Adjust this string for Applix user agent if needed
+      );
+    })();
+  
+    const handleAuthResponse = (res) => {
+      run(
+        axios.post(api.auth.aAuth, {
+          userName: res?._tokenResponse?.displayName || null,
+          email: res?._tokenResponse?.email || null,
+          idToken: res?._tokenResponse?.idToken || null,
+          phone: res?._tokenResponse?.phoneNumber || null,
+          oAuthType: "APPLE",
+        })
+      )
+        .then((res) => {
+          const {
+            accessToken,
+            refreshToken,
+            hasCompletedProfile,
+            isAddedBonus,
+          } = res.data.data;
+  
+          if (isAddedBonus) dispatch(welcomeBonus(true));
+  
+          login({ accessToken, refreshToken });
+  
+          localStorage.setItem(
+            "hasCompletedProfile",
+            JSON.stringify(hasCompletedProfile)
+          );
+  
+          isAuthModel
+            ? history.push(currentPAth)
+            : history.push(routes.app.home);
+  
+          dispatch(Close());
+        })
+        .catch((err) => {
+          console.log("apple auth error --->", err);
+          if (err?.message?.en === "You are not authorized") {
+            store.dispatch(setBlockedUser(true));
+          }
+          toast.error(
+            selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+          );
+        });
+    };
+  
+    if (isIOS && isWebView) {
+      // Fallback for iOS WebView (e.g., Applix)
+      signInWithRedirect(authentications, provider)
+        .catch((err) => {
+          console.error("Redirect login error:", err);
+          toast.error(
+            selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+          );
+        });
+    } else {
+      // Standard popup login
+      signInWithPopup(authentications, provider)
+        .then(handleAuthResponse)
+        .catch((err) => {
+          console.error("Popup login error:", err);
+          toast.error(
+            selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+          );
+        });
+    }
   };
-
+  
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
