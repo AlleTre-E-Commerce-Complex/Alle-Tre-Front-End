@@ -207,14 +207,14 @@ const ShippingDetails = () => {
 
       // Handle images once
       const images = productDetailsInt.images || [];
-      images.forEach(image => {
+      images.forEach((image) => {
         if (image && image.file) {
           formData.append("images", image.file);
         }
       });
 
-      if(productDetailsInt.relatedDocuments){
-        formData.append('pdfs', productDetailsInt.relatedDocuments[0])
+      if (productDetailsInt.relatedDocuments) {
+        formData.append("pdfs", productDetailsInt.relatedDocuments[0]);
       }
       formData.append("startBidAmount", auctionDetailsInt.MinimumPrice);
       if (isBuyNowInt.isBuyNowAllowed) {
@@ -262,11 +262,13 @@ const ShippingDetails = () => {
           warrantyPolicyInt.description
         );
       }
-      if(productDetailsInt?.auctionState === 'LISTED_PRODUCT'){
+      if (productDetailsInt?.auctionState === "LISTED_PRODUCT") {
         runCreatAuction(
           authAxios
             .post(
-              api.app.auctions.convertListedProductToAuction(productDetailsInt?.productId),
+              api.app.auctions.convertListedProductToAuction(
+                productDetailsInt?.productId
+              ),
               formData
             )
             .then((res) => {
@@ -305,7 +307,7 @@ const ShippingDetails = () => {
               dispatch(isBuyNow({}));
             })
             .catch((err) => {
-              console.error('Error in shipping deatails :',err)
+              console.error("Error in shipping deatails :", err);
               toast.error(selectedContent[localizationKeys.oops]);
             })
         );
@@ -314,20 +316,26 @@ const ShippingDetails = () => {
           authAxios
             .post(api.app.auctions.default, formData)
             .then((res) => {
-              const auctionId = res?.data?.data?.id
+              const auctionId = res?.data?.data?.id;
               window.localStorage.setItem("auctionId", res?.data?.data.id);
               toast.success(
                 selectedContent[localizationKeys.yourAuctionIsCreatedSuccess]
               );
-              const specialCategory = [[4,5000],[7,1000]]
+              const specialCategory = [
+                [4, 5000],
+                [7, 1000],
+              ];
               const isSpecial = specialCategory.some(
-                ([cat, minPrice]) => 
-                  productDetailsInt.category === cat && auctionDetailsInt.MinimumPrice < minPrice
+                ([cat, minPrice]) =>
+                  productDetailsInt.category === cat &&
+                  auctionDetailsInt.MinimumPrice < minPrice
               );
-              
-              if(isSpecial){
-                history.push(`${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`)
-              }else{
+
+              if (isSpecial) {
+                history.push(
+                  `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/paymentdetails?auctionId=${auctionId}`
+                );
+              } else {
                 history.push(routes.app.createAuction.paymentDetails);
               }
               dispatch(productDetails({}));
