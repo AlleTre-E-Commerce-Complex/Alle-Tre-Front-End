@@ -166,6 +166,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   
     if (isIOS && isWebView) {
       // Fallback for iOS WebView (e.g., Applix)
+      console.log('Apple sign in with redirect')
       signInWithRedirect(authentications, provider)
         .catch((err) => {
           console.error("Redirect login error:", err);
@@ -175,6 +176,8 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
         });
     } else {
       // Standard popup login
+      console.log('Apple sign in with pop')
+
       signInWithPopup(authentications, provider)
         .then(handleAuthResponse)
         .catch((err) => {
