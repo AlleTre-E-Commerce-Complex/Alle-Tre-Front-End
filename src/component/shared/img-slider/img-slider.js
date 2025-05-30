@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
@@ -15,6 +15,8 @@ import content from "../../../localization/content";
 import { Dimmer } from "semantic-ui-react";
 import LodingTestAllatre from "../lotties-file/loding-test-allatre";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
+import { ShareFallBack } from "../react-share/ShareFallback";
+
 const ImgSlider = ({
   images,
   auctionId,
@@ -25,6 +27,16 @@ const ImgSlider = ({
   isListProduct,
 }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
+  const [showShareFallback, setShowShareFallback] = useState(false);
+  const getDomain = () => {
+    const { protocol, hostname, port } = window.location;
+    return port
+      ? `${protocol}//${hostname}:${port}`
+      : `${protocol}//${hostname}`;
+  };
+  const shareUrl = isListProduct
+      ? `${getDomain()}/alletre/my-product/${auctionId}/details`
+      : `${getDomain()}/alletre/home/${auctionId}/details`;
   const [isZoomed, setIsZoomed] = useState(false);
   const [isWatshlist, setWatshlist] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -132,28 +144,21 @@ const ImgSlider = ({
       dispatch(Open());
     }
   };
-  const getDomain = () => {
-    const { protocol, hostname, port } = window.location;
-    return port
-      ? `${protocol}//${hostname}:${port}`
-      : `${protocol}//${hostname}`;
-  };
+
   const handleShare = async () => {
-    const shareUrl = isListProduct
-      ? `${getDomain()}/alletre/my-product/${auctionId}/details`
-      : `${getDomain()}/alletre/home/${auctionId}/details`;
     if (navigator.share) {
       try {
         await navigator.share({
-          title: { title },
+          title: title,
           text: "Check out this auction!",
           url: shareUrl,
         });
       } catch (error) {
         console.error("Error sharing post:", error);
+        setShowShareFallback(true); // Show fallback if native share fails
       }
     } else {
-      alert("Sharing is not supported in this browser.");
+      setShowShareFallback(!showShareFallback);
     }
   };
   const isVideo = (media) => {
@@ -276,11 +281,18 @@ const ImgSlider = ({
                 )}
               </button>
             )}
-            <div
-              onClick={handleShare}
-              className="border-primary border-2 border-solid bg-white rounded-lg md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
-            >
-              <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg md:text-2xl" />
+            <div className="relative">
+              <div
+                onClick={handleShare}
+                className="border-primary border-2 border-solid bg-white rounded-lg md:w-[38px] w-[28px] md:h-[44px] h-[32px] hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
+              >
+                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg md:text-2xl" />
+              </div>
+              {showShareFallback && (
+                <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
+                  <ShareFallBack shareUrl={shareUrl} title={title}/>
+                </div>
+              )}
             </div>
           </div>
           {/* Thumbnail Section */}

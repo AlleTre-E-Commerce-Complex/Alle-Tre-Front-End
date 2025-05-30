@@ -13,6 +13,7 @@ import {
   MdNavigateNext,
 } from "react-icons/md";
 import { BsPlayCircleFill } from "react-icons/bs";
+import { ShareFallBack } from "component/shared/react-share/ShareFallback";
 
 const ProductCardList = ({
   adsImg,
@@ -36,12 +37,14 @@ const ProductCardList = ({
   const history = useHistory();
   // const { user } = useAuthState();
 
+  const [showShareFallback, setShowShareFallback] = useState(false);
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
     return port
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
+  const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -49,14 +52,14 @@ const ProductCardList = ({
         await navigator.share({
           title,
           text: title,
-          // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
-          url: `${getDomain()}/alletre/my-product/${id}/details`,
+          url: shareUrl,
         });
       } catch (error) {
         console.error("Error sharing post:", error);
+        setShowShareFallback(true); // Show fallback if native share fails
       }
     } else {
-      alert("Sharing is not supported in this browser.");
+      setShowShareFallback(!showShareFallback);
     }
   };
 
@@ -336,20 +339,28 @@ const ProductCardList = ({
                   {selectedContent[localizationKeys.buyNow]}
                 </button>
               )} */}
+              
               <button
                 onClick={() => handelGoDetails(id)}
                 className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
               >
                 {selectedContent[localizationKeys.viewDetails]}
               </button>
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleShare();
-                }}
-                className="border-primary border-2 border-solid bg-white/90 rounded-lg w-6 h-6 sm:w-9 sm:h-9 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center ml-2"
-              >
-                <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-sm sm:text-lg" />
+              <div className="relative">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleShare();
+                  }}
+                  className="border-primary border-2 border-solid bg-white/90 rounded-lg w-6 h-6 sm:w-9 sm:h-9 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center ml-2"
+                >
+                  <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-sm sm:text-lg" />
+                </div>
+                {showShareFallback && (
+                  <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
+                    <ShareFallBack shareUrl={shareUrl} title={title}/>
+                  </div>
+                )}
               </div>
             </div>
           </div>

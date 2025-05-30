@@ -11,6 +11,7 @@ import { formatCurrency } from "utils/format-currency";
 import { useAuthState } from "context/auth-context";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import { ShareFallBack } from "component/shared/react-share/ShareFallback";
 
 const ProductCard = ({
   adsImg,
@@ -36,12 +37,15 @@ const ProductCard = ({
   const [preloadedVideos, setPreloadedVideos] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
 
+  const [showShareFallback, setShowShareFallback] = useState(false);
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
     return port
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
+  const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`
+
 
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
@@ -111,13 +115,14 @@ const ProductCard = ({
           title,
           text: title,
           // url: `https://www.alletre.com/alletre/home/${auctionId}/details`,
-          url: `${getDomain()}/alletre/my-product/${id}/details`,
+          url: shareUrl,
         });
       } catch (error) {
         console.error("Error sharing post:", error);
+        setShowShareFallback(true); // Show fallback if native share fails
       }
     } else {
-      alert("Sharing is not supported in this browser.");
+      setShowShareFallback(!showShareFallback);
     }
   };
 
@@ -172,6 +177,7 @@ const ProductCard = ({
       <div className="group w-full max-w-[240px] h-[400px] rounded-lg bg-white border border-gray-100 hover:border-primary hover:border-opacity-20 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden p-1 sm:p-2">
         <div className="relative  w-full h-[70%] bg-primary-veryLight">
           <div className="absolute right-2 top-2 z-30 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300">
+          <div className="relative">
             <div
               onClick={(e) => {
                 e.stopPropagation();
@@ -181,6 +187,13 @@ const ProductCard = ({
             >
               <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg" />
             </div>
+              {showShareFallback && (
+                <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
+                  <ShareFallBack shareUrl={shareUrl} title={title}/>
+                </div>
+              )}
+            </div>
+            
           </div>
 
           <div

@@ -19,6 +19,7 @@ import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import { Open } from "../../redux-store/auth-model-slice";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import { ShareFallBack } from "component/shared/react-share/ShareFallback";
 
 const CountdownDisplay = memo(
   ({ timeLeft, status, formattedstartDate, selectedContent }) => {
@@ -75,6 +76,7 @@ const AuctionCardList = ({
   const dispatch = useDispatch();
   const { user } = useAuthState();
   const { run } = useAxios([]);
+  const [showShareFallback, setShowShareFallback] = useState(false);
   // const formattedTimeLeft = `${timeLeft.days} ${selectedContent[localizationKeys.days]
   //   } :
   // ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} :
@@ -102,6 +104,7 @@ const AuctionCardList = ({
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
+  const shareUrl = `${getDomain()}/alletre/home/${auctionId}/details`
 
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
@@ -164,19 +167,22 @@ const AuctionCardList = ({
     preloadVideo(prevIndex);
   }, [currentImageIndex, adsImg, preloadedVideos]);
 
-  const handleShare = async () => {
+  const handleShare = async (e) => {
+    e.stopPropagation();
     if (navigator.share) {
       try {
         await navigator.share({
           title: { title },
           text: "Check out this auction!",
-          url: `${getDomain()}/alletre/home/${auctionId}/details`,
+          // url: `${getDomain()}/alletre/home/${auctionId}/details`,
+          url: shareUrl,
         });
       } catch (error) {
         console.error("Error sharing post:", error);
+        setShowShareFallback(true); // Show fallback if native share fails
       }
     } else {
-      alert("Sharing is not supported in this browser.");
+      setShowShareFallback(!showShareFallback);
     }
   };
 
@@ -463,15 +469,19 @@ const AuctionCardList = ({
                       )}
                     </button>
                   )}
+                  <div className="relative">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleShare();
-                    }}
+                    onClick={(e) => {handleShare(e)}}
                     className="border-primary border-2 bg-white rounded-lg w-9 h-9 sm:w-10 sm:h-10 group/share hover:bg-primary transition-all duration-300 flex items-center justify-center"
                   >
                     <RiShareForwardFill className="text-primary group-hover/share:text-white text-xl sm:text-2xl" />
                   </button>
+                    {showShareFallback && (
+                      <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
+                        <ShareFallBack shareUrl={shareUrl} title={title}/>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
