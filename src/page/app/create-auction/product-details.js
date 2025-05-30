@@ -47,8 +47,8 @@ const ProductDetails = () => {
   const location = useLocation();
   const { state } = location;
   const [isEditing, setIsEditing] = useState(false);
-  const [product_Id] = useState(state?.productId || null)   
-  
+  const [product_Id] = useState(state?.productId || null);
+
   useEffect(() => {
     if (state?.isEditing) {
       setIsEditing(true);
@@ -160,8 +160,8 @@ const ProductDetails = () => {
     } catch (error) {
       toast.error(
         error?.response?.data?.message ||
-        selectedContent[localizationKeys.updateFailed] ||
-        "An error occurred while updating."
+          selectedContent[localizationKeys.updateFailed] ||
+          "An error occurred while updating."
       );
     } finally {
       setIsUpdating(false);
@@ -241,10 +241,11 @@ const ProductDetails = () => {
       runAuctionById(
         authAxios.get(api.app.auctions.getAuctionsDetails(id)).then((res) => {
           const completeDraftValue = res?.data?.data;
+
           setAuctionState(res?.data?.data?.status);
           setCompleteDraftValue(res?.data?.data);
           SetProductFunction(completeDraftValue?.product);
-   // setimgtest(completeDraftValue?.product?.images);
+          // setimgtest(completeDraftValue?.product?.images);
 
           // // Map draft images to fileOne, fileTwo, etc.
           // if (completeDraftValue?.product?.images) {
@@ -292,17 +293,20 @@ const ProductDetails = () => {
 
           // Set initial images if available
           if (completeDraftValue?.product?.images?.length > 0) {
-            const formattedImages = completeDraftValue.product.images.map(img => {
-              const isVideo = img.imagePath?.toLowerCase().includes('video') || 
-                             img.imageLink?.toLowerCase().includes('video');
-              return {
-                id: img.id,
-                imageLink: img.imageLink,
-                imagePath: img.imagePath,
-                isVideo: isVideo,
-                isCoverPhoto: img.isCoverPhoto || false
-              };
-            });
+            const formattedImages = completeDraftValue.product.images.map(
+              (img) => {
+                const isVideo =
+                  img.imagePath?.toLowerCase().includes("video") ||
+                  img.imageLink?.toLowerCase().includes("video");
+                return {
+                  id: img.id,
+                  imageLink: img.imageLink,
+                  imagePath: img.imagePath,
+                  isVideo: isVideo,
+                  isCoverPhoto: img.isCoverPhoto || false,
+                };
+              }
+            );
             setimgtest(formattedImages);
           }
 
@@ -432,8 +436,8 @@ const ProductDetails = () => {
   const [relatedDocuments, setRelatedDocuments] = useState([]);
   const [valueRadio, setRadioValue] = useState(
     completeDraftVal?.product?.usageStatus ||
-    productDetailsint.valueRadio ||
-    null
+      productDetailsint.valueRadio ||
+      null
   );
 
   const [countriesId, setCountriesId] = useState();
@@ -442,8 +446,8 @@ const ProductDetails = () => {
 
   const [hasUsageCondition, setHasUsageCondition] = useState(
     completeDraftVal?.product?.category?.hasUsageCondition ||
-    productDetailsint.hasUsageCondition ||
-    true
+      productDetailsint.hasUsageCondition ||
+      true
   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
@@ -485,8 +489,8 @@ const ProductDetails = () => {
     const newVideos = Array.isArray(files)
       ? files.filter((file) => file.type.startsWith("video/"))
       : files.type.startsWith("video/")
-        ? [files]
-        : [];
+      ? [files]
+      : [];
 
     // If trying to upload a video as first item
     if (currentImages.length === 0 && newVideos.length > 0) {
@@ -697,7 +701,7 @@ const ProductDetails = () => {
     if (filesCount < 3) {
       toast.error(
         selectedContent[
-        localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+          localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
         ]
       );
       return;
@@ -711,7 +715,7 @@ const ProductDetails = () => {
       if (hasUsageCondition && categoryId !== 7) {
         toast.error(
           selectedContent[
-          localizationKeys.makeSureThatYouChooseItemConditionValue
+            localizationKeys.makeSureThatYouChooseItemConditionValue
           ]
         );
         return;
@@ -903,7 +907,7 @@ const ProductDetails = () => {
       } else {
         toast.error(
           selectedContent[localizationKeys.errorSavingDraft] ||
-          "Error saving draft"
+            "Error saving draft"
         );
       }
     } catch (error) {
@@ -1065,7 +1069,6 @@ const ProductDetails = () => {
                             })
                           );
                         }}
-
                       />
                     </div>
                     <div
@@ -1117,8 +1120,8 @@ const ProductDetails = () => {
                                       e?.key === "countryId"
                                         ? AllCountriesOptions
                                         : e?.key === "cityId"
-                                          ? AllCitiesOptions
-                                          : allCustomFileOptions[e?.key]?.map(
+                                        ? AllCitiesOptions
+                                        : allCustomFileOptions[e?.key]?.map(
                                             (option) => ({
                                               ...option,
                                               text: isArabic
@@ -1167,16 +1170,18 @@ const ProductDetails = () => {
                             >
                               <FormikMultiDropdown
                                 name={field.key}
-                                label={`${lang === "en" ? field.labelEn : field.labelAr
-                                  }`}
-                                placeholder={`${lang === "en" ? field.labelEn : field.labelAr
-                                  }`}
+                                label={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
+                                placeholder={`${
+                                  lang === "en" ? field.labelEn : field.labelAr
+                                }`}
                                 options={
                                   field.key === "countryId"
                                     ? AllCountriesOptions
                                     : field.key === "cityId"
-                                      ? AllCitiesOptions
-                                      : allCustomFileOptions[field.key]?.map(
+                                    ? AllCitiesOptions
+                                    : allCustomFileOptions[field.key]?.map(
                                         (option) => ({
                                           ...option,
                                           text: isArabic
@@ -1312,7 +1317,7 @@ const ProductDetails = () => {
                       <span className="text-gray-600 text-sm font-normal px-1">
                         {
                           selectedContent[
-                          localizationKeys.uploadOneImageAndOneVideo
+                            localizationKeys.uploadOneImageAndOneVideo
                           ]
                         }
                       </span>
@@ -1357,6 +1362,7 @@ const ProductDetails = () => {
                         onReload={onReload}
                         setLoadingImg={setLoadingImg}
                         isEditMode={isEditing}
+                        auctionState={auctionState}
                       />
                     </div>
                   </div>
@@ -1384,13 +1390,14 @@ const ProductDetails = () => {
                         </label>
                         <div
                           className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-200 ease-in-out max-w-3xl
-                          ${formik.touched.pdfDocument &&
-                              formik.errors.pdfDocument
+                          ${
+                            formik.touched.pdfDocument &&
+                            formik.errors.pdfDocument
                               ? "border-primary text-primary bg-primary-veryLight"
                               : relatedDocuments.length > 0
-                                ? "border-primary-light bg-primary-veryLight"
-                                : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
-                            }`}
+                              ? "border-primary-light bg-primary-veryLight"
+                              : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
+                          }`}
                         >
                           <input
                             name="relatedDocument"
@@ -1407,15 +1414,15 @@ const ProductDetails = () => {
                                   } else {
                                     toast.error(
                                       selectedContent[
-                                      localizationKeys
-                                        .fileSizeShouldBeLessThan10MB
+                                        localizationKeys
+                                          .fileSizeShouldBeLessThan10MB
                                       ]
                                     );
                                   }
                                 } else {
                                   toast.error(
                                     selectedContent[
-                                    localizationKeys.pleaseUploadPdfOnly
+                                      localizationKeys.pleaseUploadPdfOnly
                                     ]
                                   );
                                 }
@@ -1442,13 +1449,13 @@ const ProductDetails = () => {
                               <p className="text-sm text-gray-dark">
                                 {
                                   selectedContent[
-                                  localizationKeys.dragAndDropYourPdfHereOr
+                                    localizationKeys.dragAndDropYourPdfHereOr
                                   ]
                                 }{" "}
                                 <span className="text-primary font-medium hover:text-primary-dark">
                                   {
                                     selectedContent[
-                                    localizationKeys.clickToBrowse
+                                      localizationKeys.clickToBrowse
                                     ]
                                   }
                                 </span>
@@ -1504,8 +1511,8 @@ const ProductDetails = () => {
                   <div
                     className={
                       hasUsageCondition ||
-                        completeDraftVal?.product?.category?.hasUsageCondition ||
-                        productDetailsint?.hasUsageCondition
+                      completeDraftVal?.product?.category?.hasUsageCondition ||
+                      productDetailsint?.hasUsageCondition
                         ? "w-full"
                         : "hidden"
                     }
@@ -1519,9 +1526,9 @@ const ProductDetails = () => {
                     <div
                       className={
                         hasUsageCondition ||
-                          completeDraftVal?.product?.category
-                            ?.hasUsageCondition ||
-                          productDetailsint?.hasUsageCondition
+                        completeDraftVal?.product?.category
+                          ?.hasUsageCondition ||
+                        productDetailsint?.hasUsageCondition
                           ? "mt-6 w-full"
                           : "hidden"
                       }

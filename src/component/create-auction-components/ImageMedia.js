@@ -30,7 +30,8 @@ const ImageMedia = ({
   isEditMode,
   setimgtest,
   images = [],
-  isListing
+  isListing,
+  auctionState,
 }) => {
   // Check if there's already a video in the images array
   const hasExistingVideo = images.some(
@@ -64,7 +65,7 @@ const ImageMedia = ({
         }));
 
       // If in edit mode and the image has an ID (existing image), delete from backend
-      if (isEditMode && auctionId && imgId) {
+      if ((isEditMode && auctionId && imgId) || auctionState === "DRAFTED") {
         try {
           await runDelete(
             authAxios.delete(api.app.Imagees.delete(auctionId, imgId))
@@ -294,7 +295,10 @@ const ImageMedia = ({
                 const formData = new FormData();
                 formData.append("image", img.file); // Use 'image' as the key
                 await runUpload(
-                  authAxios.patch(api.app.Imagees.upload(auctionId,isListing), formData)
+                  authAxios.patch(
+                    api.app.Imagees.upload(auctionId, isListing),
+                    formData
+                  )
                 );
               }
             }
@@ -620,6 +624,7 @@ const ImageMedia = ({
 
                         {!isCoverPhoto &&
                           !isEditMode &&
+                          !auctionState === "DRAFTED" &&
                           !img.file?.type?.startsWith("video/") && (
                             <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
                               <button
