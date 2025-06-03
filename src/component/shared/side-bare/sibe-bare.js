@@ -156,7 +156,7 @@ const Sidebar = ({ SetSid, sid }) => {
             />
           </div>
           <div className="flex-grow overflow-y-auto">
-            <div className="flex flex-col gap-y-8 mx-6 mt-10 w-full">
+            <div className="flex flex-col gap-y-4  mx-6 mt-10 w-full">
               <NavLink
                 title={selectedContent[localizationKeys.profile]}
                 isActive={
@@ -298,15 +298,17 @@ const Sidebar = ({ SetSid, sid }) => {
 
 export const NavLink = ({ title, onClick, isActive }) => {
   return (
-    <div className="w-full">
-      <p
-        onClick={onClick}
+    <div 
+      onClick={onClick}
+      className={`w-full cursor-pointer h-12`}
+    >
+      <div
         className={`${
           isActive ? "active-underline-animation" : "hover-underline-animation"
-        } text-base text-white font-normal cursor-pointer`}
+        } text-base text-white font-normal py-1`}
       >
         {title}
-      </p>
+      </div>
     </div>
   );
 };
