@@ -35,11 +35,15 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
         );
       })
       .catch((err) => {
-        toast.error(
-          lang === "en"
-            ? err.message.en || err.message
-            : err.message.ar || err.message
-        );
+        let errorMsg = "";
+
+        if (typeof err.message === "object") {
+          errorMsg = lang === "en" ? err.message.en : err.message.ar;
+        } else {
+          errorMsg = err.message;
+        }
+
+        toast.error(errorMsg);
       });
   };
 
