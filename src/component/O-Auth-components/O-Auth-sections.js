@@ -121,6 +121,11 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
     })();
   
     const handleAuthResponse = (res) => {
+      if (!res?._tokenResponse?.idToken) {
+        // No token, likely user cancelled
+        return;
+      }
+      
       run(
         axios.post(api.auth.aAuth, {
           userName: res?._tokenResponse?.displayName || null,
@@ -157,10 +162,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           console.log("apple auth error --->", err);
           if (err?.message?.en === "You are not authorized") {
             store.dispatch(setBlockedUser(true));
+          } else {
+            // Only show error toast for actual errors, not for cancellations
+            toast.error(
+              selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+            );
           }
-          toast.error(
-            selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
-          );
         });
     };
   
@@ -168,11 +175,15 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
       // Fallback for iOS WebView (e.g., Applix)
       console.log('Apple sign in with redirect')
       signInWithRedirect(authentications, provider)
+        .then(handleAuthResponse)
         .catch((err) => {
           console.error("Redirect login error:", err);
-          toast.error(
-            selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
-          );
+          // Don't show error for user cancellation
+          if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+            toast.error(
+              selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+            );
+          }
         });
     } else {
       // Standard popup login
@@ -182,9 +193,12 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
         .then(handleAuthResponse)
         .catch((err) => {
           console.error("Popup login error:", err);
-          toast.error(
-            selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
-          );
+          // Don't show error for user cancellation
+          if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+            toast.error(
+              selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+            );
+          }
         });
     }
   };
