@@ -22,12 +22,12 @@ function AuthProvider({ children }) {
 
   const { run, isError } = useAxios();
 
-  const login = ({ accessToken, refreshToken }) => {
+  const login = ({ accessToken,/* refreshToken*/ }) => {
     setUser(Auth._decodeToken(accessToken));
 
     Auth.setToken({
       newAccessToken: accessToken,
-      newRefreshToken: refreshToken,
+      // newRefreshToken: refreshToken,
     });
   };
 

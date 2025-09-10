@@ -25,21 +25,24 @@ class Auth {
     }
   }
 
-  setToken({ newAccessToken, newRefreshToken }) {
+  setToken({ newAccessToken, /*newRefreshToken*/ }) {
     if (newAccessToken) {
       localStorage.setItem("accessToken", newAccessToken);
     }
-    if (newRefreshToken) {
-      localStorage.setItem("refreshToken", newRefreshToken);
-    }
+    // if (newRefreshToken) {
+    //   localStorage.setItem("refreshToken", newRefreshToken);
+    // }
   }
 
   async logout() {
     try {
-      const refreshToken = localStorage.getItem("refreshToken");
-      if (refreshToken) {
-        await Axios.post(api.auth.logout, { refreshToken }).catch(console.error);
-      }
+      // const refreshToken = localStorage.getItem("refreshToken");
+      // if (refreshToken) {
+      //   await Axios.post(api.auth.logout, { refreshToken }).catch(console.error);
+      // }
+        await Axios.post(api.auth.logout)
+    } catch (e){
+      console.error("log out api failed :",e)
     } finally {
       this.refreshPromise = null;
       localStorage.removeItem("accessToken");
@@ -71,56 +74,91 @@ class Auth {
     }
   }
 
+  // async refreshToken() {
+  //   // If there's already a refresh in progress, return that promise
+  //   if (this.refreshPromise) {
+  //     return this.refreshPromise;
+  //   }
+  //   const refreshToken = localStorage.getItem("refreshToken");
+  //   if (!refreshToken) {
+  //     // alert('window.location.pathname'+window.location.pathname)
+  //     if(window.location.pathname.includes("/alletre/profile/my-bids/pending")){
+  //       return null
+  //     }
+  //    if(
+  //       !window.location.pathname.includes("details") &&
+  //       !window.location.pathname.includes("/alletre/categories/") &&
+  //       !window.location.pathname.includes("/privacy-policy")){
+  //       await this.logout();
+  //     }
+  //     return null;
+  //   }
+
+  //   // Create new refresh promise
+  //   this.refreshPromise = (async () => {
+  //     try {
+  //       const res = await Axios.post(api.auth.RefrshToken, {
+  //         refreshToken,
+  //       });
+        
+  //       const data = res.data;
+  //       if (!data?.data?.accessToken) {
+  //         throw new Error('Invalid token response');
+  //       }
+
+  //       this.setToken({
+  //         newAccessToken: data.data.accessToken,
+  //         newRefreshToken: data.data.refreshToken || refreshToken,
+  //       });
+        
+  //       return data.data.accessToken;
+  //     } catch (error) {
+  //       console.error("Token refresh failed:", error);
+  //       await this.logout();
+  //       return null;
+  //     } finally {
+  //       // Clear the refresh promise
+  //       this.refreshPromise = null;
+  //     }
+  //   })();
+
+  //   return this.refreshPromise;
+  // }
+
   async refreshToken() {
-    // If there's already a refresh in progress, return that promise
-    if (this.refreshPromise) {
-      return this.refreshPromise;
-    }
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      // alert('window.location.pathname'+window.location.pathname)
-      if(window.location.pathname.includes("/alletre/profile/my-bids/pending")){
-        return null
-      }
-     if(
-        !window.location.pathname.includes("details") &&
-        !window.location.pathname.includes("/alletre/categories/") &&
-        !window.location.pathname.includes("/privacy-policy")){
-        await this.logout();
-      }
-      return null;
-    }
-
-    // Create new refresh promise
-    this.refreshPromise = (async () => {
-      try {
-        const res = await Axios.post(api.auth.RefrshToken, {
-          refreshToken,
-        });
-        
-        const data = res.data;
-        if (!data?.data?.accessToken) {
-          throw new Error('Invalid token response');
-        }
-
-        this.setToken({
-          newAccessToken: data.data.accessToken,
-          newRefreshToken: data.data.refreshToken || refreshToken,
-        });
-        
-        return data.data.accessToken;
-      } catch (error) {
-        console.error("Token refresh failed:", error);
-        await this.logout();
-        return null;
-      } finally {
-        // Clear the refresh promise
-        this.refreshPromise = null;
-      }
-    })();
-
+  // If there's already a refresh in progress, return that promise
+  if (this.refreshPromise) {
     return this.refreshPromise;
   }
+
+  // Create new refresh promise
+  this.refreshPromise = (async () => {
+    try {
+      // Call refresh endpoint — cookie (HttpOnly refreshToken) is sent automatically
+      const res = await Axios.post(api.auth.RefrshToken);
+      const data = res.data;
+      if (!data?.data?.accessToken) {
+        throw new Error("Invalid token response");
+      }
+
+      // Update only access token; backend should rotate refresh cookie
+      this.setToken({
+        newAccessToken: data.data.accessToken,
+      });
+
+      return data.data.accessToken;
+    } catch (error) {
+      console.error("Token refresh failed:", error);
+      await this.logout();
+      return null;
+    } finally {
+      this.refreshPromise = null;
+    }
+  })();
+
+  return this.refreshPromise;
+}
+
 
   hasExpired(token) {
     if (!token) return true;

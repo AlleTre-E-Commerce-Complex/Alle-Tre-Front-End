@@ -48,7 +48,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
         }
         login({
           accessToken: accessToken,
-          refreshToken: refreshToken,
+          // refreshToken: refreshToken,
         });
         window.localStorage.setItem(
           "hasCompletedProfile",
@@ -86,7 +86,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
                           : err.message.ar || err.message
                       );
                     })
-                }
+                 }
                 className="underline text-black cursor-pointer px-1"
               >
                 {selectedContent[localizationKeys.resendMailAgain]}

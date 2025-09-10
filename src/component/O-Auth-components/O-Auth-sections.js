@@ -138,14 +138,16 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
         .then((res) => {
           const {
             accessToken,
-            refreshToken,
+            // refreshToken,
             hasCompletedProfile,
             isAddedBonus,
           } = res.data.data;
   
           if (isAddedBonus) dispatch(welcomeBonus(true));
   
-          login({ accessToken, refreshToken });
+          login({ accessToken,
+            //  refreshToken, 
+            });
   
           localStorage.setItem(
             "hasCompletedProfile",
@@ -222,7 +224,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           .then((res) => {
             const {
               accessToken,
-              refreshToken,
+              // refreshToken,
               hasCompletedProfile,
               isAddedBonus,
             } = res.data.data;
@@ -231,7 +233,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             }
             login({
               accessToken: accessToken,
-              refreshToken: refreshToken,
+              // refreshToken: refreshToken,
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
