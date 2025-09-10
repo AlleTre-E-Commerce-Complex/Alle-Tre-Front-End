@@ -4,6 +4,7 @@ import { store } from "redux-store/store";
 import { setBlockedUser } from "redux-store/blocked-user-slice";
 
 Axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
+Axios.defaults.withCredentials = true;
 const AuthAxios = Axios.create();
 
 // Request interceptor
