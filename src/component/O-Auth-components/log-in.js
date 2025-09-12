@@ -70,7 +70,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
               <span
                 onClick={() =>
                   runforgetPassword(
-                    axios.post(api.auth.resendVerification, { email: email })
+                    axios.post(api.auth.resendVerification, { email: values.email })
                   )
                     .then((res) => {
                       toast.loading(
