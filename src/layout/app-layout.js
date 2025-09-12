@@ -65,20 +65,32 @@ const AppLayouts = () => {
       localStorage.setItem("hasSeenRewardModal", "true");
     }
   }, []);
-  const searchParams = new URLSearchParams(location.search);
-  const unSubscribe = searchParams.get("unSubscribe") === "true";
+  const search = location.search;
+  const unSubscribe = new URLSearchParams(search).get("unSubscribe") === "true";
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     if (unSubscribe) {
       setUnSubscribeModal(true);
     }
-  }, [searchParams]);
+  }, [unSubscribe]);
+
+ useEffect(() => {
+  const params = new URLSearchParams(location.search);
+  if (params.get('isLoginModal') === 'true') {
+    dispatch(Open());
+    params.delete('isLoginModal');
+    const newSearchParams = params.toString();
+    history.replace(`${location.pathname}${newSearchParams ? `?${newSearchParams}` : ''}`);
+  }
+}, [location.search, location.pathname, history, dispatch]);
+
+
   const socketauctionId = useSelector(
     (state) => state?.socketAuctionId?.socketAuctionId
   );
   const { user } = useAuthState();
-  const history = useHistory();
-  const dispatch = useDispatch();
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
   const handleOnSell = () => {
