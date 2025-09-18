@@ -60,7 +60,7 @@ const AuctionCard = ({
   auctionId,
   isBuyNowAllowed,
   isMyAuction,
-  onReload,
+  // onReload,
   StartDate,
   isPurchased,
   PurchasedTime,
@@ -105,6 +105,9 @@ const AuctionCard = ({
       handlePrevious();
     }
   };
+
+  const [,setForceReload] = useState(false);
+  const onReload = () => setForceReload(p => !p);
 
   const handleNext = () => {
     if (!Array.isArray(adsImg) || !adsImg.length) return;

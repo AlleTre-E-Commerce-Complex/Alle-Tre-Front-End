@@ -278,6 +278,7 @@ const UserDetailsPage = () => {
                             adsImg={e?.product?.images}
                             totalBods={e?._count?.bids}
                             WatshlistState={e?.isSaved}
+                            onReload={onReload}
                             endingTime={e?.expiryDate}
                             StartDate={e?.startDate}
                             isBuyNowAllowed={e?.isBuyNowAllowed}

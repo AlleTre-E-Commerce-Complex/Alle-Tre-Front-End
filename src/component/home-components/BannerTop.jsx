@@ -34,15 +34,19 @@ const CountdownTimer = memo(({ startDate, expiryDate, status }) => {
     status === "IN_SCHEDULED" ? startDate : expiryDate
   );
 
-  const formattedTime = `${timeLeft.days} ${selectedContent[localizationKeys.days]
-    } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : ${timeLeft.minutes
-    } ${selectedContent[localizationKeys.min]} : ${timeLeft.seconds} ${selectedContent[localizationKeys.sec]
-    }`;
+  const formattedTime = `${timeLeft.days} ${
+    selectedContent[localizationKeys.days]
+  } : ${timeLeft.hours} ${selectedContent[localizationKeys.hrs]} : ${
+    timeLeft.minutes
+  } ${selectedContent[localizationKeys.min]} : ${timeLeft.seconds} ${
+    selectedContent[localizationKeys.sec]
+  }`;
 
   return (
     <p
-      className={`${timeLeft.days === 0 ? "text-red" : "text-gray-800"
-        } font-medium text-[10px] md:text-xs`}
+      className={`${
+        timeLeft.days === 0 ? "text-red" : "text-gray-800"
+      } font-medium text-[10px] md:text-xs`}
     >
       {formattedTime}
     </p>
@@ -50,6 +54,7 @@ const CountdownTimer = memo(({ startDate, expiryDate, status }) => {
 });
 
 const BannerTop = ({ auctions = [] }) => {
+  console.log("aaaa", auctions)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [forceReload, setForceReload] = useState(false);
   const [lang] = useLanguage();
@@ -88,7 +93,7 @@ const BannerTop = ({ auctions = [] }) => {
       }
     } else history.push(routes.app.homeDetails(auction.id));
   };
-  
+
   const [showShareFallback, setShowShareFallback] = useState(false);
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -100,9 +105,9 @@ const BannerTop = ({ auctions = [] }) => {
   //     ? `${getDomain()}/alletre/my-product/${auctionId}/details`
   //     : `${getDomain()}/alletre/home/${auctionId}/details`;
 
-  const shareUrl = (auction) =>{
-      return `${getDomain()}/alletre/home/${auction?.id}/details`
-  } 
+  const shareUrl = (auction) => {
+    return `${getDomain()}/alletre/home/${auction?.id}/details`;
+  };
 
   const handleShare = async (auction) => {
     if (navigator.share) {
@@ -217,154 +222,157 @@ const BannerTop = ({ auctions = [] }) => {
         modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
         className="!pb-3"
       >
-        {auctions?.slice(0, 6).map(
-          (auction, index) => (
-            (
-              <SwiperSlide key={auction?.id || index}>
-                <div className="w-[95%] sm:w-[90%] h-[180px] sm:h-[200px] md:h-[220px] rounded-xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 mx-auto flex">
+        {auctions?.slice(0, 6).map((auction, index) => (
+          <SwiperSlide key={auction?.id || index}>
+            <div className="w-[95%] sm:w-[90%] h-[180px] sm:h-[200px] md:h-[220px] rounded-xl overflow-hidden shadow-xl bg-white hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 mx-auto flex">
+              <div
+                onClick={() => handelGoDetails(auction)}
+                className="w-[47%] h-full relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 group"
+              >
+                <img
+                  src={auction?.product?.images?.[0]?.imageLink}
+                  alt={auction?.product?.title || "Auction item"}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                {auction?.status && (
+                  <div className="absolute top-0 ">
+                    <AuctionsStatus status={auction.status} />
+                  </div>
+                )}
+                <div className="relative">
                   <div
-                    onClick={() => handelGoDetails(auction)}
-                    className="w-[47%] h-full relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 group"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleShare(auction);
+                    }}
+                    className={`absolute top-2 ${
+                      lang === "en" ? "right-2" : "left-2"
+                    } border-primary border-2 bg-white/95 shadow-md rounded-full w-7 h-7 sm:w-8 sm:h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center active:scale-95`}
                   >
-                    <img
-                      src={auction?.product?.images?.[0]?.imageLink}
-                      alt={auction?.product?.title || "Auction item"}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                    {auction?.status && (
-                      <div className="absolute top-0 ">
-                        <AuctionsStatus status={auction.status} />
-                      </div>
-                    )}
-                     <div className="relative">
+                    <RiShareForwardFill className="text-primary group-hover/share:text-white text-xs sm:text-sm" />
+                  </div>
+                  {showShareFallback && (
+                    <div
+                      className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]"
+                      style={{ minWidth: "180px" }}
+                    >
+                      <ShareFallBack
+                        shareUrl={shareUrl(auction)}
+                        title={auction?.product?.title}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="flex-1 p-3 flex flex-col justify-between bg-gradient-to-br from-white to-gray-50/80">
+                <div className="flex flex-col h-full justify-between py-1">
+                  <div className="space-y-1">
+                    <div className="flex items-start justify-between gap-1">
+                      <h1 className="text-gray-800 font-semibold text-md line-clamp-2 hover:text-primary transition-colors duration-200 mb-4 group-hover:text-primary">
+                        {auction?.product?.title}
+                      </h1>
                       <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleShare(auction);
-                        }}
-                        className={`absolute top-2 ${lang === "en" ? "right-2" : "left-2"} border-primary border-2 bg-white/95 shadow-md rounded-full w-7 h-7 sm:w-8 sm:h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center active:scale-95`}
+                        className={`shrink-0 px-1.5 py-0.5 rounded-md text-[9px] font-medium ${
+                          auction?.product?.usageStatus === "NEW"
+                            ? "bg-primary-veryLight text-primary"
+                            : "bg-gray-100 text-gray-700"
+                        }`}
                       >
-                        <RiShareForwardFill className="text-primary group-hover/share:text-white text-xs sm:text-sm" />
+                        {auction?.product?.usageStatus
+                          ?.charAt(0)
+                          .toUpperCase() +
+                          auction?.product?.usageStatus?.slice(1).toLowerCase()}
                       </div>
-                       {showShareFallback && (
-                          <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
-                            <ShareFallBack shareUrl={shareUrl(auction)} title={auction?.product?.title}/>
+                    </div>
+
+                    <div className="flex justify-between items-center gap-0.5 mt-1">
+                      <div className="flex items-center gap-1">
+                        {auction?.status === "IN_SCHEDULED" ? (
+                          <img
+                            className="w-4 h-4 object-contain mb-0.5"
+                            src={Timer}
+                            alt="Timer"
+                          />
+                        ) : auction?.status === "SOLD" ? (
+                          <div className="text-primary">
+                            <BiSolidPurchaseTag />
                           </div>
+                        ) : (
+                          <img
+                            className="w-[14px] h-[14px] object-contain"
+                            src={TimmerGif}
+                            alt="Timer"
+                          />
                         )}
+                        {auction?.status === "SOLD" ? (
+                          <p className="text-gray-800 text-[10px] sm:text-md text-sm py-8">
+                            {moment(auction?.Payment[0]?.createdAt)
+                              .local()
+                              .format("DD-MMMM-YYYY")}
+                          </p>
+                        ) : (
+                          <CountdownTimer
+                            startDate={auction?.startDate}
+                            expiryDate={auction?.expiryDate}
+                            status={auction?.status}
+                          />
+                        )}
+                      </div>
+                      <div className="flex items-center gap-0.5">
+                        <img
+                          src={
+                            auction?.status === "IN_SCHEDULED"
+                              ? Hummer
+                              : HummerGif
+                          }
+                          alt="Gavel"
+                          className="w-3 h-3 object-contain"
+                        />
+                        <p className="text-gray-800 font-semibold text-[10px]">
+                          {auction?._count?.bids || 0}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
+                      className="mt-1"
+                      onClick={() => handelGoDetails(auction)}
+                    >
+                      <div className="text-[11px] text-gray-600 font-medium mt-3">
+                        {" "}
+                        {selectedContent[localizationKeys.currentBid]}
+                      </div>
+                      <div className="text-primary font-bold text-sm bg-primary-veryLight/50 px-2 py-1 rounded-md inline-block">
+                        {formatCurrency(
+                          auction?.bids?.[0]?.amount ||
+                            auction?.currentBid?.bidAmount ||
+                            auction?.startBidAmount
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="flex-1 p-3 flex flex-col justify-between bg-gradient-to-br from-white to-gray-50/80">
-                    <div className="flex flex-col h-full justify-between py-1">
-                      <div className="space-y-1">
-                        <div className="flex items-start justify-between gap-1">
-                          <h1 className="text-gray-800 font-semibold text-md line-clamp-2 hover:text-primary transition-colors duration-200 mb-4 group-hover:text-primary">
-                            {auction?.product?.title}
-                          </h1>
-                          <div
-                            className={`shrink-0 px-1.5 py-0.5 rounded-md text-[9px] font-medium ${auction?.product?.usageStatus === "NEW"
-                                ? "bg-primary-veryLight text-primary"
-                                : "bg-gray-100 text-gray-700"
-                              }`}
-                          >
-                            {auction?.product?.usageStatus
-                              ?.charAt(0)
-                              .toUpperCase() +
-                              auction?.product?.usageStatus
-                                ?.slice(1)
-                                .toLowerCase()}
-                          </div>
-                        </div>
 
-                        <div className="flex justify-between items-center gap-0.5 mt-1">
-                          <div className="flex items-center gap-1">
-                            {auction?.status === "IN_SCHEDULED" ? (
-                              <img
-                                className="w-4 h-4 object-contain mb-0.5"
-                                src={Timer}
-                                alt="Timer"
-                              />
-                            ) : auction?.status === "SOLD" ? (
-                              <div className="text-primary">
-                                <BiSolidPurchaseTag />
-                              </div>
-                            ) : (
-                              <img
-                                className="w-[14px] h-[14px] object-contain"
-                                src={TimmerGif}
-                                alt="Timer"
-                              />
-                            )}
-                            {auction?.status === "SOLD" ? (
-                              <p className="text-gray-800 text-[10px] sm:text-md text-sm py-8">
-                                {moment(auction?.Payment[0]?.createdAt)
-                                  .local()
-                                  .format("DD-MMMM-YYYY")}
-                              </p>
-                            ) : (
-                              <CountdownTimer
-                                startDate={auction?.startDate}
-                                expiryDate={auction?.expiryDate}
-                                status={auction?.status}
-                              />
-                            )}
-                          </div>
-                          <div className="flex items-center gap-0.5">
-                            <img
-                              src={
-                                auction?.status === "IN_SCHEDULED"
-                                  ? Hummer
-                                  : HummerGif
-                              }
-                              alt="Gavel"
-                              className="w-3 h-3 object-contain"
-                            />
-                            <p className="text-gray-800 font-semibold text-[10px]">
-                              {auction?._count?.bids || 0}
-                            </p>
-                          </div>
-                        </div>
-
-                        <div
-                          className="mt-1"
-                          onClick={() => handelGoDetails(auction)}
-                        >
-                          <div className="text-[11px] text-gray-600 font-medium mt-3">
-                            {" "}
-                            {selectedContent[localizationKeys.currentBid]}
-                          </div>
-                          <div className="text-primary font-bold text-sm bg-primary-veryLight/50 px-2 py-1 rounded-md inline-block">
-                            {formatCurrency(
-                              auction?.bids?.[0]?.amount ||
-                              auction?.currentBid?.bidAmount ||
-                              auction?.startBidAmount
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-2 mt-1">
-                        {auction?.isBuyNowAllowed && (
-                          <button
-                            onClick={() => handelGoDetails(auction)}
-                            className="border-primary border text-primary hover:bg-primary hover:text-white rounded-lg flex-1 py-1.5 text-[11px] font-semibold transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md"
-                          >
-                            {selectedContent[localizationKeys.buyNow]}
-                          </button>
-                        )}
-                        <button
-                          onClick={() => handelGoDetails(auction)}
-                          className="bg-primary hover:bg-primary-dark text-white rounded-lg flex-1 py-1.5 text-[11px] font-semibold transition-all duration-200 active:scale-95 shadow-md hover:shadow-lg"
-                        >
-                          {selectedContent[localizationKeys.bidNow]}
-                        </button>
-                      </div>
-                    </div>
+                  <div className="flex gap-2 mt-1">
+                    {auction?.isBuyNowAllowed && (
+                      <button
+                        onClick={() => handelGoDetails(auction)}
+                        className="border-primary border text-primary hover:bg-primary hover:text-white rounded-lg flex-1 py-1.5 text-[11px] font-semibold transition-all duration-200 active:scale-95 shadow-sm hover:shadow-md"
+                      >
+                        {selectedContent[localizationKeys.buyNow]}
+                      </button>
+                    )}
+                    <button
+                      onClick={() => handelGoDetails(auction)}
+                      className="bg-primary hover:bg-primary-dark text-white rounded-lg flex-1 py-1.5 text-[11px] font-semibold transition-all duration-200 active:scale-95 shadow-md hover:shadow-lg"
+                    >
+                      {selectedContent[localizationKeys.bidNow]}
+                    </button>
                   </div>
                 </div>
-              </SwiperSlide>
-            )
-          )
-        )}
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <style jsx global>{`
         .swiper-pagination {
@@ -394,7 +402,7 @@ const BannerTop = ({ auctions = [] }) => {
           <p className="mt-4 text-white/80 text-lg sm:text-xl font-medium max-w-lg transition-all duration-300 group-hover:text-white group-hover:translate-x-2">
             {
               selectedContent[
-              localizationKeys.discoverTrendingAuctionsWithExclusiveDeals
+                localizationKeys.discoverTrendingAuctionsWithExclusiveDeals
               ]
             }
           </p>
@@ -435,6 +443,7 @@ const BannerTop = ({ auctions = [] }) => {
               <SwiperSlide key={auction?.id || index}>
                 <div className="relative w-full max-w-[280px] h-full rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
                   <AuctionCard
+                    key={auction?.id}
                     auctionId={auction?.id}
                     price={auction?.acceptedAmount || auction?.startBidAmount}
                     title={auction?.product?.title}
@@ -446,6 +455,7 @@ const BannerTop = ({ auctions = [] }) => {
                     StartDate={auction?.startDate}
                     isBuyNowAllowed={auction?.isBuyNowAllowed}
                     isMyAuction={auction?.isMyAuction}
+                    onReload={onReload}
                     latestBidAmount={auction?.bids[0]?.amount}
                     CurrentBid={auction?.currentBid?.bidAmount}
                     startBidAmount={auction?.startBidAmount}

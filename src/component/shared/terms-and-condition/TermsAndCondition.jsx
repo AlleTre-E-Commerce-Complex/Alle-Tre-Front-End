@@ -1511,7 +1511,7 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black flex items-center justify-center z-[9999] overflow-visible"
+          className="fixed inset-0 bg-white/80 flex items-center justify-center z-[9999] overflow-visible"
           role="dialog"
           onClick={closeModal}
         >

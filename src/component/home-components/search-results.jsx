@@ -1,21 +1,27 @@
-import React from 'react';
-import { useLanguage } from '../../context/language-context';
-import content from '../../localization/content';
-import localizationKeys from '../../localization/localization-keys';
-import AuctionCard from './auction-card';
-import ProductCard from './ProductCard';
+import React, { useState } from "react";
+import { useLanguage } from "../../context/language-context";
+import content from "../../localization/content";
+import localizationKeys from "../../localization/localization-keys";
+import AuctionCard from "./auction-card";
+import ProductCard from "./ProductCard";
 
 const SearchResults = ({ auctions, products, isLoading, searchQuery }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
 
-  const filteredAuctions = auctions?.filter(auction => 
-    auction?.product?.title?.toLowerCase().includes(searchQuery?.toLowerCase() || '')
+  const filteredAuctions = auctions?.filter((auction) =>
+    auction?.product?.title
+      ?.toLowerCase()
+      .includes(searchQuery?.toLowerCase() || "")
   );
 
-  const filteredProducts = products?.filter(product => 
-    product?.product?.title?.toLowerCase().includes(searchQuery?.toLowerCase() || '')
+  const filteredProducts = products?.filter((product) =>
+    product?.product?.title
+      ?.toLowerCase()
+      .includes(searchQuery?.toLowerCase() || "")
   );
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   if (isLoading) {
     return (
@@ -25,13 +31,15 @@ const SearchResults = ({ auctions, products, isLoading, searchQuery }) => {
     );
   }
 
-  const hasResults = filteredAuctions?.length > 0 || filteredProducts?.length > 0;
+  const hasResults =
+    filteredAuctions?.length > 0 || filteredProducts?.length > 0;
 
   if (!hasResults) {
     return (
       <div className="w-full text-center py-8">
-   
-        <p className="text-gray-500 font-medium md:text-3xl text-xl mt-40">{selectedContent[localizationKeys.noResultsFound]}</p>
+        <p className="text-gray-500 font-medium md:text-3xl text-xl mt-40">
+          {selectedContent[localizationKeys.noResultsFound]}
+        </p>
       </div>
     );
   }
@@ -56,6 +64,7 @@ const SearchResults = ({ auctions, products, isLoading, searchQuery }) => {
                 WatshlistState={e?.isSaved}
                 endingTime={e?.expiryDate}
                 StartDate={e?.startDate}
+                onReload={onReload}
                 isBuyNowAllowed={e?.isBuyNowAllowed}
                 isMyAuction={e?.isMyAuction}
                 latestBidAmount={e?.bids[0]?.amount}
@@ -71,9 +80,7 @@ const SearchResults = ({ auctions, products, isLoading, searchQuery }) => {
 
       {filteredProducts?.length > 0 && (
         <div>
-          <h1
-            className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-          >
+          <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
             {selectedContent[localizationKeys.listedProduct]}
           </h1>
           <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">

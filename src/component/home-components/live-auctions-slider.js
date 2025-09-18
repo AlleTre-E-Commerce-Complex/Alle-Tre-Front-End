@@ -34,7 +34,9 @@ const LiveAuctionsSlider = ({ type }) => {
   const [auctions, setAuctions] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(20);
-
+   const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  
   const swiperOptions = {
     cssMode: true,
     speed: 1000,
@@ -137,6 +139,7 @@ const LiveAuctionsSlider = ({ type }) => {
                         adsImg={e?.product?.images}
                         totalBods={e?._count?.bids}
                         WatshlistState={e?.isSaved}
+                        onReload={onReload}
                         endingTime={e?.expiryDate}
                         isBuyNowAllowed={e?.isBuyNowAllowed}
                         isMyAuction={e?.isMyAuction}

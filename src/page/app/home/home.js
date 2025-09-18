@@ -54,7 +54,7 @@ const Home = ({
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
-    const searchQuery = queryParams.get('title') || '';
+    const searchQuery = queryParams.get("title") || "";
     handleSearch(searchQuery);
   }, [search]);
 
@@ -79,7 +79,6 @@ const Home = ({
 
     return counts;
   };
-
 
   const categoryCounts = getCategoryCounts();
   // const [totalPagesListed, setTotalPagesListed] = useState();
@@ -134,18 +133,22 @@ const Home = ({
       ]);
 
       // Filter results based on the search term
-      const searchTerm = query?.toLowerCase() || '';
-      const filteredAuctions = auctionsResponse.data.data.filter(auction =>
-        !searchTerm || auction?.product?.title?.toLowerCase().includes(searchTerm)
+      const searchTerm = query?.toLowerCase() || "";
+      const filteredAuctions = auctionsResponse.data.data.filter(
+        (auction) =>
+          !searchTerm ||
+          auction?.product?.title?.toLowerCase().includes(searchTerm)
       );
-      const filteredProducts = productsResponse.data.data.filter(product =>
-        !searchTerm || product?.product?.title?.toLowerCase().includes(searchTerm)
+      const filteredProducts = productsResponse.data.data.filter(
+        (product) =>
+          !searchTerm ||
+          product?.product?.title?.toLowerCase().includes(searchTerm)
       );
 
       setMainAuctions(filteredAuctions);
       setListedProducts(filteredProducts);
     } catch (error) {
-      console.error('Error fetching search results:', error);
+      console.error("Error fetching search results:", error);
     }
 
     setIsSearching(false);
@@ -161,7 +164,6 @@ const Home = ({
   useEffect(() => {
     async function fetchAuctions() {
       try {
-
         const queryParams = new URLSearchParams(search);
         let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
         let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
@@ -178,9 +180,15 @@ const Home = ({
         const filterParams = {
           page,
           perPage,
-          categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : undefined,
-          subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
-          brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+          categories: Array.isArray(parsed.categories)
+            ? parsed.categories.map(Number)
+            : undefined,
+          subCategory: Array.isArray(parsed.subCategory)
+            ? parsed.subCategory.map(Number)
+            : undefined,
+          brands: Array.isArray(parsed.brands)
+            ? parsed.brands.map(Number)
+            : undefined,
           sellingType: parsed.sellingType,
           auctionStatus: parsed.auctionStatus,
           usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
@@ -201,70 +209,71 @@ const Home = ({
         });
 
         try {
+          const axiostToUse = user ? authAxios : axios;
           const [liveRes, upcomingRes] = await Promise.all([
-            axios.get(`${api.app.auctions.getMain}?${queryStr}`),
-            axios.get(`${api.app.auctions.getUpComming}?${queryStr}`)
+            axiostToUse.get(`${api.app.auctions.getMain}?${queryStr}`),
+            axiostToUse.get(`${api.app.auctions.getUpComming}?${queryStr}`),
           ]);
 
           // Log detailed data structure
-          console.log('Live Data:', {
+          console.log("Live Data:", {
             liveData: liveRes?.data?.data,
             isArray: Array.isArray(liveRes?.data?.data),
             length: liveRes?.data?.data?.length,
-            firstItem: liveRes?.data?.data?.[0]
+            firstItem: liveRes?.data?.data?.[0],
           });
 
-          console.log('Upcoming Data:', {
+          console.log("Upcoming Data:", {
             upcomingData: upcomingRes?.data?.data,
             isArray: Array.isArray(upcomingRes?.data?.data),
             length: upcomingRes?.data?.data?.length,
-            firstItem: upcomingRes?.data?.data?.[0]
+            firstItem: upcomingRes?.data?.data?.[0],
           });
 
           // Ensure we have valid arrays and validate each item
           const liveData = Array.isArray(liveRes?.data?.data)
-            ? liveRes.data.data.filter(item => item && typeof item === 'object')
+            ? liveRes.data.data.filter(
+                (item) => item && typeof item === "object"
+              )
             : [];
 
           const upcomingData = Array.isArray(upcomingRes?.data?.data)
-            ? upcomingRes.data.data.filter(item => item && typeof item === 'object')
+            ? upcomingRes.data.data.filter(
+                (item) => item && typeof item === "object"
+              )
             : [];
 
           // Log the filtered data
-          console.log('Filtered Data:', {
+          console.log("Filtered Data:", {
             liveDataLength: liveData.length,
             upcomingDataLength: upcomingData.length,
-            combinedLength: liveData.length + upcomingData.length
+            combinedLength: liveData.length + upcomingData.length,
           });
 
-          const combinedData = [...liveData, ...upcomingData].map(item => ({
+          const combinedData = [...liveData, ...upcomingData].map((item) => ({
             ...item,
             product: item.product || {},
-            _count: item._count || { bids: 0 }
+            _count: item._count || { bids: 0 },
           }));
 
           setMainAuctions(combinedData);
         } catch (error) {
-          console.error('Error fetching auctions:', error);
-          console.error('Error details:', {
+          console.error("Error fetching auctions:", error);
+          console.error("Error details:", {
             name: error.name,
             message: error.message,
             response: error.response,
-            request: error.request
+            request: error.request,
           });
           setMainAuctions([]);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
 
     fetchAuctions();
-
   }, [search, user]);
-
-
-
 
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
@@ -314,8 +323,8 @@ const Home = ({
             setListedProducts(res?.data?.data);
             // setTotalPagesListed(res?.data?.pagination?.totalPages);
           })
-          .catch((error)=>{
-            console.log(error)
+          .catch((error) => {
+            console.log(error);
           })
       );
     } else {
@@ -325,8 +334,9 @@ const Home = ({
           .then((res) => {
             setListedProducts(res?.data?.data);
             // setTotalPagesListed(res?.data?.pagination?.totalPages);
-          }).catch((error)=>{
-            console.log(error)
+          })
+          .catch((error) => {
+            console.log(error);
           })
       );
     }
@@ -356,20 +366,21 @@ const Home = ({
         const updatedAuctions = prev.map((auction) =>
           auction.id === data.auction.id
             ? {
-              ...auction,
-              bids: data.auction.bids,
-              startBidAmount: data.auction.startBidAmount,
-              _count: {
-                ...auction._count,
-                bids: (auction._count.bids || 0) + 1,
-              },
-              currentBid: {
-                bidAmount: Array.isArray(data.auction.bids) && data.auction.bids.length > 0
-                  ? data.auction.bids[0].amount
-                  : auction.currentBid?.bidAmount ?? null,
-              },
-
-            }
+                ...auction,
+                bids: data.auction.bids,
+                startBidAmount: data.auction.startBidAmount,
+                _count: {
+                  ...auction._count,
+                  bids: (auction._count.bids || 0) + 1,
+                },
+                currentBid: {
+                  bidAmount:
+                    Array.isArray(data.auction.bids) &&
+                    data.auction.bids.length > 0
+                      ? data.auction.bids[0].amount
+                      : auction.currentBid?.bidAmount ?? null,
+                },
+              }
             : auction
         );
         return updatedAuctions;
@@ -398,8 +409,9 @@ const Home = ({
 
   return (
     <div
-      className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white ${isDropdownOpen ? "blur-sm pointer-events-none" : ""
-        } transition-all duration-300`}
+      className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white ${
+        isDropdownOpen ? "blur-sm pointer-events-none" : ""
+      } transition-all duration-300`}
     >
       {/* {isFilterOpen && (
         <FilterSections
@@ -411,7 +423,9 @@ const Home = ({
         <div className="lg:mt-32 md:mt-32 mt-28 py-3 md:py-6 home">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
-            active={isLoadingMainAuctions || isLoadingListedProduct|| isSearching}
+            active={
+              isLoadingMainAuctions || isLoadingListedProduct || isSearching
+            }
             inverted
           >
             <LodingTestAllatre />
@@ -431,7 +445,7 @@ const Home = ({
             </p>
           </div> */}
           <div className="flex md:flex-row flex-col gap-4 px-4">
-            <div className={`${searchQuery ? 'w-full' : 'md:w-4/5 w-full'}`}>
+            <div className={`${searchQuery ? "w-full" : "md:w-4/5 w-full"}`}>
               {!searchQuery && (
                 <div className="mb-10">
                   <SliderRow categoryCounts={categoryCounts} />
@@ -449,7 +463,8 @@ const Home = ({
                 <BannerBottom />
               </div>
             </div>
-            {!searchQuery && <SideBanner />}          </div>
+            {!searchQuery && <SideBanner />}{" "}
+          </div>
           {/* <div className="flex justify-between  lg:mx-auto mx-2 px-4 pb-2 ">
             <div className="flex  ">
               <h6 className="text-gray-dark text-base font-normal pt-3 lg:pl-3 px-4 lg:px-0 w-full lg:w-auto">
