@@ -32,6 +32,9 @@ const UpComingAuctionsSlider = (isGrid) => {
   const [auctions, setAuctions] = useState();
   const [pagination, setPagination] = useState();
   const history = useHistory();
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+
   const queryParams = new URLSearchParams(search);
   const [perPage, setPerPage] = useState(
     Number(queryParams.get("perPage") || getDefaultPerPage())
@@ -222,6 +225,7 @@ const UpComingAuctionsSlider = (isGrid) => {
                     title={e?.product?.title}
                     status={e?.status}
                     adsImg={e?.product?.images}
+                    onReload={onReload}
                     totalBods={e?._count?.bids}
                     WatshlistState={e?.isSaved}
                     endingTime={e?.expiryDate}

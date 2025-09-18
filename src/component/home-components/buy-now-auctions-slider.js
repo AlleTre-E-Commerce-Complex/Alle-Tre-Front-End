@@ -28,7 +28,8 @@ const BuyNowAuctionsSlider = () => {
   const [auctions, setAuctions] = useState([]);
   const [pagination, setpagination] = useState(null);
   const [page, setPage] = useState(20);
-
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   useEffect(() => {
     const fetchAuctions = async () => {
       try {
@@ -39,7 +40,7 @@ const BuyNowAuctionsSlider = () => {
         setAuctions(auctionsData);
         setpagination(response?.data?.pagination);
       } catch (error) {
-        console.error('Error fetching auctions:', error);
+        console.error("Error fetching auctions:", error);
         setAuctions([]);
       }
     };
@@ -130,6 +131,7 @@ const BuyNowAuctionsSlider = () => {
                           totalBods={e?._count?.bids}
                           WatshlistState={e?.isSaved}
                           endingTime={e?.expiryDate}
+                          onReload={onReload}
                           isBuyNowAllowed={e?.isBuyNowAllowed}
                           isMyAuction={e?.isMyAuction}
                           latestBidAmount={e?.bids[0]?.amount}

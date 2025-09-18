@@ -1,5 +1,5 @@
 import AuctionCardList from "component/home-components/auction-card-list";
-import { useEffect, useRef, useState } from "react";
+import React ,{ useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import SearchResults from "../../../component/home-components/search-results";
@@ -53,6 +53,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     Number(DEFAULT_PAGE)
   );
 
+     const [forceReload, setForceReload] = useState(false);
+    const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+
   const [isGrid, setIsGrid] = useState(() => {
     return JSON.parse(localStorage.getItem("isGrid")) ?? true;
   });
@@ -61,6 +64,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
 
   const [mainAuctions, setMainAuctions] = useState();
+  console.log("EEEEEEE",mainAuctions)
   const [listedProducts, setListedProducts] = useState([]);
   const [totalPagesListed, setTotalPagesListed] = useState();
   const [totalpagesAuction, setTotalpagesAuction] = useState();
@@ -393,6 +397,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               WatshlistState={e?.isSaved}
                               endingTime={e?.expiryDate}
                               StartDate={e?.startDate}
+                              onReload={onReload}
                               isBuyNowAllowed={e?.isBuyNowAllowed}
                               isMyAuction={e?.isMyAuction}
                               latestBidAmount={e?.bids[0]?.amount}
@@ -588,6 +593,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               totalBods={e?._count?.bids}
                               WatshlistState={e?.isSaved}
                               endingTime={e?.expiryDate}
+                              onReload={onReload}
                               StartDate={e?.startDate}
                               isBuyNowAllowed={e?.isBuyNowAllowed}
                               isMyAuction={e?.isMyAuction}
