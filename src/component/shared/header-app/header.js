@@ -124,105 +124,124 @@ const Header = ({
     onDropdownChange?.(false);
   };
 
-  useEffect(() => {
-    if (!socket) return;
+  // useEffect(() => {
+  //   if (!socket) return;
 
-    if (user) {
-      const handleNotification = (data) => {
-        if (data.status === "ON_SELLING") {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_BIDDING" &&
-          data.userType === "FOR_SELLER" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_BIDDING" &&
-          data.userType === "CURRENT_BIDDER" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_BIDDING" &&
-          data.userType === "OTHER_BIDDERS" &&
-          data.usersId.includes(String(user?.id))
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" &&
-          data.userType === "FOR_SELLER" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_AUCTION_PURCHASE_SUCCESS" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_PENDING_PAYMENT_OF_WINNER" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_DELIVERY_DELAY" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_ITEM_SEND_FOR_DELIVERY" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_ITEM_BUY_NOW" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_CONFIRM_DELIVERY" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        } else if (
-          data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" &&
-          data.usersId === user?.id
-        ) {
-          setNotificationCount((prev) => prev + 1);
-        }
-      };
+  //   if (user) {
+  //     const handleNotification = (data) => {
+  //       if (data.status === "ON_SELLING") {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_BIDDING" &&
+  //         data.userType === "FOR_SELLER" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_BIDDING" &&
+  //         data.userType === "CURRENT_BIDDER" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_BIDDING" &&
+  //         data.userType === "OTHER_BIDDERS" &&
+  //         data.usersId.includes(String(user?.id))
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_AUCTION_EXPIRE_WITH_ZERO_BIDDER" &&
+  //         data.userType === "FOR_SELLER" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_AUCTION_EXPIRE_WITH_BIDDER" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_AUCTION_CANCELLED_WITH_ZERO_BIDDER" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_AUCTION_CANCELLED_WITH_BIDDER" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_AUCTION_PURCHASE_SUCCESS" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_PENDING_PAYMENT_OF_WINNER" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_DELIVERY_DELAY" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_PENDING_PAYMENT_TIME_EXPIRED" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_ITEM_SEND_FOR_DELIVERY" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_ITEM_BUY_NOW" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_CONFIRM_DELIVERY" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       } else if (
+  //         data.status === "ON_AUCTION_CANCELLED_BY_ADMIN" &&
+  //         data.usersId === user?.id
+  //       ) {
+  //         setNotificationCount((prev) => prev + 1);
+  //       }
+  //     };
 
-      // Register the event listener
-      socket.on("notification", handleNotification);
-      getNotificationCount();
+  //     // Register the event listener
+  //     socket.on("notification", handleNotification);
+  //     getNotificationCount();
 
-      // Clean up listener on unmount
-      return () => {
-        socket.off("notification", handleNotification);
-      };
-    }
-  }, [socket, user?.id]);
+  //     // Clean up listener on unmount
+  //     return () => {
+  //       socket.off("notification", handleNotification);
+  //     };
+  //   }
+  // }, [socket, user?.id]);
+
+  // Header or notification hook (simplified)
+useEffect(() => {
+  if (!socket || !user) return;
+  // handler receives notifications that are intended for this user
+  const handleNotification = (data) => {
+    // data is already for this user (server-targeted)
+    setNotificationCount(prev => prev + 1);
+    // optionally push into notifications list UI
+  };
+
+  socket.on('notification', handleNotification);
+  getNotificationCount();
+
+  return () => {
+    socket.off('notification', handleNotification);
+    socket.off('notification.bulk');
+  };
+}, [socket, user ,user?.id]);
 
   const location = useLocation();
   const currentPath = location.pathname;
