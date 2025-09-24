@@ -131,6 +131,21 @@ class Auth {
     return this.refreshPromise;
   }
 
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      // alert('window.location.pathname'+window.location.pathname)
+      if(window.location.pathname.includes("/alletre/profile/my-bids/pending")){
+        return null
+      }
+     if(
+        !window.location.pathname.includes("details") &&
+        !window.location.pathname.includes("/alletre/categories/") &&
+        !window.location.pathname.includes("/privacy-policy")){
+        await this.logout();
+      }
+      return null;
+    }
+
   // Create new refresh promise
   this.refreshPromise = (async () => {
     try {

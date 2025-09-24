@@ -13,10 +13,12 @@ import { HelmetProvider } from "react-helmet-async";
 import { initGA, logPageView } from "./utils/analytics";
 import { getDefaultPaginationString } from "./constants/pagination";
 import InstallPromptButton from "component/shared/installPropt/InstallPromptButton";
+import usePushNotifications from "hooks/usePushNotifications";
 
 
 
 function App() {
+  usePushNotifications()
   const location = useLocation();
 
   useEffect(() => {

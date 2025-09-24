@@ -7,22 +7,22 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compa
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAFVfUdD6BNcOL2TkP4iwzWill-uEwa2ZQ",    
-    authDomain: "allatre-2e988.firebaseapp.com",
-    projectId: "allatre-2e988",
-    storageBucket: "allatre-2e988.appspot.com",
-    messagingSenderId: "526758741584",
-    appId: "1:526758741584:web:ecb86523bb9d35113bb355",
+    apiKey: "AIzaSyCYRf1halN-JVwx1PwHCqvAcB0UeecEDlI",    
+    authDomain: "alletre-auctions.firebaseapp.com",
+    projectId: "alletre-auctions",
+    storageBucket: "alletre-auctions.firebasestorage.app",
+    messagingSenderId: "1043853491459",
+    appId: "1:1043853491459:web:68fe909550a22915f6bd36",
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+ firebase.initializeApp(firebaseConfig);
 
 // Initialize Firebase Cloud Messaging
 const messaging = firebase.messaging();
 
 // Handle background messages
-messaging.onBackgroundMessage(function(payload) {
+ messaging.onBackgroundMessage(function(payload) {
 
   const notificationTitle = payload.notification.title;
   const notificationOptions = {

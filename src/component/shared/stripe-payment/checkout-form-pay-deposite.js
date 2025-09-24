@@ -71,6 +71,7 @@ export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError,b
     setMessage(null);
     
     try {
+      // locking auction to prevent multiple bid at same time
      await authAxios.post(api.app.auctions.lockAuction,{auctionId, bidAmount}).then(async (res)=>{
       console.log('lockauctionCalled')
         console.log('res',res)
