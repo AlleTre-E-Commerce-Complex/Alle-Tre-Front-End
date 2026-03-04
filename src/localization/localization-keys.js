@@ -53,6 +53,7 @@ const localizationKeys = {
   // home
   auctions: "auctions",
   listings: "listings",
+  SearchForLuxuryItemsWatchesRealEstate:"SearchForLuxuryItemsWatchesRealEstate",
   companyProfile: "companyProfile",
   changeStatus: "changeStatus",
   convertToAuction: "convertToAuction",

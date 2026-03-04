@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/ALLETRE LOGO-03-01.svg";
-import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/ALLETRE LOGO-03-02.svg";
-import { ReactComponent as AllatreLogoFull } from "../../../../src/assets/logo/allatre-logo-color.svg";
+import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/3arbon-main.svg";
+import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/3arbon-main.svg";
+import { ReactComponent as AllatreLogoFull } from "../../../../src/assets/logo/3arbon-main.svg";
 import routes from "../../../routes";
 import DropdownLang from "./dropdown-lang";
 import NavLinkHeader from "./nav-link-header";
@@ -11,7 +11,8 @@ import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
 import { RiArrowDownSFill, RiHome2Line } from "react-icons/ri";
-import { FaUser, FaSearch } from "react-icons/fa";
+import { TbLayoutGrid } from "react-icons/tb";
+import { FaRegUser, FaSearch } from "react-icons/fa";
 // import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
 import useFilter from "../../../hooks/use-filter";
@@ -61,7 +62,7 @@ const Header = ({
   const [name, setTitle] = useFilter("title", "");
   const [searchValue, setSearchValue] = useState("");
   const [selectedOption, setSelectedOption] = useState(
-    selectedContent[localizationKeys.all]
+    selectedContent[localizationKeys.all],
   );
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
 
@@ -323,12 +324,12 @@ useEffect(() => {
     queryParams.set("page", DEFAULT_PAGE);
     queryParams.set("perPage", getDefaultPerPage());
     queryParams.set("title", value);
-    
+
     const currentPathname = window.location.pathname;
-    const targetPath = currentPathname.includes("/alletre/categories") 
+    const targetPath = currentPathname.includes("/alletre/categories")
       ? `${currentPathname}` // Keep the current category path
       : routes.app.home;
-    
+
     history.push(`${targetPath}?${queryParams.toString()}`);
     window.scrollTo({
       behavior: "smooth",
@@ -350,7 +351,7 @@ useEffect(() => {
 
     if (user) {
       const hasCompletedProfile = window.localStorage.getItem(
-        "hasCompletedProfile"
+        "hasCompletedProfile",
       );
 
       if (JSON.parse(hasCompletedProfile)) {
@@ -381,7 +382,7 @@ useEffect(() => {
     setIsDropdownOpen(false);
     if (user) {
       const hasCompletedProfile = window.localStorage.getItem(
-        "hasCompletedProfile"
+        "hasCompletedProfile",
       );
       if (JSON.parse(hasCompletedProfile)) {
         history.push(routes.app.listProduct.default);
@@ -515,10 +516,11 @@ useEffect(() => {
   }, [isOpen]);
 
   return (
-    <div className="w-full fixed top-0 z-50 bg-white/90 backdrop-blur-md">
+    <div className="w-full fixed top-0 z-50 bg-primary backdrop-blur-md">
       <div
-        className={`md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full ${lang === "en" ? "pr-3" : "pl-3"
-          } md:px-4 lg:px-5`}
+        className={`md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full ${
+          lang === "en" ? "pr-3" : "pl-3"
+        } md:px-4 lg:px-5`}
       >
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
@@ -532,24 +534,24 @@ useEffect(() => {
         <div className="flex items-center space-x-3 md:hidden">
           <BiMenu
             onClick={() => SetSid(true)}
-            className="text-primary cursor-pointer"
+            className="text-primary-veryLight cursor-pointer"
             size={30}
           />
 
           <RiHome2Line
             onClick={() => {
               history.push(
-                `${routes.app.home}?${getDefaultPaginationString()}`
+                `${routes.app.home}?${getDefaultPaginationString()}`,
               );
             }}
-            className="text-primary cursor-pointer"
+            className="text-primary-veryLight cursor-pointer"
             size={25}
           />
         </div>
         <div className="flex items-center justify-center flex-1 md:flex-none">
           <div className="flex justify-center items-center">
             {showIcon && (
-              <AllatreLogoIcon className="cursor-pointer w-[35px] block md:hidden text-primary" />
+              <AllatreLogoIcon className="cursor-pointer w-[35px] block md:hidden text-yellow" />
             )}
             {showLogo && (
               <AllatreLogo
@@ -557,16 +559,16 @@ useEffect(() => {
                   opacity: showLogo ? 1 : 0,
                   transition: "opacity 0.5s ease-in-out",
                 }}
-                className="cursor-pointer w-[100px] block md:hidden text-primary"
+                className="cursor-pointer w-[100px] block md:hidden text-yellow"
                 onClick={() =>
                   history.push(
-                    `${routes.app.home}?${getDefaultPaginationString()}`
+                    `${routes.app.home}?${getDefaultPaginationString()}`,
                   )
                 }
               />
             )}
           </div>
-          <div className="md:flex hidden lg:gap-x-12 gap-x-8 my-auto justify-center items-center">
+          <div className="md:flex hidden lg:gap-x-12 gap-x-8 my-auto justify-center items-center ">
             {[
               {
                 key: localizationKeys.home,
@@ -636,7 +638,7 @@ useEffect(() => {
               />
             </div>
             <div className="my-auto ">
-              <DropdownLang className="Edit_Lang_Dropdown text-black bg-white/90 hover:bg-white px-4 py-2.5 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600 w-[120px] h-[48px] flex items-center justify-center " />
+              <DropdownLang className="Edit_Lang_Dropdown text-black bg-primary hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] flex items-center justify-center " />
             </div>
             <div
               className="relative inline-block text-left"
@@ -645,23 +647,30 @@ useEffect(() => {
               <div>
                 <button
                   type="button"
-                  className={` w-[120px] h-[48px] hidden sm:inline-flex bg-primary hover:bg-primary-dark text-white font-bold rounded-lg px-4 transition-all duration-200 ease-in-out shadow-md transform hover:scale-105 ${lang === "ar" ? "-mr-7" : "-ml-7"
-                    } ltr:font-serifEN rtl:font-serifAR items-center justify-center`}
+                  className={`w-[120px] h-[48px] hidden sm:inline-flex flex-row items-center justify-center gap-2 whitespace-nowrap
+                   bg-yellow hover:bg-yellow-dark text-black font-bold rounded-lg px-4
+                   transition-all duration-200 ease-in-out shadow-md transform hover:scale-105
+                   ${lang === "ar" ? "-mr-7" : "-ml-7"}
+                   ltr:font-serifEN rtl:font-serifAR`}
                   id="menu-button"
                   aria-expanded={isDropdownOpen ? "true" : "false"}
                   aria-haspopup="true"
                   onClick={toggleDropdown}
                 >
-                  <FaPlus className="mr-1 ml-1 text-md" />
-                  {selectedContent[localizationKeys.sell]}
+                  <FaPlus className="text-md" />
+                  <span className="text-lg">
+                    {selectedContent[localizationKeys.sell]}
+                  </span>
                 </button>
               </div>
 
               {isDropdownOpen && (
                 <div
-                  className={`absolute  ${lang === "ar" ? "left-0 -translate-x-7" : "right-0"
-                    } z-10 mt-1 w-56 origin-top-${lang === "ar" ? "left" : "right"
-                    } rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100`}
+                  className={`absolute  ${
+                    lang === "ar" ? "left-0 -translate-x-7" : "right-0"
+                  } z-10 mt-1 w-56 origin-top-${
+                    lang === "ar" ? "left" : "right"
+                  } rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100`}
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
@@ -698,7 +707,7 @@ useEffect(() => {
                 <div className="relative">
                   <MdOutlineNotifications
                     size={25}
-                    className="text-primary cursor-pointer"
+                    className="text-primary-veryLight cursor-pointer"
                     style={{ marginTop: "4px" }}
                   />
                   {notificationCount > 0 && (
@@ -715,7 +724,7 @@ useEffect(() => {
               onClick={handleNotificationClick}
             />
             <CgProfile
-              className="text-primary cursor-pointer"
+              className="text-primary-veryLight cursor-pointer"
               size={25}
               onClick={() => {
                 handelMyPfofile();
@@ -724,16 +733,16 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <div className={` ${searchShow ? "h-[60px]" : ""} bg-white`}>
+      <div className={` ${searchShow ? "h-[60px]" : ""} bg-primary`}>
         <div className="pb-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-5">
           {currentPath.includes("/alletre/categories") && (
             <button
               onClick={onFilterClick}
-              className="md:hidden text-primary rounded-full flex items-center justify-center"
+              className="md:hidden text-primary-light rounded-full flex items-center justify-center"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 xs:h-6 xs:w-6 text-primary"
+                className="h-5 w-5 xs:h-6 xs:w-6 text-primary-veryLight"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -747,16 +756,20 @@ useEffect(() => {
               </svg>
             </button>
           )}
-          <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%]">
+          <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%] border border-primary-light rounded-md overflow-hidden bg-primary-dark">
             <Input
-              className="flex-1 border border-secondary rounded-md h-[48px] edit-search-Input 
+              className="flex-1  h-[48px] edit-search-Input 
                ltr:font-serifEN rtl:font-serifAR 
                w-full pr-10"
-              placeholder={selectedContent[localizationKeys.search]}
+              placeholder={
+                selectedContent[
+                  localizationKeys.SearchForLuxuryItemsWatchesRealEstate
+                ]
+              }
               value={searchValue}
               onChange={(e, { value }) => setSearchValue(value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && searchValue.trim()) {
+                if (e.key === "Enter" && searchValue.trim()) {
                   debounced(searchValue);
                 }
               }}
@@ -767,16 +780,16 @@ useEffect(() => {
                   debounced(searchValue);
                 }
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-primary-light hover:text-white transition-colors"
             >
-              <FaSearch className="cursor-pointer text-primary hover:text-primary-dark" size={18} />
+              <FaSearch className="cursor-pointer" size={18} />
             </button>
           </div>
 
           {currentPath.includes("/alletre/categories") && (
             <div className="relative" ref={typeDropdownRef}>
               <button
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg 
+                className="bg-primary-lightDark hover:bg-primary-dark text-white rounded-lg 
              w-[90px] h-[48px] sm:w-[110px] sm:h-[48px] md:w-[160px] xs:h-[48px]
              flex items-center justify-between px-4 py-2 text-md font-medium 
              transition-all duration-300 shadow-md"
@@ -785,8 +798,9 @@ useEffect(() => {
                 <span className="flex-1 text-center ">{selectedOption}</span>
 
                 <span
-                  className={`transform transition-transform duration-300 ${isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
-                    }`}
+                  className={`transform transition-transform duration-300 ${
+                    isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
+                  }`}
                 >
                   <RiArrowDownSFill size={20} />
                 </span>
@@ -797,11 +811,12 @@ useEffect(() => {
                   <ul className="py-2">
                     <li>
                       <button
-                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${selectedOption ===
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
+                          selectedOption ===
                           selectedContent[localizationKeys.viewAuction]
-                          ? "bg-gray-med"
-                          : ""
-                          }`}
+                            ? "bg-gray-med"
+                            : ""
+                        }`}
                         onClick={() => handleTypeChange("auction")}
                       >
                         {selectedContent[localizationKeys.viewAuction]}
@@ -809,11 +824,12 @@ useEffect(() => {
                     </li>
                     <li>
                       <button
-                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${selectedOption ===
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
+                          selectedOption ===
                           selectedContent[localizationKeys.viewProducts]
-                          ? "bg-gray-med"
-                          : ""
-                          }`}
+                            ? "bg-gray-med"
+                            : ""
+                        }`}
                         onClick={() => handleTypeChange("products")}
                       >
                         {selectedContent[localizationKeys.viewProducts]}
@@ -821,11 +837,12 @@ useEffect(() => {
                     </li>
                     <li>
                       <button
-                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${selectedOption ===
+                        className={`block w-full text-left px-4 py-2 hover:bg-gray-veryLight ${
+                          selectedOption ===
                           selectedContent[localizationKeys.viewAll]
-                          ? "bg-gray-med"
-                          : ""
-                          }`}
+                            ? "bg-gray-med"
+                            : ""
+                        }`}
                         onClick={() => handleTypeChange("all")}
                       >
                         {selectedContent[localizationKeys.viewAll]}
@@ -839,19 +856,18 @@ useEffect(() => {
           {currentPath === routes.app.home && (
             <div className="relative" ref={typeDropdownRef}>
               <button
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg 
+                className="bg-primary-lightDark hover:bg-primary-dark text-white rounded-lg 
              w-[90px] h-[48px] sm:w-[110px] sm:h-[48px] md:w-[160px] xs:h-[48px]
-             flex items-center justify-between px-4 py-2 text-md font-medium 
+             flex items-center justify-between px-4 py-2 text-lg font-medium 
              transition-all duration-300 shadow-md"
                 onClick={handleTypeDropdownClick}
               >
-                <span className="flex-1 text-center text-sm sm:text-base">
-                  {selectedContent[localizationKeys.categories]}
-                </span>
-
+                <TbLayoutGrid className="w-4 h-4 md:w-5 md:h-5" />
+                <span>{selectedContent[localizationKeys.categories]}</span>
                 <span
-                  className={`transform transition-transform duration-300 ${isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
-                    }`}
+                  className={`transform transition-transform duration-300 ${
+                    isOpen ? "rotate-[180deg]" : "rotate-[360deg]"
+                  }`}
                 >
                   <RiArrowDownSFill size={20} />
                 </span>
@@ -859,9 +875,11 @@ useEffect(() => {
 
               {isOpen && (
                 <div
-                  className={`absolute ${lang === "ar" ? "-right-44" : "-left-44"
-                    } mt-2 w-[240px] xs:w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md border rounded-lg shadow-lg z-50 p-2 xs:p-3 transition-all duration-300 ease-out origin-top ${isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                    }`}
+                  className={`absolute ${
+                    lang === "ar" ? "-right-44" : "-left-44"
+                  } mt-2 w-[240px] xs:w-[280px] sm:w-[320px] bg-white/90 backdrop-blur-md border rounded-lg shadow-lg z-50 p-2 xs:p-3 transition-all duration-300 ease-out origin-top ${
+                    isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                  }`}
                 >
                   <div className="grid grid-cols-2 gap-2 xs:gap-3 max-h-[calc(3*84px+62px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
                     {GatogryOptions?.map((e, index) => (
@@ -873,8 +891,8 @@ useEffect(() => {
                             history.push(
                               `${routes.app.categories(
                                 e.text,
-                                e.value
-                              )}?categories[]=${e.value}`
+                                e.value,
+                              )}?categories[]=${e.value}`,
                             );
                           } else {
                             dispatch(Open());
@@ -902,28 +920,28 @@ useEffect(() => {
               )}
             </div>
           )}
-          <DropdownLang className="text-black md:hidden bg-white/90 hover:bg-white px-3 py-2 rounded-lg transition-all duration-300 border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-600" />
+          <DropdownLang className="text-black md:hidden bg-primary hover:bg-yellow-200/10 px-3 py-2 rounded-lg transition-all duration-300 border border-primary-light hover:border-yellow shadow-sm hover:shadow-md" />
 
           {/* <PopupCategoriesModel
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             onClose={handleClose}
           /> */}
-          <div className="md:flex hidden gap-x-4">
+          <div className="md:flex hidden gap-x-4 ">
             {user ? (
               <>
                 <button
                   onClick={handelRegister}
-                  className="w-[120px] h-[48px] border-[1px] border-secondary text-secondary rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
+                  className=" w-[120px] h-[48px] border-[1px] border-primary-light text-white hover:bg-primary-light hover:text-white  rounded-lg flex justify-center gap-x-1 py-3  font-normal"
                 >
-                  <FaUser size={15} className="mt-1" />
-                  <p className="pt-1">
+                  <FaRegUser size={15} className="mt-1" />
+                  <p className="pt-1 ">
                     {selectedContent[localizationKeys.profile]}
                   </p>
                 </button>
                 <div
                   onClick={() => setLogoutModalOpen(true)}
-                  className="group w-[120px] h-[48px] border-[1px] border-primary text-red-600 hover:bg-primary hover:text-white rounded-lg flex items-center justify-center gap-x-1 py-3 text-base font-normal transition-all duration-300 cursor-pointer"
+                  className="group w-[120px] h-[48px] border-[1px] border-primary-light text-red-600 hover:bg-primary-light hover:text-white rounded-lg flex items-center justify-center gap-x-1 py-3 text-base font-normal transition-all duration-300 cursor-pointer"
                 >
                   <MdLogout className="text-xl" />
                   <span> {selectedContent[localizationKeys.logout]}</span>
@@ -937,9 +955,9 @@ useEffect(() => {
             ) : (
               <button
                 onClick={handelRegister}
-                className="w-[120px] h-[48px] border-[1px] border-secondary text-secondary rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
+                className="w-[120px] h-[48px] border-[1px] border-primary-light text-white hover:bg-primary-light hover:text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
               >
-                <FaUser size={15} className="mt-1" />
+                <FaRegUser size={15} className="mt-1" />
                 <p className="pt-1">
                   {selectedContent[localizationKeys.loginOrRegister]}
                 </p>

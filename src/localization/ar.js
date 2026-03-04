@@ -60,6 +60,7 @@ const ar = {
   // home
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",
+  [localizationKeys.SearchForLuxuryItemsWatchesRealEstate]:"ابحث عن السلع الفاخرة، الساعات، العقارات...",
   [localizationKeys.changeStatus]: "تغيير الحالة",
   [localizationKeys.convertToAuction]: "تحويل إلى المزاد",
   [localizationKeys.viewContactDetails]: " عرض تفاصيل الاتصال",

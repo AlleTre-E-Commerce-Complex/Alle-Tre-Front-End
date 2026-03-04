@@ -59,6 +59,7 @@ const en = {
   // home
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
+  [localizationKeys.SearchForLuxuryItemsWatchesRealEstate]:"Search for luxury items, watches, real estate...",
   [localizationKeys.changeStatus]: "Change status",
   [localizationKeys.convertToAuction]: "Convert to auction",
   [localizationKeys.viewContactDetails]: " View contact details",
@@ -73,10 +74,10 @@ const en = {
   [localizationKeys.unsubscribedSuccessfully]:
     "You have been successfully unsubscribed.",
   [localizationKeys.unsubscriptionFailed]: "Unsubscribe failed.",
-  [localizationKeys.myBids]: "My Bids",
-  [localizationKeys.myProducts]: "My Products",
+  [localizationKeys.myBids]: "MY BIDS",
+  [localizationKeys.myProducts]: "MY PRODUCTS",
   [localizationKeys.categories]: "Categories",
-  [localizationKeys.watchlist]: "Watchlist",
+  [localizationKeys.watchlist]: "WATCHLIST",
   [localizationKeys.faqs]: "FAQs",
   [localizationKeys.support]: "Support",
   [localizationKeys.arabic]: "عربي",
@@ -169,7 +170,7 @@ const en = {
   [localizationKeys.termsAndCondition]: "Terms and Condition",
   [localizationKeys.iAcceptThe]: "I accept the",
   [localizationKeys.close]: "Close",
-  [localizationKeys.sell]: "Sell",
+  [localizationKeys.sell]: "SELL",
   [localizationKeys.timing]: "Timing",
   [localizationKeys.selectTheDeliveryType]: "Select the delivery type",
   [localizationKeys.sellerAddress]: "Seller address",
@@ -213,12 +214,12 @@ const en = {
   [localizationKeys.expired]: "Expired",
   [localizationKeys.inProgress]: "In Progress",
   // Breadcrumb
-  [localizationKeys.home]: "Home",
+  [localizationKeys.home]: "HOME",
   [localizationKeys.productDetails]: "Product Details",
   [localizationKeys.auctionDetails]: "Auction Details",
   [localizationKeys.shippingDetails]: "Shipping Details",
   [localizationKeys.paymentDetails]: "Payment Details",
-  [localizationKeys.myAuctions]: "My Auctions",
+  [localizationKeys.myAuctions]: "MY AUCTIONS",
   [localizationKeys.activeAuctions]: "Active Auctions",
   [localizationKeys.scheduledAuctions]: "Scheduled Auctions",
   [localizationKeys.soldAuctions]: "Sold Auctions",
@@ -607,7 +608,7 @@ const en = {
   [localizationKeys.ThankYouForYourSubmission]:
     "Thank you for your submission..!",
   //  Purchased
-  [localizationKeys.Purchased]: "Purchases",
+  [localizationKeys.Purchased]: "PURCHASES",
   [localizationKeys.yourPurchased]: "Your purchases",
   [localizationKeys.ThereAreNoPurchasedYet]: "There are no purchases yet",
 
@@ -685,8 +686,8 @@ const en = {
   [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
     "Make sure that you choose the auction location or create another one",
   //wallet
-  [localizationKeys.Wallet]: "Wallet",
-  [localizationKeys.notifications]: "Notifications",
+  [localizationKeys.Wallet]: "WALLET",
+  [localizationKeys.notifications]: "NOTIFICATIONS",
   [localizationKeys.ThereAreNoTransactionYet]:
     "There are no transactions yet..!",
   [localizationKeys.ThereAreNoNotificationsYet]:
