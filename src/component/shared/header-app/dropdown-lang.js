@@ -18,9 +18,9 @@ const DropdownLang = ({ className }) => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -30,13 +30,11 @@ const DropdownLang = ({ className }) => {
     <div
       dir="ltr"
       ref={dropdownRef}
-      className={`relative flex items-center justify-center ${className}`}
+      className={`relative flex items-center justify-center ${className}  `}
       onClick={toggleDropdown}
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: "pointer" }}
     >
-      <div
-        className="flex items-center justify-center"
-      >
+      <div className="flex items-center justify-center ">
         <img
           src={lang === "en" ? En : Ar}
           alt={lang === "en" ? "English" : "Arabic"}
@@ -57,7 +55,7 @@ const DropdownLang = ({ className }) => {
 
       {isOpen && (
         <div
-          className="absolute bg-white border border-gray-300 rounded-md shadow-lg mt-1 z-10 
+          className="absolute bg-primary border border-primary-light hover:border-yellow rounded-md shadow-lg mt-1 z-10 
                    right-0 sm:left-0 sm:right-auto w-32 lg:w-40"
           style={{
             [lang === "ar" ? "left" : "right"]: "auto",
@@ -65,7 +63,7 @@ const DropdownLang = ({ className }) => {
           }}
         >
           <div
-            className="flex items-center p-2 hover:bg-gray-200 cursor-pointer"
+            className="flex items-center p-2 hover:bg-yellow-200/50 cursor-pointer"
             onClick={() => {
               setLang("en");
               setIsOpen(false);
@@ -81,7 +79,7 @@ const DropdownLang = ({ className }) => {
             <span>{selectedContent[localizationKeys.english]}</span>
           </div>
           <div
-            className="flex items-center p-2 hover:bg-gray-200 cursor-pointer"
+            className="flex items-center p-2 hover:bg-yellow-200/50 cursor-pointer"
             onClick={() => {
               setLang("ar");
               setIsOpen(false);

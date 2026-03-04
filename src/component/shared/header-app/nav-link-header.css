@@ -6,18 +6,16 @@
 .hover-underline-animation {
   display: inline-block;
   position: relative;
-  color: #707070;
   cursor: pointer;
 }
 .active-underline-animation {
   display: inline-block;
   position: relative;
-  color: #707070;
   cursor: pointer;
   
 }
 
-.hover-underline-animation:after {
+/* .hover-underline-animation:after {
   content: '';
   position: absolute;
   width: 100%;
@@ -25,10 +23,10 @@
   height: 2px;
   bottom: -4px;
   left: 0;
-  background-color: #821A4D;
+  background-color: #9CA3AF;
   transform-origin: bottom left;
   transition: transform 0.25s ease-out;
-}
+} */
 
 .hover-underline-animation:hover:after {
   transform: scaleX(1);
@@ -43,7 +41,7 @@
   height: 2px;
   bottom: -4px;
   left: 0;
-  background-color: #821A4D;
+  background-color: #fbae4c;
   transform-origin: bottom left;
   transition: transform 0.25s ease-out;
 }
