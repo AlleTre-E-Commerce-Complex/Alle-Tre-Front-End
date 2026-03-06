@@ -58,6 +58,10 @@ const ar = {
   [localizationKeys.draftSavedSuccessfully]: "تم حفظ المسودة بنجاح",
   [localizationKeys.productUpdatedSuccessfully]: "تم تحديث المنتج بنجاح",
   // home
+  [localizationKeys.joinToday]:"انضم اليوم",
+  [localizationKeys.beginYourCollectionJourney]:"ابدأ رحلتك في عالم المقتنيات",
+  [localizationKeys.joinThousandsDiscerning]:"انضم إلى آلاف المقتنين الذين يثقون في 3arbon لاقتناء القطع الاستثنائية من جميع أنحاء العالم.",
+   [localizationKeys.createFreeAccount]:"أنشئ حسابًا مجانيًا",
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",
   [localizationKeys.SearchForLuxuryItemsWatchesRealEstate]:"ابحث عن السلع الفاخرة، الساعات، العقارات...",
@@ -291,7 +295,7 @@ const ar = {
   [localizationKeys.wirteYourAddress]: "اكتب عنوانك",
   [localizationKeys.exHome]: "مثال:  المنزل",
   [localizationKeys.enterPostalZipCode]: "أدخل الرمز البريدي",
-  [localizationKeys.building]: "أبراج جلفار، مكتب رقم 504,",
+  [localizationKeys.building]: "ريجس، الطابق 42، برج جلفار",
   [localizationKeys.place]: "رأس الخيمة,",
   [localizationKeys.uae]: "الإمارات العربية المتحدة",
   // product details

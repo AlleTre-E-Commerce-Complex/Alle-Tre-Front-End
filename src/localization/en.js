@@ -57,6 +57,10 @@ const en = {
   [localizationKeys.draftSavedSuccessfully]:"Draft saved successfully",
   [localizationKeys.productUpdatedSuccessfully]:"Product updated successfully",
   // home
+  [localizationKeys.joinToday]:"Join Today",
+  [localizationKeys.beginYourCollectionJourney]:"Begin Your Collection Journey",
+  [localizationKeys.joinThousandsDiscerning]:"Join thousands of discerning collectors who trust 3arbon for acquiring extraordinary pieces from around the world.",
+  [localizationKeys.createFreeAccount]:"Create Free Account",
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
   [localizationKeys.SearchForLuxuryItemsWatchesRealEstate]:"Search for luxury items, watches, real estate...",
@@ -295,7 +299,7 @@ const en = {
   [localizationKeys.wirteYourAddress]: "Wirte your address",
   [localizationKeys.exHome]: "ex: Home",
   [localizationKeys.enterPostalZipCode]: "Enter postal/Zip code",
-  [localizationKeys.building]: "  Julphar Tower, Office Number: 504,",
+  [localizationKeys.building]: "Regus, Level 42, Julphar Tower",
   [localizationKeys.place]: "Ras Al Khaimah,",
   [localizationKeys.uae]: "United Arab Emirates",
   // product details
