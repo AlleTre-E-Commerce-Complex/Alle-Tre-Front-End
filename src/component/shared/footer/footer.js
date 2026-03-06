@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import footerImg from "../../../../src/assets/images/footerImg2.jpg";
-import footerImgAr from "../../../../src/assets/images/footerImgAr2.jpg";
-import footerMob from "../../../../src/assets/images/footerMob.jpg";
-import footerMobAr from "../../../../src/assets/images/footerMobAr.jpg";
-import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/allatre-logo-white.svg";
-import { FaInstagram, FaFacebookF, FaYoutube, FaTiktok, FaSnapchatGhost, FaWhatsapp,  FaTelegramPlane, FaFileAlt } from "react-icons/fa";
+import footerImg from "../../../../src/assets/images/subscribeImg.png";
+import footerImgAr from "../../../../src/assets/images/subscribeImgMobAr.png";
+import footerMob from "../../../../src/assets/images/subscribeImgMob.png";
+import footerMobAr from "../../../../src/assets/images/subscribeImgMobAr.png";
+import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/3arbon-footer.svg";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaYoutube,
+  FaTiktok,
+  FaSnapchatGhost,
+  FaWhatsapp,
+  FaTelegramPlane,
+  FaFileAlt,
+} from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
@@ -43,7 +52,7 @@ const Footer = () => {
         if (res.data.success) {
           setEmail("");
           toast.success(
-            selectedContent[localizationKeys.subscribedSuccessfully]
+            selectedContent[localizationKeys.subscribedSuccessfully],
           );
         }
       })
@@ -59,7 +68,7 @@ const Footer = () => {
   if (!pathname.startsWith(routes.app.home)) return null;
 
   return (
-    <div className="mt-10">
+    <div className="bg-white dark:bg-primary transition-colors duration-300">
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoadingrunNewSubscriber}
@@ -69,37 +78,50 @@ const Footer = () => {
         <LodingTestAllatre />
       </Dimmer>
       {/* Banner Section */}
-      <div className="relative">
+      <div className="relative px-2 sm:px-4 md:px-8 lg:px-12 pt-4 pb-8">
         <img
-          className="w-full h-[209px] object-fill"
-          src={lang === "en" ? (isMobile ? footerMob : footerImg) : (isMobile ? footerMobAr : footerImgAr)}
+          className="w-full h-auto object-cover rounded-[27px] md:rounded-[45px] lg:rounded-[50px] shadow-lg"
+          src={
+            lang === "en"
+              ? isMobile
+                ? footerMob
+                : footerImg
+              : isMobile
+                ? footerMobAr
+                : footerImgAr
+          }
           alt="Footer Banner"
         />
-        <div className="absolute flex gap-5 bottom-5 right-4 lg:bottom-20 lg:ltr:right-24">
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="sm:w-[300px] w-[200px] md:h-[48px] h-[38px] rounded-lg px-4 bg-white border rounded-lg shadow-xl"
-            placeholder={selectedContent[localizationKeys.writeYourMail]}
-          />
-          <button
-            onClick={HandleSubscribe}
-            className="bg-primary hover:bg-primary-dark rounded-lg w-[136px] md:h-[48px] h-[38px] text-white"
-          >
-            {selectedContent[localizationKeys.subscribe]}
-          </button>
+        <div className="absolute flex flex-col items-center sm:items-start gap-1 sm:gap-2 top-[75%] sm:top-[80%] left-1/2 sm:left-[60%] md:left-[65%] lg:left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-auto z-10">
+          <div className="flex w-full shadow-xl sm:shadow-2xl border-[2px] sm:border-[3px] border-white">
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 min-w-0 sm:w-[350px] md:h-[54px] h-[36px] sm:h-[44px] px-2 sm:px-6 bg-[#39485C] text-white placeholder-[#8B9BB4] focus:outline-none uppercase tracking-widest text-[9px] sm:text-xs md:text-sm border-none"
+              placeholder={
+                selectedContent[localizationKeys.writeYourMail] ||
+                "YOUR EMAIL ADDRESS"
+              }
+            />
+            <button
+              onClick={HandleSubscribe}
+              className="bg-[#d4af37] hover:bg-[#c29f2f] shrink-0 w-[90px] sm:w-[130px] md:w-[160px] md:h-[54px] h-[36px] sm:h-[44px] text-primary-dark font-bold uppercase tracking-[0.05em] sm:tracking-widest text-[9px] sm:text-xs md:text-sm transition-colors duration-300"
+            >
+              {selectedContent[localizationKeys.subscribe]}
+            </button>
+          </div>
+        
         </div>
       </div>
 
       {/* Footer Content Section */}
-      <div className="bg-gradient-to-t from-[#681224] to-secondary opacity-95 h-[200] overflow-hidden">
+      <div className="bg-primary-dark min-h-[200px] overflow-hidden mt-12 md:mt-4">
         <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[30px] md:pt-[60px]">
-
           <AllatreLogoWhite />
           <div className="flex gap-x-20 mt-5 md:mt-0 ml-auto">
             {/* Address Section */}
             <div>
-              <h1 className="text-white font-bold text-base">
+              <h1 className="text-yellow font-bold text-base">
                 {selectedContent[localizationKeys.address]}
               </h1>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
@@ -113,14 +135,14 @@ const Footer = () => {
 
             {/* Contact Section */}
             <div>
-              <h1 className="text-white font-bold text-base">
+              <h1 className="text-yellow font-bold text-base">
                 {selectedContent[localizationKeys.contactUs]}
               </h1>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.eMail]}: info@alletre.com
+                {selectedContent[localizationKeys.eMail]}: info3arbon@gmail.com
               </p>
               <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.phoneNumber]}: +971 72663004
+                {selectedContent[localizationKeys.phoneNumber]}: +971 0501400414
               </p>
               <div className="mt-4">
                 <a
@@ -130,7 +152,9 @@ const Footer = () => {
                   className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/30  text-white px-3 py-1.5 rounded transition-all duration-300 group"
                 >
                   <FaFileAlt className="text-sm" />
-                  <span className="text-sm">{selectedContent[localizationKeys.companyProfile]}</span>
+                  <span className="text-sm">
+                    {selectedContent[localizationKeys.companyProfile]}
+                  </span>
                   <span className="text-[10px] px-1.5 py-0.5 bg-black/50 rounded">
                     PDF
                   </span>
@@ -144,10 +168,10 @@ const Footer = () => {
         <div className="relative rtl:left-[10px] h-[100px]">
           <div className="relative h-[100px]">
             <div className="absolute inset-0 flex items-center">
-              <hr className="w-full border-t border-white" />
+              <hr className="w-full border-t border-primary-light" />
             </div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-              <div className="flex flex-row-reverse rtl:flex-row rounded-lg gap-x-4 sm:gap-x-8 bg-gradient-to-t from-[#3c0b11] to-[#1a090a] p-4 opacity-97">
+              <div className="flex flex-row-reverse rtl:flex-row rounded-lg gap-x-4 sm:gap-x-8 bg-primary-dark p-4 opacity-97">
                 {[
                   {
                     icon: FaFacebookF,
@@ -181,7 +205,7 @@ const Footer = () => {
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="cursor-pointer text-gray-500 hover:text-white"
+                    className="cursor-pointer text-primary-light hover:text-white"
                   >
                     <Icon size={25} />
                   </a>
@@ -190,7 +214,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="h-[10x] text-gray-med/50 flex justify-center items-center space-x-2 ">
+        <div className="h-[10x] text-white flex justify-center items-center space-x-2 ">
           <TermsAndConditions isFooter={true} />
           <span className=" mt-6">|</span>
           <PrivacyPolicy isFooter={true} />

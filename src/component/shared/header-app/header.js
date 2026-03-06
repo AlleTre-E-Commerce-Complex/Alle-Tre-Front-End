@@ -226,23 +226,23 @@ const Header = ({
   // }, [socket, user?.id]);
 
   // Header or notification hook (simplified)
-useEffect(() => {
-  if (!socket || !user) return;
-  // handler receives notifications that are intended for this user
-  const handleNotification = (data) => {
-    // data is already for this user (server-targeted)
-    setNotificationCount(prev => prev + 1);
-    // optionally push into notifications list UI
-  };
+  useEffect(() => {
+    if (!socket || !user) return;
+    // handler receives notifications that are intended for this user
+    const handleNotification = (data) => {
+      // data is already for this user (server-targeted)
+      setNotificationCount((prev) => prev + 1);
+      // optionally push into notifications list UI
+    };
 
-  socket.on('notification', handleNotification);
-  getNotificationCount();
+    socket.on("notification", handleNotification);
+    getNotificationCount();
 
-  return () => {
-    socket.off('notification', handleNotification);
-    socket.off('notification.bulk');
-  };
-}, [socket, user ,user?.id]);
+    return () => {
+      socket.off("notification", handleNotification);
+      socket.off("notification.bulk");
+    };
+  }, [socket, user, user?.id]);
 
   const location = useLocation();
   const currentPath = location.pathname;
@@ -516,7 +516,7 @@ useEffect(() => {
   }, [isOpen]);
 
   return (
-    <div className="w-full fixed top-0 z-50 bg-primary backdrop-blur-md">
+    <div className="w-full fixed top-0 z-50 bg-primary dark:bg-primary backdrop-blur-md">
       <div
         className={`md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full ${
           lang === "en" ? "pr-3" : "pl-3"
@@ -575,36 +575,36 @@ useEffect(() => {
                 path: routes.app.home,
                 handler: handelHome,
               },
-              {
-                key: localizationKeys.myAuctions,
-                path: routes.app.profile.myAuctions.default,
-                handler: handelmyAuctions,
-              },
-              {
-                key: localizationKeys.myBids,
-                path: routes.app.profile.myBids.default,
-                handler: handelmyBids,
-              },
+              // {
+              //   key: localizationKeys.myAuctions,
+              //   path: routes.app.profile.myAuctions.default,
+              //   handler: handelmyAuctions,
+              // },
+              // {
+              //   key: localizationKeys.myBids,
+              //   path: routes.app.profile.myBids.default,
+              //   handler: handelmyBids,
+              // },
               {
                 key: localizationKeys.myProducts,
                 path: routes.app.profile.myProducts.default,
                 handler: handelmyProducts,
               },
-              {
-                key: localizationKeys.watchlist,
-                path: routes.app.profile.watchlist,
-                handler: handelWatchlist,
-              },
+              // {
+              //   key: localizationKeys.watchlist,
+              //   path: routes.app.profile.watchlist,
+              //   handler: handelWatchlist,
+              // },
               {
                 key: localizationKeys.Purchased,
                 path: routes.app.profile.purchased,
                 handler: handelPurchased,
               },
-              {
-                key: localizationKeys.Wallet,
-                path: routes.app.profile.wallet,
-                handler: handelWallet,
-              },
+              // {
+              //   key: localizationKeys.Wallet,
+              //   path: routes.app.profile.wallet,
+              //   handler: handelWallet,
+              // },
               {
                 key: localizationKeys.faqs,
                 path: routes.app.faqs,
@@ -666,30 +666,27 @@ useEffect(() => {
 
               {isDropdownOpen && (
                 <div
-                  className={`absolute  ${
+                  className={`absolute ${
                     lang === "ar" ? "left-0 -translate-x-7" : "right-0"
-                  } z-10 mt-1 w-56 origin-top-${
+                  } z-10 mt-2 w-56 origin-top-${
                     lang === "ar" ? "left" : "right"
-                  } rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out opacity-100`}
+                  } rounded-xl bg-gradient-to-b from-white/90 to-white/40 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/50 ring-1 ring-black/5 focus:outline-none transform transition-all duration-200 ease-in-out`}
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
                   tabIndex="-1"
                 >
-                  <div
-                    className=" bg-white border rounded-lg shadow-lg py-2"
-                    role="none"
-                  >
-                    <div className="my-auto space-y-3 px-4 py-2">
-                      <button
+                  <div className="py-4 px-4" role="none">
+                    <div className="my-auto space-y-3">
+                      {/* <button
                         onClick={handleOnSell}
-                        className="w-full bg-primary hover:bg-primary-dark text-white font-medium rounded-lg h-[48px] transition-all duration-200 ease-in-out transform hover:scale-105 shadow-sm hover:shadow-md"
+                        className="w-full bg-gradient-to-b from-[#eac566] to-[#d4af37] hover:from-[#f0d488] hover:to-[#e0b942] text-primary font-bold text-base rounded-xl h-[48px] transition-all duration-200 ease-in-out transform hover:scale-105 shadow-md hover:shadow-lg border border-[#e8c872]/50"
                       >
                         {selectedContent[localizationKeys.createAuction]}
-                      </button>
+                      </button> */}
                       <button
                         onClick={handleListProduct}
-                        className="w-full bg-primary hover:bg-primary-dark text-white font-medium rounded-lg h-[48px] transition-all duration-200 ease-in-out transform hover:scale-105 shadow-sm hover:shadow-md"
+                        className="w-full bg-gradient-to-b from-[#eac566] to-[#d4af37] hover:from-[#f0d488] hover:to-[#e0b942] text-primary font-bold text-base rounded-xl h-[48px] transition-all duration-200 ease-in-out transform hover:scale-105 shadow-md hover:shadow-lg border border-[#e8c872]/50"
                       >
                         {selectedContent[localizationKeys.listProduct]}
                       </button>

@@ -1,6 +1,6 @@
 import React from "react";
-import sideBannerImg from "../../assets/images/sideBannerImg.png";
-import sideBannerAr from "../../assets/images/sideBannerAr.jpg";
+import sideBannerImg from "../../assets/images/arbonSideBanner.png";
+import sideBannerAr from "../../assets/images/arbonSideBannerAr.png";
 import { useLanguage } from "../../context/language-context";
 
 const SideBanner = () => {

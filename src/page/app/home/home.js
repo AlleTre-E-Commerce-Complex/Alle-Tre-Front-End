@@ -15,7 +15,8 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
-import BannerTop from "component/home-components/BannerTop";
+// import BannerTop from "component/home-components/BannerTop";
+import BannerTopNew from "component/home-components/Banner-top-new";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 import { welcomeBonus } from "redux-store/welcom-bonus-slice";
 // import { useSocket } from "context/socket-context";
@@ -40,7 +41,7 @@ const Home = ({
   const { user } = useAuthState();
   const dispatch = useDispatch();
   const isWelcomeBonus = useSelector(
-    (state) => state.welcomeBonus.welcomeBonus
+    (state) => state.welcomeBonus.welcomeBonus,
   );
   // const [isGrid, setIsGrid] = useState(() => {
   //   return JSON.parse(localStorage.getItem("isGrid")) ?? true;
@@ -93,10 +94,10 @@ const Home = ({
 
   const [openWelcomeBonusModal, setOpenWelcomeBonusModal] = useState(false);
   const { run: runMainAuctions, isLoading: isLoadingMainAuctions } = useAxios(
-    []
+    [],
   );
   const { run: runListedProduct, isLoading: isLoadingListedProduct } = useAxios(
-    []
+    [],
   );
   // const {
   //   run: runSponsoredAuctions,
@@ -137,12 +138,12 @@ const Home = ({
       const filteredAuctions = auctionsResponse.data.data.filter(
         (auction) =>
           !searchTerm ||
-          auction?.product?.title?.toLowerCase().includes(searchTerm)
+          auction?.product?.title?.toLowerCase().includes(searchTerm),
       );
       const filteredProducts = productsResponse.data.data.filter(
         (product) =>
           !searchTerm ||
-          product?.product?.title?.toLowerCase().includes(searchTerm)
+          product?.product?.title?.toLowerCase().includes(searchTerm),
       );
 
       setMainAuctions(filteredAuctions);
@@ -233,13 +234,13 @@ const Home = ({
           // Ensure we have valid arrays and validate each item
           const liveData = Array.isArray(liveRes?.data?.data)
             ? liveRes.data.data.filter(
-                (item) => item && typeof item === "object"
+                (item) => item && typeof item === "object",
               )
             : [];
 
           const upcomingData = Array.isArray(upcomingRes?.data?.data)
             ? upcomingRes.data.data.filter(
-                (item) => item && typeof item === "object"
+                (item) => item && typeof item === "object",
               )
             : [];
 
@@ -325,7 +326,7 @@ const Home = ({
           })
           .catch((error) => {
             console.log(error);
-          })
+          }),
       );
     } else {
       runListedProduct(
@@ -337,7 +338,7 @@ const Home = ({
           })
           .catch((error) => {
             console.log(error);
-          })
+          }),
       );
     }
   }, [search, user, history, runListedProduct]);
@@ -351,13 +352,13 @@ const Home = ({
 
     const handleAuctionCancelled = (data) => {
       setMainAuctions((prev) =>
-        prev.filter((auction) => auction.id !== data.auctionId)
+        prev.filter((auction) => auction.id !== data.auctionId),
       );
     };
 
     const handleBuyNowAuctionPurchase = (data) => {
       setMainAuctions((prev) =>
-        prev.filter((auction) => auction.id !== data.auctionId)
+        prev.filter((auction) => auction.id !== data.auctionId),
       );
     };
 
@@ -378,10 +379,10 @@ const Home = ({
                     Array.isArray(data.auction.bids) &&
                     data.auction.bids.length > 0
                       ? data.auction.bids[0].amount
-                      : auction.currentBid?.bidAmount ?? null,
+                      : (auction.currentBid?.bidAmount ?? null),
                 },
               }
-            : auction
+            : auction,
         );
         return updatedAuctions;
       });
@@ -409,7 +410,7 @@ const Home = ({
 
   return (
     <div
-      className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white ${
+      className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white dark:from-primary-dark dark:via-primary dark:to-primary-dark ${
         isDropdownOpen ? "blur-sm pointer-events-none" : ""
       } transition-all duration-300`}
     >
@@ -419,8 +420,8 @@ const Home = ({
           onClose={() => setIsFilterOpen(false)}
         />
       )} */}
-      <div className="">
-        <div className="lg:mt-32 md:mt-32 mt-28 py-3 md:py-6 home">
+      <div className="w-full h-full relative z-40 bg-white dark:bg-primary transition-colors duration-300">
+        <div className="lg:mt-[145px] md:mt-[139px] mt-[125px] home dark:bg-primary transition-colors duration-300">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
             active={
@@ -430,8 +431,8 @@ const Home = ({
           >
             <LodingTestAllatre />
           </Dimmer>
-          <div className="w-full px-3 sm:px-4  py-2">
-            <BannerTop auctions={mainAuctions} />
+          <div className="w-full px-3 sm:px-4">
+            <BannerTopNew auctions={mainAuctions} />
           </div>
           {/* <div className="text-center mt-1 md:mt-2 lg:mt-3">
             <h1

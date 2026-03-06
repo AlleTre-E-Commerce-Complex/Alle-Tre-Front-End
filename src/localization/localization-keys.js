@@ -51,6 +51,10 @@ const localizationKeys = {
   draftSavedSuccessfully:"draftSavedSuccessfully",
   productUpdatedSuccessfully:"productUpdatedSuccessfully",
   // home
+  joinToday:"joinToday",
+  beginYourCollectionJourney:"beginYourCollectionJourney",
+  joinThousandsDiscerning:"joinThousandsDiscerning", 
+createFreeAccount:"createFreeAccount",
   auctions: "auctions",
   listings: "listings",
   SearchForLuxuryItemsWatchesRealEstate:"SearchForLuxuryItemsWatchesRealEstate",
