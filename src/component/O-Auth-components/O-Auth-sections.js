@@ -347,17 +347,21 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   return (
     <div className="flex flex-col items-center justify-center w-full px-4 md:px-10 h-full mt-6 md:mt-0">
       <div className="w-[328px] mx-auto flex flex-col items-center">
-        <div className="mb-12 lg:-mt-32 -mt-20">
-          <img src={allatreLogoWhite} alt="allatreLogoWhite" className="w-32" />
+        <div className="mb-8 md:mb-12 lg:-mt-32 md:-mt-20 mt-0">
+          <img
+            src={allatreLogoWhite}
+            alt="allatreLogoWhite"
+            className="w-28 md:w-32"
+          />
         </div>
 
-        <p className="text-yellow text-xs font-bold tracking-[0.2em] uppercase mb-4 w-full">
+        <p className="hidden md:block text-yellow text-xs font-bold tracking-[0.2em] uppercase mb-4 w-full">
           {isLogin
             ? selectedContent[localizationKeys.privateAccess]
             : selectedContent[localizationKeys.createFreeAccount]}
         </p>
 
-        <p className="text-primary-light text-lg mb-10 w-full leading-relaxed font-serif">
+        <p className="hidden md:block text-primary-light text-lg mb-10 w-full leading-relaxed font-serif">
           {isLogin
             ? selectedContent[
                 localizationKeys.signInToAccessYourExclusiveCollection

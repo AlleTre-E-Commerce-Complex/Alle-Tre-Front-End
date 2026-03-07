@@ -113,7 +113,7 @@ const SignUp = ({ currentPAth, isAuthModel, onToggleView }) => {
 
                 <div className="flex flex-col mb-6">
                   <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
-                    {selectedContent[localizationKeys.email]} ADDRESS
+                    {selectedContent[localizationKeys.eMailAddress]} 
                   </label>
                   <Field
                     name="email"

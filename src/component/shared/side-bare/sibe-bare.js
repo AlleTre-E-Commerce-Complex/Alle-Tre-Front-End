@@ -151,7 +151,7 @@ const Sidebar = ({ SetSid, sid }) => {
     <>
       {/* Overlay */}
       <motion.div
-        className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 ${
+        className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[70] ${
           sid ? "pointer-events-auto" : "pointer-events-none"
         }`}
         variants={overlayVariants}
@@ -162,7 +162,7 @@ const Sidebar = ({ SetSid, sid }) => {
       />
       {/* Sidebar */}
       <motion.div
-        className={`fixed top-0 w-60 h-full bg-primary z-50 shadow-lg`}
+        className={`fixed top-0 w-60 h-full bg-primary z-[70] shadow-lg`}
         variants={sidebarVariants}
         initial={lang === "en" ? "closedEn" : "closedAr"}
         animate={sid ? "open" : lang === "en" ? "closedEn" : "closedAr"}
