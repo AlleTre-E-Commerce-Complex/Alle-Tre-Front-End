@@ -74,6 +74,33 @@ const Header = ({
 
   const [showLogo, setShowLogo] = useState(false);
   const [showIcon, setShowIcon] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(
+    document.documentElement.classList.contains("dark"),
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          setIsDarkMode(document.documentElement.classList.contains("dark"));
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleTheme = () => {
+    if (document.documentElement.classList.contains("dark")) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDarkMode(true);
+    }
+  };
 
   useEffect(() => {
     setSelectedOption(selectedContent[localizationKeys.all]);
@@ -534,7 +561,7 @@ const Header = ({
         <div className="flex items-center space-x-3 md:hidden">
           <BiMenu
             onClick={() => SetSid(true)}
-            className="text-primary-veryLight cursor-pointer"
+            className="text-[#eae2e6] cursor-pointer"
             size={30}
           />
 
@@ -544,7 +571,7 @@ const Header = ({
                 `${routes.app.home}?${getDefaultPaginationString()}`,
               );
             }}
-            className="text-primary-veryLight cursor-pointer"
+            className="text-[#eae2e6] cursor-pointer"
             size={25}
           />
         </div>
@@ -637,6 +664,88 @@ const Header = ({
                 onClick={handleNotificationClick}
               />
             </div>
+
+            {/* Desktop Theme Toggle */}
+            <div className="my-auto hidden md:flex items-center mx-1">
+              <button
+                onClick={toggleTheme}
+                className={`relative w-[72px] h-9 rounded-full border flex items-center transition-colors duration-300 focus:outline-none shadow-inner ${
+                  isDarkMode
+                    ? "bg-primary-dark border-gray-600"
+                    : "bg-primary-light border-primary-dark"
+                }`}
+              >
+                {/* Background Icons */}
+                <div className="absolute left-2.5 flex items-center justify-center pointer-events-none">
+                  <svg
+                    className="w-[18px] h-[18px] text-gray-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute right-2.5 flex items-center justify-center pointer-events-none">
+                  <svg
+                    className="w-[18px] h-[18px] text-gray-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
+                  </svg>
+                </div>
+                {/* Toggle Thumb */}
+                <div
+                  className={`absolute w-[30px] h-[30px] rounded-full bg-[#d4af37] shadow-md transform transition-transform duration-300 ease-in-out flex items-center justify-center ${
+                    !isDarkMode
+                      ? "ltr:translate-x-1 rtl:-translate-x-1 translate-x-1"
+                      : "ltr:translate-x-[38px] rtl:-translate-x-[38px] translate-x-[38px]"
+                  }`}
+                >
+                  {!isDarkMode ? (
+                    <svg
+                      className="w-4 h-4 text-primary-dark"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-4 h-4 text-primary-dark"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                      />
+                    </svg>
+                  )}
+                </div>
+              </button>
+            </div>
             <div className="my-auto ">
               <DropdownLang className="Edit_Lang_Dropdown text-black bg-primary hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] flex items-center justify-center " />
             </div>
@@ -704,7 +813,7 @@ const Header = ({
                 <div className="relative">
                   <MdOutlineNotifications
                     size={25}
-                    className="text-primary-veryLight cursor-pointer"
+                    className="text-[#eae2e6] cursor-pointer"
                     style={{ marginTop: "4px" }}
                   />
                   {notificationCount > 0 && (
@@ -721,7 +830,7 @@ const Header = ({
               onClick={handleNotificationClick}
             />
             <CgProfile
-              className="text-primary-veryLight cursor-pointer"
+              className="text-[#eae2e6] cursor-pointer"
               size={25}
               onClick={() => {
                 handelMyPfofile();

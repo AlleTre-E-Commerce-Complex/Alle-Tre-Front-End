@@ -24,7 +24,7 @@ const BannerTopNew = () => {
   };
 
   return (
-    <div className="w-full mt-10 md:mt-20">
+    <div className="w-full pt-0 md:pt-2">
       <div className="relative w-full overflow-hidden rounded-xl shadow-2xl h-[400px] md:h-[450px]">
         {/* Background Image with Opacity and Gradient overlay */}
         <div className="absolute inset-0">

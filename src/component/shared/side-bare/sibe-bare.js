@@ -1,8 +1,8 @@
 import routes from "../../../routes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ReactComponent as CloseIcon } from "../../../../src/assets/icons/x_icon.svg";
-import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/ALLETRE LOGO-03-01.svg";
+import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/3arbon-main.svg";
 
 import { ReactComponent as Allatre } from "../../../../src/assets/logo/allatre-logo-color.svg";
 // import DropdownLang from "../header-app/dropdown-lang";
@@ -25,6 +25,33 @@ const Sidebar = ({ SetSid, sid }) => {
   const { pathname } = useLocation();
   const [lang] = useLanguage();
   const selectedContent = content[lang];
+  const [isDarkMode, setIsDarkMode] = useState(
+    document.documentElement.classList.contains("dark"),
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          setIsDarkMode(document.documentElement.classList.contains("dark"));
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleTheme = () => {
+    if (document.documentElement.classList.contains("dark")) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDarkMode(true);
+    }
+  };
 
   const sidebarVariants = {
     open: {
@@ -135,7 +162,7 @@ const Sidebar = ({ SetSid, sid }) => {
       />
       {/* Sidebar */}
       <motion.div
-        className={`fixed top-0 w-60 h-full bg-secondary z-50 shadow-lg`}
+        className={`fixed top-0 w-60 h-full bg-primary z-50 shadow-lg`}
         variants={sidebarVariants}
         initial={lang === "en" ? "closedEn" : "closedAr"}
         animate={sid ? "open" : lang === "en" ? "closedEn" : "closedAr"}
@@ -156,7 +183,7 @@ const Sidebar = ({ SetSid, sid }) => {
             />
           </div>
           <div className="flex-grow overflow-y-auto">
-            <div className="flex flex-col gap-y-4  mx-6 mt-10 w-full">
+            <div className="flex flex-col gap-y-4  px-6 mt-10 w-full">
               <NavLink
                 title={selectedContent[localizationKeys.profile]}
                 isActive={
@@ -168,7 +195,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-              <NavLink
+              {/* <NavLink
                 title={selectedContent[localizationKeys.myAuctions]}
                 isActive={
                   pathname.length === 1 ||
@@ -178,8 +205,8 @@ const Sidebar = ({ SetSid, sid }) => {
                   handelmyAuctions();
                   SetSid(false);
                 }}
-              />
-              <NavLink
+              /> */}
+              {/* <NavLink
                 title={selectedContent[localizationKeys.myBids]}
                 isActive={
                   pathname.length === 1 ||
@@ -189,7 +216,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   handelmyBids();
                   SetSid(false);
                 }}
-              />
+              /> */}
               <NavLink
                 title={selectedContent[localizationKeys.myProducts]}
                 isActive={
@@ -201,7 +228,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-              <NavLink
+              {/* <NavLink
                 title={selectedContent[localizationKeys.createAuction]}
                 isActive={
                   pathname.length === 1 ||
@@ -211,8 +238,8 @@ const Sidebar = ({ SetSid, sid }) => {
                   handelOnSell();
                   SetSid(false);
                 }}
-              />
-              <NavLink
+              /> */}
+              {/* <NavLink
                 title={selectedContent[localizationKeys.watchlist]}
                 isActive={
                   pathname.length === 1 ||
@@ -222,7 +249,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   handelWatchlist();
                   SetSid(false);
                 }}
-              />
+              /> */}
               <NavLink
                 title={selectedContent[localizationKeys.Purchased]}
                 isActive={
@@ -234,7 +261,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-              <NavLink
+              {/* <NavLink
                 title={selectedContent[localizationKeys.Wallet]}
                 isActive={
                   pathname.length === 1 ||
@@ -244,7 +271,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   handelWallet();
                   SetSid(false);
                 }}
-              />
+              /> */}
               <NavLink
                 title={selectedContent[localizationKeys.faqs]}
                 isActive={
@@ -255,6 +282,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
+
               {/* <NavLink
                 title={selectedContent[localizationKeys.support]}
                 isActive={
@@ -290,6 +318,91 @@ const Sidebar = ({ SetSid, sid }) => {
               </div> */}
             </div>
           </div>
+
+          {/* Bottom Pinned Items */}
+          <div className="w-full px-6 pb-6 pt-4 border-t border-gray-600">
+            <div className="h-12 flex items-center justify-start gap-x-4">
+              <span className="text-white text-base py-1 hover-underline-animation cursor-pointer">
+                {selectedContent[localizationKeys.darkMode]}
+              </span>
+              <button
+                onClick={toggleTheme}
+                className={`relative w-[64px] h-8 rounded-full border flex items-center transition-colors duration-300 focus:outline-none shadow-inner ${
+                  isDarkMode
+                    ? "bg-primary-dark border-gray-600"
+                    : "bg-primary-light border-primary-dark"
+                }`}
+              >
+                <div className="absolute left-2 flex items-center justify-center pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                </div>
+                <div className="absolute right-2 flex items-center justify-center pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  className={`absolute w-6 h-6 rounded-full bg-[#d4af37] shadow-md transform transition-transform duration-300 ease-in-out flex items-center justify-center ${
+                    !isDarkMode
+                      ? "ltr:translate-x-1 rtl:-translate-x-1 translate-x-1"
+                      : "ltr:translate-x-[34px] rtl:-translate-x-[34px] translate-x-[34px]"
+                  }`}
+                >
+                  {!isDarkMode ? (
+                    <svg
+                      className="w-3 h-3 text-primary-dark"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-3 h-3 text-primary-dark"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                      />
+                    </svg>
+                  )}
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       </motion.div>
     </>
@@ -298,10 +411,7 @@ const Sidebar = ({ SetSid, sid }) => {
 
 export const NavLink = ({ title, onClick, isActive }) => {
   return (
-    <div 
-      onClick={onClick}
-      className={`w-full cursor-pointer h-12`}
-    >
+    <div onClick={onClick} className={`w-full cursor-pointer h-12`}>
       <div
         className={`${
           isActive ? "active-underline-animation" : "hover-underline-animation"

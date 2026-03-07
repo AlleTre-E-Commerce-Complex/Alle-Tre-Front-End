@@ -92,7 +92,7 @@ const Footer = () => {
           }
           alt="Footer Banner"
         />
-        <div className="absolute flex flex-col items-center sm:items-start gap-1 sm:gap-2 top-[75%] sm:top-[80%] left-1/2 sm:left-[60%] md:left-[65%] lg:left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-auto z-10">
+        <div className="absolute flex flex-col items-center sm:items-start gap-1 sm:gap-2 top-[70%] sm:top-[80%] left-1/2 sm:left-[60%] md:left-[65%] lg:left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-[80%] sm:w-auto z-10">
           <div className="flex w-full shadow-xl sm:shadow-2xl border-[2px] sm:border-[3px] border-white">
             <input
               value={email}
@@ -110,7 +110,6 @@ const Footer = () => {
               {selectedContent[localizationKeys.subscribe]}
             </button>
           </div>
-        
         </div>
       </div>
 

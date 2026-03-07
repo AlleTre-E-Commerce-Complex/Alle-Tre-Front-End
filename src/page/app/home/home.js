@@ -421,7 +421,7 @@ const Home = ({
         />
       )} */}
       <div className="w-full h-full relative z-40 bg-white dark:bg-primary transition-colors duration-300">
-        <div className="lg:mt-[145px] md:mt-[139px] mt-[125px] home dark:bg-primary transition-colors duration-300">
+        <div className="lg:pt-[145px] md:pt-[139px] pt-[125px] home dark:bg-primary transition-colors duration-300">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
             active={
