@@ -213,7 +213,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="h-[10x] text-white flex justify-center items-center space-x-2 ">
+        <div className="text-white flex justify-center items-center space-x-2 pb-5">
           <TermsAndConditions isFooter={true} />
           <span className=" mt-6">|</span>
           <PrivacyPolicy isFooter={true} />

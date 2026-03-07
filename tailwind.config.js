@@ -72,6 +72,7 @@ module.exports = {
           DEFAULT: "var(--color-yellow)",
           light: "var(--color-yellow-light)",
           dark: "var(--color-yellow-dark)",
+          veryLight: "var(--color-yellow-veryLight)",
         },
         orang: {
           DEFAULT: "var(--color-orang)",

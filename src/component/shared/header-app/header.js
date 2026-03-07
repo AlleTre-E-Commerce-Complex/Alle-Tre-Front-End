@@ -10,8 +10,8 @@ import { useDispatch } from "react-redux";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
-import { RiArrowDownSFill, RiHome2Line } from "react-icons/ri";
-import { TbLayoutGrid } from "react-icons/tb";
+// import { RiArrowDownSFill, RiHome2Line } from "react-icons/ri";
+// import { TbLayoutGrid } from "react-icons/tb";
 import { FaRegUser, FaSearch } from "react-icons/fa";
 // import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
@@ -20,7 +20,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import { CgProfile } from "react-icons/cg";
+// import { CgProfile } from "react-icons/cg";
 import { MdLogout } from "react-icons/md";
 import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
@@ -565,7 +565,7 @@ const Header = ({
             size={30}
           />
 
-          <RiHome2Line
+          {/* <RiHome2Line
             onClick={() => {
               history.push(
                 `${routes.app.home}?${getDefaultPaginationString()}`,
@@ -573,7 +573,7 @@ const Header = ({
             }}
             className="text-[#eae2e6] cursor-pointer"
             size={25}
-          />
+          /> */}
         </div>
         <div className="flex items-center justify-center flex-1 md:flex-none">
           <div className="flex justify-center items-center">
@@ -746,9 +746,7 @@ const Header = ({
                 </div>
               </button>
             </div>
-            <div className="my-auto ">
-              <DropdownLang className="Edit_Lang_Dropdown text-black bg-primary hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] flex items-center justify-center " />
-            </div>
+            <div className="my-auto "></div>
             <div
               className="relative inline-block text-left"
               ref={sellDropdownRef}
@@ -829,13 +827,13 @@ const Header = ({
               }
               onClick={handleNotificationClick}
             />
-            <CgProfile
+            {/* <CgProfile
               className="text-[#eae2e6] cursor-pointer"
               size={25}
               onClick={() => {
                 handelMyPfofile();
               }}
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -892,7 +890,7 @@ const Header = ({
             </button>
           </div>
 
-          {currentPath.includes("/alletre/categories") && (
+          {/* {currentPath.includes("/alletre/categories") && (
             <div className="relative" ref={typeDropdownRef}>
               <button
                 className="bg-primary-lightDark hover:bg-primary-dark text-white rounded-lg 
@@ -958,8 +956,8 @@ const Header = ({
                 </div>
               )}
             </div>
-          )}
-          {currentPath === routes.app.home && (
+          )} */}
+          {/* {currentPath === routes.app.home && (
             <div className="relative" ref={typeDropdownRef}>
               <button
                 className="bg-primary-lightDark hover:bg-primary-dark text-white rounded-lg 
@@ -1025,7 +1023,8 @@ const Header = ({
                 </div>
               )}
             </div>
-          )}
+          )} */}
+          <DropdownLang className="Edit_Lang_Dropdown text-black bg-primary hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] hidden items-center justify-center " />
           <DropdownLang className="text-black md:hidden bg-primary hover:bg-yellow-200/10 px-3 py-2 rounded-lg transition-all duration-300 border border-primary-light hover:border-yellow shadow-sm hover:shadow-md" />
 
           {/* <PopupCategoriesModel

@@ -34,11 +34,11 @@ import { Open } from "../redux-store/auth-model-slice";
 import RewardModal from "../component/shared/rewardModal/RewardModal";
 import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal";
 import ListProductDetails from "page/app/ListProduct/List-product-details";
-import { FaPlus } from "react-icons/fa6";
 import SummaryListedSection from "component/home-components/summary-listed-section";
 import UserDetailsPage from "component/profile-components/user-details-page";
 import ListingProductsLocationDetails from "page/app/ListProduct/List-location-details";
 import PrivacyPolicy from "../component/shared/privacy-policy/privacy-policy";
+import MobileBottomNav from "../component/shared/mobile-bottom-nav/mobile-bottom-nav";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState("");
@@ -56,7 +56,7 @@ const AppLayouts = () => {
 
   useEffect(() => {
     const hasCompletedProfile = window.localStorage.getItem(
-      "hasCompletedProfile"
+      "hasCompletedProfile",
     );
     const hasSeenRewardModal = localStorage.getItem("hasSeenRewardModal");
 
@@ -76,19 +76,20 @@ const AppLayouts = () => {
     }
   }, [unSubscribe]);
 
- useEffect(() => {
-  const params = new URLSearchParams(location.search);
-  if (params.get('isLoginModal') === 'true') {
-    dispatch(Open());
-    params.delete('isLoginModal');
-    const newSearchParams = params.toString();
-    history.replace(`${location.pathname}${newSearchParams ? `?${newSearchParams}` : ''}`);
-  }
-}, [location.search, location.pathname, history, dispatch]);
-
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("isLoginModal") === "true") {
+      dispatch(Open());
+      params.delete("isLoginModal");
+      const newSearchParams = params.toString();
+      history.replace(
+        `${location.pathname}${newSearchParams ? `?${newSearchParams}` : ""}`,
+      );
+    }
+  }, [location.search, location.pathname, history, dispatch]);
 
   const socketauctionId = useSelector(
-    (state) => state?.socketAuctionId?.socketAuctionId
+    (state) => state?.socketAuctionId?.socketAuctionId,
   );
   const { user } = useAuthState();
   const toggleExpand = () => setIsExpanded(!isExpanded);
@@ -132,7 +133,7 @@ const AppLayouts = () => {
             open={showUnSubscribeModal}
           />
         )}
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col pb-16 md:pb-0">
           <div className="flex-grow">
             <Switch>
               <Route
@@ -256,72 +257,24 @@ const AppLayouts = () => {
               />
               <Route path={routes.app.faqs} component={FAQs} />
               <Route path={routes.app.support} component={Support} />
-              <Route path={routes.app.privacyPolicy} component={PrivacyPolicy} />
+              <Route
+                path={routes.app.privacyPolicy}
+                component={PrivacyPolicy}
+              />
             </Switch>
           </div>
           <Footer />
           <div className="relative z-max">
             {currentPath === routes.app.home && (
-              <>
-                <button
-                  onClick={toggleExpand}
-                  className={`fixed z-50 bottom-4 ${
-                    lang === "ar" ? "left-4" : "right-4"
-                  } bg-primary text-white font-semibold rounded-full w-12 h-12 flex items-center justify-center shadow-2xl transform transition-all duration-300 ease-in-out md:hidden ${
-                    isExpanded
-                      ? "rotate-45 bg-primary-dark"
-                      : "rotate-0 bg-primary"
-                  }`}
-                >
-                  <span
-                    className="text-2xl font-bold transform transition-transform duration-300 ease-in-out"
-                    style={{
-                      transform: isExpanded ? "rotate(135deg)" : "rotate(0)",
-                    }}
-                  >
-                    <FaPlus />
-                  </span>
-                </button>
-
-                <div
-                  className={`fixed z-50 ${
-                    lang === "ar" ? "left-4" : "right-4"
-                  } transition-all duration-300 ease-in-out md:hidden ${
-                    isExpanded
-                      ? "bottom-20 opacity-100"
-                      : "bottom-4 opacity-0 pointer-events-none"
-                  }`}
-                >
-                  <button
-                    onClick={handleOnSell}
-                    className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
-                    style={{
-                      transform: isExpanded
-                        ? lang === "ar"
-                          ? "translateY(-1px) translateX(-135px)"
-                          : "translateY(-1px) translateX(135px)"
-                        : "translateY(0,0)",
-                      transition: "transform 0.3s ease-in-out",
-                    }}
-                  >
-                    {selectedContent[localizationKeys.createAuction]}
-                  </button>
-                  <button
-                    onClick={handleListProduct}
-                    className="bg-primary hover:bg-primary-dark text-white rounded-lg w-[136px] h-[48px] mb-2 ltr:font-serifEN rtl:font-serifAR shadow-lg"
-                    style={{
-                      transform: isExpanded
-                        ? lang === "ar"
-                          ? "translateY(-60px) translateX(-0)"
-                          : "translateY(-60px) translateX(0)"
-                        : "translateY(0,0)",
-                      transition: "transform 0.3s ease-in-out",
-                    }}
-                  >
-                    {selectedContent[localizationKeys.listProduct]}
-                  </button>
-                </div>
-              </>
+              <MobileBottomNav
+                isExpanded={isExpanded}
+                toggleExpand={toggleExpand}
+                handleOnSell={handleOnSell}
+                handleListProduct={handleListProduct}
+                user={user}
+                dispatch={dispatch}
+                Open={Open}
+              />
             )}
           </div>
         </div>

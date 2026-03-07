@@ -170,7 +170,7 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
                 <div className="w-full flex flex-col">
                   <div className="flex flex-col mb-8">
                     <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
-                      {selectedContent[localizationKeys.email]} ADDRESS
+                      {selectedContent[localizationKeys.eMailAddress]} 
                     </label>
                     <Field
                       name="email"
@@ -284,7 +284,7 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
 
                   <div className="flex flex-col mb-8">
                     <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
-                      {selectedContent[localizationKeys.eMailAddress]} 
+                      {selectedContent[localizationKeys.eMail]} 
                     </label>
                     <Field
                       name="email"
