@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import routes from "../../routes";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { Formik } from "formik";
-import FormikInput from "../shared/formik/formik-input";
+import { Field, Formik } from "formik";
 import { Button, Form } from "semantic-ui-react";
 import OAuthSections from "./O-Auth-sections";
 import { toast } from "react-hot-toast";
@@ -22,14 +21,13 @@ import { store } from "redux-store/store";
 import { setBlockedUser } from "redux-store/blocked-user-slice";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
-const LogIn = ({ currentPAth, isAuthModel }) => {
+const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
   const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const [showPassword, setShowPassword] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
-  const [email, setEmail] = useState("");
 
   const { run, isLoading } = useAxios();
 
@@ -38,21 +36,19 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
   const { login } = useAuthState();
 
   const logIn = (values) => {
-    setEmail(values.email);
     run(axios.post(api.auth.login, values))
       .then((res) => {
-        const { accessToken, refreshToken, hasCompletedProfile, isAddedBonus } =
+        const { accessToken, hasCompletedProfile, isAddedBonus } =
           res.data.data;
         if (isAddedBonus) {
           dispatch(welcomeBonus(true));
         }
         login({
           accessToken: accessToken,
-          // refreshToken: refreshToken,
         });
         window.localStorage.setItem(
           "hasCompletedProfile",
-          JSON.stringify(hasCompletedProfile)
+          JSON.stringify(hasCompletedProfile),
         );
         isAuthModel ? history.push(currentPAth) : history.push(routes.app.home);
         dispatch(Close());
@@ -70,28 +66,30 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
               <span
                 onClick={() =>
                   runforgetPassword(
-                    axios.post(api.auth.resendVerification, { email: values.email })
+                    axios.post(api.auth.resendVerification, {
+                      email: values.email,
+                    }),
                   )
                     .then((res) => {
                       toast.loading(
                         selectedContent[
                           localizationKeys.aVerificationMailHasBeenSent
-                        ]
+                        ],
                       );
                     })
                     .catch((err) => {
                       toast.error(
                         lang === "en"
                           ? err.message.en || err.message
-                          : err.message.ar || err.message
+                          : err.message.ar || err.message,
                       );
                     })
-                 }
+                }
                 className="underline text-black cursor-pointer px-1"
               >
                 {selectedContent[localizationKeys.resendMailAgain]}
               </span>
-            </p>
+            </p>,
           );
         } else console.log("google auth error --->", err);
         // Check if the error is a 401 unauthorized
@@ -102,7 +100,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
           toast.error(
             lang === "en"
               ? err.message.en || err.message
-              : err.message.ar || err.message
+              : err.message.ar || err.message,
           );
       });
   };
@@ -116,7 +114,7 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
       .trim()
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character",
       ),
   });
 
@@ -126,13 +124,13 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
     runforgetPassword(axios.post(api.auth.forgetPassword, values))
       .then((res) => {
         toast.loading(
-          selectedContent[localizationKeys.aVerificationMailHasBeenSent]
+          selectedContent[localizationKeys.aVerificationMailHasBeenSent],
         );
         // history.push(routes.auth.logIn);
       })
       .catch((err) => {
         toast.error(
-          lang === "en" ? err.message.en : err.message.en || err.message
+          lang === "en" ? err.message.en : err.message.en || err.message,
         );
       });
   };
@@ -142,30 +140,23 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
   });
 
   return (
-    <div className="flex flex-col md:flex-row  mt-8 gap-x-3 animate-in z-50 rtl:font-serifAR ltr:font-serifEN ">
-      <div className="mx-auto md:mx-0">
+    <div className="flex flex-col md:flex-row w-full animate-in z-50 rtl:font-serifAR ltr:font-serifEN">
+      <div className="w-full md:w-1/2">
         <OAuthSections
           isLogin={true}
           currentPAth={currentPAth}
           isAuthModel={isAuthModel}
         />
       </div>
-      <div className="mx-5 ">
-        <div className="border-l-[1px] border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">
-          <p className="absolute -left-[30px]  text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
-            {selectedContent[localizationKeys.or]}
-          </p>
-        </div>
+      <div className="hidden md:flex items-center">
+        <div className="h-[70%] border-l border-[#39485C]"></div>
       </div>
-      <div className="mx-auto ">
-        <div className="border-t-[1px] border-gray-dark w-64  my-2 relative md:hidden left-0.5">
-          <p className="absolute text-gray-dark bg-white left-24 -top-3 px-6">
-            {selectedContent[localizationKeys.or]}
-          </p>
-        </div>
-      </div>
-      <div>
-        <div className={isHidden ? "animate-out h-0" : "animate-in"}>
+      <div className="w-full md:w-1/2 px-4 md:px-10 mt-10 md:mt-16 flex flex-col justify-center pb-10">
+        <div
+          className={
+            isHidden ? "animate-out h-0 overflow-hidden" : "animate-in"
+          }
+        >
           <Formik
             initialValues={{
               email: "",
@@ -175,65 +166,99 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
             validationSchema={logInSchema}
           >
             {(formik) => (
-              <Form onSubmit={formik.handleSubmit}>
-                <div className="md:mx-6 mx-0 sm:w-[304px] w-full">
-                  <div className="mt-10 mx-auto ">
-                    <FormikInput
+              <Form onSubmit={formik.handleSubmit} className="w-full">
+                <div className="w-full flex flex-col">
+                  <div className="flex flex-col mb-8">
+                    <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
+                      {selectedContent[localizationKeys.email]} ADDRESS
+                    </label>
+                    <Field
                       name="email"
-                      type={"email"}
-                      label={selectedContent[localizationKeys.email]}
-                      placeholder={selectedContent[localizationKeys.email]}
+                      type="email"
+                      placeholder="example@3arbon.com"
+                      className="bg-transparent border-b border-[#39485C] text-sm text-gray-300 pb-2 focus:outline-none focus:border-[#d4af37] placeholder-gray-600 transition-colors w-full"
                     />
+                    {formik.touched.email && formik.errors.email && (
+                      <span className="text-red-500 text-xs mt-1">
+                        {formik.errors.email}
+                      </span>
+                    )}
                   </div>
-                  <div className="mt-10 mx-auto relative">
-                    <FormikInput
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      label={selectedContent[localizationKeys.password]}
-                      placeholder={selectedContent[localizationKeys.password]}
+
+                  <div className="flex flex-col mb-6 relative">
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase">
+                        {selectedContent[localizationKeys.password]}
+                      </label>
+                      <span
+                        onClick={() => setIsHidden(true)}
+                        className="text-gray-500 text-[10px] font-bold tracking-[0.2em] uppercase cursor-pointer hover:text-gray-300 transition-colors"
+                      >
+                        FORGOT?
+                      </span>
+                    </div>
+                    <div className="relative">
+                      <Field
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••••••"
+                        className="bg-transparent border-b border-[#39485C] text-sm text-gray-300 pb-2 pr-8 focus:outline-none focus:border-[#d4af37] placeholder-gray-600 transition-colors w-full"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-0 bottom-2 text-gray-500 hover:text-gray-300"
+                      >
+                        {showPassword ? (
+                          <VscEye size={18} />
+                        ) : (
+                          <VscEyeClosed size={18} />
+                        )}
+                      </button>
+                    </div>
+                    {formik.touched.password && formik.errors.password && (
+                      <span className="text-red-500 text-xs mt-1">
+                        {formik.errors.password}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center mb-8">
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 rounded-sm border-[#39485C] bg-transparent text-[#d4af37] focus:ring-0 focus:ring-offset-0 cursor-pointer appearance-none checked:bg-[#d4af37] border"
                     />
+                    <label className="ml-3 text-gray-400 text-[10px] font-bold tracking-[0.15em] uppercase cursor-pointer">
+                      {selectedContent[localizationKeys.keepMeSignedIn]} 
+                    </label>
+                  </div>
+
+                  <Button
+                    loading={isLoading}
+                    className="w-full bg-[#d4af37] hover:bg-[#e0b942] text-[#2A3A54] font-bold text-sm tracking-widest uppercase py-3.5 rounded-sm transition-colors shadow-lg shadow-[#d4af37]/20 border-0 m-0"
+                    type="submit"
+                  >
+                    {selectedContent[localizationKeys.signIn]}
+                  </Button>
+
+                  <div className="mt-10 text-center w-full">
+                    <span className="text-gray-500 text-[10px] font-bold tracking-[0.15em] uppercase">
+                      {selectedContent[localizationKeys.dontHaveAnAccount]}{" "}
+                    </span>
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute text-primary right-4 top-7 transform -translate-y-1/2 text-gray-500"
+                      onClick={onToggleView}
+                      className="text-[#d4af37] text-[10px] font-bold tracking-[0.15em] uppercase hover:text-[#e0b942] transition-colors"
                     >
-                      {showPassword ? (
-                        <VscEye size={20} />
-                      ) : (
-                        <VscEyeClosed size={20} />
-                      )}
+                      {selectedContent[localizationKeys.createAccount]}
                     </button>
-                  </div>
-                  <div className="flex justify-between mt-5 mx-1">
-                    <div>
-                      <label className="text-gray-med text-sm font-normal cursor-pointer">
-                        <input
-                          className="mt-0.5 ltr:mr-3 rtl:ml-3 bg-primary authcheckbox"
-                          type="checkbox"
-                        />
-                        {selectedContent[localizationKeys.rememberPassword]}
-                      </label>
-                    </div>
-                    <span
-                      onClick={() => setIsHidden(true)}
-                      className="underline cursor-pointer text-primary-dark text-sm font-normal pt-1"
-                    >
-                      {selectedContent[localizationKeys.forgetPassword]}
-                    </span>
-                  </div>
-                  <div className="md:flex block justify-center ">
-                    <Button
-                      loading={isLoading}
-                      className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
-                    >
-                      {selectedContent[localizationKeys.login]}
-                    </Button>
                   </div>
                 </div>
               </Form>
             )}
           </Formik>
         </div>
+
         <div className={isHidden ? "animate-in" : "animate-out h-0 hidden"}>
           <Formik
             initialValues={{
@@ -243,32 +268,44 @@ const LogIn = ({ currentPAth, isAuthModel }) => {
             validationSchema={forgetPasswordSchema}
           >
             {(formik) => (
-              <Form onSubmit={formik.handleSubmit}>
-                <div className="md:mx-6 mx-0  sm:w-[304px] w-full ">
-                  <div className="mt-10 mx-auto ">
-                    <FormikInput
-                      name="email"
-                      type={"email"}
-                      label={selectedContent[localizationKeys.email]}
-                      placeholder={selectedContent[localizationKeys.email]}
-                    />
-                  </div>
-                  <div className="flex justify-end mt-2 mx-1">
+              <Form onSubmit={formik.handleSubmit} className="w-full">
+                <div className="w-full flex flex-col">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-[#d4af37] text-sm font-bold tracking-widest uppercase">
+                      {selectedContent[localizationKeys.resetPassword]}
+                    </h3>
                     <span
                       onClick={() => setIsHidden(false)}
-                      className="underline cursor-pointer text-primary-dark text-sm font-normal pt-1"
+                      className="text-gray-500 text-[10px] font-bold tracking-[0.2em] uppercase cursor-pointer hover:text-gray-300 transition-colors"
                     >
-                      {selectedContent[localizationKeys.backToLogin]}
+                      BACK TO LOGIN
                     </span>
                   </div>
-                  <div className="w-full">
-                    <Button
-                      loading={isLoadingorgetPassword}
-                      className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px] h-[48px] w-full  rounded-lg text-white mt-5 font-normal text-base font-serifAR "
-                    >
-                      {selectedContent[localizationKeys.sentVerification]}
-                    </Button>
+
+                  <div className="flex flex-col mb-8">
+                    <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
+                      {selectedContent[localizationKeys.eMailAddress]} 
+                    </label>
+                    <Field
+                      name="email"
+                      type="email"
+                      placeholder="example@3arbon.com"
+                      className="bg-transparent border-b border-[#39485C] text-sm text-gray-300 pb-2 focus:outline-none focus:border-[#d4af37] placeholder-gray-600 transition-colors w-full"
+                    />
+                    {formik.touched.email && formik.errors.email && (
+                      <span className="text-red-500 text-xs mt-1">
+                        {formik.errors.email}
+                      </span>
+                    )}
                   </div>
+
+                  <Button
+                    loading={isLoadingorgetPassword}
+                    className="w-full bg-[#d4af37] hover:bg-[#e0b942] text-[#2A3A54] font-bold text-sm tracking-widest uppercase py-3.5 rounded-sm transition-colors shadow-lg shadow-[#d4af37]/20 border-0 m-0"
+                    type="submit"
+                  >
+                    {selectedContent[localizationKeys.sendVerification]}
+                  </Button>
                 </div>
               </Form>
             )}

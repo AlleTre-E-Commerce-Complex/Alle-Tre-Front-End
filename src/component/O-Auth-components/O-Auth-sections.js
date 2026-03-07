@@ -10,10 +10,10 @@ import {
   // fetchSignInMethodsForEmail,
 } from "firebase/auth";
 
-import appleIcon from "../../../src/assets/icons/Apple-icon.svg";
-import googleIcon from "../../../src/assets/icons/Google-icon.svg";
+import { FaGoogle, FaApple } from "react-icons/fa";
 // import facebookIcon from "../../../src/assets/icons/Fcaebook-icon.svg";
-import allatreLogoColor from "../../../src/assets/logo/allatre-logo-color.svg";
+// import allatreLogoColor from "../../../src/assets/logo/allatre-logo-color.svg";
+import allatreLogoWhite from "../../../src/assets/logo/3arbon-main.svg";
 
 import { authentications } from "../../config/firebase-config";
 import useAxios from "../../hooks/use-axios";
@@ -106,26 +106,27 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   //     });
   // };
 
-
   const signInWithApple = () => {
     const provider = new OAuthProvider("apple.com");
-  
+
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isWebView = (() => {
       const standalone = window.navigator.standalone;
       const userAgent = window.navigator.userAgent.toLowerCase();
       return (
-        (standalone === false || window.matchMedia('(display-mode: standalone)').matches) ||
-        (userAgent.includes('wv') || userAgent.includes('applix')) // Adjust this string for Applix user agent if needed
+        standalone === false ||
+        window.matchMedia("(display-mode: standalone)").matches ||
+        userAgent.includes("wv") ||
+        userAgent.includes("applix") // Adjust this string for Applix user agent if needed
       );
     })();
-  
+
     const handleAuthResponse = (res) => {
       if (!res?._tokenResponse?.idToken) {
         // No token, likely user cancelled
         return;
       }
-      
+
       run(
         axios.post(api.auth.aAuth, {
           userName: res?._tokenResponse?.displayName || null,
@@ -133,7 +134,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           idToken: res?._tokenResponse?.idToken || null,
           phone: res?._tokenResponse?.phoneNumber || null,
           oAuthType: "APPLE",
-        })
+        }),
       )
         .then((res) => {
           const {
@@ -142,22 +143,23 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             hasCompletedProfile,
             isAddedBonus,
           } = res.data.data;
-  
+
           if (isAddedBonus) dispatch(welcomeBonus(true));
-  
-          login({ accessToken,
-            //  refreshToken, 
-            });
-  
+
+          login({
+            accessToken,
+            //  refreshToken,
+          });
+
           localStorage.setItem(
             "hasCompletedProfile",
-            JSON.stringify(hasCompletedProfile)
+            JSON.stringify(hasCompletedProfile),
           );
-  
+
           isAuthModel
             ? history.push(currentPAth)
             : history.push(routes.app.home);
-  
+
           dispatch(Close());
         })
         .catch((err) => {
@@ -167,49 +169,61 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           } else {
             // Only show error toast for actual errors, not for cancellations
             toast.error(
-              selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+              selectedContent[
+                localizationKeys.somethingWentWrongPleaseTryAgainLater
+              ],
             );
           }
         });
     };
-  
+
     if (isIOS && isWebView) {
       // Fallback for iOS WebView (e.g., Applix)
-      console.log('Apple sign in with redirect')
+      console.log("Apple sign in with redirect");
       signInWithRedirect(authentications, provider)
         .then(handleAuthResponse)
         .catch((err) => {
           console.error("Redirect login error:", err);
           // Don't show error for user cancellation
-          if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+          if (
+            err.code !== "auth/popup-closed-by-user" &&
+            err.code !== "auth/cancelled-popup-request"
+          ) {
             toast.error(
-              selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+              selectedContent[
+                localizationKeys.somethingWentWrongPleaseTryAgainLater
+              ],
             );
           }
         });
     } else {
       // Standard popup login
-      console.log('Apple sign in with pop')
+      console.log("Apple sign in with pop");
 
       signInWithPopup(authentications, provider)
         .then(handleAuthResponse)
         .catch((err) => {
           console.error("Popup login error:", err);
           // Don't show error for user cancellation
-          if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+          if (
+            err.code !== "auth/popup-closed-by-user" &&
+            err.code !== "auth/cancelled-popup-request"
+          ) {
             toast.error(
-              selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+              selectedContent[
+                localizationKeys.somethingWentWrongPleaseTryAgainLater
+              ],
             );
           }
         });
     }
   };
-  
+
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
-      prompt:'select_account'
-    })
+      prompt: "select_account",
+    });
     signInWithPopup(authentications, provider)
       .then((res) => {
         run(
@@ -219,7 +233,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             idToken: res?._tokenResponse?.idToken || null,
             phone: res?._tokenResponse?.phoneNumber || null,
             oAuthType: "GOOGLE",
-          })
+          }),
         )
           .then((res) => {
             const {
@@ -237,7 +251,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             });
             window.localStorage.setItem(
               "hasCompletedProfile",
-              JSON.stringify(hasCompletedProfile)
+              JSON.stringify(hasCompletedProfile),
             );
             isAuthModel
               ? history.push(currentPAth)
@@ -254,7 +268,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             toast.error(
               selectedContent[
                 localizationKeys.somethingWentWrongPleaseTryAgainLater
-              ]
+              ],
             );
           });
       })
@@ -265,7 +279,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
           toast.error(
             selectedContent[
               localizationKeys.somethingWentWrongPleaseTryAgainLater
-            ]
+            ],
           );
         }
       });
@@ -331,65 +345,52 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   // };
 
   return (
-    <div>
-      <div className="flex md:hidden justify-center -mt-10">
-        <img
-          src={allatreLogoColor}
-          alt="allatreLogoColor"
-          className="w-28"
-        />
-      </div>
+    <div className="flex flex-col items-center justify-center w-full px-4 md:px-10 h-full mt-6 md:mt-0">
+      <div className="w-[328px] mx-auto flex flex-col items-center">
+        <div className="mb-12 lg:-mt-32 -mt-20">
+          <img src={allatreLogoWhite} alt="allatreLogoWhite" className="w-32" />
+        </div>
 
-      <Loginbutton
-        logo={appleIcon}
-        onClick={signInWithApple}
-        text={
-          isLogin
-            ? selectedContent[localizationKeys.loginWithApple]
-            : selectedContent[localizationKeys.signupwithApple]
-        }
-      />
-      <Loginbutton
-        logo={googleIcon}
-        onClick={signInWithGoogle}
-        text={
-          isLogin
-            ? selectedContent[localizationKeys.loginwithGoogle]
-            : selectedContent[localizationKeys.signupwithGoogle]
-        }
-        isLogin={isLogin}
-      />
-      {/* <Loginbutton
-        logo={facebookIcon}
-        onClick={signInWithFacebook}
-        text={
-          isLogin
-            ? selectedContent[localizationKeys.loginwithFacebook]
-            : selectedContent[localizationKeys.signupwithFacebook]
-        }
-      /> */}
-      <div
-        className={`${
-          isLogin ? "mt-20" : "mt-48"
-        } md:flex justify-center hidden`}
-      >
-        <img src={allatreLogoColor} alt="allatreLogoColor" />
+        <p className="text-yellow text-xs font-bold tracking-[0.2em] uppercase mb-4 w-full">
+          {isLogin
+            ? selectedContent[localizationKeys.privateAccess]
+            : selectedContent[localizationKeys.createFreeAccount]}
+        </p>
+
+        <p className="text-primary-light text-lg mb-10 w-full leading-relaxed font-serif">
+          {isLogin
+            ? selectedContent[
+                localizationKeys.signInToAccessYourExclusiveCollection
+              ]
+            : selectedContent[localizationKeys.beginYourCollectionJourney]}
+        </p>
+
+        <Loginbutton
+          icon={<FaApple size={20} className="text-yellow" />}
+          onClick={signInWithApple}
+          text={isLogin ? "Continue with Apple" : "Continue with Apple"}
+        />
+        <Loginbutton
+          icon={<FaGoogle size={18} className="text-yellow" />}
+          onClick={signInWithGoogle}
+          text={isLogin ? "Continue with Google" : "Continue with Google"}
+        />
       </div>
     </div>
   );
 };
 
-export const Loginbutton = ({ logo, text, onClick, isLogin }) => {
+export const Loginbutton = ({ icon, text, onClick }) => {
   return (
-    <div>
+    <div className="w-full flex justify-center md:justify-center">
       <button
-        className={`flex justify-start w-[328px] h-[48px] border-[1px] rounded-lg border-primary text-primary my-6 py-2 ltr:pl-[60px] rtl:pr-5  ${
-          !isLogin ? "mt-10" : ""
-        }`}
+        className="flex items-center justify-center gap-4 w-[328px] h-[48px] rounded-md bg-[#39485C] hover:bg-[#4a5c75] text-white my-2 transition-colors duration-300 shadow-sm border border-[#4a5c75]"
         onClick={onClick}
       >
-        <img className="mx-4" src={logo} alt="logo" />
-        <p className="text-lg font-medium pt-0.5">{text}</p>
+        <div className="flex justify-center items-center">{icon}</div>
+        <p className="text-[10.5px] font-bold tracking-[0.15em] uppercase m-0 pt-[2px]">
+          {text}
+        </p>
       </button>
     </div>
   );

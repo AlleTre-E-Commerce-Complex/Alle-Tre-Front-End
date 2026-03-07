@@ -92,7 +92,8 @@
     --color-primary: #2A3A54; /* Maintaining primary branding in dark mode often looks good */
     --color-primary-dark: #1f2937;
     --color-primary-light: #6b7280;
-    --color-primary-veryLight: #1e293b;
+    --color-primary-veryLight: #eae2e6;
+
 
     /* Secondary */
     --color-secondary: #ffffff; /* White text/elements on dark background */

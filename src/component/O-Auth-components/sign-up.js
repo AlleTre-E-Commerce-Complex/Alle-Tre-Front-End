@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import OAuthSections from "./O-Auth-sections";
-import routes from "../../routes";
-import { useHistory } from "react-router-dom";
+// import routes from "../../routes";
+// import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { Formik } from "formik";
-import FormikInput from "../shared/formik/formik-input";
+import { Field, Formik } from "formik";
 import { Button, Form } from "semantic-ui-react";
 import useAxios from "../../hooks/use-axios";
 import { toast } from "react-hot-toast";
@@ -19,19 +18,18 @@ import { PiWarningCircle } from "react-icons/pi";
 import TermsAndConditions from "component/shared/terms-and-condition/TermsAndCondition";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
-const SignUp = ({ currentPAth, isAuthModel }) => {
+const SignUp = ({ currentPAth, isAuthModel, onToggleView }) => {
   const [showPassword, setShowPassword] = useState(false);
   // const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const isArabic = lang === "ar";
   const { run, isLoading } = useAxios();
 
   const signUp = (values) => {
     run(axios.post(api.auth.signup, values))
       .then((res) => {
         toast.loading(
-          selectedContent[localizationKeys.aVerificationMailHasBeenSent]
+          selectedContent[localizationKeys.aVerificationMailHasBeenSent],
         );
       })
       .catch((err) => {
@@ -54,7 +52,7 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
       .required(selectedContent[localizationKeys.required])
       .matches(
         /^[+][0-9]+$/,
-        selectedContent[localizationKeys.invalidPhoneNumber]
+        selectedContent[localizationKeys.invalidPhoneNumber],
       ),
     password: Yup.string()
       .min(8)
@@ -63,161 +61,204 @@ const SignUp = ({ currentPAth, isAuthModel }) => {
       .required("Required field")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+        "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character",
       ),
   });
 
   return (
-    <div className="flex flex-col md:flex-row  gap-x-3 animate-in bg-transparent rtl:font-serifAR ltr:font-serifEN ">
-      <div className="mt-10 mx-auto md:mx-0">
+    <div className="flex flex-col md:flex-row w-full animate-in z-50 rtl:font-serifAR ltr:font-serifEN">
+      <div className="w-full md:w-1/2">
         <OAuthSections isLogin={false} />
       </div>
-      <div className="mx-5 ">
-        <p className="border-l-[1px] mt-10 border-gray-dark h-64 bg-blue-400 my-2 relative md:block hidden ltr:left-4 rtl:-left-4">
-          <p className="absolute -left-[30px] text-gray-dark md:rotate-90 rotate-0 top-1/2 bg-white px-6">
-            {selectedContent[localizationKeys.or]}
-          </p>
-        </p>
+      <div className="hidden md:flex items-center">
+        <div className="h-[70%] border-l border-[#39485C]"></div>
       </div>
-      <div className="mx-auto ">
-        <p className="border-t-[1px] border-gray-dark w-64  my-2 relative md:hidden left-0.5">
-          <p className="absolute text-gray-dark bg-white left-24 -top-3 px-6">
-            {selectedContent[localizationKeys.or]}
-          </p>
-        </p>
-      </div>
-      <div>
-        <div className="">
-          <Formik
-            initialValues={{
-              userName: "",
-              email: "",
-              phone: "",
-              password: "",
-            }}
-            onSubmit={signUp}
-            validationSchema={signUpSchema}
-          >
-            {({
-              values,
-              setFieldValue,
-              errors,
-              touched,
-              handleSubmit,
-              handleBlur,
-            }) => (
-              <Form onSubmit={handleSubmit}>
-                <div className="md:mx-6 mx-0 sm:w-[304px] w-full">
-                  <div className="mt-10 mx-auto ">
-                    <FormikInput
-                      name="userName"
-                      type={"text"}
-                      label={selectedContent[localizationKeys.name]}
-                      placeholder={selectedContent[localizationKeys.name]}
-                    />
-                  </div>
-                  <div className="mt-10 mx-auto ">
-                    <FormikInput
-                      name="email"
-                      type={"email"}
-                      label={selectedContent[localizationKeys.email]}
-                      placeholder={selectedContent[localizationKeys.email]}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <div className="mt-10 mx-auto">
-                      <div
-                        className="float-container"
-                        lang={lang}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
-                        <label
-                          htmlFor="phone"
-                          className="label_Input_Form phone-label"
-                          style={{
-                            [isArabic ? "right" : "left"]: 58,
-                            textAlign: isArabic ? "right" : "left",
-                          }}
-                        >
-                          {selectedContent[localizationKeys.phone]}
-                        </label>
-                        <PhoneInput
-                          id="phone"
-                          name="phone"
-                          international
-                          defaultCountry="AE"
-                          value={values.phoneNumber || ""}
-                          onChange={(value) => setFieldValue("phone", value)}
-                          onBlur={handleBlur}
-                          className={"input_Input_Form phone_Input_Form"}
-                          placeholder={
-                            selectedContent[localizationKeys.phoneNumber]
-                          }
-                          style={{
-                            border: "none",
-                            boxShadow: "none",
-                            outline: "none",
-                            flex: 1,
-                            paddingLeft: isArabic ? "10px" : "50px",
-                            paddingRight: isArabic ? "50px" : "10px",
-                          }}
-                        />
-                        {/* Error Message */}
-                        {touched.phone && errors.phone && (
-                          <div
-                            className="text-red-700 text-md mt-1 absolute flex items-center"
-                            style={{
-                              position: "absolute",
-                              top: "100%",
-                              [isArabic ? "right" : "left"]: 8,
-                            }}
-                          >
-                            <PiWarningCircle className="mr-2" />
-                            {errors.phone}
-                          </div>
-                        )}
-                      </div>
+      <div className="w-full md:w-1/2 px-4 md:px-10 mt-6 md:mt-10 flex flex-col justify-center pb-10">
+        <Formik
+          initialValues={{
+            userName: "",
+            email: "",
+            phone: "",
+            password: "",
+          }}
+          onSubmit={signUp}
+          validationSchema={signUpSchema}
+        >
+          {({
+            values,
+            setFieldValue,
+            errors,
+            touched,
+            handleSubmit,
+            handleBlur,
+          }) => (
+            <Form onSubmit={handleSubmit} className="w-full">
+              <div className="w-full flex flex-col">
+                <div className="flex flex-col mb-6">
+                  <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
+                    {selectedContent[localizationKeys.name]}
+                  </label>
+                  <Field
+                    name="userName"
+                    type="text"
+                    placeholder="John Doe"
+                    className="bg-transparent border-b border-[#39485C] text-sm text-gray-300 pb-2 focus:outline-none focus:border-[#d4af37] placeholder-gray-600 transition-colors w-full"
+                  />
+                  {touched.userName && errors.userName && (
+                    <span className="text-red-500 text-xs mt-1">
+                      {errors.userName}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col mb-6">
+                  <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
+                    {selectedContent[localizationKeys.email]} ADDRESS
+                  </label>
+                  <Field
+                    name="email"
+                    type="email"
+                    placeholder="example@3arbon.com"
+                    className="bg-transparent border-b border-[#39485C] text-sm text-gray-300 pb-2 focus:outline-none focus:border-[#d4af37] placeholder-gray-600 transition-colors w-full"
+                  />
+                  {touched.email && errors.email && (
+                    <span className="text-red-500 text-xs mt-1">
+                      {errors.email}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col mb-6 relative">
+                  <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
+                    {selectedContent[localizationKeys.phone]}
+                  </label>
+                  <PhoneInput
+                    id="phone"
+                    name="phone"
+                    international
+                    defaultCountry="AE"
+                    value={values.phone || ""}
+                    onChange={(value) => setFieldValue("phone", value)}
+                    onBlur={handleBlur}
+                    className="bg-transparent text-sm text-gray-300 pb-2 transition-colors w-full PhoneInput-auth-dark"
+                    placeholder={selectedContent[localizationKeys.phoneNumber]}
+                    style={{
+                      boxShadow: "none",
+                      outline: "none",
+                    }}
+                  />
+                  {/* Style override to make PhoneInput text white in dark mode without rewriting its internals fully */}
+                  <style>{`
+                    .PhoneInput-auth-dark input {
+                      background: transparent;
+                      color: #D1D5DB;
+                      border: none;
+                      outline: none;
+                    }
+                    .PhoneInput-auth-dark input::placeholder {
+                      color: #4B5563;
+                    }
+                    .PhoneInputCountrySelect {
+                      background-color: #2A3A54;
+                      color: white;
+                    }
+                    .PhoneInputCountrySelect option {
+                      background-color: #2A3A54;
+                      color: white;
+                    }
+                    .PhoneInput {
+                      background: #2A3A54;
+                    }
+                    .PhoneInputCountry {
+                      background: #2A3A54;
+                    }
+                    .PhoneInputCountryIcon {
+                      background: #2A3A54;
+                      box-shadow: none;
+                    }
+                    .PhoneInputInput {
+                      background-color: transparent !important;
+                      color: #d1d5db !important;
+                      border: none ;
+                      outline: none ;
+                      border-color: #39485C !important;
+                      focus-within:border-color:#d4af37 !important;
+                    }
+                    .PhoneInputCountrySelectArrow {
+                      color: #d4af37;
+                      opacity: 1;
+                      border-bottom-width: 2px;
+                      border-right-width: 2px;
+                    }
+                  `}</style>
+                  {touched.phone && errors.phone && (
+                    <div className="text-red-500 text-xs mt-1 flex items-center">
+                      <PiWarningCircle className="mr-1" />
+                      {errors.phone}
                     </div>
-                  </div>
-                  <div className="mt-10 mx-auto relative">
-                    <FormikInput
+                  )}
+                </div>
+
+                <div className="flex flex-col mb-6 relative">
+                  <label className="text-[#d4af37] text-[10px] font-bold tracking-[0.2em] uppercase mb-2">
+                    {selectedContent[localizationKeys.password]}
+                  </label>
+                  <div className="relative">
+                    <Field
                       name="password"
                       type={showPassword ? "text" : "password"}
-                      label={selectedContent[localizationKeys.password]}
-                      placeholder={selectedContent[localizationKeys.password]}
+                      placeholder="••••••••••••"
+                      className="bg-transparent border-b border-[#39485C] text-sm text-gray-300 pb-2 pr-8 focus:outline-none focus:border-[#d4af37] placeholder-gray-600 transition-colors w-full"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute text-primary right-4 top-7 transform -translate-y-1/2 text-gray-500"
+                      className="absolute right-0 bottom-2 text-gray-500 hover:text-gray-300"
                     >
                       {showPassword ? (
-                        <VscEye size={20} />
+                        <VscEye size={18} />
                       ) : (
-                        <VscEyeClosed size={20} />
+                        <VscEyeClosed size={18} />
                       )}
                     </button>
                   </div>
-                  <TermsAndConditions isFooter={false} />
-                  <div className="">
-                    <Button
-                      loading={isLoading}
-                      onClick={() => {
-                        // history.push(routes.dashboard.app);
-                      }}
-                      className="bg-primary hover:bg-primary-dark opacity-100 sm:w-[304px]  w-full h-[48px] rounded-lg text-white mt-5 font-normal text-base rtl:font-serifAR ltr:font-serifEN "
-                    >
-                      {selectedContent[localizationKeys.createAccount]}
-                    </Button>
-                  </div>
+                  {touched.password && errors.password && (
+                    <span className="text-red-500 text-xs mt-1">
+                      {errors.password}
+                    </span>
+                  )}
                 </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
+
+                <div className="mb-6 -mt-2">
+                  <TermsAndConditions isFooter={false} />
+                </div>
+
+                <Button
+                  loading={isLoading}
+                  className="w-full bg-[#d4af37] hover:bg-[#e0b942] text-[#2A3A54] font-bold text-sm tracking-widest uppercase py-3.5 rounded-sm transition-colors shadow-lg shadow-[#d4af37]/20 border-0 m-0"
+                  type="submit"
+                >
+                  {selectedContent[localizationKeys.createAccount]}
+                </Button>
+
+                <div className="mt-8 text-center w-full">
+                  <span className="text-gray-500 text-[10px] font-bold tracking-[0.15em] uppercase">
+                    {
+                      selectedContent[localizationKeys.alreadyHaveAnAccount]
+                    }{" "}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={onToggleView}
+                    className="text-[#d4af37] text-[10px] font-bold tracking-[0.15em] uppercase hover:text-[#e0b942] transition-colors"
+                  >
+                    {selectedContent[localizationKeys.signIn]}
+                  </button>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );
