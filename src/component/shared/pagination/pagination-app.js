@@ -3,6 +3,7 @@ import { Pagination } from "semantic-ui-react";
 import useFilter from "../../../hooks/use-filter";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import "../../../../src/assets/style/pagination-app.css";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const PaginationApp = ({
   totalPages,
@@ -18,10 +19,10 @@ const PaginationApp = ({
     type === "auction"
       ? "auctionPage"
       : type === "products"
-      ? "productPage"
-      : type === "upcomingAuction"
-      ? "UpcomingauctionPage"
-      : "page";
+        ? "productPage"
+        : type === "upcomingAuction"
+          ? "UpcomingauctionPage"
+          : "page";
   const [page, setPage] = useFilter(pageParam, DEFAULT_PAGE);
   const per_Page = perPage ? perPage : getDefaultPerPage();
   const [perpage, setPerPage] = useFilter("perPage", per_Page);
@@ -83,17 +84,25 @@ const PaginationApp = ({
       className="Edit_Pagination_App"
       defaultActivePage={parseInt(page)}
       activePage={parseInt(page)}
-      ellipsisItem={windowWidth < 768 ? null : undefined}
+      ellipsisItem={windowWidth < 768 ? null : { content: "...", icon: true }}
       firstItem={null}
       lastItem={null}
-      prevItem={{ "aria-label": "Previous page" }}
-      nextItem={{ "aria-label": "Next page" }}
+      prevItem={{
+        content: <MdNavigateBefore className="text-xl md:text-2xl" />,
+        icon: true,
+        "aria-label": "Previous page",
+      }}
+      nextItem={{
+        content: <MdNavigateNext className="text-xl md:text-2xl" />,
+        icon: true,
+        "aria-label": "Next page",
+      }}
       secondary
       totalPages={parseInt(totalPages) || 1}
       onPageChange={handlePageChange}
-      size={windowWidth < 768 ? "mini" : "small"}
-      boundaryRange={windowWidth < 768 ? 1 : 1}
-      siblingRange={windowWidth < 768 ? 1 : 1}
+      size={windowWidth < 768 ? "mini" : "large"}
+      boundaryRange={windowWidth < 768 ? 1 : 2}
+      siblingRange={windowWidth < 768 ? 1 : 2}
     />
   );
 };

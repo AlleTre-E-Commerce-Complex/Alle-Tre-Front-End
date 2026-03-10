@@ -64,7 +64,7 @@ const Header = ({
   const [selectedOption, setSelectedOption] = useState(
     selectedContent[localizationKeys.all],
   );
-  const { GatogryOptions, loadingGatogry } = useGetGatogry();
+  // const { GatogryOptions, loadingGatogry } = useGetGatogry();
 
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
@@ -746,7 +746,7 @@ const Header = ({
                 </div>
               </button>
             </div>
-            <div className="my-auto "></div>
+
             <div
               className="relative inline-block text-left"
               ref={sellDropdownRef}
@@ -1025,7 +1025,7 @@ const Header = ({
             </div>
           )} */}
           <DropdownLang className="Edit_Lang_Dropdown text-black bg-primary hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] hidden items-center justify-center " />
-          <DropdownLang className="text-black md:hidden bg-primary hover:bg-yellow-200/10 px-3 py-2 rounded-lg transition-all duration-300 border border-primary-light hover:border-yellow shadow-sm hover:shadow-md" />
+          <DropdownLang className="text-black  bg-primary hover:bg-yellow-200/10 px-3 py-2 rounded-lg transition-all duration-300 border border-primary-light hover:border-yellow shadow-sm hover:shadow-md" />
 
           {/* <PopupCategoriesModel
             isOpen={isOpen}
@@ -1044,13 +1044,13 @@ const Header = ({
                     {selectedContent[localizationKeys.profile]}
                   </p>
                 </button>
-                <div
+                {/* <div
                   onClick={() => setLogoutModalOpen(true)}
                   className="group w-[120px] h-[48px] border-[1px] border-primary-light text-red-600 hover:bg-primary-light hover:text-white rounded-lg flex items-center justify-center gap-x-1 py-3 text-base font-normal transition-all duration-300 cursor-pointer"
                 >
                   <MdLogout className="text-xl" />
                   <span> {selectedContent[localizationKeys.logout]}</span>
-                </div>
+                </div> */}
                 <LogoutModal
                   open={logoutModalOpen}
                   setOpen={setLogoutModalOpen}

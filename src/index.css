@@ -85,13 +85,13 @@
 
   .dark {
     /* Backgrounds */
-    --color-bg: #1a202c; /* Dark background placeholder */
+    --color-bg: #344664; /* Dark background placeholder */
     --color-bg-gray: #2d3748;
-    --color-bg-profile: #4a55681a;
+    --color-bg-profile: #1d2f4e;
 
     /* Primary */
     --color-primary: #2A3A54; /* Maintaining primary branding in dark mode often looks good */
-    --color-primary-dark: #1f2937;
+    --color-primary-dark: #1e2738;
     --color-primary-light: #6b7280;
     --color-primary-veryLight: #eae2e6;
 
@@ -120,7 +120,7 @@
     --color-cyan: #06b6d4;
 
     --color-yellow: #d4af37;
-    --color-yellow-light: #78350f;
+    --color-yellow-light: #a07b4c;
 
     --color-orang: #ea580c;
   }

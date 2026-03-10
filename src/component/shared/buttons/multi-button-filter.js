@@ -1,28 +1,28 @@
 import React from "react";
 import useFilter from "../../../hooks/use-filter";
-import localizationKeys from "../../../localization/localization-keys";
-import content from "../../../localization/content";
-import { useLanguage } from "../../../context/language-context";
 import DropdownButtonFilter from "./dropdown-button-filter";
 
 const removeFromArray = (arr, v) => arr.filter((a) => a !== v);
 
-const MultiButtonFilter = ({ name, values = [], myRef, isMultiSelect = true ,subCategories}) => {
+const MultiButtonFilter = ({
+  name,
+  values = [],
+  myRef,
+  isMultiSelect = true,
+  subCategories,
+  variant = "checkbox",
+}) => {
   const [filter, setFilter] = useFilter(name, isMultiSelect ? [] : "");
-  const [lang] = useLanguage("");
-  const selectedContent = content[lang];
-  
+
   // Ensure values is always an array
   const filterValues = Array.isArray(values) ? values : [];
-  
 
   const handleClick = (value) => {
     if (isMultiSelect) {
       const currentFilter = Array.isArray(filter) ? filter : [];
-      if(name ==='categories' && !currentFilter.includes(value) ){
-         currentFilter.length = 0
+      if (name === "categories" && !currentFilter.includes(value)) {
+        currentFilter.length = 0;
       }
-
 
       const newFilter = currentFilter.includes(value)
         ? removeFromArray(currentFilter, value)
@@ -46,50 +46,85 @@ const MultiButtonFilter = ({ name, values = [], myRef, isMultiSelect = true ,sub
   };
 
   return (
-    <div className="mb-4">
-      <h4 className="text-md font-semibold text-gray-900 mb-3">
-        {selectedContent[localizationKeys.selectOptions]}
-      </h4>
-      <div className="flex flex-col space-y-2 max-h-[350px] overflow-y-auto pr-2">
-        {filterValues.map((v, index) => (
-          <React.Fragment key={index}>
-            <div 
-              onClick={() => handleClick(v?.value.toString())}
-              className={`flex items-center p-3 cursor-pointer rounded-lg transition-all duration-200 ease-in-out
-                ${
-                  isSelected(v?.value.toString())
-                    ? "bg-primary text-white shadow-md"
-                    : "bg-white text-gray-dark border border-gray-300 hover:bg-gray-50 hover:border-primary"
-                }`}
-            >
-              <div className="flex items-center space-x-3 w-full">
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center relative
-                  ${isSelected(v?.value.toString()) 
-                    ? "border-white" 
-                    : "border-gray-400"
+    <div className="w-full">
+      <div
+        className={
+          variant === "button"
+            ? "flex flex-wrap gap-2 mt-2"
+            : "flex flex-col space-y-3 max-h-[350px] overflow-y-auto pr-2"
+        }
+      >
+        {filterValues.map((v, index) => {
+          const selected = isSelected(v?.value.toString());
+
+          if (variant === "button") {
+            return (
+              <button
+                key={index}
+                onClick={() => handleClick(v?.value.toString())}
+                className={`px-4 py-2 text-[11px] font-bold tracking-wider rounded transition-colors duration-200 uppercase
+                  ${
+                    selected
+                      ? "border border-[#d4af37] text-[#d4af37] bg-[#d4af37]/10"
+                      : "border border-gray-200 dark:border-gray-700 text-[#1e2738] dark:text-gray-300 hover:border-gray-300"
+                  }
+                `}
+              >
+                {v?.name || ""}
+              </button>
+            );
+          }
+
+          return (
+            <React.Fragment key={index}>
+              <div
+                onClick={() => handleClick(v?.value.toString())}
+                className="flex items-center space-x-3 cursor-pointer group py-1"
+              >
+                <div
+                  className={`w-4 h-4 rounded flex items-center justify-center border transition-all duration-200 shrink-0
+                  ${
+                    selected
+                      ? "bg-[#d4af37] border-[#d4af37]"
+                      : "border-gray-500 dark:border-gray-400 group-hover:border-[#d4af37] bg-white dark:bg-transparent"
                   }`}
                 >
-                  {isSelected(v?.value.toString()) && (
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white" />
+                  {selected && (
+                    <svg
+                      className="w-3 h-3 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
                   )}
                 </div>
-                <span className="font-medium">{v?.name || ''}</span>
+                <span
+                  className={`text-[15px] transition-colors font-serifEN tracking-wide ${selected ? "text-[#1e2738] dark:text-white" : "text-[#1e2738]/90 dark:text-gray-300 group-hover:text-[#1e2738] dark:group-hover:text-white"}`}
+                >
+                  {v?.name || ""}
+                </span>
               </div>
-            </div>
-            {isSelected(v?.value.toString()) && subCategories?.length > 0 && (
-              <div className="ml-6">
-                <DropdownButtonFilter 
-                  myRef={myRef}
-                  values={subCategories}
-                  name='subCategory'
-                  isMultiSelect={true}
-                />
-              </div>
-            )}
-          </React.Fragment>
-        ))}
+              {selected && subCategories?.length > 0 && (
+                <div className="ml-7 mt-1">
+                  <DropdownButtonFilter
+                    myRef={myRef}
+                    values={subCategories}
+                    name="subCategory"
+                    isMultiSelect={true}
+                  />
+                </div>
+              )}
+            </React.Fragment>
+          );
+        })}
       </div>
-      
     </div>
   );
 };
