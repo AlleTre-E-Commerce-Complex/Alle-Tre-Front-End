@@ -13,8 +13,9 @@ import { motion } from "framer-motion";
 import ShowFilterSections from "./show-filter-sections";
 import useGetSubGatogry from "hooks/use-get-sub-category";
 import { useLocation } from "react-router-dom";
-import queryString from 'query-string'
+import queryString from "query-string";
 import DropdownButtonFilter from "component/shared/buttons/dropdown-button-filter";
+import { useHistory } from "react-router-dom";
 
 const FilterSections = ({
   myRef,
@@ -23,6 +24,7 @@ const FilterSections = ({
   isFullPage,
   onClose,
 }) => {
+  const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { GatogryOptions } = useGetGatogry();
@@ -33,9 +35,10 @@ const FilterSections = ({
   const { search } = useLocation();
   const parsed = queryString.parse(search, { arrayFormat: "bracket" });
   const categories = parsed?.categories || [];
-  const category_Id = categories.length >= 1  ? categories[categories.length -1] : null
+  const category_Id =
+    categories.length >= 1 ? categories[categories.length - 1] : null;
   const { SubGatogryOptions } = useGetSubGatogry(category_Id);
-    const toggleSection = (section) => {
+  const toggleSection = (section) => {
     setExpandedSections((prevState) => ({
       ...prevState,
       [section]: !prevState[section],
@@ -44,15 +47,15 @@ const FilterSections = ({
 
   const renderArrowIcon = (section) => {
     return expandedSections[section] ? (
-      <MdKeyboardArrowUp className="text-2xl" />
+      <MdKeyboardArrowUp className="text-xl text-[#1e2738] dark:text-gray-300" />
     ) : (
-      <MdKeyboardArrowDown className="text-2xl" />
+      <MdKeyboardArrowDown className="text-xl text-[#1e2738] dark:text-gray-300" />
     );
   };
 
   const overlayClasses = isFullPage
-    ? "fixed inset-0 z-50 bg-white overflow-y-auto px-4"
-    : "relative hidden md:block bg-white flex flex-col gap-4 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 max-w-full mx-auto w-full lg:max-w-[300px] md:max-w-[280px] border border-gray-100 h-full backdrop-blur-sm";
+    ? "fixed inset-0 z-50 bg-[#fcfcfc] dark:bg-[#0b101a] overflow-y-auto px-4 w-full"
+    : "relative hidden md:flex flex-col gap-4 py-4 md:py-6 pr-4 shadow-none backdrop-blur-none transition-all duration-300 max-w-full mx-auto w-full lg:max-w-[300px] md:max-w-[280px] h-full bg-transparent";
 
   useEffect(() => {
     if (isFullPage) {
@@ -74,10 +77,20 @@ const FilterSections = ({
       transition={{ duration: 0.3 }}
       className={overlayClasses}
     >
-      <div className="relative flex items-center justify-between p-4">
-        <h2 className="text-xl font-bold text-gray-500">
-          {selectedContent[localizationKeys.filterOptions]}
+      <div className="relative flex items-center justify-between p-2 mb-2">
+        <h2 className="text-2xl font-bold text-[#1e2738] dark:text-white font-serifEN">
+          {selectedContent[localizationKeys.filter]}
         </h2>
+        {/* CLEAR ALL ALWAYS VISIBLE FOR DESKTOP AND MOBILE */}
+        <button
+          onClick={() => {
+            history.push({ search: "" });
+            // add additional form resets if necessary
+          }}
+          className="text-[11px] font-bold text-yellow hover:text-[#b8952b] transition uppercase tracking-widest"
+        >
+        {selectedContent[localizationKeys.clearAll]}
+        </button>
         {isFullPage && (
           <div className="flex items-center justify-between">
             <div className={`${lang === "ar" ? "ml-2" : "mr-2"}`}>
@@ -118,12 +131,12 @@ const FilterSections = ({
       <div className="flex flex-col gap-4">
         {/* Categories Section */}
         {!hiddenGatogry && (
-          <div>
+          <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40  rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
             <div
               onClick={() => toggleSection("categories")}
-              className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+              className="cursor-pointer px-4 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-[#2a3648] transition-colors"
             >
-              <h3 className="font-medium text-lg">
+              <h3 className="font-bold text-[11px] uppercase tracking-widest text-[#d4af37]">
                 {selectedContent[localizationKeys.category]}
               </h3>
               {renderArrowIcon("categories")}
@@ -134,7 +147,7 @@ const FilterSections = ({
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.1, ease: "linear" }}
-                className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+                className="px-4 pb-4"
               >
                 <MultiButtonFilter
                   values={GatogryOptions}
@@ -142,8 +155,8 @@ const FilterSections = ({
                   isMultiSelect={true}
                   myRef={myRef}
                   subCategories={SubGatogryOptions}
+                  variant="checkbox"
                 />
-           
               </motion.div>
             )}
           </div>
@@ -179,12 +192,12 @@ const FilterSections = ({
         </div> */}
 
         {/* Selling Type */}
-        <div className="">
+        <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40 rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
           <div
             onClick={() => toggleSection("sellingType")}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+            className="cursor-pointer px-4 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-[#2a3648] transition-colors"
           >
-            <h3 className="font-medium text-lg">
+            <h3 className="font-bold text-[11px] uppercase tracking-widest text-[#d4af37]">
               {selectedContent[localizationKeys.sellingType]}
             </h3>
             {renderArrowIcon("sellingType")}
@@ -195,7 +208,7 @@ const FilterSections = ({
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.1, ease: "linear" }}
-              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+              className="px-4 pb-4"
             >
               <MultiButtonFilter
                 name="sellingType"
@@ -211,18 +224,19 @@ const FilterSections = ({
                 ]}
                 isMultiSelect={false}
                 myRef={myRef}
+                variant="button"
               />
             </motion.div>
           )}
         </div>
 
         {/* Auction Status */}
-        <div className="">
+        <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40  rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
           <div
             onClick={() => toggleSection("auctionStatus")}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+            className="cursor-pointer px-4 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-[#2a3648] transition-colors"
           >
-            <h3 className="font-medium text-lg">
+            <h3 className="font-bold text-[11px] uppercase tracking-widest text-[#d4af37]">
               {selectedContent[localizationKeys.auctionState]}
             </h3>
             {renderArrowIcon("auctionStatus")}
@@ -233,7 +247,7 @@ const FilterSections = ({
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.1, ease: "linear" }}
-              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+              className="px-4 pb-4"
             >
               <MultiButtonFilter
                 name="auctionStatus"
@@ -249,18 +263,19 @@ const FilterSections = ({
                 ]}
                 isMultiSelect={false}
                 myRef={myRef}
+                variant="button"
               />
             </motion.div>
           )}
         </div>
 
         {/* Usage Status */}
-        <div className="">
+        <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40  rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
           <div
             onClick={() => toggleSection("usageStatus")}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary hover:shadow-lg flex justify-between items-center"
+            className="cursor-pointer px-4 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-[#2a3648] transition-colors"
           >
-            <h3 className="font-medium text-lg">
+            <h3 className="font-bold text-[11px] uppercase tracking-widest text-[#d4af37]">
               {selectedContent[localizationKeys.condition]}
             </h3>
             {renderArrowIcon("usageStatus")}
@@ -271,7 +286,7 @@ const FilterSections = ({
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.1, ease: "linear" }}
-              className="mt-3 p-4 rounded-lg bg-white shadow-sm"
+              className="px-4 pb-4"
             >
               <MultiButtonFilter
                 name="usageStatus"
@@ -288,19 +303,19 @@ const FilterSections = ({
                 ]}
                 isMultiSelect={false}
                 myRef={myRef}
+                variant="button"
               />
             </motion.div>
           )}
         </div>
 
         {/* Price Range Section */}
-        <div>
+        <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40  rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
           <div
             onClick={() => toggleSection("price")}
-            className="cursor-pointer p-3 border-gray-500 rounded-lg shadow-md transition-all duration-100 ease-in-out bg-gradient-to-r from-[#a91d3a] to-[#d85b73] text-white/90 hover:from-[#f19ab1] hover:to-[#f1abba] hover:text-primary
-            hover:shadow-lg flex justify-between items-center"
+            className="cursor-pointer px-4 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-[#2a3648] transition-colors"
           >
-            <h3 className="font-medium text-lg">
+            <h3 className="font-bold text-[11px] uppercase tracking-widest text-[#d4af37]">
               {selectedContent[localizationKeys.price]}
             </h3>
             {renderArrowIcon("price")}
@@ -311,7 +326,7 @@ const FilterSections = ({
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.1, ease: "linear" }}
-              className={`mt-3 ${isFullPage ? "w-full max-w-3xl mx-auto" : ""}`}
+              className={`px-4 pb-4 ${isFullPage ? "w-full max-w-3xl mx-auto" : ""}`}
             >
               <RangeInput className="" myRef={myRef} isFullPage={isFullPage} />
             </motion.div>

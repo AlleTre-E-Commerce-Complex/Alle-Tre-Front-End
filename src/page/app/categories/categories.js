@@ -1,12 +1,10 @@
 import AuctionCardList from "component/home-components/auction-card-list";
-import React ,{ useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import SearchResults from "../../../component/home-components/search-results";
 import { Dimmer } from "semantic-ui-react";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
-import listicon from "../../../../src/assets/icons/bullet.svg";
-import menuicon from "../../../../src/assets/icons/grid-06.svg";
 import api from "../../../api";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import AuctionCard from "../../../component/home-components/auction-card";
@@ -23,10 +21,6 @@ import useGetSubGatogry from "../../../hooks/use-get-sub-category";
 import useLocalStorage from "../../../hooks/use-localstorage";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-// import { Open } from "../../../redux-store/auth-model-slice";
-// import routes from "../../../routes";
-// import { ReactComponent as NoAuctionImg } from "../../../../src/assets/images/no auction new.svg";
-// import { ReactComponent as NoProductImg } from "../../../../src/assets/images/no products new.svg";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import ProductCard from "component/home-components/ProductCard";
 import ProductCardList from "component/home-components/products-card-list";
@@ -47,24 +41,33 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const myRef1 = useRef();
   const dispatch = useDispatch();
   const [auctionPageNumber, setAuctionPageNumber] = useState(
-    Number(DEFAULT_PAGE)
+    Number(DEFAULT_PAGE),
   );
   const [listedPageNumber, setListedPageNumber] = useState(
-    Number(DEFAULT_PAGE)
+    Number(DEFAULT_PAGE),
   );
 
-     const [forceReload, setForceReload] = useState(false);
-    const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  const [forceReload, setForceReload] = useState(false);
+  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [isGrid, setIsGrid] = useState(() => {
     return JSON.parse(localStorage.getItem("isGrid")) ?? true;
   });
+  const [activeTab, setActiveTab] = useState(
+    selectedType === "all" ? "auction" : selectedType,
+  );
+
+  useEffect(() => {
+    if (selectedType !== "all") {
+      setActiveTab(selectedType);
+    }
+  }, [selectedType]);
+
   const [open, setOpen] = useState(false);
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
 
   const [mainAuctions, setMainAuctions] = useState();
-  console.log("EEEEEEE",mainAuctions)
   const [listedProducts, setListedProducts] = useState([]);
   const [totalPagesListed, setTotalPagesListed] = useState();
   const [totalpagesAuction, setTotalpagesAuction] = useState();
@@ -97,7 +100,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-      isHome:false,
+      isHome: false,
     };
 
     Object.keys(filterParams).forEach((key) => {
@@ -116,7 +119,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           setMainAuctions(res?.data?.data);
           setTotalpagesAuction(res?.data?.pagination?.totalPages);
           // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        })
+        }),
       );
     } else {
       runCategories(
@@ -124,11 +127,11 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           setMainAuctions(res?.data?.data);
           setTotalpagesAuction(res?.data?.pagination?.totalPages);
           // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        })
+        }),
       );
     }
   }, [categoryId, runCategories, search, user, auctionPageNumber]);
-  
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -160,8 +163,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
-      isHome:false,
-
+      isHome: false,
     };
 
     Object.keys(filterParams).forEach((key) => {
@@ -182,7 +184,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             setListedProducts(res?.data?.data);
             setTotalPagesListed(res?.data?.pagination?.totalPages);
             // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-          })
+          }),
       );
     } else {
       runCategories(
@@ -192,7 +194,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             setListedProducts(res?.data?.data);
             setTotalPagesListed(res?.data?.pagination?.totalPages);
             // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-          })
+          }),
       );
     }
   }, [categoryId, runCategories, search, user, listedPageNumber]);
@@ -201,7 +203,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   useEffect(() => {
     if (categoryId) {
       const selectedCategory = GatogryOptions.find(
-        (category) => category.value === parseInt(categoryId)
+        (category) => category.value === parseInt(categoryId),
       );
       if (selectedCategory) SetselectedCategor(selectedCategory);
     }
@@ -213,7 +215,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
 
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",
-    ""
+    "",
   );
 
   // const handelCreatOuction = () => {
@@ -236,7 +238,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           onClose={() => setIsFilterOpen(false)}
         />
       )}
-      <div className="">
+      <div className="bg-white dark:bg-background">
         <div className="mx-auto mt-32 py-3 md:py-6 py-3 ">
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
@@ -246,54 +248,30 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             {/* <Loader active /> */}
             <LodingTestAllatre />
           </Dimmer>
-          <div className="relative w-full aspect-[21/9] max-h-[370px] mb-6 overflow-hidden rounded-lg px-4">
+          <div className="relative w-full aspect-[21/9] sm:aspect-[21/7] lg:aspect-[21/6] xl:max-h-[340px] mb-6 overflow-hidden rounded-xl md:rounded-2xl lg:px-4">
             <img
-              className="w-full h-full object-fill object-center rounded-lg"
-              src={lang === "ar" ? (selectedCategor?.bannerLinkAr || selectedCategor?.bannerLink || addImage) : (selectedCategor?.bannerLink || selectedCategor?.bannerLinkAr || addImage)}
+              className="w-full h-full object-cover object-center rounded-xl md:rounded-2xl shadow-sm"
+              src={
+                lang === "ar"
+                  ? selectedCategor?.bannerLinkAr ||
+                    selectedCategor?.bannerLink ||
+                    addImage
+                  : selectedCategor?.bannerLink ||
+                    selectedCategor?.bannerLinkAr ||
+                    addImage
+              }
               alt={selectedCategor?.text || "Category Banner"}
               loading="eager"
             />
-            <div className="">
-              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
-                  {selectedCategor?.text}
-                </h1>
-              </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1b2331]/80 via-[#1b2331]/20 to-transparent lg:mx-4 rounded-xl md:rounded-2xl pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 lg:p-10 text-white lg:mx-4 z-10">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serifEN font-bold tracking-wide drop-shadow-md">
+                {selectedCategor?.text}
+              </h1>
             </div>
           </div>
           <div className={SubGatogryOptions.length === 0 ? "hidden" : "mb-6"}>
             <SubCategorySlider SubGatogryOptions={SubGatogryOptions} />
-          </div>
-          <div className="flex justify-between px-4 lg:mx-auto mx-2 px-2 pb-4 ">
-            <div className="flex  gap-x-60">
-              <h6 className=" text-gray-med text-base font-normal pt-3 ">
-                {mainAuctions?.length}{" "}
-                {selectedContent[localizationKeys.results]}
-              </h6>
-            </div>
-            <div className="mt-auto">
-              {isGrid ? (
-                <button
-                  onClick={() => setIsGrid((prev) => !prev)}
-                  className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
-                >
-                  <img src={menuicon} alt="menuicon" />
-                  <p className="flex items-center">
-                    {selectedContent[localizationKeys.Grid]}
-                  </p>
-                </button>
-              ) : (
-                <button
-                  onClick={() => setIsGrid((prev) => !prev)}
-                  className="flex items-center gap-x-3 h-9 text-primary-light bg-primary-light/20 rounded-lg p-4 mr-3"
-                >
-                  <img src={listicon} alt="listicon" className="w-5 h-5" />
-                  <p className="flex items-center">
-                    {selectedContent[localizationKeys.List]}
-                  </p>
-                </button>
-              )}
-            </div>
           </div>
           <div className="flex gap-3 px-4 lg:mx-auto md:mx-12 ">
             {/* left filter sections */}
@@ -303,7 +281,113 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
               hiddenGatogry
             />
             {/* right card sections */}
-            {/* {mainAuctions?.length === 0 ? (
+            <div className="flex-1 min-w-0">
+              {/* Breadcrumb / Title / Tabs / Toggle header */}
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-end pb-6 border-b border-gray-200 dark:border-gray-800 mb-6 gap-y-4">
+                <div className="flex flex-col gap-1 max-w-2xl">
+                  <div className="flex items-center text-[10px] md:text-[11px] text-gray-500 dark:text-gray-400 gap-1 uppercase font-semibold tracking-wider mb-1">
+                    <span className="hover:text-yellow cursor-pointer transition-colors">
+                      HOME
+                    </span>
+                    <span>&gt;</span>
+                    <span className="text-yellow">
+                      {selectedCategor?.text || "CARS"}
+                    </span>
+                  </div>
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-serifEN dark:text-white text-primary font-bold">
+                    {selectedCategor?.text || "Luxury Vehicles"}
+                  </h1>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm mt-1">
+                    Discover{" "}
+                    {activeTab === "auction"
+                      ? mainAuctions?.length || 0
+                      : listedProducts?.length || 0}{" "}
+                    curated listings from the world's most prestigious
+                    collections.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 mt-auto md:mt-0 w-full md:w-auto">
+                  {/* Type Toggle (Live Auctions / Fixed Price) */}
+                  <div className="flex bg-gray-100 dark:bg-[#1b2331] rounded-lg p-1 flex-1 md:flex-none h-[42px]">
+                    <button
+                      onClick={() => setActiveTab("auction")}
+                      className={`flex-1 md:flex-none px-4 py-1.5 text-xs md:text-sm font-semibold rounded-md transition-all duration-300 ${
+                        activeTab === "auction"
+                          ? "bg-white dark:bg-[#2c3e50] text-[#1e2738] dark:text-white shadow-sm"
+                          : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                      }`}
+                    >
+                      {selectedContent[localizationKeys.liveAuctions]}
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("products")}
+                      className={`flex-1 md:flex-none px-4 py-1.5 text-xs md:text-sm font-semibold rounded-md transition-all duration-300 ${
+                        activeTab === "products"
+                          ? "bg-white dark:bg-[#2c3e50] text-[#1e2738] dark:text-white shadow-sm"
+                          : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                      }`}
+                    >
+                      {selectedContent[localizationKeys.listProduct]}
+                    </button>
+                  </div>
+
+                  {/* Grid / List Icon Buttons */}
+                  <div className="flex bg-gray-100 dark:bg-[#1b2331] rounded-lg p-1 gap-1 h-[42px]">
+                    <button
+                      onClick={() => setIsGrid(true)}
+                      className={`p-2 rounded-md transition-all duration-300 ${
+                        isGrid
+                          ? "bg-[#1e2738] dark:bg-yellow text-white dark:text-[#1e2738] shadow-sm"
+                          : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                      }`}
+                    >
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill={isGrid ? "currentColor" : "none"}
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => setIsGrid(false)}
+                      className={`p-2 rounded-md transition-all duration-300 ${
+                        !isGrid
+                          ? "bg-[#1e2738] dark:bg-yellow text-white dark:text-[#1e2738] shadow-sm"
+                          : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                      }`}
+                    >
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill={!isGrid ? "currentColor" : "none"}
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {/* {mainAuctions?.length === 0 ? (
           <div className="w-full flex justify-center pt-52 bg-[#E5E5E51A] rounded-2xl">
             <div className="mx-auto text-center">
               <EmtyHome className="mx-auto " />
@@ -366,7 +450,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
           </div>
         )} */}
 
-            <div className="w-full">
               {titleParam ? (
                 <SearchResults
                   auctions={mainAuctions}
@@ -376,14 +459,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                 />
               ) : (
                 (() => {
-                  if (isGrid && selectedType === "auction") {
+                  if (isGrid && activeTab === "auction") {
                     return (
                       <div>
-                        {mainAuctions?.length !== 0 && (
-                          <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                            {selectedContent[localizationKeys.trendingAuctions]}
-                          </h1>
-                        )}
                         <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                           {mainAuctions?.map((e) => (
                             <AuctionCard
@@ -425,15 +503,10 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         </div>
                       </div>
                     );
-                  } else if (!isGrid && selectedType === "auction") {
+                  } else if (!isGrid && activeTab === "auction") {
                     return (
                       <div>
-                        {mainAuctions?.length !== 0 && (
-                          <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                            {selectedContent[localizationKeys.trendingAuctions]}
-                          </h1>
-                        )}
-                        <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                        <div className="flex flex-col gap-4 w-full">
                           {mainAuctions?.map((e) => (
                             <AuctionCardList
                               key={e?.id}
@@ -473,17 +546,9 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         </div>
                       </div>
                     );
-                  } else if (isGrid && selectedType === "products") {
+                  } else if (isGrid && activeTab === "products") {
                     return (
                       <div>
-                        {listedProducts?.length !== 0 && (
-                          <h1
-                            ref={myRef1}
-                            className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                          >
-                            {selectedContent[localizationKeys.listedProduct]}
-                          </h1>
-                        )}
                         <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                           {listedProducts?.map((e) => (
                             <ProductCard
@@ -523,18 +588,10 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         </div>
                       </div>
                     );
-                  } else if (!isGrid && selectedType === "products") {
+                  } else if (!isGrid && activeTab === "products") {
                     return (
                       <div>
-                        {listedProducts?.length !== 0 && (
-                          <h1
-                            ref={myRef1}
-                            className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                          >
-                            {selectedContent[localizationKeys.listedProduct]}
-                          </h1>
-                        )}
-                        <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                        <div className="flex flex-col gap-4 w-full">
                           {listedProducts?.map((e) => (
                             <ProductCardList
                               key={e?.id}
@@ -576,11 +633,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (isGrid && selectedType === "all") {
                     return (
                       <>
-                        {mainAuctions?.length !== 0 && (
-                          <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                            {selectedContent[localizationKeys.trendingAuctions]}
-                          </h1>
-                        )}
                         <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                           {mainAuctions?.map((e) => (
                             <AuctionCard
@@ -620,14 +672,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div>
                           <UpComingAuctionsSlider isGrid={isGrid} />
                         </div>
-                        {listedProducts?.length !== 0 && (
-                          <h1
-                            ref={myRef1}
-                            className="pb-6 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                          >
-                            {selectedContent[localizationKeys.listedProduct]}
-                          </h1>
-                        )}
                         <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
                           {listedProducts?.map((e) => (
                             <ProductCard
@@ -670,11 +714,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (!isGrid && selectedType === "all") {
                     return (
                       <>
-                        {mainAuctions?.length !== 0 && (
-                          <h1 className="text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8">
-                            {selectedContent[localizationKeys.trendingAuctions]}
-                          </h1>
-                        )}
                         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                           {mainAuctions?.map((e) => (
                             <AuctionCardList
@@ -713,14 +752,6 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         <div>
                           <UpComingAuctionsSlider isGrid={isGrid} />
                         </div>
-                        {listedProducts?.length !== 0 && (
-                          <h1
-                            ref={myRef1}
-                            className="pb-14 text-center md:text-2xl lg:text-3xl font-extrabold text-gray-700 dark:text-gray-300 drop-shadow-md mb-8"
-                          >
-                            {selectedContent[localizationKeys.listedProduct]}
-                          </h1>
-                        )}
                         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                           {listedProducts?.map((e) => (
                             <ProductCardList

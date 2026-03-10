@@ -1,48 +1,38 @@
-import { React, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import SubCategory from "./SubCategory";
 import Swiper from "swiper";
 import "swiper/css";
-import AnglesRight from "../../../../src/assets/icons/arrow-right.svg";
-import AnglesLeft from "../../../../src/assets/icons/arrow-left.svg";
+import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import localizationKeys from "../../../localization/localization-keys";
 
 const SubCategorySlider = ({ SubGatogryOptions }) => {
   const swiperRef = useRef(null);
   const swiper = useRef(null);
   const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const swiperOptions = {
-    slidesPerView: 2.2,
-    spaceBetween: 12,
+    slidesPerView: 3,
+    spaceBetween: 10,
     navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
+      nextEl: ".swiper-custom-next",
+      prevEl: ".swiper-custom-prev",
     },
     breakpoints: {
-      480: {
-        slidesPerView: 2.5,
-        spaceBetween: 12,
-      },
-      640: {
-        slidesPerView: 3.5,
-        spaceBetween: 16,
-      },
-      768: {
-        slidesPerView: 4.5,
-        spaceBetween: 16,
-      },
-      1024: {
-        slidesPerView: 5.5,
-        spaceBetween: 16,
-      },
-      1280: {
-        slidesPerView: 6,
-        spaceBetween: 16,
-      },
+      480: { slidesPerView: 4, spaceBetween: 15 },
+      640: { slidesPerView: 5, spaceBetween: 20 },
+      768: { slidesPerView: 6, spaceBetween: 30 },
+      1024: { slidesPerView: 7, spaceBetween: 40 },
+      1280: { slidesPerView: 8, spaceBetween: 50 },
     },
   };
 
   useEffect(() => {
     if (swiperRef.current) {
+      if (swiper.current) {
+        swiper.current.destroy();
+      }
       swiper.current = new Swiper(swiperRef.current, swiperOptions);
     }
 
@@ -51,7 +41,7 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
         swiper.current.destroy();
       }
     };
-  }, [lang]);
+  }, [lang, SubGatogryOptions]);
 
   const handleNextClick = () => {
     swiper.current?.slideNext();
@@ -61,48 +51,58 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
     swiper.current?.slidePrev();
   };
 
+  if (!SubGatogryOptions || SubGatogryOptions.length === 0) return null;
+
   return (
-    <div className="container mx-auto px-2 sm:px-4 lg:px-6 my-8 relative">
-      <div className="max-w-[1400px] mx-auto overflow-hidden">
-        <div ref={swiperRef} className="swiper flex justify-center">
-          <div className="swiper-wrapper h-full flex justify-center">
-            {SubGatogryOptions?.map((e, index) => (
-              <div key={index} className="swiper-slide h-auto">
-                <SubCategory
-                  view
-                  img={e?.imageLink}
-                  title={e?.text}
-                  id={e?.value}
-                  className="shadow-lg hover:shadow-xl transition-shadow duration-300"
-                />
-              </div>
-            ))}
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-8 md:my-14 overflow-visible">
+      <div className="max-w-[1400px] mx-auto">
+        {/* Header Section */}
+        <div className="flex items-center justify-between mb-8 md:mb-10 w-full">
+          <h2 className="text-2xl md:text-[28px] font-serifEN text-[#1e2738] dark:text-gray-100 tracking-wide">
+           {selectedContent[localizationKeys.exploreCategories]}
+          </h2>
+
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
+            <button
+              onClick={lang === "ar" ? handleNextClick : handlePrevClick}
+              className="swiper-custom-prev group w-8 h-8 md:w-9 md:h-9 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center hover:bg-[#1e2738] dark:hover:border-gray-300 transition-all duration-300 bg-white dark:bg-transparent cursor-pointer active:scale-95 shadow-sm"
+              aria-label="Previous"
+            >
+              <MdNavigateBefore className="text-[#1e2738] group-hover:text-white dark:text-gray-400 dark:group-hover:text-white text-xl transition-colors" />
+            </button>
+            <button
+              onClick={lang === "ar" ? handlePrevClick : handleNextClick}
+              className="swiper-custom-next group w-8 h-8 md:w-9 md:h-9 rounded-full border border-gray-200 dark:border-gray-600 flex items-center justify-center hover:bg-[#1e2738] dark:hover:border-gray-300 transition-all duration-300 bg-white dark:bg-transparent cursor-pointer active:scale-95 shadow-sm"
+              aria-label="Next"
+            >
+              <MdNavigateNext className="text-[#1e2738] group-hover:text-white dark:text-gray-400 dark:group-hover:text-white text-xl transition-colors" />
+            </button>
           </div>
         </div>
-        <button
-          onClick={lang === "ar" ? handlePrevClick : handleNextClick}
-          className="swiper-button-next absolute top-1/2 -translate-y-1/2 -right-2 md:right-0 z-10 transition-transform hover:scale-105"
-        >
-          <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-            <img
-              className="w-6 h-6 md:w-8 md:h-8"
-              src={AnglesRight}
-              alt="Next"
-            />
+
+        {/* Swiper Section */}
+        <div className="px-2 py-4 -mx-2">
+          <div
+            ref={swiperRef}
+            className="swiper flex justify-center overflow-visible"
+          >
+            <div className="swiper-wrapper flex items-start justify-center pt-2">
+              {SubGatogryOptions?.map((e, index) => (
+                <div
+                  key={index}
+                  className="swiper-slide !h-auto flex justify-center pb-2"
+                >
+                  <SubCategory
+                    img={e?.imageLink}
+                    title={e?.text}
+                    id={e?.value}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </button>
-        <button
-          onClick={lang === "ar" ? handleNextClick : handlePrevClick}
-          className="swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-2 md:left-0 z-10 transition-transform hover:scale-105"
-        >
-          <div className="rounded-full bg-white shadow-lg p-2 cursor-pointer w-10 h-10 md:w-12 md:h-12 flex items-center justify-center">
-            <img
-              className="w-6 h-6 md:w-8 md:h-8"
-              src={AnglesLeft}
-              alt="Previous"
-            />
-          </div>
-        </button>
+        </div>
       </div>
     </div>
   );

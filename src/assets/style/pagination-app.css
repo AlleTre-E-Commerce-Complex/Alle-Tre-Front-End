@@ -2,43 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .Edit_Pagination_App.ui.pagination.menu .item {
-  @apply hover:bg-[#A2547A0D] hover:text-primary  bg-white outline-[#E8E9EC] outline-1 outline text-gray-med/50 flex justify-center p-0 min-w-[35px] min-h-[35px]  rounded-md overflow-hidden !important;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Edit_Pagination_App.ui.pagination.menu {
+  @apply shadow-none border-none flex flex-wrap justify-center gap-1.5 sm:gap-2 m-0 bg-transparent !important;
+  box-shadow: none !important;
 }
-.Edit_Pagination_App.ui.secondary.menu .active.item {
-  @apply bg-[#A2547A0D] text-primary overflow-hidden !important;
-} */
-.Edit_Pagination_App.ui.menu > .item:first-child {
-  text-indent: -9999px !important;
-  display: inline-block !important;
-  background-size: cover !important ;
-  background-position: center !important;
-  width: 30px !important;
-  height: 30px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  margin: 0 !important;
+
+.Edit_Pagination_App.ui.pagination.menu .item {
+  @apply flex items-center justify-center min-w-[32px] h-[32px] sm:min-w-[40px] sm:h-[40px] rounded-lg text-xs sm:text-sm font-bold transition-all duration-300 border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1b2331] text-[#6b7280] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-[#1e2738] dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600 m-0 p-0 cursor-pointer select-none font-serifEN !important;
 }
-.Edit_Pagination_App.ui.menu > .item:last-child {
-  text-indent: -9999px !important;
-  display: inline-block !important;
-  background-size: cover !important ;
-  background-position: center !important;
-  width: 30px !important;
-  height: 30px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  margin: 0 !important;
+
+.Edit_Pagination_App.ui.pagination.menu .item::before {
+  display: none !important;
 }
-.Edit_Pagination_App.ui.menu > .item:first-child:lang(en) {
-  background-image: url("../icons/arrow-left.svg") !important;
+
+/* Active Page */
+.Edit_Pagination_App.ui.pagination.menu .active.item {
+  @apply bg-[#1e2738] dark:bg-[#d4af37] text-white dark:text-[#1b2331] border-[#1e2738] dark:border-[#d4af37] shadow-md hover:bg-[#2c3e50] dark:hover:bg-[#e0c050] hover:text-white dark:hover:text-[#1b2331] !important;
 }
-.Edit_Pagination_App.ui.menu > .item:first-child:lang(ar) {
-  background-image: url("../icons/arrow-right.svg") !important;
+
+/* Disabled Items (.e.g Ellipsis) */
+.Edit_Pagination_App.ui.pagination.menu .disabled.item {
+  @apply opacity-50 cursor-not-allowed bg-transparent dark:bg-transparent border-transparent dark:border-transparent hover:bg-transparent dark:hover:bg-transparent hover:text-[#6b7280] dark:hover:text-gray-400 shadow-none !important;
 }
-.Edit_Pagination_App.ui.menu > .item:last-child:lang(en) {
-  background-image: url("../icons/arrow-right.svg") !important;
-}
-.Edit_Pagination_App.ui.menu > .item:last-child:lang(ar) {
-  background-image: url("../icons/arrow-left.svg") !important;
+
+/* Nav Icons Styling Helper (handled mainly in JS, but nice to ensure alignment) */
+.Edit_Pagination_App.ui.pagination.menu .item.icon {
+  @apply flex items-center justify-center p-0 !important;
 }

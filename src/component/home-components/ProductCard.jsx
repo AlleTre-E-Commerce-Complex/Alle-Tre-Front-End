@@ -1,14 +1,11 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState} from "react";
 import { useLanguage } from "context/language-context";
 import content from "localization/content";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { truncateString } from "utils/truncate-string";
 import routes from "../../routes";
-// import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
 import localizationKeys from "../../localization/localization-keys";
 import { formatCurrency } from "utils/format-currency";
-import { useAuthState } from "context/auth-context";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { ShareFallBack } from "component/shared/react-share/ShareFallback";
@@ -28,24 +25,20 @@ const ProductCard = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-  const { user } = useAuthState();
-  // const { run, isLoading } = useAxios([]);
-  // const dispatch = useDispatch();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const [preloadedVideos, setPreloadedVideos] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
-
   const [showShareFallback, setShowShareFallback] = useState(false);
+
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
     return port
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
-  const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`
-
+  const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`;
 
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
@@ -56,56 +49,42 @@ const ProductCard = ({
   };
 
   const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) {
-      handleNext();
-    }
-    if (touchEnd - touchStart > 75) {
-      handlePrevious();
-    }
+    if (touchStart - touchEnd > 75) handleNext();
+    if (touchEnd - touchStart > 75) handlePrevious();
   };
 
   const handleNext = () => {
     if (!Array.isArray(adsImg) || !adsImg.length) return;
     setIsLoading(true);
-    const nextIndex = (currentImageIndex + 1) % adsImg.length;
-    setCurrentImageIndex(nextIndex);
+    setCurrentImageIndex((currentImageIndex + 1) % adsImg.length);
   };
 
   const handlePrevious = () => {
     if (!Array.isArray(adsImg) || !adsImg.length) return;
     setIsLoading(true);
-    const prevIndex =
-      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
-    setCurrentImageIndex(prevIndex);
+    setCurrentImageIndex(
+      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1,
+    );
   };
 
-  const handleImageLoad = () => {
-    setIsLoading(false);
-  };
+  const handleImageLoad = () => setIsLoading(false);
 
   useEffect(() => {
     if (!Array.isArray(adsImg) || adsImg.length <= 1) return;
-
     const preloadVideo = (index) => {
       if (index < 0 || index >= adsImg.length) return;
-
       const item = adsImg[index];
       if (!item?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i)) return;
       if (preloadedVideos.has(item.imageLink)) return;
-
       const video = document.createElement("video");
       video.preload = "metadata";
       video.src = item.imageLink;
-
       setPreloadedVideos((prev) => new Set([...prev, item.imageLink]));
     };
-
-    const nextIndex = (currentImageIndex + 1) % adsImg.length;
-    preloadVideo(nextIndex);
-
-    const prevIndex =
-      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
-    preloadVideo(prevIndex);
+    preloadVideo((currentImageIndex + 1) % adsImg.length);
+    preloadVideo(
+      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1,
+    );
   }, [currentImageIndex, adsImg, preloadedVideos]);
 
   const handleShare = async () => {
@@ -119,7 +98,7 @@ const ProductCard = ({
         });
       } catch (error) {
         console.error("Error sharing post:", error);
-        setShowShareFallback(true); // Show fallback if native share fails
+        setShowShareFallback(true);
       }
     } else {
       setShowShareFallback(!showShareFallback);
@@ -173,197 +152,199 @@ const ProductCard = ({
   };
 
   return (
-    <div>
-      <div className="group w-full max-w-[240px] h-[400px] rounded-lg bg-white border border-gray-100 hover:border-primary hover:border-opacity-20 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden p-1 sm:p-2">
-        <div className="relative  w-full h-[70%] bg-primary-veryLight">
-          <div className="absolute right-2 top-2 z-30 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300">
+    <div className="group w-full max-w-full h-auto flex flex-col mx-auto bg-white dark:bg-[#1a2234] border border-primary-gray-veryLight dark:border-primary-light hover:border-gray-300 dark:hover:border-yellow rounded-lg overflow-hidden transition-colors duration-200 shadow-sm hover:shadow-md">
+      {/* Image Container */}
+      <div className="relative w-full aspect-[4/3] bg-gray-light overflow-hidden shrink-0">
+        {/* Badge - Top Left */}
+        <div className="absolute top-2 left-2 z-10 flex gap-1.5">
+          <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
+            VERIFIED
+          </div>
+        </div>
+
+        {/* Action Icons - Top Right */}
+        <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
           <div className="relative">
             <div
               onClick={(e) => {
                 e.stopPropagation();
                 handleShare();
               }}
-              className="bg-white shadow-md rounded-full w-8 h-8 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center"
+              className="transition-transform duration-200 cursor-pointer active:scale-95 drop-shadow-md"
             >
-              <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-lg" />
+              <RiShareForwardFill className="text-white text-base drop-shadow-lg hover:text-gray-200" />
             </div>
-              {showShareFallback && (
-                <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
-                  <ShareFallBack shareUrl={shareUrl} title={title}/>
-                </div>
-              )}
-            </div>
-            
-          </div>
-
-          <div
-            className="relative w-full h-full"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onClick={() => handelGoDetails(id)}
-          >
-            {isLoading && (
-              <div className="absolute inset-0 rflex flex-col justify-center items-center bg-black bg-opacity-50 z-10">
-                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            {showShareFallback && (
+              <div
+                className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]"
+                style={{ minWidth: "180px" }}
+              >
+                <ShareFallBack shareUrl={shareUrl} title={title} />
               </div>
             )}
+          </div>
+        </div>
 
-            {Array.isArray(adsImg) &&
-            adsImg.length > 0 &&
-            adsImg[currentImageIndex]?.imageLink ? (
-              <>
-                {adsImg[currentImageIndex].imagePath.match(
-                  /\.(mp4|mov|webm|avi)$/i
-                ) ? (
-                  <div className="relative w-full h-full group/video rounded-lg">
-                    <video
-                      key={adsImg[currentImageIndex].imageLink}
-                      onClick={() => handelGoDetails(id)}
-                      className="w-full h-full object-cover cursor-pointer"
-                      preload="metadata"
-                      playsInline
-                      muted
-                      onLoadedMetadata={() => setIsLoading(false)}
-                      onLoadStart={() => setIsLoading(true)}
-                    >
-                      <source
-                        src={adsImg[currentImageIndex].imageLink}
-                        type="video/mp4"
-                      />
-                    </video>
-                    <div
+        {/* Image Slider */}
+        <div
+          className="relative w-full h-full group touch-pan-y cursor-pointer"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onClick={() => handelGoDetails(id)}
+        >
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
+              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )}
+
+          {Array.isArray(adsImg) &&
+          adsImg.length > 0 &&
+          adsImg[currentImageIndex]?.imageLink ? (
+            <>
+              {adsImg[currentImageIndex].imagePath.match(
+                /\.(mp4|mov|webm|avi)$/i,
+              ) ? (
+                <div className="relative w-full h-full group/video">
+                  <video
+                    key={adsImg[currentImageIndex].imageLink}
+                    onClick={() => handelGoDetails(id)}
+                    className="w-full h-full object-cover cursor-pointer"
+                    preload="metadata"
+                    playsInline
+                    muted
+                    onLoadedMetadata={() => setIsLoading(false)}
+                    onLoadStart={() => setIsLoading(true)}
+                  >
+                    <source
+                      src={adsImg[currentImageIndex].imageLink}
+                      type="video/mp4"
+                    />
+                  </video>
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all duration-300 cursor-pointer z-[5]">
+                    <BsPlayCircleFill className="text-white text-3xl opacity-70 group-hover/video:opacity-100 transition-opacity duration-300" />
+                  </div>
+                </div>
+              ) : (
+                <img
+                  onClick={() => handelGoDetails(id)}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-pointer"
+                  src={adsImg[currentImageIndex].imageLink}
+                  alt={`Product ${currentImageIndex + 1}`}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "fallback-image-url.jpg";
+                  }}
+                  onLoad={handleImageLoad}
+                />
+              )}
+
+              {/* Slider Controls */}
+              {adsImg.length > 1 && (
+                <>
+                  <div className="absolute inset-0">
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handelGoDetails(id);
+                        handlePrevious();
                       }}
-                      className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all duration-300 cursor-pointer z-[5]"
+                      className="absolute z-[5] left-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 h-8 w-6 flex items-center justify-center"
                     >
-                      <BsPlayCircleFill
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handelGoDetails(id);
-                        }}
-                        className="text-white text-4xl opacity-70 group-hover/video:opacity-100 transition-opacity duration-300 cursor-pointer"
-                      />
-                    </div>
+                      <MdNavigateBefore className="text-white text-xl" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNext();
+                      }}
+                      className="absolute z-[5] right-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 h-8 w-6 flex items-center justify-center"
+                    >
+                      <MdNavigateNext className="text-white text-xl" />
+                    </button>
                   </div>
-                ) : (
-                  <img
-                    onClick={() => handelGoDetails(id)}
-                    className="w-full h-full  rounded-lg object-cover transition-transform duration-300"
-                    src={adsImg[currentImageIndex].imageLink}
-                    alt={`Product ${currentImageIndex + 1}`}
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "fallback-image-url.jpg"; // You can add a fallback image URL here
-                    }}
-                    onLoad={handleImageLoad}
-                  />
-                )}
+                  {/* Slider Dots */}
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-[5]">
+                    {adsImg.map((_, index) => (
+                      <div
+                        key={index}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndex(index);
+                        }}
+                        className={`h-0.5 transition-all duration-300 cursor-pointer ${
+                          index === currentImageIndex
+                            ? "bg-white w-3"
+                            : "bg-white/50 w-1.5 hover:bg-white/80"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          ) : null}
+        </div>
+      </div>
 
-                {adsImg.length > 1 && (
-                  <>
-                    <div className="absolute inset-0">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handlePrevious();
-                        }}
-                        className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-1 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
-                      >
-                        <MdNavigateBefore className="flex justify-center text-white text-md item-center" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleNext();
-                        }}
-                        className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-1 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
-                      >
-                        <MdNavigateNext className="flex justify-center text-white text-md item-center" />
-                      </button>
-                    </div>
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
-                      {adsImg.map((_, index) => (
-                        <div
-                          key={index}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex(index);
-                          }}
-                          className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                            index === currentImageIndex
-                              ? "bg-primary w-3"
-                              : "bg-white/80 hover:bg-white"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
-              </>
-            ) : null}
-          </div>
-          <div className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-2 sm:px-3 py-1.5 sm:py-2 rounded-md shadow-sm backdrop-blur-sm bg-opacity-75">
-            <span className="text-white font-medium text-xs sm:text-sm flex items-center">
-              <span className="text-white/80 text-[10px] sm:text-xs mr-1">
-                AED
-              </span>
-              {formatCurrency(price).replace("AED", "")}
+      {/* Details Section */}
+      <div className="flex flex-col flex-1 pt-2 px-2.5 pb-2.5">
+        {/* Usage badge */}
+        <span className="text-yellow text-[8px] uppercase font-bold tracking-widest mb-0.5">
+          {usageStatus
+            ? usageStatus === "NEW"
+              ? "NEW"
+              : usageStatus
+            : "USED"}
+        </span>
+
+        {/* Title */}
+        <h2
+          onClick={() => handelGoDetails(id)}
+          className="text-xs sm:text-[13px] font-semibold text-[#1e2738] dark:text-gray-100 mb-1.5 line-clamp-2 cursor-pointer hover:text-yellow transition-colors leading-snug"
+        >
+          {title}
+        </h2>
+
+        {/* Meta: location */}
+        <div className="flex items-center gap-2.5 text-gray-400 dark:text-gray-500 text-[8px] font-medium mb-2 uppercase tracking-wide">
+          <div className="flex items-center gap-1">
+            <svg
+              width="8"
+              height="8"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>
+              {city}, {country}
             </span>
           </div>
         </div>
-        <div className="flex flex-col h-[30%] p-3 justify-between">
-          <div className="space-y-2">
-            <h1
-              onClick={() => handelGoDetails(id)}
-              className="text-gray-800 font-medium text-base leading-tight line-clamp-2 hover:text-primary transition-colors duration-200 cursor-pointer"
-            >
-              {truncateString(title, 100)}
-            </h1>
 
-            <div className="flex items-center gap-2">
-              <div
-                className={`px-2 py-0.5 rounded-md text-xs font-medium ${
-                  usageStatus === "NEW"
-                    ? "bg-primary-veryLight text-primary"
-                    : "bg-gray-100 text-gray-700"
-                }`}
-              >
-               {category === 3 || category === 7
-                ? usageStatus === "NEW"
-                  ? selectedContent[localizationKeys.sell]
-                  : category === 7 ? selectedContent[localizationKeys.adoption
-                    
-                  ] : selectedContent[localizationKeys.rent]
-                : usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
-              </div>
-            </div>
+        {/* Pricing & Button */}
+        <div className="mt-auto flex justify-between items-end gap-1 pt-1.5 border-t border-gray-100 dark:border-gray-800">
+          <div className="flex flex-col pb-0.5 min-w-0">
+            <p className="text-[7px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">
+              {selectedContent[localizationKeys.price]}
+            </p>
+            <p className="text-xs sm:text-sm text-gray-800 dark:text-white font-bold leading-none tracking-tight truncate">
+              {formatCurrency(price)}
+            </p>
           </div>
-
-          <div className="mt-auto">
-            {/* {user?.id === userId ? (
-              <button
-                onClick={() => handelGoDetails(id)}
-                className="bg-primary-veryLight text-primary hover:bg-primary hover:text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1"
-              >
-                {selectedContent[localizationKeys.viewDetails]}
-              </button>
-            ) : (
-              <button
-                onClick={() => handelGoDetails(id)}
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
-              >
-                {selectedContent[localizationKeys.buyNow]}
-              </button>
-            )} */}
+          <div className="shrink-0">
             <button
-              onClick={() => handelGoDetails(id)}
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                handelGoDetails(id);
+              }}
+              className="bg-[#1e2738] dark:bg-yellow hover:bg-[#2c3e50] dark:hover:bg-yellow-dark dark:text-black text-white px-2.5 py-1 text-[8px] font-bold uppercase tracking-wider transition-colors duration-200"
             >
-              {selectedContent[localizationKeys.viewDetails]}
+            {selectedContent[localizationKeys.viewDetails]}   
             </button>
           </div>
         </div>

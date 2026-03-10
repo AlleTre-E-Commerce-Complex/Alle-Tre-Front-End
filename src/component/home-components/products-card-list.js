@@ -5,13 +5,8 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import routes from "../../routes";
 import { formatCurrency } from "../../utils/format-currency";
-import { truncateString } from "../../utils/truncate-string";
 import { RiShareForwardFill } from "react-icons/ri";
-import {
-  MdLocationPin,
-  MdNavigateBefore,
-  MdNavigateNext,
-} from "react-icons/md";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { ShareFallBack } from "component/shared/react-share/ShareFallback";
 
@@ -35,133 +30,123 @@ const ProductCardList = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
-  // const { user } = useAuthState();
-
   const [showShareFallback, setShowShareFallback] = useState(false);
+
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
     return port
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
-  const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`
+  const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`;
 
-  const handleShare = async () => {
+  const handleShare = async (e) => {
+    e.stopPropagation();
     if (navigator.share) {
       try {
-        await navigator.share({
-          title,
-          text: title,
-          url: shareUrl,
-        });
+        await navigator.share({ title, text: title, url: shareUrl });
       } catch (error) {
-        console.error("Error sharing post:", error);
-        setShowShareFallback(true); // Show fallback if native share fails
+        setShowShareFallback(true);
       }
     } else {
       setShowShareFallback(!showShareFallback);
     }
   };
 
-  // const getTimeDifference = (createdAt) => {
-  //   const createdDate = new Date(createdAt);
-  //   const today = new Date();
-  //   const diffInMs = today - createdDate;
-
-  //   // Convert milliseconds to different units
-  //   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-  //   const diffInWeeks = Math.floor(diffInDays / 7);
-  //   const diffInMonths = Math.floor(diffInDays / 30);
-
-  //   return {
-  //     days: diffInDays,
-  //     weeks: diffInWeeks,
-  //     months: diffInMonths,
-  //   };
-  // };
-  const handleTouchStart = (e) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.touches[0].clientX);
-  };
-
+  const handleTouchStart = (e) => setTouchStart(e.touches[0].clientX);
+  const handleTouchMove = (e) => setTouchEnd(e.touches[0].clientX);
   const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) {
-      handleNext();
-    }
-    if (touchEnd - touchStart > 75) {
-      handlePrevious();
-    }
+    if (touchStart - touchEnd > 75) handleNext();
+    if (touchEnd - touchStart > 75) handlePrevious();
   };
 
   const handleNext = () => {
     if (!Array.isArray(adsImg) || !adsImg.length) return;
     setIsLoading(true);
-    const nextIndex = (currentImageIndex + 1) % adsImg.length;
-    setCurrentImageIndex(nextIndex);
+    setCurrentImageIndex((currentImageIndex + 1) % adsImg.length);
   };
 
   const handlePrevious = () => {
     if (!Array.isArray(adsImg) || !adsImg.length) return;
     setIsLoading(true);
-    const prevIndex =
-      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
-    setCurrentImageIndex(prevIndex);
+    setCurrentImageIndex(
+      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1,
+    );
   };
 
-  const handleImageLoad = () => {
-    setIsLoading(false);
-  };
+  const handleImageLoad = () => setIsLoading(false);
 
   useEffect(() => {
     if (!Array.isArray(adsImg) || adsImg.length <= 1) return;
-
     const preloadVideo = (index) => {
       if (index < 0 || index >= adsImg.length) return;
-
       const item = adsImg[index];
       if (!item?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i)) return;
       if (preloadedVideos.has(item.imageLink)) return;
-
       const video = document.createElement("video");
       video.preload = "metadata";
       video.src = item.imageLink;
-
       setPreloadedVideos((prev) => new Set([...prev, item.imageLink]));
     };
-
-    const nextIndex = (currentImageIndex + 1) % adsImg.length;
-    preloadVideo(nextIndex);
-
-    const prevIndex =
-      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1;
-    preloadVideo(prevIndex);
+    preloadVideo((currentImageIndex + 1) % adsImg.length);
+    preloadVideo(
+      currentImageIndex === 0 ? adsImg.length - 1 : currentImageIndex - 1,
+    );
   }, [currentImageIndex, adsImg, preloadedVideos]);
-
-  // const difference = getTimeDifference(createdAt);
 
   const handelGoDetails = (id) => {
     history.push(routes.app.listProduct.details(id));
   };
+
   return (
-    <div className="flex flex-wrap gap-4">
-      <div className="flex-1 my-2 group rounded-lg border border-gray-200 hover:border-primary shadow-md hover:shadow-lg p-2 lg:p-3">
+    <div className="w-full mb-3">
+      <div className="group w-full rounded-xl border border-primary-gray-veryLight dark:border-primary-light dark:bg-[#1a2234] bg-white hover:border-gray-300 dark:hover:border-yellow shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden">
         <div
-          className="flex gap-3 sm:gap-4"
+          className="flex flex-row cursor-pointer"
           onClick={() => handelGoDetails(id)}
         >
-          <div className="w-[120px] h-[120px] sm:w-[200px] sm:h-[150px] min-w-[120px] sm:min-w-[200px] rounded-lg relative overflow-hidden bg-gray-light">
+          {/* --- Image Panel --- */}
+          <div className="relative w-[120px] h-[120px] sm:w-[200px] sm:h-[150px] min-w-[120px] sm:min-w-[200px] shrink-0 bg-gray-light overflow-hidden">
+            {/* Badge */}
+            <div className="absolute top-2.5 left-2.5 z-10">
+              <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
+                VERIFIED
+              </div>
+            </div>
+
+            {/* Share icon */}
             <div
-              className="relative w-full h-full group"
+              className="absolute top-2.5 right-2.5 z-20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative">
+                <button
+                  onClick={handleShare}
+                  className="transition-transform active:scale-95"
+                >
+                  <RiShareForwardFill className="text-white text-base drop-shadow-lg hover:text-gray-200" />
+                </button>
+                {showShareFallback && (
+                  <div
+                    className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]"
+                    style={{ minWidth: "180px" }}
+                  >
+                    <ShareFallBack shareUrl={shareUrl} title={title} />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Image slider */}
+            <div
+              className="relative w-full h-full group/img"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
               {isLoading && (
-                <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-50 z-10">
-                  <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
+                  <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                 </div>
               )}
 
@@ -170,13 +155,12 @@ const ProductCardList = ({
               adsImg[currentImageIndex]?.imageLink ? (
                 <>
                   {adsImg[currentImageIndex].imagePath.match(
-                    /\.(mp4|mov|webm|avi)$/i
+                    /\.(mp4|mov|webm|avi)$/i,
                   ) ? (
                     <div className="relative w-full h-full group/video">
                       <video
                         key={adsImg[currentImageIndex].imageLink}
-                        onClick={() => handelGoDetails(id)}
-                        className="w-full h-full object-cover cursor-pointer"
+                        className="w-full h-full object-cover"
                         preload="metadata"
                         playsInline
                         muted
@@ -188,31 +172,18 @@ const ProductCardList = ({
                           type="video/mp4"
                         />
                       </video>
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handelGoDetails(id);
-                        }}
-                        className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all duration-300 cursor-pointer z-[5]"
-                      >
-                        <BsPlayCircleFill
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handelGoDetails(id);
-                          }}
-                          className="text-white text-4xl opacity-70 group-hover/video:opacity-100 transition-opacity duration-300 cursor-pointer"
-                        />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all z-[5]">
+                        <BsPlayCircleFill className="text-white text-3xl opacity-70 group-hover/video:opacity-100 transition-opacity" />
                       </div>
                     </div>
                   ) : (
                     <img
-                      onClick={() => handelGoDetails(id)}
-                      className="w-full h-full object-cover transition-transform duration-300"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
                       src={adsImg[currentImageIndex].imageLink}
                       alt={`Product ${currentImageIndex + 1}`}
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = "fallback-image-url.jpg"; // You can add a fallback image URL here
+                        e.target.src = "fallback-image-url.jpg";
                       }}
                       onLoad={handleImageLoad}
                     />
@@ -220,28 +191,25 @@ const ProductCardList = ({
 
                   {adsImg.length > 1 && (
                     <>
-                      <div className="absolute inset-0">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handlePrevious();
-                          }}
-                          className="absolute z-[5] left-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
-                        >
-                          <MdNavigateBefore className="flex justify-center text-white text-sm item-center" />
-                        </button>
-
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleNext();
-                          }}
-                          className="absolute z-[5] right-2 top-1/2 -translate-y-1/2 bg-primary/60 hover:bg-primary px-0.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-7 sm:block hidden"
-                        >
-                          <MdNavigateNext className="flex justify-center text-white text-sm item-center" />
-                        </button>
-                      </div>
-                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePrevious();
+                        }}
+                        className="absolute z-[5] left-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all h-8 w-6 flex items-center justify-center"
+                      >
+                        <MdNavigateBefore className="text-white text-xl" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleNext();
+                        }}
+                        className="absolute z-[5] right-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all h-8 w-6 flex items-center justify-center"
+                      >
+                        <MdNavigateNext className="text-white text-xl" />
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-[5]">
                         {adsImg.map((_, index) => (
                           <div
                             key={index}
@@ -249,11 +217,7 @@ const ProductCardList = ({
                               e.stopPropagation();
                               setCurrentImageIndex(index);
                             }}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                              index === currentImageIndex
-                                ? "bg-primary w-3"
-                                : "bg-white/80 hover:bg-white"
-                            }`}
+                            className={`h-0.5 transition-all duration-300 cursor-pointer ${index === currentImageIndex ? "bg-white w-3" : "bg-white/50 w-1.5"}`}
                           />
                         ))}
                       </div>
@@ -262,105 +226,68 @@ const ProductCardList = ({
                 </>
               ) : null}
             </div>
-            <div className="absolute top-0 left-0 z-20 bg-gradient-to-r from-primary to-primary-light px-1 sm:px-2 py-0.5 sm:py-1 rounded-br-lg shadow-sm backdrop-blur-sm bg-opacity-75">
-              <span className="text-white font-medium text-xs sm:text-sm flex items-center">
-                <span className="text-white/80 text-[10px] sm:text-xs mr-1">
-                  AED
-                </span>
-                {formatCurrency(price).replace("AED", "")}
-              </span>
-            </div>
           </div>
 
-          <div className="flex flex-col flex-1 justify-between relative">
-            <div className="space-y-2 sm:space-y-4">
-              <div className="flex items-start justify-between gap-2">
-                <h1
-                  onClick={() => handelGoDetails(id)}
-                  className="text-gray-dark font-medium text-sm sm:text-lg flex-1 line-clamp-2 hover:text-primary transition-colors duration-200"
-                >
-                  {truncateString(title, 70)}
-                </h1>
-                <div
-                  className={`state-button shrink-0 px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium transition-colors ${
-                    usageStatus === "NEW"
-                      ? "bg-primary-veryLight text-primary"
-                      : "bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  {category === 3 || category === 7
-                    ? usageStatus === "NEW"
-                      ? selectedContent[localizationKeys.sell]
-                      : category === 7
-                      ? selectedContent[localizationKeys.adoption]
-                      : selectedContent[localizationKeys.rent]
-                    : usageStatus?.charAt(0).toUpperCase() +
-                      usageStatus?.slice(1).toLowerCase()}
-                </div>
-              </div>
+          {/* --- Content Panel --- */}
+          <div className="flex flex-col flex-1 p-2.5 sm:p-4 min-w-0 overflow-hidden">
+            {/* Usage badge */}
+            <span className="text-yellow text-[8px] uppercase font-bold tracking-widest mb-1.5">
+              {usageStatus
+                ? usageStatus === "NEW"
+                  ? "NEW EDITION"
+                  : usageStatus
+                : "USED"}
+            </span>
 
-              <div className="flex flex-col gap-2 sm:grid sm:grid-cols-3 sm:gap-6">
-                <div className="flex items-center justify-start sm:flex sm:items-start sm:gap-2 h-[40px] sm:h-auto gap-1">
-                  <MdLocationPin className="text-primary/80 text-md sm:text-md mt-0.5" />
-                  <p
-                    className="text-gray-dark font-medium text-xs sm:text-sm"
-                    onClick={() => handelGoDetails(id)}
-                  >
-                    {city}, {country}
-                  </p>
-                </div>
-                {/* <div className="flex items-center justify-end sm:flex sm:items-start sm:justify-start sm:gap-2">
-                  <p
-                    className="text-gray-dark font-medium text-xs sm:text-sm"
-                    onClick={() => handelGoDetails(id)}
-                  >
-                    {difference.months > 0 && `${difference.months} months ago`}
-                    {difference.months === 0 && difference.weeks > 0 && `${difference.weeks} weeks ago`}
-                    {difference.months === 0 && difference.weeks === 0 && difference.days > 0 && `${difference.days} days ago`}
-                    {difference.months === 0 && difference.weeks === 0 && difference.days === 0 && `Today`}
-                  </p>
-                </div> */}
-              </div>
+            {/* Title */}
+            <h2
+              onClick={(e) => {
+                e.stopPropagation();
+                handelGoDetails(id);
+              }}
+              className="text-[13px] sm:text-base lg:text-lg font-bold text-[#1e2738] dark:text-white mb-1.5 sm:mb-2 line-clamp-2 hover:text-yellow transition-colors cursor-pointer leading-snug"
+            >
+              {title}
+            </h2>
+
+            {/* Location */}
+            <div className="hidden sm:flex items-center gap-1 text-gray-400 dark:text-gray-500 text-[9px] sm:text-[10px] font-medium uppercase tracking-wide mb-3">
+              <svg
+                width="9"
+                height="9"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span>
+                {city}, {country}
+              </span>
             </div>
 
-            <div className="mt-2 sm:mt-4 flex items-center justify-between">
-              {/* {user?.id === userId ? (
-                <button
-                  onClick={() => handelGoDetails(id)}
-                  className="bg-primary-veryLight text-primary hover:bg-primary hover:text-white rounded-lg w-full py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1"
-                >
-                  {selectedContent[localizationKeys.viewDetails]}
-                </button>
-              ) : (
-                <button
-                  onClick={() => handelGoDetails(id)}
-                  className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 sm:py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
-                >
-                  {selectedContent[localizationKeys.buyNow]}
-                </button>
-              )} */}
-              
-              <button
-                onClick={() => handelGoDetails(id)}
-                className="bg-primary hover:bg-primary-dark text-white rounded-lg w-full py-2 text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 shadow-sm"
-              >
-                {selectedContent[localizationKeys.viewDetails]}
-              </button>
-              <div className="relative">
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleShare();
-                  }}
-                  className="border-primary border-2 border-solid bg-white/90 rounded-lg w-6 h-6 sm:w-9 sm:h-9 hover:bg-primary group/share transition-all duration-300 cursor-pointer flex items-center justify-center ml-2"
-                >
-                  <RiShareForwardFill className="text-primary group-hover/share:text-white transition-all duration-300 text-sm sm:text-lg" />
+            {/* Divider + price + button */}
+            <div className="border-t border-gray-100 dark:border-gray-800 mt-auto pt-3">
+              <div className="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <p className="text-[7px] sm:text-[8px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">
+                    {selectedContent[localizationKeys.price]}
+                  </p>
+                  <p className="text-sm sm:text-lg font-bold text-yellow leading-none">
+                    {formatCurrency(price)}
+                  </p>
                 </div>
-                {showShareFallback && (
-                  <div className="absolute right-0 top-full mt-2 p-2 bg-white border border-gray-300 rounded-lg shadow-md flex gap-2 z-[100]" style={{ minWidth: '180px' }}>
-                    <ShareFallBack shareUrl={shareUrl} title={title}/>
-                  </div>
-                )}
+
+                <div onClick={(e) => e.stopPropagation()}>
+                  <button
+                    onClick={() => handelGoDetails(id)}
+                    className="bg-[#1e2738] dark:bg-yellow hover:bg-[#2c3e50] dark:hover:bg-yellow-dark text-white dark:text-black px-4 py-1.5 text-[9px] font-bold uppercase tracking-wider transition-colors duration-200"
+                  >
+                    {selectedContent[localizationKeys.viewDetails]}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

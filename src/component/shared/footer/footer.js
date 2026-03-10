@@ -68,7 +68,7 @@ const Footer = () => {
   if (!pathname.startsWith(routes.app.home)) return null;
 
   return (
-    <div className="bg-white dark:bg-primary transition-colors duration-300">
+    <div className="bg-white dark:bg-background transition-colors duration-300">
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
         active={isLoadingrunNewSubscriber}

@@ -1,21 +1,18 @@
 #range-slider-edit .range-slider__range {
-  background: #821A4D;
+  background: #d4af37;
   transition: height 0.3s;
 }
 
 #range-slider-edit .range-slider__thumb {
-  border: 1px solid #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
 
-#range-slider-edit .range-slider__thumb[data-lower] {
-  background: white;
-  border-style: solid;
-  border-color: #CCCCCC;
-}
-
-#range-slider-edit .range-slider__thumb[data-upper] {
-  background: white;
-  border-style: solid;
-  border-color: #CCCCCC;
+#range-slider-edit .range-slider__track {
+  background: #e5e7eb;
 }
