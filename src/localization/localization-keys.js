@@ -663,6 +663,12 @@ const localizationKeys = {
   WithDrawalSuccessMessage: "WithDrawalSuccessMessage",
   addAccount: "addAccount",
   postedBy: "postedBy",
+  listedBy:"listedBy",
+  inclusiveOfAllTaxes:"inclusiveOfAllTaxes",
+  getDirections:"getDirections",
+  premiumListing:"premiumListing",
+  scrollToViewMore:"scrollToViewMore",
+  pictures:"pictures",
 };
 
 export default localizationKeys;

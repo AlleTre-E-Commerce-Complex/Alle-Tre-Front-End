@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
-import { truncateString } from "../../utils/truncate-string";
 import api from "api";
-import { useLocation, useParams } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
+import { useParams } from "react-router-dom";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { FaWhatsapp } from "react-icons/fa";
-import { IoCall } from "react-icons/io5";
+import { IoStar, IoLocationSharp, IoCall } from "react-icons/io5";
+import { FaWhatsapp, FaUser } from "react-icons/fa";
+import { MdOutlineVerifiedUser } from "react-icons/md";
+import { BsClockHistory } from "react-icons/bs";
+import { HiOutlineExternalLink } from "react-icons/hi";
+import { MdPublishedWithChanges } from "react-icons/md";
+import { RiAuctionLine } from "react-icons/ri";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import ImgSlider from "component/shared/img-slider/img-slider";
-// import AuctionDetailsTabs from "component/auctions-details-components/auction-details-tabs";
 import PhoneNumberModal from "component/shared/phone-number-modal/phone-number-modal";
 import SilmilarProductsSlider from "component/auctions-details-components/silmilar-products-slider";
 import { Dimmer } from "semantic-ui-react";
@@ -25,48 +27,38 @@ import { useDispatch } from "react-redux";
 import { Open } from "../../redux-store/auth-model-slice";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
-import { FaRegUser } from "react-icons/fa";
-import { MdLocationOn } from "react-icons/md";
-import { BsClockHistory } from "react-icons/bs";
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
   const [mainLocation, setMainLocation] = useState();
   const [date, setDate] = useState();
+  const [difference, setDifference] = useState({
+    months: 0,
+    weeks: 0,
+    days: 0,
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [open, setOpen] = useState(false);
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { user } = useAuthState();
-  const { pathname } = useLocation();
   const { productId } = useParams();
   const [activeIndexTab, setActiveIndexTab] = useState(0);
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
   const dispatch = useDispatch();
   const history = useHistory();
-  const scrollWithOffset = (el) => {
-    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
-    const yOffset = -220;
-    window.scrollTo({
-      top: yCoordinate + yOffset,
-      behavior: "smooth",
-    });
-  };
+
+  const mapUrl = `https://maps.google.com/maps?q=${mainLocation?.lat},${mainLocation?.lng}&hl=es&z=14&output=embed`;
 
   const handleOnContact = () => {
     try {
       if (!user) {
-        const hasCompletedProfile = window.localStorage.getItem(
-          "hasCompletedProfile"
-        );
-        if (hasCompletedProfile && JSON.parse(hasCompletedProfile)) {
-          setOpen(true);
-        } else {
-          dispatch(Open());
-        }
+        dispatch(Open());
+        return false;
       }
+      return true;
     } catch (error) {
       toast.error(selectedContent[localizationKeys.oops]);
+      return false;
     }
   };
 
@@ -79,59 +71,57 @@ const SummaryListedSection = () => {
       authAxios
         .get(`${api.app.productListing.listedProduct(productId)}`)
         .then((res) => {
-          setDate(res?.data?.data?.createdAt);
+          const createdAt = res?.data?.data?.createdAt;
+          setDate(createdAt);
           setListedProductsData(res?.data?.data?.product);
           setMainLocation(res?.data?.data?.location);
+
+          if (createdAt) {
+            const now = new Date();
+            const listingDate = new Date(createdAt);
+            const diffInTime = now.getTime() - listingDate.getTime();
+            const diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24));
+            const months = Math.floor(diffInDays / 30);
+            const weeks = Math.floor((diffInDays % 30) / 7);
+            const days = diffInDays % 7;
+            setDifference({ months, weeks, days });
+          }
         })
         .catch((error) => {
           console.log("summery listed section error:", error);
-        })
+        }),
     );
   }, [run, productId]);
 
-  const getTimeDifference = (createdAt) => {
-    const createdDate = new Date(createdAt);
-    const today = new Date();
-    const diffInMs = today - createdDate;
-
-    // Convert milliseconds to different units
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-    const diffInWeeks = Math.floor(diffInDays / 7);
-    const diffInMonths = Math.floor(diffInDays / 30);
-
-    return {
-      days: diffInDays,
-      weeks: diffInWeeks,
-      months: diffInMonths,
-    };
+  const handleWhatsApp = () => {
+    if (handleOnContact()) {
+      const message = encodeURIComponent(
+        "Hello, I would like to inquire about your product listed on 3arbon.",
+      );
+      const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
+      window.open(whatsappUrl, "_blank");
+    }
   };
 
-  const handelUserDetails = () => {
-    const userData = listedProductsData?.user;
-    const queryParams = new URLSearchParams({
-      username: userData?.userName || "",
-      id: userData?.id || "",
-      imageLink: userData?.imageLink || "",
-      phone: userData?.phone || "",
-    }).toString();
-    history.push(`${routes.app.listProduct.userDetails}?${queryParams}`);
+  const handleCall = () => {
+    if (handleOnContact()) {
+      setIsModalOpen(true);
+    }
   };
-  const difference = getTimeDifference(date);
-  const mapUrl = ` https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(
-    `${mainLocation?.lat},${mainLocation?.lng}`
-  )}&key=${process.env.REACT_APP_GOOGLE_MAP_SECRET_KEY}`;
+
   return (
-    <div>
+    <div className="bg-white dark:bg-primary min-h-screen pt-32 pb-20 transition-colors duration-300">
       <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
+        className="fixed w-full h-full top-0 bg-white/50 dark:bg-black/50"
         active={isLoadingListedProduct}
         inverted
       >
         <LodingTestAllatre />
       </Dimmer>
-      <div className="grid md:grid-cols-2 grid-cols-1 mt-44 animate-in mx-5 px-4">
-        <div className="w-full md:w-auto">
-          <div className="px-4 mx-auto h-14 px-4 py-4 sm:block  ">
+
+      <div className="w-full mx-auto px-4 md:px-8">
+        <div className="w-full flex items-center px-4 md:px-6 shadow-sm overflow-x-auto hide-scrollbar mt-4 md:mt-8">
+          <div className="min-w-max">
             <ListProductsBreadcrumb
               details={productId}
               category={
@@ -142,175 +132,307 @@ const SummaryListedSection = () => {
               categoryId={listedProductsData?.categoryId}
             />
           </div>
-          <ImgSlider
-            images={listedProductsData?.images}
-            auctionId={listedProductsData?.id}
-            isMyAuction={true}
-            isListProduct={true}
-          />
         </div>
-        <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0 md:order-none order-last">
-          <div className="flex items-center gap-x-2 md:gap-x-5 pt-8">
-            <h1 className="text-3xl font-bold text-gray-800">
-              {listedProductsData?.title}
-            </h1>
-            <div className="flex items-center gap-2">
-              <div
-                className={`px-2 py-0.5 rounded-md text-xs font-medium ${
-                  listedProductsData.usageStatus === "NEW"
-                    ? "bg-primary-veryLight text-primary"
-                    : "bg-gray-100 text-gray-700"
-                }`}
-              >
-                {listedProductsData.categoryId === 3 ||
-                listedProductsData.categoryId === 7
-                  ? listedProductsData.usageStatus === "NEW"
-                    ? selectedContent[localizationKeys.sell]
-                    : listedProductsData.categoryId === 7
-                    ? selectedContent[localizationKeys.adoption]
-                    : selectedContent[localizationKeys.rent]
-                  : listedProductsData.usageStatus?.charAt(0).toUpperCase() +
-                    listedProductsData.usageStatus?.slice(1).toLowerCase()}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          {/* Main Content Area (Left) */}
+          <div className="lg:col-span-8 space-y-8">
+            <div className="animate-in">
+
+              <div className="mt-4 relative group">
+                <ImgSlider
+                  images={listedProductsData?.images}
+                  auctionId={listedProductsData?.id}
+                  isMyAuction={listedProductsData?.userId === user?.id}
+                  isListProduct={true}
+                  title={listedProductsData?.title}
+                />
               </div>
             </div>
+
+         
+            {/* Asset Specifications Section */}
+            <div className="mb-8 hidden lg:block">
+              <AuctionDetailsTabs
+                dataTabs={listedProductsData}
+                activeIndexTab={activeIndexTab}
+                setActiveIndexTab={setActiveIndexTab}
+                isListProduct
+              />
+            </div>
+
+            {/* Owner Controls */}
           </div>
 
-          <div className="py-4">
-            {listedProductsData?.user?.userName && (
-              <div className="flex items-start">
-                <div>
-                  <p className="text-sm text-gray-500 mb-2.5">
-                    {selectedContent[localizationKeys.postedBy]}
-                  </p>
-                  <div
-                    onClick={() => handelUserDetails()}
-                    className="inline-flex items-center px-4 py-2.5 bg-gray-50 hover:bg-gray-300 transition-colors duration-200 text-gray-700 rounded-lg gap-2.5 cursor-pointer"
-                  >
-                    <FaRegUser className="text-gray-500" />
-                    <span className="text-base font-medium">
-                      {listedProductsData?.user?.userName}
+          {/* Sidebar Area (Right) */}
+          <div className="lg:col-span-4 space-y-6 sticky top-40">
+            {/* Purchase Card */}
+            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-xl">
+              {/* Title & Location Section (Integrated from Overlay) */}
+              <div className="mb-8 text-primary dark:text-white ">
+                <div className="">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-primary dark:text-white leading-tight mb-2">
+                    {listedProductsData?.title}
+                  </h1>
+                  <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-xs sm:text-sm font-medium">
+                    <IoLocationSharp
+                      className="text-primary dark:text-primary-light"
+                      size={16}
+                    />
+                    <span className="dark:text-gray-300 transition-colors duration-300">
+                      {
+                        mainLocation?.city?.[
+                          lang === "ar" ? "nameAr" : "nameEn"
+                        ]
+                      }
+                      ,{" "}
+                      {
+                        mainLocation?.country?.[
+                          lang === "ar" ? "nameAr" : "nameEn"
+                        ]
+                      }
                     </span>
                   </div>
                 </div>
               </div>
-            )}
-          </div>
-          {/* Description */}
-          <div className="py-6">
-            <h3 className="text-base font-medium text-gray-700 mb-3">
-              {selectedContent[localizationKeys.description]}
-            </h3>
-            <p className="text-base text-gray-600 leading-relaxed mb-4">
-              {truncateString(listedProductsData.description, 80)}
-            </p>
-            <HashLink
-              className="inline-flex items-center text-primary hover:text-primary-dark text-sm font-medium transition-colors duration-200"
-              smooth
-              scroll={scrollWithOffset}
-              to={`${pathname}#itemDescription`}
-              onClick={() => setActiveIndexTab(0)}
-            >
-              {selectedContent[localizationKeys.viewDetails]}
-              <svg
-                className={`w-4 h-4 ml-1 ${lang === "ar" ? "rotate-180" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </HashLink>
-          </div>
-          <div className="inline-flex items-center gap-2 bg-primary/5 hover:bg-primary/10 transition-all duration-300 rounded-full px-4 py-1.5 border border-primary/10">
-            <BsClockHistory className="text-primary text-sm" />
-            <p className="text-primary font-medium text-xs sm:text-sm">
-              {difference.months > 0 && `${difference.months} months ago`}
-              {difference.months === 0 &&
-                difference.weeks > 0 &&
-                `${difference.weeks} weeks ago`}
-              {difference.months === 0 &&
-                difference.weeks === 0 &&
-                difference.days > 0 &&
-                `${difference.days} days ago`}
-              {difference.months === 0 &&
-                difference.weeks === 0 &&
-                difference.days === 0 &&
-                `Today`}
-            </p>
-          </div>
-          {/* Category sections */}
-          <div className="py-6 flex flex-wrap gap-6">
-            <div>
-              <p className="text-sm text-gray-500 mb-2.5">
-                {selectedContent[localizationKeys.category]}
-              </p>
-              <div className="text-center px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
-                {lang === "en"
-                  ? listedProductsData?.category?.nameEn
-                  : listedProductsData?.category?.nameAr}
-              </div>
-            </div>
-            {(listedProductsData?.subCategory?.nameEn ||
-              listedProductsData?.subCategory?.nameAr) && (
-              <div>
-                <p className="text-sm text-gray-500 mb-2.5">
-                  {selectedContent[localizationKeys.subCategory]}
-                </p>
-                <div className="text-center px-4 py-2.5 bg-gray-100 hover:bg-gray-100 transition-colors duration-200 text-gray-700 rounded-lg font-medium">
-                  {lang === "en"
-                    ? listedProductsData?.subCategory?.nameEn
-                    : listedProductsData?.subCategory?.nameAr}
+
+              {/* Listing Age Badge */}
+              <div className="mb-6 flex justify-center">
+                <div className="inline-flex items-center gap-2 bg-primary/5 dark:bg-primary/10 hover:bg-primary/10 transition-all duration-300 rounded-full px-4 py-1.5 border border-primary dark:border-white/10">
+                  <BsClockHistory className="text-primary dark:text-white text-xs" />
+                  <p className="text-primary dark:text-white font-bold text-[10px] uppercase tracking-wider">
+                    {difference.months > 0 && `${difference.months} months ago`}
+                    {difference.months === 0 &&
+                      difference.weeks > 0 &&
+                      `${difference.weeks} weeks ago`}
+                    {difference.months === 0 &&
+                      difference.weeks === 0 &&
+                      difference.days > 0 &&
+                      `${difference.days} days ago`}
+                    {difference.months === 0 &&
+                      difference.weeks === 0 &&
+                      difference.days === 0 &&
+                      `Listed Today`}
+                  </p>
                 </div>
               </div>
-            )}
-          </div>
 
-          {/* Prices  sections */}
-          <div className="pt-6  gap-6">
-            <div className="flex items-start space-x-4 p-4 ">
-              <div className="flex-1">
-                <p className="text-gray-dark text-sm font-medium uppercase tracking-wide">
+              <div className="space-y-1 mb-8">
+                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
                   {selectedContent[localizationKeys.sellingPrice]}
                 </p>
-                <p className="text-gray-verydark text-2xl font-bold mt-1">
-                  {formatCurrency(listedProductsData?.ProductListingPrice)}
+                <div className="flex items-baseline gap-2 pt-1">
+                  <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-primary dark:text-white tracking-tight sm:tracking-tighter transition-all duration-300">
+                    {formatCurrency(listedProductsData?.ProductListingPrice)}
+                  </p>
+                </div>
+                <p className="text-[10px] font-medium text-gray-500 dark:text-gray-400 mt-2">
+                 {selectedContent[localizationKeys.inclusiveOfAllTaxes]}
                 </p>
               </div>
-            </div>
-          </div>
-          <div className="pt-6 grid md:grid-cols-2 sm:grid-cols-1 gap-6">
-            <div className="p-4">
-              <div className="flex items-start space-x-3">
-                <MdLocationOn className="text-primary-600 text-2xl mt-1" />
-                <div className="flex-1">
-                  <div className="text-gray-dark text-sm font-medium uppercase tracking-wide">
-                    {selectedContent[localizationKeys.location]}
-                  </div>
-                  <div className="text-gray-verydark mt-2">
-                    {mainLocation?.address ? (
-                      <>
-                        <p className="text-xl font-semibold leading-tight">
-                          {mainLocation?.address}
-                        </p>
-                        <p className="text-base text-gray-600">
-                          {mainLocation?.addressLabel}
-                        </p>
 
-                        <div className="flex items-center space-x-1 mt-2">
-                          <p className="text-base text-gray-600">
+              {/* Category Metadata */}
+              <div className="py-6 border-y border-gray-50 dark:border-slate-800/50 mb-6 grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">
+                    {selectedContent[localizationKeys.category]}
+                  </p>
+                  <div className="px-3 py-2 bg-gray-50 dark:bg-slate-800/50 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold border border-gray-100 dark:border-slate-800 truncate">
+                    {lang === "en"
+                      ? listedProductsData?.category?.nameEn
+                      : listedProductsData?.category?.nameAr}
+                  </div>
+                </div>
+                {(listedProductsData?.subCategory?.nameEn ||
+                  listedProductsData?.subCategory?.nameAr) && (
+                  <div>
+                    <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">
+                      {selectedContent[localizationKeys.subCategory]}
+                    </p>
+                    <div className="px-3 py-2 bg-gray-50 dark:bg-slate-800/50 text-gray-700 dark:text-gray-300 rounded-xl text-xs font-bold border border-gray-100 dark:border-slate-800 truncate">
+                      {lang === "en"
+                        ? listedProductsData?.subCategory?.nameEn
+                        : listedProductsData?.subCategory?.nameAr}
+                    </div>
+                  </div>
+                )}
+              </div>
+              {user?.id === listedProductsData?.userId ? (
+                <div className="grid pt-8 grid-cols-1 gap-4">
+                  <button
+                    onClick={handleOnStatus}
+                    className="flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
+                  >
+                    <MdPublishedWithChanges
+                      size={20}
+                      className="group-hover:rotate-180 transition-transform duration-500"
+                    />
+                    <span>
+                      {selectedContent[localizationKeys.changeStatus]}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      history.push(routes.app.createAuction.productDetails, {
+                        productId: productId,
+                      })
+                    }
+                    className="flex items-center justify-center gap-3 bg-white dark:bg-slate-800 border-2 border-primary text-primary hover:bg-primary hover:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/5 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
+                  >
+                    <RiAuctionLine
+                      size={20}
+                      className="group-hover:scale-110 transition-transform"
+                    />
+                    <span>
+                      {selectedContent[localizationKeys.convertToAuction]}
+                    </span>
+                  </button>
+                </div>
+              ) : user ? (
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleWhatsApp}
+                    className="flex-1 bg-yellow hover:bg-yellow-dark text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
+                  >
+                    <FaWhatsapp className="text-2xl" />
+                    <span>{selectedContent[localizationKeys.chat]}</span>
+                  </button>
+                  <button
+                    onClick={handleCall}
+                    className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg border border-white/10"
+                  >
+                    <IoCall className="text-2xl text-yellow" />
+                  </button>
+                </div>
+              ) : (
+                <div className="pt-2">
+                  <button
+                    onClick={handleOnContact}
+                    className="w-full bg-primary hover:bg-primary-dark text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 uppercase tracking-widest text-sm"
+                  >
+                    {selectedContent[localizationKeys.viewContactDetails]}
+                  </button>
+                </div>
+              )}
+            </div>
+            {/* Tabs for mobile (hidden on desktop) */}
+            <div className="mt-8 lg:hidden block">
+              <AuctionDetailsTabs
+                dataTabs={listedProductsData}
+                activeIndexTab={activeIndexTab}
+                setActiveIndexTab={setActiveIndexTab}
+                isListProduct
+              />
+            </div>
+            {/* Agent Sidebar Card */}
+            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-lg">
+              <div className="p-6 md:p-8 space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      {listedProductsData?.user?.imageLink ? (
+                        <img
+                          src={listedProductsData?.user?.imageLink}
+                          className="w-14 h-14 rounded-full object-cover ring-2 ring-gray-100 dark:ring-slate-800 p-0.5"
+                          alt="Agent"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-full bg-gray-50 dark:bg-slate-800 flex items-center justify-center ring-2 ring-gray-100 dark:ring-slate-800 p-0.5">
+                          <div className="w-full h-full rounded-full bg-gray-200/50 dark:bg-slate-700/50 flex items-center justify-center">
+                            <FaUser className="text-gray-400 dark:text-gray-500 text-xl" />
+                          </div>
+                        </div>
+                      )}
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center p-0.5">
+                        <MdOutlineVerifiedUser className="text-blue-500 w-full h-full" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5">
+                        {selectedContent[localizationKeys.listedBy]}
+                      </p>
+                      <h4 className="font-black text-gray-900 dark:text-white tracking-tight leading-none overflow-hidden text-ellipsis whitespace-nowrap max-w-[150px]">
+                        {listedProductsData?.user?.userName}
+                      </h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 bg-yellow-400/10 px-2 py-1 rounded-lg">
+                    <IoStar className="text-yellow-500" size={12} />
+                    <span className="text-[11px] font-black text-yellow-600">
+                      4.9
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Map Interaction Section */}
+            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl p-6 shadow-lg">
+              <div className="text-gray-900 dark:text-white mt-2">
+                {mainLocation?.address ? (
+                  <div className="space-y-6">
+                    {mainLocation?.lat && mainLocation?.lng ? (
+                      <div className="space-y-5">
+                        <iframe
+                          title="Google Map"
+                          className="w-full h-80 rounded-2xl border-0 shadow-inner transition-all duration-700"
+                          src={mapUrl}
+                          allowFullScreen
+                        />
+                        <button
+                          onClick={() =>
+                            window.open(
+                              `https://www.google.com/maps/dir/?api=1&destination=${mainLocation?.lat},${mainLocation?.lng}`,
+                              "_blank",
+                            )
+                          }
+                          className="w-full bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group/btn"
+                        >
+                          <HiOutlineExternalLink
+                            size={18}
+                            className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"
+                          />
+                          {selectedContent[localizationKeys.getDirections]}
+                        </button>
+                      </div>
+                    ) : null}
+
+                    <div className="space-y-5 px-1">
+                      <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
+                        <div className="w-14 h-14 bg-primary/5 dark:bg-primary/10 rounded-2xl flex items-center justify-center shrink-0 border border-primary/10 dark:border-white/5 shadow-sm">
+                          <IoLocationSharp size={28} className="text-primary" />
+                        </div>
+                        <div className="space-y-1">
+                          <h4 className="text-2xl font-black text-gray-900 dark:text-white leading-tight tracking-tight">
+                            {mainLocation?.address}
+                          </h4>
+                          <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-primary/40" />
+                            <p className="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-[0.15em]">
+                              {mainLocation?.addressLabel}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-gray-100 dark:border-slate-800/50">
+                          <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1">
+                            City
+                          </p>
+                          <p className="text-sm font-bold text-gray-900 dark:text-white truncate">
                             {
                               mainLocation?.city?.[
                                 lang === "ar" ? "nameAr" : "nameEn"
                               ]
                             }
                           </p>
-                          <span className="text-gray-400">&bull;</span>
-                          <p className="text-base text-gray-600">
+                        </div>
+                        <div className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-gray-100 dark:border-slate-800/50">
+                          <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-1">
+                            Country
+                          </p>
+                          <p className="text-sm font-bold text-gray-900 dark:text-white truncate">
                             {
                               mainLocation?.country?.[
                                 lang === "ar" ? "nameAr" : "nameEn"
@@ -318,107 +440,39 @@ const SummaryListedSection = () => {
                             }
                           </p>
                         </div>
-
-                        {
-                          mainLocation?.lat && mainLocation?.lng ? (
-                            <iframe
-                              title="Google Map"
-                              className="w-full h-64 mt-4 rounded-lg"
-                              src={mapUrl}
-                              allowFullScreen
-                            />
-                          ) : null
-                          // <p className="text-gray-600 mt-2">
-                          //   {selectedContent[localizationKeys.locationNotAvailable]}
-                          // </p>
-                        }
-                      </>
-                    ) : (
-                      <p>
-                        {selectedContent[localizationKeys.locationNotAvailable]}
-                      </p>
-                    )}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="py-12 text-center bg-gray-50 dark:bg-slate-800/50 rounded-3xl border border-dashed border-gray-200 dark:border-slate-700">
+                    <IoLocationSharp
+                      className="mx-auto text-gray-300 mb-4"
+                      size={48}
+                    />
+                    <p className="text-sm text-gray-500 dark:text-gray-400 italic font-medium px-8">
+                      {selectedContent[localizationKeys.locationNotAvailable]}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-          {user?.id === listedProductsData?.userId ? (
-            <div className="pt-4 flex gap-2">
-              <button
-                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
-                onClick={handleOnStatus}
-              >
-                {selectedContent[localizationKeys.changeStatus]}
-              </button>
+        </div>
 
-              <button
-                onClick={() =>
-                  history.push(routes.app.createAuction.productDetails, {
-                    productId: productId,
-                  })
-                }
-                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
-              >
-                {selectedContent[localizationKeys.convertToAuction]}
-              </button>
-            </div>
-          ) : user ? (
-            <div className="flex flex-col md:flex-row gap-4 pt-2">
-              <button
-                onClick={() => {
-                  const message = encodeURIComponent(
-                    "Hello, I would like to inquire about your product listed on Alletre."
-                  );
-                  const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
-                  window.open(whatsappUrl, "_blank");
-                }}
-                className="border-primary border-[1px] text-primary md:w-[120px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2 hover:border-primary-dark hover:text-primary-dark"
-              >
-                <FaWhatsapp />
-                <span>{selectedContent[localizationKeys.chat]}</span>
-              </button>
-
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-primary hover:bg-primary-dark text-white md:w-[120px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
-              >
-                <IoCall />
-                <span> {selectedContent[localizationKeys.call]}</span>
-              </button>
-
-              <PhoneNumberModal
-                openModal={isModalOpen}
-                phoneNumber={listedProductsData?.user?.phone}
-                setOpen={setIsModalOpen}
-              />
-            </div>
-          ) : (
-            <div className="pt-4">
-              <button
-                onClick={handleOnContact}
-                className=" bg-primary hover:bg-primary-dark text-white md:w-[145px] w-full h-[35px] md:h-[40px] rounded-lg flex items-center justify-center space-x-2"
-              >
-                {selectedContent[localizationKeys.viewContactDetails]}
-              </button>
-            </div>
-          )}
+        {/* Similar Products */}
+        <div className="mt-24"> 
+          <SilmilarProductsSlider
+            categoriesId={listedProductsData?.categoryId}
+            isListProduct={true}
+          />
         </div>
       </div>
-      <div className="mt-28 px-4">
-        <AuctionDetailsTabs
-          dataTabs={listedProductsData}
-          activeIndexTab={activeIndexTab}
-          setActiveIndexTab={setActiveIndexTab}
-          isListProduct
-        />
-      </div>
-      <div className="mt-16">
-        <SilmilarProductsSlider
-          categoriesId={listedProductsData?.categoryId}
-          isListProduct={true}
-        />
-      </div>
+
+      <PhoneNumberModal
+        openModal={isModalOpen}
+        phoneNumber={listedProductsData?.user?.phone}
+        setOpen={setIsModalOpen}
+      />
     </div>
   );
 };

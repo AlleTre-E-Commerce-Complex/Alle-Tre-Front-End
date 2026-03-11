@@ -93,6 +93,7 @@ const en = {
   [localizationKeys.viewContactDetails]: " View contact details",
   [localizationKeys.trendingAuctions]: "Trending Auctions",
   [localizationKeys.postedBy]: "Posted by",
+  [localizationKeys.listedBy]: "Listed by",
   [localizationKeys.type]: "Type",
   [localizationKeys.filterOptions]: "Filter options",
   [localizationKeys.filter]: "Filters",
@@ -744,6 +745,11 @@ const en = {
   [localizationKeys.WithDrawalSuccessMessage]:
     "Success! Your withdrawal request has been processed successfully. Your funds are on their way, and you’ll receive them shortly. Thank you for using our service!",
   [localizationKeys.addAccount]: "Add account",
+  [localizationKeys.inclusiveOfAllTaxes]:"Inclusive of all taxes",
+  [localizationKeys.getDirections]:"Get Directions",
+  [localizationKeys.premiumListing]:"Premium Listing",
+  [localizationKeys.scrollToViewMore]:"Scroll to view more",
+  [localizationKeys.pictures]:"pictures",
 };
 
 export default en;

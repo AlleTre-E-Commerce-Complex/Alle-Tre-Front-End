@@ -110,7 +110,14 @@ const ProductCardList = ({
             {/* Badge */}
             <div className="absolute top-2.5 left-2.5 z-10">
               <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
-                VERIFIED
+                  {category === 3 || category === 7
+                ? usageStatus === "NEW"
+                  ? selectedContent[localizationKeys.sell]
+                  : category === 7 ? selectedContent[localizationKeys.adoption
+                    
+                  ] : selectedContent[localizationKeys.rent]
+                : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
               </div>
             </div>
 
@@ -231,13 +238,13 @@ const ProductCardList = ({
           {/* --- Content Panel --- */}
           <div className="flex flex-col flex-1 p-2.5 sm:p-4 min-w-0 overflow-hidden">
             {/* Usage badge */}
-            <span className="text-yellow text-[8px] uppercase font-bold tracking-widest mb-1.5">
+            {/* <span className="text-yellow text-[8px] uppercase font-bold tracking-widest mb-1.5">
               {usageStatus
                 ? usageStatus === "NEW"
                   ? "NEW EDITION"
                   : usageStatus
                 : "USED"}
-            </span>
+            </span> */}
 
             {/* Title */}
             <h2

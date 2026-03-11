@@ -8,15 +8,22 @@ const ReturnPolicy = ({ dataTabs }) => {
   const selectedContent = content[lang];
 
   return (
-    <div className="animate-in">
-      <div className=" mb-40">
-        <div className={`flex bg-[#F2F2F2] drop-shadow  py-3 rounded ${""}`}>
-          <p className="text-gray-med font-normal text-sm px-5 w-1/2">
-            {selectedContent[localizationKeys.returnPolicy]}: 
-          </p>
-          <p className="text-gray-dark font-normal text-sm flex justify-start w-full mx-auto ">
-            {dataTabs.returnPolicyDescription ? dataTabs.returnPolicyDescription : selectedContent[localizationKeys.noReturnPolicy]}
-          </p>
+    <div className="animate-in fade-in duration-700">
+      <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="md:w-1/3">
+            <h3 className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-2">
+              {selectedContent[localizationKeys.returnPolicy]}
+            </h3>
+            <div className="w-12 h-1.5 bg-primary rounded-full" />
+          </div>
+          <div className="md:w-2/3">
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
+              {dataTabs.returnPolicyDescription
+                ? dataTabs.returnPolicyDescription
+                : selectedContent[localizationKeys.noReturnPolicy]}
+            </p>
+          </div>
         </div>
       </div>
     </div>
