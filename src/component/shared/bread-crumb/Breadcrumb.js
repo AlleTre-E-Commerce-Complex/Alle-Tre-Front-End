@@ -10,7 +10,6 @@ import queryString from "query-string";
 import { DEFAULT_PAGE, getDefaultPerPage } from "constants/pagination";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
-
 export const CreateAuctionBreadcrumb = ({ edit }) => {
   const { pathname } = useLocation();
   const [lang] = useLanguage("");
@@ -34,10 +33,11 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
           key: "Create Auction",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.createAuction.productDetails)
+              className={`${
+                pathname.startsWith(routes.app.createAuction.productDetails)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.createAuction.default}
             >
               {selectedContent[localizationKeys.createAuction]}
@@ -50,11 +50,12 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
           key: "Product Details",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.createAuction.auctionDetails)
+              className={`${
+                pathname.startsWith(routes.app.createAuction.auctionDetails)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
-            // to={routes.app.createAuction.productDetails}
+              } mx-2 text-base font-normal `}
+              // to={routes.app.createAuction.productDetails}
             >
               {selectedContent[localizationKeys.productDetails]}
             </Link>
@@ -66,11 +67,12 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
           key: "Shipping Details",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.createAuction.shippingDetails)
+              className={`${
+                pathname.startsWith(routes.app.createAuction.shippingDetails)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
-            // to={routes.app.createAuction.auctionDetails}
+              } mx-2 text-base font-normal `}
+              // to={routes.app.createAuction.auctionDetails}
             >
               {selectedContent[localizationKeys.auctionDetails]}
             </Link>
@@ -82,11 +84,12 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
           key: "Shipping Details",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.createAuction.paymentDetails)
+              className={`${
+                pathname.startsWith(routes.app.createAuction.paymentDetails)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
-            // to={routes.app.createAuction.shippingDetails}
+              } mx-2 text-base font-normal `}
+              // to={routes.app.createAuction.shippingDetails}
             >
               {selectedContent[localizationKeys.shippingDetails]}
             </Link>
@@ -139,10 +142,11 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
           key: "profile",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.default)
+              className={`${
+                pathname.startsWith(routes.app.profile.default)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.default}
             >
               {selectedContent[localizationKeys.profile]}
@@ -155,10 +159,11 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
           key: "My Auctions",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myAuctions.default)
+              className={`${
+                pathname.startsWith(routes.app.profile.myAuctions.default)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.default}
             >
               {selectedContent[localizationKeys.myAuctions]}
@@ -171,10 +176,11 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
           key: " Active Auctions",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myAuctions.active)
+              className={`${
+                pathname.startsWith(routes.app.profile.myAuctions.active)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.active}
             >
               {selectedContent[localizationKeys.activeAuctions]}
@@ -187,10 +193,11 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
           key: "Scheduled Auctions",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myAuctions.scheduled)
+              className={`${
+                pathname.startsWith(routes.app.profile.myAuctions.scheduled)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.scheduled}
             >
               {selectedContent[localizationKeys.scheduledAuctions]}
@@ -203,10 +210,11 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
           key: "Sold Auctions",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myAuctions.sold)
+              className={`${
+                pathname.startsWith(routes.app.profile.myAuctions.sold)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.sold}
             >
               {selectedContent[localizationKeys.soldAuctions]}
@@ -219,10 +227,11 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
           key: "Pending Auctions",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myAuctions.pending)
+              className={`${
+                pathname.startsWith(routes.app.profile.myAuctions.pending)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.pending}
             >
               {selectedContent[localizationKeys.pendingAuctions]}
@@ -235,10 +244,11 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
           key: "Expired Auctions",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myAuctions.expired)
+              className={`${
+                pathname.startsWith(routes.app.profile.myAuctions.expired)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.expired}
             >
               {selectedContent[localizationKeys.expiredAuctions]}
@@ -248,17 +258,18 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myAuctions.activeDetails(details)
+          routes.app.profile.myAuctions.activeDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myAuctions.activeDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myAuctions.activeDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.activeDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -268,17 +279,18 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myAuctions.scheduledDetails(details)
+          routes.app.profile.myAuctions.scheduledDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myAuctions.scheduledDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myAuctions.scheduledDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.scheduledDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -288,17 +300,18 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myAuctions.soldDetails(details)
+          routes.app.profile.myAuctions.soldDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myAuctions.soldDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myAuctions.soldDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.soldDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -308,17 +321,18 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myAuctions.pendingDetails(details)
+          routes.app.profile.myAuctions.pendingDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myAuctions.pendingDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myAuctions.pendingDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.pendingDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -328,17 +342,18 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myAuctions.expiredDetails(details)
+          routes.app.profile.myAuctions.expiredDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myAuctions.expiredDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myAuctions.expiredDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myAuctions.expiredDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -356,25 +371,34 @@ export const AuctionDetailsBreadcrumb = ({ details }) => {
   );
 };
 
-export const AuctionHomeDetailsBreadcrumb = ({ details, category, categoryId }) => {
+export const AuctionHomeDetailsBreadcrumb = ({
+  details,
+  category,
+  categoryId,
+}) => {
   const { pathname } = useLocation();
   const [lang] = useLanguage("");
   const { search } = useLocation();
   const selectedContent = content[lang];
   const queryParams = new URLSearchParams(search);
-  
+
   let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
   let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-
 
   const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
   const filterParams = {
     page,
     perPage,
-    categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : [categoryId], // Ensure categoryId is included if no categories
-    subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
-    brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+    categories: Array.isArray(parsed.categories)
+      ? parsed.categories.map(Number)
+      : [categoryId], // Ensure categoryId is included if no categories
+    subCategory: Array.isArray(parsed.subCategory)
+      ? parsed.subCategory.map(Number)
+      : undefined,
+    brands: Array.isArray(parsed.brands)
+      ? parsed.brands.map(Number)
+      : undefined,
     sellingType: parsed.sellingType,
     auctionStatus: parsed.auctionStatus,
     usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
@@ -389,7 +413,9 @@ export const AuctionHomeDetailsBreadcrumb = ({ details, category, categoryId }) 
     }
   });
 
-  const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
+  const queryStr = queryString.stringify(filterParams, {
+    arrayFormat: "bracket",
+  });
 
   const AuctionHomeDetailsSections = (pathname, details, category) =>
     [
@@ -410,7 +436,6 @@ export const AuctionHomeDetailsBreadcrumb = ({ details, category, categoryId }) 
           <Link
             className="text-gray-med mx-2 text-base font-normal"
             to={`${routes.app.categories(category, categoryId)}?${queryStr}`}
-
           >
             {category}
           </Link>
@@ -421,11 +446,12 @@ export const AuctionHomeDetailsBreadcrumb = ({ details, category, categoryId }) 
           key: "Auction Details",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.homeDetails(details)) &&
-                  pathname.startsWith(routes.app.buyNow(details))
+              className={`${
+                pathname.startsWith(routes.app.homeDetails(details)) &&
+                pathname.startsWith(routes.app.buyNow(details))
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.homeDetails(details)}
             >
               {selectedContent[localizationKeys.auctionDetails]}
@@ -438,10 +464,11 @@ export const AuctionHomeDetailsBreadcrumb = ({ details, category, categoryId }) 
           key: "Pay Deposite",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.payDeposite(details))
+              className={`${
+                pathname.startsWith(routes.app.payDeposite(details))
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.payDeposite(details)}
             >
               {selectedContent[localizationKeys.payDeposite]}
@@ -454,10 +481,11 @@ export const AuctionHomeDetailsBreadcrumb = ({ details, category, categoryId }) 
           key: "buy now",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.buyNow(details))
+              className={`${
+                pathname.startsWith(routes.app.buyNow(details))
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.buyNow(details)}
             >
               {selectedContent[localizationKeys.buyNow]}
@@ -481,19 +509,24 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
   const { search } = useLocation();
   const selectedContent = content[lang];
   const queryParams = new URLSearchParams(search);
-  
+
   let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
   let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-
 
   const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
   const filterParams = {
     page,
     perPage,
-    categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : [categoryId], // Ensure categoryId is included if no categories
-    subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
-    brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+    categories: Array.isArray(parsed.categories)
+      ? parsed.categories.map(Number)
+      : [categoryId], // Ensure categoryId is included if no categories
+    subCategory: Array.isArray(parsed.subCategory)
+      ? parsed.subCategory.map(Number)
+      : undefined,
+    brands: Array.isArray(parsed.brands)
+      ? parsed.brands.map(Number)
+      : undefined,
     sellingType: parsed.sellingType,
     auctionStatus: parsed.auctionStatus,
     usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
@@ -508,32 +541,34 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
     }
   });
 
-  const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
-
+  const queryStr = queryString.stringify(filterParams, {
+    arrayFormat: "bracket",
+  });
 
   const MyBidsSections = (pathname, details, category) =>
-    [ {
-      key: "home",
-      content: (
-        <Link
-          className="text-gray-med mx-2 text-base font-normal"
-          to={routes.app.home}
-        >
-          {selectedContent[localizationKeys.home]}
-        </Link>
-      ),
-    },
-    {
-      key: "category",
-      content: (
-        <Link
-          className="text-gray-med mx-2 text-base font-normal"
-          to={`${routes.app.categories(category, categoryId)}?${queryStr}`}
-        >
-          {category}
-        </Link>
-      ),
-    },
+    [
+      {
+        key: "home",
+        content: (
+          <Link
+            className="text-gray-med mx-2 text-base font-normal"
+            to={routes.app.home}
+          >
+            {selectedContent[localizationKeys.home]}
+          </Link>
+        ),
+      },
+      {
+        key: "category",
+        content: (
+          <Link
+            className="text-gray-med mx-2 text-base font-normal"
+            to={`${routes.app.categories(category, categoryId)}?${queryStr}`}
+          >
+            {category}
+          </Link>
+        ),
+      },
       {
         key: "category",
         content: (
@@ -550,10 +585,11 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: "Auction Details",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.default)
+              className={`${
+                pathname.startsWith(routes.app.profile.default)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.default}
             >
               {selectedContent[localizationKeys.profile]}
@@ -566,10 +602,11 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: "My Bids",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myBids.default)
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.default)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.default}
             >
               {selectedContent[localizationKeys.myBids]}
@@ -582,10 +619,11 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: "  In Pogress",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myBids.inPogress)
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.inPogress)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.inPogress}
             >
               {selectedContent[localizationKeys.inProgress]}
@@ -598,10 +636,11 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: "Pending",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myBids.pending)
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.pending)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.pending}
             >
               {selectedContent[localizationKeys.pending]}
@@ -614,12 +653,13 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: " Waiting For Delivery",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myBids.waitingForDelivery
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.waitingForDelivery,
+                )
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.waitingForDelivery}
             >
               {selectedContent[localizationKeys.waitingForDelivery]}
@@ -632,10 +672,11 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: "Expired",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myBids.expired)
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.expired)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.expired}
             >
               {selectedContent[localizationKeys.expired]}
@@ -648,10 +689,11 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: "completed",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myBids.completed)
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.completed)
                   ? "text-gray-med"
                   : "text-primary"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completed}
             >
               {selectedContent[localizationKeys.completed]}
@@ -664,10 +706,11 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
           key: " Complete Payment",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.profile.myBids.completePayment)
+              className={`${
+                pathname.startsWith(routes.app.profile.myBids.completePayment)
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completePayment}
             >
               {selectedContent[localizationKeys.completePayment]}
@@ -677,17 +720,18 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myBids.inPogressDetails(details)
+          routes.app.profile.myBids.inPogressDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myBids.inPogressDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.inPogressDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.inPogressDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -697,17 +741,18 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myBids.pendingDetails(details)
+          routes.app.profile.myBids.pendingDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myBids.pendingDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.pendingDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.pendingDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -717,17 +762,18 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myBids.waitingForDeliveryDetails(details)
+          routes.app.profile.myBids.waitingForDeliveryDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myBids.waitingForDeliveryDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.waitingForDeliveryDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.waitingForDeliveryDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -737,17 +783,18 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myBids.expiredDetails(details)
+          routes.app.profile.myBids.expiredDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myBids.expiredDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.expiredDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.expiredDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -757,17 +804,18 @@ export const MyBidsBreadcrumb = ({ details, category, categoryId }) => {
       ],
       ...[
         pathname.startsWith(
-          routes.app.profile.myBids.completedDetails(details)
+          routes.app.profile.myBids.completedDetails(details),
         ) && {
           key: "View Details",
           content: (
             <Link
-              className={`${pathname.startsWith(
-                routes.app.profile.myBids.completedDetails(details)
-              )
+              className={`${
+                pathname.startsWith(
+                  routes.app.profile.myBids.completedDetails(details),
+                )
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.profile.myBids.completedDetails(details)}
             >
               {selectedContent[localizationKeys.viewDetails]}
@@ -808,10 +856,11 @@ export const FAQsBreadcrumb = ({ details }) => {
           key: "Auction Details",
           content: (
             <Link
-              className={`${pathname.startsWith(routes.app.faqs)
+              className={`${
+                pathname.startsWith(routes.app.faqs)
                   ? "text-primary"
                   : "text-gray-med"
-                } mx-2 text-base font-normal `}
+              } mx-2 text-base font-normal `}
               to={routes.app.faqs}
             >
               {selectedContent[localizationKeys.faqs]}
@@ -836,19 +885,24 @@ export const ListProductsBreadcrumb = ({ details, category, categoryId }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const queryParams = new URLSearchParams(search);
-  
+
   let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
   let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-
 
   const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
   const filterParams = {
     page,
     perPage,
-    categories: Array.isArray(parsed.categories) ? parsed.categories.map(Number) : [categoryId], // Ensure categoryId is included if no categories
-    subCategory: Array.isArray(parsed.subCategory) ? parsed.subCategory.map(Number) : undefined,
-    brands: Array.isArray(parsed.brands) ? parsed.brands.map(Number) : undefined,
+    categories: Array.isArray(parsed.categories)
+      ? parsed.categories.map(Number)
+      : [categoryId], // Ensure categoryId is included if no categories
+    subCategory: Array.isArray(parsed.subCategory)
+      ? parsed.subCategory.map(Number)
+      : undefined,
+    brands: Array.isArray(parsed.brands)
+      ? parsed.brands.map(Number)
+      : undefined,
     sellingType: parsed.sellingType,
     auctionStatus: parsed.auctionStatus,
     usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
@@ -864,14 +918,19 @@ export const ListProductsBreadcrumb = ({ details, category, categoryId }) => {
     }
   });
 
-  const queryStr = queryString.stringify(filterParams, { arrayFormat: "bracket" });
+  const queryStr = queryString.stringify(filterParams, {
+    arrayFormat: "bracket",
+  });
 
   const ListProductSections = (pathname, details, category) =>
     [
       {
         key: "home",
         content: (
-          <Link className="text-gray-med mx-2 text-base font-normal" to={routes.app.home}>
+          <Link
+            className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors mx-2 text-sm md:text-base font-medium"
+            to={routes.app.home}
+          >
             {selectedContent[localizationKeys.home]}
           </Link>
         ),
@@ -880,7 +939,7 @@ export const ListProductsBreadcrumb = ({ details, category, categoryId }) => {
         key: "category",
         content: (
           <Link
-            className="text-gray-med mx-2 text-base font-normal"
+            className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors mx-2 text-sm md:text-base font-medium"
             to={`${routes.app.categories(category, categoryId)}?${queryStr}`}
           >
             {category}
@@ -894,9 +953,9 @@ export const ListProductsBreadcrumb = ({ details, category, categoryId }) => {
             <Link
               className={`${
                 pathname.startsWith(routes.app.listProduct.details(details))
-                  ? "text-primary"
-                  : "text-gray-med"
-              } mx-2 text-base font-normal `}
+                  ? "text-primary dark:text-white font-bold"
+                  : "text-gray-500 dark:text-gray-400 font-medium"
+              } mx-2 text-sm md:text-base transition-colors hover:text-primary`}
               to={routes.app.listProduct.details(details)}
             >
               {selectedContent[localizationKeys.productDetails]}
@@ -906,5 +965,10 @@ export const ListProductsBreadcrumb = ({ details, category, categoryId }) => {
       ],
     ].filter(Boolean);
 
-  return <Breadcrumb className="Edit_Breadcrumb" sections={ListProductSections(pathname, details, category)} />;
+  return (
+    <Breadcrumb
+      className="Edit_Breadcrumb"
+      sections={ListProductSections(pathname, details, category)}
+    />
+  );
 };

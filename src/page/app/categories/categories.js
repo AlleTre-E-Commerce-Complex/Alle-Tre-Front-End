@@ -286,7 +286,10 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
               <div className="flex flex-col md:flex-row justify-between items-start md:items-end pb-6 border-b border-gray-200 dark:border-gray-800 mb-6 gap-y-4">
                 <div className="flex flex-col gap-1 max-w-2xl">
                   <div className="flex items-center text-[10px] md:text-[11px] text-gray-500 dark:text-gray-400 gap-1 uppercase font-semibold tracking-wider mb-1">
-                    <span className="hover:text-yellow cursor-pointer transition-colors">
+                    <span
+                      className="hover:text-yellow cursor-pointer transition-colors"
+                      onClick={() => history.push("/")}
+                    >
                       HOME
                     </span>
                     <span>&gt;</span>

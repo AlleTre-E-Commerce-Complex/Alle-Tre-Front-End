@@ -90,6 +90,7 @@ const ar = {
   [localizationKeys.convertToAuction]: "تحويل إلى المزاد",
   [localizationKeys.viewContactDetails]: " عرض تفاصيل الاتصال",
   [localizationKeys.trendingAuctions]: "المزادات المميزه",
+  [localizationKeys.listedBy]: "بواسطة",
   [localizationKeys.type]: "عرض",
   [localizationKeys.filterOptions]: "خيارات الفلتر",
   [localizationKeys.selectOptions]: "حدد الخيارات",
@@ -727,6 +728,11 @@ const ar = {
   [localizationKeys.WithDrawalSuccessMessage]:
     "تم بنجاح! لقد تمت معالجة طلب السحب الخاص بك بنجاح. أموالك في طريقها إليك، وستصلك قريبًا. شكرًا لك على استخدام خدمتنا!",
   [localizationKeys.addAccount]: "إضافة حساب",
+  [localizationKeys.inclusiveOfAllTaxes]: "شامل جميع الضرائب",
+  [localizationKeys.getDirections]: "الحصول على الاتجاهات",
+  [localizationKeys.premiumListing]: "إعلان مميز",
+  [localizationKeys.scrollToViewMore]: "قم بالتمرير لعرض المزيد",
+  [localizationKeys.pictures]: "صور",
 };
 
 export default ar;

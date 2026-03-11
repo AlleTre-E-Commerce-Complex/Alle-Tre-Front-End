@@ -158,7 +158,14 @@ const ProductCard = ({
         {/* Badge - Top Left */}
         <div className="absolute top-2 left-2 z-10 flex gap-1.5">
           <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
-            VERIFIED
+               {category === 3 || category === 7
+                ? usageStatus === "NEW"
+                  ? selectedContent[localizationKeys.sell]
+                  : category === 7 ? selectedContent[localizationKeys.adoption
+                    
+                  ] : selectedContent[localizationKeys.rent]
+                : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
           </div>
         </div>
 
@@ -290,13 +297,16 @@ const ProductCard = ({
       {/* Details Section */}
       <div className="flex flex-col flex-1 pt-2 px-2.5 pb-2.5">
         {/* Usage badge */}
-        <span className="text-yellow text-[8px] uppercase font-bold tracking-widest mb-0.5">
-          {usageStatus
-            ? usageStatus === "NEW"
-              ? "NEW"
-              : usageStatus
-            : "USED"}
-        </span>
+        {/* <span className="text-yellow text-[8px] uppercase font-bold tracking-widest mb-0.5">
+             {category === 3 || category === 7
+                ? usageStatus === "NEW"
+                  ? selectedContent[localizationKeys.sell]
+                  : category === 7 ? selectedContent[localizationKeys.adoption
+                    
+                  ] : selectedContent[localizationKeys.rent]
+                : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()}
+        </span> */}
 
         {/* Title */}
         <h2
