@@ -166,7 +166,7 @@ const SummaryListedSection = () => {
           {/* Sidebar Area (Right) */}
           <div className="lg:col-span-4 space-y-6 sticky top-40">
             {/* Purchase Card */}
-            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-xl">
+            <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-xl">
               {/* Title & Location Section (Integrated from Overlay) */}
               <div className="mb-8 text-primary dark:text-white ">
                 <div className="">
@@ -325,7 +325,7 @@ const SummaryListedSection = () => {
               />
             </div>
             {/* Agent Sidebar Card */}
-            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-lg">
+            <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-slate-800 rounded-3xl overflow-hidden shadow-lg">
               <div className="p-6 md:p-8 space-y-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -343,7 +343,7 @@ const SummaryListedSection = () => {
                           </div>
                         </div>
                       )}
-                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center p-0.5">
+                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-white dark:bg-primary-dark rounded-full flex items-center justify-center p-0.5">
                         <MdOutlineVerifiedUser className="text-blue-500 w-full h-full" />
                       </div>
                     </div>
@@ -367,7 +367,7 @@ const SummaryListedSection = () => {
             </div>
 
             {/* Map Interaction Section */}
-            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl p-6 shadow-lg">
+            <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-slate-800 rounded-3xl p-6 shadow-lg">
               <div className="text-gray-900 dark:text-white mt-2">
                 {mainLocation?.address ? (
                   <div className="space-y-6">

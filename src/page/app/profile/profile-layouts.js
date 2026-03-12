@@ -31,52 +31,54 @@ const ProfileLayouts = () => {
   };
 
   return (
-    <div className="mt-44 px-2 md:px-4 mx-auto">
+    <div className="pt-44 px-2 md:px-4 mx-auto min-h-screen dark:bg-primary transition-colors duration-300">
       <ProfileSideBare SetSid={SetSid} sid={sid} />
 
-      <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0">
-        {useLocation().pathname === '/alletre/profile/settings' && (
-          <div className="flex justify-end md:hidden">
-            <button
-              onClick={() => setLogoutModalOpen(true)}
-              className="mx-2  border-[1px] border-primary text-red-600 flex items-center gap-2 px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition duration-200"
-            >
-              <MdLogout className="text-xl" />
-              <span className="font-medium">
-                {selectedContent[localizationKeys.logout]}
-              </span>
-            </button>
-          </div>
-        )}
+      <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0 md:px-6">
+        <div className="bg-white dark:bg-primary-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800/60 min-h-[calc(100vh-14rem)] mb-8 p-4 sm:p-6 md:p-8">
+          {useLocation().pathname === "/alletre/profile/settings" && (
+            <div className="flex justify-end md:hidden mb-6">
+              <button
+                onClick={() => setLogoutModalOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 border border-red-200 dark:border-red-900/50 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition duration-300"
+              >
+                <MdLogout className="text-xl" />
+                <span>{selectedContent[localizationKeys.logout]}</span>
+              </button>
+            </div>
+          )}
 
+          <Switch>
+            <Route
+              path={routes.app.profile.myBids.completePayment}
+              component={MyBidsCompletePayment}
+            />
 
-        <Switch>
-          <Route
-            path={routes.app.profile.myBids.completePayment}
-            component={MyBidsCompletePayment}
-          />
-
-          <Route
-            path={routes.app.profile.profileSettings}
-            component={ProfileSettings}
-          />
-          <Route
-            path={routes.app.profile.myAuctions.default}
-            component={MyAuctions}
-          />
-          <Route path={routes.app.profile.myBids.default} component={MyBids} />
-          <Route
-            path={routes.app.profile.myProducts.default}
-            component={MyProducts}
-          />
-          <Route path={routes.app.profile.watchlist} component={Watshlist} />
-          <Route path={routes.app.profile.purchased} component={Purchased} />
-          <Route path={routes.app.profile.wallet} component={Wallet} />
-          <Route
-            path={routes.app.profile.notifications}
-            component={Notifications}
-          />
-        </Switch>
+            <Route
+              path={routes.app.profile.profileSettings}
+              component={ProfileSettings}
+            />
+            <Route
+              path={routes.app.profile.myAuctions.default}
+              component={MyAuctions}
+            />
+            <Route
+              path={routes.app.profile.myBids.default}
+              component={MyBids}
+            />
+            <Route
+              path={routes.app.profile.myProducts.default}
+              component={MyProducts}
+            />
+            <Route path={routes.app.profile.watchlist} component={Watshlist} />
+            <Route path={routes.app.profile.purchased} component={Purchased} />
+            <Route path={routes.app.profile.wallet} component={Wallet} />
+            <Route
+              path={routes.app.profile.notifications}
+              component={Notifications}
+            />
+          </Switch>
+        </div>
       </div>
 
       <LogoutModal
