@@ -18,6 +18,10 @@
 }
 
 @layer base {
+  body {
+    @apply bg-white dark:bg-primary transition-colors duration-300;
+  }
+
   *:lang(en) {
     font-family: "Roboto", sans-serif;
   }
@@ -46,8 +50,8 @@
     --color-bg-profile: #e5e5e51a;
 
     /* Primary */
-    --color-primary: #2A3A54;
-    --color-primary-dark: #1E293B;
+    --color-primary: #2a3a54;
+    --color-primary-dark: #1e293b;
     --color-primary-light: #7484a0;
     --color-primary-light-dark: #4d5f7c;
     --color-primary-veryLight: #eae2e6;
@@ -79,7 +83,7 @@
     --color-yellow-light: #e6b474;
     --color-yellow-dark: #af8809;
     --color-yellow-veryLight: #31302b;
-    
+
     --color-orang: #eb8400;
   }
 
@@ -90,11 +94,10 @@
     --color-bg-profile: #1d2f4e;
 
     /* Primary */
-    --color-primary: #2A3A54; /* Maintaining primary branding in dark mode often looks good */
+    --color-primary: #2a3a54; /* Maintaining primary branding in dark mode often looks good */
     --color-primary-dark: #1e2738;
     --color-primary-light: #6b7280;
     --color-primary-veryLight: #eae2e6;
-
 
     /* Secondary */
     --color-secondary: #ffffff; /* White text/elements on dark background */

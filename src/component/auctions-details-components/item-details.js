@@ -57,7 +57,7 @@ const ItemDetails = ({ itemDetailsData }) => {
               {selectedContent[localizationKeys.aboutTheBrand]}
             </h2>
           </div>
-          <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
+          <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
             <p className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap font-medium">
               {itemDetailsData?.description}
             </p>
@@ -77,7 +77,7 @@ const ItemDetails = ({ itemDetailsData }) => {
             return (
               <div
                 key={index}
-                className="bg-white dark:bg-slate-900/50 border border-gray-100 dark:border-slate-800 p-5 rounded-2xl hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300 group"
+                className="bg-white dark:bg-slate-900/40 border border-gray-100 dark:border-slate-800 p-5 rounded-2xl hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300 group"
               >
                 <p className="text-[10px] font-black text-gray-500 dark:text-gray-700 uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">
                   {field?.label[lang]}

@@ -27,14 +27,17 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   const [forceReload, setForceReload] = useState(false);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
+
   useEffect(() => {
     runPofile(
-      authAxios.get(api.app.profile.default).then((res) => {
-        setPofileData(res?.data?.data);
-      })
-      .catch((error)=>{
-        console.log('ProfileSideBare erroe',error)
-      })
+      authAxios
+        .get(api.app.profile.default)
+        .then((res) => {
+          setPofileData(res?.data?.data);
+        })
+        .catch((error) => {
+          console.log("ProfileSideBare error", error);
+        }),
     );
   }, [runPofile, forceReload]);
 
@@ -52,6 +55,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
       transition: { ease: "easeInOut", duration: 0.3 },
     },
   };
+
   const overlayVariants = {
     open: {
       opacity: 1,
@@ -62,6 +66,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
       transition: { ease: "easeInOut", duration: 0.3 },
     },
   };
+
   const socket = useSocket();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
@@ -72,14 +77,16 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   };
 
   const ProfileData = useSelector((state) => state.profileData.PofileData);
+
   return (
     <>
-      <div className="h-screen fixed md:block hidden w-[250px]">
+      {/* Desktop Sidebar */}
+      <div className="hidden md:flex flex-col fixed w-[250px] bg-white dark:bg-primary-dark h-[calc(100vh-14rem)] rounded-2xl shadow-sm border border-primary-veryLight dark:border-gray-800/60 overflow-hidden">
         {/* Fixed Header */}
-        <div className="h-[80px] flex gap-x-4 mx-14 pb-4 pt-3">
-          <div className="min-w-[48px] h-12">
+        <div className="flex items-center gap-x-4 p-6 border-b border-gray-100 dark:border-gray-800/60 bg-gray-50/50 dark:bg-[#111A2E]">
+          <div className="shrink-0 relative">
             <img
-              className="w-12 h-12 rounded-full object-cover"
+              className="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm"
               src={
                 ProfileData?.img || pofileData?.imageLink
                   ? ProfileData?.img || pofileData?.imageLink
@@ -87,86 +94,84 @@ const ProfileSideBare = ({ SetSid, sid }) => {
               }
               alt="userProfileicon"
             />
+            <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-primary rounded-full"></span>
           </div>
-          <div className="pt-1">
-            <h1 className="text-base text-gray-dark font-medium">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white truncate pb-0.5">
               {ProfileData?.name || pofileData?.userName}
             </h1>
-            <p className="text-xs text-gray-med font-normal">
+            <p className="text-xs text-green-600 font-medium">
               {selectedContent[localizationKeys.online]}
             </p>
           </div>
         </div>
 
         {/* Scrollable Content */}
-        <div className="h-[calc(100vh-120px)] overflow-y-auto">
-          <div className="flex flex-col min-h-[500px] pb-10">
-            <NavLink
-              title={selectedContent[localizationKeys.profileSettings]}
-              isActive={pathname.startsWith(routes.app.profile.profileSettings)}
-              onClick={() => history.push(routes.app.profile.profileSettings)}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.myAuctions]}
-              isActive={pathname.startsWith(
-                routes.app.profile.myAuctions.default
-              )}
-              onClick={() =>
-                history.push(routes.app.profile.myAuctions.default)
-              }
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.myBids]}
-              isActive={pathname.startsWith(routes.app.profile.myBids.default)}
-              onClick={() => history.push(routes.app.profile.myBids.default)}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.myProducts]}
-              isActive={pathname.startsWith(
-                routes.app.profile.myProducts.default
-              )}
-              onClick={() =>
-                history.push(routes.app.profile.myProducts.default)
-              }
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.watchlist]}
-              isActive={pathname.startsWith(routes.app.profile.watchlist)}
-              onClick={() => history.push(routes.app.profile.watchlist)}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.Purchased]}
-              isActive={pathname.startsWith(routes.app.profile.purchased)}
-              onClick={() => history.push(routes.app.profile.purchased)}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.Wallet]}
-              isActive={pathname.startsWith(routes.app.profile.wallet)}
-              onClick={() => history.push(routes.app.profile.wallet)}
-            />
-            <NavLink
-              title={selectedContent[localizationKeys.notifications]}
-              isActive={pathname.startsWith(routes.app.profile.notifications)}
-              onClick={() => history.push(routes.app.profile.notifications)}
-            />
-            <div className="h-[100px]"></div>
-          </div>
+        <div className="flex-1 overflow-y-auto scrollbar-hide p-4 space-y-1 ">
+          <NavLink
+            title={selectedContent[localizationKeys.profile]}
+            isActive={pathname.startsWith(routes.app.profile.profileSettings)}
+            onClick={() => history.push(routes.app.profile.profileSettings)}
+          />
+          <NavLink
+            title={selectedContent[localizationKeys.myAuctions]}
+            isActive={pathname.startsWith(
+              routes.app.profile.myAuctions.default,
+            )}
+            onClick={() => history.push(routes.app.profile.myAuctions.default)}
+          />
+          <NavLink
+            title={selectedContent[localizationKeys.myBids]}
+            isActive={pathname.startsWith(routes.app.profile.myBids.default)}
+            onClick={() => history.push(routes.app.profile.myBids.default)}
+          />
+          <NavLink
+            title={selectedContent[localizationKeys.myProducts]}
+            isActive={pathname.startsWith(
+              routes.app.profile.myProducts.default,
+            )}
+            onClick={() => history.push(routes.app.profile.myProducts.default)}
+          />
+          <NavLink
+            title={selectedContent[localizationKeys.watchlist]}
+            isActive={pathname.startsWith(routes.app.profile.watchlist)}
+            onClick={() => history.push(routes.app.profile.watchlist)}
+          />
+          <NavLink
+            title={selectedContent[localizationKeys.Purchased]}
+            isActive={pathname.startsWith(routes.app.profile.purchased)}
+            onClick={() => history.push(routes.app.profile.purchased)}
+          />
+          <NavLink
+            title={selectedContent[localizationKeys.Wallet]}
+            isActive={pathname.startsWith(routes.app.profile.wallet)}
+            onClick={() => history.push(routes.app.profile.wallet)}
+          />
+          <NavLink
+            title={selectedContent[localizationKeys.notifications]}
+            isActive={pathname.startsWith(routes.app.profile.notifications)}
+            onClick={() => history.push(routes.app.profile.notifications)}
+          />
         </div>
 
         {/* Fixed Footer */}
-        <div
-          onClick={() => setLogoutModalOpen(true)}
-          className="h-[40px] fixed bottom-0 w-[250px] flex justify-center gap-x-1 py-2 cursor-pointer bg-white shadow-md border-t"
-        >
-          <MdLogout className="text-xl text-red-600 h-6 " />
-          <p className="text-red-600 text-base font-medium underline">
-            {selectedContent[localizationKeys.logout]}
-          </p>
+        <div className="p-4 border-t border-gray-100 dark:border-gray-800/60 bg-white dark:bg-primary-dark">
+          <button
+            onClick={() => setLogoutModalOpen(true)}
+            className="w-full flex items-center justify-center gap-x-2 py-2.5 px-4 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300 group"
+          >
+            <MdLogout className="text-xl group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-sm font-semibold tracking-wide">
+              {selectedContent[localizationKeys.logout]}
+            </span>
+          </button>
         </div>
       </div>
+
+      {/* Mobile Sidebar */}
       <div className="block md:hidden">
         <motion.div
-          className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 ${
+          className={`fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-40 ${
             sid ? "pointer-events-auto" : "pointer-events-none"
           }`}
           variants={overlayVariants}
@@ -175,113 +180,122 @@ const ProfileSideBare = ({ SetSid, sid }) => {
           transition={{ duration: 0.3 }}
           onClick={() => SetSid(false)}
         />
+
         <motion.div
-       className="hidden md:flex h-full fixed top-0 z-50 w-[255px] bg-white flex-col"
+          className="fixed top-0 bottom-0 z-50 w-[280px] bg-white dark:bg-[#1A222F] flex flex-col shadow-2xl"
           variants={sidebarVariants}
           initial={lang === "en" ? "closedEn" : "closedAr"}
           animate={sid ? "open" : lang === "en" ? "closedEn" : "closedAr"}
         >
           {/* Fixed Header */}
-          <div className="flex gap-x-4 mx-14 pb-8 pt-3">
-            <img
-              className="w-12 h-12 rounded-full object-cover"
-              src={ProfileData?.img ? ProfileData?.img : userProfileicon}
-              alt="userProfileicon"
-            />
-            <div className="pt-1">
-              <h1 className="text-base text-gray-dark font-medium">
+          <div className="flex items-center gap-x-4 p-6 border-b border-gray-100 dark:border-gray-800/60 bg-gray-50/50 dark:bg-black/10">
+            <div className="shrink-0 relative">
+              <img
+                className="w-14 h-14 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow-sm"
+                src={
+                  ProfileData?.img || pofileData?.imageLink
+                    ? ProfileData?.img || pofileData?.imageLink
+                    : userProfileicon
+                }
+                alt="userProfileicon"
+              />
+              <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white dark:border-[#1A222F] rounded-full"></span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <h1 className="text-base font-bold text-gray-900 dark:text-white truncate">
                 {ProfileData?.name}
               </h1>
-              <p className="text-xs text-gray-med font-normal">
+              <p className="text-sm text-green-600 font-medium mt-0.5">
                 {selectedContent[localizationKeys.online]}
               </p>
             </div>
           </div>
 
           {/* Scrollable Content */}
-          <div className="flex-grow overflow-y-auto">
-            <div>
-              <NavLink
-                title={selectedContent[localizationKeys.profileSettings]}
-                isActive={
-                  pathname.length === 1 ||
-                  pathname.startsWith(routes.app.profile.profileSettings)
-                }
-                onClick={() => {
-                  history.push(routes.app.profile.profileSettings);
-                  SetSid(false);
-                }}
-              />
-              <NavLink
-                title={selectedContent[localizationKeys.myAuctions]}
-                isActive={
-                  pathname.length === 1 ||
-                  pathname.startsWith(routes.app.profile.myAuctions.default)
-                }
-                onClick={() => {
-                  history.push(routes.app.profile.myAuctions.default);
-                  SetSid(false);
-                }}
-              />
-              <NavLink
-                title={selectedContent[localizationKeys.myBids]}
-                isActive={
-                  pathname.length === 1 ||
-                  pathname.startsWith(routes.app.profile.myBids.default)
-                }
-                onClick={() => {
-                  history.push(routes.app.profile.myBids.default);
-                  SetSid(false);
-                }}
-              />
-              <NavLink
-                title={selectedContent[localizationKeys.watchlist]}
-                isActive={
-                  pathname.length === 1 ||
-                  pathname.startsWith(routes.app.profile.watchlist)
-                }
-                onClick={() => {
-                  history.push(routes.app.profile.watchlist);
-                  SetSid(false);
-                }}
-              />
-              <NavLink
-                title={selectedContent[localizationKeys.Purchased]}
-                isActive={
-                  pathname.length === 1 ||
-                  pathname.startsWith(routes.app.profile.purchased)
-                }
-                onClick={() => {
-                  history.push(routes.app.profile.purchased);
-                  SetSid(false);
-                }}
-              />
-              <NavLink
-                title={selectedContent[localizationKeys.Wallet]}
-                isActive={
-                  pathname.length === 1 ||
-                  pathname.startsWith(routes.app.profile.wallet)
-                }
-                onClick={() => {
-                  history.push(routes.app.profile.wallet);
-                  SetSid(false);
-                }}
-              />
-            </div>
+          <div className="flex-1 overflow-y-auto p-4 space-y-1">
+            <NavLink
+              title={selectedContent[localizationKeys.profileSettings]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.profileSettings)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.profileSettings);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.myAuctions]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.myAuctions.default)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.myAuctions.default);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.myBids]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.myBids.default)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.myBids.default);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.watchlist]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.watchlist)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.watchlist);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.Purchased]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.purchased)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.purchased);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.Wallet]}
+              isActive={
+                pathname.length === 1 ||
+                pathname.startsWith(routes.app.profile.wallet)
+              }
+              onClick={() => {
+                history.push(routes.app.profile.wallet);
+                SetSid(false);
+              }}
+            />
           </div>
 
           {/* Fixed Footer */}
-          <div
-            onClick={() => setLogoutModalOpen(true)}
-            className="flex justify-center items-center  py-4 cursor-pointer"
-          >
-            <MdLogout className="text-xl text-red-600 h-6" />
-            <p className="text-red-600 text-base font-medium underline">
-              {selectedContent[localizationKeys.logout]}
-            </p>
+          <div className="p-4 border-t border-gray-100 dark:border-gray-800/60 bg-white dark:bg-primary-dark">
+            <button
+              onClick={() => setLogoutModalOpen(true)}
+              className="w-full flex items-center justify-center gap-x-2 py-3 px-4 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-300 group"
+            >
+              <MdLogout className="text-xl group-hover:scale-110 transition-transform duration-300" />
+              <span className="text-base font-semibold tracking-wide">
+                {selectedContent[localizationKeys.logout]}
+              </span>
+            </button>
           </div>
         </motion.div>
       </div>
+
       <LogoutModal
         open={logoutModalOpen}
         setOpen={setLogoutModalOpen}
@@ -293,23 +307,27 @@ const ProfileSideBare = ({ SetSid, sid }) => {
 
 export const NavLink = ({ title, onClick, isActive }) => {
   return (
-    <div
+    <button
       onClick={onClick}
-      className={`${
+      className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 text-left ${
         isActive
-          ? "bg-primary-light/10 text-primary mx-0 px-10 font-bold "
-          : "mx-10 px-4 border-b-gray-veryLight border-b-[1px] "
-      } hidden sm:flex text-base text-gray-dark font-normal py-5 cursor-pointer`}
+          ? "bg-primary/5 dark:bg-[#D8B46C]/10 text-primary dark:text-[#D8B46C]"
+          : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#2A3441] hover:text-gray-900 dark:hover:text-white"
+      }`}
     >
       <span
-        className={`${
+        className={`shrink-0 w-2 h-2 rounded-full mr-4 transition-all duration-300 ${
           isActive
-            ? "bg-primary font-bold w-2 h-2 rounded-full mt-1.5 mx-4"
-            : ""
-        } translate delay-150 duration-150 `}
-      ></span>
-      <span className={`${isActive ? "font-bold " : ""}`}>{title}</span>
-    </div>
+            ? "bg-primary dark:bg-[#D8B46C] scale-100"
+            : "bg-transparent scale-0"
+        }`}
+      />
+      <span
+        className={`text-sm truncate ${isActive ? "font-black" : "font-bold"}`}
+      >
+        {title}
+      </span>
+    </button>
   );
 };
 
