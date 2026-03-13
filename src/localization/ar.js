@@ -733,6 +733,10 @@ const ar = {
   [localizationKeys.premiumListing]: "إعلان مميز",
   [localizationKeys.scrollToViewMore]: "قم بالتمرير لعرض المزيد",
   [localizationKeys.pictures]: "صور",
+   [localizationKeys.showing]:"عرض",
+  [localizationKeys.of]:"من",
+  [localizationKeys.details]:"تفاصيل",
+  [localizationKeys.AllMyProductsDescription]:"إدارة وتتبع مخزون المنتجات الخاص بك مع تحليلات في الوقت الفعلي ومراقبة حالة المخزون.",
 };
 
 export default ar;

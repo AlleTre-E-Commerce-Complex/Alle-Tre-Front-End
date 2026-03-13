@@ -101,8 +101,13 @@ const MyProducts = () => {
               outOfStockProducts={analyticsDataObject?.OUT_OF_STOCK?.count}
               soldOutProducts={analyticsDataObject?.SOLD_OUT?.count}
             />
-            <div className="mt-4">
-              <MyProductsTab onReload={onReload} />
+            <div className="mt-8">
+              <MyProductsTab 
+                onReload={onReload} 
+                inProgressProducts={analyticsDataObject?.IN_PROGRESS?.count || 0}
+                outOfStockProducts={analyticsDataObject?.OUT_OF_STOCK?.count || 0}
+                soldOutProducts={analyticsDataObject?.SOLD_OUT?.count || 0}
+              />
             </div>
           </>
         )}

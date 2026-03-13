@@ -1,8 +1,9 @@
 import React from "react";
-import DonutChart from "./donut-chart";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
+import { useHistory } from "react-router-dom";
+import routes from "../../routes";
 
 const TotalMyProducts = ({
   inProgressProducts,
@@ -11,121 +12,96 @@ const TotalMyProducts = ({
 }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
+  const history = useHistory();
+
   return (
-    <div className="bg-gray-veryLight/20 rounded-lg drop-shadow-complete-profile shadow-sm flex flex-wrap gap-x-20 sm:ltr:pr-28 sm:rtl:pl-28 ltr:pr-8 rtl:pl-8 overflow-hidden ">
-      <h1 className="text-gray-dark font-semibold text-base ltr:pl-6 rtl:pr-6 pt-6  ">
-        {selectedContent[localizationKeys.AllMyProducts]}
-      </h1>
-      {/* <div className="ltr:pl-6 rtl:pr-6 ltr:md:pl-0 rtl:md:pr-0">
-        <DonutChart
-          inProgressAuction={inProgressAuction}
-          pendingAuction={pendingAuction}
-          completedAuction={completedAuction}
-          expiredAuctions={expiredAuctions}
-          waitingForDeliveryAuctions={waitingForDeliveryAuctions}
-          cancelledBids={cancelledAuction}
-          totalcount={totalcount}
-        />
-      </div> */}
-      <div className="my-auto sm:w-80 w-full ltr:pl-6 rtl:pr-6 md:ltr:pl-0 md:rtl:pr-0 ">
-        <div className="flex justify-between py-1.5">
-          <div className="flex gap-x-2">
-            <p className="w-4 h-4 rounded-full mt-1 bg-green"></p>
-            <p className="text-base font-normal text-gray-med">
-              {selectedContent[localizationKeys.inProgress]}
-            </p>
-          </div>
-          <p className="text-gray-verydark">
-            {inProgressProducts}{" "}
-            <span className="px-1">
-              {" "}
-              {selectedContent[localizationKeys.products]}
-            </span>{" "}
+    <div className="flex flex-col gap-6 w-full pb-4 p-4">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 ">
+            {selectedContent[localizationKeys.AllMyProducts] }
+          </h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-bold">
+            {selectedContent[localizationKeys.AllMyProductsDescription]}
           </p>
         </div>
-        <div className="flex justify-between py-1.5">
-          <div className="flex gap-x-2">
-            <p className="w-4 h-4 rounded-full mt-1 bg-cyan"></p>
-            <p className="text-base font-normal text-gray-med">
-              {" "}
-              {selectedContent[localizationKeys.outOfStock]}
-            </p>
+        <button
+          onClick={() => history.push(routes.app.listProduct.default)}
+          className="flex items-center gap-2 bg-[#FDC02A] hover:bg-[#FDC02A]/90 text-gray-900 px-6 py-2.5 rounded-lg font-medium transition-colors whitespace-nowrap"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          {selectedContent[localizationKeys.startLisitng]}
+        </button>
+      </div>
+
+      {/* Cards Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* In Progress Card */}
+        <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-6 flex flex-col justify-between shadow-sm h-40">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-gray-600 dark:text-gray-300 font-medium">{selectedContent[localizationKeys.inProgress]}</span>
+            <div className="text-[#FDC02A]">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
           </div>
-          <p className="text-gray-verydark">
-            {outOfStockProducts}
-            <span className="px-1">
-              {" "}
-              {selectedContent[localizationKeys.products]}
-            </span>{" "}
-          </p>
+          <div className="mt-auto">
+            <div className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {inProgressProducts || 0}
+            </div>
+            <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#FDC02A] rounded-full"
+                style={{ width: inProgressProducts > 0 ? "33%" : "0%" }}
+              ></div>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-between py-1.5">
-          <div className="flex gap-x-2">
-            <p className="w-4 h-4 rounded-full mt-1 bg-primary-light"></p>
-            <p className="text-base font-normal text-gray-med">
-              {" "}
-              {selectedContent[localizationKeys.soldOut]}
-            </p>
+
+        {/* Out of Stock Card */}
+        <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-6 flex flex-col justify-between shadow-sm h-40">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-gray-600 dark:text-gray-300 font-medium">{selectedContent[localizationKeys.outOfStock]}</span>
+            <div className="text-gray-400">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+            </div>
           </div>
-          <p className="text-gray-verydark">
-            {soldOutProducts}
-            <span className="px-1">
-              {" "}
-              {selectedContent[localizationKeys.products]}
-            </span>{" "}
-          </p>
+          <div className="mt-auto">
+            <div className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {outOfStockProducts || 0}
+            </div>
+            <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+              <div className="h-full bg-gray-300 dark:bg-gray-600 rounded-full" style={{ width: outOfStockProducts > 0 ? "33%" : "0%" }}></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sold Out Card */}
+        <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-6 flex flex-col justify-between shadow-sm h-40">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-gray-600 dark:text-gray-300 font-medium">{selectedContent[localizationKeys.soldOut]}</span>
+            <div className="text-gray-400">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+            </div>
+          </div>
+          <div className="mt-auto">
+            <div className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {soldOutProducts || 0}
+            </div>
+            <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+              <div className="h-full bg-gray-300 dark:bg-gray-600 rounded-full" style={{ width: soldOutProducts > 0 ? "33%" : "0%" }}></div>
+            </div>
+          </div>
         </div>
       </div>
-      {/* <div className="mt-[24px] sm:w-80 w-full pl-6 md:pl-0 ">
-        <div className="flex justify-between py-1.5">
-          <div className="flex gap-x-2">
-            <p className="w-4 h-4 rounded-full mt-1 bg-gray-med"></p>
-            <p className="text-base font-normal text-gray-med">
-              {" "}
-              {selectedContent[localizationKeys.expiredAuctions]}
-            </p>
-          </div>
-          <p className="text-gray-verydark">
-            {expiredAuctions}{" "}
-            <span className="px-1">
-              {" "}
-              {selectedContent[localizationKeys.auction]}
-            </span>{" "}
-          </p>
-        </div>
-        <div className="flex justify-between py-1.5">
-          <div className="flex gap-x-2">
-            <p className="w-4 h-4 rounded-full mt-1 bg-yellow"></p>
-            <p className="text-base font-normal text-gray-med">
-              {" "}
-              {selectedContent[localizationKeys.waitingForDelivery]}
-            </p>
-          </div>
-          <p className="text-gray-verydark">
-            {waitingForDeliveryAuctions}{" "}
-            <span className="px-1">
-              {" "}
-              {selectedContent[localizationKeys.auction]}
-            </span>{" "}
-          </p>
-        </div>
-        <div className="flex justify-between py-1.5">
-          <div className="flex gap-x-2">
-            <p className="w-4 h-4 rounded-full mt-1 bg-red-600"></p>
-            <p className="text-base font-normal text-gray-med">
-              {" "}
-              {selectedContent[localizationKeys.cancelledAuctions]}
-            </p>
-          </div>
-          <p className="text-gray-verydark">
-            {cancelledAuction}{" "}
-            <span className="px-1">
-              {" "}
-              {selectedContent[localizationKeys.auction]}
-            </span>{" "}
-          </p>
-        </div>
-      </div> */}
     </div>
   );
 };

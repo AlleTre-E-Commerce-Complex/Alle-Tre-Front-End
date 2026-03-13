@@ -750,6 +750,10 @@ const en = {
   [localizationKeys.premiumListing]:"Premium Listing",
   [localizationKeys.scrollToViewMore]:"Scroll to view more",
   [localizationKeys.pictures]:"pictures",
+  [localizationKeys.showing]:"Showing",
+  [localizationKeys.of]:"of",
+  [localizationKeys.details]:"Details",
+  [localizationKeys.AllMyProductsDescription]:"Manage and track your product inventory with real-time analytics and stock status monitoring.",
 };
 
 export default en;

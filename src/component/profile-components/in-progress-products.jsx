@@ -21,12 +21,9 @@ const InProgressProducts = () => {
 
   const [activeProductData, setActiveProductData] = useState();
   const [totalPages, setTotalPages] = useState();
+  const [totalItems, setTotalItems] = useState();
 
   const { search } = useLocation();
-
-  const [openIncreaseModel, setOpenIncreaseModel] = useState(false);
-  const [auctionId, setAuctionId] = useState();
-  const [compareValue, setCompareValue] = useState();
 
   const { run, isLoading } = useAxios([]);
   useEffect(() => {
@@ -37,30 +34,25 @@ const InProgressProducts = () => {
           .then((res) => {
             setActiveProductData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
+            setTotalItems(res?.data?.pagination?.totalItems);
           })
       );
   }, [run, forceReload, search]);
 
   return (
-    <div className="">
+    <div className="mt-4">
       <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
+        className="fixed w-full h-full top-0 bg-white/50 dark:bg-[#151A23]/50"
         active={isLoading}
         inverted
       >
-        {/* <Loader active /> */}
         <LodingTestAllatre />
       </Dimmer>
-      <div>
-        <p className="pb-5 text-gray-med text-xs font-normal">
-          {activeProductData?.length} {selectedContent[localizationKeys.total]}
-        </p>
-      </div>
       {activeProductData?.length === 0 ? (
         <div className="flex justify-center mt-32">
           <div>
             <AuctionIcon className="mx-auto" />
-            <p className="text-gray-dark text-center mt-8 ">
+            <p className="text-gray-dark dark:text-gray-400 text-center mt-8 ">
               {
                 selectedContent[
                   localizationKeys.youHaveNotPlacedAnyBidsAtThisTime
@@ -73,6 +65,7 @@ const InProgressProducts = () => {
         <div>
           {activeProductData?.map((e) => (
             <ProductRowTable
+              key={e?.id}
               status={"IN_PROGRESS"}
               title={e?.product?.title}
               description={e?.product?.description}
@@ -85,7 +78,10 @@ const InProgressProducts = () => {
               Product_id={e?.product?.id} //listProduct.product.id
             />
           ))}
-          <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
+          <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-4 sm:mb-0">
+              {selectedContent[localizationKeys.showing]} {activeProductData?.length || 0} {totalItems ? `${selectedContent[localizationKeys.of]} ${totalItems}` : ""} {selectedContent[localizationKeys.products]}
+            </p>
             <PaginationApp totalPages={totalPages} perPage={10} />
           </div>
         </div>
