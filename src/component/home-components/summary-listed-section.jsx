@@ -277,7 +277,7 @@ const SummaryListedSection = () => {
                         productId: productId,
                       })
                     }
-                    className="flex items-center justify-center gap-3 bg-white dark:bg-slate-800 border-2 border-primary text-primary hover:bg-primary hover:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/5 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
+                    className="flex items-center justify-center gap-3 bg-white dark:bg-slate-800 dark:hover:bg-slate-700 border-2 border-primary text-primary hover:bg-primary hover:text-white dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/5 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
                   >
                     <RiAuctionLine
                       size={20}

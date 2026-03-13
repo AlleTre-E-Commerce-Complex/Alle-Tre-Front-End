@@ -622,11 +622,11 @@ const Header = ({
               //   path: routes.app.profile.watchlist,
               //   handler: handelWatchlist,
               // },
-              {
-                key: localizationKeys.Purchased,
-                path: routes.app.profile.purchased,
-                handler: handelPurchased,
-              },
+              // {
+              //   key: localizationKeys.Purchased,
+              //   path: routes.app.profile.purchased,
+              //   handler: handelPurchased,
+              // },
               // {
               //   key: localizationKeys.Wallet,
               //   path: routes.app.profile.wallet,

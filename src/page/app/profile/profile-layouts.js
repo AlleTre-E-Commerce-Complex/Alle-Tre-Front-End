@@ -35,7 +35,7 @@ const ProfileLayouts = () => {
       <ProfileSideBare SetSid={SetSid} sid={sid} />
 
       <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0 md:px-6">
-        <div className="bg-white dark:bg-primary-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800/60 min-h-[calc(100vh-14rem)] mb-8 p-4 sm:p-6 md:p-8">
+        <div className="bg-white dark:bg-primary-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800/60 min-h-[calc(100vh-14rem)] mb-8 ">
           {useLocation().pathname === "/alletre/profile/settings" && (
             <div className="flex justify-end md:hidden mb-6">
               <button
