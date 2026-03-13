@@ -113,18 +113,18 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             isActive={pathname.startsWith(routes.app.profile.profileSettings)}
             onClick={() => history.push(routes.app.profile.profileSettings)}
           />
-          <NavLink
+          {/* <NavLink
             title={selectedContent[localizationKeys.myAuctions]}
             isActive={pathname.startsWith(
               routes.app.profile.myAuctions.default,
             )}
             onClick={() => history.push(routes.app.profile.myAuctions.default)}
-          />
-          <NavLink
+          /> */}
+          {/* <NavLink
             title={selectedContent[localizationKeys.myBids]}
             isActive={pathname.startsWith(routes.app.profile.myBids.default)}
             onClick={() => history.push(routes.app.profile.myBids.default)}
-          />
+          /> */}
           <NavLink
             title={selectedContent[localizationKeys.myProducts]}
             isActive={pathname.startsWith(
@@ -132,21 +132,21 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             )}
             onClick={() => history.push(routes.app.profile.myProducts.default)}
           />
-          <NavLink
+          {/* <NavLink
             title={selectedContent[localizationKeys.watchlist]}
             isActive={pathname.startsWith(routes.app.profile.watchlist)}
             onClick={() => history.push(routes.app.profile.watchlist)}
-          />
-          <NavLink
+          /> */}
+          {/* <NavLink
             title={selectedContent[localizationKeys.Purchased]}
             isActive={pathname.startsWith(routes.app.profile.purchased)}
             onClick={() => history.push(routes.app.profile.purchased)}
-          />
-          <NavLink
+          /> */}
+          {/* <NavLink
             title={selectedContent[localizationKeys.Wallet]}
             isActive={pathname.startsWith(routes.app.profile.wallet)}
             onClick={() => history.push(routes.app.profile.wallet)}
-          />
+          /> */}
           <NavLink
             title={selectedContent[localizationKeys.notifications]}
             isActive={pathname.startsWith(routes.app.profile.notifications)}

@@ -41,7 +41,7 @@ const routes = {
       paymentFaild: `/alletre/home/create-auction/product-details/auction-details/shipping-details/payment-details/Faild`,
     },
     listProduct: {
-      default: `/alletre/home/list-product`,
+      default: `/alletre/list-product`,
       details: (productId = ":productId") =>
         `/alletre/my-product/${productId}/details`,
       listProductLocationDetails: `/alletre/my-products/add-location`,

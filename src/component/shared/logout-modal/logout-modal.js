@@ -14,7 +14,7 @@ const LogoutModal = ({ open, setOpen, onLogout }) => {
       open={open}
     >
       <div className="sm:w-[400px] w-full h-auto border-2 border-primary rounded-2xl bg-background pb-6 pt-4">
-        <h1 className="text-black font-semibold text-lg text-center">
+        <h1 className="text-black dark:text-primary-veryLight font-semibold text-lg text-center">
         {selectedContent[localizationKeys.confirmLogout]}
          
         </h1>
@@ -25,13 +25,13 @@ const LogoutModal = ({ open, setOpen, onLogout }) => {
         <div className="flex justify-center gap-x-6 pt-6">
           <button
             onClick={() => setOpen(false)}
-            className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
+            className="border-gray-400 text-gray-700 dark:text-white border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary dark:hover:border-white"
           >
             {selectedContent[localizationKeys.cancel]}
           </button>
           <button
             onClick={onLogout}
-            className="bg-primary text-white w-[120px] h-[40px] rounded-lg text-base font-normal"
+            className="bg-primary hover:bg-primary-dark text-white w-[120px] h-[40px] rounded-lg text-base font-normal"
           >
             {selectedContent[localizationKeys.logOut]}
           </button>

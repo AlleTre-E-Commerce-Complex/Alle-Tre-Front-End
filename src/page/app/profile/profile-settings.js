@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { MdMail } from "react-icons/md";
+import { MdMail, MdPhotoCamera } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { RiUser3Fill } from "react-icons/ri";
 import { HiLockClosed } from "react-icons/hi";
@@ -129,208 +129,211 @@ const ProfileSettings = () => {
           </div>
         </div>
         <div className=" rounded-2xl md:px-2 px-0 pt-6">
-          <div className="flex gap-x-5 pb-8 border-b-[1px] border-gray-veryLight mx-2">
-            <img
-              className="w-28 h-28 rounded-full object-cover"
-              src={
-                pofileData?.imageLink ? pofileData?.imageLink : userProfileicon
-              }
-              alt="userProfileicon"
-            />
-            <div>
-              <h1 className="text-gray-dark md:text-4xl text-2xl font-medium pt-3">
-                {pofileData?.userName}
-              </h1>
-              <UploadeImgModel
-                onReload={onReload}
-                oldimg={pofileData?.imageLink}
-                IsImgModelOpen={IsImgModelOpen}
-                setImgModelOpen={setImgModelOpen}
-              />
+          <div className="border border-gray-100 dark:border-gray-800/60 rounded-2xl overflow-hidden mb-8 bg-white dark:bg-primary-dark mx-2 md:mx-0 shadow-sm relative">
+            {/* Banner */}
+            <div className="h-32 bg-[#34415C] dark:bg-gray-900 w-full relative">
+              {/* Optional Pattern Overlay */}
+              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] dark:opacity-5"></div>
             </div>
-          </div>
-          {/*  Personal Details */}
-          <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8 ">
-            <h1 className="text-gray-dark text-base font-semibold">
-              {selectedContent[localizationKeys.personalDetails]}
-            </h1>
-            <div className="flex justify-between pt-9">
-              <div>
-                <div className="flex items-center">
-                  <p className="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center ltr:mr-5 rtl:ml-5">
-                    <RiUser3Fill size={16} />
-                  </p>
-                  <p className="text-gray-dark text-base font-medium">
-                    {selectedContent[localizationKeys.userName]}
-                  </p>
+            
+            <div className="px-6 pb-6 relative flex flex-col md:flex-row md:items-end">
+              {/* Avatar section */}
+              <div className="relative -mt-16 z-10 mx-auto md:mx-0">
+                <div className="relative inline-block group">
+                  <img
+                    className="w-32 h-32 rounded-full object-cover border-[6px] border-white dark:border-primary-dark bg-white dark:bg-primary-dark shadow-sm group-hover:opacity-90 transition-opacity"
+                    src={
+                      pofileData?.imageLink ? pofileData?.imageLink : userProfileicon
+                    }
+                    alt="userProfileicon"
+                  />
+                  {/* Verified Badge */}
+                  <div className="absolute bottom-2 ltr:right-2 rtl:left-2 bg-[#d6a536] text-white rounded-full flex items-center justify-center w-7 h-7 border-2 border-white dark:border-primary-dark shadow-sm z-10">
+                     <IoMdCheckmarkCircle size={18} />
+                  </div>
+                  {/* Edit Photo Icon Overlay */}
+                  <div className="absolute top-2 ltr:-right-2 rtl:-left-2 z-20">
+                    <UploadeImgModel
+                      onReload={onReload}
+                      oldimg={pofileData?.imageLink}
+                      IsImgModelOpen={IsImgModelOpen}
+                      setImgModelOpen={setImgModelOpen}
+                      customTrigger={
+                        <button className="bg-white dark:bg-gray-800 text-[#34415C] dark:text-white hover:text-[#d6a536] dark:hover:text-[#d6a536] rounded-full p-2 border-2 border-white dark:border-primary-dark shadow-md transition-all hover:scale-110">
+                          <MdPhotoCamera size={18} />
+                        </button>
+                      }
+                    />
+                  </div>
                 </div>
+              </div>
 
-                <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px] ">
-                  {pofileData?.userName}
-                </p>
-              </div>
-              <div>
-                <EditUserNameModel
-                  onReload={onReload}
-                  oldName={pofileData?.userName}
-                />
-              </div>
-            </div>
-            <div
-              className={
-                pofileData?.isOAuth ? "hidden" : "flex justify-between pt-9"
-              }
-            >
-              <div>
-                <div className="flex ">
-                  <p className="bg-primary  text-white w-9 h-9 rounded-full px-2.5 pt-2 ltr:mr-5 rtl:ml-5">
-                    <HiLockClosed size={16} />
-                  </p>
-                  <p className="text-gray-dark text-base font-medium  ">
-                    {selectedContent[localizationKeys.password]}
-                  </p>
+              {/* User Info */}
+              <div className="mt-4 md:mt-0 ltr:md:ml-6 rtl:md:mr-6 flex-grow text-center md:text-start pb-2">
+                <div className="flex justify-center md:justify-start items-center">
+                  <h1 className="text-[#34415C] dark:text-white text-2xl md:text-3xl font-bold">
+                    {pofileData?.userName || "Abdullah Al-Mansour"}
+                  </h1>
                 </div>
-                <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px] ">
-                  *************
-                </p>
-              </div>
-              <div>
-                <EditPasswordModel onReload={onReload} />
-              </div>
-            </div>
-          </div>
-          {/* Contact info */}
-          <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8 ">
-            <h1 className="text-gray-dark text-base font-semibold">
-              {selectedContent[localizationKeys.contactInfo]}
-            </h1>
-            <div className="flex pt-9">
-              <div>
-                <div className="flex items-center">
-                  <p className="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center ltr:mr-5 rtl:ml-5">
-                    <MdMail size={16} />
-                  </p>
-                  <p className="text-gray-dark text-base font-medium">
-                    {selectedContent[localizationKeys.eMail]}
-                  </p>
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-2">
+                  <span className="bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] text-[11px] font-bold px-3 py-1 rounded-full border border-[#fde68a] dark:border-[#d6a536]/30">
+                    Verified Member
+                  </span>
+                  <span className="text-gray-400 text-sm font-medium">
+                    Member since {pofileData?.createdAt ? new Date(pofileData?.createdAt).toLocaleDateString('en-US', {month: 'short', year: 'numeric'}) : "Nov 2022"}
+                  </span>
                 </div>
-                <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px]  ">
-                  {pofileData?.email}
-                </p>
               </div>
-              <div
-                className={`${
-                  pofileData?.isVerified
-                    ? "text-green-500"
-                    : "text-gray-veryLight"
-                } hidden md:flex gap-x-1 ltr:md:ml-[210px] rtl:md:mr-[210px] ltr:ml-auto rtl:mr-auto`}
-              >
-                <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-                <p className="text-base font-normal">
-                  {selectedContent[localizationKeys.verified]}
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-between pt-9">
-              <div>
-                <div className="flex items-center">
-                  <p className="bg-primary text-white w-9 h-9 rounded-full flex items-center justify-center ltr:mr-5 rtl:ml-5">
-                    <BsFillTelephoneFill size={16} />
-                  </p>
-                  <p className="text-gray-dark text-base font-medium">
-                    {selectedContent[localizationKeys.phoneNumber]}
-                  </p>
-                </div>
 
-                <p className="text-gray-dark text-base ltr:pl-[64px] rtl:pr-[64px]">
-                  {pofileData?.phone}
-                </p>
-              </div>
-              <div>
-                <EditPhoneNumberModel
-                  onReload={onReload}
-                  oldPhoneNumber={pofileData?.phone}
-                />
-              </div>
-            </div>
-          </div>
-          {/* O Auth */}
-          <div className="pt-3 border-b-[1px] border-gray-veryLight pb-8">
-            <h1 className="text-gray-dark text-base font-semibold">
-              {selectedContent[localizationKeys.loginService]}
-            </h1>
-            <p className="text-gray-dark text-base font-normal pt-2">
-              {selectedContent[localizationKeys.loginServiceMaseg]}
-            </p>
-            <div>
-              <div className="md:flex block mt-8">
-                <Loginbutton
-                  isActive={pofileData?.oAuthType === "APPLE" ? true : false}
-                  logo={appleIcon}
-                  text={selectedContent[localizationKeys.connectedWithApple]}
-                />
-                <div
-                  className={`${
-                    pofileData?.oAuthType === "APPLE"
-                      ? "text-green-500"
-                      : "text-gray-veryLight"
-                  } md:flex hidden gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto `}
-                >
-                  <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-                  <p className="text-base font-normal">
-                    {selectedContent[localizationKeys.connected]}
-                  </p>
+              {/* Stats */}
+              {/* <div className="mt-8 md:mt-0 flex justify-center md:justify-end divide-x divide-gray-200 dark:divide-gray-800 rtl:divide-x-reverse pb-2">
+                <div className="px-5 md:px-8 text-center">
+                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">{pofileData?.totalBids || 124}</p>
+                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">Total Bids</p>
                 </div>
-              </div>
-              <div className="md:flex block ">
-                <Loginbutton
-                  isActive={pofileData?.oAuthType === "GOOGLE" ? true : false}
-                  logo={googleIcon}
-                  text={selectedContent[localizationKeys.connectWithGoogle]}
-                />
-                <div
-                  className={`${
-                    pofileData?.oAuthType === "GOOGLE"
-                      ? "text-green-500"
-                      : "text-gray-veryLight"
-                  } md:flex hidden  gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto`}
-                >
-                  <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-                  <p className="text-base font-normal">
-                    {selectedContent[localizationKeys.connected]}
-                  </p>
+                <div className="px-5 md:px-8 text-center">
+                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">{pofileData?.activeListings || 8}</p>
+                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">Active Listings</p>
                 </div>
-              </div>
-              {/* <div className="md:flex block ">
-                <Loginbutton
-                  isActive={pofileData?.oAuthType === "FACEBOOK" ? true : false}
-                  logo={facebookIcon}
-                  text={selectedContent[localizationKeys.connectWithFacebook]}
-                />
-                <div
-                  className={`${
-                    pofileData?.oAuthType === "FACEBOOK"
-                      ? "text-green-500"
-                      : "text-gray-veryLight"
-                  } md:flex hidden gap-x-1 ltr:ml-[71px] rtl:mr-[71px] my-auto`}
-                >
-                  <IoMdCheckmarkCircle size={16} className="mt-0.5" />
-                  <p className="text-base font-normal">
-                    {selectedContent[localizationKeys.connected]}
-                  </p>
+                <div className="ltr:pl-5 md:ltr:pl-8 rtl:pr-5 md:rtl:pr-8 text-center">
+                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">{pofileData?.itemsSold || 42}</p>
+                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">Items Sold</p>
                 </div>
               </div> */}
             </div>
           </div>
+          {/*  Personal Details */}
+          <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-gray-800/60 rounded-2xl shadow-sm px-6 sm:px-8 mx-2 md:mx-0">
+            <div className="flex items-center gap-3 pb-4 border-b border-gray-50 dark:border-gray-800/50">
+              <h2 className="text-xl font-bold text-[#34415C] dark:text-white">
+                {selectedContent[localizationKeys.personalDetails]}
+              </h2>
+            </div>
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+                <div className="flex items-center gap-4 mb-3 sm:mb-0">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                    <RiUser3Fill size={18} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.userName]}</p>
+                    <p className="text-base font-semibold text-[#34415C] dark:text-white">{pofileData?.userName}</p>
+                  </div>
+                </div>
+                <EditUserNameModel onReload={onReload} oldName={pofileData?.userName} />
+              </div>
+              
+              {!pofileData?.isOAuth && (
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+                  <div className="flex items-center gap-4 mb-3 sm:mb-0">
+                    <div className="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                      <HiLockClosed size={18} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.password]}</p>
+                      <p className="text-base font-semibold text-[#34415C] dark:text-white">••••••••••••</p>
+                    </div>
+                  </div>
+                  <EditPasswordModel onReload={onReload} />
+                </div>
+              )}
+            </div>
+          </div>
+          {/* Contact info */}
+          <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-gray-800/60 rounded-2xl shadow-sm px-6 sm:px-8 py-3 sm:py-4 mb-6 mx-2 md:mx-0">
+            <div className="flex items-center gap-3 border-b border-gray-50 dark:border-gray-800/50">
+              <h2 className="text-xl font-bold text-[#34415C] dark:text-white">
+                {selectedContent[localizationKeys.contactInfo]}
+              </h2>
+            </div>
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+                <div className="flex items-center gap-4 mb-3 sm:mb-0">
+                  <div className="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                    <MdMail size={18} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.eMail]}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-base font-semibold text-[#34415C] dark:text-white">{pofileData?.email}</p>
+                      {pofileData?.isVerified && (
+                         <span className="flex items-center gap-1 text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-0.5 rounded-full border border-green-100 dark:border-green-800/50">
+                           <IoMdCheckmarkCircle size={14} /> {selectedContent[localizationKeys.verified]}
+                         </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+                <div className="flex items-center gap-4 mb-3 sm:mb-0">
+                  <div className="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/40 text-green-600 dark:text-green-400 flex items-center justify-center">
+                    <BsFillTelephoneFill size={18} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.phoneNumber]}</p>
+                    <p className="text-base font-semibold text-[#34415C] dark:text-white">{pofileData?.phone || "No phone added"}</p>
+                  </div>
+                </div>
+                <EditPhoneNumberModel onReload={onReload} oldPhoneNumber={pofileData?.phone} />
+              </div>
+            </div>
+          </div>
+          {/* O Auth */}
+          <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-gray-800/60 rounded-2xl shadow-sm p-6 sm:p-8 mb-6 mx-2 md:mx-0">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-50 dark:border-gray-800/50">
+              <div>
+                <h2 className="text-xl font-bold text-[#34415C] dark:text-white">
+                  {selectedContent[localizationKeys.loginService]}
+                </h2>
+                <p className="text-sm text-gray-400 mt-1">
+                  {selectedContent[localizationKeys.loginServiceMaseg]}
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Loginbutton
+                isActive={pofileData?.oAuthType === "APPLE"}
+                logo={appleIcon}
+                text={selectedContent[localizationKeys.connectedWithApple]}
+                statusText={selectedContent[localizationKeys.connected]}
+              />
+              <Loginbutton
+                isActive={pofileData?.oAuthType === "GOOGLE"}
+                logo={googleIcon}
+                text={selectedContent[localizationKeys.connectWithGoogle]}
+                statusText={selectedContent[localizationKeys.connected]}
+              />
+            </div>
+          </div>
 
           {/* Address Book */}
-          <div id="AddressBook" className="pt-3  pb-20 mb-10 ">
-            <h1 className="text-gray-dark text-base font-semibold">
-              {selectedContent[localizationKeys.addAddress]}
-            </h1>
-            <p className="text-gray-dark text-base font-normal pt-2">
-              {selectedContent[localizationKeys.addressBookmasg]}
-            </p>
+          <div id="AddressBook" className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-gray-800/60 rounded-2xl shadow-sm p-6 sm:p-8 mb-6 mx-2 md:mx-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-50 dark:border-gray-800/50">
+               <div>
+                <h2 className="text-xl font-bold text-[#34415C] dark:text-white">
+                  {selectedContent[localizationKeys.addAddress]}
+                </h2>
+                <p className="text-sm text-gray-400 mt-1">
+                  {selectedContent[localizationKeys.addressBookmasg]}
+                </p>
+              </div>
+              <button
+                 onClick={() => setOpen(true)}
+                 className="bg-[#34415C] dark:bg-primary hover:bg-[#2a3449] dark:hover:bg-primary-dark text-white px-5 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 shadow-sm"
+               >
+                 <GoPlus size={18} />
+                 <span>{selectedContent[localizationKeys.addAddress]}</span>
+               </button>
+               <AddLocationModel
+                 open={open}
+                 setOpen={setOpen}
+                 TextButton={selectedContent[localizationKeys.add]}
+                 onReload={onReload}
+               />
+            </div>
+
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-6">
               {locationData?.map((e) => {
                 return (
@@ -344,31 +347,31 @@ const ProfileSettings = () => {
                     }
                     City={lang === "en" ? e?.city?.nameEn : e?.city.nameAr}
                     phone={e?.phone ? e.phone : "No phone number"}
-                    // PostalCode={e?.zipCode}
                     isMain={e?.isMain}
                     onReload={onReload}
                   />
                 );
               })}
-              <button
-                onClick={() => setOpen(true)}
-                className="border-gray-med hover:border-primary border-[1px] border-dashed w-[136px] h-[48px] rounded-lg text-base font-normal text-gray-med flex hover:text-primary justify-center gap-x-2 "
-              >
-                <GoPlus className="my-auto" size={16} />
-                <p className="my-auto">
-                  {selectedContent[localizationKeys.addAddress]}
-                </p>
-              </button>
-              <AddLocationModel
-                open={open}
-                setOpen={setOpen}
-                TextButton={selectedContent[localizationKeys.add]}
-                onReload={onReload}
-              />
+              {!locationData?.length && (
+                <button
+                  onClick={() => setOpen(true)}
+                  className="w-full h-32 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl hover:border-[#d6a536] dark:hover:border-[#d6a536] hover:bg-[#fff8e1]/30 dark:hover:bg-[#d6a536]/10 flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-[#d6a536] transition-all"
+                >
+                  <GoPlus size={24} />
+                  <span className="font-medium">{selectedContent[localizationKeys.addAddress]}</span>
+                </button>
+              )}
             </div>
-            <div className="deleteAccountSection mt-12">
-              <DeleteAccountSection />
-            </div>
+          </div>
+
+          <div className="bg-red-50/50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-2xl p-6 sm:p-8 mb-10 mx-2 md:mx-0">
+             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+               <div>
+                 <h3 className="text-lg font-bold text-red-600 dark:text-red-400 mb-1">Danger Zone</h3>
+                 <p className="text-sm text-red-500/80 dark:text-red-400/80">Once you delete your account, there is no going back. Please be certain.</p>
+               </div>
+               <DeleteAccountSection />
+             </div>
           </div>
         </div>
       </div>
@@ -376,17 +379,22 @@ const ProfileSettings = () => {
   );
 };
 
-export const Loginbutton = ({ logo, text, isActive }) => {
+export const Loginbutton = ({ logo, text, isActive, statusText }) => {
   return (
-    <div>
-      <button
-        className={`${
-          isActive ? "bg-primary/5" : ""
-        } flex justify-start sm:w-[298px] w-full h-[48px] border-[1px] rounded-lg border-primary text-primary my-2 py-2 ltr:pl-[45px] rtl:pr-5`}
-      >
-        <img className="mx-4 mt-0.5 " src={logo} alt="logo" />
-        <p className="text-lg font-medium pt-0.5 ">{text}</p>
-      </button>
+    <div className={`relative flex items-center p-4 border rounded-xl transition-all duration-200 ${isActive ? 'border-green-500 bg-green-50/30 dark:bg-green-900/20 dark:border-green-800/60' : 'border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-700/30 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-white dark:hover:bg-gray-800'}`}>
+       <div className="w-10 h-10 flex-shrink-0 bg-white dark:bg-gray-800 rounded-full border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-center ltr:mr-4 rtl:ml-4">
+         <img className="w-6 h-6 object-contain" src={logo} alt="logo" />
+       </div>
+       <div className="flex-grow">
+         <p className="text-sm font-semibold text-[#34415C] dark:text-white">{text}</p>
+         <p className={`text-xs mt-0.5 ${isActive ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-400'}`}>
+            {isActive ? (
+               <span className="flex items-center gap-1">
+                 <IoMdCheckmarkCircle size={14} /> {statusText}
+               </span>
+            ) : 'Not connected'}
+         </p>
+       </div>
     </div>
   );
 };
@@ -452,66 +460,66 @@ export const LocationDetailsCard = ({
 
   return (
     <>
-      <div className="border-[1px] rounded-lg w-full p-5">
-        <div className="flex justify-between">
-          <h1 className="text-gray-dark text-sm">{AddressLable}</h1>
+      <div className="relative group border border-gray-100 dark:border-gray-800 bg-white dark:bg-primary-dark hover:border-[#d6a536]/50 dark:hover:border-[#d6a536]/50 hover:shadow-md rounded-xl p-5 transition-all duration-200">
+        {isMain && (
+           <div className="absolute -top-3 ltr:left-4 rtl:right-4 bg-[#d6a536] text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm uppercase tracking-wider">
+             {selectedContent[localizationKeys.default]}
+           </div>
+        )}
+        <div className="flex justify-between items-start pt-1">
+          <h1 className="text-[#34415C] dark:text-white font-bold text-base">{AddressLable}</h1>
           <Popup
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
             open={open}
-            className="bg-white w-auto h-auto rounded-lg border-none relative shadow-lg"
+            className="bg-white dark:bg-gray-900 w-auto h-auto rounded-xl border border-gray-100 dark:border-gray-800 shadow-xl overflow-hidden py-1"
             trigger={
-              <div className="cursor-pointer hover:text-primary">
-                <BsThreeDots size={20} className="text-gray-med mb-auto" />
+              <div className="cursor-pointer text-gray-400 hover:text-[#d6a536] transition-colors p-1 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">
+                <BsThreeDots size={20} />
               </div>
             }
             on="click"
             position="bottom right"
           >
-            <div className="py-2 min-w-[150px]">
+            <div className="min-w-[160px] flex flex-col">
               {!isMain && (
-                <div
+                <button
                   onClick={() => handelMakeDefault(Id)}
-                  className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                  className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 font-medium transition-colors"
                 >
                   {selectedContent[localizationKeys.makeDefault]}
-                </div>
+                </button>
               )}
-              <div
+              <button
                 onClick={() => {
                   setEditModalOpen(true);
                   setOpen(false);
                 }}
-                className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 font-medium transition-colors"
               >
                 {selectedContent[localizationKeys.edit]}
-              </div>
+              </button>
               {!isMain && (
-                <div
+                <button
                   onClick={() => {
                     setDeleteModalOpen(true);
                     setOpen(false);
                   }}
-                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
+                  className="text-left ltr:text-left rtl:text-right text-sm text-red-600 dark:text-red-400 px-4 py-2.5 hover:bg-red-200 dark:hover:bg-red-900/30 font-medium transition-colors"
                 >
                   {selectedContent[localizationKeys.delete]}
-                </div>
+                </button>
               )}
             </div>
           </Popup>
         </div>
 
-        <p className="text-gray-med text-sm pt-2">{Address}</p>
-        <p className="text-gray-med text-sm pt-1">
-          {City}, {Country}
-        </p>
-        <p className="text-gray-med text-sm pt-2">{phone}</p>
-        <div className="flex justify-between">
-          {isMain && (
-            <p className="text-primary-dark underline text-sm pt-1 ml-auto">
-              {selectedContent[localizationKeys.default]}
-            </p>
-          )}
+        <div className="mt-3 space-y-1">
+          <p className="text-gray-500 text-sm">{Address}</p>
+          <p className="text-gray-500 text-sm">
+            {City}, {Country}
+          </p>
+          <p className="text-gray-500 text-sm">{phone}</p>
         </div>
 
         <AddLocationModel
@@ -552,10 +560,10 @@ export function DeleteAccountSection() {
     <div className="flex items-center space-x-4">
       <button
         onClick={() => setShowModal(true)}
-        className="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2"
+        className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-md font-medium transition-all duration-200 flex items-center justify-center gap-2 shadow-sm "
       >
         <svg
-          className="w-5 h-5 mb-1"
+          className="w-5 h-5 mb-0.5"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
