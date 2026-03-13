@@ -669,6 +669,11 @@ const localizationKeys = {
   premiumListing:"premiumListing",
   scrollToViewMore:"scrollToViewMore",
   pictures:"pictures",
+  showing:"showing",
+  of:"of",
+  details:"details",
+  AllMyProductsDescription:"AllMyProductsDescription",
+  
 };
 
 export default localizationKeys;
