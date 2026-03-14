@@ -3,10 +3,9 @@
 @tailwind utilities;
 
 .Edit_FormikTextArea .field>label{
-  @apply absolute -top-[18px] bg-white z-[9] ltr:left-5 rtl:right-5 text-gray-dark text-lg font-normal px-1.5 !important
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 static bg-transparent px-0 !important;
 }
 
-.Edit_FormikTextArea .ui.form input[type=checkbox], .ui.form textarea{
-  @apply rounded-lg focus:border-primary focus:rounded-lg  h-[189px] !important
+.Edit_FormikTextArea textarea{
+  @apply w-full rounded-lg border border-gray-300 dark:border-[#d4af37]/40 min-h-[140px] focus:border-primary dark:focus:border-yellow focus:ring-1 focus:ring-primary rtl:font-serifAR ltr:font-serifEN p-4 outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-white dark:bg-primary-dark text-gray-900 dark:text-white transition-colors resize-y !important;
 }
-

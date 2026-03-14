@@ -151,6 +151,7 @@ const ar = {
   [localizationKeys.createAuction]: "إنشاء مزاد",
   [localizationKeys.listProduct]: "اضف اعلان",
   [localizationKeys.price]: "سعر",
+  [localizationKeys.Price]: "سعر",
   [localizationKeys.myAccount]: "حسابي",
   [localizationKeys.changeProductStatus]: "تغيير حالة المنتج هنا",
   [localizationKeys.iamBiddingOn]: "أنا أقوم بالمزايدة على",
@@ -179,7 +180,7 @@ const ar = {
   [localizationKeys.PopularPicksPerfectChoices]:
     "اختيارات رائجة ، اختيارات مثالية",
   [localizationKeys.Grid]: "الشبكة",
-  [localizationKeys.List]: "قائمة",
+  [localizationKeys.listItem]: "عنصر القائمة",
   [localizationKeys.ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow]:
     "لا توجد مزادات حاليًا. يمكنك إنشاء مزادك الخاص الآن",
   [localizationKeys.BidWinRepeat]: "المزايدة ، الفوز ، التكرار!",
@@ -340,7 +341,7 @@ const ar = {
     "لا يُمكن تحميل الفيديو أولاً. يُرجى تحميل صورة أولاً لاستخدامها كغلاف.",
   [localizationKeys.onlyOneVideoFileIsAllowed]: "يُسمح بملف فيديو واحد فقط",
   [localizationKeys.uploadOneImageAndOneVideo]:
-    "* يمكنك تحميل ما يصل إلى ٥٠ صورة وفيديو واحد (بحد أقصى ٥٠ ميجابايت). يجب تحميل الفيديوهات بشكل منفصل عن الصور.",
+    "* يمكنك تحميل ما يصل إلى ١٢ صورة وفيديو واحد (بحد أقصى ٥٠ ميجابايت). يجب تحميل الفيديوهات بشكل منفصل عن الصور.",
   [localizationKeys.fileSizeShouldBeLessThan10MB]:
     "يجب أن يكون حجم الملف أقل من 10 ميجا بايت",
   [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:
@@ -733,10 +734,28 @@ const ar = {
   [localizationKeys.premiumListing]: "إعلان مميز",
   [localizationKeys.scrollToViewMore]: "قم بالتمرير لعرض المزيد",
   [localizationKeys.pictures]: "صور",
-   [localizationKeys.showing]:"عرض",
-  [localizationKeys.of]:"من",
-  [localizationKeys.details]:"تفاصيل",
-  [localizationKeys.AllMyProductsDescription]:"إدارة وتتبع مخزون المنتجات الخاص بك مع تحليلات في الوقت الفعلي ومراقبة حالة المخزون.",
+  [localizationKeys.showing]: "عرض",
+  [localizationKeys.of]: "من",
+  [localizationKeys.details]: "تفاصيل",
+  [localizationKeys.AllMyProductsDescription]:
+    "إدارة وتتبع مخزون المنتجات الخاص بك مع تحليلات في الوقت الفعلي ومراقبة حالة المخزون.",
+  [localizationKeys.thereAreNoInProgressProductsAtTheMoment]:
+    "لا توجد منتجات قيد التنفيذ في الوقت الحالي",
+  [localizationKeys.thereAreNoOutOfStockProductsAtTheMoment]:
+    "لا توجد منتجات خارج المخزون في الوقت الحالي",
+  [localizationKeys.thereAreNoSoldOutProductsAtTheMoment]:
+    "لا توجد منتجات مباعة في الوقت الحالي",
+    [localizationKeys.productMedia]:"وسائط المنتج",
+    [localizationKeys.addMore]:"أضف المزيد",
+    [localizationKeys.clickToUploadImagesAndVideos]:"انقر لتحميل الصور ومقاطع الفيديو",
+    [localizationKeys.uploadUpTo12Items]:"قم بتحميل ما يصل إلى 12 عنصرًا",
+    [localizationKeys.premiumRealEstateAvailableForExclusiveOwnership]:"عقارات فاخرة متاحة للتملك الحصري",
+    [localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters]:"عقارات استثنائية منتقاة للمستأجرين المميزين",
+    [localizationKeys.discoverExceptionalBreedsAndLovingCompanions]:"اكتشف السلالات الاستثنائية والرفاق المحبين",
+    [localizationKeys.provideAForeverHomeToARemarkableRescue]:"وفر منزلاً دائمًا لإنقاذ رائع",
+    [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:"حالة ممتازة، لم تمس مع العلامات الأصلية أو العبوة",
+    [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"حالة ممتازة مستعملة، تظهر عليها علامات استخدام طفيفة إلى خفيفة",
+    
 };
 
 export default ar;

@@ -19,13 +19,14 @@
 }
 
 .label_Input_Form {
-  font-size: 12px;
+  font-size: 14px;
   position: absolute;
-  bottom: 46px;
+  bottom: 46px; /* Positioned just above input container */
   padding: 0 5px;
   background: white;
-  font: normal normal normal 16px/21px Roboto;
-  color: #707070;
+  font-family: inherit;
+  font-weight: 500;
+  color: #374151; /* text-gray-700 */
 }
 
 .input_Input_Form:lang(ar) {
@@ -48,16 +49,47 @@
 
 /* Phone input container styles */
 .phone_Input_Form {
-  border: 1px solid #e4e4e4;
+  border: 1px solid #d1d5db; /* border-gray-300 */
   font-size: 16px;
   outline: none;
   width: 100%;
-  font: normal normal normal 16px/21px Roboto;
-  padding: 15px 5px;
+  font-family: inherit;
+  height: 48px; /* Matching h-[48px] */
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
   box-sizing: border-box;
-  background: white;
-  border-radius: 0.375rem;
+  background-color: white; /* bg-white */
+  border-radius: 0.5rem; /* rounded-lg */
   direction: ltr; /* Default direction */
+  transition: all 150ms ease-in-out; /* transition-colors */
+}
+
+.phone_Input_Form:focus-within {
+  border-color: #d6a536; /* focus:border-primary */
+  box-shadow: 0 0 0 1px #d6a536; /* focus:ring-1 focus:ring-primary */
+}
+
+/* Dark mode overrides for phone input & label */
+.dark .label_Input_Form {
+  background-color: #202e46; /* dark:bg-primary-dark */
+  color: #d1d5db; /* dark:text-gray-300 */
+}
+
+.dark .phone_Input_Form {
+  background-color: #1A1F2C; /* dark:bg-primary-dark */
+  border-color: rgba(212, 175, 55, 0.4); /* border-[#d4af37]/40 */
+  color: #ffffff; /* dark:text-white */
+}
+
+.dark .phone_Input_Form:focus-within {
+  border-color: #d4af37; /* dark:focus:border-yellow */
+  box-shadow: 0 0 0 1px #d4af37; /* dark:focus:ring-yellow */
+}
+
+.dark .phone_Input_Form input {
+  background-color: transparent;
+  color: #ffffff; /* dark:text-white */
 }
 /* .phone_Input_Form .PhoneInputInput {
   padding-left: 30px;

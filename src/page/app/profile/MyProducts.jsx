@@ -5,13 +5,13 @@ import useAxios from "../../../hooks/use-axios";
 import { Dimmer } from "semantic-ui-react";
 import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as BidIcon } from "../../../../src/assets/icons/listing icon-01.svg";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import localizationKeys from "../../../localization/localization-keys";
 import TotalMyProducts from "component/profile-components/Total-my-products";
 import MyProductsTab from "component/profile-components/my-produts-tab";
+import { IoBagHandleOutline } from "react-icons/io5";
 
 const MyProducts = () => {
   const [lang] = useLanguage();
@@ -70,28 +70,27 @@ const MyProducts = () => {
           <LodingTestAllatre />
         </Dimmer>
         {analyticsData?.length === 0 ? (
-          <div className="align-middle pt-52">
-            <div className="flex flex-col items-center">
-              <BidIcon className="w-32 h-32" />
-
-              <p className="text-gray-dark text-center mt-10">
-                {
-                  selectedContent[
-                    localizationKeys
-                      .thereAreNoListedProductsAtTheMomentListYouFirstProductNow
-                  ]
-                }
-              </p>
-
-              <div className="flex justify-center mt-8">
-                <button
-                  onClick={() => history.push(routes.app.listProduct.default)}
-                  className="text-white text-sm font-normal bg-primary hover:bg-primary-dark rounded-lg px-6 w-[120px] h-[40px]"
-                >
-                  {selectedContent[localizationKeys.startLisitng]}
-                </button>
-              </div>
+          <div className="flex flex-col items-center justify-center min-h-[400px] bg-white dark:bg-[#1A1F2C] border border-gray-200 dark:border-[#2C3241] rounded-2xl p-8 mt-10 shadow-sm mx-auto max-w-3xl">
+            <div className="bg-primary/10 dark:bg-primary/20 p-6 rounded-full mb-6">
+              <IoBagHandleOutline className="w-16 h-16 text-primary" />
             </div>
+
+            <p className="text-gray-500 dark:text-gray-400 text-center max-w-md mt-2 mb-8 text-base font-medium">
+              {
+                selectedContent[
+                  localizationKeys
+                    .thereAreNoListedProductsAtTheMomentListYouFirstProductNow
+                ]
+              }
+            </p>
+
+            <button
+              onClick={() => history.push(routes.app.listProduct.default)}
+              className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded-xl transition-colors"
+            >
+              {selectedContent[localizationKeys.startLisitng]}
+              <span className="rtl:rotate-180">➤</span>
+            </button>
           </div>
         ) : (
           <>

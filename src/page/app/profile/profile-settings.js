@@ -7,9 +7,7 @@ import { HiLockClosed } from "react-icons/hi";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { BsFillTelephoneFill, BsThreeDots } from "react-icons/bs";
 
-import appleIcon from "../../../../src/assets/icons/Apple-icon.svg";
-import googleIcon from "../../../../src/assets/icons/Google-icon.svg";
-// import facebookIcon from "../../../../src/assets/icons/Fcaebook-icon.svg";
+import { FaApple, FaGoogle } from "react-icons/fa";
 import userProfileicon from "../../../../src/assets/icons/user-Profile-icon.png";
 
 import UploadeImgModel from "../../../component/profile-components/uploade-img-model";
@@ -20,7 +18,7 @@ import EditPhoneNumberModel from "../../../component/profile-components/edit-pho
 
 import useAxios from "../../../hooks/use-axios";
 
-import { Dimmer, Popup } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 
 import api from "../../../api";
@@ -212,7 +210,7 @@ const ProfileSettings = () => {
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
                 <div className="flex items-center gap-4 mb-3 sm:mb-0">
-                  <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] font-bold rounded-full border border-[#fde68a] dark:border-[#d6a536]/30 flex items-center justify-center">
                     <RiUser3Fill size={18} />
                   </div>
                   <div>
@@ -224,9 +222,9 @@ const ProfileSettings = () => {
               </div>
               
               {!pofileData?.isOAuth && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+                <div className="py-4 flex flex-col sm:flex-row sm:items-center justify-between px-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
                   <div className="flex items-center gap-4 mb-3 sm:mb-0">
-                    <div className="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] font-bold rounded-full border border-[#fde68a] dark:border-[#d6a536]/30 flex items-center justify-center">
                       <HiLockClosed size={18} />
                     </div>
                     <div>
@@ -248,16 +246,16 @@ const ProfileSettings = () => {
             </div>
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
-                <div className="flex items-center gap-4 mb-3 sm:mb-0">
-                  <div className="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                <div className="flex items-start sm:items-center gap-4 mb-3 sm:mb-0">
+                  <div className="flex-shrink-0 w-10 h-10 bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] font-bold rounded-full border border-[#fde68a] dark:border-[#d6a536]/30 flex items-center justify-center">
                     <MdMail size={18} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.eMail]}</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-base font-semibold text-[#34415C] dark:text-white">{pofileData?.email}</p>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                      <p className="text-base font-semibold text-[#34415C] dark:text-white break-all sm:break-normal">{pofileData?.email}</p>
                       {pofileData?.isVerified && (
-                         <span className="flex items-center gap-1 text-xs font-bold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-2 py-0.5 rounded-full border border-green-100 dark:border-green-800/50">
+                         <span className="flex-shrink-0 flex items-center gap-1 bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] text-[11px] font-bold px-3 py-1 rounded-full border border-[#fde68a] dark:border-[#d6a536]/30">
                            <IoMdCheckmarkCircle size={14} /> {selectedContent[localizationKeys.verified]}
                          </span>
                       )}
@@ -268,7 +266,7 @@ const ProfileSettings = () => {
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
                 <div className="flex items-center gap-4 mb-3 sm:mb-0">
-                  <div className="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/40 text-green-600 dark:text-green-400 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] font-bold rounded-full border border-[#fde68a] dark:border-[#d6a536]/30 flex items-center justify-center">
                     <BsFillTelephoneFill size={18} />
                   </div>
                   <div>
@@ -292,16 +290,16 @@ const ProfileSettings = () => {
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex justify-center items-center">
               <Loginbutton
                 isActive={pofileData?.oAuthType === "APPLE"}
-                logo={appleIcon}
+                Icon={FaApple}
                 text={selectedContent[localizationKeys.connectedWithApple]}
                 statusText={selectedContent[localizationKeys.connected]}
               />
               <Loginbutton
                 isActive={pofileData?.oAuthType === "GOOGLE"}
-                logo={googleIcon}
+                Icon={FaGoogle}
                 text={selectedContent[localizationKeys.connectWithGoogle]}
                 statusText={selectedContent[localizationKeys.connected]}
               />
@@ -379,11 +377,11 @@ const ProfileSettings = () => {
   );
 };
 
-export const Loginbutton = ({ logo, text, isActive, statusText }) => {
+export const Loginbutton = ({ Icon, text, isActive, statusText }) => {
   return (
     <div className={`relative flex items-center p-4 border rounded-xl transition-all duration-200 ${isActive ? 'border-green-500 bg-green-50/30 dark:bg-green-900/20 dark:border-green-800/60' : 'border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-700/30 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-white dark:hover:bg-gray-800'}`}>
-       <div className="w-10 h-10 flex-shrink-0 bg-white dark:bg-gray-800 rounded-full border border-gray-100 dark:border-gray-700 shadow-sm flex items-center justify-center ltr:mr-4 rtl:ml-4">
-         <img className="w-6 h-6 object-contain" src={logo} alt="logo" />
+       <div className="w-10 h-10 flex-shrink-0 bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] border border-[#fde68a] dark:border-[#d6a536]/30 rounded-full shadow-sm flex items-center justify-center ltr:mr-4 rtl:ml-4">
+         {Icon && <Icon className="w-5 h-5" />}
        </div>
        <div className="flex-grow">
          <p className="text-sm font-semibold text-[#34415C] dark:text-white">{text}</p>
@@ -460,7 +458,7 @@ export const LocationDetailsCard = ({
 
   return (
     <>
-      <div className="relative group border border-gray-100 dark:border-gray-800 bg-white dark:bg-primary-dark hover:border-[#d6a536]/50 dark:hover:border-[#d6a536]/50 hover:shadow-md rounded-xl p-5 transition-all duration-200">
+      <div className="relative group border border-gray-100 dark:border-[#d4af37]/40 bg-white dark:bg-primary-dark hover:border-[#d6a536]/50 dark:hover:border-yellow hover:shadow-md rounded-xl p-5 transition-all duration-200">
         {isMain && (
            <div className="absolute -top-3 ltr:left-4 rtl:right-4 bg-[#d6a536] text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm uppercase tracking-wider">
              {selectedContent[localizationKeys.default]}
@@ -468,50 +466,58 @@ export const LocationDetailsCard = ({
         )}
         <div className="flex justify-between items-start pt-1">
           <h1 className="text-[#34415C] dark:text-white font-bold text-base">{AddressLable}</h1>
-          <Popup
-            onOpen={() => setOpen(true)}
-            onClose={() => setOpen(false)}
-            open={open}
-            className="bg-white dark:bg-gray-900 w-auto h-auto rounded-xl border border-gray-100 dark:border-gray-800 shadow-xl overflow-hidden py-1"
-            trigger={
-              <div className="cursor-pointer text-gray-400 hover:text-[#d6a536] transition-colors p-1 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">
-                <BsThreeDots size={20} />
-              </div>
-            }
-            on="click"
-            position="bottom right"
-          >
-            <div className="min-w-[160px] flex flex-col">
-              {!isMain && (
-                <button
-                  onClick={() => handelMakeDefault(Id)}
-                  className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 font-medium transition-colors"
-                >
-                  {selectedContent[localizationKeys.makeDefault]}
-                </button>
-              )}
-              <button
-                onClick={() => {
-                  setEditModalOpen(true);
-                  setOpen(false);
-                }}
-                className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-200 dark:hover:bg-gray-800 font-medium transition-colors"
-              >
-                {selectedContent[localizationKeys.edit]}
-              </button>
-              {!isMain && (
-                <button
-                  onClick={() => {
-                    setDeleteModalOpen(true);
-                    setOpen(false);
-                  }}
-                  className="text-left ltr:text-left rtl:text-right text-sm text-red-600 dark:text-red-400 px-4 py-2.5 hover:bg-red-200 dark:hover:bg-red-900/30 font-medium transition-colors"
-                >
-                  {selectedContent[localizationKeys.delete]}
-                </button>
-              )}
-            </div>
-          </Popup>
+          <div className="relative">
+            <button
+              onClick={() => setOpen(!open)}
+              className="cursor-pointer text-gray-400 hover:text-[#d6a536] transition-colors p-1 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+              <BsThreeDots size={20} />
+            </button>
+            
+            {open && (
+              <>
+                <div 
+                  className="fixed inset-0 z-40" 
+                  onClick={() => setOpen(false)}
+                />
+                <div className="absolute top-full ltr:right-0 rtl:left-0 mt-2 min-w-[160px] bg-white dark:bg-[#1A1F2C] rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="flex flex-col">
+                    {!isMain && (
+                      <button
+                        onClick={() => {
+                          handelMakeDefault(Id);
+                          setOpen(false);
+                        }}
+                        className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-[#22283A] font-medium transition-colors"
+                      >
+                        {selectedContent[localizationKeys.makeDefault]}
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        setEditModalOpen(true);
+                        setOpen(false);
+                      }}
+                      className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-[#22283A] font-medium transition-colors"
+                    >
+                      {selectedContent[localizationKeys.edit]}
+                    </button>
+                    {!isMain && (
+                      <button
+                        onClick={() => {
+                          setDeleteModalOpen(true);
+                          setOpen(false);
+                        }}
+                        className="text-left ltr:text-left rtl:text-right text-sm text-red-600 dark:text-red-400 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 font-medium transition-colors"
+                      >
+                        {selectedContent[localizationKeys.delete]}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         <div className="mt-3 space-y-1">

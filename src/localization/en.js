@@ -159,6 +159,7 @@ const en = {
   [localizationKeys.createAuction]: "Create Auction",
   [localizationKeys.listProduct]: "List Product",
   [localizationKeys.price]: "PRICE",
+  [localizationKeys.Price]: "Price",
   [localizationKeys.changeProductStatus]: "Change Product Status Here",
   [localizationKeys.myAccount]: "My Account",
   [localizationKeys.iamBiddingOn]: "I'm Bidding On",
@@ -186,7 +187,7 @@ const en = {
   [localizationKeys.PopularPicksPerfectChoices]:
     "Popular Picks, Perfect Choices",
   [localizationKeys.Grid]: "Grid",
-  [localizationKeys.List]: "List",
+  [localizationKeys.listItem]: "List Item",
   [localizationKeys.ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow]:
     " There are no auctions currently. You can create your own auction right now",
   [localizationKeys.BidWinRepeat]: "Bid, Win, Repeat!",
@@ -348,7 +349,7 @@ const en = {
   [localizationKeys.onlyOneVideoFileIsAllowed]:
     "Only one video file is allowed",
   [localizationKeys.uploadOneImageAndOneVideo]:
-    "* You can upload up to 50 images and 1 video (max 50MB). Videos must be uploaded separately from images.",
+    "* You can upload up to 12 images and 1 video (max 50MB). Videos must be uploaded separately from images.",
   [localizationKeys.fileSizeShouldBeLessThan10MB]:
     "File size should be less than 10MB",
   [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:
@@ -441,7 +442,7 @@ const en = {
     "This auction has been cancelled by the administrator. ",
   [localizationKeys.auctionCancelled]: "Auction Cancelled",
   // shiping details
-  [localizationKeys.locationDetails]: "Location Details",
+  List: "Location Details",
   [localizationKeys.addAddress]: "Add Address",
   [localizationKeys.successUpdateLocation]: "Location updated successfully",
   [localizationKeys.confirmDeleteAddress]:
@@ -754,6 +755,19 @@ const en = {
   [localizationKeys.of]:"of",
   [localizationKeys.details]:"Details",
   [localizationKeys.AllMyProductsDescription]:"Manage and track your product inventory with real-time analytics and stock status monitoring.",
+  [localizationKeys.thereAreNoInProgressProductsAtTheMoment]:"There are no in-progress products at the moment",
+  [localizationKeys.thereAreNoOutOfStockProductsAtTheMoment]:"There are no out of stock products at the moment",
+  [localizationKeys.thereAreNoSoldOutProductsAtTheMoment]:"There are no sold out products at the moment",
+  [localizationKeys.productMedia]:"Product Media",
+  [localizationKeys.addMore]:"Add More",
+  [localizationKeys.clickToUploadImagesAndVideos]:"Click to upload images and videos",
+  [localizationKeys.uploadUpTo12Items]:"Upload up to 12 items",
+  [localizationKeys.premiumRealEstateAvailableForExclusiveOwnership]:"Premium real estate available for exclusive ownership",
+  [localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters]:"Exceptional properties curated for discerning renters",
+  [localizationKeys.discoverExceptionalBreedsAndLovingCompanions]:"Discover exceptional breeds and loving companions",
+  [localizationKeys.provideAForeverHomeToARemarkableRescue]:"Provide a forever home to a remarkable rescue",
+  [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:"Pristine condition, untouched with original tags or packaging",
+  [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"Pre-owned excellence, showing only minor to light signs of wear",
 };
 
 export default en;

@@ -143,6 +143,7 @@ const localizationKeys = {
   createAuction: "createAuction",
   listProduct: "listProduct",
   price: "Price",
+  Price: "Price",
   changeProductStatus: "changeProductStatus",
   myAccount: "myAccount",
   iamBiddingOn: "iamBiddingOn",
@@ -163,7 +164,7 @@ const localizationKeys = {
   CreateyourAdNow: "CreateyourAdNow",
   PopularPicksPerfectChoices: "PopularPicksPerfectChoices",
   Grid: "Grid",
-  List: "List",
+  listItem: "listItem",
   ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow:
     "ThereAreAuctionsCurrentlyYouCanCreateYourOwnAuctionRightNow",
   BidWinRepeat: "BidWinRepeat",
@@ -673,7 +674,19 @@ const localizationKeys = {
   of:"of",
   details:"details",
   AllMyProductsDescription:"AllMyProductsDescription",
-  
+  thereAreNoInProgressProductsAtTheMoment:"thereAreNoInProgressProductsAtTheMoment",
+  thereAreNoOutOfStockProductsAtTheMoment:"thereAreNoOutOfStockProductsAtTheMoment",
+  thereAreNoSoldOutProductsAtTheMoment:"thereAreNoSoldOutProductsAtTheMoment",
+  productMedia:"productMedia",
+  addMore:"addMore",
+  clickToUploadImagesAndVideos:"clickToUploadImagesAndVideos",
+  uploadUpTo12Items:"uploadUpTo12Items",
+  premiumRealEstateAvailableForExclusiveOwnership:"premiumRealEstateAvailableForExclusiveOwnership",
+  exceptionalPropertiesCuratedForDiscerningRenters:"exceptionalPropertiesCuratedForDiscerningRenters",
+  discoverExceptionalBreedsAndLovingCompanions:"discoverExceptionalBreedsAndLovingCompanions",
+  provideAForeverHomeToARemarkableRescue:"provideAForeverHomeToARemarkableRescue",
+  pristineConditionUntouchedWithOriginalTagsOrPackaging:"pristineConditionUntouchedWithOriginalTagsOrPackaging",
+  preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear:"preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear",
 };
 
 export default localizationKeys;

@@ -19,7 +19,6 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
 import { BsThreeDots } from "react-icons/bs";
-import { Popup } from "semantic-ui-react";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
 import { getDefaultPerPage } from "constants/pagination";
 
@@ -213,14 +212,14 @@ const ListingProductsLocationDetails = () => {
         <LodingTestAllatre />
       </Dimmer>
       <div className="mt-44 animate-in mx-5 ">
-        <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
+        {/* <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
           <CreateAuctionBreadcrumb />
         </div>
         <div className="flex justify-center">
           <Stepper />
-        </div>
+        </div> */}
         <div className=" max-w-[1366px] mx-auto ">
-          <h1 className="font-bold text-base text-black pt-6">
+          <h1 className="font-bold text-base text-black dark:text-white pt-6">
             {selectedContent[localizationKeys.locationDetails]}
           </h1>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mx-auto pt-6">
@@ -256,12 +255,12 @@ const ListingProductsLocationDetails = () => {
           {/* buttons */}
           <div className=" flex justify-end  mt-28">
             <button
-              className="bg-primary hover:bg-primary-dark text-white sm:w-[304px] w-full h-[48px] rounded-lg  sm:mt-8 mt-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN mb-5"
+              className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors flex items-center justify-center gap-2"
               // onClick={creatAuction}
               onClick={listProduct}
               loading={isLoadingListNewProduct}
             >
-              {selectedContent[localizationKeys.List]}
+              {selectedContent[localizationKeys.listItem]}
             </button>
           </div>
         </div>
@@ -352,75 +351,85 @@ export const LocationDetailsCard = ({
     <>
       <div
         onClick={() => setLocationId(Id)}
-        className={`transition-all duration-100 ${
+        className={`relative group border ${
           locationId === `${Id}`
-            ? "border-2 border-primary "
-            : "border-gray-300 bg-white"
-        } border rounded-xl h-[130px] w-full p-5 cursor-pointer relative hover:shadow-lg`}
+            ? "border-2 border-primary dark:border-yellow bg-primary/5 dark:bg-yellow-200/5 shadow-md"
+            : "border-gray-100 dark:border-[#d4af37]/40 bg-white dark:bg-primary-dark hover:border-[#d6a536]/50 dark:hover:border-yellow hover:shadow-md"
+        } rounded-xl w-full p-5 cursor-pointer transition-all duration-200`}
       >
-        <div className="flex justify-between items-center">
-          <h1 className="text-gray-dark text-sm font-medium">{AddressLable}</h1>
-          <Popup
-            onOpen={() => setOpen(true)}
-            onClose={() => setOpen(false)}
-            open={open}
-            className="bg-white w-auto h-auto rounded-lg border-none shadow-lg"
-            trigger={
-              <div className="cursor-pointer hover:text-primary transition-all">
-                <BsThreeDots size={20} className="text-gray-dark" />
-              </div>
-            }
-            on="click"
-            position="bottom right"
-          >
-            <div className="py-2 min-w-[150px] rounded-lg ">
-              {!isMain && (
-                <div
-                  onClick={handleMakeDefault}
-                  className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
-                >
-                  {selectedContent[localizationKeys.makeDefault]}
-                </div>
-              )}
-              <div
-                onClick={() => {
-                  setEditModalOpen(true);
-                  setOpen(false);
-                }}
-                className="text-gray-700 px-4 py-2 cursor-pointer hover:bg-gray-100 text-base font-normal"
-              >
-                {selectedContent[localizationKeys.edit]}
-              </div>
-              {!isMain && (
-                <div
-                  onClick={() => {
-                    setDeleteModalOpen(true);
+        {isMain && (
+           <div className="absolute -top-3 ltr:left-4 rtl:right-4 bg-[#d6a536] text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm uppercase tracking-wider">
+             {selectedContent[localizationKeys.default]}
+           </div>
+        )}
+        <div className="flex justify-between items-start pt-1">
+          <h1 className="text-[#34415C] dark:text-white font-bold text-base">{AddressLable}</h1>
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setOpen(!open)}
+              className="cursor-pointer text-gray-400 hover:text-[#d6a536] transition-colors p-1 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+              <BsThreeDots size={20} />
+            </button>
+            
+            {open && (
+              <>
+                <div 
+                  className="fixed inset-0 z-40" 
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setOpen(false);
                   }}
-                  className="text-red-500 px-4 py-2 cursor-pointer hover:bg-red-50 text-base font-normal"
-                >
-                  {selectedContent[localizationKeys.delete]}
+                />
+                <div className="absolute top-full ltr:right-0 rtl:left-0 mt-2 min-w-[160px] bg-white dark:bg-[#1A1F2C] rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
+                  <div className="flex flex-col py-1.5">
+                    {!isMain && (
+                      <button
+                        onClick={(e) => handleMakeDefault(e)}
+                        className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-[#22283A] font-medium transition-colors"
+                      >
+                        {selectedContent[localizationKeys.makeDefault]}
+                      </button>
+                    )}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditModalOpen(true);
+                        setOpen(false);
+                      }}
+                      className="text-left ltr:text-left rtl:text-right text-sm text-gray-700 dark:text-gray-300 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-[#22283A] font-medium transition-colors"
+                    >
+                      {selectedContent[localizationKeys.edit]}
+                    </button>
+                    {!isMain && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteModalOpen(true);
+                          setOpen(false);
+                        }}
+                        className="text-left ltr:text-left rtl:text-right text-sm text-red-600 dark:text-red-400 px-4 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 font-medium transition-colors"
+                      >
+                        {selectedContent[localizationKeys.delete]}
+                      </button>
+                    )}
+                  </div>
                 </div>
-              )}
-            </div>
-          </Popup>
+              </>
+            )}
+          </div>
         </div>
 
-        <p className="text-gray-dark text-sm pt-2">{Address}</p>
-        <p className="text-gray-dark text-sm pt-1">
-          {City}, {Country}
-        </p>
-        <p className="text-gray-dark text-sm pt-1">{phone}</p>
-        <p className="text-gray-dark text-sm pt-1">{PostalCode}</p>
-        {isMain && (
-          <p
-            className={`text-primary text-md absolute bottom-2 ${
-              lang === "ar" ? "left-4" : "right-4"
-            }`}
-          >
-            {selectedContent[localizationKeys.default]}
+        <div className="mt-3 space-y-1">
+          <p className="text-gray-500 text-sm truncate">{Address}</p>
+          <p className="text-gray-500 text-sm truncate">
+            {City}, {Country}
           </p>
-        )}
+          <div className="flex gap-4">
+            <p className="text-gray-500 text-sm">{phone}</p>
+            <p className="text-gray-500 text-sm">{PostalCode}</p>
+          </div>
+        </div>
 
         <AddLocationModel
           open={editModalOpen}

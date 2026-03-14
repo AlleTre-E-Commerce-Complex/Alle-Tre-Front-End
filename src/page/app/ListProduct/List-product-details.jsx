@@ -33,7 +33,13 @@ import useGetAllCities from "../../../hooks/use-get-all-cities";
 // import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
 import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
-import { IoCameraOutline } from "react-icons/io5";
+import {
+  IoCameraOutline,
+  IoImageOutline,
+  IoInformationCircleOutline,
+  IoPricetagOutline,
+  IoRibbonOutline,
+} from "react-icons/io5";
 import { MdArrowDropDown } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
 import { listingProductDetails } from "redux-store/ListingProduct-details-slice";
@@ -145,7 +151,7 @@ const ListProductDetails = () => {
             if (productData?.subCategoryId) {
               setSubCategoryId(productData.subCategoryId);
             }
-          })
+          }),
       );
     }
   }, [run, forceReload, product_Id]);
@@ -204,7 +210,7 @@ const ListProductDetails = () => {
             }
           },
           "image/jpeg",
-          0.8
+          0.8,
         );
       });
     } catch (error) {
@@ -218,7 +224,7 @@ const ListProductDetails = () => {
     const currentImages = imgtest || [];
     if (currentImages.length + files.length > 50) {
       toast.error(
-        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
+        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages],
       );
       event.target.value = null;
       return;
@@ -226,7 +232,7 @@ const ListProductDetails = () => {
 
     // Check if there's already a video in the current images
     const hasExistingVideo = currentImages.some((img) =>
-      img.file.type.startsWith("video/")
+      img.file.type.startsWith("video/"),
     );
 
     // Check if any of the new files is a video
@@ -238,7 +244,7 @@ const ListProductDetails = () => {
         selectedContent[
           localizationKeys
             .videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover
-        ]
+        ],
       );
       event.target.value = null;
       return;
@@ -259,7 +265,7 @@ const ListProductDetails = () => {
             file: watermarkedFile,
             imageLink: URL.createObjectURL(watermarkedFile),
           };
-        })
+        }),
       );
       setimgtest([...currentImages, ...processedFiles]);
     } catch (error) {
@@ -275,14 +281,14 @@ const ListProductDetails = () => {
 
       if (currentImages.length >= 50) {
         toast.error(
-          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
+          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages],
         );
         event.target.value = null;
         return;
       }
 
       const hasExistingVideo = currentImages.some((img) =>
-        img.file.type.startsWith("video/")
+        img.file.type.startsWith("video/"),
       );
 
       const isVideo = file.type.startsWith("video/");
@@ -292,7 +298,7 @@ const ListProductDetails = () => {
           selectedContent[
             localizationKeys
               .videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover
-          ]
+          ],
         );
         event.target.value = null;
         return;
@@ -300,7 +306,7 @@ const ListProductDetails = () => {
 
       if (hasExistingVideo && isVideo) {
         toast.error(
-          selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]
+          selectedContent[localizationKeys.onlyOneVideoFileIsAllowed],
         );
         event.target.value = null;
         return;
@@ -327,7 +333,7 @@ const ListProductDetails = () => {
             .get(api.app.customField.ByCategoryId(categoryId))
             .then((res) => {
               setCustomFromData(res?.data?.data);
-            })
+            }),
         );
       } else
         run(
@@ -335,7 +341,7 @@ const ListProductDetails = () => {
             .get(api.app.customField.BySubCategoryId(subCategoryId))
             .then((res) => {
               setCustomFromData(res?.data?.data);
-            })
+            }),
         );
     }
   }, [run, categoryId, subCategoryId, SubGatogryOptions.length, loadingImg]);
@@ -343,11 +349,10 @@ const ListProductDetails = () => {
   const arrayCustomFieldsvalidations =
     customFromData?.arrayCustomFields?.reduce((acc, curr) => {
       acc[curr.key] = Yup.string().required(
-        selectedContent[localizationKeys.required]
+        selectedContent[localizationKeys.required],
       );
       return acc;
     }, {});
-
 
   const isArabic = lang === "ar";
   const handleUpdate = async (values) => {
@@ -369,7 +374,7 @@ const ListProductDetails = () => {
         "Updating with category:",
         values.category,
         "subcategory:",
-        values.subCategory
+        values.subCategory,
       );
       formData.append("product[ProductListingPrice]", values.itemPrice);
       if (values.brand) formData.append("product[brand]", values.brand);
@@ -399,7 +404,7 @@ const ListProductDetails = () => {
       if (values.regionOfManufacture)
         formData.append(
           "product[regionOfManufacture]",
-          values.regionOfManufacture
+          values.regionOfManufacture,
         );
       if (values.numberOfFloors)
         formData.append("product[numberOfFloors]", values.numberOfFloors);
@@ -422,12 +427,12 @@ const ListProductDetails = () => {
       const response = await authAxios.put(
         api.app.productListing.updateListedProduct(product_Id),
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        { headers: { "Content-Type": "multipart/form-data" } },
       );
 
       if (response.status === 200) {
         toast.success(
-          selectedContent[localizationKeys.productUpdatedSuccessfully]
+          selectedContent[localizationKeys.productUpdatedSuccessfully],
         );
         history.push(routes.app.profile.myProducts.default);
       }
@@ -435,7 +440,9 @@ const ListProductDetails = () => {
       console.error("Error updating product:", error);
       toast.error(
         error?.response?.data?.message ||
-          selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater]
+          selectedContent[
+            localizationKeys.somethingWentWrongPleaseTryAgainLater
+          ],
       );
     } finally {
       setIsUpdating(false);
@@ -447,7 +454,7 @@ const ListProductDetails = () => {
       .trim()
       .required(selectedContent[localizationKeys.required]),
     itemPrice: Yup.number().required(
-      selectedContent[localizationKeys.required]
+      selectedContent[localizationKeys.required],
     ),
     category: Yup.string()
       .trim()
@@ -466,7 +473,7 @@ const ListProductDetails = () => {
       is: () => SubGatogryOptions?.length === 0,
       then: Yup.string().notRequired(),
       otherwise: Yup.string().required(
-        selectedContent[localizationKeys.required]
+        selectedContent[localizationKeys.required],
       ),
     }),
   });
@@ -485,7 +492,7 @@ const ListProductDetails = () => {
             })),
             auctionState,
             auctionId: completeDraftVal?.id,
-          })
+          }),
         );
         history.push(routes.app.listProduct.listProductLocationDetails);
       } else {
@@ -495,7 +502,7 @@ const ListProductDetails = () => {
       toast.error(
         selectedContent[
           localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
-        ]
+        ],
       );
     }
   };
@@ -509,7 +516,7 @@ const ListProductDetails = () => {
     ...(customFromData?.regularCustomFields || []),
   ];
   const adjustedcarField = carField.filter(
-    (field) => field.subCategoryId !== null || field.categoryId === 4
+    (field) => field.subCategoryId !== null || field.categoryId === 4,
   );
 
   return (
@@ -523,19 +530,14 @@ const ListProductDetails = () => {
       </Dimmer>
       <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
         {/* <Loader active /> */}
-        <div className=" h-14 my-7 py-4 sm:block hidden">
-          {/* Breadcrumb  */}
+        {/* <div className=" h-14 my-7 py-4 sm:block hidden">
           <CreateAuctionBreadcrumb />
-        </div>
+        </div> */}
         {/* stepper */}
         <div className="flex justify-center">
           <Stepper />
         </div>
-        <div className="">
-          <h1 className="text-black text-base font-bold mt-4">
-            {selectedContent[localizationKeys.itemDetails]}
-          </h1>
-          {/* formik */}
+        <div className="w-full flex flex-col gap-6 mt-5">
           <div>
             <Formik
               initialValues={{
@@ -594,126 +596,196 @@ const ListProductDetails = () => {
                 <Form onSubmit={formik.handleSubmit}>
                   <ScrollToFieldError />
                   {setDraftValue(formik?.values)}
-                  <div className="grid gap-x-4 gap-y-10 md:grid-cols-4 grid-cols-2 mt-10 ">
-                    <div className="col-span-2">
-                      <FormikInput
-                        name="itemName"
-                        type={"text"}
-                        label={selectedContent[localizationKeys.itemName]}
-                        placeholder={selectedContent[localizationKeys.itemName]}
-                      />
-                    </div>
-                    <div className="col-span-2 hidden md:block"></div>
-                    <div className="col-span-2">
-                      <FormikInput
-                        min={0}
-                        type="number"
-                        name="itemPrice"
-                        label={selectedContent[localizationKeys.price]}
-                        placeholder="AEDXXX"
-                        onWheel={(e) => e.target.blur()} // Prevent scrolling while focused
-                      />
-                    </div>
-                    <div className="col-span-2 hidden md:block"></div>
-                    <div className="col-span-2 ">
-                      <FormikMultiDropdown
-                        name="category"
-                        label={selectedContent[localizationKeys.category]}
-                        placeholder={selectedContent[localizationKeys.category]}
-                        options={GatogryOptions}
-                        // options={GatogryOptions.map((option) => ({
-                        //   ...option,
-                        //   text:
-                        //     option.text === "Electronic Devices" ||
-                        //     option.text === "الأجهزة الإلكترونية" ? (
-                        //       option.text
-                        //     ) : (
-                        //       <div className="flex justify-between items-center">
-                        //         <span>{option.text}</span>
-                        //         <span className="bg-gray-200 text-gray-600 text-xs font-semibold px-2 py-1 rounded-lg">
-                        //           {selectedContent[localizationKeys.comingSoon]}
-                        //         </span>
-                        //       </div>
-                        //     ),
-                        //   disabled:
-                        //     option.text !== "Electronic Devices" &&
-                        //     option.text !== "الأجهزة الإلكترونية",
-                        // }))}
-                        loading={loadingGatogry}
-                        onChange={(value) => {
-                          setCategoryId(value);
-                          const fieldOption = GatogryOptions.find(
-                            (go) => go.value === value
-                          );
-                          // onReload();
-                          setCustomFromData([]);
-                          setSubCategoryId(undefined);
-                          formik.setFieldValue("subCategory", "", false);
-                          formik.setFieldTouched("subCategory", false, false);
-                        }}
-                      />
-                    </div>
-                    <div
-                      className={
-                        SubGatogryOptions?.length === 0
-                          ? "hidden"
-                          : "col-span-2"
-                      }
-                    >
-                      <FormikMultiDropdown
-                        name="subCategory"
-                        label={selectedContent[localizationKeys.subCategory]}
-                        placeholder={
-                          selectedContent[localizationKeys.subCategory]
-                        }
-                        loading={loadingSubGatogry}
-                        options={SubGatogryOptions}
-                        onChange={(value) => {
-                          setSubCategoryId(value);
-                          formik.setFieldValue("subCategory", value, true);
-                        }}
-                      />
-                    </div>
-                    {formik.values.subCategory && (
-                      <>
-                        {[
-                          ...(customFromData?.arrayCustomFields || []),
-                          ...(customFromData?.regularCustomFields || []),
-                        ]
-                          .filter((e) => e?.key !== "brandId")
-                          .map((e) => {
-                            const isDropdown =
-                              customFromData?.arrayCustomFields?.some(
-                                (field) => field.key === e.key
-                              );
 
-                            return (
-                              <div
-                                key={e.key}
-                                className="w-full col-span-2 sm:col-span-1 md:col-span-2"
-                              >
-                                {isDropdown ? (
+                  <div className="w-full flex flex-col gap-6  mx-auto">
+                    {/* General Information Card */}
+                    <div className="bg-white dark:bg-primary-dark border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm">
+                      <div className="flex items-center gap-2 mb-6">
+                        <IoInformationCircleOutline className="dark:text-primary-light text-yellow w-6 h-6" />
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                          {selectedContent[localizationKeys.itemDetails]}
+                        </h2>
+                      </div>
+
+                      <div className="grid gap-x-6 gap-y-6 md:grid-cols-2 grid-cols-1">
+                        <div className="md:col-span-2">
+                          <FormikInput
+                            name="itemName"
+                            type={"text"}
+                            label={selectedContent[localizationKeys.itemName]}
+                            placeholder={
+                              selectedContent[localizationKeys.itemName]
+                            }
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <FormikMultiDropdown
+                            name="category"
+                            label={selectedContent[localizationKeys.category]}
+                            placeholder={
+                              selectedContent[localizationKeys.category]
+                            }
+                            options={GatogryOptions}
+                            // options={GatogryOptions.map((option) => ({
+                            //   ...option,
+                            //   text:
+                            //     option.text === "Electronic Devices" ||
+                            //     option.text === "الأجهزة الإلكترونية" ? (
+                            //       option.text
+                            //     ) : (
+                            //       <div className="flex justify-between items-center">
+                            //         <span>{option.text}</span>
+                            //         <span className="bg-gray-200 text-gray-600 text-xs font-semibold px-2 py-1 rounded-lg">
+                            //           {selectedContent[localizationKeys.comingSoon]}
+                            //         </span>
+                            //       </div>
+                            //     ),
+                            //   disabled:
+                            //     option.text !== "Electronic Devices" &&
+                            //     option.text !== "الأجهزة الإلكترونية",
+                            // }))}
+                            loading={loadingGatogry}
+                            onChange={(value) => {
+                              setCategoryId(value);
+                              setCustomFromData([]);
+                              setSubCategoryId(undefined);
+                              formik.setFieldValue("subCategory", "", false);
+                              formik.setFieldTouched(
+                                "subCategory",
+                                false,
+                                false,
+                              );
+                            }}
+                          />
+                        </div>
+                        <div
+                          className={
+                            SubGatogryOptions?.length === 0
+                              ? "hidden"
+                              : "w-full"
+                          }
+                        >
+                          <FormikMultiDropdown
+                            name="subCategory"
+                            label={
+                              selectedContent[localizationKeys.subCategory]
+                            }
+                            placeholder={
+                              selectedContent[localizationKeys.subCategory]
+                            }
+                            loading={loadingSubGatogry}
+                            options={SubGatogryOptions}
+                            onChange={(value) => {
+                              setSubCategoryId(value);
+                              formik.setFieldValue("subCategory", value, true);
+                            }}
+                          />
+                        </div>
+
+                        {formik.values.subCategory && (
+                          <>
+                            {[
+                              ...(customFromData?.arrayCustomFields || []),
+                              ...(customFromData?.regularCustomFields || []),
+                            ]
+                              .filter((e) => e?.key !== "brandId")
+                              .map((e) => {
+                                const isDropdown =
+                                  customFromData?.arrayCustomFields?.some(
+                                    (field) => field.key === e.key,
+                                  );
+
+                                return (
+                                  <div key={e.key} className="w-full">
+                                    {isDropdown ? (
+                                      <FormikMultiDropdown
+                                        name={e?.key}
+                                        label={
+                                          lang === "en"
+                                            ? e?.labelEn
+                                            : e?.labelAr
+                                        }
+                                        placeholder={
+                                          lang === "en"
+                                            ? e?.labelEn
+                                            : e?.labelAr
+                                        }
+                                        options={
+                                          e?.key === "countryId"
+                                            ? AllCountriesOptions
+                                            : e?.key === "cityId"
+                                              ? AllCitiesOptions
+                                              : allCustomFileOptions[
+                                                  e?.key
+                                                ]?.map((option) => ({
+                                                  ...option,
+                                                  text: isArabic
+                                                    ? option.text.split(
+                                                        " | ",
+                                                      )[1]
+                                                    : option.text.split(
+                                                        " | ",
+                                                      )[0],
+                                                }))
+                                        }
+                                        onChange={(selectedValue) =>
+                                          setCountriesId(selectedValue)
+                                        }
+                                        loading={
+                                          loadingAllCountries ||
+                                          loadingCitiesOptions
+                                        }
+                                      />
+                                    ) : (
+                                      <FormikInput
+                                        name={e?.key}
+                                        label={
+                                          lang === "en"
+                                            ? e?.labelEn
+                                            : e?.labelAr
+                                        }
+                                        placeholder={
+                                          lang === "en"
+                                            ? e?.labelEn
+                                            : e?.labelAr
+                                        }
+                                        type={e?.type}
+                                      />
+                                    )}
+                                  </div>
+                                );
+                              })}
+                          </>
+                        )}
+
+                        {categoryId === 4 &&
+                          adjustedcarField
+                            .filter(
+                              (field) =>
+                                field.categoryId === 4 &&
+                                field.key !== "brandId",
+                            ) // Filter for car category
+                            .map((field) => {
+                              return (
+                                <div key={field.key} className="w-full">
                                   <FormikMultiDropdown
-                                    name={e?.key}
-                                    label={
-                                      lang === "en" ? e?.labelEn : e?.labelAr
-                                    }
-                                    placeholder={
-                                      lang === "en" ? e?.labelEn : e?.labelAr
-                                    }
+                                    name={field.key}
+                                    label={`${lang === "en" ? field.labelEn : field.labelAr}`}
+                                    placeholder={`${lang === "en" ? field.labelEn : field.labelAr}`}
                                     options={
-                                      e?.key === "countryId"
+                                      field.key === "countryId"
                                         ? AllCountriesOptions
-                                        : e?.key === "cityId"
-                                        ? AllCitiesOptions
-                                        : allCustomFileOptions[e?.key]?.map(
-                                            (option) => ({
+                                        : field.key === "cityId"
+                                          ? AllCitiesOptions
+                                          : allCustomFileOptions[
+                                              field.key
+                                            ]?.map((option) => ({
                                               ...option,
                                               text: isArabic
                                                 ? option.text.split(" | ")[1]
                                                 : option.text.split(" | ")[0],
-                                            })
-                                          )
+                                            }))
                                     }
                                     onChange={(selectedValue) =>
                                       setCountriesId(selectedValue)
@@ -723,179 +795,221 @@ const ListProductDetails = () => {
                                       loadingCitiesOptions
                                     }
                                   />
-                                ) : (
-                                  <FormikInput
-                                    name={e?.key}
-                                    label={
-                                      lang === "en" ? e?.labelEn : e?.labelAr
-                                    }
-                                    placeholder={
-                                      lang === "en" ? e?.labelEn : e?.labelAr
-                                    }
-                                    type={e?.type}
-                                  />
-                                )}
-                              </div>
-                            );
-                          })}
-                      </>
-                    )}
-                    {categoryId === 4 &&
-                      adjustedcarField
-                        .filter(
-                          (field) =>
-                            field.categoryId === 4 && field.key !== "brandId"
-                        ) // Filter for car category
-                        .map((field) => {
-                          return (
-                            <div
-                              key={field.key}
-                              className="w-full col-span-2 sm:col-span-1 md:col-span-2"
-                            >
-                              <FormikMultiDropdown
-                                name={field.key}
-                                label={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
-                                placeholder={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
-                                options={
-                                  field.key === "countryId"
-                                    ? AllCountriesOptions
-                                    : field.key === "cityId"
-                                    ? AllCitiesOptions
-                                    : allCustomFileOptions[field.key]?.map(
-                                        (option) => ({
-                                          ...option,
-                                          text: isArabic
-                                            ? option.text.split(" | ")[1]
-                                            : option.text.split(" | ")[0],
-                                        })
-                                      )
-                                }
-                                onChange={(selectedValue) =>
-                                  setCountriesId(selectedValue)
-                                }
-                                loading={
-                                  loadingAllCountries || loadingCitiesOptions
-                                }
-                              />
-                            </div>
-                          );
-                        })}
-                    {(formik.values.subCategory || categoryId === 4) &&
-                      categoryId !== 3 &&
-                      categoryId !== 7 && (
-                        <>
-                          <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
-                            <FormikInput
-                              name="brand"
-                              type="text"
-                              label={selectedContent[localizationKeys.brand]}
-                              placeholder={
-                                selectedContent[localizationKeys.brand]
-                              }
-                              value={formik.values.brand}
-                              onChange={(e) => {
-                                const value = e.target.value;
-                                formik.handleChange(e);
-                                handleBrandInputChange(value);
-                              }}
-                              onFocus={() => setIsDropdownOpen(true)}
-                            />
-                            <button
-                              onClick={() => setIsDropdownOpen((prev) => !prev)}
-                              className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70" // Button to toggle dropdown
-                              aria-label="Toggle Dropdown"
-                            >
-                              {isDropdownOpen &&
-                                brandSuggestions.length > 0 && (
-                                  <MdArrowDropDown className="w-5 h-5" /> // Show icon only when dropdown is open
-                                )}
-                            </button>
-                            {isDropdownOpen && brandSuggestions.length > 0 && (
-                              <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-                                <ul>
-                                  {brandSuggestions.map((suggestion, index) => (
-                                    <li
-                                      key={index}
-                                      onClick={() => {
-                                        formik.setFieldValue(
-                                          "brand",
-                                          suggestion.text
-                                        );
-                                        setBrandInput(suggestion.text);
-                                        setBrandSuggestions([]);
-                                        setIsDropdownOpen(false);
-                                      }}
-                                      className="cursor-pointer hover:bg-gray-200 px-4 py-2"
-                                    >
-                                      {suggestion.text}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </div>
-                          {customFromData?.model && (
-                            <div className="col-span-2 sm:col-span-1  md:col-span-2">
-                              <FormikInput
-                                min={0}
-                                name={`${customFromData?.model?.key}`}
-                                label={`${
-                                  lang === "en"
-                                    ? customFromData?.model?.labelEn
-                                    : customFromData?.model?.labelAr
-                                }`}
-                                placeholder={`${
-                                  lang === "en"
-                                    ? customFromData?.model?.labelEn
-                                    : customFromData?.model?.labelAr
-                                }`}
-                              />
-                            </div>
-                          )}
-                        </>
-                      )}
+                                </div>
+                              );
+                            })}
 
-                    <div className="col-span-2 col-start-1 mt-1">
-                      <FormikTextArea
-                        name="itemDescription"
-                        type={"text"}
-                        label={
-                          selectedContent[localizationKeys.itemDescription]
-                        }
-                        placeholder={
-                          selectedContent[localizationKeys.writeItemDescription]
-                        }
-                      />
+                        {(formik.values.subCategory || categoryId === 4) &&
+                          categoryId !== 3 &&
+                          categoryId !== 7 && (
+                            <>
+                              <div className="w-full relative">
+                                <FormikInput
+                                  name="brand"
+                                  type="text"
+                                  label={
+                                    selectedContent[localizationKeys.brand]
+                                  }
+                                  placeholder={
+                                    selectedContent[localizationKeys.brand]
+                                  }
+                                  value={formik.values.brand}
+                                  onChange={(e) => {
+                                    const value = e.target.value;
+                                    formik.handleChange(e);
+                                    handleBrandInputChange(value);
+                                  }}
+                                  onFocus={() => setIsDropdownOpen(true)}
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setIsDropdownOpen((prev) => !prev)
+                                  }
+                                  className="absolute right-4 top-10 sm:right-3 sm:top-10 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                                >
+                                  {isDropdownOpen &&
+                                    brandSuggestions.length > 0 && (
+                                      <MdArrowDropDown className="w-6 h-6" />
+                                    )}
+                                </button>
+                                {isDropdownOpen &&
+                                  brandSuggestions.length > 0 && (
+                                    <div className="absolute z-10 mt-1 w-full bg-white dark:bg-[#2C3241] border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
+                                      <ul className="py-1">
+                                        {brandSuggestions.map(
+                                          (suggestion, index) => (
+                                            <li
+                                              key={index}
+                                              onClick={() => {
+                                                formik.setFieldValue(
+                                                  "brand",
+                                                  suggestion.text,
+                                                );
+                                                setBrandInput(suggestion.text);
+                                                setBrandSuggestions([]);
+                                                setIsDropdownOpen(false);
+                                              }}
+                                              className="cursor-pointer hover:bg-gray-100 dark:hover:bg-[#1A1F2C] text-gray-900 dark:text-white px-4 py-2"
+                                            >
+                                              {suggestion.text}
+                                            </li>
+                                          ),
+                                        )}
+                                      </ul>
+                                    </div>
+                                  )}
+                              </div>
+                              {customFromData?.model && (
+                                <div className="w-full">
+                                  <FormikInput
+                                    min={0}
+                                    name={`${customFromData?.model?.key}`}
+                                    label={`${lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}`}
+                                    placeholder={`${lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}`}
+                                  />
+                                </div>
+                              )}
+                            </>
+                          )}
+
+                        <div className="md:col-span-2 w-full mt-2 ">
+                          <FormikTextArea
+                            name="itemDescription"
+                            type={"text"}
+                            label={
+                              selectedContent[localizationKeys.itemDescription]
+                            }
+                            placeholder={
+                              selectedContent[
+                                localizationKeys.writeItemDescription
+                              ]
+                            }
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <h1 className="font-bold text-base text-black pt-6">
-                      {selectedContent[localizationKeys.addMedia]}{" "}
-                      <span className="text-gray-600 text-sm font-normal px-1">
-                        {
-                          selectedContent[
-                            localizationKeys.uploadOneImageAndOneVideo
-                          ]
-                        }
-                      </span>
-                    </h1>
-                    <div className="relative">
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                      {/* Pricing Card */}
+                      <div className="bg-white dark:bg-[#1A1F2C] border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm flex flex-col h-full">
+                        <div className="flex items-center gap-2 mb-6">
+                          <IoPricetagOutline className="dark:text-primary-light text-yellow w-6 h-6" />
+                          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {selectedContent[localizationKeys.Price]}
+                          </h2>
+                        </div>
+                        <div className="w-full">
+                          <FormikInput
+                            min={0}
+                            type="number"
+                            name="itemPrice"
+                            label={
+                              selectedContent[localizationKeys.price] +
+                              (lang === "en" ? " (AED)" : "")
+                            }
+                            placeholder="AED 000"
+                            onWheel={(e) => e.target.blur()}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Condition Card */}
+                      {!(categoryId === 7 && subCategoryId === 23) ? (
+                        <div className="bg-white dark:bg-[#1A1F2C] border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm flex flex-col h-full">
+                          <div className="flex items-center gap-2 mb-6">
+                            <IoRibbonOutline className="dark:text-primary-light text-yellow w-6 h-6" />
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                              {selectedContent[localizationKeys.itemCondition]}
+                            </h2>
+                          </div>
+                          <div className="w-full h-full">
+                            <CheckboxRadioProductDetails
+                              valueRadio={valueRadio}
+                              setRadioValue={setRadioValue}
+                              categoryId={categoryId}
+                              subCategoryId={subCategoryId}
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
+                    {/* Media Card */}
+                    <div className="bg-white dark:bg-[#1A1F2C] border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm">
+                      {/* Desktop Header */}
+                      <div className="hidden md:flex justify-between items-start mb-6">
+                        <div className="flex flex-col gap-1">
+                          <div className="flex flex-row items-center gap-2">
+                            <IoImageOutline className="w-5 h-5 dark:text-primary-light text-yellow" />
+                            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                              {selectedContent[localizationKeys.productMedia]}
+                            </h2>
+                          </div>
+                          <span className="text-gray-500 dark:text-[#8E97A6] text-sm block">
+                            {
+                              selectedContent[
+                                localizationKeys.uploadOneImageAndOneVideo
+                              ]
+                            }
+                          </span>
+                        </div>
+                        <label
+                          htmlFor="media-upload"
+                          className="flex items-center gap-1.5 text-sm font-bold text-primary dark:text-yellow cursor-pointer hover:opacity-80 transition-opacity shrink-0"
+                        >
+                          <IoCameraOutline className="w-4 h-4" /> {selectedContent[localizationKeys.addMore]}
+                        </label>
+                      </div>
+
+                      {/* Mobile Header */}
+                      <div className="flex md:hidden justify-between items-center mb-6">
+                        <div className="flex items-center gap-2">
+                          <IoImageOutline className="dark:text-primary-light text-yellow w-6 h-6" />
+                          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            {selectedContent[localizationKeys.addMedia]}
+                          </h2>
+                        </div>
+                        <span className="text-gray-500 dark:text-gray-400 text-sm hidden sm:block">
+                          {
+                            selectedContent[
+                              localizationKeys.uploadOneImageAndOneVideo
+                            ]
+                          }
+                        </span>
+                      </div>
+
+                      {/* Mobile Upload Zone */}
+                      <div className="relative mb-6 md:hidden">
+                        <label
+                          htmlFor="media-upload"
+                          className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-[#2C3241] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#22283A] transition-colors bg-gray-50/50 dark:bg-[#151922]"
+                        >
+                          <IoImageOutline className="w-10 h-10 text-gray-400 dark:text-gray-500 mb-2" />
+                          <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                            {selectedContent[localizationKeys.clickToUploadImagesAndVideos]}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {selectedContent[localizationKeys.uploadUpTo12Items]}
+                          </p>
+                        </label>
+                        <label
+                          htmlFor="camera-input-file"
+                          className="absolute right-4 top-4 cursor-pointer p-2 bg-white dark:bg-[#2C3241] rounded-full shadow-sm border border-gray-200 dark:border-gray-700"
+                        >
+                          <IoCameraOutline className="w-5 h-5 text-primary dark:text-yellow" />
+                        </label>
+                      </div>
+
+                      {/* Hidden Upload Inputs */}
                       <input
                         type="file"
                         accept="image/*,video/*"
                         multiple
                         onChange={handleFileChange}
-                        className="w-full max-w-[660px] h-[50px] px-4 py-3 box-border pr-12"
-                        style={{
-                          width: "100%",
-                          maxWidth: "680px",
-                          height: "50px",
-                          boxSizing: "border-box",
-                        }}
+                        id="media-upload"
+                        className="hidden"
                       />
                       <input
                         id="camera-input-file"
@@ -906,78 +1020,46 @@ const ListProductDetails = () => {
                         capture="environment"
                         className="hidden"
                       />
-                      <label
-                        htmlFor="camera-input-file"
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 md:hidden cursor-pointer"
-                      >
-                        <IoCameraOutline className="w-7 h-7 text-primary" />
-                      </label>
-                    </div>
-                    <div className="mt-6 w-full">
-                      <ImageMedia
-                        auctionId={state?.auctionId || product_Id}
-                        setimgtest={setimgtest}
-                        images={imgtest || []}
-                        onReload={onReload}
-                        setLoadingImg={setLoadingImg}
-                        isEditMode={isEditing}
-                        isListing={true}
-                      />
-                    </div>
-                  </div>
-                  <div
-                  // className={
-                  //   hasUsageCondition ||
-                  //   completeDraftVal?.product?.category?.hasUsageCondition ||
-                  //   productDetailsint?.hasUsageCondition
-                  //     ? "w-full"
-                  //     : "hidden"
-                  // }
-                  >
-                    {!(categoryId === 7 && subCategoryId === 23) && (
-                      <h1 className="font-bold text-base text-black pt-6">
-                        {selectedContent[localizationKeys.itemCondition]}
-                      </h1>
-                    )}
-                    <div
-                    //   className={
-                    //     hasUsageCondition ||
-                    //     completeDraftVal?.product?.category
-                    //       ?.hasUsageCondition ||
-                    //     productDetailsint?.hasUsageCondition
-                    //       ? "mt-6 w-full"
-                    //       : "hidden"
-                    //   }
-                    >
-                      <CheckboxRadioProductDetails
-                        valueRadio={valueRadio}
-                        setRadioValue={setRadioValue}
-                        categoryId={categoryId}
-                        subCategoryId={subCategoryId}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-x-4 sm:justify-end justify-center pb-8">
-                    {/* <div className="mt-auto w-full sm:w-auto ">
-                      <div
-                        onClick={() => SaveAuctionAsDraft()}
-                        className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
-                      >
-                        {selectedContent[localizationKeys.saveAsDraft]}
+
+                      <div className="w-full">
+                        <ImageMedia
+                          auctionId={state?.auctionId || product_Id}
+                          setimgtest={setimgtest}
+                          images={imgtest || []}
+                          onReload={onReload}
+                          setLoadingImg={setLoadingImg}
+                          isEditMode={isEditing}
+                          isListing={true}
+                        />
                       </div>
-                    </div> */}
-                    {isEditing ? (
+                    </div>
+
+                    <div className="flex gap-x-4 sm:justify-end justify-center pt-2 pb-10">
                       <button
-                        type="submit"
-                        className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                        type="button"
+                        onClick={() => history.goBack()}
+                        className="bg-transparent border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2C3241] sm:w-[150px] w-full h-[48px] rounded-lg font-medium transition-colors"
                       >
-                        {selectedContent[localizationKeys.Submit]}
+                        {selectedContent[localizationKeys.cancel]}
                       </button>
-                    ) : (
-                      <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
-                        {selectedContent[localizationKeys.next]}
-                      </button>
-                    )}
+
+                      {isEditing ? (
+                        <button
+                          type="submit"
+                          className="bg-primary hover:bg-primary-dark sm:w-[220px] w-full h-[48px] rounded-lg text-black font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
+                        >
+                          {selectedContent[localizationKeys.Submit]}
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors flex items-center justify-center gap-2"
+                        >
+                          {selectedContent[localizationKeys.next]}
+                          <span className="rtl:rotate-180">➤</span>
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </Form>
               )}

@@ -183,7 +183,7 @@ const AddLocationModel = ({
     >
       <div className="sm:w-[471px] w-full h-auto border-2 border-primary rounded-2xl bg-background p-6">
         <div className="flex justify-between items-center ltr:text-left rtl:text-right">
-          <h1 className="text-base font-bold">
+          <h1 className="text-base dark:text-white font-bold">
             {isEditing
               ? selectedContent[localizationKeys.editLocation]
               : selectedContent[localizationKeys.locationIsRequired]}{" "}
@@ -216,7 +216,7 @@ const AddLocationModel = ({
             <HashLink
               smooth
               to={`${routes.app.profile.profileSettings}#AddressBook`}
-              className="text-primary underline cursor-pointer"
+              className="text-primary dark:text-white underline cursor-pointer"
               onClick={() => setOpen(false)}
             >
               {selectedContent[localizationKeys.manageYouAddresses]}
@@ -356,7 +356,7 @@ const AddLocationModel = ({
                 <div className="flex justify-end">
                   <Button
                     loading={isLoading}
-                    className="bg-primary w-[163px] h-[48px] rounded-lg text-white mb-2 font-normal text-base rtl:font-serifAR ltr:font-serifEN opacity-100"
+                    className="bg-primary dark:bg-yellow dark:hover:bg-yellow-dark font-bold dark:text-black text-white w-[163px] h-[48px] rounded-lg text-white mb-2 e rtl:font-serifAR ltr:font-serifEN opacity-100"
                   >
                     {TextButton}
                   </Button>

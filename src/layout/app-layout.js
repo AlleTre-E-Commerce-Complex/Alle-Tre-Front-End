@@ -134,7 +134,7 @@ const AppLayouts = () => {
           />
         )}
         <div className="min-h-screen flex flex-col pb-16 md:pb-0">
-          <div className="flex-grow">
+          <div className="flex-grow dark:bg-background">
             <Switch>
               <Route
                 exact
