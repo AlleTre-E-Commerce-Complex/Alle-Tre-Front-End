@@ -331,12 +331,12 @@ const ImageMedia = ({
         if (index !== undefined) {
           newImages = [...images];
           processedFiles.forEach((processedFile, i) => {
-            if (index + i < 50) {
+            if (index + i < 12) {
               newImages[index + i] = processedFile;
             }
           });
         } else {
-          newImages = [...images, ...processedFiles].slice(0, 50);
+          newImages = [...images, ...processedFiles].slice(0, 12);
         }
 
         // Update state first
@@ -515,7 +515,7 @@ const ImageMedia = ({
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-y-4 gap-x-4">
             {[...images, ...Array(Math.max(3 - images.length, 1)).fill(null)]
-              .slice(0, Math.min(50, Math.max(images.length + 1, 3)))
+              .slice(0, Math.min(12, Math.max(images.length + 1, 3)))
               .map((img, index) => {
                 const isCoverPhoto = index === 0;
                 const existingVideo = images.some((img) =>
@@ -525,11 +525,11 @@ const ImageMedia = ({
                 return (
                   <div key={index} className="relative">
                     {img ? (
-                      <div className="relative group">
-                        <div className="sm:w-[154px] w-full h-[139px] hover:bg-gradient-to-t hover:from-[#25252562] absolute z-30 group">
+                      <div className="relative group rounded-xl overflow-hidden">
+                        <div className="sm:w-[154px] w-full h-[139px] hover:bg-black/40 absolute z-30 group">
                           <div className="absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300">
                             <button
-                              className="bg-white/50 hover:bg-gray-med hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300"
+                              className="bg-white/80 dark:bg-black/50 hover:bg-red-500 hover:text-white p-2 rounded-full shadow hover:shadow-lg transition-all duration-300 backdrop-blur-sm"
                               onClick={(e) => handelDeleteImg(img.id, index, e)}
                             >
                               <img
@@ -579,8 +579,8 @@ const ImageMedia = ({
                             img?.isVideo ? (
                               <div className="relative">
                                 <video
-                                  className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
-                                    isCoverPhoto ? "ring-2 ring-primary" : ""
+                                  className={`rounded-xl w-[154px] h-[139px] object-cover shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1A1F2C] ${
+                                    isCoverPhoto ? "ring-2 ring-primary ring-offset-2 dark:ring-offset-[#1A1F2C]" : ""
                                   }`}
                                   controls
                                   poster={img.imageLink} // Use the watermarked thumbnail as poster
@@ -595,18 +595,11 @@ const ImageMedia = ({
                                   />
                                   Your browser does not support the video tag.
                                 </video>
-                                <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-                                  <img
-                                    src={watermarkImage}
-                                    className="opacity-50 w-1/3 h-auto"
-                                    alt="Watermark"
-                                  />
-                                </div>
                               </div>
                             ) : (
                               <img
-                                className={`border-primary border-solid rounded-lg w-[154px] h-[139px] object-cover ${
-                                  isCoverPhoto ? "ring-2 ring-primary" : ""
+                                className={`rounded-xl w-[154px] h-[139px] object-cover shadow-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1A1F2C] ${
+                                  isCoverPhoto ? "ring-2 ring-primary ring-offset-2 dark:ring-offset-[#1A1F2C]" : ""
                                 }`}
                                 src={img.imageLink || addImage}
                                 alt="Product img"
@@ -626,10 +619,10 @@ const ImageMedia = ({
                           !isEditMode &&
                           auctionState !== "DRAFTED"  &&
                           !img.file?.type?.startsWith("video/") && (
-                            <div className="absolute bottom-2 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
+                            <div className="absolute bottom-2 left-0 right-0 text-white hover:text-primary dark:text-yellow dark:hover:text-white text-center opacity-0 group-hover:opacity-100 transition-all duration-300 z-40">
                               <button
                                 onClick={(e) => handleSetCover(index, e)}
-                                className="bg-primary hover:bg-white/90 text-white hover:text-primary px-3 py-1 rounded-full text-sm shadow hover:shadow-lg transition-all duration-300 flex items-center gap-1 mx-auto"
+                                className="bg-primary hover:bg-white/90 dark:hover:bg-yellow px-3 py-1 rounded-full text-sm shadow hover:shadow-lg transition-all duration-300 flex items-center gap-1 mx-auto"
                               >
                                 <MdOutlineImage className="w-4 h-4" />
                                 Set as Cover
@@ -644,13 +637,16 @@ const ImageMedia = ({
                         types={fileTypes}
                         multiple
                       >
-                        <div className="border-gray-med border-[1px] border-dashed rounded-lg w-[154px] h-[139px] flex justify-center items-center cursor-pointer">
-                          <img
-                            className="w-6 h-6"
-                            src={addImage}
-                            alt="Add Icon"
-                          />
-                        </div>
+                        {index === 0 ? (
+                           <div className="border border-dashed border-yellow dark:border-yellow rounded-xl w-[154px] h-[139px] flex flex-col justify-center items-center cursor-pointer hover:bg-primary/5 dark:hover:bg-yellow-200/5 transition-colors bg-transparent">
+                             <MdOutlineImage className="text-primary dark:text-yellow w-7 h-7 mb-2" />
+                             <span className="text-primary dark:text-yellow text-[10px] uppercase font-bold tracking-wider">Main Photo</span>
+                           </div>
+                        ) : (
+                           <div className="rounded-xl w-[154px] h-[139px] flex justify-center items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-[#2A3143] transition-colors bg-gray-50 dark:bg-[#22283A]">
+                              <MdOutlineImage className="text-gray-400 dark:text-gray-500 w-6 h-6 opacity-60" />
+                           </div>
+                        )}
                       </FileUploader>
                     )}
                   </div>
