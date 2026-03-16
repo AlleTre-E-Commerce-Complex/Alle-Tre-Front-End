@@ -687,6 +687,7 @@ const localizationKeys = {
   provideAForeverHomeToARemarkableRescue:"provideAForeverHomeToARemarkableRescue",
   pristineConditionUntouchedWithOriginalTagsOrPackaging:"pristineConditionUntouchedWithOriginalTagsOrPackaging",
   preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear:"preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear",
+  manageYourActivityAndAlerts:"manageYourActivityAndAlerts",
 };
 
 export default localizationKeys;

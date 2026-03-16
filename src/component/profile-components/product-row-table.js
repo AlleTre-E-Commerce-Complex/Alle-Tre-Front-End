@@ -64,74 +64,77 @@ const ProductRowTable = ({
   };
 
   return (
-    <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-4 mb-4 flex flex-col md:flex-row gap-6 items-start md:items-center shadow-sm">
-      {/* Image */}
-      <div className="w-full md:w-48 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
-        <img
-          className="w-full h-full object-cover"
-          src={img || emtyPhotosIcon}
-          alt={title || "Product"}
-        />
-      </div>
-
-      {/* Content */}
-      <div className="flex-grow flex flex-col gap-2">
-        <div className="flex items-center gap-3">
-          <span className="text-[#FDC02A] font-bold text-lg">
-            {formatCurrency(price)}
-          </span>
-          <span className="bg-gray-100 dark:bg-[#2A3142] text-gray-600 dark:text-gray-300 text-[10px] uppercase font-bold px-2 py-1 rounded">
-            {price > 100 ? "PREMIUM" : "NEW ARRIVAL"}
-          </span>
+    <div className="relative bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-3 md:p-4 mb-4 flex flex-col md:flex-row gap-3 md:gap-6 items-start md:items-center shadow-sm">
+      {/* Wrapper for Image and Content side-by-side on mobile */}
+      <div className="flex flex-row gap-3 md:gap-6 w-full md:w-auto flex-grow items-start">
+        {/* Image */}
+        <div className="w-24 h-24 md:w-48 md:h-32 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800">
+          <img
+            className="w-full h-full object-cover"
+            src={img || emtyPhotosIcon}
+            alt={title || "Product"}
+          />
         </div>
-        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-          {truncateString(title, 80)}
-        </h1>
-        <div className="flex flex-wrap items-center gap-4 text-gray-500 dark:text-gray-400 text-sm mt-1">
-          <div className="flex items-center gap-1.5">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-              />
-            </svg>
-            <span>SKU: {productId?.toString().substring(0, 8) || "N/A"}</span>
+
+        {/* Content */}
+        <div className="flex-grow flex flex-col gap-1 md:gap-2">
+          <div className="flex flex-wrap items-center gap-2 md:gap-3">
+            <span className="text-[#FDC02A] font-bold text-base md:text-lg">
+              {formatCurrency(price)}
+            </span>
+            <span className="bg-gray-100 dark:bg-[#2A3142] text-gray-600 dark:text-gray-300 text-[9px] md:text-[10px] uppercase font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">
+              {price > 100 ? "PREMIUM" : "NEW ARRIVAL"}
+            </span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            <span>{moment(createdAt).local().format("MMM DD, YYYY")}</span>
+          <h1 className="text-sm md:text-xl font-bold text-gray-900 dark:text-white leading-tight line-clamp-2 md:line-clamp-none">
+            {truncateString(title, 80)}
+          </h1>
+          <div className="flex flex-col md:flex-row flex-wrap items-start md:items-center gap-1 md:gap-4 text-gray-500 dark:text-gray-400 text-xs md:text-sm mt-0.5 md:mt-1">
+            <div className="flex items-center gap-1 md:gap-1.5 hidden md:flex">
+              <svg
+                className="w-3 h-3 md:w-4 md:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+                />
+              </svg>
+              <span>SKU: {productId?.toString().substring(0, 8) || "N/A"}</span>
+            </div>
+            <div className="flex items-center gap-1 md:gap-1.5">
+              <svg
+                className="w-3 h-3 md:w-4 md:h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <span>{moment(createdAt).local().format("MMM DD, YYYY")}</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Actions */}
-      <div className="flex flex-wrap items-center gap-3 w-full md:w-auto mt-4 md:mt-0">
+      <div className="flex flex-row items-center gap-2 md:gap-3 w-full md:w-auto mt-2 md:mt-0 justify-end md:justify-start overflow-x-auto whitespace-nowrap scrollbar-hide">
         {status !== "SOLD_OUT" &&
           getDropdownOptions().map((opt, idx) => (
             <button
               key={opt.key}
               onClick={() => handleButtonClick(opt.value)}
               disabled={isLoading}
-              className="px-4 py-2 border border-gray-200 dark:border-[#2A3142] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2A3142] rounded-lg text-sm font-medium transition-colors"
+              className="px-4 py-2 flex-shrink-0 border border-gray-200 hover:border-gray-500 dark:border-[#2A3142] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#2A3142] rounded-lg text-sm font-medium transition-colors"
             >
               {opt.text}
             </button>
@@ -145,7 +148,7 @@ const ProductRowTable = ({
                 state: { productId: Product_id, isEditing: true },
               });
             }}
-            className="flex items-center gap-1.5 px-4 py-2 bg-gray-100 dark:bg-[#323D4E] text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-[#404c5e] rounded-lg text-sm font-medium transition-colors border border-transparent dark:border-[#323D4E]"
+            className={`flex-shrink-0 flex items-center justify-center gap-1.5 absolute top-3 md:top-auto ${lang === "ar" ? "left-3 md:left-auto" : "right-3 md:right-auto"} md:static w-8 h-8 md:w-auto md:h-auto md:px-4 md:py-2 bg-gray-100 hover:border-gray-400 dark:bg-[#323D4E] text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-[#404c5e] rounded-full md:rounded-lg text-sm font-medium transition-colors border border-transparent dark:border-[#323D4E] shadow-sm md:shadow-none z-10`}
           >
             <svg
               className="w-4 h-4"
@@ -160,13 +163,13 @@ const ProductRowTable = ({
                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
               />
             </svg>
-            {selectedContent[localizationKeys.edit]}
+            <span className="hidden md:inline">{selectedContent[localizationKeys.edit]}</span>
           </button>
         )}
 
         <button
           onClick={() => history.push(goToDetails)}
-          className="flex items-center gap-1.5 px-4 py-2 border border-[#FDC02A]/30 text-[#FDC02A] hover:bg-[#FDC02A]/10 rounded-lg text-sm font-medium transition-colors"
+          className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 border border-[#FDC02A]/50 text-yellow hover:bg-[#FDC02A]/30 rounded-lg text-sm font-medium transition-colors"
         >
           <svg
             className="w-4 h-4"

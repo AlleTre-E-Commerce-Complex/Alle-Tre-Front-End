@@ -81,7 +81,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex flex-col fixed w-[250px] bg-white dark:bg-primary-dark h-[calc(100vh-14rem)] rounded-2xl shadow-sm border border-primary-veryLight dark:border-gray-800/60 overflow-hidden">
+      <div className="hidden md:flex flex-col fixed w-[250px] bg-white dark:bg-primary-dark h-[calc(100vh-14rem)] rounded-xl shadow-sm border border-primary-veryLight dark:border-gray-800/60 overflow-hidden">
         {/* Fixed Header */}
         <div className="flex items-center gap-x-4 p-6 border-b border-gray-100 dark:border-gray-800/60 bg-gray-50/50 dark:bg-[#111A2E]">
           <div className="shrink-0 relative">
