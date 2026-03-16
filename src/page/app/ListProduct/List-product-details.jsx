@@ -1046,7 +1046,7 @@ const ListProductDetails = () => {
                       {isEditing ? (
                         <button
                           type="submit"
-                          className="bg-primary hover:bg-primary-dark sm:w-[220px] w-full h-[48px] rounded-lg text-black font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
+                          className="bg-primary hover:bg-primary-dark sm:w-[220px] w-full h-[48px] rounded-lg text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
                         >
                           {selectedContent[localizationKeys.Submit]}
                         </button>

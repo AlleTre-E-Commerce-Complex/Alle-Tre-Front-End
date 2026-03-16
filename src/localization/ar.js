@@ -755,7 +755,7 @@ const ar = {
     [localizationKeys.provideAForeverHomeToARemarkableRescue]:"وفر منزلاً دائمًا لإنقاذ رائع",
     [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:"حالة ممتازة، لم تمس مع العلامات الأصلية أو العبوة",
     [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"حالة ممتازة مستعملة، تظهر عليها علامات استخدام طفيفة إلى خفيفة",
-    
+    [localizationKeys.manageYourActivityAndAlerts]:"إدارة نشاطك وتنبيهاتك",
 };
 
 export default ar;

@@ -130,7 +130,7 @@
 }
 /* input checkbox */
 .authcheckbox {
-  accent-color: #821a4d;
+  accent-color: var(--color-yellow);
 }
 
 a {

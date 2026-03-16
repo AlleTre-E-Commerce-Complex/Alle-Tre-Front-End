@@ -192,7 +192,7 @@ const FilterSections = ({
         </div> */}
 
         {/* Selling Type */}
-        <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40 rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
+        {/* <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40 rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
           <div
             onClick={() => toggleSection("sellingType")}
             className="cursor-pointer px-4 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-[#2a3648] transition-colors"
@@ -228,10 +228,10 @@ const FilterSections = ({
               />
             </motion.div>
           )}
-        </div>
+        </div> */}
 
         {/* Auction Status */}
-        <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40  rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
+        {/* <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40  rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
           <div
             onClick={() => toggleSection("auctionStatus")}
             className="cursor-pointer px-4 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-[#2a3648] transition-colors"
@@ -267,7 +267,7 @@ const FilterSections = ({
               />
             </motion.div>
           )}
-        </div>
+        </div> */}
 
         {/* Usage Status */}
         <div className="bg-white dark:bg-[#1e2738] border border-gray-200 dark:border-[#d4af37]/40  rounded-xl overflow-hidden shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">

@@ -844,7 +844,7 @@ export const FAQsBreadcrumb = ({ details }) => {
         key: "Home",
         content: (
           <Link
-            className="text-gray-med mx-2 text-base font-normal"
+            className="text-primary dark:text-primary-veryLight mx-2 text-base font-normal"
             to={routes.app.home}
           >
             {selectedContent[localizationKeys.home]}
@@ -858,8 +858,8 @@ export const FAQsBreadcrumb = ({ details }) => {
             <Link
               className={`${
                 pathname.startsWith(routes.app.faqs)
-                  ? "text-primary"
-                  : "text-gray-med"
+                  ? "text-primary dark:text-primary-veryLight"
+                  : "text-gray-med dark:text-gray-light"
               } mx-2 text-base font-normal `}
               to={routes.app.faqs}
             >

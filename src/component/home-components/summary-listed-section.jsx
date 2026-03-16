@@ -260,7 +260,7 @@ const SummaryListedSection = () => {
                 <div className="grid pt-8 grid-cols-1 gap-4">
                   <button
                     onClick={handleOnStatus}
-                    className="flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
+                    className="border-2 border-primary-light flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
                   >
                     <MdPublishedWithChanges
                       size={20}
@@ -271,7 +271,7 @@ const SummaryListedSection = () => {
                     </span>
                   </button>
 
-                  <button
+                  {/* <button
                     onClick={() =>
                       history.push(routes.app.createAuction.productDetails, {
                         productId: productId,
@@ -286,7 +286,7 @@ const SummaryListedSection = () => {
                     <span>
                       {selectedContent[localizationKeys.convertToAuction]}
                     </span>
-                  </button>
+                  </button> */}
                 </div>
               ) : user ? (
                 <div className="flex gap-3">

@@ -768,6 +768,7 @@ const en = {
   [localizationKeys.provideAForeverHomeToARemarkableRescue]:"Provide a forever home to a remarkable rescue",
   [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:"Pristine condition, untouched with original tags or packaging",
   [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"Pre-owned excellence, showing only minor to light signs of wear",
+  [localizationKeys.manageYourActivityAndAlerts]:"Manage Your Activity and Alerts",
 };
 
 export default en;

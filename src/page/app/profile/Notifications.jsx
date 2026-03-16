@@ -117,7 +117,7 @@ const Notifications = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-transparent dark:bg-primary-dark text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <div className="w-full min-h-screen bg-transparent p-4 rounded-xl dark:bg-primary-dark text-gray-800 dark:text-gray-200 transition-colors duration-300">
       <Dimmer className="bg-white/50 dark:bg-primary-dark shadow-none border-none" active={isLoading} inverted>
         <LodingTestAllatre />
       </Dimmer>
@@ -126,8 +126,8 @@ const Notifications = () => {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 pb-6 border-b border-gray-200 dark:border-gray-700/50">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Notifications</h1>
-            <p className="text-gray-500 dark:text-gray-400">Manage your activity and alerts</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{selectedContent[localizationKeys.notifications]}</h1>
+            <p className="text-gray-500 dark:text-gray-400">{selectedContent[localizationKeys.manageYourActivityAndAlerts]}</p>
           </div>
           {/* <div className="flex items-center gap-4 mt-6 md:mt-0">
             <button className="px-4 py-2 text-sm font-medium text-primary dark:text-[#D8B46C] border border-gray-300 dark:border-[#3A4354] rounded-lg hover:bg-gray-100 dark:hover:bg-[#3A4354]/50 transition duration-300">

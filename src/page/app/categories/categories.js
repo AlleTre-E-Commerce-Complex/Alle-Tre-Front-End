@@ -25,8 +25,9 @@ import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import ProductCard from "component/home-components/ProductCard";
 import ProductCardList from "component/home-components/products-card-list";
 import queryString from "query-string";
-import BuyNowAuctionsSlider from "component/home-components/buy-now-auctions-slider";
-import UpComingAuctionsSlider from "component/home-components/up-coming-auctions";
+// import BuyNowAuctionsSlider from "component/home-components/buy-now-auctions-slider";
+// import UpComingAuctionsSlider from "component/home-components/up-coming-auctions";
+import routes from "routes";
 
 const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [lang] = useLanguage("");
@@ -54,7 +55,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     return JSON.parse(localStorage.getItem("isGrid")) ?? true;
   });
   const [activeTab, setActiveTab] = useState(
-    selectedType === "all" ? "auction" : selectedType,
+    // selectedType === "all" ? "auction" : selectedType,
+    selectedType === "all" ? "products" : selectedType,
   );
 
   useEffect(() => {
@@ -113,23 +115,23 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       arrayFormat: "bracket",
     });
     // if (search.includes("page") && search.includes("perPage"))
-    if (user) {
-      runCategories(
-        authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
-          setMainAuctions(res?.data?.data);
-          setTotalpagesAuction(res?.data?.pagination?.totalPages);
-          // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        }),
-      );
-    } else {
-      runCategories(
-        axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
-          setMainAuctions(res?.data?.data);
-          setTotalpagesAuction(res?.data?.pagination?.totalPages);
-          // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        }),
-      );
-    }
+    // if (user) {
+    //   runCategories(
+    //     authAxios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+    //       setMainAuctions(res?.data?.data);
+    //       setTotalpagesAuction(res?.data?.pagination?.totalPages);
+    //       // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    //     }),
+    //   );
+    // } else {
+    //   runCategories(
+    //     axios.get(`${api.app.auctions.getMain}?${queryStr}`).then((res) => {
+    //       setMainAuctions(res?.data?.data);
+    //       setTotalpagesAuction(res?.data?.pagination?.totalPages);
+    //       // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    //     }),
+    //   );
+    // }
   }, [categoryId, runCategories, search, user, auctionPageNumber]);
 
   useEffect(() => {
@@ -288,7 +290,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   <div className="flex items-center text-[10px] md:text-[11px] text-gray-500 dark:text-gray-400 gap-1 uppercase font-semibold tracking-wider mb-1">
                     <span
                       className="hover:text-yellow cursor-pointer transition-colors"
-                      onClick={() => history.push("/")}
+                      onClick={() => history.push(routes.app.home)}
                     >
                       HOME
                     </span>
@@ -313,7 +315,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                 <div className="flex items-center gap-4 mt-auto md:mt-0 w-full md:w-auto">
                   {/* Type Toggle (Live Auctions / Fixed Price) */}
                   <div className="flex bg-gray-100 dark:bg-[#1b2331] rounded-lg p-1 flex-1 md:flex-none h-[42px]">
-                    <button
+                    {/* <button
                       onClick={() => setActiveTab("auction")}
                       className={`flex-1 md:flex-none px-4 py-1.5 text-xs md:text-sm font-semibold rounded-md transition-all duration-300 ${
                         activeTab === "auction"
@@ -322,7 +324,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                       }`}
                     >
                       {selectedContent[localizationKeys.liveAuctions]}
-                    </button>
+                    </button> */}
                     <button
                       onClick={() => setActiveTab("products")}
                       className={`flex-1 md:flex-none px-4 py-1.5 text-xs md:text-sm font-semibold rounded-md transition-all duration-300 ${
@@ -462,7 +464,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                 />
               ) : (
                 (() => {
-                  if (isGrid && activeTab === "auction") {
+                  /* if (isGrid && activeTab === "auction") {
                     return (
                       <div>
                         <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
@@ -549,7 +551,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         </div>
                       </div>
                     );
-                  } else if (isGrid && activeTab === "products") {
+                  } else */ if (isGrid && activeTab === "products") {
                     return (
                       <div>
                         <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
@@ -636,7 +638,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (isGrid && selectedType === "all") {
                     return (
                       <>
-                        <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
+                        {/* <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full">
                           {mainAuctions?.map((e) => (
                             <AuctionCard
                               key={e?.id}
@@ -674,7 +676,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         </div>
                         <div>
                           <UpComingAuctionsSlider isGrid={isGrid} />
-                        </div>
+                        </div> */}
                         <div className="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-4 gap-4 h-fit mx-auto w-full mt-6">
                           {listedProducts?.map((e) => (
                             <ProductCard
@@ -717,7 +719,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                   } else if (!isGrid && selectedType === "all") {
                     return (
                       <>
-                        <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
+                        {/* <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                           {mainAuctions?.map((e) => (
                             <AuctionCardList
                               key={e?.id}
@@ -754,7 +756,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                         </div>
                         <div>
                           <UpComingAuctionsSlider isGrid={isGrid} />
-                        </div>
+                        </div> */}
                         <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">
                           {listedProducts?.map((e) => (
                             <ProductCardList
@@ -801,11 +803,11 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
               )}
             </div>
           </div>
-          {!titleParam && (
+          {/*!titleParam && (
             <div className="px-4 mx-auto py-10">
               <BuyNowAuctionsSlider />
             </div>
-          )}
+          )*/}
           {/* <div className="flex justify-end ltr:mr-2 rtl:ml-2  mt-7 pb-12 px-4 mx-auto ">
         <PaginationApp totalPages={totalPages} perPage={40} myRef={myRef} />
       </div> */}
