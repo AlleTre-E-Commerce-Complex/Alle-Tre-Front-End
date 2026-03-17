@@ -11,7 +11,7 @@ const TermAndConditionData = [
       en: (
         <div className="mx-2 sm:mx-4">
           <li>
-            "3ARBON E-COMMERCE COMPLEX LLC OPC" welcomes you to the "3ARBON"
+            "3arbon Information Technology LLC" welcomes you to the "3ARBON"
             platform, where we provide product listing services. By using the
             platform, you agree to be bound by the terms and conditions listed
             below. Please read this carefully, as your use of the platform
@@ -42,7 +42,7 @@ const TermAndConditionData = [
             <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
               The platform :
             </span>
-            The site of the 3ARBON E-COMMERCE COMPLEX LLC OPC.
+            The site of the 3arbon Information Technology LLC.
           </li>
           <li>
             <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
@@ -67,8 +67,7 @@ const TermAndConditionData = [
             <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
               Exhibit/ Exhibits :
             </span>
-            Means all the goods on the website of 3ARBON E-COMMERCE COMPLEX
-            LLC OPC and the electronic application offered for sale and purchasing
+            Means all the goods on the website of 3arbon Information Technology LLC and the electronic application offered for sale and purchasing
             on, for example, but not limited to (smart phones - and electronic
             devices).
           </li>
@@ -78,7 +77,7 @@ const TermAndConditionData = [
             </span>
             Means the owner , the requester of execution , their representatives
             , governmental, semi-governmental or private entities of all kinds
-            who own the exhibits on the 3ARBON E-COMMERCE COMPLEX LLC OPC and
+            who own the exhibits on the 3arbon Information Technology LLC and
             are permitted to sell goods and services through the platform.
           </li>
           <li>
@@ -86,7 +85,7 @@ const TermAndConditionData = [
               Buyer / Second Party / Customer :
             </span>
             Means the person who want to purchase any of the exhibits on the
-            3ARBON E-COMMERCE COMPLEX LLC OPC website or the electronic
+            3arbon Information Technology LLC website or the electronic
             application.
           </li>
           <li>
@@ -96,14 +95,13 @@ const TermAndConditionData = [
             Means the person who purchases the displayed goods at the highest
             price and the sale was awarded to him and is allowed to purchase
             the goods through the platform displayed by the user on the platform
-            without intervention by 3ARBON E-COMMERCE COMPLEX LLC OPC.
+            without intervention by 3arbon Information Technology LLC.
           </li>
           <li>
             <span className="font-bold sm:font-extrabold block sm:inline mb-1 sm:mb-0">
               Third Party :
             </span>
-            Means the role and scope of responsibility of 3ARBON E-COMMERCE
-            COMPLEX LLC OPC as an intermediary in the sales process between the
+            Means the role and scope of responsibility of 3arbon Information Technology LLC as an intermediary in the sales process between the
             seller and the buyer through the platform, without obligation or
             responsibility towards them and has no relation to any illegal
             operations that may be carried out by any member of the sale
@@ -198,13 +196,14 @@ const TermAndConditionData = [
             current and complete information about yourself as prompted by the
             registration form on the site. If you provide any information that
             is untrue, inaccurate, not current or incomplete (or becomes untrue,
-            inaccurate, not current or incomplete, or if 3ARBON E-COMMERCE
-            COMPLEX LLC OPC has reasonable grounds to suspect that such
-            information is untrue, inaccurate, not current or incomplete), ALLE
-            TRE Platform has the right to suspend or terminate your account and
-            refuse any and all current or future use of the Site or any portion
-            thereof and forfeit the security deposit. If you use the Site, you
-            are responsible for maintaining the confidentiality of your account
+            inaccurate, not current or incomplete, or if 3arbon Information
+            Technology LLC has reasonable grounds to suspect that such
+            information is untrue, inaccurate, not current or incomplete), 3arbon
+            Information Technology LLC has the right to suspend or terminate
+            your account and refuse any and all current or future use of the
+            Site or any portion thereof and forfeit the security deposit. If you
+            use the Site, you are responsible for maintaining the confidentiality
+            of your account
             and password, and for restricting access to your computer. You agree
             to accept responsibility for all activities that occur under your
             account or password. Because of this, we strongly recommend that you
@@ -416,7 +415,7 @@ const TermAndConditionData = [
   },
   {
     title: {
-      en: "7 - Harm to the company, 3ARBON E-COMMERCE COMPLEX LLC OPC",
+      en: "7 - Harm to the company, 3arbon Information Technology LLC",
       ar: "٧- الإضرار بشركة عربون مجمع للتعامل الإلكتروني:",
     },
     parag: {
@@ -466,7 +465,7 @@ const TermAndConditionData = [
       en: (
         <div className="mx-2 sm:mx-4">
           <li>
-            The 3ARBON E-COMMERCE COMPLEX LLC OPC platform is committed to
+            The 3arbon Information Technology LLC platform is committed to
             ensuring the integrity and transparency of sales. Therefore, it
             is strictly prohibited for the seller, directly or indirectly, to
             participate as a buyer on the platform of the product he has offered
@@ -1040,13 +1039,13 @@ const TermAndConditionData = [
               <ul className="list-disc mt-1 ml-6">
                 <li>
                   Any dispute that arises between the supplier (seller) and the
-                  buyer (buyer), the platform of the 3ARBON E-COMMERCE
-                  COMPLEX LLC OPC shall arbitrate between them without the right
+                  buyer (buyer), the platform of the 3arbon Information
+                  Technology LLC shall arbitrate between them without the right
                   of either party to object to it, and the arbitration shall be
                   decided within 30 days from the date of the arbitration
                   request, and the decision issued shall be considered a final
                   settlement that is enforceable immediately upon its approval
-                  by the platform of the 3ARBON E-COMMERCE COMPLEX LLC OPC.
+                  by the platform of the 3arbon Information Technology LLC.
                 </li>
                 <li>
                   The number of arbitrators shall be (1) and the 3ARBON
@@ -1110,7 +1109,7 @@ const TermAndConditionData = [
           <div className="mt-3 sm:mt-4">
             <span className="text-lg font-bold text-gray-verydark">15- </span>
             <span>
-              Value Added Tax Compliance: The 3ARBON E-COMMERCE COMPLEX LLC
+              Value Added Tax Compliance: The 3arbon Information Technology LLC
               OPC confirms that all transactions conducted through the platform
               are subject to the provisions of Federal Decree-Law No. (8) of
               2017 regarding Value Added Tax and its executive regulations, if
@@ -1123,7 +1122,7 @@ const TermAndConditionData = [
                   The prices offered by the seller include value added tax.
                 </li>
                 <li>
-                  The 3ARBON E-COMMERCE COMPLEX LLC OPC acts as an electronic
+                  The 3arbon Information Technology LLC acts as an electronic
                   intermediary to facilitate sales between sellers and
                   buyers, and the platform does not bear any legal or financial
                   responsibility related to issuing tax invoices, collecting
@@ -1137,7 +1136,7 @@ const TermAndConditionData = [
                   platform.
                 </li>
                 <li>
-                  The 3ARBON E-COMMERCE COMPLEX LLC OPC fully disclaims any
+                  The 3arbon Information Technology LLC fully disclaims any
                   liability for any failure by the seller to meet its tax
                   obligations, including failure to issue tax invoices or
                   failure to collect or pay value added tax. The seller is
@@ -1179,7 +1178,7 @@ const TermAndConditionData = [
             <span className="text-lg font-bold text-gray-verydark">19- </span>
             <span>
               Headquarters: The headquarters of the company 3ARBON is one of
-              the properties of 3ARBON E-COMMERCE COMPLEX LLC OPC.
+              the properties of 3arbon Information Technology LLC.
             </span>
           </div>
           <div className="mt-3 sm:mt-4">

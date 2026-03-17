@@ -4,13 +4,10 @@ import LodingTestAllatre from "../component/shared/lotties-file/loding-test-alla
 import useAxios from "../hooks/use-axios";
 import routes from "../routes";
 import Auth from "../utils/auth";
-import { getDefaultPaginationString } from "../constants/pagination";
 import { useDispatch } from "react-redux";
 import { Open } from "redux-store/auth-model-slice";
 
 const AuthContext = React.createContext();
-
-const WHITE_LIST = [routes.auth.default, routes.auth.forgetpass.default, routes.auth.forgetpass.restpass, routes.app.privacyPolicy];
 
 function AuthProvider({ children }) {
   const dispatch = useDispatch();
@@ -20,7 +17,7 @@ function AuthProvider({ children }) {
   const history = useHistory();
   const { pathname, search } = useLocation();
 
-  const { run, isError } = useAxios();
+  const { isError } = useAxios();
 
   const login = ({ accessToken,/* refreshToken*/ }) => {
     setUser(Auth._decodeToken(accessToken));
@@ -54,22 +51,11 @@ function AuthProvider({ children }) {
             setIsLoading(false); // ensure the app renders children instead of loading screen
             // return;
         }else{
-          const isWhiteListed = WHITE_LIST.some(route => 
-            pathname.startsWith(route) || 
-            pathname.includes(route) || 
-            window.location.pathname.startsWith(route)
-          );
-          if (!isWhiteListed) {
-            if (!searchParams.includes("page") && !searchParams.includes("perPage")) {
-              const redirectPath = window.location.pathname.includes("details")
-                ? window.location.pathname
-                : `${routes.app.home}?${getDefaultPaginationString()}`;
-              history.push(`${redirectPath}?${searchParams}`);
-            } else {
-              history.push(window.location.pathname + window.location.search);
-    
-            }
-          }}
+          // Removing the aggressive history.push intercept here
+          // as it conflicts with back navigation and page loading.
+          // Unauthenticated users will still be blocked from protected routes
+          // via other mechanisms (like PrivateRoutes or specific component checks).
+          }
           setUser(null);
         } else {
           setUser(user);
@@ -82,7 +68,7 @@ function AuthProvider({ children }) {
       }
     }
     fetchUser();
-  }, [pathname,searchParams,history]); 
+  }, [pathname, searchParams, history, dispatch]); 
 
   return (
     <AuthContext.Provider
