@@ -13,7 +13,7 @@ const FQAsDate = [
         <div>
           <li>Website : www.3arbon.com</li>
           <li>
-            Owner : 3arbon E-commerce complex LLC, a limited liability company
+            Owner : 3arbon Information Technology LLC, a limited liability company
             located in Ras Al Khaima - United Arab Emirates.
           </li>
           <li>

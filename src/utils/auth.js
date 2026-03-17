@@ -50,7 +50,7 @@ class Auth {
       localStorage.removeItem("hasCompletedProfile");
       if (window.location.pathname !== routes.app.home) {
         const perPage = getDefaultPerPage()
-        window.location = `${routes.app.home}?page=1&perPage=${perPage}`
+        window.location.replace(`${routes.app.home}?page=1&perPage=${perPage}`);
       }
     }
   }
@@ -140,6 +140,7 @@ class Auth {
      if(
         !window.location.pathname.includes("details") &&
         !window.location.pathname.includes("/alletre/categories/") &&
+        !window.location.pathname.includes(routes.app.home) &&
         !window.location.pathname.includes("/privacy-policy")){
         await this.logout();
       }
