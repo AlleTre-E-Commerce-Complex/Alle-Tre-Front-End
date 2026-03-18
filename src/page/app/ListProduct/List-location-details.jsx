@@ -354,7 +354,7 @@ export const LocationDetailsCard = ({
         className={`relative group border ${
           locationId === `${Id}`
             ? "border-2 border-primary dark:border-yellow bg-primary/5 dark:bg-yellow-200/5 shadow-md"
-            : "border-gray-100 dark:border-[#d4af37]/40 bg-white dark:bg-primary-dark hover:border-[#d6a536]/50 dark:hover:border-yellow hover:shadow-md"
+            : "border-gray-100 border-2 dark:border-[#d4af37]/40 bg-white dark:bg-primary-dark hover:border-[#d6a536]/50 dark:hover:border-yellow hover:shadow-md"
         } rounded-xl w-full p-5 cursor-pointer transition-all duration-200`}
       >
         {isMain && (
