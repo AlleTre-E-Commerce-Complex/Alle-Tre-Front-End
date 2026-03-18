@@ -272,3 +272,44 @@ a {
   @apply border-none shadow;
 }
 /* ///////////////////////////////////////////////////////////////////// */
+
+/* Custom Premium Loader Animation */
+@keyframes floatAndGlow {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
+  }
+  50% {
+    transform: translateY(-15px) scale(1.05);
+    filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.7));
+  }
+}
+
+@keyframes spin3D {
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(360deg);
+  }
+}
+
+.animate-premium-loader {
+  animation: floatAndGlow 3s ease-in-out infinite, spin3D 10s linear infinite;
+}
+
+/* Custom Elegant Pulse for Loader B */
+@keyframes loaderBElegantPulse {
+  0%, 100% {
+    transform: scale(0.95);
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
+  }
+}
+
+.animate-loader-b-elegant {
+  animation: loaderBElegantPulse 2.5s ease-in-out infinite;
+}

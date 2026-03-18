@@ -75,6 +75,20 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [totalpagesAuction, setTotalpagesAuction] = useState();
   const { run: runCategories, isLoading: isLoadingCategories } = useAxios([]);
 
+  // Disable scroll when loading
+  useEffect(() => {
+    const isPageLoading = loadingSubGatogry || isLoadingCategories || loadingGatogry;
+    if (isPageLoading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [loadingSubGatogry, isLoadingCategories, loadingGatogry]);
+
   useEffect(() => {
     const queryParams = new URLSearchParams(search);
     let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
