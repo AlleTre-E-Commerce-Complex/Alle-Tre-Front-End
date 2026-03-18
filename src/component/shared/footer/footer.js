@@ -116,7 +116,7 @@ const Footer = () => {
       {/* Footer Content Section */}
       <div className="bg-primary-dark min-h-[200px] overflow-hidden mt-12 md:mt-4">
         <div className="flex flex-wrap gap-x-24 md:mx-24 mx-2 pt-[30px] md:pt-[60px]">
-          <AllatreLogoWhite />
+          <AllatreLogoWhite className="hidden md:block md:w-[110px] lg:w-[130px]"/>
           <div className="flex gap-x-20 mt-5 md:mt-0 ml-auto">
             {/* Address Section */}
             <div>

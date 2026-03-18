@@ -183,7 +183,11 @@ const ListProductDetails = () => {
       ctx.drawImage(img, 0, 0);
 
       // Calculate watermark dimensions
-      const watermarkWidth = img.width * 0.3;
+      const maxDim = Math.max(img.width, img.height);
+      let watermarkWidth = maxDim * 0.4;
+      if (watermarkWidth > img.width * 0.8) {
+        watermarkWidth = img.width * 0.8;
+      }
       const watermarkHeight =
         (watermarkImg.height / watermarkImg.width) * watermarkWidth;
 

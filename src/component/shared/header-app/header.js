@@ -551,13 +551,12 @@ const Header = ({
       >
         <div className="my-auto hidden md:block">
           <AllatreLogoFull
-            className="cursor-pointer hidden md:block"
+            className="cursor-pointer hidden md:block md:w-[110px] lg:w-[130px] h-auto"
             onClick={() =>
               history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
             }
           />
         </div>
-        <div></div>
         <div className="flex items-center space-x-3 md:hidden">
           <BiMenu
             onClick={() => SetSid(true)}
