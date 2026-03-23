@@ -16,7 +16,7 @@ const PillGroup = ({ name, options, label }) => {
 
   return (
     <div className="flex flex-col gap-2 w-full" id={name}>
-      <div className="flex justify-between items-center w-full">
+      <div className="flex justify-start gap-2 items-center w-full">
         <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-0">{label}</label>
         {touched[name] && errors[name] && (
           <div className="text-xs font-normal flex items-center text-red-700 m-0">
@@ -52,7 +52,7 @@ const MultiPillGroup = ({ name, options, label }) => {
   
   return (
     <div className="flex flex-col gap-2 w-full" id={name}>
-      <div className="flex justify-between items-center w-full">
+      <div className="flex justify-start gap-2 items-center w-full">
         <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-0">{label}</label>
         {touched[name] && errors[name] && (
           <div className="text-xs font-normal flex items-center text-red-700 m-0">
@@ -120,76 +120,76 @@ const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
        
           {/* Row 1 */}
           <div className="w-full">
-            <FormikInput name="trim" type="text" label="TRIM" placeholder="e.g. XLE" />
+            <FormikInput name="trim" type="text" label={isArabic ? "الفئة (TRIM)" : "TRIM"} placeholder={isArabic ? "مثال: XLE" : "e.g. XLE"} />
           </div>
           <div className="w-full">
-            <FormikInput name="kilometers" type="number" label="KILOMETERS" placeholder="e.g. 15,000" />
+            <FormikInput name="kilometers" type="number" label={isArabic ? "الكيلومترات" : "KILOMETERS"} placeholder={isArabic ? "مثال: 15,000" : "e.g. 15,000"} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="regionalSpecs" label="REGION / SPECS" placeholder="Select Region" options={getOptions("regionalSpecs")} />
+            <FormikMultiDropdown name="regionalSpecs" label={isArabic ? "المواصفات الإقليمية" : "REGION / SPECS"} placeholder={isArabic ? "اختر المواصفات" : "Select Region"} options={getOptions("regionalSpecs")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="carType" label="BODY TYPE" placeholder="Select Body" options={getOptions("carType")} />
+            <FormikMultiDropdown name="carType" label={isArabic ? "نوع الهيكل" : "BODY TYPE"} placeholder={isArabic ? "اختر الهيكل" : "Select Body"} options={getOptions("carType")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="releaseYear" label="YEAR" placeholder="Select Year" options={yearOptions} />
+            <FormikMultiDropdown name="releaseYear" label={isArabic ? "سنة الصنع" : "YEAR"} placeholder={isArabic ? "اختر السنة" : "Select Year"} options={yearOptions} />
           </div>
           {/* Row 2 */}
           <div className="w-full">
-            <FormikMultiDropdown name="engineCapacity" label="ENGINE CAPACITY" placeholder="Select Engine" options={getOptions("engineCapacity")} />
+            <FormikMultiDropdown name="engineCapacity" label={isArabic ? "سعة المحرك" : "ENGINE CAPACITY"} placeholder={isArabic ? "اختر السعة" : "Select Engine"} options={getOptions("engineCapacity")} />
           </div>
           
           <div className="w-full">
-            <FormikMultiDropdown name="numberOfCylinders" label="NO. OF CYLINDERS" placeholder="Select Cylinders" options={getOptions("cylinders")} />
+            <FormikMultiDropdown name="numberOfCylinders" label={isArabic ? "عدد الأسطوانات" : "NO. OF CYLINDERS"} placeholder={isArabic ? "اختر الأسطوانات" : "Select Cylinders"} options={getOptions("cylinders")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="horsepower" label="HORSEPOWER" placeholder="Select Horsepower" options={getOptions("horsepower")} />
+            <FormikMultiDropdown name="horsepower" label={isArabic ? "القدرة الحصانية" : "HORSEPOWER"} placeholder={isArabic ? "اختر القدرة الحصانية" : "Select Horsepower"} options={getOptions("horsepower")} />
           </div>
       
           <div className="w-full">
-            <FormikMultiDropdown name="seatingCapacity" label="SEATING CAPACITY" placeholder="Select Seating Capacity" options={getOptions("seatingCapacity")} />
+            <FormikMultiDropdown name="seatingCapacity" label={isArabic ? "سعة المقاعد" : "SEATING CAPACITY"} placeholder={isArabic ? "اختر سعة المقاعد" : "Select Seating Capacity"} options={getOptions("seatingCapacity")} />
           </div>
 
           <div className="w-full">
-            <FormikMultiDropdown name="color" label="EXTERIOR COLOR" placeholder="Select Color" options={getOptions("color")} />
+            <FormikMultiDropdown name="color" label={isArabic ? "اللون الخارجي" : "EXTERIOR COLOR"} placeholder={isArabic ? "اختر اللون" : "Select Color"} options={getOptions("color")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="interiorColor" label="INTERIOR COLOR" placeholder="Select Color" options={getOptions("color")}/>
+            <FormikMultiDropdown name="interiorColor" label={isArabic ? "اللون الداخلي" : "INTERIOR COLOR"} placeholder={isArabic ? "اختر اللون" : "Select Color"} options={getOptions("color")}/>
           </div>         
           <div className="w-full">
-            <PillGroup name="transmissionType" label="TRANSMISSION" options={getOptions("transmissionType").filter(t => t.value !== "semi-automatic")} />
+            <PillGroup name="transmissionType" label={isArabic ? "ناقل الحركة" : "TRANSMISSION"} options={getOptions("transmissionType").filter(t => t.value !== "semi-automatic")} />
           </div>
           {/* Condition Fields */}
           <div className="w-full">
-            <MultiPillGroup name="insuredInUae" label="Is your car insured in UAE?" options={[
-              { value: "yes", text: "Yes" }, { value: "no", text: "No" }
+            <MultiPillGroup name="insuredInUae" label={isArabic ? "هل سيارتك مؤمنة في الإمارات؟" : "Is your car insured in UAE?"} options={[
+              { value: "yes", text: isArabic ? "نعم" : "Yes" }, { value: "no", text: isArabic ? "لا" : "No" }
             ]} />
           </div>
           <div className="w-full">
-            <MultiPillGroup name="warranty" label="Warranty" options={getOptions("warranty")} />
+            <MultiPillGroup name="warranty" label={isArabic ? "الضمان" : "Warranty"} options={getOptions("warranty")} />
           </div>
           <div className="w-full">
-            <MultiPillGroup name="fuelType" label="Fuel Type" options={getOptions("fuelType")} />
+            <MultiPillGroup name="fuelType" label={isArabic ? "نوع الوقود" : "Fuel Type"} options={getOptions("fuelType")} />
           </div>
           <div className="w-full">
-            <MultiPillGroup name="doors" label="Doors" options={getOptions("doors")} />
+            <MultiPillGroup name="doors" label={isArabic ? "الأبواب" : "Doors"} options={getOptions("doors")} />
           </div>
           <div className="w-full">
-            <MultiPillGroup name="steeringSide" label="Steering Side" options={getOptions("steeringSide")} />
+            <MultiPillGroup name="steeringSide" label={isArabic ? "جهة القيادة" : "Steering Side"} options={getOptions("steeringSide")} />
           </div>
 
           {/* Features Fields */}
           <div className="w-full md:col-span-2 lg:col-span-1">
-             <FormikMultiDropdown name="driverAssistance" label="Driver Assistance & Safety" placeholder="Select Features" multiple options={getOptions("driverAssistance")} />
+             <FormikMultiDropdown name="driverAssistance" label={isArabic ? "مساعدة السائق والأمان" : "Driver Assistance & Safety"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("driverAssistance")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="entertainment" label="Entertainment & Technology" placeholder="Select Features" multiple options={getOptions("entertainment")} />
+            <FormikMultiDropdown name="entertainment" label={isArabic ? "الترفيه والتكنولوجيا" : "Entertainment & Technology"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("entertainment")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="comfort" label="Comfort & Convenience" placeholder="Select Features" multiple options={getOptions("comfort")} />
+            <FormikMultiDropdown name="comfort" label={isArabic ? "الراحة والملاءمة" : "Comfort & Convenience"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("comfort")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="exteriorFeatures" label="Exterior" placeholder="Select Features" multiple options={getOptions("exteriorFeatures")} />
+            <FormikMultiDropdown name="exteriorFeatures" label={isArabic ? "التجهيزات الخارجية" : "Exterior"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("exteriorFeatures")} />
           </div>
         </div>
            {descriptionNode}

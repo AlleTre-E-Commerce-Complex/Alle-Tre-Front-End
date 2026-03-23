@@ -675,7 +675,7 @@ const Header = ({
                 }`}
               >
                 {/* Background Icons */}
-                <div className="absolute left-2.5 flex items-center justify-center pointer-events-none">
+                <div className="absolute ltr:left-2.5 rtl:right-2.5 flex items-center justify-center pointer-events-none">
                   <svg
                     className="w-[18px] h-[18px] text-gray-500"
                     fill="none"
@@ -690,7 +690,7 @@ const Header = ({
                     />
                   </svg>
                 </div>
-                <div className="absolute right-2.5 flex items-center justify-center pointer-events-none">
+                <div className="absolute ltr:right-2.5 rtl:left-2.5 flex items-center justify-center pointer-events-none">
                   <svg
                     className="w-[18px] h-[18px] text-gray-500"
                     fill="none"
@@ -707,10 +707,10 @@ const Header = ({
                 </div>
                 {/* Toggle Thumb */}
                 <div
-                  className={`absolute w-[30px] h-[30px] rounded-full bg-[#d4af37] shadow-md transform transition-transform duration-300 ease-in-out flex items-center justify-center ${
+                  className={`absolute ltr:left-0 rtl:right-0 w-[30px] h-[30px] rounded-full bg-[#d4af37] shadow-md transform transition-transform duration-300 ease-in-out flex items-center justify-center ${
                     !isDarkMode
-                      ? "ltr:translate-x-1 rtl:-translate-x-1 translate-x-1"
-                      : "ltr:translate-x-[38px] rtl:-translate-x-[38px] translate-x-[38px]"
+                      ? "ltr:translate-x-1 rtl:-translate-x-1"
+                      : "ltr:translate-x-[38px] rtl:-translate-x-[38px]"
                   }`}
                 >
                   {!isDarkMode ? (
