@@ -769,6 +769,7 @@ const en = {
   [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:"Pristine condition, untouched with original tags or packaging",
   [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"Pre-owned excellence, showing only minor to light signs of wear",
   [localizationKeys.manageYourActivityAndAlerts]:"Manage Your Activity and Alerts",
+  [localizationKeys.vehicleSpecifications]:"Vehicle Specifications",
 };
 
 export default en;

@@ -39,6 +39,7 @@ import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown, MdDelete, MdLock } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
+import CarSpecifications from "../../../component/create-auction-components/CarSpecifications";
 
 const ProductDetails = () => {
   const [isSavingDraft, setIsSavingDraft] = useState(false);
@@ -114,6 +115,24 @@ const ProductDetails = () => {
         formData.append("product[totalArea]", values.totalArea);
       if (values.operatingSystem)
         formData.append("product[operatingSystem]", values.operatingSystem);
+      if (values.trim) formData.append("product[trim]", values.trim);
+      if (values.regionalSpecs) formData.append("product[regionalSpecs]", values.regionalSpecs);
+      if (values.kilometers) formData.append("product[kilometers]", values.kilometers);
+      if (values.insuredInUae) formData.append("product[insuredInUae]", values.insuredInUae);
+      if (values.interiorColor) formData.append("product[interiorColor]", values.interiorColor);
+      if (values.warranty) formData.append("product[warranty]", values.warranty);
+      if (values.fuelType) formData.append("product[fuelType]", values.fuelType);
+      if (values.doors) formData.append("product[doors]", values.doors);
+      if (values.transmissionType) formData.append("product[transmissionType]", values.transmissionType);
+      if (values.seatingCapacity) formData.append("product[seatingCapacity]", values.seatingCapacity);
+      if (values.horsepower) formData.append("product[horsepower]", values.horsepower);
+      if (values.steeringSide) formData.append("product[steeringSide]", values.steeringSide);
+      if (values.engineCapacity) formData.append("product[engineCapacity]", values.engineCapacity);
+      if (values.numberOfCylinders) formData.append("product[numberOfCylinders]", values.numberOfCylinders);
+      if (values.driverAssistance?.length) formData.append("product[driverAssistance]", JSON.stringify(values.driverAssistance));
+      if (values.entertainment?.length) formData.append("product[entertainment]", JSON.stringify(values.entertainment));
+      if (values.comfort?.length) formData.append("product[comfort]", JSON.stringify(values.comfort));
+      if (values.exteriorFeatures?.length) formData.append("product[exteriorFeatures]", JSON.stringify(values.exteriorFeatures));
       if (values.regionOfManufacture)
         formData.append(
           "product[regionOfManufacture]",
@@ -389,6 +408,24 @@ const ProductDetails = () => {
         itemDescription: product?.description,
         hasUsageCondition: product?.category?.hasUsageCondition,
         valueRadio: product?.usageStatus,
+        trim: product?.trim,
+        regionalSpecs: product?.regionalSpecs,
+        kilometers: product?.kilometers,
+        insuredInUae: product?.insuredInUae,
+        interiorColor: product?.interiorColor,
+        warranty: product?.warranty,
+        fuelType: product?.fuelType,
+        doors: product?.doors,
+        transmissionType: product?.transmissionType,
+        seatingCapacity: product?.seatingCapacity,
+        horsepower: product?.horsepower,
+        steeringSide: product?.steeringSide,
+        engineCapacity: product?.engineCapacity,
+        numberOfCylinders: product?.numberOfCylinders,
+        driverAssistance: product?.driverAssistance,
+        entertainment: product?.entertainment,
+        comfort: product?.comfort,
+        exteriorFeatures: product?.exteriorFeatures,
       })
     );
     setRadioValue(product?.usageStatus);
@@ -649,17 +686,40 @@ const ProductDetails = () => {
     loadingImg,
   ]);
 
+  const optionalCarSpecs = [
+    "transmissionType", "steeringSide", "seatingCapacity", "horsepower",
+    "numberOfCylinders", "fuelType", "doors", "engineCapacity", "trim",
+    "kilometers", "regionalSpecs", "carType", "color", "interiorColor",
+    "releaseYear", "insuredInUae", "warranty", "driverAssistance",
+    "entertainment", "comfort", "exteriorFeatures"
+  ];
+
   const arrayCustomFieldsvalidations =
     customFromData?.arrayCustomFields?.reduce((acc, curr) => {
-      acc[curr.key] = Yup.string().required(
-        selectedContent[localizationKeys.required]
-      );
+      if (!optionalCarSpecs.includes(curr.key)) {
+        acc[curr.key] = Yup.string().required(
+          selectedContent[localizationKeys.required]
+        );
+      }
       return acc;
     }, {});
 
   const model = customFromData?.model?.key;
   const isArabic = lang === "ar";
   const [pdfFile, setPdfFile] = useState(null);
+
+  const carMandatoryFields = [
+    "trim", "kilometers", "regionalSpecs", "carType", "color",
+    "interiorColor", "releaseYear", "insuredInUae"
+  ].reduce((acc, field) => {
+    acc[field] = Yup.string().when("category", {
+      is: (cat) => String(cat) === "4" || GatogryOptions?.find(o => String(o.value) === String(cat))?.name === "Cars",
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    });
+    return acc;
+  }, {});
+
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
@@ -669,7 +729,7 @@ const ProductDetails = () => {
       .required(selectedContent[localizationKeys.required]),
     itemDescription: Yup.string()
       .trim()
-      .required(selectedContent[localizationKeys.required]),
+      .notRequired(),
     pdfDocument: Yup.mixed().when("category", {
       is: (category) =>
         ["Cars", "Jewellers", "Properties"].includes(
@@ -679,20 +739,21 @@ const ProductDetails = () => {
       otherwise: Yup.mixed().notRequired(),
     }),
     ...arrayCustomFieldsvalidations,
-    // model: Yup.string().when([], {
-    //   is: () => model,
-    //   then: Yup.string().required(selectedContent[localizationKeys.required]),
-    //   otherwise: Yup.string().notRequired(),
-    // }),
+    ...carMandatoryFields,
+    ...(model ? {
+      [model]: Yup.string().required(selectedContent[localizationKeys.required])
+    } : {}),
+    brand: Yup.string().when("category", {
+      is: (cat) => String(cat) !== "3" && String(cat) !== "7",
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    }),
     subCategory: Yup.string().when([], {
       is: () => SubGatogryOptions?.length === 0,
       then: Yup.string().notRequired(),
       otherwise: Yup.string().required(
         selectedContent[localizationKeys.required]
       ),
-      brand: Yup.string()
-        .trim()
-        .required(selectedContent[localizationKeys.required]),
     }),
   });
 
@@ -848,6 +909,19 @@ const ProductDetails = () => {
         draftValue.operatingSystem || productDetailsint.operatingSystem
       );
     }
+    const appendDraftField = (field) => {
+      const val = draftValue[field] || productDetailsint[field];
+      if (val) {
+        formData.append(field, Array.isArray(val) ? JSON.stringify(val) : val);
+      }
+    };
+    [
+      "trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor",
+      "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity",
+      "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance",
+      "entertainment", "comfort", "exteriorFeatures"
+    ].forEach(appendDraftField);
+    
     if (
       draftValue.regionOfManufacture ||
       productDetailsint.regionOfManufacture
@@ -1011,6 +1085,24 @@ const ProductDetails = () => {
                 cityId: productDetailsint.cityId || "",
                 countryId: productDetailsint.countryId || "",
                 itemDescription: productDetailsint.itemDescription || "",
+                trim: productDetailsint.trim || "",
+                regionalSpecs: productDetailsint.regionalSpecs || "",
+                kilometers: productDetailsint.kilometers || "",
+                insuredInUae: productDetailsint.insuredInUae || "",
+                interiorColor: productDetailsint.interiorColor || "",
+                warranty: productDetailsint.warranty || "",
+                fuelType: productDetailsint.fuelType || "petrol",
+                doors: productDetailsint.doors || "4",
+                transmissionType: productDetailsint.transmissionType || "automatic",
+                seatingCapacity: productDetailsint.seatingCapacity || "5",
+                horsepower: productDetailsint.horsepower || "100-199",
+                steeringSide: productDetailsint.steeringSide || "left",
+                engineCapacity: productDetailsint.engineCapacity || "unknown",
+                numberOfCylinders: productDetailsint.numberOfCylinders || "4",
+                driverAssistance: productDetailsint.driverAssistance || [],
+                entertainment: productDetailsint.entertainment || [],
+                comfort: productDetailsint.comfort || [],
+                exteriorFeatures: productDetailsint.exteriorFeatures || [],
               }}
               onSubmit={isEditing ? handleUpdate : handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}
@@ -1160,52 +1252,83 @@ const ProductDetails = () => {
                       </>
                     )}
 
-                    {categoryId === 4 &&
-                      adjustedcarField
-                        .filter(
-                          (field) =>
-                            field.categoryId === 4 && field.key !== "brandId"
-                        ) // Filter for car category
-                        .map((field) => {
-                          return (
-                            <div
-                              key={field.key}
-                              className="w-full col-span-2 sm:col-span-1 md:col-span-2"
-                            >
-                              <FormikMultiDropdown
-                                name={field.key}
-                                label={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
-                                placeholder={`${
-                                  lang === "en" ? field.labelEn : field.labelAr
-                                }`}
-                                options={
-                                  field.key === "countryId"
-                                    ? AllCountriesOptions
-                                    : field.key === "cityId"
-                                    ? AllCitiesOptions
-                                    : allCustomFileOptions[field.key]?.map(
-                                        (option) => ({
-                                          ...option,
-                                          text: isArabic
-                                            ? option.text.split(" | ")[1]
-                                            : option.text.split(" | ")[0],
-                                        })
-                                      )
-                                }
-                                onChange={(selectedValue) =>
-                                  setCountriesId(selectedValue)
-                                }
-                                loading={
-                                  loadingAllCountries || loadingCitiesOptions
-                                }
+                    {categoryId === 4 && (
+                      <div className="col-span-2 md:col-span-4 w-full">
+                        <CarSpecifications
+                          brandNode={
+                            <div className="w-full relative">
+                              <FormikInput
+                                name="brand"
+                                type="text"
+                                label={selectedContent[localizationKeys.brand]}
+                                placeholder={selectedContent[localizationKeys.brand]}
+                                value={formik.values.brand}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  formik.handleChange(e);
+                                  handleBrandInputChange(value);
+                                }}
+                                onFocus={() => setIsDropdownOpen(true)}
+                              />
+                              <button
+                                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                                className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70"
+                                aria-label="Toggle Dropdown"
+                                type="button"
+                              >
+                                {isDropdownOpen && brandSuggestions.length > 0 && (
+                                  <MdArrowDropDown className="w-5 h-5" />
+                                )}
+                              </button>
+                              {isDropdownOpen && brandSuggestions.length > 0 && (
+                                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+                                  <ul>
+                                    {brandSuggestions.map((suggestion, index) => (
+                                      <li
+                                        key={index}
+                                        onClick={() => {
+                                          formik.setFieldValue("brand", suggestion.text);
+                                          setBrandInput(suggestion.text);
+                                          setBrandSuggestions([]);
+                                          setIsDropdownOpen(false);
+                                        }}
+                                        className="cursor-pointer hover:bg-gray-200 px-4 py-2"
+                                      >
+                                        {suggestion.text}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </div>
+                          }
+                          modelNode={
+                            customFromData?.model ? (
+                              <div className="w-full">
+                                <FormikInput
+                                  min={0}
+                                  name={`${customFromData?.model?.key}`}
+                                  label={lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}
+                                  placeholder={lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}
+                                />
+                              </div>
+                            ) : null
+                          }
+                          descriptionNode={
+                            <div className="md:col-span-3 w-full mt-2">
+                              <FormikTextArea
+                                name="itemDescription"
+                                type={"text"}
+                                label={selectedContent[localizationKeys.itemDescription]}
+                                placeholder={selectedContent[localizationKeys.writeItemDescription]}
                               />
                             </div>
-                          );
-                        })}
+                          }
+                        />
+                      </div>
+                    )}
 
-                    {(formik.values.subCategory || categoryId === 4) &&
+                    {(formik.values.subCategory && categoryId !== 4) &&
                       categoryId !== 3 &&
                       categoryId !== 7 && (
                         <>
@@ -1280,18 +1403,20 @@ const ProductDetails = () => {
                         </>
                       )}
 
-                    <div className="col-span-2 col-start-1 mt-1">
-                      <FormikTextArea
-                        name="itemDescription"
-                        type={"text"}
-                        label={
-                          selectedContent[localizationKeys.itemDescription]
-                        }
-                        placeholder={
-                          selectedContent[localizationKeys.writeItemDescription]
-                        }
-                      />
-                    </div>
+                    {categoryId !== 4 && (
+                      <div className="col-span-2 col-start-1 mt-1">
+                        <FormikTextArea
+                          name="itemDescription"
+                          type={"text"}
+                          label={
+                            selectedContent[localizationKeys.itemDescription]
+                          }
+                          placeholder={
+                            selectedContent[localizationKeys.writeItemDescription]
+                          }
+                        />
+                      </div>
+                    )}
                   </div>
                   {/* {isEditing ? (
                     <div className="flex items-start justify-start my-8">

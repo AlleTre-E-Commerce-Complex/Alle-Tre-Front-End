@@ -21,29 +21,44 @@ export const getFieldErrorNames = (formikErrors) => {
   return transformObjectToDotNotation(formikErrors);
 };
 
-export const ScrollToFieldError = ({
-  scrollBehavior = { behavior: "smooth", block: "center" },
-}) => {
+export const ScrollToFieldError = () => {
   const { submitCount, isValid, errors } = useFormikContext();
 
   useEffect(() => {
-    if (isValid) return;
+    if (isValid || submitCount === 0) return;
 
-    const fieldErrorNames = getFieldErrorNames(errors);
-    if (fieldErrorNames.length <= 0) return;
+    setTimeout(() => {
+      const fieldErrorNames = getFieldErrorNames(errors);
+      if (fieldErrorNames.length <= 0) return;
 
-    const element = document.querySelector(
-      `input[name='${fieldErrorNames[0]}']`
-    );
+      const errorField = fieldErrorNames[0];
+      
+      // Prioritize explicit IDs (visible SUI Dropdown containers) over name attributes (hidden inputs)
+      let element = document.getElementById(errorField);
+      
+      // Fallback: Visible inputs with exact name
+      if (!element) {
+        element = document.querySelector(
+          `input:not([type="hidden"])[name='${errorField}'], textarea[name='${errorField}'], select[name='${errorField}']`
+        );
+      }
+      
+      // Ultimate Fallback: Just absolutely anything named the error
+      if (!element) {
+        element = document.querySelector(`[name='${errorField}']`);
+      }
 
-    if (!element) return;
+      if (element) {
+        // Calculate specific vertical offset to ensure sticky top headers don't hide the focused element
+        const yOffset = -150; 
+        const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+        window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+      } else {
+        // Complete Fallback: User explicitly requested scroll to top of page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 100);
 
-    // Scroll to first known error into view
-    element.scrollIntoView(scrollBehavior);
-
-    // Formik doesn't (yet) provide a callback for a client-failed submission,
-    // thus why this is implemented through a hook that listens to changes on
-    // the submit count.
   }, [submitCount]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return null;

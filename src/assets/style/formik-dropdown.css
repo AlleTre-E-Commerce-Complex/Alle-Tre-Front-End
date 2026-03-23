@@ -7,7 +7,12 @@
 }
 
 .Edit_FormikMultiDropdown .field>.selection.dropdown{
-  @apply h-[48px] rounded-lg border border-gray-300 dark:border-[#d4af37]/40 dark:focus:border-yellow focus:ring-1 focus:ring-primary bg-white dark:bg-primary-dark text-gray-900 dark:text-white hover:border-gray-400 dark:hover:border-yellow transition-colors flex items-center px-4 shadow-none !important;
+  @apply min-h-[48px] h-auto rounded-lg border border-gray-300 dark:border-[#d4af37]/40 dark:focus:border-yellow focus:ring-1 focus:ring-primary bg-white dark:bg-primary-dark text-gray-900 dark:text-white hover:border-gray-400 dark:hover:border-yellow transition-colors flex items-center px-4 shadow-none !important;
+  user-select: none !important;
+}
+
+.Edit_FormikMultiDropdown .ui.selection.dropdown > .label {
+  @apply whitespace-nowrap overflow-hidden text-ellipsis max-w-full;
 }
 
 .Edit_FormikMultiDropdown .ui.search.dropdown.active>input.search, .Edit_FormikMultiDropdown .ui.search.dropdown.visible>input.search{
@@ -32,12 +37,110 @@
 
 .Edit_FormikMultiDropdown .ui.dropdown > .text {
   @apply text-gray-900 dark:text-white !important;
+  user-select: none !important;
 }
 
 .Edit_FormikMultiDropdown .ui.dropdown > .default.text {
   @apply text-gray-400 dark:text-gray-500 !important;
+  user-select: none !important;
 }
 
 .Edit_FormikMultiDropdown .ui.selection.dropdown > .dropdown.icon {
   @apply text-gray-500 dark:text-gray-400 top-[55%] -translate-y-1/2 py-0 h-auto right-4 !important;
+  pointer-events: none !important;
+}
+
+/* Override the flex display from .selection.dropdown for multiple selects */
+.Edit_FormikMultiDropdown .field > .ui.multiple.selection.dropdown {
+  display: block !important;
+  height: auto !important;
+  min-height: 48px !important;
+  padding: 0.5rem 2.5rem 0.5rem 1rem !important;
+}
+
+.Edit_FormikMultiDropdown .field > .ui.multiple.selection.dropdown > .label {
+  margin: 0.15rem 0.25rem 0.15rem 0 !important;
+  white-space: normal !important;
+}
+
+.Edit_FormikMultiDropdown .field > .ui.multiple.selection.dropdown > input.search {
+  position: relative !important;
+  margin: 0.15rem 0 !important;
+  pointer-events: none !important;
+}
+/* ----------------------------------------------------
+   OVERRIDE SEMANTIC UI ERROR STATE (FIXED)
+---------------------------------------------------- */
+.Edit_FormikMultiDropdown .field.error label,
+.Edit_FormikMultiDropdown .field.error label span {
+  @apply text-gray-700 dark:text-gray-300 !important;
+}
+
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error {
+  @apply border-red-500 dark:border-red-500 focus:border-red-500 focus:ring-red-500 bg-white dark:bg-primary-dark !important;
+}
+
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .menu,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .menu {
+  @apply border border-gray-300 dark:border-[#2C3241] rounded-b-lg shadow-lg bg-white dark:bg-primary-dark !important;
+}
+
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .menu .item,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .menu .item,
+.ui.form .Edit_FormikMultiDropdown .field.error .ui.dropdown .menu .item,
+.ui.form .field.error .Edit_FormikMultiDropdown .ui.dropdown .menu .item {
+  @apply text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#22283A] !important;
+}
+
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .text,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .text,
+.ui.form .Edit_FormikMultiDropdown .field.error .ui.dropdown .text,
+.ui.form .field.error .Edit_FormikMultiDropdown .ui.dropdown .text {
+  @apply text-gray-900 dark:text-white !important;
+}
+
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .default.text,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .default.text,
+.ui.form .Edit_FormikMultiDropdown .field.error .ui.dropdown .default.text,
+.ui.form .field.error .Edit_FormikMultiDropdown .ui.dropdown .default.text {
+  @apply text-gray-400 dark:text-gray-500 !important;
+}
+
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .dropdown.icon,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .dropdown.icon {
+  @apply text-gray-500 dark:text-gray-400 !important;
+}
+
+/* ----------------------------------------------------
+   RAW CSS OVERRIDES FOR BACKGROUNDS (DO NOT MIX WITH APPLY)
+---------------------------------------------------- */
+.Edit_FormikMultiDropdown .field.error label,
+.Edit_FormikMultiDropdown .field.error label span,
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .menu .item,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .menu .item,
+.ui.form .Edit_FormikMultiDropdown .field.error .ui.dropdown .menu .item,
+.ui.form .field.error .Edit_FormikMultiDropdown .ui.dropdown .menu .item,
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .text,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .text,
+.ui.form .Edit_FormikMultiDropdown .field.error .ui.dropdown .text,
+.ui.form .field.error .Edit_FormikMultiDropdown .ui.dropdown .text,
+.ui.form .field.error .Edit_FormikMultiDropdown .ui.dropdown .item,
+.ui.form .fields.error .Edit_FormikMultiDropdown .field .ui.dropdown .item,
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .default.text,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .default.text,
+.ui.form .Edit_FormikMultiDropdown .field.error .ui.dropdown .default.text,
+.ui.form .field.error .Edit_FormikMultiDropdown .ui.dropdown .default.text,
+.Edit_FormikMultiDropdown .field.error .ui.selection.dropdown .dropdown.icon,
+.Edit_FormikMultiDropdown .ui.selection.dropdown.error .dropdown.icon {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Enforce the Dropdown and Menu background color explicitly to stop Semantic UI */
+.ui.form .Edit_FormikMultiDropdown .field.error .ui.dropdown,
+.ui.form .fields.error .Edit_FormikMultiDropdown .field .ui.dropdown,
+.Edit_FormikMultiDropdown .field.error .ui.dropdown,
+.Edit_FormikMultiDropdown .ui.dropdown.error {
+  @apply bg-white dark:bg-primary-dark !important;
 }

@@ -4,7 +4,7 @@ import footerImg from "../../../../src/assets/images/subscribeImg.png";
 import footerImgAr from "../../../../src/assets/images/subscribeImgMobAr.png";
 import footerMob from "../../../../src/assets/images/subscribeImgMob.png";
 import footerMobAr from "../../../../src/assets/images/subscribeImgMobAr.png";
-import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/3arbon-footer.svg";
+import { ReactComponent as AllatreLogoWhite } from "../../../../src/assets/logo/3arbon-main.svg";
 import {
   FaInstagram,
   FaFacebookF,
