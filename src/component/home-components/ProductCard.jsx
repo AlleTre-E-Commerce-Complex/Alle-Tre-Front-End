@@ -41,6 +41,7 @@ const ProductCard = ({
   const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`;
 
   const handleTouchStart = (e) => {
+    setTouchEnd(null);
     setTouchStart(e.touches[0].clientX);
   };
 
@@ -48,9 +49,16 @@ const ProductCard = ({
     setTouchEnd(e.touches[0].clientX);
   };
 
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) handleNext();
-    if (touchEnd - touchStart > 75) handlePrevious();
+  const handleTouchEnd = (e) => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 50) {
+      e.stopPropagation();
+      handleNext();
+    } else if (distance < -50) {
+      e.stopPropagation();
+      handlePrevious();
+    }
   };
 
   const handleNext = () => {

@@ -53,11 +53,21 @@ const ProductCardList = ({
     }
   };
 
-  const handleTouchStart = (e) => setTouchStart(e.touches[0].clientX);
+  const handleTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.touches[0].clientX);
+  };
   const handleTouchMove = (e) => setTouchEnd(e.touches[0].clientX);
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) handleNext();
-    if (touchEnd - touchStart > 75) handlePrevious();
+  const handleTouchEnd = (e) => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 50) {
+      e.stopPropagation();
+      handleNext();
+    } else if (distance < -50) {
+      e.stopPropagation();
+      handlePrevious();
+    }
   };
 
   const handleNext = () => {
