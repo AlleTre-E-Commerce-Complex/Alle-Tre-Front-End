@@ -1,6 +1,5 @@
 import { Field } from "formik";
 import InputForm from "../input-filed/input-form";
-import ErrorMessage from "./error-message";
 
 function FormikInput({
   label,
@@ -53,9 +52,9 @@ function FormikInput({
                 {...field}
                 {...props}
                 error={isError ? "true" : undefined}
+                errorMessage={isError ? errors[name] : undefined}
                 onKeyDown={type === "number" ? handleKeyDown : undefined}
               />
-              {isError && <ErrorMessage message={errors[name]} />}
             </div>
           );
         }}

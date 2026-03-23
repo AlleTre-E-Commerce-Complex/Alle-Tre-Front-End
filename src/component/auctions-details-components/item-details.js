@@ -29,6 +29,25 @@ const ItemDetails = ({ itemDetailsData }) => {
     })
     .filter((item) => item !== null);
 
+  const extraSpecs = [
+    { label: { en: "Trim", ar: "القصة" }, value: itemDetailsData?.trim },
+    { label: { en: "Kilometers", ar: "الكيلومترات" }, value: itemDetailsData?.kilometers },
+    { label: { en: "Regional Specs", ar: "المواصفات الإقليمية" }, value: itemDetailsData?.regionalSpecs },
+    { label: { en: "Transmission", ar: "ناقل الحركة" }, value: itemDetailsData?.transmissionType },
+    { label: { en: "Engine Capacity", ar: "سعة المحرك" }, value: itemDetailsData?.engineCapacity },
+    { label: { en: "Horsepower", ar: "قوة الحصان" }, value: itemDetailsData?.horsepower },
+    { label: { en: "Cylinders", ar: "اسطوانات" }, value: itemDetailsData?.numberOfCylinders },
+    { label: { en: "Fuel Type", ar: "نوع الوقود" }, value: itemDetailsData?.fuelType },
+    { label: { en: "Doors", ar: "أبواب" }, value: itemDetailsData?.doors },
+    { label: { en: "Seating Capacity", ar: "سعة المقاعد" }, value: itemDetailsData?.seatingCapacity },
+    { label: { en: "Steering Side", ar: "جانب القيادة" }, value: itemDetailsData?.steeringSide },
+    { label: { en: "Interior Color", ar: "اللون الداخلي" }, value: itemDetailsData?.interiorColor },
+    { label: { en: "Insured", ar: "مؤمن" }, value: itemDetailsData?.insuredInUae },
+    { label: { en: "Warranty", ar: "الضمان" }, value: itemDetailsData?.warranty },
+  ].filter((spec) => spec.value && spec.value !== "undefined");
+
+  const combinedDetailsArray = [...itemDetailsArray, ...extraSpecs];
+
   const { run: runSysField, isLoading: isLoadingysField } = useAxios([]);
 
   useEffect(() => {
@@ -50,44 +69,84 @@ const ItemDetails = ({ itemDetailsData }) => {
 
       <div className="animate-in fade-in duration-700">
         {/* Item Description */}
-        <div id="itemDescription" className="mb-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1.5 h-8 bg-primary rounded-full" />
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
-              {selectedContent[localizationKeys.aboutTheBrand]}
-            </h2>
+        {itemDetailsData?.description?.trim() && (
+          <div id="itemDescription" className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1.5 h-8 bg-primary rounded-full" />
+              <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
+                {selectedContent[localizationKeys.aboutTheBrand]}
+              </h2>
+            </div>
+            <div className="bg-white dark:bg-transparent border border-primary-veryLight dark:border-primary-lightDark rounded-xl p-8 shadow-sm">
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap font-medium">
+                {itemDetailsData?.description}
+              </p>
+            </div>
           </div>
-          <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-sm">
-            <p className="text-gray-600 dark:text-gray-400 leading-relaxed whitespace-pre-wrap font-medium">
-              {itemDetailsData?.description}
-            </p>
-          </div>
-        </div>
+        )}
 
-        {/* Specifications Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {itemDetailsArray.map((field, index) => {
-            if (
-              field.value === null ||
-              field.value === undefined ||
-              field.value === ""
-            )
-              return null;
+        {/* Consolidated Details Container */}
+        <div className="bg-white dark:bg-transparent rounded-xl sm:p-8 sm:border border-primary-veryLight dark:border-primary-lightDark">
+          
+          {/* Specifications Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-y-8 gap-x-6">
+            {combinedDetailsArray.map((field, index) => {
+              if (
+                field.value === null ||
+                field.value === undefined ||
+                field.value === ""
+              )
+                return null;
+
+              return (
+                <div key={index} className="flex flex-col">
+                  <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">
+                    {field?.label[lang]}
+                  </span>
+                  <span className="text-base font-bold text-gray-900 dark:text-white capitalize truncate">
+                    {field.value}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Extra Features (If Available) */}
+          {(() => {
+            const parseFeatures = (str) => {
+              try { return JSON.parse(str) || []; } catch(e) { return []; }
+            };
+            const featuresLists = [
+              { label: { en: "Driver Assistance", ar: "Driver Assistance" }, items: parseFeatures(itemDetailsData?.driverAssistance) },
+              { label: { en: "Entertainment", ar: "Entertainment" }, items: parseFeatures(itemDetailsData?.entertainment) },
+              { label: { en: "Comfort", ar: "Comfort" }, items: parseFeatures(itemDetailsData?.comfort) },
+              { label: { en: "Exterior Features", ar: "Exterior Features" }, items: parseFeatures(itemDetailsData?.exteriorFeatures) },
+            ].filter(list => list.items.length > 0);
+
+            if (featuresLists.length === 0) return null;
 
             return (
-              <div
-                key={index}
-                className="bg-white dark:bg-slate-900/40 border border-gray-100 dark:border-slate-800 p-5 rounded-2xl hover:border-primary/30 dark:hover:border-primary/50 transition-all duration-300 group"
-              >
-                <p className="text-[10px] font-black text-gray-500 dark:text-gray-700 uppercase tracking-widest mb-2 group-hover:text-primary transition-colors">
-                  {field?.label[lang]}
-                </p>
-                <p className="text-sm font-bold text-primary dark:text-white leading-tight">
-                  {field.value}
-                </p>
-              </div>
+              <>
+                <div className="w-full h-px bg-primary-veryLight dark:bg-primary-lightDark my-8" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {featuresLists.map((list, idx) => (
+                    <div key={idx} className="flex flex-col">
+                      <span className="text-base font-bold text-gray-900 dark:text-white mb-4">
+                        {list.label[lang] || list.label["en"]}
+                      </span>
+                      <div className="flex flex-wrap gap-3">
+                        {list.items.map((item, idxx) => (
+                          <span key={idxx} className="px-4 py-2 bg-gray-50 dark:bg-slate-800/80 text-gray-600 dark:text-gray-300 rounded-lg text-sm font-medium border border-primary-veryLight dark:border-primary-lightDark capitalize">
+                            {item.replace(/-/g, " ")}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
             );
-          })}
+          })()}
         </div>
       </div>
     </>

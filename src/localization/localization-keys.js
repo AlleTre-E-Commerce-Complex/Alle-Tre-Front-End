@@ -688,6 +688,7 @@ const localizationKeys = {
   pristineConditionUntouchedWithOriginalTagsOrPackaging:"pristineConditionUntouchedWithOriginalTagsOrPackaging",
   preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear:"preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear",
   manageYourActivityAndAlerts:"manageYourActivityAndAlerts",
+  vehicleSpecifications:"vehicleSpecifications",
 };
 
 export default localizationKeys;

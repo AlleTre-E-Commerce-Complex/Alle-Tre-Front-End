@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/3arbon-main.svg";
-import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/3arbon-main.svg";
+import { ReactComponent as AllatreLogoIcon } from "../../../../src/assets/logo/3arbon-icon.svg";
 import { ReactComponent as AllatreLogoFull } from "../../../../src/assets/logo/3arbon-main.svg";
 import routes from "../../../routes";
 import DropdownLang from "./dropdown-lang";
@@ -577,7 +577,7 @@ const Header = ({
         <div className="flex items-center justify-center flex-1 md:flex-none">
           <div className="flex justify-center items-center">
             {showIcon && (
-              <AllatreLogoIcon className="cursor-pointer w-[35px] block md:hidden text-yellow" />
+              <AllatreLogoIcon className="cursor-pointer w-[25px] mr-3 block md:hidden text-yellow" />
             )}
             {showLogo && (
               <AllatreLogo

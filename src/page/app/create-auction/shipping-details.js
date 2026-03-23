@@ -194,12 +194,29 @@ const ShippingDetails = () => {
           productDetailsInt.itemDescription
         );
       }
-      if (productDetailsInt.countryId) {
-        formData.append("product[countryId]", productDetailsInt.countryId);
-      }
       if (productDetailsInt.cityId) {
         formData.append("product[cityId]", productDetailsInt.cityId);
       }
+      
+      if (productDetailsInt.trim) formData.append("product[trim]", productDetailsInt.trim);
+      if (productDetailsInt.regionalSpecs) formData.append("product[regionalSpecs]", productDetailsInt.regionalSpecs);
+      if (productDetailsInt.kilometers) formData.append("product[kilometers]", productDetailsInt.kilometers);
+      if (productDetailsInt.insuredInUae) formData.append("product[insuredInUae]", productDetailsInt.insuredInUae);
+      if (productDetailsInt.interiorColor) formData.append("product[interiorColor]", productDetailsInt.interiorColor);
+      if (productDetailsInt.warranty) formData.append("product[warranty]", productDetailsInt.warranty);
+      if (productDetailsInt.fuelType) formData.append("product[fuelType]", productDetailsInt.fuelType);
+      if (productDetailsInt.doors) formData.append("product[doors]", productDetailsInt.doors);
+      if (productDetailsInt.transmissionType) formData.append("product[transmissionType]", productDetailsInt.transmissionType);
+      if (productDetailsInt.seatingCapacity) formData.append("product[seatingCapacity]", productDetailsInt.seatingCapacity);
+      if (productDetailsInt.horsepower) formData.append("product[horsepower]", productDetailsInt.horsepower);
+      if (productDetailsInt.steeringSide) formData.append("product[steeringSide]", productDetailsInt.steeringSide);
+      if (productDetailsInt.engineCapacity) formData.append("product[engineCapacity]", productDetailsInt.engineCapacity);
+      if (productDetailsInt.numberOfCylinders) formData.append("product[numberOfCylinders]", productDetailsInt.numberOfCylinders);
+      if (productDetailsInt.driverAssistance?.length) formData.append("product[driverAssistance]", JSON.stringify(productDetailsInt.driverAssistance));
+      if (productDetailsInt.entertainment?.length) formData.append("product[entertainment]", JSON.stringify(productDetailsInt.entertainment));
+      if (productDetailsInt.comfort?.length) formData.append("product[comfort]", JSON.stringify(productDetailsInt.comfort));
+      if (productDetailsInt.exteriorFeatures?.length) formData.append("product[exteriorFeatures]", JSON.stringify(productDetailsInt.exteriorFeatures));
+
       if (offerDataInt.IsOfferPrice) {
         formData.append("product[isOffer]", offerDataInt.IsOfferPrice);
         formData.append("product[offerAmount]", offerDataInt.offerAmount);

@@ -256,6 +256,7 @@ const SummaryListedSection = () => {
                   </div>
                 )}
               </div>
+              
               {user?.id === listedProductsData?.userId ? (
                 <div className="grid pt-8 grid-cols-1 gap-4">
                   <button
@@ -400,7 +401,7 @@ const SummaryListedSection = () => {
                     <div className="space-y-5 px-1">
                       <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
                         <div className="w-14 h-14 bg-primary/5 dark:bg-primary/10 rounded-2xl flex items-center justify-center shrink-0 border border-primary/10 dark:border-white/5 shadow-sm">
-                          <IoLocationSharp size={28} className="text-primary" />
+                          <IoLocationSharp size={28} className="text-primary dark:text-primary-light" />
                         </div>
                         <div className="space-y-1">
                           <h4 className="text-2xl font-black text-gray-900 dark:text-white leading-tight tracking-tight">

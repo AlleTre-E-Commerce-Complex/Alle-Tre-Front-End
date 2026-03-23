@@ -272,3 +272,13 @@ a {
   @apply border-none shadow;
 }
 /* ///////////////////////////////////////////////////////////////////// */
+
+/* Autofill fixes for dark mode */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover, 
+.dark input:-webkit-autofill:focus, 
+.dark input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--color-primary-dark) inset !important;
+  -webkit-text-fill-color: var(--color-secondary) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}

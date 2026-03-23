@@ -1,8 +1,8 @@
 import React from "react";
 import { Field } from "formik";
 import { Form } from "semantic-ui-react";
-import ErrorMessage from "./error-message";
 import { get } from "wild-wild-path";
+import { BiErrorCircle } from "react-icons/bi";
 import "../../../../src/assets/style/formik-dropdown.css";
 
 function FormikMultiDropdown({
@@ -21,7 +21,19 @@ function FormikMultiDropdown({
           <div className="flex flex-col mt-1.5 relative Edit_FormikMultiDropdown">
             <Form.Dropdown
               id={name}
-              label={label}
+              label={
+                label ? (
+                  <div className="flex justify-between items-center w-full mb-1">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</span>
+                    {get(touched, name) && get(errors, name) && (
+                      <div className="text-xs font-normal flex items-center text-red-700 m-0">
+                        <BiErrorCircle className="ltr:mr-1 rtl:ml-1 w-3 h-3" />
+                        {get(errors, name)}
+                      </div>
+                    )}
+                  </div>
+                ) : null
+              }
               {...field}
               {...props}
               error={Boolean(touched[name] && errors[name])}
@@ -37,9 +49,6 @@ function FormikMultiDropdown({
             >
               {props.children}
             </Form.Dropdown>
-            {get(touched, name) && get(errors, name) && (
-              <ErrorMessage message={get(errors, name)} />
-            )}
           </div>
         );
       }}

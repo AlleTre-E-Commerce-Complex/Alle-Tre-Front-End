@@ -80,7 +80,7 @@ const AuctionDetailsTabs = ({
   return (
     <div className="w-full">
       {/* Custom Tab Menu */}
-      <div className="flex overflow-x-auto scrollbar-hide border-b border-gray-100 dark:border-slate-800">
+      <div className="flex overflow-x-auto scrollbar-hide">
         <div className="flex gap-6 md:gap-10">
           {tabs.map((tab) => (
             <button
@@ -89,7 +89,7 @@ const AuctionDetailsTabs = ({
               className={`relative py-4 text-[11px] md:text-sm font-bold uppercase tracking-[0.05em] transition-all duration-300 whitespace-nowrap ${
                 activeIndexTab === tab.id
                   ? "text-gray-900 dark:text-white"
-                  : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                  : "text-gray-500 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
               }`}
             >
               <span className="relative z-10">{tab.label}</span>
@@ -111,6 +111,7 @@ const AuctionDetailsTabs = ({
           {tabs.find((t) => t.id === activeIndexTab)?.content}
         </div>
       </div>
+
     </div>
   );
 };
