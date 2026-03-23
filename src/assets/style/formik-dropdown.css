@@ -46,7 +46,7 @@
 }
 
 .Edit_FormikMultiDropdown .ui.selection.dropdown > .dropdown.icon {
-  @apply text-gray-500 dark:text-gray-400 top-[55%] -translate-y-1/2 py-0 h-auto right-4 !important;
+  @apply text-gray-500 dark:text-gray-400 top-[70%] -translate-y-1/2 py-0 h-auto ltr:right-4 ltr:left-auto rtl:left-4 rtl:right-auto !important;
   pointer-events: none !important;
 }
 
