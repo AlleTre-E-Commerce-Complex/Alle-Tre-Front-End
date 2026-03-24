@@ -198,6 +198,13 @@ const ShippingDetails = () => {
         formData.append("product[cityId]", productDetailsInt.cityId);
       }
       
+      const propertyFields = ["emirate", "totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType"];
+      propertyFields.forEach(field => {
+        if (productDetailsInt[field] !== undefined && productDetailsInt[field] !== null && productDetailsInt[field] !== "") {
+          formData.append(`product[${field}]`, Array.isArray(productDetailsInt[field]) ? JSON.stringify(productDetailsInt[field]) : productDetailsInt[field]);
+        }
+      });
+
       if (productDetailsInt.trim) formData.append("product[trim]", productDetailsInt.trim);
       if (productDetailsInt.regionalSpecs) formData.append("product[regionalSpecs]", productDetailsInt.regionalSpecs);
       if (productDetailsInt.kilometers) formData.append("product[kilometers]", productDetailsInt.kilometers);

@@ -75,7 +75,24 @@ const ProductDetails = () => {
 
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
 
-  const handleUpdate = async (values) => {
+  function getCleanedValues(formValues) {
+    const isCarCategory = Number(formValues.category) === 4 || GatogryOptions?.find(o => String(o.value) === String(formValues.category))?.name?.toLowerCase() === "cars";
+    const isPropertyCategory = Number(formValues.category) === 7 || Number(formValues.category) === 19 || Number(formValues.category) === 23 || ["properties", "عقارات", "propertiess"].includes(GatogryOptions?.find(o => String(o.value) === String(formValues.category))?.name?.toLowerCase());
+
+    const cleanValues = { ...formValues };
+    if (!isCarCategory) {
+      const carFields = ["trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor", "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity", "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance", "entertainment", "comfort", "exteriorFeatures", "carType"];
+      carFields.forEach(f => delete cleanValues[f]);
+    }
+    if (!isPropertyCategory) {
+      const propFields = ["emirate", "totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
+      propFields.forEach(f => delete cleanValues[f]);
+    }
+    return cleanValues;
+  }
+
+  const handleUpdate = async (rawValues) => {
+    const values = getCleanedValues(rawValues);
     setIsUpdating(true);
     try {
       const formData = new FormData();
@@ -732,8 +749,8 @@ const ProductDetails = () => {
       .notRequired(),
     pdfDocument: Yup.mixed().when("category", {
       is: (category) =>
-        ["Cars", "Jewellers", "Properties"].includes(
-          GatogryOptions.find((opt) => opt.value === category)?.name
+        ["Cars", "Jewellers", "Properties", "عقارات", "مجوهرات", "سيارات", "Propertiess"].includes(
+          GatogryOptions.find((opt) => String(opt.value) === String(category))?.name
         ),
       then: Yup.mixed().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.mixed().notRequired(),
@@ -744,7 +761,28 @@ const ProductDetails = () => {
       [model]: Yup.string().required(selectedContent[localizationKeys.required])
     } : {}),
     brand: Yup.string().when("category", {
-      is: (cat) => String(cat) !== "3" && String(cat) !== "7",
+      is: (cat) => {
+        const catName = GatogryOptions?.find((opt) => String(opt.value) === String(cat))?.name;
+        return String(cat) !== "3" && String(cat) !== "7" && !["Properties", "عقارات", "Propertiess"].includes(catName);
+      },
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    }),
+    residentialType: Yup.string().when("subCategory", {
+      is: (subCat) => {
+        const subCatObj = SubGatogryOptions?.find((opt) => String(opt.value) === String(subCat));
+        const subCatName = subCatObj?.text?.toLowerCase() || subCatObj?.name?.toLowerCase() || "";
+        return subCatName.includes("residential") || subCatName.includes("سكني") || subCatName.includes("house") || subCatName.includes("villa") || subCatName.includes("townhouse");
+      },
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    }),
+    commercialType: Yup.string().when("subCategory", {
+      is: (subCat) => {
+        const subCatObj = SubGatogryOptions?.find((opt) => String(opt.value) === String(subCat));
+        const subCatName = subCatObj?.text?.toLowerCase() || subCatObj?.name?.toLowerCase() || "";
+        return subCatName.includes("commercial") || subCatName.includes("تجاري") || subCatName.includes("office") || subCatName.includes("retail") || subCatName.includes("warehouse");
+      },
       then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
@@ -757,7 +795,8 @@ const ProductDetails = () => {
     }),
   });
 
-  const handelProductDetailsdata = (values) => {
+  const handelProductDetailsdata = (rawValues) => {
+    const values = getCleanedValues(rawValues);
     const allImages = imgtest || [];
     const filesCount = allImages.filter(
       (file) => file !== null && file !== undefined
@@ -897,7 +936,10 @@ const ProductDetails = () => {
         draftValue.screenSize || productDetailsint.screenSize
       );
     }
-    if (draftValue.totalArea || productDetailsint.totalArea) {
+    const draftCategory = draftValue.category || productDetailsint.category;
+    const isDraftPropCategory = Number(draftCategory) === 7 || Number(draftCategory) === 19 || Number(draftCategory) === 23 || ["properties", "عقارات", "propertiess"].includes(GatogryOptions?.find(o => String(o.value) === String(draftCategory))?.name?.toLowerCase());
+
+    if (isDraftPropCategory && (draftValue.totalArea || productDetailsint.totalArea)) {
       formData.append(
         "totalArea",
         draftValue.totalArea || productDetailsint.totalArea
@@ -915,12 +957,15 @@ const ProductDetails = () => {
         formData.append(field, Array.isArray(val) ? JSON.stringify(val) : val);
       }
     };
-    [
-      "trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor",
-      "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity",
-      "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance",
-      "entertainment", "comfort", "exteriorFeatures"
-    ].forEach(appendDraftField);
+    const isDraftCarCategory = Number(draftCategory) === 4 || GatogryOptions?.find(o => String(o.value) === String(draftCategory))?.name?.toLowerCase() === "cars";
+    if (isDraftCarCategory) {
+      [
+        "trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor",
+        "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity",
+        "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance",
+        "entertainment", "comfort", "exteriorFeatures"
+      ].forEach(appendDraftField);
+    }
     
     if (
       draftValue.regionOfManufacture ||
@@ -931,13 +976,13 @@ const ProductDetails = () => {
         draftValue.regionOfManufacture || productDetailsint.regionOfManufacture
       );
     }
-    if (draftValue.numberOfFloors || productDetailsint.numberOfFloors) {
+    if (isDraftPropCategory && (draftValue.numberOfFloors || productDetailsint.numberOfFloors)) {
       formData.append(
         "numberOfFloors",
         draftValue.numberOfFloors || productDetailsint.numberOfFloors
       );
     }
-    if (draftValue.numberOfRooms || productDetailsint.numberOfRooms) {
+    if (isDraftPropCategory && (draftValue.numberOfRooms || productDetailsint.numberOfRooms)) {
       formData.append(
         "numberOfRooms",
         draftValue.numberOfRooms || productDetailsint.numberOfRooms
@@ -1330,7 +1375,8 @@ const ProductDetails = () => {
 
                     {(formik.values.subCategory && categoryId !== 4) &&
                       categoryId !== 3 &&
-                      categoryId !== 7 && (
+                      categoryId !== 7 &&
+                      !["Properties", "عقارات", "Propertiess"].includes(GatogryOptions?.find(opt => String(opt.value) === String(categoryId))?.name) && (
                         <>
                           <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                             <FormikInput
@@ -1503,9 +1549,10 @@ const ProductDetails = () => {
                     "عقارات",
                     "مجوهرات",
                     "سيارات",
+                    "Propertiess"
                   ].includes(
                     GatogryOptions.find(
-                      (opt) => opt.value === formik.values.category
+                      (opt) => String(opt.value) === String(formik.values.category)
                     )?.name
                   ) &&
                     !isEditing && (
@@ -1518,6 +1565,7 @@ const ProductDetails = () => {
                           </span>
                         </label>
                         <div
+                          id="pdfDocument"
                           className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-200 ease-in-out max-w-3xl
                           ${
                             formik.touched.pdfDocument &&

@@ -44,6 +44,23 @@ const ItemDetails = ({ itemDetailsData }) => {
     { label: { en: "Interior Color", ar: "اللون الداخلي" }, value: itemDetailsData?.interiorColor },
     { label: { en: "Insured", ar: "مؤمن" }, value: itemDetailsData?.insuredInUae },
     { label: { en: "Warranty", ar: "الضمان" }, value: itemDetailsData?.warranty },
+    { label: { en: "Emirate", ar: "الإمارة" }, value: itemDetailsData?.emirate },
+    { label: { en: "Total Closing Fee", ar: "إجمالي رسوم الإغلاق" }, value: itemDetailsData?.totalClosingFee },
+    { label: { en: "Bathrooms", ar: "حمامات" }, value: itemDetailsData?.numberOfBathrooms },
+    { label: { en: "Developer", ar: "المطور" }, value: itemDetailsData?.developer },
+    { label: { en: "Ready By", ar: "جاهز بحلول" }, value: itemDetailsData?.readyBy },
+    { label: { en: "Annual Community Fee", ar: "رسوم المجتمع السنوية" }, value: itemDetailsData?.annualCommunityFee },
+    { label: { en: "Furnished", ar: "مفروشة" }, value: itemDetailsData?.isFurnished },
+    { label: { en: "Property Reference ID", ar: "رقم مرجع العقار" }, value: itemDetailsData?.propertyReferenceId },
+    { label: { en: "Buyer Transfer Fee", ar: "رسوم نقل المشتري" }, value: itemDetailsData?.buyerTransferFee },
+    { label: { en: "Seller Transfer Fee", ar: "رسوم نقل البائع" }, value: itemDetailsData?.sellerTransferFee },
+    { label: { en: "Maintenance Fee", ar: "رسوم الصيانة" }, value: itemDetailsData?.maintenanceFee },
+    { label: { en: "Occupancy Status", ar: "حالة الإشغال" }, value: itemDetailsData?.occupancyStatus },
+    { label: { en: "Zoned For", ar: "مخصص لـ" }, value: itemDetailsData?.zonedFor },
+    { label: { en: "Approved Build-up Area", ar: "مساحة البناء المعتمدة" }, value: itemDetailsData?.approvedBuildUpArea },
+    { label: { en: "Freehold", ar: "تملك حر" }, value: itemDetailsData?.freehold },
+    { label: { en: "Residential Type", ar: "النوع السكني" }, value: itemDetailsData?.residentialType },
+    { label: { en: "Commercial Type", ar: "النوع التجاري" }, value: itemDetailsData?.commercialType },
   ].filter((spec) => spec.value && spec.value !== "undefined");
 
   const combinedDetailsArray = [...itemDetailsArray, ...extraSpecs];
@@ -117,10 +134,11 @@ const ItemDetails = ({ itemDetailsData }) => {
               try { return JSON.parse(str) || []; } catch(e) { return []; }
             };
             const featuresLists = [
-              { label: { en: "Driver Assistance", ar: "Driver Assistance" }, items: parseFeatures(itemDetailsData?.driverAssistance) },
-              { label: { en: "Entertainment", ar: "Entertainment" }, items: parseFeatures(itemDetailsData?.entertainment) },
-              { label: { en: "Comfort", ar: "Comfort" }, items: parseFeatures(itemDetailsData?.comfort) },
-              { label: { en: "Exterior Features", ar: "Exterior Features" }, items: parseFeatures(itemDetailsData?.exteriorFeatures) },
+              { label: { en: "Driver Assistance", ar: "مساعدة السائق" }, items: parseFeatures(itemDetailsData?.driverAssistance) },
+              { label: { en: "Entertainment", ar: "الترفيه" }, items: parseFeatures(itemDetailsData?.entertainment) },
+              { label: { en: "Comfort", ar: "الراحة" }, items: parseFeatures(itemDetailsData?.comfort) },
+              { label: { en: "Exterior Features", ar: "الميزات الخارجية" }, items: parseFeatures(itemDetailsData?.exteriorFeatures) },
+              { label: { en: "Amenities", ar: "المرافق" }, items: parseFeatures(itemDetailsData?.amenities) },
             ].filter(list => list.items.length > 0);
 
             if (featuresLists.length === 0) return null;
