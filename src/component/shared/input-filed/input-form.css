@@ -133,3 +133,13 @@
   right: 8px; /* Move to the right */
   margin-right: -4px; 
 }
+
+/* Style native calendar / time picker icons */
+.has-custom-date::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}

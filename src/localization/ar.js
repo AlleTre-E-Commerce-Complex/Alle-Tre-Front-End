@@ -119,6 +119,8 @@ const ar = {
   [localizationKeys.seeAll]: "عرض الكل",
   [localizationKeys.seeLess]: "عرض أقل",
   [localizationKeys.brand]: "العلامة التجارية",
+    [localizationKeys.Brands]: "العلامة التجارية",
+    [localizationKeys.model]:"الموديل",
   [localizationKeys.sellingType]: "نوع البيع",
   [localizationKeys.auction]: "مزاد",
   [localizationKeys.products]: "منتجات",
@@ -324,6 +326,8 @@ const ar = {
   // product details
   [localizationKeys.itemDetails]: "تفاصيل السلعة",
   [localizationKeys.itemName]: "اسم العنصر",
+  [localizationKeys.ITEMNAME]: "اسم العنصر",
+  [localizationKeys.CATEGORY]: "الفئة",
   [localizationKeys.category]: "الفئة",
   [localizationKeys.subCategory]: "فئة فرعية",
   [localizationKeys.itemDescription]: "وصف العنصر",

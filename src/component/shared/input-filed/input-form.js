@@ -1,5 +1,5 @@
 import React from "react";
-import { BiErrorCircle } from "react-icons/bi";
+import { BiErrorCircle, BiCalendar } from "react-icons/bi";
 import "./input-form.css";
 
 const InputForm = ({ type, placeholder, label, width, value, errorMessage, ...props }) => {
@@ -16,13 +16,18 @@ const InputForm = ({ type, placeholder, label, width, value, errorMessage, ...pr
           )}
         </div>
       )}
-      <input
-        className={`w-full rounded-lg border border-gray-300 dark:border-[#d4af37]/40 h-[48px] focus:border-primary dark:focus:border-yellow focus:ring-1 focus:ring-primary rtl:font-serifAR ltr:font-serifEN px-4 outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-white dark:bg-primary-dark text-gray-900 dark:text-white transition-colors ${props.className || ""}`}
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        {...props}
-      />
+      <div className="relative w-full flex items-center">
+        <input
+          className={`w-full rounded-lg border border-gray-300 dark:border-[#d4af37]/40 h-[48px] focus:border-primary dark:focus:border-yellow focus:ring-1 focus:ring-primary rtl:font-serifAR ltr:font-serifEN px-4 outline-none placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-white dark:bg-primary-dark text-gray-900 dark:text-white transition-colors dark:[color-scheme:dark] ${type === "date" ? "has-custom-date" : ""} ${props.className || ""}`}
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          {...props}
+        />
+        {type === "date" && (
+          <BiCalendar className="absolute ltr:right-4 rtl:left-4 w-5 h-5 text-primary dark:text-gray-400 pointer-events-none" />
+        )}
+      </div>
     </div>
   );
 };

@@ -17,7 +17,7 @@ const PillGroup = ({ name, options, label }) => {
   return (
     <div className="flex flex-col gap-2 w-full" id={name}>
       <div className="flex justify-start gap-2 items-center w-full">
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-0">{label}</label>
+        <label className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-0">{label}</label>
         {touched[name] && errors[name] && (
           <div className="text-xs font-normal flex items-center text-red-700 m-0">
             <BiErrorCircle className="ltr:mr-1 rtl:ml-1 w-3 h-3" />
@@ -53,7 +53,7 @@ const MultiPillGroup = ({ name, options, label }) => {
   return (
     <div className="flex flex-col gap-2 w-full" id={name}>
       <div className="flex justify-start gap-2 items-center w-full">
-        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-0">{label}</label>
+        <label className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-0">{label}</label>
         {touched[name] && errors[name] && (
           <div className="text-xs font-normal flex items-center text-red-700 m-0">
             <BiErrorCircle className="ltr:mr-1 rtl:ml-1 w-3 h-3" />
@@ -95,6 +95,15 @@ const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
       };
     }) || [];
   };
+
+  const getOptionalLabel = (enLabel, arLabel) => (
+    <div className="flex justify-between items-center w-full gap-2">
+      <span>{isArabic ? arLabel : enLabel}</span>
+      <span className="text-[10px] font-normal text-gray-400 uppercase tracking-widest leading-none">
+        {isArabic ? "(اختياري)" : "(Optional)"}
+      </span>
+    </div>
+  );
 
   // Generate Year options (1950 to current year + 1)
   const currentYear = new Date().getFullYear();
@@ -180,16 +189,16 @@ const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
 
           {/* Features Fields */}
           <div className="w-full md:col-span-2 lg:col-span-1">
-             <FormikMultiDropdown name="driverAssistance" label={isArabic ? "مساعدة السائق والأمان" : "Driver Assistance & Safety"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("driverAssistance")} />
+             <FormikMultiDropdown name="driverAssistance" label={getOptionalLabel("Driver Assistance & Safety", "مساعدة السائق والأمان")} placeholder="" multiple options={getOptions("driverAssistance")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="entertainment" label={isArabic ? "الترفيه والتكنولوجيا" : "Entertainment & Technology"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("entertainment")} />
+            <FormikMultiDropdown name="entertainment" label={getOptionalLabel("Entertainment & Technology", "الترفيه والتكنولوجيا")} placeholder="" multiple options={getOptions("entertainment")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="comfort" label={isArabic ? "الراحة والملاءمة" : "Comfort & Convenience"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("comfort")} />
+            <FormikMultiDropdown name="comfort" label={getOptionalLabel("Comfort & Convenience", "الراحة والملاءمة")} placeholder="" multiple options={getOptions("comfort")} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="exteriorFeatures" label={isArabic ? "التجهيزات الخارجية" : "Exterior"} placeholder={isArabic ? "اختر المواصفات" : "Select Features"} multiple options={getOptions("exteriorFeatures")} />
+            <FormikMultiDropdown name="exteriorFeatures" label={getOptionalLabel("Exterior", "التجهيزات الخارجية")} placeholder="" multiple options={getOptions("exteriorFeatures")} />
           </div>
         </div>
            {descriptionNode}

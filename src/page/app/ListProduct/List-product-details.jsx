@@ -45,6 +45,7 @@ import ImageMedia from "component/create-auction-components/ImageMedia";
 import { listingProductDetails } from "redux-store/ListingProduct-details-slice";
 import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 import CarSpecifications from "../../../component/create-auction-components/CarSpecifications";
+import PropertySpecifications from "../../../component/create-auction-components/PropertySpecifications";
 const ListProductDetails = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -351,26 +352,47 @@ const ListProductDetails = () => {
     }
   }, [run, categoryId, subCategoryId, SubGatogryOptions.length, loadingImg]);
 
-  const optionalCarSpecs = [
-    "transmissionType", "steeringSide", "seatingCapacity", "horsepower",
-    "numberOfCylinders", "fuelType", "doors", "engineCapacity", "trim",
-    "kilometers", "regionalSpecs", "carType", "color", "interiorColor",
-    "releaseYear", "insuredInUae", "warranty", "driverAssistance",
-    "entertainment", "comfort", "exteriorFeatures"
-  ];
+  // const optionalCarSpecs = [
+  //   "transmissionType", "steeringSide", "seatingCapacity", "horsepower",
+  //   "numberOfCylinders", "fuelType", "doors", "engineCapacity", "trim",
+  //   "kilometers", "regionalSpecs", "carType", "color", "interiorColor",
+  //   "releaseYear", "insuredInUae", "warranty", "driverAssistance",
+  //   "entertainment", "comfort", "exteriorFeatures"
+  // ];
 
-  const arrayCustomFieldsvalidations =
-    customFromData?.arrayCustomFields?.reduce((acc, curr) => {
-      if (!optionalCarSpecs.includes(curr.key)) {
-        acc[curr.key] = Yup.string().required(
-          selectedContent[localizationKeys.required],
-        );
-      }
-      return acc;
-    }, {});
+  // const arrayCustomFieldsvalidations =
+  //   customFromData?.arrayCustomFields?.reduce((acc, curr) => {
+  //     if (!optionalCarSpecs.includes(curr.key)) {
+  //       acc[curr.key] = Yup.string().required(
+  //         selectedContent[localizationKeys.required],
+  //       );
+  //     }
+  //     return acc;
+  //   }, {});
 
   const isArabic = lang === "ar";
-  const handleUpdate = async (values) => {
+
+  const getCleanedValues = (formValues) => {
+    const catId = Number(formValues.category);
+    const catName = GatogryOptions?.find((opt) => String(opt.value) === String(formValues.category))?.name?.toLowerCase();
+    
+    const isCarCategory = catId === 4 || catName === "cars";
+    const isPropertyCategory = catId === 7 || catId === 19 || catId === 23 || ["properties", "عقارات", "propertiess"].includes(catName);
+
+    const cleanValues = { ...formValues };
+    if (!isCarCategory) {
+      const carFields = ["trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor", "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity", "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance", "entertainment", "comfort", "exteriorFeatures", "carType"];
+      carFields.forEach(f => delete cleanValues[f]);
+    }
+    if (!isPropertyCategory) {
+      const propFields = ["emirate", "totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
+      propFields.forEach(f => delete cleanValues[f]);
+    }
+    return cleanValues;
+  };
+
+  const handleUpdate = async (rawValues) => {
+    const values = getCleanedValues(rawValues);
     setIsUpdating(true);
     try {
       const formData = new FormData();
@@ -441,13 +463,27 @@ const ListProductDetails = () => {
         );
       if (values.numberOfFloors)
         formData.append("product[numberOfFloors]", values.numberOfFloors);
+      if (values.residentialType)
+        formData.append("product[residentialType]", values.residentialType);
+      if (values.commercialType)
+        formData.append("product[commercialType]", values.commercialType);
       if (values.numberOfRooms)
         formData.append("product[numberOfRooms]", values.numberOfRooms);
       if (values.itemDescription)
         formData.append("product[description]", values.itemDescription);
-      if (values.countryId)
-        formData.append("product[countryId]", values.countryId);
-      if (values.cityId) formData.append("product[cityId]", values.cityId);
+      if (values.emirate) formData.append("product[emirate]", values.emirate);
+      if (values.totalClosingFee) formData.append("product[totalClosingFee]", values.totalClosingFee);
+      if (values.numberOfBathrooms) formData.append("product[numberOfBathrooms]", values.numberOfBathrooms);
+      if (values.developer) formData.append("product[developer]", values.developer);
+      if (values.readyBy) formData.append("product[readyBy]", values.readyBy);
+      if (values.annualCommunityFee) formData.append("product[annualCommunityFee]", values.annualCommunityFee);
+      if (values.isFurnished) formData.append("product[isFurnished]", values.isFurnished);
+      if (values.propertyReferenceId) formData.append("product[propertyReferenceId]", values.propertyReferenceId);
+      if (values.buyerTransferFee) formData.append("product[buyerTransferFee]", values.buyerTransferFee);
+      if (values.sellerTransferFee) formData.append("product[sellerTransferFee]", values.sellerTransferFee);
+      if (values.maintenanceFee) formData.append("product[maintenanceFee]", values.maintenanceFee);
+      if (values.occupancyStatus) formData.append("product[occupancyStatus]", values.occupancyStatus);
+      if (values.amenities?.length) formData.append("product[amenities]", JSON.stringify(values.amenities));
 
       // Add productId if needed for the update API
 
@@ -496,6 +532,17 @@ const ListProductDetails = () => {
     return acc;
   }, {});
 
+  const propertyMandatoryFields = [
+    "emirate", "totalArea"
+  ].reduce((acc, field) => {
+    acc[field] = Yup.string().when("category", {
+      is: (cat) => String(cat) === "7" || GatogryOptions?.find(o => String(o.value) === String(cat))?.name === "Properties",
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    });
+    return acc;
+  }, {});
+
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
@@ -510,13 +557,35 @@ const ListProductDetails = () => {
       .trim()
       .notRequired(),
     // ...regularCustomFieldsvalidations,
-    ...arrayCustomFieldsvalidations,
+    // ...arrayCustomFieldsvalidations,
     ...carMandatoryFields,
+    ...propertyMandatoryFields,
     ...(model ? {
       [model]: Yup.string().required(selectedContent[localizationKeys.required])
     } : {}),
     brand: Yup.string().when("category", {
-      is: (cat) => String(cat) !== "3" && String(cat) !== "7",
+      is: (cat) => {
+        const catName = GatogryOptions?.find((opt) => String(opt.value) === String(cat))?.name;
+        return String(cat) !== "3" && String(cat) !== "7" && !["Properties", "عقارات", "Propertiess"].includes(catName);
+      },
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    }),
+    residentialType: Yup.string().when("subCategory", {
+      is: (subCat) => {
+        const subCatObj = SubGatogryOptions?.find((opt) => String(opt.value) === String(subCat));
+        const subCatName = subCatObj?.text?.toLowerCase() || subCatObj?.name?.toLowerCase() || "";
+        return subCatName.includes("residential") || subCatName.includes("سكني") || subCatName.includes("house") || subCatName.includes("villa") || subCatName.includes("townhouse");
+      },
+      then: Yup.string().required(selectedContent[localizationKeys.required]),
+      otherwise: Yup.string().notRequired(),
+    }),
+    commercialType: Yup.string().when("subCategory", {
+      is: (subCat) => {
+        const subCatObj = SubGatogryOptions?.find((opt) => String(opt.value) === String(subCat));
+        const subCatName = subCatObj?.text?.toLowerCase() || subCatObj?.name?.toLowerCase() || "";
+        return subCatName.includes("commercial") || subCatName.includes("تجاري") || subCatName.includes("office") || subCatName.includes("retail") || subCatName.includes("warehouse");
+      },
       then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
@@ -529,7 +598,8 @@ const ListProductDetails = () => {
     }),
   });
 
-  const handelProductDetailsdata = (values) => {
+  const handelProductDetailsdata = (rawValues) => {
+    const values = getCleanedValues(rawValues);
     if (imgtest.length >= 3) {
       if (valueRadio) {
         dispatch(
@@ -568,6 +638,15 @@ const ListProductDetails = () => {
   ];
   const adjustedcarField = carField.filter(
     (field) => field.subCategoryId !== null || field.categoryId === 4,
+  );
+
+  const getOptionalLabel = (labelText) => (
+    <div className="flex justify-between items-center w-full gap-2">
+      <span>{labelText}</span>
+      <span className="text-[10px] font-normal text-gray-400 uppercase tracking-widest leading-none">
+        {isArabic ? "(اختياري)" : "(Optional)"}
+      </span>
+    </div>
   );
 
   return (
@@ -629,12 +708,21 @@ const ListProductDetails = () => {
                   : "",
                 landType: isEditing ? listedProductVal?.landType || "" : "",
                 carType: isEditing ? listedProductVal?.carType || "" : "",
-                cityId: isEditing
-                  ? listedProductVal?.cityId?.toString() || ""
-                  : "",
-                countryId: isEditing
-                  ? listedProductVal?.countryId?.toString() || ""
-                  : "",
+                emirate: isEditing ? listedProductVal?.emirate || "" : "",
+                totalClosingFee: isEditing ? listedProductVal?.totalClosingFee || "" : "",
+                numberOfBathrooms: isEditing ? listedProductVal?.numberOfBathrooms || "" : "",
+                developer: isEditing ? listedProductVal?.developer || "" : "",
+                readyBy: isEditing ? listedProductVal?.readyBy || "" : "",
+                annualCommunityFee: isEditing ? listedProductVal?.annualCommunityFee || "" : "",
+                isFurnished: isEditing ? listedProductVal?.isFurnished || "" : "",
+                propertyReferenceId: isEditing ? listedProductVal?.propertyReferenceId || "" : "",
+                buyerTransferFee: isEditing ? listedProductVal?.buyerTransferFee || "" : "",
+                sellerTransferFee: isEditing ? listedProductVal?.sellerTransferFee || "" : "",
+                maintenanceFee: isEditing ? listedProductVal?.maintenanceFee || "" : "",
+                occupancyStatus: isEditing ? listedProductVal?.occupancyStatus || "" : "",
+                amenities: isEditing ? listedProductVal?.amenities || [] : [],
+                residentialType: isEditing ? listedProductVal?.residentialType || "" : "",
+                commercialType: isEditing ? listedProductVal?.commercialType || "" : "",
                 itemDescription: isEditing
                   ? listedProductVal?.description || ""
                   : "",
@@ -677,11 +765,11 @@ const ListProductDetails = () => {
                       </div>
 
                       <div className="grid gap-x-6 gap-y-6 md:grid-cols-2 grid-cols-1">
-                        <div className="md:col-span-2">
+                        <div className="md:col-span-2 ">
                           <FormikInput
                             name="itemName"
                             type={"text"}
-                            label={selectedContent[localizationKeys.itemName]}
+                            label={selectedContent[localizationKeys.ITEMNAME]}
                             placeholder={
                               selectedContent[localizationKeys.itemName]
                             }
@@ -691,7 +779,7 @@ const ListProductDetails = () => {
                         <div className="w-full">
                           <FormikMultiDropdown
                             name="category"
-                            label={selectedContent[localizationKeys.category]}
+                            label={selectedContent[localizationKeys.CATEGORY]}
                             placeholder={
                               selectedContent[localizationKeys.category]
                             }
@@ -830,14 +918,15 @@ const ListProductDetails = () => {
 
                         {(formik.values.subCategory && categoryId !== 4) &&
                           categoryId !== 3 &&
-                          categoryId !== 7 && (
+                          categoryId !== 7 &&
+                          !["Properties", "عقارات", "Propertiess"].includes(GatogryOptions?.find(opt => String(opt.value) === String(categoryId))?.name) && (
                             <>
                               <div className="w-full relative">
                                 <FormikInput
                                   name="brand"
                                   type="text"
                                   label={
-                                    selectedContent[localizationKeys.brand]
+                                    selectedContent[localizationKeys.Brands]
                                   }
                                   placeholder={
                                     selectedContent[localizationKeys.brand]
@@ -894,7 +983,7 @@ const ListProductDetails = () => {
                                   <FormikInput
                                     min={0}
                                     name={`${customFromData?.model?.key}`}
-                                    label={`${lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}`}
+                                    label={selectedContent[localizationKeys.model]}
                                     placeholder={`${lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}`}
                                   />
                                 </div>
@@ -902,7 +991,7 @@ const ListProductDetails = () => {
                             </>
                           )}
 
-                        {categoryId !== 4 && (
+                        {/* {categoryId !== 4 && (
                           <div className="md:col-span-2 w-full mt-2">
                             <FormikTextArea
                               name="itemDescription"
@@ -917,7 +1006,7 @@ const ListProductDetails = () => {
                               }
                             />
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
 
@@ -929,7 +1018,7 @@ const ListProductDetails = () => {
                               <FormikInput
                                 name="brand"
                                 type="text"
-                                label={selectedContent[localizationKeys.brand]}
+                                label={selectedContent[localizationKeys.Brands]}
                                 placeholder={selectedContent[localizationKeys.brand]}
                                 value={formik.values.brand}
                                 onChange={(e) => {
@@ -976,18 +1065,40 @@ const ListProductDetails = () => {
                                 <FormikInput
                                   min={0}
                                   name={`${customFromData?.model?.key}`}
-                                  label={`${lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}`}
+                                  label={selectedContent[localizationKeys.model]}
                                   placeholder={`${lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}`}
                                 />
                               </div>
                             ) : null
                           }
                           descriptionNode={
-                            <div className="md:col-span-3 w-full mt-2">
+                            <div className="md:col-span-3 w-full mt-2 text-gray-600 dark:text-gray-300 font-bold text-sm">
                               <FormikTextArea
                                 name="itemDescription"
                                 type={"text"}
-                                label={selectedContent[localizationKeys.itemDescription]}
+                                label={getOptionalLabel(selectedContent[localizationKeys.itemDescription])}
+                                placeholder={selectedContent[localizationKeys.writeItemDescription]}
+                              />
+                            </div>
+                          }
+                        />
+                      </div>
+                    )}
+
+                    {categoryId === 7 && (
+                      <div className="w-full">
+                        <PropertySpecifications 
+                          subCategoryText={SubGatogryOptions?.find(opt => opt.value === formik.values.subCategory)?.text}
+                          AllCountriesOptions={AllCountriesOptions}
+                          AllCitiesOptions={AllCitiesOptions}
+                          loadingAllCountries={loadingAllCountries}
+                          loadingCitiesOptions={loadingCitiesOptions}
+                          descriptionNode={
+                            <div className="w-full mt-2 text-gray-600 dark:text-gray-300">
+                              <FormikTextArea
+                                name="itemDescription"
+                                type={"text"}
+                                label={getOptionalLabel(selectedContent[localizationKeys.itemDescription])}
                                 placeholder={selectedContent[localizationKeys.writeItemDescription]}
                               />
                             </div>
