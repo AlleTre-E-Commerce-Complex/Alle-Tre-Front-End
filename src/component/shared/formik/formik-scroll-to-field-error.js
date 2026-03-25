@@ -33,7 +33,7 @@ export const ScrollToFieldError = () => {
 
       const errorField = fieldErrorNames[0];
       
-      // Prioritize explicit IDs (visible SUI Dropdown containers) over name attributes (hidden inputs)
+      // Prioritize explicit IDs
       let element = document.getElementById(errorField);
       
       // Fallback: Visible inputs with exact name
@@ -49,15 +49,24 @@ export const ScrollToFieldError = () => {
       }
 
       if (element) {
-        // Calculate specific vertical offset to ensure sticky top headers don't hide the focused element
-        const yOffset = -150; 
-        const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
-        window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+        let scrollTarget = element;
+        // If element is hidden or very small, try to find a visible parent div
+        if (element.offsetParent === null || element.offsetHeight === 0) {
+          const parentDiv = element.closest('div');
+          if (parentDiv) scrollTarget = parentDiv;
+        }
+
+        // Use scrollIntoView with 'center' to avoid issues with sticky headers
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Optionally focus the element if it's an input
+        if (typeof element.focus === 'function') {
+          setTimeout(() => element.focus({ preventScroll: true }), 300);
+        }
       } else {
-        // Complete Fallback: User explicitly requested scroll to top of page
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }, 100);
+    }, 150);
 
   }, [submitCount]); // eslint-disable-line react-hooks/exhaustive-deps
 

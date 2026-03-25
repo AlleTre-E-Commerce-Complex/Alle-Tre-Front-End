@@ -61,14 +61,9 @@ const ListProductDetails = () => {
   const history = useHistory();
   const [draftValue, setDraftValue] = useState();
   const [imgtest, setimgtest] = useState([]);
-  const [fileOne, setFileOne] = useState(null);
-  const [fileTwo, setFileTwo] = useState(null);
-  const [fileThree, setFileThree] = useState(null);
-  const [fileFour, setFileFour] = useState(null);
-  const [fileFive, setFileFive] = useState(null);
+
   const [listedProductVal, setListedProductVal] = useState();
-  console.log("listedProductVal", listedProductVal);
-  const [valueRadio, setRadioValue] = useState(null);
+
 
   const [countriesId, setCountriesId] = useState();
   const [categoryId, setCategoryId] = useState();
@@ -141,10 +136,7 @@ const ListProductDetails = () => {
               setimgtest(formattedImages);
             }
 
-            // Set initial usage status
-            if (productData?.usageStatus) {
-              setRadioValue(productData.usageStatus);
-            }
+
 
             // Set category and subcategory IDs for dropdown population
             if (productData?.categoryId) {
@@ -415,7 +407,12 @@ const ListProductDetails = () => {
       );
       formData.append("product[ProductListingPrice]", values.itemPrice);
       if (values.brand) formData.append("product[brand]", values.brand);
-      if (valueRadio) formData.append("product[usageStatus]", valueRadio);
+      if (values.usageStatus) {
+        formData.append("product[usageStatus]", values.usageStatus);
+      } else {
+        toast.error(selectedContent[localizationKeys.oops]);
+        return;
+      }
       if (values.color) formData.append("product[color]", values.color);
       if (values.age) formData.append("product[age]", values.age);
       if (values.landType)
@@ -483,6 +480,7 @@ const ListProductDetails = () => {
       if (values.sellerTransferFee) formData.append("product[sellerTransferFee]", values.sellerTransferFee);
       if (values.maintenanceFee) formData.append("product[maintenanceFee]", values.maintenanceFee);
       if (values.occupancyStatus) formData.append("product[occupancyStatus]", values.occupancyStatus);
+      if (values.zonedFor) formData.append("product[zonedFor]", values.zonedFor);
       if (values.amenities?.length) formData.append("product[amenities]", JSON.stringify(values.amenities));
 
       // Add productId if needed for the update API
@@ -533,12 +531,31 @@ const ListProductDetails = () => {
   }, {});
 
   const propertyMandatoryFields = [
-    "emirate", "totalArea"
+    "emirate", "totalArea", "numberOfRooms", "zonedFor", "occupancyStatus", "isFurnished", "numberOfBathrooms"
   ].reduce((acc, field) => {
-    acc[field] = Yup.string().when("category", {
-      is: (cat) => String(cat) === "7" || GatogryOptions?.find(o => String(o.value) === String(cat))?.name === "Properties",
-      then: Yup.string().required(selectedContent[localizationKeys.required]),
-      otherwise: Yup.string().notRequired(),
+    acc[field] = Yup.string().when(["category", "subCategory"], {
+      is: (cat, subCat) => {
+        const isProperty = String(cat) === "7" || GatogryOptions?.find(o => String(o.value) === String(cat))?.name === "Properties";
+        if (!isProperty) return false;
+
+        const subCatObj = SubGatogryOptions?.find(o => String(o.value) === String(subCat));
+        const subCatText = (subCatObj?.text || subCatObj?.name || "").toLowerCase();
+        
+        const isResidential = subCatText.includes("residential") || subCatText.includes("سكني") || subCatText.includes("house") || subCatText.includes("villa") || subCatText.includes("townhouse");
+        const isCommercial = subCatText.includes("commercial") || subCatText.includes("تجاري") || subCatText.includes("office") || subCatText.includes("retail") || subCatText.includes("warehouse");
+        const isMultipleUnits = subCatText.includes("multiple units") || subCatText.includes("وحدات متعددة");
+        const isLand = subCatText.includes("land") || subCatText.includes("أرض");
+
+        if (field === "emirate" || field === "totalArea") return true;
+        if (field === "numberOfRooms" || field === "numberOfBathrooms") return isResidential;
+        if (field === "isFurnished") return isResidential || isCommercial;
+        if (field === "occupancyStatus") return isResidential || isCommercial || isMultipleUnits;
+        if (field === "zonedFor") return isLand || isMultipleUnits;
+        
+        return false;
+      },
+      then: (schema) => schema.required(selectedContent[localizationKeys.required]),
+      otherwise: (schema) => schema.notRequired(),
     });
     return acc;
   }, {});
@@ -596,29 +613,32 @@ const ListProductDetails = () => {
         selectedContent[localizationKeys.required],
       ),
     }),
+    usageStatus: Yup.string().required(selectedContent[localizationKeys.required]),
   });
+
+  const DraftSaver = ({ values, setDraftValue }) => {
+    React.useEffect(() => {
+      setDraftValue(values);
+    }, [values, setDraftValue]);
+    return null;
+  };
 
   const handelProductDetailsdata = (rawValues) => {
     const values = getCleanedValues(rawValues);
     if (imgtest.length >= 3) {
-      if (valueRadio) {
-        dispatch(
-          listingProductDetails({
-            ...values,
-            valueRadio,
-            images: imgtest.map((img) => ({
-              file: img.file,
-              imageLink: img.imageLink,
-              imagePath: img.file.name,
-            })),
-            auctionState,
-            auctionId: completeDraftVal?.id,
-          }),
-        );
-        history.push(routes.app.listProduct.listProductLocationDetails);
-      } else {
-        toast.error(selectedContent[localizationKeys.oops]);
-      }
+      dispatch(
+        listingProductDetails({
+          ...values,
+          images: imgtest.map((img) => ({
+            file: img.file,
+            imageLink: img.imageLink,
+            imagePath: img.file.name,
+          })),
+          auctionState,
+          auctionId: completeDraftVal?.id,
+        }),
+      );
+      history.push(routes.app.listProduct.listProductLocationDetails);
     } else {
       toast.error(
         selectedContent[
@@ -720,6 +740,7 @@ const ListProductDetails = () => {
                 sellerTransferFee: isEditing ? listedProductVal?.sellerTransferFee || "" : "",
                 maintenanceFee: isEditing ? listedProductVal?.maintenanceFee || "" : "",
                 occupancyStatus: isEditing ? listedProductVal?.occupancyStatus || "" : "",
+                zonedFor: isEditing ? listedProductVal?.zonedFor || "" : "",
                 amenities: isEditing ? listedProductVal?.amenities || [] : [],
                 residentialType: isEditing ? listedProductVal?.residentialType || "" : "",
                 commercialType: isEditing ? listedProductVal?.commercialType || "" : "",
@@ -750,9 +771,9 @@ const ListProductDetails = () => {
               enableReinitialize
             >
               {(formik) => (
-                <Form onSubmit={formik.handleSubmit}>
+                <Form onSubmit={formik.handleSubmit} noValidate>
                   <ScrollToFieldError />
-                  {setDraftValue(formik?.values)}
+                  <DraftSaver values={formik.values} setDraftValue={setDraftValue} />
 
                   <div className="w-full flex flex-col gap-6  mx-auto">
                     {/* General Information Card */}
@@ -1134,18 +1155,30 @@ const ListProductDetails = () => {
                       {/* Condition Card */}
                       {!(categoryId === 7 && subCategoryId === 23) ? (
                         <div className="bg-white dark:bg-primary-dark border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm flex flex-col h-full">
-                          <div className="flex items-center gap-2 mb-6">
-                            <IoRibbonOutline className="dark:text-primary-light text-yellow w-6 h-6" />
-                            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                              {selectedContent[localizationKeys.itemCondition]}
-                            </h2>
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center gap-2">
+                              <IoRibbonOutline className="dark:text-primary-light text-yellow w-6 h-6" />
+                              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                {selectedContent[localizationKeys.itemCondition]} <span className="text-red-500">*</span>
+                              </h2>
+                            </div>
+                            {formik.errors.usageStatus && (formik.touched.usageStatus || formik.submitCount > 0) && (
+                              <span className="text-sm font-medium text-red-600 ltr:font-serifEN rtl:font-serifAR px-2 py-1 rounded">
+                                {selectedContent[localizationKeys.required]}
+                              </span>
+                            )}
                           </div>
-                          <div className="w-full h-full">
+                          <div className="w-full h-full" id="usageStatus">
                             <CheckboxRadioProductDetails
-                              valueRadio={valueRadio}
-                              setRadioValue={setRadioValue}
+                              valueRadio={formik.values.usageStatus}
+                              setRadioValue={(val) => {
+                                formik.setFieldValue("usageStatus", val);
+                              }}
                               categoryId={categoryId}
                               subCategoryId={subCategoryId}
+                              showError={Boolean(
+                                formik.errors.usageStatus && (formik.touched.usageStatus || formik.submitCount > 0)
+                              )}
                             />
                           </div>
                         </div>

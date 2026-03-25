@@ -25,7 +25,9 @@ const PillGroup = ({ name, options, label }) => {
           </div>
         )}
       </div>
-      <div className="flex flex-wrap gap-2 bg-gray-100 dark:bg-[#2C3241] p-1 rounded-xl w-max">
+      <div className={`flex flex-wrap gap-2 bg-gray-100 dark:bg-[#2C3241] p-1 rounded-xl w-max border ${
+        touched[name] && errors[name] ? "border-red-600" : "border-transparent"
+      }`}>
         {options.map((opt) => (
           <button
             key={opt.value}
@@ -70,6 +72,8 @@ const MultiPillGroup = ({ name, options, label }) => {
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
               currentValue === opt.value
                 ? 'border-primary dark:border-yellow text-primary dark:text-yellow bg-primary/10 dark:bg-yellow/10'
+                : touched[name] && errors[name]
+                ? 'border-red-600 text-gray-600 dark:text-gray-300 hover:border-red-600'
                 : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-primary dark:hover:border-yellow'
             }`}
           >

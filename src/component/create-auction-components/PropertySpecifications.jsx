@@ -11,12 +11,13 @@ import { BiErrorCircle, BiInfoCircle } from "react-icons/bi";
 const MultiPillGroup = ({ name, options, label }) => {
   const { values, setFieldValue, errors, touched } = useFormikContext();
   const currentValue = values[name];
+  const hasError = touched[name] && errors[name];
   
   return (
     <div className="flex flex-col gap-2 w-full" id={name}>
       <div className="flex justify-start gap-2 items-center w-full">
         <label className="text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider mb-0">{label}</label>
-        {touched[name] && errors[name] && (
+        {hasError && (
           <div className="text-xs font-normal flex items-center text-red-700 m-0">
             <BiErrorCircle className="ltr:mr-1 rtl:ml-1 w-3 h-3" />
             {errors[name]}
@@ -32,6 +33,8 @@ const MultiPillGroup = ({ name, options, label }) => {
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all border ${
               currentValue === opt.value
                 ? 'border-primary dark:border-yellow text-primary dark:text-yellow bg-primary/10 dark:bg-yellow/10'
+                : hasError
+                ? 'border-red-600 text-gray-600 dark:text-gray-300 hover:border-red-600'
                 : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-primary dark:hover:border-yellow'
             }`}
           >
@@ -139,7 +142,7 @@ const PropertySpecifications = ({
             <div className="w-full">
               <FormikMultiDropdown
                 name="residentialType"
-                label={isArabic ? "نوع العقار السكني *" : "RESIDENTIAL TYPE *"}
+                label={isArabic ? "نوع العقار السكني" : "RESIDENTIAL TYPE"}
                 placeholder={isArabic ? "اختر نوع العقار" : "Select Type"}
                 options={getOptions("residentialType")}
               />
@@ -149,7 +152,7 @@ const PropertySpecifications = ({
             <div className="w-full">
               <FormikMultiDropdown
                 name="commercialType"
-                label={isArabic ? "نوع العقار التجاري *" : "COMMERCIAL TYPE *"}
+                label={isArabic ? "نوع العقار التجاري" : "COMMERCIAL TYPE"}
                 placeholder={isArabic ? "اختر نوع العقار" : "Select Type"}
                 options={getOptions("commercialType")}
               />
@@ -183,7 +186,7 @@ const PropertySpecifications = ({
           {showRoomsAndBathrooms && (
             <>
               <div className="w-full">
-                <MultiPillGroup name="numberOfRooms" label={isArabic ? "غرف النوم *" : "BEDROOMS *"} options={bedroomsOptions.map(opt => ({...opt, text: isArabic ? (opt.text.split(" | ")[1] || opt.text) : opt.text.split(" | ")[0]}))} />
+                <MultiPillGroup name="numberOfRooms" label={isArabic ? "غرف النوم" : "BEDROOMS"} options={bedroomsOptions.map(opt => ({...opt, text: isArabic ? (opt.text.split(" | ")[1] || opt.text) : opt.text.split(" | ")[0]}))} />
               </div>
               <div className="w-full">
                 <MultiPillGroup name="numberOfBathrooms" label={isArabic ? "الحمامات" : "BATHROOMS"} options={bathroomsOptions} />
