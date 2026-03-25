@@ -86,8 +86,8 @@ const ListingProductsLocationDetails = () => {
       if (productDetailsInt.brand) {
         formData.append("product[brand]", productDetailsInt.brand);
       }
-      if (productDetailsInt.valueRadio) {
-        formData.append("product[usageStatus]", productDetailsInt.valueRadio);
+      if (productDetailsInt.usageStatus) {
+        formData.append("product[usageStatus]", productDetailsInt.usageStatus);
       }
       if (productDetailsInt.color) {
         formData.append("product[color]", productDetailsInt.color);

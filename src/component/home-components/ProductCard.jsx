@@ -166,13 +166,15 @@ const ProductCard = ({
         {/* Badge - Top Left */}
         <div className="absolute top-2 left-2 z-10 flex gap-1.5">
           <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
-               {category === 3 || category === 7
+               {/* {category === 3 || category === 7
                 ? usageStatus === "NEW"
                   ? selectedContent[localizationKeys.sell]
                   : category === 7 ? selectedContent[localizationKeys.adoption
                     
                   ] : selectedContent[localizationKeys.rent]
                 : usageStatus?.charAt(0).toUpperCase() +
+                  usageStatus?.slice(1).toLowerCase()} */}
+                  {usageStatus?.charAt(0).toUpperCase() +
                   usageStatus?.slice(1).toLowerCase()}
           </div>
         </div>

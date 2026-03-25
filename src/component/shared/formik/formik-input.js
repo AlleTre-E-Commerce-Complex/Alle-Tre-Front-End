@@ -44,6 +44,7 @@ function FormikInput({
           return (
             <div>
               <InputForm
+                id={name}
                 label={label}
                 placeholder={placeholder}
                 type={type}
@@ -51,7 +52,7 @@ function FormikInput({
                 value={value}
                 {...field}
                 {...props}
-                error={isError ? "true" : undefined}
+                error={isError}
                 errorMessage={isError ? errors[name] : undefined}
                 onKeyDown={type === "number" ? handleKeyDown : undefined}
               />

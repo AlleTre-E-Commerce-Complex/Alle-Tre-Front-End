@@ -10,7 +10,8 @@ export const CheckboxRadioProductDetails = ({
   setRadioValue,
   categoryId,
   subCategoryId,
-  isAuction
+  isAuction,
+  showError,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -24,24 +25,54 @@ export const CheckboxRadioProductDetails = ({
 
   const getOptionLabel = (isNew) => {
     if (isProperty || (isAnimal && subCategoryId === 22)) {
-      return isNew ? selectedContent[localizationKeys.sell] : selectedContent[localizationKeys.rent];
+      return isNew
+        ? selectedContent[localizationKeys.sell]
+        : selectedContent[localizationKeys.rent];
     }
-    return isNew ? selectedContent[localizationKeys.new] : selectedContent[localizationKeys.used];
+    return isNew
+      ? selectedContent[localizationKeys.new]
+      : selectedContent[localizationKeys.used];
   };
 
   const getOptionDescription = (isNew) => {
     if (isProperty) {
-      return isNew ? selectedContent[localizationKeys.premiumRealEstateAvailableForExclusiveOwnership] : selectedContent[localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters];
+      return isNew
+        ? selectedContent[
+            localizationKeys.premiumRealEstateAvailableForExclusiveOwnership
+          ]
+        : selectedContent[
+            localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters
+          ];
     }
     if (isAnimal && subCategoryId === 22) {
-      return isNew ? selectedContent[localizationKeys.discoverExceptionalBreedsAndLovingCompanions] : selectedContent[localizationKeys.provideAForeverHomeToARemarkableRescue];
+      return isNew
+        ? selectedContent[
+            localizationKeys.discoverExceptionalBreedsAndLovingCompanions
+          ]
+        : selectedContent[
+            localizationKeys.provideAForeverHomeToARemarkableRescue
+          ];
     }
-    return isNew ? selectedContent[localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging] : selectedContent[localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear];
+    return isNew
+      ? selectedContent[
+          localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging
+        ]
+      : selectedContent[
+          localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear
+        ];
   };
 
   const options = [
-    { value: "NEW", label: getOptionLabel(true), description: getOptionDescription(true) },
-    { value: "USED", label: getOptionLabel(false), description: getOptionDescription(false) },
+    {
+      value: "NEW",
+      label: getOptionLabel(true),
+      description: getOptionDescription(true),
+    },
+    {
+      value: "USED",
+      label: getOptionLabel(false),
+      description: getOptionDescription(false),
+    },
   ];
 
   return (
@@ -55,6 +86,8 @@ export const CheckboxRadioProductDetails = ({
             className={`flex flex-col items-center justify-center p-6 rounded-xl cursor-pointer border-2 transition-all duration-300 h-full ${
               isSelected
                 ? "border-yellow bg-primary/5 dark:border-yellow dark:bg-yellow-200/10"
+                : showError
+                ? "border-red-600 bg-red-50 dark:bg-red-900/10 border-2"
                 : "border-transparent bg-gray-50 dark:bg-[#1A1F2C] hover:bg-gray-100 dark:hover:bg-[#22283A]"
             }`}
           >
