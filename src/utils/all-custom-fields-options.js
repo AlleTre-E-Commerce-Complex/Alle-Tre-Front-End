@@ -72,7 +72,6 @@ export const allCustomFileOptions = {
     { key: "Turquoise", text: "Turquoise | تركواز", value: "Turquoise" },
     { key: "Bronze", text: "Bronze | برونزي", value: "Bronze" },
     { key: "Golden", text: "Golden | ذهبي", value: "Golden" },
-    { key: "Grey", text: "Grey | رمادي", value: "Grey" },
     { key: "Silver", text: "Silver | فضي", value: "Silver" },
     {
       key: "Matte Black",

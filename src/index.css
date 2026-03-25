@@ -251,7 +251,7 @@ a {
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-search-Input---------------------------*/
 .edit-search-Input.ui.input > input {
-  @apply rounded-lg border-none focus:outline-none ltr:font-serifEN rtl:font-serifAR bg-primary-dark text-primary-light focus:text-white;
+  @apply rounded-lg border-none focus:outline-none ltr:font-serifEN rtl:font-serifAR bg-transparent text-primary-light focus:text-white;
 }
 /* ///////////////////////////////////////////////////////////////////// */
 /*----------------------- edit-For-order-tabs ---------------------------*/

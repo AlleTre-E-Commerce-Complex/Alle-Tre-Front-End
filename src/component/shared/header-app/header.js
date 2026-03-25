@@ -66,6 +66,19 @@ const Header = ({
   );
   // const { GatogryOptions, loadingGatogry } = useGetGatogry();
 
+  const isTransparentPath = pathname.includes("categories");
+
+  const inputClasses = `
+  flex-1  h-[48px] edit-search-Input 
+               ltr:font-serifEN rtl:font-serifAR 
+               w-full pr-10
+  ${
+    isTransparentPath
+      ? "bg-transparent text-white placeholder-gray-300" // Styles for Transparent Nav
+      : "bg-primary-dark text-primary-light focus:text-white" // Styles for Solid Nav
+  }
+`;
+
   // const [pushEnabled, setPushEnabled] = useState(false);
   // const socketUrl = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
   const { logout } = useAuthState();
@@ -543,7 +556,16 @@ const Header = ({
   }, [isOpen]);
 
   return (
-    <div className="w-full fixed top-0 z-50 bg-primary dark:bg-primary backdrop-blur-md">
+    <div
+      className={`
+    w-full fixed top-0 z-50 transition-all duration-300
+    ${
+      isTransparentPath
+        ? "bg-transparent"
+        : "bg-primary dark:bg-primary backdrop-blur-md"
+    }
+  `}
+    >
       <div
         className={`md:h-[72px] h-[60px] flex justify-between gap-x-2 w-full ${
           lang === "en" ? "pr-3" : "pl-3"
@@ -836,7 +858,7 @@ const Header = ({
           </div>
         </div>
       </div>
-      <div className={` ${searchShow ? "h-[60px]" : ""} bg-primary`}>
+      <div className={` ${searchShow ? "h-[60px]" : ""} `}>
         <div className="pb-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-5">
           {currentPath.includes("/alletre/categories") && (
             <button
@@ -859,11 +881,9 @@ const Header = ({
               </svg>
             </button>
           )}
-          <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%] border border-primary-light rounded-md overflow-hidden bg-primary-dark">
+          <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%] border border-primary-light rounded-md overflow-hidden ">
             <Input
-              className="flex-1  h-[48px] edit-search-Input 
-               ltr:font-serifEN rtl:font-serifAR 
-               w-full pr-10"
+              className={inputClasses}
               placeholder={
                 selectedContent[
                   localizationKeys.SearchForLuxuryItemsWatchesRealEstate
@@ -1023,8 +1043,8 @@ const Header = ({
               )}
             </div>
           )} */}
-          <DropdownLang className="Edit_Lang_Dropdown text-black bg-primary hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] hidden items-center justify-center " />
-          <DropdownLang className="text-black  bg-primary hover:bg-yellow-200/10 px-3 py-2 rounded-lg transition-all duration-300 border border-primary-light hover:border-yellow shadow-sm hover:shadow-md" />
+          <DropdownLang className="Edit_Lang_Dropdown text-white hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] hidden items-center justify-center " />
+          <DropdownLang className="text-white hover:bg-yellow-200/10 px-3 py-2 rounded-lg transition-all duration-300 border border-primary-light hover:border-yellow shadow-sm hover:shadow-md" />
 
           {/* <PopupCategoriesModel
             isOpen={isOpen}
