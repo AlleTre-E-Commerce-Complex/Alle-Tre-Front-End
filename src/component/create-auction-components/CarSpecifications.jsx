@@ -133,8 +133,17 @@ const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
        
           {/* Row 1 */}
           <div className="w-full">
+            <FormikMultiDropdown 
+              name="emirate" 
+              label={isArabic ? "الإمارة" : "EMIRATE"} 
+              placeholder={isArabic ? "اختر الإمارة" : "Select Emirate"} 
+              options={getOptions("emirates")} 
+            />
+          </div>
+          <div className="w-full">
             <FormikInput name="trim" type="text" label={isArabic ? "الفئة (TRIM)" : "TRIM"} placeholder={isArabic ? "مثال: XLE" : "e.g. XLE"} />
           </div>
+
           <div className="w-full">
             <FormikInput name="kilometers" type="number" label={isArabic ? "الكيلومترات" : "KILOMETERS"} placeholder={isArabic ? "مثال: 15,000" : "e.g. 15,000"} />
           </div>

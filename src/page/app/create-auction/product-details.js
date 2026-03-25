@@ -85,9 +85,14 @@ const ProductDetails = () => {
       carFields.forEach(f => delete cleanValues[f]);
     }
     if (!isPropertyCategory) {
-      const propFields = ["emirate", "totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
+      const propFields = ["totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
+      // emirate is allowed for both cars and properties, so we only delete it if it's neither
+      if (!isCarCategory) {
+        delete cleanValues["emirate"];
+      }
       propFields.forEach(f => delete cleanValues[f]);
     }
+
     return cleanValues;
   }
 
@@ -150,6 +155,8 @@ const ProductDetails = () => {
       if (values.entertainment?.length) formData.append("product[entertainment]", JSON.stringify(values.entertainment));
       if (values.comfort?.length) formData.append("product[comfort]", JSON.stringify(values.comfort));
       if (values.exteriorFeatures?.length) formData.append("product[exteriorFeatures]", JSON.stringify(values.exteriorFeatures));
+      if (values.emirate) formData.append("product[emirate]", values.emirate);
+
       if (values.regionOfManufacture)
         formData.append(
           "product[regionOfManufacture]",
@@ -963,8 +970,9 @@ const ProductDetails = () => {
         "trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor",
         "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity",
         "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance",
-        "entertainment", "comfort", "exteriorFeatures"
+        "entertainment", "comfort", "exteriorFeatures", "emirate"
       ].forEach(appendDraftField);
+
     }
     
     if (

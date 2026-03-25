@@ -21,7 +21,8 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 // import { CgProfile } from "react-icons/cg";
-import { MdLogout } from "react-icons/md";
+// import { MdLogout } from "react-icons/md";
+
 import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
 import { productDetails } from "../../../redux-store/product-details-Slice";
@@ -35,10 +36,13 @@ import {
   getDefaultPerPage,
   getDefaultPaginationString,
 } from "../../../constants/pagination";
-import useGetGatogry from "../../../hooks/use-get-category";
+// import useGetGatogry from "../../../hooks/use-get-category";
+
 // import { getFCMToken } from "../../../config/firebase-config";
 // import { getMessaging, onMessage } from "firebase/messaging";
+import MobileFilterBar from "../../home-components/mobile-filter-bar";
 const Header = ({
+
   SetSid,
   setSelectedType,
   onFilterClick,
@@ -54,16 +58,18 @@ const Header = ({
   // const socketauctionId = useSelector((state) => state.socket.auct);
   const [notificationCount, setNotificationCount] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [searchShow, setSearchShow] = useState(false);
+  const [searchShow, setSearchShow] = useState(true);
+
 
   const [isListing, setIsListing] = useState(false);
   const [open, setOpen] = useState(false);
   const { run } = useAxios();
-  const [name, setTitle] = useFilter("title", "");
+  const [, setTitle] = useFilter("title", "");
   const [searchValue, setSearchValue] = useState("");
   const [selectedOption, setSelectedOption] = useState(
     selectedContent[localizationKeys.all],
   );
+
   // const { GatogryOptions, loadingGatogry } = useGetGatogry();
 
   const isTransparentPath = pathname.includes("categories");
@@ -147,7 +153,7 @@ const Header = ({
       console.log("unread count error :", error);
     }
   }
-  const handleTypeChange = (type) => {
+  /* const handleTypeChange = (type) => {
     switch (type) {
       case "auction":
         setSelectedOption(selectedContent[localizationKeys.viewAuction]);
@@ -163,7 +169,8 @@ const Header = ({
     }
     setSelectedType(type);
     onDropdownChange?.(false);
-  };
+  }; */
+
 
   // useEffect(() => {
   //   if (!socket) return;
@@ -561,9 +568,10 @@ const Header = ({
     w-full fixed top-0 z-50 transition-all duration-300
     ${
       isTransparentPath
-        ? "bg-transparent"
+        ? "bg-transparent "
         : "bg-primary dark:bg-primary backdrop-blur-md"
     }
+
   `}
     >
       <div
@@ -858,29 +866,9 @@ const Header = ({
           </div>
         </div>
       </div>
-      <div className={` ${searchShow ? "h-[60px]" : ""} `}>
+      <div className={` ${searchShow ? "h-auto pb-2" : "h-0 overflow-hidden"} `}>
         <div className="pb-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-5">
-          {currentPath.includes("/alletre/categories") && (
-            <button
-              onClick={onFilterClick}
-              className="md:hidden text-primary-light rounded-full flex items-center justify-center"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 xs:h-6 xs:w-6 text-primary-veryLight"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                />
-              </svg>
-            </button>
-          )}
+
           <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%] border border-primary-light rounded-md overflow-hidden ">
             <Input
               className={inputClasses}
@@ -1045,31 +1033,18 @@ const Header = ({
           )} */}
           <DropdownLang className="Edit_Lang_Dropdown text-white hover:bg-yellow-200/10 px-4 py-2.5 rounded-lg transition-all duration-300 border border-primary-light shadow-sm hover:shadow-md hover:border-yellow w-[120px] h-[48px] hidden items-center justify-center " />
           <DropdownLang className="text-white hover:bg-yellow-200/10 px-3 py-2 rounded-lg transition-all duration-300 border border-primary-light hover:border-yellow shadow-sm hover:shadow-md" />
-
-          {/* <PopupCategoriesModel
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            onClose={handleClose}
-          /> */}
-          <div className="md:flex hidden gap-x-4 ">
+          <div className="md:flex hidden gap-x-4">
             {user ? (
               <>
                 <button
                   onClick={handelRegister}
-                  className=" w-[120px] h-[48px] border-[1px] border-primary-light text-white hover:bg-primary-light hover:text-white  rounded-lg flex justify-center gap-x-1 py-3  font-normal"
+                  className="w-[120px] h-[48px] border-[1px] border-primary-light text-white hover:bg-primary-light hover:text-white rounded-lg flex items-center justify-center gap-x-1 py-1 font-normal"
                 >
-                  <FaRegUser size={15} className="mt-1" />
-                  <p className="pt-1 ">
+                  <FaRegUser size={15} />
+                  <p className="pt-0.5">
                     {selectedContent[localizationKeys.profile]}
                   </p>
                 </button>
-                {/* <div
-                  onClick={() => setLogoutModalOpen(true)}
-                  className="group w-[120px] h-[48px] border-[1px] border-primary-light text-red-600 hover:bg-primary-light hover:text-white rounded-lg flex items-center justify-center gap-x-1 py-3 text-base font-normal transition-all duration-300 cursor-pointer"
-                >
-                  <MdLogout className="text-xl" />
-                  <span> {selectedContent[localizationKeys.logout]}</span>
-                </div> */}
                 <LogoutModal
                   open={logoutModalOpen}
                   setOpen={setLogoutModalOpen}
@@ -1079,17 +1054,23 @@ const Header = ({
             ) : (
               <button
                 onClick={handelRegister}
-                className="w-[120px] h-[48px] border-[1px] border-primary-light text-white hover:bg-primary-light hover:text-white rounded-lg flex justify-center gap-x-1 py-3 text-base font-normal"
+                className="w-[120px] h-[48px] border-[1px] border-primary-light text-white hover:bg-primary-light hover:text-white rounded-lg flex items-center justify-center gap-x-1 py-1 text-base font-normal"
               >
-                <FaRegUser size={15} className="mt-1" />
-                <p className="pt-1">
+                <FaRegUser size={15} />
+                <p className="pt-0.5">
                   {selectedContent[localizationKeys.loginOrRegister]}
                 </p>
               </button>
             )}
           </div>
         </div>
+
+        {(currentPath.includes("/alletre/categories") || currentPath === routes.app.home) && (
+          <MobileFilterBar onOpenFullFilters={onFilterClick} />
+        )}
       </div>
+
+
       <AddLocationModel
         open={open}
         setOpen={setOpen}

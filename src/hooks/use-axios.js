@@ -53,7 +53,12 @@ function useAxios(initialState) {
           return response;
         },
         (error) => {
-          const errorMessage = error?.response?.data;
+          const responseData = error?.response?.data;
+          const errorMessage =
+            typeof responseData === "object" && responseData !== null
+              ? responseData.en || responseData.message || JSON.stringify(responseData)
+              : responseData || error.message;
+
           if (config.throwOnError) throw new Error(errorMessage);
           setError(errorMessage);
           return Promise.reject(errorMessage);

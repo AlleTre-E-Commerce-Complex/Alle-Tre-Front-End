@@ -27,6 +27,10 @@ import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import SideBanner from "../../../component/home-components/SideBanner";
 import BannerBottom from "component/home-components/BannerBottom";
 import SearchResults from "component/home-components/search-results";
+// import MobileFilterBar from "../../../component/home-components/mobile-filter-bar";
+
+import FilterSections from "../../../component/home-components/filter-sections";
+
 
 const Home = ({
   selectedType,
@@ -179,6 +183,7 @@ const Home = ({
         const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
         const filterParams = {
+          ...parsed,
           page,
           perPage,
           categories: Array.isArray(parsed.categories)
@@ -291,6 +296,7 @@ const Home = ({
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
     const filterParams = {
+      ...parsed,
       page: page,
       perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
@@ -414,12 +420,13 @@ const Home = ({
         isDropdownOpen ? "blur-sm pointer-events-none" : ""
       } transition-all duration-300`}
     >
-      {/* {isFilterOpen && (
+      {isFilterOpen && (
         <FilterSections
           isFullPage={true}
           onClose={() => setIsFilterOpen(false)}
         />
-      )} */}
+      )}
+
       <div className="w-full h-full relative z-40 bg-white dark:bg-background transition-colors duration-300">
         <div className="lg:pt-[145px] md:pt-[139px] pt-[125px] home dark:bg-background transition-colors duration-300">
           <Dimmer
@@ -434,6 +441,9 @@ const Home = ({
           <div className="w-full px-3 sm:px-4">
             <BannerTopNew auctions={mainAuctions} />
           </div>
+          {/* <MobileFilterBar onOpenFullFilters={() => setIsFilterOpen(true)} /> */}
+
+
           {/* <div className="text-center mt-1 md:mt-2 lg:mt-3">
             <h1
               ref={myRef}
