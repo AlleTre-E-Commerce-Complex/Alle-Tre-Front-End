@@ -105,6 +105,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
     const filterParams = {
+      ...parsed,
       page: page,
       perPage: perPage,
       categories: parsed.categories ? parsed.categories.map(Number) : undefined,
@@ -273,7 +274,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         />
       )}
       <div className="bg-white dark:bg-background">
-        <div className="py-3 md:py-6 py-3 ">
+        <div className="py-0 md:py-6">
+
           <Dimmer
             className="fixed w-full h-full top-0 bg-white/50"
             active={loadingSubGatogry || isLoadingCategories || loadingGatogry}
@@ -282,7 +284,11 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             {/* <Loader active /> */}
             <LodingTestAllatre />
           </Dimmer>
-          <div className=" sticky z-30 relative w-full sm:aspect-[21/7] lg:aspect-[21/6] xl:max-h-[300px] mb-6 overflow-hidden top-[-175px] -mt-6">
+          <div className="sticky z-30 relative w-full h-[220px] sm:h-[240px] md:h-[280px] lg:h-[300px] xl:h-[320px] mb-6 overflow-hidden top-[-50px] sm:top-[-90px] md:top-[-155px] lg:top-[-175px] xl:top-[-190px] md:-mt-6">
+
+
+
+
             <img
               className="w-full h-full object-cover object-center rounded-xl md:rounded-2xl"
               src={
@@ -300,8 +306,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             {/* <div className="absolute inset-0 bg-gradient-to-t from-[#1b2331]/80 via-[#1b2331]/20 to-transparent lg:mx-4 rounded-xl md:rounded-2xl pointer-events-none"></div> */}
             <div
               className={`absolute bottom-0 left-0 right-0 p-5 sm:p-8 lg:p-10 text-white lg:mx-4 z-10 
-    transition-all duration-500 ease-in-out
-    ${isScrolled ? "opacity-0 translate-y-4 pointer-events-none" : "opacity-100 translate-y-0"}`}
+                        transition-all duration-500 ease-in-out
+                          ${isScrolled ? "opacity-0 translate-y-4 pointer-events-none" : "opacity-100 translate-y-0"}`}
             >
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-serifEN font-bold tracking-wide drop-shadow-md">
                 {selectedCategor?.text}

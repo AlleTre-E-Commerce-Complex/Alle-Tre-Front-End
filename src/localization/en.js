@@ -774,6 +774,8 @@ const en = {
   [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"Pre-owned excellence, showing only minor to light signs of wear",
   [localizationKeys.manageYourActivityAndAlerts]:"Manage Your Activity and Alerts",
   [localizationKeys.vehicleSpecifications]:"Vehicle Specifications",
+  [localizationKeys.applyFilters]:"Apply Filters",
+  [localizationKeys.clear]:"Clear",
 };
 
 export default en;

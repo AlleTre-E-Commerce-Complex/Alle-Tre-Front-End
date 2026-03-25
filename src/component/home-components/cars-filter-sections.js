@@ -13,6 +13,7 @@ const CarsFilterSections = ({ lang, myRef }) => {
   };
 
   const carConfigs = [
+    { id: "emirate", label: lang === "ar" ? "الإمارة" : "Emirate", options: getFilterOptions("emirate") },
     { id: "regionalSpecs", label: lang === "ar" ? "المواصفات الإقليمية" : "Regional Specs", options: getFilterOptions("regionalSpecs") },
     { id: "bodyType", label: lang === "ar" ? "نوع الكابينة" : "Body Type", options: getFilterOptions("carType") },
     { id: "seatingCapacity", label: lang === "ar" ? "المقاعد" : "Seats", options: getFilterOptions("seatingCapacity") },
@@ -24,8 +25,9 @@ const CarsFilterSections = ({ lang, myRef }) => {
     { id: "engineCapacity", label: lang === "ar" ? "سعة المحرك (cc)" : "Engine Capacity (cc)", options: getFilterOptions("engineCapacity") },
     { id: "doors", label: lang === "ar" ? "الأبواب" : "Doors", options: getFilterOptions("doors") },
     { id: "warranty", label: lang === "ar" ? "الضمان" : "Warranty", options: getFilterOptions("warranty") },
-    { id: "cylinders", label: lang === "ar" ? "عدد الأسطوانات" : "Number of Cylinders", options: getFilterOptions("cylinders") }
+    { id: "cylinders", label: lang === "ar" ? "عدد الأسطوانات" : "Number of Cylinders", options: getFilterOptions("cylinders") },
   ];
+
 
   return (
     <>

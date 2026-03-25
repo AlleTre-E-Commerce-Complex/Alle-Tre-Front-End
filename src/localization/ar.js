@@ -761,6 +761,8 @@ const ar = {
     [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"حالة ممتازة مستعملة، تظهر عليها علامات استخدام طفيفة إلى خفيفة",
     [localizationKeys.manageYourActivityAndAlerts]:"إدارة نشاطك وتنبيهاتك",
     [localizationKeys.vehicleSpecifications]:"مواصفات المركبة",
+    [localizationKeys.applyFilters]:"تطبيق الفلاتر",
+    [localizationKeys.clear]:"مسح",
 };
 
 export default ar;

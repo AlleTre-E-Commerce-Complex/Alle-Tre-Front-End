@@ -377,9 +377,14 @@ const ListProductDetails = () => {
       carFields.forEach(f => delete cleanValues[f]);
     }
     if (!isPropertyCategory) {
-      const propFields = ["emirate", "totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
+      const propFields = ["totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
+      // emirate is allowed for both cars and properties, so we only delete it if it's neither
+      if (!isCarCategory) {
+        delete cleanValues["emirate"];
+      }
       propFields.forEach(f => delete cleanValues[f]);
     }
+
     return cleanValues;
   };
 
