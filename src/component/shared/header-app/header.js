@@ -1065,7 +1065,7 @@ const Header = ({
           </div>
         </div>
 
-        {(currentPath.includes("/alletre/categories") || currentPath === routes.app.home) && (
+        {currentPath.includes("/alletre/categories") && (
           <MobileFilterBar onOpenFullFilters={onFilterClick} />
         )}
       </div>

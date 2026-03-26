@@ -56,22 +56,22 @@ const ProfileSettings = () => {
             name: res?.data?.data?.userName,
             img: res?.data?.data?.imageLink,
             email: res?.data?.data?.email,
-          })
+          }),
         );
-      })
+      }),
     );
   }, [runPofile, forceReload]);
 
   const { run: runLocationData, isLoading: isLoadingLocationData } = useAxios(
-    []
+    [],
   );
   useEffect(() => {
     runLocationData(
       authAxios.get(api.app.location.get).then((res) => {
         setLocationData(
-          res?.data?.data?.sort((a, b) => (a.isMain ? -1 : b.isMain ? 1 : 0))
+          res?.data?.data?.sort((a, b) => (a.isMain ? -1 : b.isMain ? 1 : 0)),
         );
-      })
+      }),
     );
   }, [runLocationData, forceReload]);
 
@@ -133,7 +133,7 @@ const ProfileSettings = () => {
               {/* Optional Pattern Overlay */}
               <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] dark:opacity-5"></div>
             </div>
-            
+
             <div className="px-6 pb-6 relative flex flex-col md:flex-row md:items-end">
               {/* Avatar section */}
               <div className="relative -mt-16 z-10 mx-auto md:mx-0">
@@ -141,13 +141,15 @@ const ProfileSettings = () => {
                   <img
                     className="w-32 h-32 rounded-full object-cover border-[6px] border-white dark:border-primary-dark bg-white dark:bg-primary-dark shadow-sm group-hover:opacity-90 transition-opacity"
                     src={
-                      pofileData?.imageLink ? pofileData?.imageLink : userProfileicon
+                      pofileData?.imageLink
+                        ? pofileData?.imageLink
+                        : userProfileicon
                     }
                     alt="userProfileicon"
                   />
                   {/* Verified Badge */}
                   <div className="absolute bottom-2 ltr:right-2 rtl:left-2 bg-[#d6a536] text-white rounded-full flex items-center justify-center w-7 h-7 border-2 border-white dark:border-primary-dark shadow-sm z-10">
-                     <IoMdCheckmarkCircle size={18} />
+                    <IoMdCheckmarkCircle size={18} />
                   </div>
                   {/* Edit Photo Icon Overlay */}
                   <div className="absolute top-2 ltr:-right-2 rtl:-left-2 z-20">
@@ -178,7 +180,13 @@ const ProfileSettings = () => {
                     Verified Member
                   </span>
                   <span className="text-gray-400 text-sm font-medium">
-                    Member since {pofileData?.createdAt ? new Date(pofileData?.createdAt).toLocaleDateString('en-US', {month: 'short', year: 'numeric'}) : "Nov 2022"}
+                    Member since{" "}
+                    {pofileData?.createdAt
+                      ? new Date(pofileData?.createdAt).toLocaleDateString(
+                          "en-US",
+                          { month: "short", year: "numeric" },
+                        )
+                      : "Nov 2022"}
                   </span>
                 </div>
               </div>
@@ -214,13 +222,20 @@ const ProfileSettings = () => {
                     <RiUser3Fill size={18} />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.userName]}</p>
-                    <p className="text-base font-semibold text-[#34415C] dark:text-white">{pofileData?.userName}</p>
+                    <p className="text-sm text-gray-400 font-medium mb-1">
+                      {selectedContent[localizationKeys.userName]}
+                    </p>
+                    <p className="text-base font-semibold text-[#34415C] dark:text-white">
+                      {pofileData?.userName}
+                    </p>
                   </div>
                 </div>
-                <EditUserNameModel onReload={onReload} oldName={pofileData?.userName} />
+                <EditUserNameModel
+                  onReload={onReload}
+                  oldName={pofileData?.userName}
+                />
               </div>
-              
+
               {!pofileData?.isOAuth && (
                 <div className="py-4 flex flex-col sm:flex-row sm:items-center justify-between px-4 rounded-xl border border-gray-50 dark:border-gray-800/50 bg-gray-50/50 dark:bg-gray-800/20 hover:bg-white dark:hover:bg-gray-800/40 hover:shadow-sm hover:border-gray-200 dark:hover:border-gray-700 transition-all">
                   <div className="flex items-center gap-4 mb-3 sm:mb-0">
@@ -228,8 +243,12 @@ const ProfileSettings = () => {
                       <HiLockClosed size={18} />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.password]}</p>
-                      <p className="text-base font-semibold text-[#34415C] dark:text-white">••••••••••••</p>
+                      <p className="text-sm text-gray-400 font-medium mb-1">
+                        {selectedContent[localizationKeys.password]}
+                      </p>
+                      <p className="text-base font-semibold text-[#34415C] dark:text-white">
+                        ••••••••••••
+                      </p>
                     </div>
                   </div>
                   <EditPasswordModel onReload={onReload} />
@@ -251,13 +270,18 @@ const ProfileSettings = () => {
                     <MdMail size={18} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.eMail]}</p>
+                    <p className="text-sm text-gray-400 font-medium mb-1">
+                      {selectedContent[localizationKeys.eMail]}
+                    </p>
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                      <p className="text-base font-semibold text-[#34415C] dark:text-white break-all sm:break-normal">{pofileData?.email}</p>
+                      <p className="text-base font-semibold text-[#34415C] dark:text-white break-all sm:break-normal">
+                        {pofileData?.email}
+                      </p>
                       {pofileData?.isVerified && (
-                         <span className="flex-shrink-0 flex items-center gap-1 bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] text-[11px] font-bold px-3 py-1 rounded-full border border-[#fde68a] dark:border-[#d6a536]/30">
-                           <IoMdCheckmarkCircle size={14} /> {selectedContent[localizationKeys.verified]}
-                         </span>
+                        <span className="flex-shrink-0 flex items-center gap-1 bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] text-[11px] font-bold px-3 py-1 rounded-full border border-[#fde68a] dark:border-[#d6a536]/30">
+                          <IoMdCheckmarkCircle size={14} />{" "}
+                          {selectedContent[localizationKeys.verified]}
+                        </span>
                       )}
                     </div>
                   </div>
@@ -270,11 +294,18 @@ const ProfileSettings = () => {
                     <BsFillTelephoneFill size={18} />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400 font-medium mb-1">{selectedContent[localizationKeys.phoneNumber]}</p>
-                    <p className="text-base font-semibold text-[#34415C] dark:text-white">{pofileData?.phone || "No phone added"}</p>
+                    <p className="text-sm text-gray-400 font-medium mb-1">
+                      {selectedContent[localizationKeys.phoneNumber]}
+                    </p>
+                    <p className="text-base font-semibold text-[#34415C] dark:text-white">
+                      {pofileData?.phone || "No phone added"}
+                    </p>
                   </div>
                 </div>
-                <EditPhoneNumberModel onReload={onReload} oldPhoneNumber={pofileData?.phone} />
+                <EditPhoneNumberModel
+                  onReload={onReload}
+                  oldPhoneNumber={pofileData?.phone}
+                />
               </div>
             </div>
           </div>
@@ -307,9 +338,12 @@ const ProfileSettings = () => {
           </div>
 
           {/* Address Book */}
-          <div id="AddressBook" className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-gray-800/60 rounded-2xl shadow-sm p-6 sm:p-8 mb-6 mx-2 md:mx-0">
+          <div
+            id="AddressBook"
+            className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-gray-800/60 rounded-2xl shadow-sm p-6 sm:p-8 mb-6 mx-2 md:mx-0"
+          >
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-50 dark:border-gray-800/50">
-               <div>
+              <div>
                 <h2 className="text-xl font-bold text-[#34415C] dark:text-white">
                   {selectedContent[localizationKeys.addAddress]}
                 </h2>
@@ -318,18 +352,18 @@ const ProfileSettings = () => {
                 </p>
               </div>
               <button
-                 onClick={() => setOpen(true)}
-                 className="bg-[#34415C] dark:bg-primary hover:bg-[#2a3449] dark:hover:bg-primary-dark text-white px-5 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 shadow-sm"
-               >
-                 <GoPlus size={18} />
-                 <span>{selectedContent[localizationKeys.addAddress]}</span>
-               </button>
-               <AddLocationModel
-                 open={open}
-                 setOpen={setOpen}
-                 TextButton={selectedContent[localizationKeys.add]}
-                 onReload={onReload}
-               />
+                onClick={() => setOpen(true)}
+                className="bg-[#34415C] dark:bg-primary hover:bg-[#2a3449] dark:hover:bg-primary-dark text-white px-5 py-2.5 rounded-md text-sm font-medium transition-colors flex items-center justify-center gap-2 shadow-sm"
+              >
+                <GoPlus size={18} />
+                <span>{selectedContent[localizationKeys.addAddress]}</span>
+              </button>
+              <AddLocationModel
+                open={open}
+                setOpen={setOpen}
+                TextButton={selectedContent[localizationKeys.add]}
+                onReload={onReload}
+              />
             </div>
 
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mt-6">
@@ -356,20 +390,27 @@ const ProfileSettings = () => {
                   className="w-full h-32 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl hover:border-[#d6a536] dark:hover:border-[#d6a536] hover:bg-[#fff8e1]/30 dark:hover:bg-[#d6a536]/10 flex flex-col items-center justify-center gap-2 text-gray-400 hover:text-[#d6a536] transition-all"
                 >
                   <GoPlus size={24} />
-                  <span className="font-medium">{selectedContent[localizationKeys.addAddress]}</span>
+                  <span className="font-medium">
+                    {selectedContent[localizationKeys.addAddress]}
+                  </span>
                 </button>
               )}
             </div>
           </div>
 
           <div className="bg-red-50/50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-2xl p-6 sm:p-8 mb-10 mx-2 md:mx-0">
-             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-               <div>
-                 <h3 className="text-lg font-bold text-red-600 dark:text-red-400 mb-1">Danger Zone</h3>
-                 <p className="text-sm text-red-500/80 dark:text-red-400/80">Once you delete your account, there is no going back. Please be certain.</p>
-               </div>
-               <DeleteAccountSection />
-             </div>
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-bold text-red-600 dark:text-red-400 mb-1">
+                  Danger Zone
+                </h3>
+                <p className="text-sm text-red-500/80 dark:text-red-400/80">
+                  Once you delete your account, there is no going back. Please
+                  be certain.
+                </p>
+              </div>
+              <DeleteAccountSection />
+            </div>
           </div>
         </div>
       </div>
@@ -379,20 +420,28 @@ const ProfileSettings = () => {
 
 export const Loginbutton = ({ Icon, text, isActive, statusText }) => {
   return (
-    <div className={`relative flex items-center p-4 border rounded-xl transition-all duration-200 ${isActive ? 'border-green-500 bg-green-50/30 dark:bg-green-900/20 dark:border-green-800/60' : 'border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-700/30 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-white dark:hover:bg-gray-800'}`}>
-       <div className="w-10 h-10 flex-shrink-0 bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] border border-[#fde68a] dark:border-[#d6a536]/30 rounded-full shadow-sm flex items-center justify-center ltr:mr-4 rtl:ml-4">
-         {Icon && <Icon className="w-5 h-5" />}
-       </div>
-       <div className="flex-grow">
-         <p className="text-sm font-semibold text-[#34415C] dark:text-white">{text}</p>
-         <p className={`text-xs mt-0.5 ${isActive ? 'text-green-600 dark:text-green-400 font-medium' : 'text-gray-400'}`}>
-            {isActive ? (
-               <span className="flex items-center gap-1">
-                 <IoMdCheckmarkCircle size={14} /> {statusText}
-               </span>
-            ) : 'Not connected'}
-         </p>
-       </div>
+    <div
+      className={`relative flex items-center p-4 border rounded-xl transition-all duration-200 ${isActive ? "border-green-500 bg-green-50/30 dark:bg-green-900/20 dark:border-green-800/60" : "border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-700/30 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-white dark:hover:bg-gray-800"}`}
+    >
+      <div className="w-10 h-10 flex-shrink-0 bg-[#fff8e1] dark:bg-[#d6a536]/10 text-[#d6a536] border border-[#fde68a] dark:border-[#d6a536]/30 rounded-full shadow-sm flex items-center justify-center ltr:mr-4 rtl:ml-4">
+        {Icon && <Icon className="w-5 h-5" />}
+      </div>
+      <div className="flex-grow">
+        <p className="text-sm font-semibold text-[#34415C] dark:text-white">
+          {text}
+        </p>
+        <p
+          className={`text-xs mt-0.5 ${isActive ? "text-green-600 dark:text-green-400 font-medium" : "text-gray-400"}`}
+        >
+          {isActive ? (
+            <span className="flex items-center gap-1">
+              <IoMdCheckmarkCircle size={14} /> {statusText}
+            </span>
+          ) : (
+            "Not connected"
+          )}
+        </p>
+      </div>
     </div>
   );
 };
@@ -422,7 +471,7 @@ export const LocationDetailsCard = ({
         .delete(api.app.location.delete(id))
         .then(() => {
           toast.success(
-            selectedContent[localizationKeys.addressDeletedSuccessfully]
+            selectedContent[localizationKeys.addressDeletedSuccessfully],
           );
           setOpen(false);
           onReload();
@@ -430,9 +479,9 @@ export const LocationDetailsCard = ({
         .catch((err) => {
           toast.error(
             err?.response?.data?.message?.[lang] ||
-              selectedContent[localizationKeys.oops]
+              selectedContent[localizationKeys.oops],
           );
-        })
+        }),
     );
   };
 
@@ -442,7 +491,7 @@ export const LocationDetailsCard = ({
         .patch(api.app.location.makeDefault(id))
         .then(() => {
           toast.success(
-            selectedContent[localizationKeys.ChangedDefaultAdrress]
+            selectedContent[localizationKeys.ChangedDefaultAdrress],
           );
           setOpen(false);
           onReload();
@@ -450,9 +499,9 @@ export const LocationDetailsCard = ({
         .catch((err) => {
           toast.error(
             err?.response?.data?.message?.[lang] ||
-              selectedContent[localizationKeys.oops]
+              selectedContent[localizationKeys.oops],
           );
-        })
+        }),
     );
   };
 
@@ -460,12 +509,14 @@ export const LocationDetailsCard = ({
     <>
       <div className="relative group border border-gray-100 dark:border-[#d4af37]/40 bg-white dark:bg-primary-dark hover:border-[#d6a536]/50 dark:hover:border-yellow hover:shadow-md rounded-xl p-5 transition-all duration-200">
         {isMain && (
-           <div className="absolute -top-3 ltr:left-4 rtl:right-4 bg-[#d6a536] text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm uppercase tracking-wider">
-             {selectedContent[localizationKeys.default]}
-           </div>
+          <div className="absolute -top-3 ltr:left-4 rtl:right-4 bg-[#d6a536] text-white text-[10px] font-bold px-2 py-1 rounded-md shadow-sm uppercase tracking-wider">
+            {selectedContent[localizationKeys.default]}
+          </div>
         )}
         <div className="flex justify-between items-start pt-1">
-          <h1 className="text-[#34415C] dark:text-white font-bold text-base">{AddressLable}</h1>
+          <h1 className="text-[#34415C] dark:text-white font-bold text-base">
+            {AddressLable}
+          </h1>
           <div className="relative">
             <button
               onClick={() => setOpen(!open)}
@@ -473,11 +524,11 @@ export const LocationDetailsCard = ({
             >
               <BsThreeDots size={20} />
             </button>
-            
+
             {open && (
               <>
-                <div 
-                  className="fixed inset-0 z-40" 
+                <div
+                  className="fixed inset-0 z-40"
                   onClick={() => setOpen(false)}
                 />
                 <div className="absolute top-full ltr:right-0 rtl:left-0 mt-2 min-w-[160px] bg-white dark:bg-[#1A1F2C] rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">

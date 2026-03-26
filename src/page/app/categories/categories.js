@@ -271,6 +271,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
         <FilterSections
           isFullPage={true}
           onClose={() => setIsFilterOpen(false)}
+          categoryId={categoryId}
         />
       )}
       <div className="bg-white dark:bg-background">
