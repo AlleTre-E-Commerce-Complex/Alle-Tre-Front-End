@@ -9,7 +9,7 @@ const NavLinkHeader = ({ title, onClick, isActive, className }) => {
         className={`${
           isActive
             ? "active-underline-animation text-yellow font-bold"
-            : "hover-underline-animation text-primary-light hover:text-white"
+            : "hover-underline-animation text-primary-veryLight hover:text-white"
         } lg:text-base text-xs font-bold  transition-colors duration-200 ${className} `}
       >
         {title}
