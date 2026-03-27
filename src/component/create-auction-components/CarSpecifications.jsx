@@ -8,6 +8,7 @@ import FormikInput from "../../component/shared/formik/formik-input";
 import { allCustomFileOptions } from "../../utils/all-custom-fields-options";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BiErrorCircle } from "react-icons/bi";
+import { useCarData } from "../../hooks/use-car-data";
 
 // Helper components
 const PillGroup = ({ name, options, label }) => {
@@ -39,7 +40,7 @@ const PillGroup = ({ name, options, label }) => {
                 : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
-            {opt.text.split(" | ")[0]}
+            {opt.text}
           </button>
         ))}
       </div>
@@ -77,7 +78,7 @@ const MultiPillGroup = ({ name, options, label }) => {
                 : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-primary dark:hover:border-yellow'
             }`}
           >
-            {opt.text.split(" | ")[0]}
+            {opt.text}
           </button>
         ))}
       </div>
@@ -86,10 +87,13 @@ const MultiPillGroup = ({ name, options, label }) => {
 };
 
 
-const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
+const CarSpecifications = ({ descriptionNode }) => {
   const [lang] = useLanguage();
   const isArabic = lang === "ar";
- const selectedContent = content[lang];
+  const selectedContent = content[lang];
+  const { values, setFieldValue } = useFormikContext();
+  
+  const { makes, models, years } = useCarData(values.brand, values.model);
   const getOptions = (key) => {
     return allCustomFileOptions[key]?.map(opt => {
       const parts = opt.text.split(" | ");
@@ -109,13 +113,6 @@ const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
     </div>
   );
 
-  // Generate Year options (1950 to current year + 1)
-  const currentYear = new Date().getFullYear();
-  const yearOptions = Array.from({ length: currentYear - 1950 + 2 }, (_, i) => {
-    const year = (currentYear - i).toString();
-    return { key: year, text: year, value: year };
-  });
-
   return (
     <div className="w-full flex flex-col gap-6 mx-auto mt-6">
       {/* 1. Vehicle Specifications Card */}
@@ -128,8 +125,42 @@ const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
         </div>
 
         <div className="grid gap-x-6 gap-y-6 md:grid-cols-3 grid-cols-1">
-          {brandNode}
-          {modelNode}
+          <div className="w-full">
+            <FormikMultiDropdown
+              name="brand"
+              label={selectedContent[localizationKeys.Brands]}
+              placeholder={isArabic ? "اختر الماركة" : "Select Make"}
+              options={makes}
+              onChange={() => {
+                setFieldValue("model", "");
+                setFieldValue("releaseYear", "");
+              }}
+              search
+            />
+          </div>
+          <div className="w-full">
+            <FormikMultiDropdown
+              name="model"
+              label={selectedContent[localizationKeys.model]}
+              placeholder={isArabic ? "اختر الموديل" : "Select Model"}
+              options={models}
+              disabled={!values.brand}
+              onChange={() => {
+                setFieldValue("releaseYear", "");
+              }}
+              search
+            />
+          </div>
+          <div className="w-full">
+            <FormikMultiDropdown 
+              name="releaseYear" 
+              label={isArabic ? "سنة الصنع" : "YEAR"} 
+              placeholder={isArabic ? "اختر السنة" : "Select Year"} 
+              options={years}
+              disabled={!values.model}
+              search
+            />
+          </div>
        
           {/* Row 1 */}
           <div className="w-full">
@@ -153,9 +184,7 @@ const CarSpecifications = ({ brandNode, modelNode, descriptionNode }) => {
           <div className="w-full">
             <FormikMultiDropdown name="carType" label={isArabic ? "نوع الهيكل" : "BODY TYPE"} placeholder={isArabic ? "اختر الهيكل" : "Select Body"} options={getOptions("carType")} />
           </div>
-          <div className="w-full">
-            <FormikMultiDropdown name="releaseYear" label={isArabic ? "سنة الصنع" : "YEAR"} placeholder={isArabic ? "اختر السنة" : "Select Year"} options={yearOptions} />
-          </div>
+          
           {/* Row 2 */}
           <div className="w-full">
             <FormikMultiDropdown name="engineCapacity" label={isArabic ? "سعة المحرك" : "ENGINE CAPACITY"} placeholder={isArabic ? "اختر السعة" : "Select Engine"} options={getOptions("engineCapacity")} />

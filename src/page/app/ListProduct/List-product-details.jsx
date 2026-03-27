@@ -1039,64 +1039,6 @@ const ListProductDetails = () => {
                     {categoryId === 4 && (
                       <div className="w-full">
                         <CarSpecifications
-                          brandNode={
-                            <div className="w-full relative">
-                              <FormikInput
-                                name="brand"
-                                type="text"
-                                label={selectedContent[localizationKeys.Brands]}
-                                placeholder={selectedContent[localizationKeys.brand]}
-                                value={formik.values.brand}
-                                onChange={(e) => {
-                                  const value = e.target.value;
-                                  formik.handleChange(e);
-                                  handleBrandInputChange(value);
-                                }}
-                                onFocus={() => setIsDropdownOpen(true)}
-                              />
-                              <button
-                                type="button"
-                                onClick={() => setIsDropdownOpen((prev) => !prev)}
-                                className="absolute right-4 top-10 sm:right-3 sm:top-10 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                              >
-                                {isDropdownOpen && brandSuggestions.length > 0 && (
-                                  <MdArrowDropDown className="w-6 h-6" />
-                                )}
-                              </button>
-                              {isDropdownOpen && brandSuggestions.length > 0 && (
-                                <div className="absolute z-10 mt-1 w-full bg-white dark:bg-[#2C3241] border border-gray-300 dark:border-gray-600 rounded-md shadow-lg">
-                                  <ul className="py-1">
-                                    {brandSuggestions.map((suggestion, index) => (
-                                      <li
-                                        key={index}
-                                        onClick={() => {
-                                          formik.setFieldValue("brand", suggestion.text);
-                                          setBrandInput(suggestion.text);
-                                          setBrandSuggestions([]);
-                                          setIsDropdownOpen(false);
-                                        }}
-                                        className="cursor-pointer hover:bg-gray-100 dark:hover:bg-[#1A1F2C] text-gray-900 dark:text-white px-4 py-2"
-                                      >
-                                        {suggestion.text}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
-                            </div>
-                          }
-                          modelNode={
-                            customFromData?.model ? (
-                              <div className="w-full">
-                                <FormikInput
-                                  min={0}
-                                  name={`${customFromData?.model?.key}`}
-                                  label={selectedContent[localizationKeys.model]}
-                                  placeholder={`${lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}`}
-                                />
-                              </div>
-                            ) : null
-                          }
                           descriptionNode={
                             <div className="md:col-span-3 w-full mt-2 text-gray-600 dark:text-gray-300 font-bold text-sm">
                               <FormikTextArea

@@ -61,6 +61,7 @@
     "victory": "^36.6.8",
     "wild-wild-parser": "^5.0.0",
     "wild-wild-path": "^3.6.0",
+    "xlsx": "^0.18.5",
     "yup": "^0.32.11"
   },
   "scripts": {
