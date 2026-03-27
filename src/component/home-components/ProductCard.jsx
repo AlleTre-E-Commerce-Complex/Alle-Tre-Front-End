@@ -38,7 +38,7 @@ const ProductCard = ({
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
-  const shareUrl = `${getDomain()}/alletre/my-product/${id}/details`;
+  const shareUrl = `${getDomain()}/my-product/${id}/details`;
 
   const handleTouchStart = (e) => {
     setTouchEnd(null);

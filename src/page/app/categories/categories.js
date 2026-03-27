@@ -9,7 +9,7 @@ import api from "../../../api";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import AuctionCard from "../../../component/home-components/auction-card";
 import FilterSections from "../../../component/home-components/filter-sections";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import PaginationApp from "../../../component/shared/pagination/pagination-app";
 import SubCategorySlider from "../../../component/shared/slider-categories/sub-category-slider";
 import { authAxios, axios } from "../../../config/axios-config";
@@ -283,7 +283,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
             inverted
           >
             {/* <Loader active /> */}
-            <LodingTestAllatre />
+            <LoadingTest3arbon />
           </Dimmer>
           <div className="sticky z-30 relative w-full h-[220px] sm:h-[240px] md:h-[280px] lg:h-[300px] xl:h-[320px] mb-6 overflow-hidden top-[-50px] sm:top-[-90px] md:top-[-155px] lg:top-[-175px] xl:top-[-190px] md:-mt-6">
 

@@ -27,14 +27,13 @@ import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
 import { productDetails } from "../../../redux-store/product-details-Slice";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
-import { MdOutlineNotifications } from "react-icons/md";
+import { MdOutlineNotifications, MdClose } from "react-icons/md";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
 import { FaPlus } from "react-icons/fa6";
 import {
   DEFAULT_PAGE,
   getDefaultPerPage,
-  getDefaultPaginationString,
 } from "../../../constants/pagination";
 // import useGetGatogry from "../../../hooks/use-get-category";
 
@@ -130,6 +129,11 @@ const Header = ({
     setSearchValue("");
     setTitle("");
   }, [pathname]);
+
+  const handleClearSearch = () => {
+    setSearchValue("");
+    debounced("");
+  };
 
   // Show the AllatreLogo after a delay
   useEffect(() => {
@@ -373,7 +377,7 @@ const Header = ({
     queryParams.set("title", value);
 
     const currentPathname = window.location.pathname;
-    const targetPath = currentPathname.includes("/alletre/categories")
+    const targetPath = currentPathname.includes("/categories")
       ? `${currentPathname}` // Keep the current category path
       : routes.app.home;
 
@@ -384,33 +388,33 @@ const Header = ({
     });
   }, 500);
 
-  const handelMyPfofile = () => {
-    if (user) {
-      history.push(routes.app.profile.profileSettings);
-    } else {
-      dispatch(Open());
-    }
-  };
-  const handleOnSell = () => {
-    setIsDropdownOpen(false);
-    localStorage.removeItem("auctionId");
-    dispatch(productDetails({ auctionId: null }));
+  // const handelMyPfofile = () => {
+  //   if (user) {
+  //     history.push(routes.app.profile.profileSettings);
+  //   } else {
+  //     dispatch(Open());
+  //   }
+  // };
+  // const handleOnSell = () => {
+  //   setIsDropdownOpen(false);
+  //   localStorage.removeItem("auctionId");
+  //   dispatch(productDetails({ auctionId: null }));
 
-    if (user) {
-      const hasCompletedProfile = window.localStorage.getItem(
-        "hasCompletedProfile",
-      );
+  //   if (user) {
+  //     const hasCompletedProfile = window.localStorage.getItem(
+  //       "hasCompletedProfile",
+  //     );
 
-      if (JSON.parse(hasCompletedProfile)) {
-        history.push(routes.app.createAuction.productDetails);
-        // dispatch(productDetails({}))
-      } else {
-        setOpen(true);
-      }
-    } else {
-      dispatch(Open());
-    }
-  };
+  //     if (JSON.parse(hasCompletedProfile)) {
+  //       history.push(routes.app.createAuction.productDetails);
+  //       // dispatch(productDetails({}))
+  //     } else {
+  //       setOpen(true);
+  //     }
+  //   } else {
+  //     dispatch(Open());
+  //   }
+  // };
   // useEffect(() => {
   //   const handleClickOutside = (event) => {
   //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -449,7 +453,7 @@ const Header = ({
     } else dispatch(Open());
   };
   const handelHome = () => {
-    history.push(`${routes.app.home}?${getDefaultPaginationString()}`);
+    history.push(routes.app.home);
   };
   const handelmyAuctions = () => {
     if (user) {
@@ -489,11 +493,11 @@ const Header = ({
     } else dispatch(Open());
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setLogoutModalOpen(false);
 
     socket.close();
-    logout();
+    await logout();
   };
 
   const dropdownRef = useRef(null);
@@ -583,7 +587,7 @@ const Header = ({
           <AllatreLogoFull
             className="cursor-pointer hidden md:block md:w-[110px] lg:w-[130px] h-auto"
             onClick={() =>
-              history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
+              history.push(routes.app.home)
             }
           />
         </div>
@@ -596,9 +600,7 @@ const Header = ({
 
           {/* <RiHome2Line
             onClick={() => {
-              history.push(
-                `${routes.app.home}?${getDefaultPaginationString()}`,
-              );
+              history.push(routes.app.home);
             }}
             className="text-[#eae2e6] cursor-pointer"
             size={25}
@@ -618,7 +620,7 @@ const Header = ({
                 className="cursor-pointer w-[100px] block md:hidden text-yellow"
                 onClick={() =>
                   history.push(
-                    `${routes.app.home}?${getDefaultPaginationString()}`,
+                    routes.app.home,
                   )
                 }
               />
@@ -670,7 +672,7 @@ const Header = ({
               <NavLinkHeader
                 key={key}
                 title={selectedContent[key]}
-                isActive={pathname.length === 1 || pathname.startsWith(path)}
+                isActive={pathname.startsWith(path)}
                 onClick={handler || (() => history.push(path))}
               />
             ))}
@@ -687,7 +689,6 @@ const Header = ({
                   </div>
                 }
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.notifications)
                 }
                 onClick={handleNotificationClick}
@@ -850,10 +851,7 @@ const Header = ({
                   )}
                 </div>
               }
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.notifications)
-              }
+              isActive={pathname.startsWith(routes.app.profile.notifications)}
               onClick={handleNotificationClick}
             />
             {/* <CgProfile
@@ -869,7 +867,7 @@ const Header = ({
       <div className={` ${searchShow ? "h-auto pb-2" : "h-0 overflow-hidden"} `}>
         <div className="pb-[6px] flex gap-x-1 xs:gap-x-2 md:gap-x-6 sm:gap-x-4 w-full px-4 xs:px-4 md:px-4 lg:px-5">
 
-          <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%] border border-primary-light rounded-md overflow-hidden ">
+          <div className="relative flex-1 min-w-[120px] sm:w-[40%] md:w-[50%] border border-primary-light rounded-md overflow-hidden bg-primary-dark">
             <Input
               className={inputClasses}
               placeholder={
@@ -880,15 +878,30 @@ const Header = ({
               value={searchValue}
               onChange={(e, { value }) => setSearchValue(value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && searchValue.trim()) {
-                  debounced(searchValue);
+                if (e.key === "Enter") {
+                  if (searchValue.trim()) {
+                    debounced(searchValue);
+                  } else {
+                    handleClearSearch();
+                  }
                 }
               }}
             />
+            {searchValue && (
+              <button
+                onClick={handleClearSearch}
+                className="absolute right-10 top-1/2 -translate-y-1/2 text-primary-light hover:text-white transition-colors"
+                type="button"
+              >
+                <MdClose size={18} />
+              </button>
+            )}
             <button
               onClick={() => {
                 if (searchValue.trim()) {
                   debounced(searchValue);
+                } else {
+                  handleClearSearch();
                 }
               }}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-primary-light hover:text-white transition-colors"
@@ -1065,7 +1078,7 @@ const Header = ({
           </div>
         </div>
 
-        {currentPath.includes("/alletre/categories") && (
+        {currentPath.includes("/categories") && (
           <MobileFilterBar onOpenFullFilters={onFilterClick} />
         )}
       </div>

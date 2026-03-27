@@ -7,7 +7,7 @@ import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import localizationKeys from "../../../localization/localization-keys";
 import TotalMyProducts from "component/profile-components/Total-my-products";
 import MyProductsTab from "component/profile-components/my-produts-tab";
@@ -67,7 +67,7 @@ const MyProducts = () => {
           inverted
         >
           {/* <Loader active /> */}
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
         {analyticsData?.length === 0 ? (
           <div className="flex flex-col items-center justify-center min-h-[400px] bg-white dark:bg-[#1A1F2C] border border-gray-200 dark:border-[#2C3241] rounded-2xl p-8 mt-10 shadow-sm mx-auto max-w-3xl">

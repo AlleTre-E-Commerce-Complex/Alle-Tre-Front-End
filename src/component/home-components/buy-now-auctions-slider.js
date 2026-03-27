@@ -9,7 +9,7 @@ import { Dimmer } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const BuyNowAuctionsSlider = () => {
@@ -82,7 +82,7 @@ const BuyNowAuctionsSlider = () => {
   return (
     <div className="relative">
       <Dimmer className="bg-white/50" active={isLoadingAuctions} inverted>
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
 
       {/* Section Header */}

@@ -23,7 +23,7 @@ import routes from "../../../routes";
 import useAxios from "hooks/use-axios";
 import api from "api";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import toast from "react-hot-toast";
 import TermsAndConditions from "../terms-and-condition/TermsAndCondition";
 import PrivacyPolicy from "../privacy-policy/privacy-policy";
@@ -75,7 +75,7 @@ const Footer = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       {/* Banner Section */}
       <div className="relative px-2 sm:px-4 md:px-8 lg:px-12 pt-4 pb-8">

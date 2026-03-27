@@ -18,7 +18,7 @@ import useLocalStorage from "../../../hooks/use-localstorage";
 import { useDispatch, useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
 import CheckoutFormPaymentDetails from "./checkout-form-payment-details";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import { Prompt, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import routes from "../../../routes";
 import WalletPayment from "../WalletPayment/WalletPayment";
@@ -266,7 +266,7 @@ export default function CheckoutPagePaymentDetails() {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in ">
         <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">

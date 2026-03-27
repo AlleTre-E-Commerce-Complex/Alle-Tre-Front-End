@@ -8,7 +8,7 @@ import EmtyWatchlist from "../../../../src/assets/icons/empty-watch-list.svg";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 
 const Purchased = () => {
   const [lang] = useLanguage("");
@@ -35,7 +35,7 @@ const Purchased = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mx-4 ltr:ml-4 rtl:mr-4 md:ltr:ml-8 md:rtl:mr-8  animate-in">
         {purchased?.length === 0 ? (

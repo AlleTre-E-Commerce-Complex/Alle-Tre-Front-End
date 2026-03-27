@@ -106,7 +106,7 @@ const BannerTop = ({ auctions = [] }) => {
   //     : `${getDomain()}/alletre/home/${auctionId}/details`;
 
   const shareUrl = (auction) => {
-    return `${getDomain()}/alletre/home/${auction?.id}/details`;
+    return `${getDomain()}/home/${auction?.id}/details`;
   };
 
   const handleShare = async (auction) => {

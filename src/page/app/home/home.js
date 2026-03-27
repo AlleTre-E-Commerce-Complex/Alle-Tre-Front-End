@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 // import BannerTop from "component/home-components/BannerTop";
 import BannerTopNew from "component/home-components/Banner-top-new";
 import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
@@ -119,7 +119,7 @@ const Home = ({
     try {
       const params = queryString.parse(search);
       const [auctionsResponse, productsResponse] = await Promise.all([
-        authAxios.get(`/auctions`, {
+        authAxios.get(`${api.app.auctions.getMain}`, {
           params: {
             ...params,
             title: query,
@@ -127,7 +127,7 @@ const Home = ({
             perPage: getDefaultPerPage(),
           },
         }),
-        authAxios.get(`/product-listings`, {
+        authAxios.get(`${api.app.productListing.getAllListedProducts}`, {
           params: {
             ...params,
             title: query,
@@ -172,13 +172,6 @@ const Home = ({
         const queryParams = new URLSearchParams(search);
         let page = Number(queryParams.get("auctionPage") || DEFAULT_PAGE);
         let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-
-        if (!queryParams.has("auctionPage") || !queryParams.has("perPage")) {
-          queryParams.set("auctionPage", page.toString());
-          queryParams.set("perPage", perPage.toString());
-          history.replace({ search: queryParams.toString() });
-          return;
-        }
 
         const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
@@ -285,13 +278,6 @@ const Home = ({
     const queryParams = new URLSearchParams(search);
     let page = Number(queryParams.get("productPage") || DEFAULT_PAGE);
     let perPage = Number(queryParams.get("perPage") || getDefaultPerPage());
-
-    if (!queryParams.has("productPage") || !queryParams.has("perPage")) {
-      queryParams.set("productPage", page.toString());
-      queryParams.set("perPage", perPage.toString());
-      history.replace({ search: queryParams.toString() });
-      return;
-    }
 
     const parsed = queryString.parse(search, { arrayFormat: "bracket" });
 
@@ -436,7 +422,7 @@ const Home = ({
             }
             inverted
           >
-            <LodingTestAllatre />
+            <LoadingTest3arbon />
           </Dimmer>
           <div className="w-full px-3 sm:px-4">
             <BannerTopNew auctions={mainAuctions} />

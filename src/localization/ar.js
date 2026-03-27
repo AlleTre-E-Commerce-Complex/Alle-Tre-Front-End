@@ -380,7 +380,7 @@ const ar = {
   [localizationKeys.contactNumber]: "رقم التواصل",
   [localizationKeys.youCanConnectOn]: "يمكنك الاتصال على:",
   [localizationKeys.DontForgetToMention]: "لا تنسى أن تذكر",
-  [localizationKeys.alletre]: "آلي تري",
+  [localizationKeys.alletre]: "3arbon",
   [localizationKeys.whenYouCall]: "عندما تتصل!",
   [localizationKeys.inspectionDetails]: "تفاصيل التفتيش",
   [localizationKeys.contactPerson]: "الشخص الذي يمكن الاتصال به",

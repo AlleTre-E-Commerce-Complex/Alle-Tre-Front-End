@@ -2,16 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useLanguage } from "../../../context/language-context";
 import { Link, useHistory } from "react-router-dom";
 import routes from "../../../routes";
-import { useDispatch } from "react-redux";
-import { Open } from "../../../redux-store/auth-model-slice";
-import { useAuthState } from "../../../context/auth-context";
 
 const PrivacyPolicy = ({ isFooter }) => {
   const [copied, setCopied] = useState(false);
   const [lang] = useLanguage();
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { user } = useAuthState();
 
   useEffect(() => {
     if (!isFooter) {

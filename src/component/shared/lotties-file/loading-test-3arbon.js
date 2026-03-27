@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactComponent as LoaderB } from "../../../../src/assets/logo/loaderB.svg";
 
-const LodingTestAllatre = () => {
+const LoadingTest3arbon = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -50,4 +50,4 @@ const LodingTestAllatre = () => {
   );
 };
 
-export default LodingTestAllatre;
+export default LoadingTest3arbon;

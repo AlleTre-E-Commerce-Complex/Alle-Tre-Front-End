@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import { useAuthState } from "context/auth-context";
 import { useDispatch } from "react-redux";
 import { Open } from "../../redux-store/auth-model-slice";
@@ -65,7 +65,7 @@ const ActiveAuctions = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">

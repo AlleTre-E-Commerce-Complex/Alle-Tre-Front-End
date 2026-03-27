@@ -29,7 +29,7 @@ import { PofileData } from "../../../redux-store/pofile-data-slice";
 import { useDispatch } from "react-redux";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
 import { DeleteAccountModal } from "../../../component/shared/delete-account-modal/delete-account-modal";
 
@@ -95,7 +95,7 @@ const ProfileSettings = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4  animate-in  ">
         {/* complete profile */}

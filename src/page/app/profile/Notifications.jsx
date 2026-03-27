@@ -1,4 +1,4 @@
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import { useLanguage } from "context/language-context";
 import EmtyWatchlist from "../../../../src/assets/icons/empty-watch-list.svg";
 import useAxios from "hooks/use-axios";
@@ -119,7 +119,7 @@ const Notifications = () => {
   return (
     <div className="w-full min-h-screen bg-transparent p-4 rounded-xl dark:bg-primary-dark text-gray-800 dark:text-gray-200 transition-colors duration-300">
       <Dimmer className="bg-white/50 dark:bg-primary-dark shadow-none border-none" active={isLoading} inverted>
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
 
       <div className="w-full h-full pb-8">

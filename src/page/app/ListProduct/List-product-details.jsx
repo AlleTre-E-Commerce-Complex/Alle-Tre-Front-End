@@ -32,7 +32,7 @@ import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 // import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import {
   IoCameraOutline,
   IoImageOutline,
@@ -681,7 +681,7 @@ const ListProductDetails = () => {
         active={isLoading || loadingSubGatogry || isUpdating}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
         {/* <Loader active /> */}

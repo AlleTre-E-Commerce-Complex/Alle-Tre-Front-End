@@ -6,7 +6,7 @@ import api from "../../../api";
 import { useLanguage } from "../../../context/language-context";
 // import content from "../../../localization/content";
 import { LocationDetailsCard } from "../../../page/app/profile/profile-settings";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 
 const MakeDefultLocations = ({
   openMakeDefultLocations,
@@ -36,7 +36,7 @@ const MakeDefultLocations = ({
         active={isLoadingLocationData}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <Modal
         className="sm:w-[650px] w-full h-auto bg-transparent scale-in "

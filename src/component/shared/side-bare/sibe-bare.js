@@ -118,11 +118,11 @@ const Sidebar = ({ SetSid, sid }) => {
   const socket = useSocket();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
-  const onLogout = () => {
+  const onLogout = async () => {
     setLogoutModalOpen(false);
     history.push(routes.app.home);
     socket.close();
-    logout();
+    await logout();
     SetSid(false);
   };
   const handelmyAuctions = () => {
@@ -198,7 +198,6 @@ const Sidebar = ({ SetSid, sid }) => {
               {/* <NavLink
                 title={selectedContent[localizationKeys.myAuctions]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.myAuctions.default)
                 }
                 onClick={() => {
@@ -209,7 +208,6 @@ const Sidebar = ({ SetSid, sid }) => {
               {/* <NavLink
                 title={selectedContent[localizationKeys.myBids]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.myBids.default)
                 }
                 onClick={() => {
@@ -220,7 +218,6 @@ const Sidebar = ({ SetSid, sid }) => {
               <NavLink
                 title={selectedContent[localizationKeys.myProducts]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.myProducts.default)
                 }
                 onClick={() => {
@@ -231,7 +228,6 @@ const Sidebar = ({ SetSid, sid }) => {
               {/* <NavLink
                 title={selectedContent[localizationKeys.createAuction]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.createAuction.productDetails)
                 }
                 onClick={() => {
@@ -242,7 +238,6 @@ const Sidebar = ({ SetSid, sid }) => {
               {/* <NavLink
                 title={selectedContent[localizationKeys.watchlist]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.watchlist)
                 }
                 onClick={() => {
@@ -253,7 +248,6 @@ const Sidebar = ({ SetSid, sid }) => {
               <NavLink
                 title={selectedContent[localizationKeys.Purchased]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.purchased)
                 }
                 onClick={() => {
@@ -264,7 +258,6 @@ const Sidebar = ({ SetSid, sid }) => {
               {/* <NavLink
                 title={selectedContent[localizationKeys.Wallet]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.profile.wallet)
                 }
                 onClick={() => {
@@ -274,9 +267,7 @@ const Sidebar = ({ SetSid, sid }) => {
               /> */}
               <NavLink
                 title={selectedContent[localizationKeys.faqs]}
-                isActive={
-                  pathname.length === 1 || pathname.startsWith(routes.app.faqs)
-                }
+                isActive={pathname.startsWith(routes.app.faqs)}
                 onClick={() => {
                   handelFaq();
                   SetSid(false);
@@ -286,7 +277,6 @@ const Sidebar = ({ SetSid, sid }) => {
               {/* <NavLink
                 title={selectedContent[localizationKeys.support]}
                 isActive={
-                  pathname.length === 1 ||
                   pathname.startsWith(routes.app.support)
                 }
                 onClick={() => {

@@ -282,11 +282,9 @@ const AppLayouts = () => {
         <AuthModel currentPAth={currentPath} />
         <PaymentSucsessModel
           open={
-            pathname.length === 1 ||
-            pathname.endsWith(`${routes.app.home}/paymentdetails`) ||
-            pathname.endsWith(`${routes.app.home}/payDeposite`) ||
-            pathname.endsWith(`${routes.app.home}/complete-pay`) ||
-            pathname.endsWith(`${routes.app.home}/buyNow`)
+            pathname.endsWith("paymentSucsess") ||
+            pathname.endsWith("Sucsess") ||
+            pathname.endsWith("pay-deposite/paymentSucsess")
               ? true
               : false
           }

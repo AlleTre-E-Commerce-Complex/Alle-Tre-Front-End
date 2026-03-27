@@ -13,7 +13,7 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import localizationKeys from "../../localization/localization-keys";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 
 const CompletedBids = () => {
   const [lang] = useLanguage("");
@@ -46,7 +46,7 @@ const CompletedBids = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">

@@ -215,10 +215,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
           <div className="flex-1 overflow-y-auto p-4 space-y-1">
             <NavLink
               title={selectedContent[localizationKeys.profileSettings]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.profileSettings)
-              }
+              isActive={pathname.startsWith(routes.app.profile.profileSettings)}
               onClick={() => {
                 history.push(routes.app.profile.profileSettings);
                 SetSid(false);
@@ -226,10 +223,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             />
             <NavLink
               title={selectedContent[localizationKeys.myAuctions]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.myAuctions.default)
-              }
+              isActive={pathname.startsWith(routes.app.profile.myAuctions.default)}
               onClick={() => {
                 history.push(routes.app.profile.myAuctions.default);
                 SetSid(false);
@@ -237,10 +231,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             />
             <NavLink
               title={selectedContent[localizationKeys.myBids]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.myBids.default)
-              }
+              isActive={pathname.startsWith(routes.app.profile.myBids.default)}
               onClick={() => {
                 history.push(routes.app.profile.myBids.default);
                 SetSid(false);
@@ -248,10 +239,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             />
             <NavLink
               title={selectedContent[localizationKeys.watchlist]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.watchlist)
-              }
+              isActive={pathname.startsWith(routes.app.profile.watchlist)}
               onClick={() => {
                 history.push(routes.app.profile.watchlist);
                 SetSid(false);
@@ -259,10 +247,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             />
             <NavLink
               title={selectedContent[localizationKeys.Purchased]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.purchased)
-              }
+              isActive={pathname.startsWith(routes.app.profile.purchased)}
               onClick={() => {
                 history.push(routes.app.profile.purchased);
                 SetSid(false);
@@ -270,10 +255,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             />
             <NavLink
               title={selectedContent[localizationKeys.Wallet]}
-              isActive={
-                pathname.length === 1 ||
-                pathname.startsWith(routes.app.profile.wallet)
-              }
+              isActive={pathname.startsWith(routes.app.profile.wallet)}
               onClick={() => {
                 history.push(routes.app.profile.wallet);
                 SetSid(false);

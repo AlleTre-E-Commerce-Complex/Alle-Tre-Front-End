@@ -8,7 +8,7 @@ import { authAxios } from 'config/axios-config.js';
 import api from 'api.js';
 import useAxios from 'hooks/use-axios.js';
 import toast from 'react-hot-toast';
-import LodingTestAllatre from '../lotties-file/loding-test-allatre.js';
+import LoadingTest3arbon from '../lotties-file/loading-test-3arbon.js';
 
 const WarningModal = ({open,setOpen,auctionId,message,setSuccessModal}) => {
     const [lang] = useLanguage(""); 
@@ -52,7 +52,7 @@ const WarningModal = ({open,setOpen,auctionId,message,setSuccessModal}) => {
           inverted
         >
           {/* <Loader active /> */}
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
         <div className="bg-primary text-white text-center font-semibold py-2 text-xl">
             <h1>{selectedContent[localizationKeys.Warning]}</h1>

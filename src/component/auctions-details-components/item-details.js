@@ -6,7 +6,7 @@ import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 
 const ItemDetails = ({ itemDetailsData }) => {
   const [lang] = useLanguage();
@@ -81,7 +81,7 @@ const ItemDetails = ({ itemDetailsData }) => {
         active={isLoadingysField}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
 
       <div className="animate-in fade-in duration-700">

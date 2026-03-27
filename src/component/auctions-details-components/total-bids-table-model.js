@@ -13,7 +13,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useSelector } from "react-redux";
 import { formatCurrency } from "../../utils/format-currency";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import { FaCrown } from "react-icons/fa6";
 
 const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
@@ -90,7 +90,7 @@ const TotalBidsTableModel = ({ open, setOpen, auctionsIdB }) => {
           active={isLoading}
           inverted
         >
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
 
         <Table className="bg-transparent border-none w-full">

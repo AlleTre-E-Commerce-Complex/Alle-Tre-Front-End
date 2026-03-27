@@ -20,5 +20,6 @@ export const getDefaultPerPage = () => {
 
 // Get default pagination string
 export const getDefaultPaginationString = () => {
-  return `page=${DEFAULT_PAGE}&perPage=${getDefaultPerPage()}`;
+  return "";
+  // return `page=${DEFAULT_PAGE}&perPage=${getDefaultPerPage()}`;
 };

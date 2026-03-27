@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../component/shared/lotties-file/loading-test-3arbon";
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
 import AuctionCard from "component/home-components/auction-card";
 import ProductCard from "component/home-components/ProductCard";
@@ -186,7 +186,7 @@ const UserDetailsPage = () => {
         active={isLoadingMainAuctions || isLoadingListedProduct || forceReload}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-40 pt-4 ">
         <div className="flex flex-col md:flex-row gap-6">

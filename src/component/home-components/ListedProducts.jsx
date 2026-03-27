@@ -11,7 +11,7 @@
 // import AnglesLeft from "../../../src/assets/icons/arrow-left.svg";
 // import Swiper from "swiper";
 // import { Dimmer, Loader } from "semantic-ui-react";
-// import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+// import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 // import ProductCard from "./ProductCard";
 // import localizationKeys from "../../localization/localization-keys";
 
@@ -114,7 +114,7 @@
 //             inverted
 //           >
 //             <Loader active />
-//             <LodingTestAllatre />
+//             <LoadingTest3arbon />
 //           </Dimmer>
 //           <div className="ezd-snapslider pt-10">
 //             <div className="snapslider-wrapper">

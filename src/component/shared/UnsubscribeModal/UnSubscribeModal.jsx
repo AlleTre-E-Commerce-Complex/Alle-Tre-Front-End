@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Dimmer, Modal } from 'semantic-ui-react'
-import LodingTestAllatre from '../lotties-file/loding-test-allatre'
+import LoadingTest3arbon from '../lotties-file/loading-test-3arbon'
 import localizationKeys from 'localization/localization-keys'
 import useAxios from 'hooks/use-axios'
 import axios from 'axios'
@@ -55,7 +55,7 @@ const selectedContent = content[lang];
   inverted
 >
   {/* <Loader active /> */}
-  <LodingTestAllatre />
+  <LoadingTest3arbon />
 </Dimmer>
 
     <div className="sm:w-[400px] w-full h-auto rounded-2xl bg-background pb-6 ">

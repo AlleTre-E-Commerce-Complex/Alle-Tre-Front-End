@@ -10,7 +10,7 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import localizationKeys from "../../localization/localization-keys";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import ProductRowTable from "./product-row-table";
 
 const InProgressProducts = () => {
@@ -46,7 +46,7 @@ const InProgressProducts = () => {
         active={isLoading}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       {activeProductData?.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[300px] bg-white dark:bg-[#1A1F2C] border border-gray-200 dark:border-[#2C3241] rounded-2xl p-8 mt-6 shadow-sm mx-auto w-full">

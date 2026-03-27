@@ -14,7 +14,7 @@ import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { IoChevronUpOutline } from "react-icons/io5";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 // import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
 import { ShareFallBack } from "../react-share/ShareFallback";
 
@@ -46,8 +46,8 @@ const ImgSlider = ({
       : `${protocol}//${hostname}`;
   };
   const shareUrl = isListProduct
-    ? `${getDomain()}/alletre/my-product/${auctionId}/details`
-    : `${getDomain()}/alletre/home/${auctionId}/details`;
+    ? `${getDomain()}/my-product/${auctionId}/details`
+    : `${getDomain()}/home/${auctionId}/details`;
   const [isWatshlist, setWatshlist] = useState(false);
   const swiperRef = useRef(null);
   const thumbSwiperRef = useRef(null);
@@ -187,7 +187,7 @@ const ImgSlider = ({
         active={isLoading}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="group overflow-hidden relative flex flex-col md:flex-row gap-4 h-auto">
         {/* Main Image Container */}

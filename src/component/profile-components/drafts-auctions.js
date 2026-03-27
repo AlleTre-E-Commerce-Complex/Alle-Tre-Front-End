@@ -12,7 +12,7 @@ import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import PaginationApp from "component/shared/pagination/pagination-app";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -48,7 +48,7 @@ const DraftsAuctions = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">

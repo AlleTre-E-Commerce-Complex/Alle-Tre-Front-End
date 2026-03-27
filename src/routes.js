@@ -11,107 +11,107 @@ const routes = {
     },
   },
   app: {
-    default: `/alletre`,
-    unSubscribeUser: "/alletre/unSubscribeUser",
-    home: "/alletre/home",
+    default: `/`,
+    unSubscribeUser: "/unSubscribeUser",
+    home: "/home",
     homeDetails: (auctionId = ":auctionId") =>
-      `/alletre/home/${auctionId}/details`,
+      `/home/${auctionId}/details`,
     payDeposite: (auctionId = ":auctionId") =>
-      `/alletre/home/${auctionId}/details/pay-deposite`,
+      `/home/${auctionId}/details/pay-deposite`,
     buyNow: (auctionId = ":auctionId") =>
-      `/alletre/home/${auctionId}/details/buy-now`,
+      `/home/${auctionId}/details/buy-now`,
     paymentSucsess: (auctionId = ":auctionId") =>
-      `/alletre/home/${auctionId}/details/pay-deposite/paymentSucsess`,
+      `/home/${auctionId}/details/pay-deposite/paymentSucsess`,
     categories: (
       categoryTitle = ":categoryTitle",
       categoryId = ":categoryId"
-    ) => `/alletre/categories/${categoryTitle}/${categoryId}`,
+    ) => `/categories/${categoryTitle}/${categoryId}`,
 
-    faqs: `/alletre/FAQs`,
-    support: `/alletre/support`,
-    privacyPolicy: `/alletre/privacy-policy`,
+    faqs: `/FAQs`,
+    support: `/support`,
+    privacyPolicy: `/privacy-policy`,
 
     createAuction: {
-      default: `/alletre/home/create-auction`,
-      productDetails: `/alletre/home/create-auction/product-details`,
-      auctionDetails: `/alletre/home/create-auction/product-details/auction-details`,
-      shippingDetails: `/alletre/home/create-auction/product-details/auction-details/shipping-details`,
-      paymentDetails: `/alletre/home/create-auction/product-details/auction-details/shipping-details/payment-details`,
-      paymentSucsess: `/alletre/home/create-auction/product-details/auction-details/shipping-details/payment-details/Sucsess`,
-      paymentFaild: `/alletre/home/create-auction/product-details/auction-details/shipping-details/payment-details/Faild`,
+      default: `/home/create-auction`,
+      productDetails: `/home/create-auction/product-details`,
+      auctionDetails: `/home/create-auction/product-details/auction-details`,
+      shippingDetails: `/home/create-auction/product-details/auction-details/shipping-details`,
+      paymentDetails: `/home/create-auction/product-details/auction-details/shipping-details/payment-details`,
+      paymentSucsess: `/home/create-auction/product-details/auction-details/shipping-details/payment-details/Sucsess`,
+      paymentFaild: `/home/create-auction/product-details/auction-details/shipping-details/payment-details/Faild`,
     },
     listProduct: {
-      default: `/alletre/list-product`,
+      default: `/list-product`,
       details: (productId = ":productId") =>
-        `/alletre/my-product/${productId}/details`,
-      listProductLocationDetails: `/alletre/my-products/add-location`,
-      userDetails: `/alletre/user/user-details`,
+        `/my-product/${productId}/details`,
+      listProductLocationDetails: `/my-products/add-location`,
+      userDetails: `/user/user-details`,
     },
     profile: {
-      default: `/alletre/profile`,
-      profileSettings: `/alletre/profile/settings`,
+      default: `/profile`,
+      profileSettings: `/profile/settings`,
       myAuctions: {
-        default: `/alletre/profile/my-auctions`,
-        active: `/alletre/profile/my-auctions/active`,
-        scheduled: `/alletre/profile/my-auctions/scheduled`,
-        drafts: `/alletre/profile/my-auctions/drafts`,
-        sold: `/alletre/profile/my-auctions/sold`,
-        pending: `/alletre/profile/my-auctions/pending`,
-        watingForPayment: `/alletre/profile/my-auctions/wating-for-payment`,
-        expired: `/alletre/profile/my-auctions/expired`,
-        cancelled: `/alletre/profile/my-auctions/cancelled`,
+        default: `/profile/my-auctions`,
+        active: `/profile/my-auctions/active`,
+        scheduled: `/profile/my-auctions/scheduled`,
+        drafts: `/profile/my-auctions/drafts`,
+        sold: `/profile/my-auctions/sold`,
+        pending: `/profile/my-auctions/pending`,
+        watingForPayment: `/profile/my-auctions/wating-for-payment`,
+        expired: `/profile/my-auctions/expired`,
+        cancelled: `/profile/my-auctions/cancelled`,
 
         activeDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-auctions/active/${auctionId}/details`,
+          `/profile/my-auctions/active/${auctionId}/details`,
         scheduledDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-auctions/scheduled/${auctionId}/details`,
+          `/profile/my-auctions/scheduled/${auctionId}/details`,
         soldDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-auctions/sold/${auctionId}/details`,
+          `/profile/my-auctions/sold/${auctionId}/details`,
         pendingDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-auctions/pending/${auctionId}/details`,
+          `/profile/my-auctions/pending/${auctionId}/details`,
         watingForPaymentDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-auctions/wating-for-payment/${auctionId}/details`,
+          `/profile/my-auctions/wating-for-payment/${auctionId}/details`,
         expiredDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-auctions/expired/${auctionId}/details`,
+          `/profile/my-auctions/expired/${auctionId}/details`,
       },
 
       myBids: {
-        default: `/alletre/profile/my-bids`,
-        inPogress: `/alletre/profile/my-bids/in-pogress`,
-        pending: `/alletre/profile/my-bids/pending`,
-        waitingForDelivery: `/alletre/profile/my-bids/waiting-for-delivery`,
-        expired: `/alletre/profile/my-bids/expired`,
-        completed: `/alletre/profile/my-bids/completed`,
-        cancelled: `/alletre/profile/my-bids/cancelled`,
+        default: `/profile/my-bids`,
+        inPogress: `/profile/my-bids/in-pogress`,
+        pending: `/profile/my-bids/pending`,
+        waitingForDelivery: `/profile/my-bids/waiting-for-delivery`,
+        expired: `/profile/my-bids/expired`,
+        completed: `/profile/my-bids/completed`,
+        cancelled: `/profile/my-bids/cancelled`,
 
         inPogressDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-bids/in-pogress/${auctionId}/details`,
+          `/profile/my-bids/in-pogress/${auctionId}/details`,
         pendingDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-bids/pending/${auctionId}/details`,
+          `/profile/my-bids/pending/${auctionId}/details`,
         waitingForDeliveryDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-bids/waitingForDelivery/${auctionId}/details`,
+          `/profile/my-bids/waitingForDelivery/${auctionId}/details`,
         expiredDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-bids/expired/${auctionId}/details`,
+          `/profile/my-bids/expired/${auctionId}/details`,
         completedDetails: (auctionId = ":auctionId") =>
-          `/alletre/profile/my-bids/completed/${auctionId}/details`,
+          `/profile/my-bids/completed/${auctionId}/details`,
 
-        completePayment: `/alletre/profile/my-bids/pending/complete-payment`,
+        completePayment: `/profile/my-bids/pending/complete-payment`,
       },
 
       myProducts: {
-        default: `/alletre/profile/my-products`,
-        inPogress: `/alletre/profile/my-products/in-pogress`,
-        outOfStock: `/alletre/profile/my-products/out-of-stock`,
-        soldOut: `/alletre/profile/my-products/sold-out`,
+        default: `/profile/my-products`,
+        inPogress: `/profile/my-products/in-pogress`,
+        outOfStock: `/profile/my-products/out-of-stock`,
+        soldOut: `/profile/my-products/sold-out`,
       },
 
-      watchlist: `/alletre/profile/watchlist`,
+      watchlist: `/profile/watchlist`,
       watchlistDetails: (auctionId = ":auctionId") =>
-        `/alletre/profile/watchlist/${auctionId}/details`,
+        `/profile/watchlist/${auctionId}/details`,
 
-      purchased: `/alletre/profile/purchased`,
-      wallet: `/alletre/profile/wallet`,
-      notifications: `/alletre/profile/notifications`,
+      purchased: `/profile/purchased`,
+      wallet: `/profile/wallet`,
+      notifications: `/profile/notifications`,
     },
   },
 };

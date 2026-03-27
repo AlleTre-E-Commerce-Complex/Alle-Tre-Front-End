@@ -22,8 +22,7 @@ const StepperApp = () => {
   return (
     <>
       {/* step 1 */}
-      {pathname.length === 1 ||
-        (pathname.endsWith(routes.app.createAuction.productDetails) && (
+      {(pathname.endsWith(routes.app.createAuction.productDetails) && (
           <div className="flex mb-8">
             <div className={`text-center relative ${isListedProduct ? "pointer-events-none opacity-50" : ""}`}>
             <button
@@ -83,8 +82,7 @@ const StepperApp = () => {
         ))}
 
       {/* step 2 */}
-      {pathname.length === 1 ||
-        (pathname.endsWith(routes.app.createAuction.auctionDetails) && (
+      {(pathname.endsWith(routes.app.createAuction.auctionDetails) && (
           <div className="flex mb-8">
             <div className={`text-center relative ${isListedProduct ? "pointer-events-none opacity-50" : ""}`}>
             <button
@@ -139,8 +137,7 @@ const StepperApp = () => {
         ))}
 
       {/* step 3 */}
-      {pathname.length === 1 ||
-        (pathname.endsWith(routes.app.createAuction.shippingDetails) && (
+      {(pathname.endsWith(routes.app.createAuction.shippingDetails) && (
           <div className="flex mb-8">
             <div className={`text-center relative ${isListedProduct ? "pointer-events-none opacity-50" : ""}`}>
             <button
@@ -207,8 +204,7 @@ const StepperApp = () => {
         ))}
 
       {/* step 4 */}
-      {pathname.length === 1 ||
-        (pathname.endsWith(routes.app.createAuction.paymentDetails) && (
+      {(pathname.endsWith(routes.app.createAuction.paymentDetails) && (
           <div className="flex">
             <div className="text-center relative cursor-not-allowed ">
               <button

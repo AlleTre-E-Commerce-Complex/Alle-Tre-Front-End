@@ -28,7 +28,7 @@ import routes from "../../routes";
 import AddLocationModel from "../create-auction-components/add-location-model";
 import { FiPlus, FiMinus } from "react-icons/fi";
 import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import { FaRegUser } from "react-icons/fa";
 import { BiSolidFilePdf } from "react-icons/bi";
 import { IoCall } from "react-icons/io5";
@@ -383,7 +383,7 @@ const SummaryHomeAuctionSections = ({
         active={isLoading || loading}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
 
       {/* Cancellation Modal */}

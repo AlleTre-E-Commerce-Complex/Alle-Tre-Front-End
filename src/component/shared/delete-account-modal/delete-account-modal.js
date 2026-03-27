@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { authAxios } from "../../../config/axios-config";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 
 export function DeleteAccountModal({ open, onClose }) {
   const { run: runDeleteProfile, isLoading: isLoadingProfile } = useAxios([]);
@@ -41,7 +41,7 @@ export function DeleteAccountModal({ open, onClose }) {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <Modal
         className="sm:w-[400px] w-full h-auto bg-transparent scale-in"

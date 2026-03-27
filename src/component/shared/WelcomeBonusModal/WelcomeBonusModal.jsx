@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dimmer, Modal } from 'semantic-ui-react'
-import LodingTestAllatre from '../lotties-file/loding-test-allatre'
+import LoadingTest3arbon from '../lotties-file/loading-test-3arbon'
 import welcomeBonusImage from '../../../assets/images/welcomeBonusImage.png'
 // import { useLanguage } from 'context/language-context';
 // import content from 'localization/content';
@@ -36,7 +36,7 @@ const WelcomeBonusModal = ({open,setOpen,isLoading}) => {
           inverted
         >
           {/* <Loader active /> */}
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
         
         <div className="relative">

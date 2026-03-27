@@ -14,7 +14,7 @@ import { Dimmer } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import AuctionCardList from "./auction-card-list";
 import PaginationApp from "../shared/pagination/pagination-app";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../constants/pagination";
@@ -212,7 +212,7 @@ const UpComingAuctionsSlider = (isGrid) => {
 
       <div className="ezd-content relative">
         <Dimmer className="bg-white/50" active={isLoadingAuctions} inverted>
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
         <div className="pt-6 pb-4 ">
           {isGrid.isGrid ? (

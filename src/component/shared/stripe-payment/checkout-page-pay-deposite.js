@@ -24,7 +24,7 @@ import { truncateString } from "../../../utils/truncate-string";
 import { ReactComponent as MoneyINHand } from "../../../../src/assets/icons/money-in-hand-icon.svg";
 import { ReactComponent as CircleCloseIcon } from "../../../../src/assets/icons/circle-close-icon.svg";
 import CheckoutFormPayDeposite from "./checkout-form-pay-deposite";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import routes from "../../../routes";
 import PaymentSelection from "../PaymentSelection/PaymentSelection";
 import WalletPaymentForBiddingDeoposit from "../WalletPayment/WalletPaymentForBiddingDeoposit";
@@ -195,7 +195,7 @@ export default function CheckoutPagePayDeposite() {
         active={isLoading || isLoadingPendingAuctionData || isLoadingRun}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in px-2 sm:px-4">
         <div className="w-full   mx-auto h-14 my-7 py-4 sm:block hidden">
@@ -358,7 +358,7 @@ export default function CheckoutPagePayDeposite() {
               <div className="text-red-500 text-center p-4">{error}</div>
             ) : (
               <div className="text-center p-4">
-                <LodingTestAllatre />
+                <LoadingTest3arbon />
               </div>
             )}
             {clientSecret && showStripePayment && (
