@@ -42,7 +42,7 @@ function FormikMultiDropdown({
                 setFieldValue(name, value);
                 if (typeof onChange === "function") onChange(value);
               }}
-              search={false}
+              search={props.search !== undefined ? props.search : true}
               fluid
               selection
               multiple={multiple}
