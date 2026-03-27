@@ -18,7 +18,7 @@ import ImgSlider from "component/shared/img-slider/img-slider";
 import PhoneNumberModal from "component/shared/phone-number-modal/phone-number-modal";
 import SilmilarProductsSlider from "component/auctions-details-components/silmilar-products-slider";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import routes from "../../routes";
 import { ListProductsBreadcrumb } from "../../component/shared/bread-crumb/Breadcrumb";
 import AuctionDetailsTabs from "component/auctions-details-components/auction-details-tabs";
@@ -116,7 +116,7 @@ const SummaryListedSection = () => {
         active={isLoadingListedProduct}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
 
       <div className="w-full mx-auto px-4 md:px-8">

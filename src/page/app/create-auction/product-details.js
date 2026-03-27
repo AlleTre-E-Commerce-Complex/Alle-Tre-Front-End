@@ -34,7 +34,7 @@ import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 // import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown, MdDelete, MdLock } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
@@ -1091,7 +1091,7 @@ const ProductDetails = () => {
         }
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in max-w-[1366px] md:mx-auto  px-4 ">
         {/* <Loader active /> */}

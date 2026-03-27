@@ -17,7 +17,7 @@ import SummaryAuctionSections from "../../../component/auctions-details-componen
 import AuctionDetailsTabs from "../../../component/auctions-details-components/auction-details-tabs";
 import { useAuthState } from "../../../context/auth-context";
 import { useSelector } from "react-redux";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 
 const ProfileAuctionDetails = ({ isMyAuction }) => {
   const { user } = useAuthState();
@@ -68,7 +68,7 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in mx-5 ">
         <div className="px-4 mx-auto">

@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import LodingTestAllatre from "../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../component/shared/lotties-file/loading-test-3arbon";
 import useAxios from "../hooks/use-axios";
 import routes from "../routes";
 import Auth from "../utils/auth";
@@ -28,9 +28,9 @@ function AuthProvider({ children }) {
     });
   };
 
-  const logout = () => {
+  const logout = async () => {
     // Auth.setToken({ newAccessToken: "", newRefreshToken: "" });
-    Auth.logout();
+    await Auth.logout();
     setUser(null);
     // history.push(routes.app.home);
   };
@@ -46,7 +46,7 @@ function AuthProvider({ children }) {
       try {
         const user = await Auth.getUser();
         if (!user) {
-          if(window.location.pathname.includes("/alletre/profile/my-bids/pending")){
+        if (pathname.includes(routes.app.profile.myBids.pending)) {
             dispatch(Open());
             setIsLoading(false); // ensure the app renders children instead of loading screen
             // return;
@@ -83,7 +83,7 @@ function AuthProvider({ children }) {
       {isLoading ? (
         <div className="h-screen w-screen flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
-            <LodingTestAllatre />
+            <LoadingTest3arbon />
           </div>
         </div>
       ) : (

@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import { authAxios } from "../../../config/axios-config";
 import useAxios from "hooks/use-axios";
 import api from "api";
@@ -123,7 +123,7 @@ export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError,b
   if (!stripe || !elements) {
     return (
       <div className="text-center p-4">
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
         <p className="mt-2">Loading payment system...</p>
       </div>
     );
@@ -136,7 +136,7 @@ export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError,b
         active={isLoading || isStripeLoading}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
 
       <form className="w-full mx-auto" id="payment-form" onSubmit={handleSubmit}>

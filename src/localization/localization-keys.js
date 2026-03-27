@@ -344,7 +344,7 @@ const localizationKeys = {
   contactNumber: "contactNumber",
   youCanConnectOn: "youCanConnectOn",
   DontForgetToMention: "DontForgetToMention",
-  alletre: "Alletre",
+  alletre: "3arbon",
   whenYouCall: "whenYouCall",
   // auction details
   quickAuction: "quickAuction",

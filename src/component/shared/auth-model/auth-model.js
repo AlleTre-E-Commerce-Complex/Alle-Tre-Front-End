@@ -19,8 +19,8 @@ function AuthModel({ currentPAth }) {
       className="m-0 p-0 md:w-[824px] w-[95%] h-auto md:h-[550px] bg-[#2A3A54] shadow-2xl shadow-black/50 rounded-2xl scale-in overflow-y-scroll md:overflow-visible scrollbar-hide border border-[#39485C]"
       onClose={() => {
         dispatch(Close());
-        if (window.location.pathname === "/alletre/profile/my-bids/pending") {
-          window.location.href = `${routes.app.home}?page=1&perPage=24&productPage=1&auctionPage=1`;
+        if (window.location.pathname === routes.app.profile.myBids.pending) {
+          window.location.href = routes.app.home;
         }
       }}
       onOpen={() => {

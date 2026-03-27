@@ -7,7 +7,7 @@ import { authAxios } from 'config/axios-config.js';
 import api from 'api.js';
 import useAxios from 'hooks/use-axios.js';
 import toast from 'react-hot-toast';
-import LodingTestAllatre from '../lotties-file/loding-test-allatre.js';
+import LoadingTest3arbon from '../lotties-file/loading-test-3arbon.js';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.js';
 import routes from 'routes.js';
 const DeliveryModal = ({open,setOpen,auctionId,setSuccessModal}) => {
@@ -55,7 +55,7 @@ const DeliveryModal = ({open,setOpen,auctionId,setSuccessModal}) => {
               inverted
             >
               {/* <Loader active /> */}
-              <LodingTestAllatre />
+              <LoadingTest3arbon />
             </Dimmer>
             <div className="bg-primary text-white text-center font-semibold py-2 text-lg">
                 <h1>{selectedContent[localizationKeys.didYouSendTheItemForDelivery]}</h1>

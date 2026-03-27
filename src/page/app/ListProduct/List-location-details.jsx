@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listingProductDetails } from "redux-store/ListingProduct-details-slice";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import { BsThreeDots } from "react-icons/bs";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
 import { getDefaultPerPage } from "constants/pagination";
@@ -235,7 +235,7 @@ const ListingProductsLocationDetails = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in mx-5 ">
         {/* <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">

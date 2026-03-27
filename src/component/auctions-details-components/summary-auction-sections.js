@@ -18,7 +18,7 @@ import localizationKeys from "../../localization/localization-keys";
 import AuctionsStatus from "../shared/status/auctions-status";
 import TotalBidsTableModel from "./total-bids-table-model";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import useAxios from "hooks/use-axios";
 import { BiSolidFilePdf } from "react-icons/bi";
 
@@ -96,7 +96,7 @@ const SummaryAuctionSections = ({
         active={isLoadingAuctionById || loading}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div>
         {/* Title Section */}

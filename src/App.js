@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import BlockedModal from "component/shared/UserBlockedModal/BlockedModal";
 import { HelmetProvider } from "react-helmet-async";
 import { initGA, logPageView } from "./utils/analytics";
-import { getDefaultPaginationString } from "./constants/pagination";
 import InstallPromptButton from "component/shared/installPropt/InstallPromptButton";
 import usePushNotifications from "hooks/usePushNotifications";
 
@@ -63,8 +62,9 @@ function App() {
           <Route exact path={routes.auth.forgetpass.restpass} component={CredentialsuUpdateLayout} />
           <Route exact path={routes.auth.forgetpass.default} component={CredentialsuUpdateLayout} />
           <Route path={routes.auth.default} component={AuthLayouts} />
+          <Redirect exact from="/" to={routes.app.home} />
           <Route path={routes.app.default} component={AppLayouts} />
-          <Redirect to={`${routes.app.home}?${getDefaultPaginationString()}`} />
+          {/* <Redirect to={`${routes.app.home}?${getDefaultPaginationString()}`} /> */}
         </Switch>
         {/* Blocked Modal */}
         <BlockedModal />

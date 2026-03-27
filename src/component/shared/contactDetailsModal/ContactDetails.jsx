@@ -4,7 +4,7 @@ import { Dimmer, Modal } from "semantic-ui-react";
 import { authAxios } from "config/axios-config";
 import api from "api";
 import { useAuthState } from "context/auth-context";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import content from "localization/content";
 import { useLanguage } from "context/language-context";
 import localizationKeys from "localization/localization-keys";
@@ -55,7 +55,7 @@ const ContactDetails = ({ open, onClose, userType, auctionId }) => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
 
       <div className="sm:w-[500px] w-full h-auto bg-background rounded-2xl border-2 border-solid border-primary pb-6 shadow-xl">

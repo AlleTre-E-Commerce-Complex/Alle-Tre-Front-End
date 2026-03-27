@@ -2,7 +2,7 @@ import jwt_decode from "jwt-decode";
 import Axios from "axios";
 import api from "../api";
 import routes from "routes";
-import { getDefaultPerPage } from "constants/pagination";
+// import { DEFAULT_PAGE } from "constants/pagination";
 
 class Auth {
   constructor() {
@@ -49,8 +49,7 @@ class Auth {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("hasCompletedProfile");
       if (window.location.pathname !== routes.app.home) {
-        const perPage = getDefaultPerPage()
-        window.location.replace(`${routes.app.home}?page=1&perPage=${perPage}`);
+        window.location.replace(routes.app.home);
       }
     }
   }
@@ -134,14 +133,14 @@ class Auth {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       // alert('window.location.pathname'+window.location.pathname)
-      if(window.location.pathname.includes("/alletre/profile/my-bids/pending")){
-        return null
+      if (window.location.pathname.includes(routes.app.profile.myBids.pending)) {
+        return null;
       }
      if(
         !window.location.pathname.includes("details") &&
-        !window.location.pathname.includes("/alletre/categories/") &&
+        !window.location.pathname.includes("/categories/") &&
         !window.location.pathname.includes(routes.app.home) &&
-        !window.location.pathname.includes("/privacy-policy")){
+        !window.location.pathname.includes("/privacy-policy")) {
         await this.logout();
       }
       return null;

@@ -3,7 +3,7 @@ import useAxios from "hooks/use-axios";
 import content from "localization/content";
 import React, { useState } from "react";
 import { Dimmer, Modal } from "semantic-ui-react";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import { authAxios } from "config/axios-config";
 import localizationKeys from "../../../localization/localization-keys";
 import api from "api";
@@ -112,7 +112,7 @@ const AddNewBankModal = ({ open, setOpen }) => {
           active={isLoading}
           inverted
         >
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
         <div className="bg-white h-auto  border-2 border-primary rounded-2xl shadow-md w-full">
           <h1 className="text-black font-semibold text-lg text-center my-6">

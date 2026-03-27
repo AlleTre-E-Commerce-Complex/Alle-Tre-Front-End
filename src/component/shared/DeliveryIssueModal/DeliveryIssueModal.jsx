@@ -10,7 +10,7 @@ import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import api from "api";
 import imageCompression from "browser-image-compression";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import { Dimmer } from "semantic-ui-react";
 
 const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
@@ -183,7 +183,7 @@ const DeliveryIssueModal = ({ open, setOpen, auctionId }) => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="w-full max-w-[500px] h-auto mx-auto rounded-2xl bg-white border-2 border-primary p-4">
         <div

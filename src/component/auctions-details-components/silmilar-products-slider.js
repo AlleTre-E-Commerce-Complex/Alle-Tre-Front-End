@@ -11,7 +11,7 @@ import { useLanguage } from "../../context/language-context";
 import useAxios from "../../hooks/use-axios";
 import content from "../../localization/content";
 import AuctionCard from "../home-components/auction-card";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import "./auctions-slider.scss";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import ProductCard from "component/home-components/ProductCard";
@@ -92,7 +92,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
   return (
     <>
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       {auctions?.length === 0 ? null : (
         <div

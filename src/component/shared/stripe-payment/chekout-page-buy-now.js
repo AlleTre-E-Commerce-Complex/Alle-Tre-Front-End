@@ -17,7 +17,7 @@ import api from "../../../api";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 import CheckoutFormBuyNow from "./checkout-form-buy-now";
 import moment from "moment";
@@ -152,7 +152,7 @@ export default function CheckoutPageBuyNow() {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in ">
         <div className="max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden">

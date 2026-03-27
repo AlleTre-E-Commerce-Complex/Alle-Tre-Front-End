@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import localizationKeys from "../../../localization/localization-keys";
 // import { io } from "socket.io-client";
 import { useAuthState } from "context/auth-context";
-import { getDefaultPaginationString } from "../../../constants/pagination";
 const PaymentSucsessModel = ({ open, TextButton, onReload }) => {
   const [lang, setLang] = useLanguage("");
   const selectedContent = content[lang];
@@ -90,7 +89,7 @@ const PaymentSucsessModel = ({ open, TextButton, onReload }) => {
           </button>
           <button
             onClick={() =>
-              history.push(`${routes.app.home}?${getDefaultPaginationString()}`)
+              history.push(routes.app.home)
             }
             className="bg-primary text-white w-[136px] h-[48px] rounded-lg text-base font-normal"
           >

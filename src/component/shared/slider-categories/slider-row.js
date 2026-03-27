@@ -2,7 +2,7 @@ import React from "react";
 import Category from "./Category";
 import useGetGatogry from "../../../hooks/use-get-category";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 // import { useLanguage } from "../../../context/language-context";
 // import content from "../../../localization/content";
 // import localizationKeys from "../../../localization/localization-keys";
@@ -18,7 +18,7 @@ const SliderRow = ({ categoryCounts = {} }) => {
         active={loadingGatogry}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="container mx-auto mt-20 px-4 sm:px-6 lg:px-8 mb-20">
         <div className="max-w-[1400px] mx-auto">

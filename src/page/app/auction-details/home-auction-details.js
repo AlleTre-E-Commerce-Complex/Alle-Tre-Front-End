@@ -21,7 +21,7 @@ import { authAxios, axios } from "../../../config/axios-config";
 // import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import routes from "../../../routes";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import SilmilarProductsSlider from "../../../component/auctions-details-components/silmilar-products-slider";
 import useLocalStorage from "../../../hooks/use-localstorage";
 import { Helmet } from "react-helmet-async";
@@ -29,7 +29,7 @@ import { Helmet } from "react-helmet-async";
 // Move getShareImage function outside of component
 const getShareImage = (imageUrl) => {
   if (!imageUrl) {
-    return "https://www.alletre.com/logo512.png";
+    return "https://www.3arbon.com/logo512.png";
   }
   // Remove any query parameters for cleaner URL
   const baseUrl = imageUrl.split("?")[0];
@@ -150,35 +150,35 @@ const HomeAuctionDetails = () => {
       <Helmet prioritizeSeoTags={true}>
         {/* Base tags */}
         <title>
-          {auctionsDetailsData?.product?.title || "Auction Details - Alletre"}
+          {auctionsDetailsData?.product?.title || "Auction Details - 3arbon"}
         </title>
         <meta
           name="description"
           content={
             auctionsDetailsData?.product?.description ||
-            "Explore our latest auction details on Alletre."
+            "Explore our latest auction details on 3arbon."
           }
         />
 
         {/* Open Graph / Facebook - Explicitly provided first */}
         <meta property="og:image" content={shareImageUrl} key="og:image" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Alletre" />
+        <meta property="og:site_name" content="3arbon" />
         <meta
           property="og:url"
-          content={`https://www.alletre.com${pathname}`}
+          content={`https://www.3arbon.com${pathname}`}
         />
         <meta
           property="og:title"
           content={
-            auctionsDetailsData?.product?.title || "Auction Details - Alletre"
+            auctionsDetailsData?.product?.title || "Auction Details - 3arbon"
           }
         />
         <meta
           property="og:description"
           content={
             auctionsDetailsData?.product?.description ||
-            "Explore our latest auction details on Alletre."
+            "Explore our latest auction details on 3arbon."
           }
         />
         <meta property="og:image:secure_url" content={shareImageUrl} />
@@ -187,38 +187,38 @@ const HomeAuctionDetails = () => {
         <meta property="og:image:height" content="630" />
         <meta
           property="og:image:alt"
-          content={auctionsDetailsData?.product?.title || "Alletre Auction"}
+          content={auctionsDetailsData?.product?.title || "3arbon Auction"}
         />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@alletre" />
-        <meta name="twitter:creator" content="@alletre" />
+        <meta name="twitter:site" content="@3arbon" />
+        <meta name="twitter:creator" content="@3arbon" />
         <meta
           name="twitter:url"
-          content={`https://www.alletre.com${pathname}`}
+          content={`https://www.3arbon.com${pathname}`}
         />
         <meta
           name="twitter:title"
           content={
-            auctionsDetailsData?.product?.title || "Auction Details - Alletre"
+            auctionsDetailsData?.product?.title || "Auction Details - 3arbon"
           }
         />
         <meta
           name="twitter:description"
           content={
             auctionsDetailsData?.product?.description ||
-            "Explore our latest auction details on Alletre."
+            "Explore our latest auction details on 3arbon."
           }
         />
         <meta name="twitter:image" content={shareImageUrl} />
         <meta
           name="twitter:image:alt"
-          content={auctionsDetailsData?.product?.title || "Alletre Auction"}
+          content={auctionsDetailsData?.product?.title || "3arbon Auction"}
         />
 
         {/* Additional SEO */}
-        <link rel="canonical" href={`https://www.alletre.com${pathname}`} />
+        <link rel="canonical" href={`https://www.3arbon.com${pathname}`} />
       </Helmet>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
@@ -226,7 +226,7 @@ const HomeAuctionDetails = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in mx-5 ">
         <div className="sm:px-4 px-0 mx-auto">

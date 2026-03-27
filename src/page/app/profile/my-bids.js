@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import { ReactComponent as BidIcon } from "../../../../src/assets/icons/Bids-icon.svg";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import localizationKeys from "../../../localization/localization-keys";
 
 const MyBids = () => {
@@ -79,7 +79,7 @@ const MyBids = () => {
           inverted
         >
           {/* <Loader active /> */}
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
         {analyticsData?.length === 0 ? (
           <div className="align-middle pt-52">

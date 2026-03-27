@@ -22,7 +22,7 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { truncateString } from "../../../utils/truncate-string";
 import CheckoutFromCompletePayment from "./checkout-from-complete-payment";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import routes from "../../../routes";
 import WalletPaymentForBidderFullPayment from "../WalletPayment/WalletPaymentForBidderFullPayment";
 import BankTransferPayment from "../BankTransferPayment/BankTransferPayment";
@@ -242,7 +242,7 @@ useEffect(() => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in ">
         <div className=" mx-auto h-14 my-7 py-4 sm:block hidden">

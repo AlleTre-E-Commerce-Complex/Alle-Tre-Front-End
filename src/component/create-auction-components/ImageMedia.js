@@ -12,7 +12,7 @@ import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import { toast } from "react-hot-toast";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
 // import { BiPlayCircle } from "react-icons/bi";
 
@@ -36,7 +36,7 @@ const ImageMedia = ({
   // Check if there's already a video in the images array
   const hasExistingVideo = images.some(
     (img) =>
-      img?.imagePath?.includes("AlletreVideo") ||
+      img?.imagePath?.includes("3arbonVideo") ||
       img?.isVideo ||
       img?.file?.type?.startsWith("video/")
   );
@@ -513,7 +513,7 @@ const ImageMedia = ({
         active={isloadingDelete || isloadingUpload}
         inverted
       >
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="image-upload-container">
         <div className="flex flex-col gap-4">

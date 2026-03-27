@@ -3,7 +3,7 @@ import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "localization/localization-keys";
 import { Button, Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 // import ShowBankDetailsModal from "../withdrawalModal/ShowBankDetailsModal";
 
 const PaymentSelectionOnAuctionPurchase = ({
@@ -32,7 +32,7 @@ const PaymentSelectionOnAuctionPurchase = ({
         active={isLoading}
         inverted
       >
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
       </Dimmer>
       <div className="">
         <div className="px-3 py-2 my-5 text-center font-semibold text-lg">

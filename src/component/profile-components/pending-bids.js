@@ -16,9 +16,8 @@ import useAxios from "../../hooks/use-axios";
 import localizationKeys from "../../localization/localization-keys";
 import { useDispatch } from "react-redux";
 import { completePaymentData } from "../../redux-store/complete-payment-slice";
-import LodingTestAllatre from "../shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import useLocalStorage from "../../hooks/use-localstorage";
-import DeleverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
 import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
 // import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 
@@ -95,7 +94,7 @@ const PendingBids = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div>
         <p className="pb-5 text-gray-med text-xs font-normal">

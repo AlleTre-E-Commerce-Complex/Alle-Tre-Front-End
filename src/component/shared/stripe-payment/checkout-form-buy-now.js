@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "../../../routes";
 import { formatCurrency } from "../../../utils/format-currency";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 
 export default function CheckoutFormBuyNow({ payPrice }) {
   const history = useHistory();
@@ -96,7 +96,7 @@ export default function CheckoutFormBuyNow({ payPrice }) {
       inverted
     >
       {/* <Loader active /> */}
-      <LodingTestAllatre />
+      <LoadingTest3arbon />
     </Dimmer>
     <form className="w-full mx-auto" id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} onReady={()=>setIsStripeLoading(false)}/>

@@ -390,7 +390,7 @@ const en = {
   [localizationKeys.contactNumber]: "Contact Number",
   [localizationKeys.youCanConnectOn]: "You can connect on:",
   [localizationKeys.DontForgetToMention]: "Don't forget to mention",
-  [localizationKeys.alletre]: "Alletre",
+  [localizationKeys.alletre]: "3arbon",
   [localizationKeys.whenYouCall]: "When you call!",
   [localizationKeys.inspectionDetails]: "Inspection Details",
   [localizationKeys.contactPerson]: "Contact Person",
@@ -501,7 +501,7 @@ const en = {
   [localizationKeys.editPhoneNumber]: "Edit Phone Number",
   [localizationKeys.loginService]: "Login Service",
   [localizationKeys.loginServiceMaseg]:
-    "Your Alletre account does not have an external login service. Connect accounts now for quick & secure access.",
+    "Your 3arbon account does not have an external login service. Connect accounts now for quick & secure access.",
   [localizationKeys.connected]: "Connected",
   [localizationKeys.connectedWithApple]: "Connected with Apple",
   [localizationKeys.connectWithGoogle]: "Connect with Google",

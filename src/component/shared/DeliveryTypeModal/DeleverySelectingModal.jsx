@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Dropdown } from "semantic-ui-react";
 import { Dimmer } from "semantic-ui-react";
-import LodingTestAllatre from "../lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import api from "api";
@@ -94,7 +94,7 @@ const DeliverySelectingModal = ({
           active={isLoading}
           inverted
         >
-          <LodingTestAllatre />
+          <LoadingTest3arbon />
         </Dimmer>
 
         <div className="w-full h-auto rounded-xl bg-white border-2 border-primary px-2">

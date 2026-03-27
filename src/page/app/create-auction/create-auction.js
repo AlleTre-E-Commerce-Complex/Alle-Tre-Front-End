@@ -25,7 +25,7 @@ import { truncateString } from "../../../utils/truncate-string";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import LodingTestAllatre from "../../../component/shared/lotties-file/loding-test-allatre";
+import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 
 const CreateAuction = () => {
   const [lang] = useLanguage("");
@@ -72,7 +72,7 @@ const CreateAuction = () => {
         inverted
       >
         {/* <Loader active /> */}
-        <LodingTestAllatre />
+        <LoadingTest3arbon />
       </Dimmer>
       <div className="mt-44 animate-in  ">
         <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">

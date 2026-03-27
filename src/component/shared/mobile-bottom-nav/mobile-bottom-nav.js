@@ -86,7 +86,6 @@ const MobileBottomNav = ({
             <FiList
               size={24}
               className={
-                pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.myProducts.default)
                   ? "text-yellow"
                   : "text-primary-veryLight"
@@ -94,7 +93,6 @@ const MobileBottomNav = ({
             />
             <span
               className={`text-[10px] sm:text-xs font-medium ${
-                pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.myProducts.default)
                   ? "text-yellow"
                   : ""
@@ -129,7 +127,6 @@ const MobileBottomNav = ({
             <HiOutlineShoppingBag
               size={22}
               className={
-                pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.purchased)
                   ? "text-yellow"
                   : "text-primary-veryLight"
@@ -137,7 +134,6 @@ const MobileBottomNav = ({
             />
             <span
               className={`text-[10px] sm:text-xs font-medium ${
-                pathname.length === 1 ||
                 pathname.startsWith(routes.app.profile.purchased)
                   ? "text-yellow"
                   : ""
