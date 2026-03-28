@@ -85,7 +85,7 @@ const FilterSections = ({
         {isFullPage && (
           <div className="flex items-center gap-3">
             <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary-dark transition rounded-md">{selectedContent[localizationKeys.apply]}</button>
-            <button onClick={onClose} className="p-2 text-gray-500 hover:text-primary transition rounded-full hover:bg-gray-100">
+            <button onClick={onClose} className="p-2 text-gray-500 dark:hover:bg-primary-dark dark:hover:text-primary-veryLight hover:text-primary transition rounded-full hover:bg-gray-100">
               <IoClose size={24} />
             </button>
 
