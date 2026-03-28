@@ -20,7 +20,7 @@ const SliderRow = ({ categoryCounts = {} }) => {
       >
         <LoadingTest3arbon />
       </Dimmer>
-      <div className="container mx-auto mt-20 px-4 sm:px-6 lg:px-8 mb-20">
+      <div className="container mx-auto mt-4 px-4 sm:px-6 lg:px-8 mb-4">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-11 gap-4 sm:gap-6 md:gap-16 lg:gap-20">
             {GatogryOptions?.map((e, index) => (

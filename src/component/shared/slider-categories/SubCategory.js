@@ -32,7 +32,7 @@ const SubCategory = ({ img, title, id, view, className = "" }) => {
   return (
     <div
       onClick={handleClick}
-      className={`group flex flex-col items-center justify-start gap-4 md:gap-5 h-full cursor-pointer w-full px-2 sm:px-4 ${className}`}
+      className={`group flex flex-col items-center justify-start gap-2 md:gap-3 h-full cursor-pointer w-full px-2 sm:px-4 ${className}`}
     >
       <div className="w-full aspect-square flex items-center justify-center p-2 sm:p-3">
         <div

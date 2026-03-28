@@ -54,10 +54,10 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
   if (!SubGatogryOptions || SubGatogryOptions.length === 0) return null;
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-8 md:my-14 overflow-visible">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 my-1 md:my-2 overflow-visible">
       <div className="max-w-[1400px] mx-auto">
         {/* Header Section */}
-        <div className="flex items-center justify-between mb-8 md:mb-10 w-full">
+        <div className="flex items-center justify-between mb-1 md:mb-2 w-full">
           <h2 className="text-2xl md:text-[28px] font-serifEN text-[#1e2738] dark:text-gray-100 tracking-wide">
            {selectedContent[localizationKeys.exploreCategories]}
           </h2>
@@ -82,16 +82,16 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
         </div>
 
         {/* Swiper Section */}
-        <div className="px-2 py-4 -mx-2">
+        <div className="px-2 py-0 -mx-2">
           <div
             ref={swiperRef}
             className="swiper flex justify-center overflow-visible"
           >
-            <div className="swiper-wrapper flex items-start justify-center pt-2">
+            <div className="swiper-wrapper flex items-start justify-center pt-0">
               {SubGatogryOptions?.map((e, index) => (
                 <div
                   key={index}
-                  className="swiper-slide !h-auto flex justify-center pb-2"
+                  className="swiper-slide !h-auto flex justify-center pb-0"
                 >
                   <SubCategory
                     img={e?.imageLink}

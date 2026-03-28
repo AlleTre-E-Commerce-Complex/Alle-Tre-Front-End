@@ -30,7 +30,7 @@ const OutOfStockProducts = () => {
     if (search.includes("page") && search.includes("perPage"))
       run(
         authAxios
-          .get(`${api.app.productListing.getAllListedProducts}${search}&status=OUT_OF_STOCK`)
+          .get(`${api.app.productListing.getAllListedProducts}${search}&status=OUT_OF_STOCK&isMyListing=true`)
           .then((res) => {
             setActiveProductData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);

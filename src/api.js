@@ -143,7 +143,8 @@ const api = {
     WatchList: {
       get: "/watch-lists/saved",
       add: "/watch-lists/save",
-      delete: (auctionsId) => `/watch-lists/un-save?auctionId=${auctionsId}`,
+      delete: (id, isProduct = false) =>
+        `/watch-lists/un-save?${isProduct ? "productId" : "auctionId"}=${id}`,
     },
     Wallet: {
       get: "/wallet/get_from_wallet",

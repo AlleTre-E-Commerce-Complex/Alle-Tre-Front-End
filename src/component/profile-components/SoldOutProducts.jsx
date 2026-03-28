@@ -28,7 +28,7 @@ const SoldOutProducts = () => {
     if (search.includes("page") && search.includes("perPage"))
       run(
         authAxios
-          .get(`${api.app.productListing.getAllListedProducts}${search}&status=SOLD_OUT`)
+          .get(`${api.app.productListing.getAllListedProducts}${search}&status=SOLD_OUT&isMyListing=true`)
           .then((res) => {
             setActiveProductData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);

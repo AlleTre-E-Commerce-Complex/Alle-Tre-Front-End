@@ -8,7 +8,12 @@ import localizationKeys from "../../localization/localization-keys";
 import { formatCurrency } from "utils/format-currency";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { ShareFallBack } from "component/shared/react-share/ShareFallback";
+import { useAuthState } from "context/auth-context";
+import { authAxios } from "config/axios-config";
+import api from "api";
+import { toast } from "react-hot-toast";
 
 const ProductCard = ({
   adsImg,
@@ -21,6 +26,7 @@ const ProductCard = ({
   userId,
   usageStatus,
   category,
+  isSaved,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -31,6 +37,12 @@ const ProductCard = ({
   const [preloadedVideos, setPreloadedVideos] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const [showShareFallback, setShowShareFallback] = useState(false);
+  const { user } = useAuthState();
+  const [isSavedState, setIsSavedState] = useState(isSaved);
+
+  useEffect(() => {
+    setIsSavedState(isSaved);
+  }, [isSaved]);
 
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -155,6 +167,36 @@ const ProductCard = ({
 
   // const difference = getTimeDifference(createdAt);
 
+  const handleToggleFavorite = async (e) => {
+    e.stopPropagation();
+    if (!user) {
+      // dispatch(Open()); // We need dispatch here if we want to open login modal
+      return;
+    }
+
+    try {
+      if (isSavedState) {
+        await authAxios.delete(api.app.WatchList.delete(id, true));
+        setIsSavedState(false);
+        toast.success(selectedContent[localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]);
+      } else {
+        await authAxios.post(api.app.WatchList.add, { productId: id });
+        setIsSavedState(true);
+        toast.success(selectedContent[localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]);
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      const responseData = error?.response?.data;
+      let errorMessage = responseData?.message || error?.message || "Something went wrong";
+      
+      if (typeof errorMessage === 'object' && errorMessage !== null) {
+        errorMessage = errorMessage.en || errorMessage.message || JSON.stringify(errorMessage);
+      }
+      
+      toast.error(String(errorMessage));
+    }
+  };
+
   const handelGoDetails = (id) => {
     history.push(routes.app.listProduct.details(id));
   };
@@ -180,8 +222,8 @@ const ProductCard = ({
         </div>
 
         {/* Action Icons - Top Right */}
-        <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
-          <div className="relative">
+        <div className="absolute top-2 right-2 z-10 flex flex-col gap-2">
+          <div className="relative flex flex-col gap-2.5">
             <div
               onClick={(e) => {
                 e.stopPropagation();
@@ -189,7 +231,17 @@ const ProductCard = ({
               }}
               className="transition-transform duration-200 cursor-pointer active:scale-95 drop-shadow-md"
             >
-              <RiShareForwardFill className="text-white text-base drop-shadow-lg hover:text-gray-200" />
+              <RiShareForwardFill className="text-white text-xl drop-shadow-lg hover:text-gray-200" />
+            </div>
+            <div
+              onClick={handleToggleFavorite}
+              className="transition-transform duration-200 cursor-pointer active:scale-95 drop-shadow-md"
+            >
+              {isSavedState ? (
+                <AiFillHeart className="text-red-500 text-xl drop-shadow-lg" />
+              ) : (
+                <AiOutlineHeart className="text-white text-xl drop-shadow-lg hover:text-gray-200" />
+              )}
             </div>
             {showShareFallback && (
               <div
