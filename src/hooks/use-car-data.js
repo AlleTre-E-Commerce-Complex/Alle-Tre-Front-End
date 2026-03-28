@@ -15,23 +15,50 @@ export const useCarData = (selectedMake, selectedModel) => {
   }, [isArabic]);
 
   const models = useMemo(() => {
-    if (!selectedMake || !carData[selectedMake]) return [];
+    if (!selectedMake) return [];
     
-    return Object.keys(carData[selectedMake].models).map((model) => ({
-      key: model,
-      text: isArabic ? carData[selectedMake].models[model].nameAr : model,
-      value: model,
-    })).sort((a, b) => a.text.localeCompare(b.text));
+    const makesArray = Array.isArray(selectedMake) ? selectedMake : [selectedMake];
+    const allModels = [];
+    const seenModels = new Set();
+    
+    makesArray.forEach(make => {
+      if (carData[make]) {
+        Object.keys(carData[make].models).forEach(model => {
+          if (!seenModels.has(model)) {
+            const modelData = carData[make].models[model];
+            allModels.push({
+              key: model,
+              text: isArabic ? modelData.nameAr : model,
+              value: model,
+            });
+            seenModels.add(model);
+          }
+        });
+      }
+    });
+
+    return allModels.sort((a, b) => a.text.localeCompare(b.text));
   }, [selectedMake, isArabic]);
 
   const years = useMemo(() => {
-    if (!selectedMake || !selectedModel || !carData[selectedMake]?.models[selectedModel]) return [];
+    if (!selectedMake || !selectedModel) return [];
     
-    return carData[selectedMake].models[selectedModel].years.map((year) => ({
-      key: year.toString(),
-      text: year.toString(),
-      value: year.toString(),
-    }));
+    const makesArray = Array.isArray(selectedMake) ? selectedMake : [selectedMake];
+    const modelsArray = Array.isArray(selectedModel) ? selectedModel : [selectedModel];
+    
+    // For years, we typically look at the first selected make and model that exists in data
+    for (const make of makesArray) {
+      for (const model of modelsArray) {
+        if (carData[make]?.models[model]) {
+          return carData[make].models[model].years.map((year) => ({
+            key: year.toString(),
+            text: year.toString(),
+            value: year.toString(),
+          }));
+        }
+      }
+    }
+    return [];
   }, [selectedMake, selectedModel]);
 
   return { makes, models, years };

@@ -11,6 +11,7 @@ const MultiButtonFilter = ({
   isMultiSelect = true,
   subCategories,
   variant = "checkbox",
+  maxHeight = "350px",
 }) => {
   const [filter, setFilter] = useFilter(name, isMultiSelect ? [] : "");
 
@@ -50,9 +51,10 @@ const MultiButtonFilter = ({
       <div
         className={
           variant === "button"
-            ? "flex flex-wrap gap-2 mt-2"
-            : "flex flex-col space-y-3 max-h-[350px] overflow-y-auto pr-2"
+            ? "flex flex-wrap gap-2 mt-2 max-h-[var(--max-height)] overflow-y-auto pr-1 custom-scrollbar"
+            : "flex flex-col space-y-3 overflow-y-auto pr-2"
         }
+        style={{ "--max-height": maxHeight, maxHeight: maxHeight }}
       >
         {filterValues.map((v, index) => {
           const selected = isSelected(v?.value.toString());

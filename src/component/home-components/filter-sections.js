@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import useGetALLBrand from "../../hooks/use-get-all-brands";
+
 import useGetGatogry from "../../hooks/use-get-category";
 import RangeInput from "./range-input";
-import useGetBrand from "../../hooks/use-get-brand";
+
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import MultiButtonFilter from "component/shared/buttons/multi-button-filter";
 import { motion } from "framer-motion";
-import useGetSubGatogry from "hooks/use-get-sub-category";
+
 import { useLocation, useHistory } from "react-router-dom";
 import queryString from "query-string";
-import useGetAllCities from "../../hooks/use-get-all-cities";
+
 import { IoClose } from "react-icons/io5";
 
 
@@ -31,8 +31,7 @@ const FilterSections = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const { GatogryOptions } = useGetGatogry();
-  const { brandOptions } = useGetBrand(categoryId);
-  const { allBrands } = useGetALLBrand();
+
   const { search } = useLocation();
   const parsed = queryString.parse(search, { arrayFormat: "bracket" });
   const categories = parsed?.categories || [];
@@ -125,19 +124,7 @@ const FilterSections = ({
           </FilterBlock>
         )} */}
 
-        {isCars && (
-          <FilterBlock
-            title={selectedContent[localizationKeys.brand]}
-            defaultExpanded={true}
-          >
-            <MultiButtonFilter
-              values={categoryId ? brandOptions : allBrands}
-              name="brands"
-              isMultiSelect={true}
-              myRef={myRef}
-            />
-          </FilterBlock>
-        )}
+
 
         <FilterBlock
           title={selectedContent[localizationKeys.condition]}
