@@ -40,9 +40,9 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
       .then((res) => {
         const { accessToken, hasCompletedProfile, isAddedBonus } =
           res.data.data;
-        if (isAddedBonus) {
-          dispatch(welcomeBonus(true));
-        }
+        // if (isAddedBonus) {
+        //   dispatch(welcomeBonus(true));
+        // }
         login({
           accessToken: accessToken,
         });

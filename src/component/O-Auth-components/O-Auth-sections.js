@@ -144,7 +144,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
             isAddedBonus,
           } = res.data.data;
 
-          if (isAddedBonus) dispatch(welcomeBonus(true));
+          // if (isAddedBonus) dispatch(welcomeBonus(true));
 
           login({
             accessToken,
@@ -242,9 +242,9 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
               hasCompletedProfile,
               isAddedBonus,
             } = res.data.data;
-            if (isAddedBonus) {
-              dispatch(welcomeBonus(true));
-            }
+            // if (isAddedBonus) {
+            //   dispatch(welcomeBonus(true));
+            // }
             login({
               accessToken: accessToken,
               // refreshToken: refreshToken,
