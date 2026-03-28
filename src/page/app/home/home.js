@@ -44,9 +44,9 @@ const Home = ({
   const history = useHistory();
   const { user } = useAuthState();
   const dispatch = useDispatch();
-  const isWelcomeBonus = useSelector(
-    (state) => state.welcomeBonus.welcomeBonus,
-  );
+  // const isWelcomeBonus = useSelector(
+  //   (state) => state.welcomeBonus.welcomeBonus,
+  // );
   // const [isGrid, setIsGrid] = useState(() => {
   //   return JSON.parse(localStorage.getItem("isGrid")) ?? true;
   // });
@@ -393,12 +393,12 @@ const Home = ({
     };
   }, [socket]);
 
-  useEffect(() => {
-    if (isWelcomeBonus) {
-      setOpenWelcomeBonusModal(true);
-      dispatch(welcomeBonus(false));
-    }
-  }, [isWelcomeBonus, dispatch]);
+  // useEffect(() => {
+  //   if (isWelcomeBonus) {
+  //     setOpenWelcomeBonusModal(true);
+  //     dispatch(welcomeBonus(false));
+  //   }
+  // }, [isWelcomeBonus, dispatch]);
 
   return (
     <div
