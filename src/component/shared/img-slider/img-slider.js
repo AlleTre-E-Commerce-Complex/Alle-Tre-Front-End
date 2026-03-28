@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { toast } from "react-hot-toast";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 import { RiShareForwardFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import api from "../../../api";
@@ -8,7 +7,7 @@ import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
 import { Open } from "../../../redux-store/auth-model-slice";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
@@ -128,31 +127,41 @@ const ImgSlider = ({
   const { run, isLoading } = useAxios([]);
   const handelAddNewWatshlist = () => {
     if (user) {
-      const body = {
-        auctionId: auctionId,
-      };
+      const body = isListProduct
+        ? { productId: auctionId }
+        : { auctionId: auctionId };
       if (!isWatshlist) {
         run(
           authAxios.post(api.app.WatchList.add, body).then((res) => {
             toast.success(
               selectedContent[
-                localizationKeys.thisAuctionAddedToWatchListSuccessfully
+                localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
               ],
             );
             setWatshlist(true);
-            onReload();
+            onReload?.();
+          }).catch(err => {
+            const responseData = err?.response?.data;
+            let errorMessage = responseData?.message || err?.message || "Something went wrong";
+            if (typeof errorMessage === 'object' && errorMessage !== null) {
+              errorMessage = errorMessage.en || errorMessage.message || JSON.stringify(errorMessage);
+            }
+            toast.error(String(errorMessage));
           }),
         );
       } else {
         run(
-          authAxios.delete(api.app.WatchList.delete(auctionId)).then((res) => {
+          authAxios.delete(api.app.WatchList.delete(auctionId, isListProduct)).then((res) => {
             toast.success(
               selectedContent[
-                localizationKeys.thisAuctionRemovedFromWatchListSuccessfully
+                localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully
               ],
             );
             setWatshlist(false);
-            onReload();
+            onReload?.();
+          }).catch(err => {
+            const errorMessage = err?.response?.data?.message || err?.message || "Something went wrong";
+            toast.error(typeof errorMessage === 'object' ? errorMessage.en || "Error" : errorMessage);
           }),
         );
       }
@@ -278,9 +287,9 @@ const ImgSlider = ({
                     className="backdrop-blur-md bg-white/20 dark:bg-black/20 hover:bg-white dark:hover:bg-black p-2 md:p-2.5 rounded-xl border border-white/30 transition-all duration-300"
                   >
                     {isWatshlist ? (
-                      <BsBookmarkFill className="text-yellow-500 text-lg md:text-xl" />
+                      <AiFillHeart className="text-red-500 text-lg md:text-xl" />
                     ) : (
-                      <BsBookmark className="text-white text-lg md:text-xl" />
+                      <AiOutlineHeart className="text-white text-lg md:text-xl" />
                     )}
                   </button>
                 )}
@@ -307,10 +316,10 @@ const ImgSlider = ({
                 className={`absolute top-1/2 w-full flex ${isArabic ? "justify-between flex-row-reverse" : "justify-between"} px-4 transform -translate-y-1/2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
               >
                 <button className="swiper-button-prev-custom pointer-events-auto bg-white/90 dark:bg-black/90 p-2 md:p-3 rounded-xl shadow-lg hover:bg-white dark:hover:bg-black transition-all hover:scale-110 disabled:opacity-50">
-                  <BsChevronLeft className="text-gray-900 dark:text-white text-lg md:text-xl" />
+                  <span className="flex items-center justify-center w-full h-full">{"<"}</span>
                 </button>
                 <button className="swiper-button-next-custom pointer-events-auto bg-white/90 dark:bg-black/90 p-2 md:p-3 rounded-xl shadow-lg hover:bg-white dark:hover:bg-black transition-all hover:scale-110 disabled:opacity-50">
-                  <BsChevronRight className="text-gray-900 dark:text-white text-lg md:text-xl" />
+                   <span className="flex items-center justify-center w-full h-full">{">"}</span>
                 </button>
               </div>
             </div>

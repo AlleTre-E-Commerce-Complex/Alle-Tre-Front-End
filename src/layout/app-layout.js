@@ -247,12 +247,12 @@ const AppLayouts = () => {
                 exact
                 path={routes.app.categories()}
                 render={(props) => (
-                  <Categories
-                    {...props}
-                    selectedType={selectedType}
-                    isFilterOpen={isFilterOpen}
-                    setIsFilterOpen={setIsFilterOpen}
-                  />
+                        <Categories
+                          {...props}
+                          selectedType={selectedType}
+                          isFilterOpen={isFilterOpen}
+                          setIsFilterOpen={setIsFilterOpen}
+                        />
                 )}
               />
               <Route path={routes.app.faqs} component={FAQs} />

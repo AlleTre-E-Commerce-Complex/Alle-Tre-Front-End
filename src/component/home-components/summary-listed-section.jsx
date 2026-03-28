@@ -73,7 +73,10 @@ const SummaryListedSection = () => {
         .then((res) => {
           const createdAt = res?.data?.data?.createdAt;
           setDate(createdAt);
-          setListedProductsData(res?.data?.data?.product);
+          setListedProductsData({
+            ...res?.data?.data?.product,
+            isSaved: res?.data?.data?.isSaved,
+          });
           setMainLocation(res?.data?.data?.location);
 
           if (createdAt) {
@@ -137,11 +140,20 @@ const SummaryListedSection = () => {
           {/* Main Content Area (Left) */}
           <div className="lg:col-span-8 space-y-8">
             <div className="animate-in">
-
               <div className="mt-4 relative group">
                 <ImgSlider
                   images={listedProductsData?.images}
                   auctionId={listedProductsData?.id}
+                  WatshlistState={listedProductsData?.isSaved}
+                  onReload={() => {
+                    // Refetch data to get latest isSaved state
+                    run(authAxios.get(`${api.app.productListing.listedProduct(productId)}`)).then((res) => {
+                      setListedProductsData({
+                        ...res?.data?.data?.product,
+                        isSaved: res?.data?.data?.isSaved,
+                      });
+                    });
+                  }}
                   isMyAuction={listedProductsData?.userId === user?.id}
                   isListProduct={true}
                   title={listedProductsData?.title}

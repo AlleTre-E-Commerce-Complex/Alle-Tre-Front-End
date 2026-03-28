@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MyAuctions from "./my-auctions";
 import ProfileSettings from "./profile-settings";
-import Watshlist from "./watshlist";
+import Favourites from "./favourites";
 import ProfileSideBare from "../../../component/profile-components/profile-side-bare";
 import routes from "../../../routes";
 import { Route, Switch, useLocation } from "react-router-dom";
@@ -70,7 +70,7 @@ const ProfileLayouts = () => {
               path={routes.app.profile.myProducts.default}
               component={MyProducts}
             />
-            <Route path={routes.app.profile.watchlist} component={Watshlist} />
+            <Route path={routes.app.profile.watchlist} component={Favourites} />
             <Route path={routes.app.profile.purchased} component={Purchased} />
             <Route path={routes.app.profile.wallet} component={Wallet} />
             <Route

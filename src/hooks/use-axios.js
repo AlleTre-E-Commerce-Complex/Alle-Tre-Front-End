@@ -54,10 +54,19 @@ function useAxios(initialState) {
         },
         (error) => {
           const responseData = error?.response?.data;
-          const errorMessage =
-            typeof responseData === "object" && responseData !== null
-              ? responseData.en || responseData.message || JSON.stringify(responseData)
-              : responseData || error.message;
+          let errorMessage = responseData || error.message;
+
+          if (typeof responseData === "object" && responseData !== null) {
+            const msg = responseData.en || responseData.message || responseData.error;
+            errorMessage =
+              typeof msg === "object" && msg !== null
+                ? msg.en || JSON.stringify(msg)
+                : msg || JSON.stringify(responseData);
+          }
+
+          if (typeof errorMessage !== "string") {
+            errorMessage = JSON.stringify(errorMessage);
+          }
 
           if (config.throwOnError) throw new Error(errorMessage);
           setError(errorMessage);

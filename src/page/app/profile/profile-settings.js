@@ -192,20 +192,32 @@ const ProfileSettings = () => {
               </div>
 
               {/* Stats */}
-              {/* <div className="mt-8 md:mt-0 flex justify-center md:justify-end divide-x divide-gray-200 dark:divide-gray-800 rtl:divide-x-reverse pb-2">
+              <div className="mt-8 md:mt-0 flex justify-center md:justify-end divide-x divide-gray-200 dark:divide-gray-800 rtl:divide-x-reverse pb-2">
+                {/* <div className="px-5 md:px-8 text-center">
+                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">
+                    {pofileData?.totalBids || 0}
+                  </p>
+                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">
+                    {selectedContent[localizationKeys.totalBids]}
+                  </p>
+                </div> */}
                 <div className="px-5 md:px-8 text-center">
-                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">{pofileData?.totalBids || 124}</p>
-                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">Total Bids</p>
-                </div>
-                <div className="px-5 md:px-8 text-center">
-                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">{pofileData?.activeListings || 8}</p>
-                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">Active Listings</p>
+                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">
+                    {pofileData?.activeListings || 0}
+                  </p>
+                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">
+                    {selectedContent[localizationKeys.activeListings]}
+                  </p>
                 </div>
                 <div className="ltr:pl-5 md:ltr:pl-8 rtl:pr-5 md:rtl:pr-8 text-center">
-                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">{pofileData?.itemsSold || 42}</p>
-                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">Items Sold</p>
+                  <p className="text-[#34415C] dark:text-gray-100 text-2xl font-bold">
+                    {pofileData?.itemsSold || 0}
+                  </p>
+                  <p className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mt-1">
+                    {selectedContent[localizationKeys.itemsSold]}
+                  </p>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
           {/*  Personal Details */}

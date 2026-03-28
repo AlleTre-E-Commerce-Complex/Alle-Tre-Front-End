@@ -132,11 +132,11 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             )}
             onClick={() => history.push(routes.app.profile.myProducts.default)}
           />
-          {/* <NavLink
-            title={selectedContent[localizationKeys.watchlist]}
+          <NavLink
+            title={selectedContent[localizationKeys.favourites]}
             isActive={pathname.startsWith(routes.app.profile.watchlist)}
             onClick={() => history.push(routes.app.profile.watchlist)}
-          /> */}
+          />
           {/* <NavLink
             title={selectedContent[localizationKeys.Purchased]}
             isActive={pathname.startsWith(routes.app.profile.purchased)}

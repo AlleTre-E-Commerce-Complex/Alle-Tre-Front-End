@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import SearchResults from "../../../component/home-components/search-results";
 import { Dimmer } from "semantic-ui-react";
+import { HiHeart } from "react-icons/hi";
 import addImage from "../../../../src/assets/icons/add-image-icon.png";
 import api from "../../../api";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
@@ -23,7 +24,9 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import { DEFAULT_PAGE, getDefaultPerPage } from "../../../constants/pagination";
 import ProductCard from "component/home-components/ProductCard";
-import ProductCardList from "component/home-components/products-card-list";
+import ProductCardList from "../../../component/home-components/products-card-list";
+import SortDropdown from "../../../component/home-components/SortDropdown";
+import MobileSortToggle from "../../../component/home-components/MobileSortToggle";
 import queryString from "query-string";
 // import BuyNowAuctionsSlider from "component/home-components/buy-now-auctions-slider";
 // import UpComingAuctionsSlider from "component/home-components/up-coming-auctions";
@@ -118,6 +121,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      sortBy: parsed.sortBy || undefined,
+      sortOrder: parsed.sortOrder || undefined,
       isHome: false,
     };
 
@@ -182,6 +187,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       usageStatus: parsed.usageStatus ? [parsed.usageStatus] : undefined,
       priceFrom: parsed.priceFrom ? Number(parsed.priceFrom) : undefined,
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
+      sortBy: parsed.sortBy || undefined,
+      sortOrder: parsed.sortOrder || undefined,
       isHome: false,
     };
 
@@ -197,7 +204,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
     // if (search.includes("page") && search.includes("perPage"))
     if (user) {
       runCategories(
-        axios
+        authAxios
           .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
           .then((res) => {
             setListedProducts(res?.data?.data);
@@ -338,26 +345,54 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                       HOME
                     </span>
                     <span>&gt;</span>
-                    <span className="text-yellow">
-                      {selectedCategor?.text || "CARS"}
+                    <span className="text-yellow uppercase font-semibold">
+                      {selectedCategor?.text}
                     </span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-serifEN dark:text-white text-primary font-bold">
-                    {selectedCategor?.text || "Luxury Vehicles"}
+                    {selectedCategor?.text}
                   </h1>
                   <p className="text-gray-500 dark:text-gray-400 text-xs md:text-sm mt-1">
                     Discover{" "}
                     {activeTab === "auction"
                       ? mainAuctions?.length || 0
                       : listedProducts?.length || 0}{" "}
-                    curated listings from the world's most prestigious
-                    collections.
+                    curated listings from our collection.
                   </p>
                 </div>
 
-                <div className="flex items-center gap-4 mt-auto md:mt-0 w-full md:w-auto">
+                <div className="flex items-center gap-2 mt-auto md:mt-0 w-full md:w-auto py-2 flex-wrap">
+                  {/* Desktop Sorting Dropdown */}
+                  <div className="hidden md:block">
+                    <SortDropdown 
+                      lang={lang} 
+                      selectedContent={selectedContent} 
+                      categoryId={categoryId} 
+                    />
+                  </div>
+
+                  {/* Mobile Sort | Save Bar */}
+                  <div className="block md:hidden w-full">
+                    <MobileSortToggle 
+                      lang={lang} 
+                      selectedContent={selectedContent} 
+                      categoryId={categoryId} 
+                    />
+                  </div>
+
+                  {/* Desktop Saved Button (Shortcut to Watchlist) */}
+                  <div
+                    onClick={() => history.push(routes.app.profile.watchlist)}
+                    className="hidden md:flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-lg px-3 h-[42px] cursor-pointer bg-white dark:bg-[#1b2331] hover:border-gray-300 transition-all font-sansEN"
+                  >
+                    <HiHeart className="dark:text-primary-veryLight text-primary w-4 h-4" />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                      {selectedContent[localizationKeys.saved]}
+                    </span>
+                  </div>
+
                   {/* Type Toggle (Live Auctions / Fixed Price) */}
-                  <div className="flex bg-gray-100 dark:bg-[#1b2331] rounded-lg p-1 flex-1 md:flex-none h-[42px]">
+                  <div className="flex bg-gray-100 dark:bg-[#1b2331] rounded-lg p-1 flex-1 md:flex-none h-[42px] ml-auto">
                     {/* <button
                       onClick={() => setActiveTab("auction")}
                       className={`flex-1 md:flex-none px-4 py-1.5 text-xs md:text-sm font-semibold rounded-md transition-all duration-300 ${
@@ -609,16 +644,17 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               city={
                                 lang === "en"
                                   ? e?.location?.city?.nameEn
-                                  : e?.location?.city?.nameEn
+                                  : e?.location?.city?.nameAr
                               }
                               country={
                                 lang === "en"
                                   ? e?.location?.country?.nameEn
-                                  : e?.location?.country?.nameEn
+                                  : e?.location?.country?.nameAr
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
                               category={e?.product?.categoryId}
+                              isSaved={e?.isSaved}
                             />
                           ))}
                         </div>
@@ -661,6 +697,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
                               category={e?.product?.categoryId}
+                              isSaved={e?.isSaved}
                             />
                           ))}
                         </div>
@@ -742,6 +779,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
                               category={e?.product?.categoryId}
+                              isSaved={e?.isSaved}
                             />
                           ))}
                         </div>
@@ -822,6 +860,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
                               category={e?.product?.categoryId}
+                              isSaved={e?.isSaved}
                             />
                           ))}
                         </div>

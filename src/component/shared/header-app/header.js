@@ -648,11 +648,11 @@ const Header = ({
                 path: routes.app.profile.myProducts.default,
                 handler: handelmyProducts,
               },
-              // {
-              //   key: localizationKeys.watchlist,
-              //   path: routes.app.profile.watchlist,
-              //   handler: handelWatchlist,
-              // },
+              {
+                key: localizationKeys.favourites,
+                path: routes.app.profile.watchlist,
+                handler: handelWatchlist,
+              },
               // {
               //   key: localizationKeys.Purchased,
               //   path: routes.app.profile.purchased,

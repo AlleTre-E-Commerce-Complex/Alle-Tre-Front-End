@@ -322,7 +322,7 @@ const Home = ({
       );
     } else {
       runListedProduct(
-        axios
+        authAxios
           .get(`${api.app.productListing.getAllListedProducts}?${queryStr}`)
           .then((res) => {
             setListedProducts(res?.data?.data);
@@ -643,6 +643,7 @@ const Home = ({
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
+                                isSaved={e?.isSaved}
                               />
                             ))}
                           </div>
@@ -697,6 +698,7 @@ const Home = ({
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
+                                isSaved={e?.isSaved}
                               />
                             ))}
                           </div>
@@ -746,6 +748,7 @@ const Home = ({
                                 startBidAmount={e?.startBidAmount}
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
+                                isSaved={e?.isSaved}
                               />
                             ))}
                           </div>
@@ -798,6 +801,7 @@ const Home = ({
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
+                                isSaved={e?.isSaved}
                               />
                             ))}
                           </div>
@@ -888,6 +892,7 @@ const Home = ({
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
                               category={e?.product?.categoryId}
+                              isSaved={e?.isSaved}
                             />
                           ))}
                         </div>

@@ -30,7 +30,7 @@ const InProgressProducts = () => {
     if (search.includes("page") && search.includes("perPage"))
       run(
         authAxios
-          .get(`${api.app.productListing.getAllListedProducts}${search}&status=IN_PROGRESS`)
+          .get(`${api.app.productListing.getAllListedProducts}${search}&status=IN_PROGRESS&isMyListing=true`)
           .then((res) => {
             setActiveProductData(res?.data?.data);
             setTotalPages(res?.data?.pagination?.totalPages);
