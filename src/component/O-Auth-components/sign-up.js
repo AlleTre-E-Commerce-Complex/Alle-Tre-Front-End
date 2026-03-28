@@ -16,7 +16,7 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { PiWarningCircle } from "react-icons/pi";
 import TermsAndConditions from "component/shared/terms-and-condition/TermsAndCondition";
-import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { HiEye, HiEyeOff } from "react-icons/hi";
 
 const SignUp = ({ currentPAth, isAuthModel, onToggleView }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -213,12 +213,12 @@ const SignUp = ({ currentPAth, isAuthModel, onToggleView }) => {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-0 bottom-2 text-gray-500 hover:text-gray-300"
+                      className="absolute right-1 top-1 p-1.5 rounded-full hover:bg-white/5 active:scale-90 transition-all text-gray-500 hover:text-[#d4af37]"
                     >
                       {showPassword ? (
-                        <VscEye size={18} />
+                        <HiEye size={15} className="transition-opacity duration-300" />
                       ) : (
-                        <VscEyeClosed size={18} />
+                        <HiEyeOff size={15} className="transition-opacity duration-300" />
                       )}
                     </button>
                   </div>

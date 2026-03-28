@@ -36,6 +36,19 @@
     margin: 0;
   }
 
+  /* Hide password reveal icon in Edge/Chrome */
+  input::-ms-reveal,
+  input::-ms-clear {
+    display: none;
+  }
+  input::-webkit-contacts-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+  }
+
   /* slider-transition  */
   .slider-transition {
     transition: transform 0.5s ease-in-out;
