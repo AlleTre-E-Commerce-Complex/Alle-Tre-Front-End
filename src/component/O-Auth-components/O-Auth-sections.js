@@ -46,7 +46,7 @@ const OAuthSections = ({ isLogin, currentPAth, isAuthModel }) => {
   const dispatch = useDispatch();
   const { login } = useAuthState();
 
-  const { run, isLoading } = useAxios();
+  const { run } = useAxios();
   // const signInWithApple = () => {
   //   const provider = new OAuthProvider("apple.com");
   //   signInWithPopup(authentications, provider)
