@@ -100,22 +100,22 @@ const MobileSortToggle = ({ lang, selectedContent, categoryId }) => {
   return (
     <>
       {/* Mobile Bar: Sort | Save (Fixed Bottom Center) - Vice Versa Theme */}
-      <div className="md:hidden fixed bottom-8 left-1/2 -translate-x-1/2 z-[40] flex items-center bg-[#1b2331] dark:bg-white border border-gray-700 dark:border-gray-200 rounded-xl overflow-hidden shadow-2xl h-[38px] min-w-[150px]">
+      <div className="md:hidden fixed bottom-8 left-1/2 -translate-x-1/2 z-[40] flex items-center bg-white dark:bg-[#1b2331] border border-gray-300 dark:border-white/10 rounded-xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.15)] h-[38px] min-w-[150px] transition-colors duration-300">
         <button
           onClick={() => setOpen(true)}
-          className="flex-1 flex items-center justify-center gap-1.5 px-3 hover:bg-gray-800 dark:hover:bg-gray-50 transition-all border-r border-gray-700/50 dark:border-gray-100 h-full"
+          className="flex-1 flex items-center justify-center gap-1.5 px-3 hover:bg-gray-100 dark:hover:bg-white/5 transition-all border-r border-gray-200 dark:border-white/10 h-full"
         >
-          <HiSelector className="text-white dark:text-gray-900 w-4 h-4 shrink-0" />
-          <span className="text-[13px] font-bold leading-none text-white dark:text-gray-900 whitespace-nowrap">
+          <HiSelector className="text-gray-900 dark:text-yellow w-4 h-4 shrink-0" />
+          <span className="text-[13px] font-bold leading-none text-gray-900 dark:text-white whitespace-nowrap">
             {selectedContent[localizationKeys.sort]}
           </span>
         </button>
         <button
           onClick={() => history.push(routes.app.profile.watchlist)}
-          className="flex-1 flex items-center justify-center gap-1.5 px-3 hover:bg-gray-800 dark:hover:bg-gray-50 transition-all h-full"
+          className="flex-1 flex items-center justify-center gap-1.5 px-3 hover:bg-gray-100 dark:hover:bg-white/5 transition-all h-full"
         >
-          <HiHeart className="text-white dark:text-gray-900 w-4 h-4 shrink-0" />
-          <span className="text-[13px] font-bold leading-none text-white dark:text-gray-900 whitespace-nowrap">
+          <HiHeart className="text-gray-900 dark:text-yellow w-4 h-4 shrink-0" />
+          <span className="text-[13px] font-bold leading-none text-gray-900 dark:text-white whitespace-nowrap">
             {selectedContent[localizationKeys.saved]}
           </span>
         </button>
