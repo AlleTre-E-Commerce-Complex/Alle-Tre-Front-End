@@ -8,6 +8,7 @@ import localizationKeys from "../../localization/localization-keys";
 export const CheckboxRadioProductDetails = ({
   valueRadio,
   setRadioValue,
+  isProperty,
   categoryId,
   subCategoryId,
   isAuction,
@@ -16,7 +17,6 @@ export const CheckboxRadioProductDetails = ({
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
-  const isProperty = categoryId === 3;
   const isAnimal = categoryId === 7;
 
   if ((isAnimal && subCategoryId === 23) || (isAnimal && isAuction)) {
