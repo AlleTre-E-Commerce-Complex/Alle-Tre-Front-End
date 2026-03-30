@@ -1053,27 +1053,34 @@ const ListProductDetails = () => {
                       </div>
                     )}
 
-                    {categoryId === 7 && (
-                      <div className="w-full">
-                        <PropertySpecifications 
-                            subCategoryText={SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.text || SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.name}
-                          AllCountriesOptions={AllCountriesOptions}
-                          AllCitiesOptions={AllCitiesOptions}
-                          loadingAllCountries={loadingAllCountries}
-                          loadingCitiesOptions={loadingCitiesOptions}
-                          descriptionNode={
-                            <div className="w-full mt-2 text-gray-600 dark:text-gray-300">
-                              <FormikTextArea
-                                name="itemDescription"
-                                type={"text"}
-                                label={getOptionalLabel(selectedContent[localizationKeys.itemDescription])}
-                                placeholder={selectedContent[localizationKeys.writeItemDescription]}
-                              />
-                            </div>
-                          }
-                        />
-                      </div>
-                    )}
+                    {(() => {
+                      const categoryName = GatogryOptions?.find(opt => String(opt.value) === String(categoryId))?.name?.toLowerCase() || "";
+                      const isPropertyCategory = categoryId === 7 || categoryId === 3 || categoryName.includes("properties") || categoryName.includes("عقارات") || categoryName.includes("real estate");
+                      
+                      if (!isPropertyCategory) return null;
+
+                      return (
+                        <div className="w-full">
+                          <PropertySpecifications 
+                              subCategoryText={SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.text || SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.name}
+                            AllCountriesOptions={AllCountriesOptions}
+                            AllCitiesOptions={AllCitiesOptions}
+                            loadingAllCountries={loadingAllCountries}
+                            loadingCitiesOptions={loadingCitiesOptions}
+                            descriptionNode={
+                              <div className="w-full mt-2 text-gray-600 dark:text-gray-300">
+                                <FormikTextArea
+                                  name="itemDescription"
+                                  type={"text"}
+                                  label={getOptionalLabel(selectedContent[localizationKeys.itemDescription])}
+                                  placeholder={selectedContent[localizationKeys.writeItemDescription]}
+                                />
+                              </div>
+                            }
+                          />
+                        </div>
+                      );
+                    })()}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                       {/* Pricing Card */}
@@ -1099,39 +1106,48 @@ const ListProductDetails = () => {
                         </div>
                       </div>
 
-                      {/* Condition Card */}
-                      {!(categoryId === 7 && subCategoryId === 23) ? (
-                        <div className="bg-white dark:bg-primary-dark border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm flex flex-col h-full">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center gap-2">
-                              <IoRibbonOutline className="dark:text-primary-light text-yellow w-6 h-6" />
-                              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                {selectedContent[localizationKeys.itemCondition]} <span className="text-red-500">*</span>
-                              </h2>
-                            </div>
-                            {formik.errors.usageStatus && (formik.touched.usageStatus || formik.submitCount > 0) && (
-                              <span className="text-sm font-medium text-red-600 ltr:font-serifEN rtl:font-serifAR px-2 py-1 rounded">
-                                {selectedContent[localizationKeys.required]}
-                              </span>
-                            )}
-                          </div>
-                          <div className="w-full h-full" id="usageStatus">
-                            <CheckboxRadioProductDetails
-                              valueRadio={formik.values.usageStatus}
-                              setRadioValue={(val) => {
-                                formik.setFieldValue("usageStatus", val);
-                              }}
-                              categoryId={categoryId}
-                              subCategoryId={subCategoryId}
-                              showError={Boolean(
-                                formik.errors.usageStatus && (formik.touched.usageStatus || formik.submitCount > 0)
+                      {(() => {
+                        const categoryName = GatogryOptions?.find(opt => String(opt.value) === String(categoryId))?.name?.toLowerCase() || "";
+                        const isPropertyCategory = categoryId === 7 || categoryId === 3 || categoryName.includes("properties") || categoryName.includes("عقارات") || categoryName.includes("real estate");
+                        const subCatName = SubGatogryOptions?.find(opt => String(opt.value) === String(subCategoryId))?.text?.toLowerCase() || "";
+                        const isRent = subCategoryId === 23 || subCatName.includes("rent") || subCatName.includes("إيجار");
+
+                        if (isPropertyCategory && isRent) {
+                          return <div></div>;
+                        }
+
+                        return (
+                          <div className="bg-white dark:bg-primary-dark border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm flex flex-col h-full">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="flex items-center gap-2">
+                                <IoRibbonOutline className="dark:text-primary-light text-yellow w-6 h-6" />
+                                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                  {selectedContent[localizationKeys.itemCondition]} <span className="text-red-500">*</span>
+                                </h2>
+                              </div>
+                              {formik.errors.usageStatus && (formik.touched.usageStatus || formik.submitCount > 0) && (
+                                <span className="text-sm font-medium text-red-600 ltr:font-serifEN rtl:font-serifAR px-2 py-1 rounded">
+                                  {selectedContent[localizationKeys.required]}
+                                </span>
                               )}
-                            />
+                            </div>
+                            <div className="w-full h-full" id="usageStatus">
+                              <CheckboxRadioProductDetails
+                                valueRadio={formik.values.usageStatus}
+                                setRadioValue={(val) => {
+                                  formik.setFieldValue("usageStatus", val);
+                                }}
+                                isProperty={isPropertyCategory}
+                                categoryId={categoryId}
+                                subCategoryId={subCategoryId}
+                                showError={Boolean(
+                                  formik.errors.usageStatus && (formik.touched.usageStatus || formik.submitCount > 0)
+                                )}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        <div></div>
-                      )}
+                        );
+                      })()}
                     </div>
                     {/* Media Card */}
                     <div className="bg-white dark:bg-primary-dark border border-gray-200 dark:border-[#d4af37]/40 rounded-2xl p-6 md:p-8 shadow-sm">
