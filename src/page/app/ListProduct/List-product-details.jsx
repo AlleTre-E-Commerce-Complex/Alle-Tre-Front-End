@@ -1056,7 +1056,7 @@ const ListProductDetails = () => {
                     {categoryId === 7 && (
                       <div className="w-full">
                         <PropertySpecifications 
-                          subCategoryText={SubGatogryOptions?.find(opt => opt.value === formik.values.subCategory)?.text}
+                            subCategoryText={SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.text || SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.name}
                           AllCountriesOptions={AllCountriesOptions}
                           AllCitiesOptions={AllCitiesOptions}
                           loadingAllCountries={loadingAllCountries}

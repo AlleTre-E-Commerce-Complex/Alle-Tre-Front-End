@@ -70,9 +70,9 @@ const PropertySpecifications = ({
   // Convert subCategoryText to lowercase for robust checking
   const subCatStr = (subCategoryText || "").toLowerCase();
   
-  const isResidential = subCatStr.includes("residential") || subCatStr.includes("سكني") || subCatStr.includes("house") || subCatStr.includes("villa") || subCatStr.includes("townhouse");
-  const isCommercial = subCatStr.includes("commercial") || subCatStr.includes("تجاري") || subCatStr.includes("office") || subCatStr.includes("retail") || subCatStr.includes("warehouse");
-  const isMultipleUnits = subCatStr.includes("multiple units") || subCatStr.includes("وحدات متعددة");
+  const isResidential = subCatStr.includes("residential") || subCatStr.includes("سكني") || subCatStr.includes("house") || subCatStr.includes("villa") || subCatStr.includes("townhouse") || subCatStr.includes("apartment") || subCatStr.includes("شقة") || subCatStr.includes("منزل") || subCatStr.includes("فيلا");
+  const isCommercial = subCatStr.includes("commercial") || subCatStr.includes("تجاري") || subCatStr.includes("office") || subCatStr.includes("retail") || subCatStr.includes("warehouse") || subCatStr.includes("مكتب") || subCatStr.includes("محل") || subCatStr.includes("مستودع") || subCatStr.includes("معرض");
+  const isMultipleUnits = subCatStr.includes("multiple units") || subCatStr.includes("وحدات متعددة") || subCatStr.includes("building") || subCatStr.includes("مبنى");
   const isLand = subCatStr.includes("land") || subCatStr.includes("أرض");
   const { values, setFieldValue } = useFormikContext();
 
