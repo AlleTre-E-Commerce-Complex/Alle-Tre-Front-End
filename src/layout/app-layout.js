@@ -26,12 +26,12 @@ import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-d
 import ProfileLayouts from "../page/app/profile/profile-layouts";
 import { useSelector, useDispatch } from "react-redux";
 import { SocketProvider } from "context/socket-context";
-import localizationKeys from "../localization/localization-keys";
-import { useLanguage } from "../context/language-context";
-import content from "../localization/content";
+
+
+
 import { useAuthState } from "../context/auth-context";
 import { Open } from "../redux-store/auth-model-slice";
-import RewardModal from "../component/shared/rewardModal/RewardModal";
+// import RewardModal from "../component/shared/rewardModal/RewardModal";
 import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal";
 import ListProductDetails from "page/app/ListProduct/List-product-details";
 import SummaryListedSection from "component/home-components/summary-listed-section";
@@ -43,28 +43,28 @@ import MobileBottomNav from "../component/shared/mobile-bottom-nav/mobile-bottom
 const AppLayouts = () => {
   const [sid, SetSid] = useState("");
   const [selectedType, setSelectedType] = useState("all");
-  const [showRewardModal, setShowRewardModal] = useState(false);
+//  const [showRewardModal, setShowRewardModal] = useState(false);
   const [showUnSubscribeModal, setUnSubscribeModal] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const currentPath = location.pathname;
   const { pathname } = useLocation();
-  const [lang] = useLanguage("");
-  const selectedContent = content[lang];
+
+
   const [isExpanded, setIsExpanded] = useState(false);
 
-  useEffect(() => {
-    const hasCompletedProfile = window.localStorage.getItem(
-      "hasCompletedProfile",
-    );
-    const hasSeenRewardModal = localStorage.getItem("hasSeenRewardModal");
+  // useEffect(() => {
+  //   const hasCompletedProfile = window.localStorage.getItem(
+  //     "hasCompletedProfile",
+  //   );
+  //   const hasSeenRewardModal = localStorage.getItem("hasSeenRewardModal");
 
-    if (!hasCompletedProfile && !hasSeenRewardModal) {
-      setShowRewardModal(true);
-      localStorage.setItem("hasSeenRewardModal", "true");
-    }
-  }, []);
+  //   if (!hasCompletedProfile && !hasSeenRewardModal) {
+  //     setShowRewardModal(true);
+  //     localStorage.setItem("hasSeenRewardModal", "true");
+  //   }
+  // }, []);
   const search = location.search;
   const unSubscribe = new URLSearchParams(search).get("unSubscribe") === "true";
   const dispatch = useDispatch();
@@ -120,13 +120,13 @@ const AppLayouts = () => {
           onDropdownChange={setIsDropdownOpen}
         />
         <Sidebar SetSid={SetSid} sid={sid} />
-        {showRewardModal && (
+        {/* {showRewardModal && (
           <RewardModal
             open={showRewardModal}
             setOpen={setShowRewardModal}
             user={user}
           />
-        )}
+        )} */}
         {showUnSubscribeModal && (
           <UnSubscribeModal
             onClose={() => setUnSubscribeModal(false)}
