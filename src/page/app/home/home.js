@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Dimmer } from "semantic-ui-react";
 import api from "../../../api";
 // import FilterSections from "../../../component/home-components/filter-sections";
@@ -10,16 +10,14 @@ import { authAxios } from "../../../config/axios-config";
 import { useAuthState } from "../../../context/auth-context";
 import useAxios from "../../../hooks/use-axios";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
-import { useDispatch } from "react-redux";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 // import BannerTop from "component/home-components/BannerTop";
 import BannerTopNew from "component/home-components/Banner-top-new";
-import WelcomeBonusModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
+import WelcomeModal from "component/shared/WelcomeBonusModal/WelcomeBonusModal";
 import { welcomeBonus } from "redux-store/welcom-bonus-slice";
-// import { useSocket } from "context/socket-context";
 import { useSocket } from "context/socket-context";
 // import LiveAuctionsSlider from "component/home-components/live-auctions-slider";
 import queryString from "query-string";
@@ -44,9 +42,9 @@ const Home = ({
   const history = useHistory();
   const { user } = useAuthState();
   const dispatch = useDispatch();
-  // const isWelcomeBonus = useSelector(
-  //   (state) => state.welcomeBonus.welcomeBonus,
-  // );
+  const isWelcomeBonus = useSelector(
+    (state) => state.welcomeBonus.welcomeBonus,
+  );
   // const [isGrid, setIsGrid] = useState(() => {
   //   return JSON.parse(localStorage.getItem("isGrid")) ?? true;
   // });
@@ -393,12 +391,20 @@ const Home = ({
     };
   }, [socket]);
 
-  // useEffect(() => {
-  //   if (isWelcomeBonus) {
-  //     setOpenWelcomeBonusModal(true);
-  //     dispatch(welcomeBonus(false));
-  //   }
-  // }, [isWelcomeBonus, dispatch]);
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
+    if (user && !hasSeenWelcome) {
+      setOpenWelcomeBonusModal(true);
+      localStorage.setItem("hasSeenWelcome", "true");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (isWelcomeBonus) {
+      setOpenWelcomeBonusModal(true);
+      dispatch(welcomeBonus(false));
+    }
+  }, [isWelcomeBonus, dispatch]);
 
   return (
     <div
@@ -927,7 +933,7 @@ const Home = ({
             setOpen={setOpen}
             TextButton={selectedContent[localizationKeys.proceed]}
           />
-          <WelcomeBonusModal
+          <WelcomeModal
             open={openWelcomeBonusModal}
             setOpen={setOpenWelcomeBonusModal}
           />
