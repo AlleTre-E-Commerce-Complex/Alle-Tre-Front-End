@@ -15,7 +15,7 @@ import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { useDispatch } from "react-redux";
 import { Close } from "../../redux-store/auth-model-slice";
-import { welcomeBonus } from "../../redux-store/welcom-bonus-slice";
+// import { welcomeBonus } from "../../redux-store/welcom-bonus-slice";
 import { useAuthState } from "context/auth-context";
 import { store } from "redux-store/store";
 import { setBlockedUser } from "redux-store/blocked-user-slice";
@@ -38,7 +38,8 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
   const logIn = (values) => {
     run(axios.post(api.auth.login, values))
       .then((res) => {
-        const { accessToken, hasCompletedProfile, isAddedBonus } =
+        // const { accessToken, hasCompletedProfile, isAddedBonus } =
+          const { accessToken, hasCompletedProfile } =
           res.data.data;
         // if (isAddedBonus) {
         //   dispatch(welcomeBonus(true));
