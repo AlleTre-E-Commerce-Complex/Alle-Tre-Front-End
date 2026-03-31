@@ -145,7 +145,7 @@ const Footer = () => {
               </p>
               <div className="mt-4">
                 <a
-                  href="https://firebasestorage.googleapis.com/v0/b/alletre-auctions.firebasestorage.app/o/company%20profile.pdf?alt=media&token=50e5e0cd-156a-4231-8fbe-2008ec81d26c"
+                  href="https://firebasestorage.googleapis.com/v0/b/alletre-auctions.firebasestorage.app/o/3arbonCompany%20Profile.pdf?alt=media&token=3e2498ac-0a8c-4360-909a-78cee34ac4a2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/30  text-white px-3 py-1.5 rounded transition-all duration-300 group"
@@ -172,32 +172,32 @@ const Footer = () => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
               <div className="flex flex-row-reverse rtl:flex-row rounded-lg gap-x-4 sm:gap-x-8 bg-primary-dark p-4 opacity-97">
                 {[
-                  {
-                    icon: FaFacebookF,
-                    link: "https://www.facebook.com/alletr.ae",
-                  },
+                  // {
+                  //   icon: FaFacebookF,
+                  //   link: "https://www.facebook.com/alletr.ae",
+                  // },
                   {
                     icon: FaInstagram,
-                    link: "https://www.instagram.com/alletre.ae/",
+                    link: "https://www.instagram.com/3arbon.ae/",
                   },
-                  {
-                    icon: FaYoutube,
-                    link: "https://www.youtube.com/@Alletre_ae",
-                  },
+                  // {
+                  //   icon: FaYoutube,
+                  //   link: "https://www.youtube.com/@Alletre_ae",
+                  // },
                   {
                     icon: FaTiktok,
-                    link: "https://www.tiktok.com/@alletre.ae",
+                    link: "https://www.tiktok.com/@3arbon.ae",
                   },
-                  {
-                    icon: FaSnapchatGhost,
-                    link: "https://www.snapchat.com/add/alletre",
-                  },
-                  { icon: FaWhatsapp, link: "https://wa.me/971502663180" },
+                  // {
+                  //   icon: FaSnapchatGhost,
+                  //   link: "https://www.snapchat.com/add/alletre",
+                  // },
+                  // { icon: FaWhatsapp, link: "https://wa.me/971502663180" },
                   // {
                   //   icon: FaWhatsappSquare,
                   //   link: "https://whatsapp.com/channel/0029Valpc9dLI8YQT9VNDk1R",
                   // },
-                  { icon: FaTelegramPlane, link: "http://t.me/Alletre" },
+                  // { icon: FaTelegramPlane, link: "http://t.me/Alletre" },
                 ].map(({ icon: Icon, link }, index) => (
                   <a
                     key={index}
