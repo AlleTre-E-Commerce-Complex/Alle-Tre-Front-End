@@ -235,8 +235,8 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               /> */}
-              {/* <NavLink
-                title={selectedContent[localizationKeys.watchlist]}
+              <NavLink
+                title={selectedContent[localizationKeys.favourites]}
                 isActive={
                   pathname.startsWith(routes.app.profile.watchlist)
                 }
@@ -244,7 +244,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   handelWatchlist();
                   SetSid(false);
                 }}
-              /> */}
+              />
               <NavLink
                 title={selectedContent[localizationKeys.Purchased]}
                 isActive={

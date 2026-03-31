@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Open } from "../../redux-store/auth-model-slice";
+import { useAuthState } from "context/auth-context";
 import { Modal, Icon } from "semantic-ui-react";
 import { HiSelector, HiHeart } from "react-icons/hi";
 import { useHistory, useLocation } from "react-router-dom";
@@ -11,6 +14,8 @@ const MobileSortToggle = ({ lang, selectedContent, categoryId }) => {
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const { search } = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useAuthState();
   const queryParams = new URLSearchParams(search);
 
   const { GatogryOptions } = useGetGatogry();
@@ -111,7 +116,13 @@ const MobileSortToggle = ({ lang, selectedContent, categoryId }) => {
           </span>
         </button>
         <button
-          onClick={() => history.push(routes.app.profile.watchlist)}
+          onClick={() => {
+            if (user) {
+              history.push(routes.app.profile.watchlist);
+            } else {
+              dispatch(Open());
+            }
+          }}
           className="flex-1 flex items-center justify-center gap-1.5 px-3 hover:bg-gray-100 dark:hover:bg-white/5 transition-all h-full"
         >
           <HiHeart className="text-gray-900 dark:text-yellow w-4 h-4 shrink-0" />
