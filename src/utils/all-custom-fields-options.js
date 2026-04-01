@@ -498,9 +498,9 @@ export const allCustomFileOptions = {
     { key: "yes", text: "Yes | نعم", value: "yes" },
     { key: "no", text: "No | لا", value: "no" },
     {
-      key: "does-not-apply",
+      key: "Does not apply",
       text: "Does not apply | لا ينطبق",
-      value: "does-not-apply",
+      value: "Does not apply",
     },
   ],
   doors: [

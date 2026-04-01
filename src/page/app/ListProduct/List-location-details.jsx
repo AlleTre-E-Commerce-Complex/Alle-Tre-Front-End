@@ -205,7 +205,7 @@ const ListingProductsLocationDetails = () => {
           .post(api.app.productListing.listNewProduct, formData)
           .then((res) => {
             toast.success(
-              selectedContent[localizationKeys.yourProductIsSuccessfullyListed]
+              selectedContent[localizationKeys.ProductListedSuccessfully]
             );
             const perPage = getDefaultPerPage()
             history.push(`${routes.app.home}?page=1&perPage=${perPage}`);
@@ -221,7 +221,7 @@ const ListingProductsLocationDetails = () => {
       toast.error(
         selectedContent[
           localizationKeys
-            .makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne
+            .makeSureThatYouChooseTheLocationOrCreateAnotherOne
         ]
       );
     }

@@ -74,6 +74,7 @@ const ar = {
   [localizationKeys.productUpdatedSuccessfully]: "تم تحديث المنتج بنجاح",
   // home
   [localizationKeys.joinToday]: "انضم اليوم",
+  [localizationKeys.welcomeBack]: "مرحباً بعودتك",
   [localizationKeys.beginYourCollectionJourney]: "ابدأ رحلتك في عالم المقتنيات",
   [localizationKeys.joinThousandsDiscerning]:
     "انضم إلى آلاف المقتنين الذين يثقون في 3arbon لاقتناء القطع الاستثنائية من جميع أنحاء العالم.",
@@ -313,6 +314,8 @@ const ar = {
     "موقعك. يمكنك إدارتها لاحقًا.",
   [localizationKeys.manageYouAddresses]: "إدارة عناوينك",
   [localizationKeys.country]: "دولة",
+  [localizationKeys.Country]: "دولة",
+  [localizationKeys.City]: "المدينة",
   [localizationKeys.city]: "المدينة",
   [localizationKeys.address]: "العنوان",
   [localizationKeys.addressLabel]: "علامة للعنوان",
@@ -720,9 +723,9 @@ const ar = {
     "تم حفظ المزاد الخاص بك بنجاح كمسودة",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
     "لقد تم إنشاء المزاد الخاص بك بنجاح",
-  [localizationKeys.yourProductIsSuccessfullyListed]: "تم إدراج منتجك بنجاح",
-  [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
-    "تأكد من اختيار موقع المزاد أو إنشاء موقع آخر",
+  [localizationKeys.ProductListedSuccessfully]: "تم إدراج المنتج بنجاح",
+  [localizationKeys.makeSureThatYouChooseTheLocationOrCreateAnotherOne]:
+    "اختر أو أضف موقعًا",
   //wallet
   [localizationKeys.Wallet]: "المحفظة",
   [localizationKeys.notifications]: "الإشعارات",

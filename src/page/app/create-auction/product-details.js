@@ -733,7 +733,7 @@ const ProductDetails = () => {
   const [pdfFile, setPdfFile] = useState(null);
 
   const carMandatoryFields = [
-    "trim", "kilometers", "regionalSpecs", "carType", "color",
+    "carType", "color",
     "interiorColor", "releaseYear", "insuredInUae"
   ].reduce((acc, field) => {
     acc[field] = Yup.string().when("category", {

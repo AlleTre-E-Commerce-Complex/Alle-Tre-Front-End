@@ -48,10 +48,6 @@ const MultiPillGroup = ({ name, options, label }) => {
 
 const PropertySpecifications = ({ 
   subCategoryText, 
-  AllCountriesOptions, 
-  AllCitiesOptions, 
-  loadingAllCountries, 
-  loadingCitiesOptions,
   descriptionNode
 }) => {
   const [lang] = useLanguage();
@@ -127,16 +123,6 @@ const PropertySpecifications = ({
         </div>
 
         <div className="grid gap-x-6 gap-y-6 md:grid-cols-2 grid-cols-1">
-          {/* Always Show Location (Emirate instead of Country/City) */}
-          <div className="w-full">
-            <FormikMultiDropdown
-              name="emirate"
-              label={isArabic ? "الإمارة" : "EMIRATE"}
-              placeholder={isArabic ? "اختر الإمارة" : "Select Emirate"}
-              options={getOptions("emirates")}
-            />
-          </div>
-
           {/* Type Dropdown Depending on Category */}
           {isResidential && (
             <div className="w-full">

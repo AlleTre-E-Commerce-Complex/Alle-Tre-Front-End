@@ -43,7 +43,9 @@ const BannerTopNew = () => {
           <div className="flex items-center gap-4 mb-4">
             <div className="h-[1px] w-8 sm:w-12 bg-yellow"></div>
             <p className="text-yellow text-xs sm:text-sm font-bold tracking-[0.2em] uppercase">
-              {selectedContent[localizationKeys.joinToday] || "JOIN TODAY"}
+              {user
+                ? selectedContent[localizationKeys.welcomeBack]
+                : selectedContent[localizationKeys.joinToday]}
             </p>
             <div className="h-[1px] w-8 sm:w-12 bg-yellow"></div>
           </div>
@@ -56,33 +58,35 @@ const BannerTopNew = () => {
             {selectedContent[localizationKeys.joinThousandsDiscerning]}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full">
-            <button
-              onClick={handelRegister}
-              className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#eac566] to-[#d4af37] hover:from-[#f0d488] hover:to-[#e0b942] text-primary-dark font-bold text-sm sm:text-base rounded-md transition-all duration-300 transform hover:-translate-y-1 shadow-[0_4px_14px_rgba(212,175,55,0.4)] flex items-center justify-center gap-2 group"
-            >
-              {selectedContent[localizationKeys.createFreeAccount]}
-              <svg
-                className="w-4 h-4 transform group-hover:translate-x-1 transition-transform rtl:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+          {!user && (
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full">
+              <button
+                onClick={handelRegister}
+                className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-b from-[#eac566] to-[#d4af37] hover:from-[#f0d488] hover:to-[#e0b942] text-primary-dark font-bold text-sm sm:text-base rounded-md transition-all duration-300 transform hover:-translate-y-1 shadow-[0_4px_14px_rgba(212,175,55,0.4)] flex items-center justify-center gap-2 group"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </button>
-            <a
-              href="tel:+971501400414"
-              className="w-full sm:w-auto px-8 py-3.5 bg-transparent hover:bg-white/10 text-white font-bold text-sm sm:text-base rounded-md border-2 border-white/40 hover:border-white transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-sm flex items-center justify-center"
-            >
-              {selectedContent[localizationKeys.contactUs]}
-            </a>
-          </div>
+                {selectedContent[localizationKeys.createFreeAccount]}
+                <svg
+                  className="w-4 h-4 transform group-hover:translate-x-1 transition-transform rtl:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </button>
+              <a
+                href="tel:+971501400414"
+                className="w-full sm:w-auto px-8 py-3.5 bg-transparent hover:bg-white/10 text-white font-bold text-sm sm:text-base rounded-md border-2 border-white/40 hover:border-white transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-sm flex items-center justify-center"
+              >
+                {selectedContent[localizationKeys.contactUs]}
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>

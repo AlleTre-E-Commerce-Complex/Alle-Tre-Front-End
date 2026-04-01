@@ -12,6 +12,7 @@ import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { IoChevronUpOutline } from "react-icons/io5";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { Dimmer } from "semantic-ui-react";
 import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 // import watermarkImage from "../../../../src/assets/logo/WaterMarkFinal.png";
@@ -315,11 +316,11 @@ const ImgSlider = ({
               <div
                 className={`absolute top-1/2 w-full flex ${isArabic ? "justify-between flex-row-reverse" : "justify-between"} px-4 transform -translate-y-1/2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}
               >
-                <button className="swiper-button-prev-custom pointer-events-auto bg-white/90 dark:bg-black/90 p-2 md:p-3 rounded-xl shadow-lg hover:bg-white dark:hover:bg-black transition-all hover:scale-110 disabled:opacity-50">
-                  <span className="flex items-center justify-center w-full h-full">{"<"}</span>
+                <button className="swiper-button-prev-custom pointer-events-auto backdrop-blur-md bg-white/80 dark:bg-black/40 p-2.5 md:p-3.5 rounded-2xl shadow-2xl border border-white/40 dark:border-white/10 hover:bg-white dark:hover:bg-primary-dark transition-all duration-300 group/navprev disabled:opacity-30">
+                  <HiChevronLeft className="text-primary dark:text-yellow text-xl md:text-2xl transition-transform group-hover/navprev:scale-125" />
                 </button>
-                <button className="swiper-button-next-custom pointer-events-auto bg-white/90 dark:bg-black/90 p-2 md:p-3 rounded-xl shadow-lg hover:bg-white dark:hover:bg-black transition-all hover:scale-110 disabled:opacity-50">
-                   <span className="flex items-center justify-center w-full h-full">{">"}</span>
+                <button className="swiper-button-next-custom pointer-events-auto backdrop-blur-md bg-white/80 dark:bg-black/40 p-2.5 md:p-3.5 rounded-2xl shadow-2xl border border-white/40 dark:border-white/10 hover:bg-white dark:hover:bg-primary-dark transition-all duration-300 group/navnext disabled:opacity-30">
+                  <HiChevronRight className="text-primary dark:text-yellow text-xl md:text-2xl transition-transform group-hover/navnext:scale-125" />
                 </button>
               </div>
             </div>

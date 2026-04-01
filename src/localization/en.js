@@ -75,6 +75,7 @@ const en = {
   [localizationKeys.productUpdatedSuccessfully]: "Product updated successfully",
   // home
   [localizationKeys.joinToday]: "Join Today",
+  [localizationKeys.welcomeBack]: "Welcome Back",
   [localizationKeys.beginYourCollectionJourney]:
     "Begin Your Collection Journey",
   [localizationKeys.joinThousandsDiscerning]:
@@ -321,7 +322,9 @@ const en = {
     "your location. you can manage them later .",
   [localizationKeys.manageYouAddresses]: "Manage you addresses",
   [localizationKeys.country]: "Country",
+  [localizationKeys.Country]:"COUNTRY",
   [localizationKeys.city]: "City",
+  [localizationKeys.City]:"CITY",
   [localizationKeys.address]: "Address",
   [localizationKeys.addressLabel]: "Address Label",
   [localizationKeys.zipCode]: "Postal code",
@@ -720,10 +723,10 @@ const en = {
     "Your auction successfully saved as draft",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
     "Your auction has been created successfully",
-  [localizationKeys.yourProductIsSuccessfullyListed]:
-    "Your product is successfully listed",
-  [localizationKeys.makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne]:
-    "Make sure that you choose the auction location or create another one",
+  [localizationKeys.ProductListedSuccessfully]:
+    "Product listed successfully",
+  [localizationKeys.makeSureThatYouChooseTheLocationOrCreateAnotherOne]:
+    "Select or add a location",
   //wallet
   [localizationKeys.Wallet]: "WALLET",
   [localizationKeys.notifications]: "NOTIFICATIONS",
