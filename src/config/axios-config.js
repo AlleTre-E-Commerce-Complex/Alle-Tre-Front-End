@@ -2,6 +2,7 @@ import Axios from "axios";
 import auth from "../utils/auth";
 import { store } from "redux-store/store";
 import { setBlockedUser } from "redux-store/blocked-user-slice";
+import { Open } from "redux-store/auth-model-slice";
 
 Axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 Axios.defaults.withCredentials = true;
@@ -34,10 +35,19 @@ AuthAxios.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Handle blocked user
-    if (error?.response?.data?.message === 'Token error: User is blocked') {
+    // Handle any authentication errors (blocked user, stale session, invalid token)
+    const errorMessage = error?.response?.data?.message;
+    if (
+      typeof errorMessage === 'string' &&
+      (errorMessage.startsWith('Token error:') || errorMessage === 'User is blocked')
+    ) {
       await auth.logout();
-      store.dispatch(setBlockedUser(true));
+      if (errorMessage === 'Token error: User is blocked') {
+        store.dispatch(setBlockedUser(true));
+      } else {
+        // Automatically open the login model for other session errors
+        store.dispatch(Open());
+      }
       return Promise.reject(error);
     }
 
