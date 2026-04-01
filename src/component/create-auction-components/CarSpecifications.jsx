@@ -87,7 +87,7 @@ const MultiPillGroup = ({ name, options, label }) => {
 };
 
 
-const CarSpecifications = ({ descriptionNode }) => {
+const CarSpecifications = ({descriptionNode}) => {
   const [lang] = useLanguage();
   const isArabic = lang === "ar";
   const selectedContent = content[lang];
@@ -162,24 +162,15 @@ const CarSpecifications = ({ descriptionNode }) => {
             />
           </div>
        
-          {/* Row 1 */}
           <div className="w-full">
-            <FormikMultiDropdown 
-              name="emirate" 
-              label={isArabic ? "الإمارة" : "EMIRATE"} 
-              placeholder={isArabic ? "اختر الإمارة" : "Select Emirate"} 
-              options={getOptions("emirates")} 
-            />
-          </div>
-          <div className="w-full">
-            <FormikInput name="trim" type="text" label={isArabic ? "الفئة (TRIM)" : "TRIM"} placeholder={isArabic ? "مثال: XLE" : "e.g. XLE"} />
+            <FormikInput name="trim" type="text" label={getOptionalLabel("TRIM", "الفئة (TRIM)")} placeholder={isArabic ? "مثال: XLE" : "e.g. XLE"} />
           </div>
 
           <div className="w-full">
-            <FormikInput name="kilometers" type="number" label={isArabic ? "الكيلومترات" : "KILOMETERS"} placeholder={isArabic ? "مثال: 15,000" : "e.g. 15,000"} />
+            <FormikInput name="kilometers" type="number" label={getOptionalLabel("KILOMETERS", "الكيلومترات")} placeholder={isArabic ? "مثال: 15,000" : "e.g. 15,000"} />
           </div>
           <div className="w-full">
-            <FormikMultiDropdown name="regionalSpecs" label={isArabic ? "المواصفات الإقليمية" : "REGION / SPECS"} placeholder={isArabic ? "اختر المواصفات" : "Select Region"} options={getOptions("regionalSpecs")} />
+            <FormikMultiDropdown name="regionalSpecs" label={getOptionalLabel("REGION / SPECS", "المواصفات الإقليمية")} placeholder={isArabic ? "اختر المواصفات" : "Select Region"} options={getOptions("regionalSpecs")} />
           </div>
           <div className="w-full">
             <FormikMultiDropdown name="carType" label={isArabic ? "نوع الهيكل" : "BODY TYPE"} placeholder={isArabic ? "اختر الهيكل" : "Select Body"} options={getOptions("carType")} />

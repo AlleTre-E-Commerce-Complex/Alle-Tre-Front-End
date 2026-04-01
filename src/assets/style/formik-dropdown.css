@@ -47,7 +47,8 @@
 
 .Edit_FormikMultiDropdown .ui.selection.dropdown > .dropdown.icon {
   @apply text-gray-500 dark:text-gray-400 top-[70%] -translate-y-1/2 py-0 h-auto ltr:right-4 ltr:left-auto rtl:left-4 rtl:right-auto !important;
-  pointer-events: none !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }
 
 /* Override the flex display from .selection.dropdown for multiple selects */
@@ -66,7 +67,6 @@
 .Edit_FormikMultiDropdown .field > .ui.multiple.selection.dropdown > input.search {
   position: relative !important;
   margin: 0.15rem 0 !important;
-  pointer-events: none !important;
 }
 /* ----------------------------------------------------
    OVERRIDE SEMANTIC UI ERROR STATE (FIXED)

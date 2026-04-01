@@ -69,28 +69,35 @@ function App() {
         {/* Blocked Modal */}
         <BlockedModal />
         <Toaster
-          position="top-right"
-          reverseOrder={true}
-          gutter={8}
-          containerStyle={{}}
+          position="top-center"
+          reverseOrder={false}
+          gutter={12}
+          containerStyle={{
+            top: 40,
+          }}
           toastOptions={{
-            iconTheme: {
-              className: "hidden p-0",
-            },
-            loading: {
-              duration: 5000,
-              className:
-                "w-[430px] h-auto border-l-8 border-[#002189] bg-[#F7F9FF] py-3",
-            },
+            className: "premium-toast",
+            duration: 3000,
             success: {
-              duration: 5000,
-              className:
-                "w-[430px] h-auto border-l-8 border-[#45BF55] bg-[#F7F9FF] py-3",
+              className: "premium-toast premium-toast-success",
+              iconTheme: {
+                primary: "var(--color-green)",
+                secondary: "#fff",
+              },
             },
             error: {
-              duration: 5000,
-              className:
-                "w-[430px] h-auto border-l-8 border-[#E53737] bg-[#FFFAFA] py-3",
+              className: "premium-toast premium-toast-error",
+              iconTheme: {
+                primary: "var(--color-red)",
+                secondary: "#fff",
+              },
+            },
+            loading: {
+              className: "premium-toast premium-toast-loading",
+              iconTheme: {
+                primary: "var(--color-yellow)",
+                secondary: "#fff",
+              },
             },
           }}
         />

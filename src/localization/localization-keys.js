@@ -64,6 +64,7 @@ const localizationKeys = {
   productUpdatedSuccessfully: "productUpdatedSuccessfully",
   // home
   joinToday: "joinToday",
+  welcomeBack: "welcomeBack",
   beginYourCollectionJourney: "beginYourCollectionJourney",
   joinThousandsDiscerning: "joinThousandsDiscerning",
   createFreeAccount: "createFreeAccount",
@@ -282,7 +283,9 @@ const localizationKeys = {
   yourLocationYouCanManageThemLater: "yourLocationYouCanManageThemLater",
   manageYouAddresses: "manageYouAddresses",
   country: "country",
+  Country: "COUNTRY",
   city: "city",
+  City: "CITY",
   address: "address",
   addressLabel: "addressLabel",
   zipCode: "zipCode",
@@ -643,9 +646,9 @@ const localizationKeys = {
   imageUpdatedSuccessfully: "imageUpdatedSuccessfully",
   yourAuctionSaveAsDraftedSuccess: "yourAuctionSaveAsDraftedSuccess",
   yourAuctionIsCreatedSuccess: "yourAuctionIsCreatedSuccess",
-  yourProductIsSuccessfullyListed: "yourProductIsSuccessfullyListed",
-  makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne:
-    "makeSureThatYouChooseTheAuctionLocationOrCreateAnotherOne",
+  ProductListedSuccessfully: "ProductListedSuccessfully",
+  makeSureThatYouChooseTheLocationOrCreateAnotherOne:
+    "makeSureThatYouChooseTheLocationOrCreateAnotherOne",
   //wallet
   Wallet: "Wallet",
   notifications: "notifications",

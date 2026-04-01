@@ -5,16 +5,34 @@
 @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 /* styles.css */
-.custom-toast {
-  width: 400px; /* Width of the toast */
-  height: 200px; /* Height of the toast */
-  display: flex; /* Flexbox for centering */
-  align-items: center; /* Vertical centering */
-  justify-content: center; /* Horizontal centering */
-  background-color: #4caf50; /* Success background color */
-  color: white; /* Text color */
-  border-radius: 8px; /* Rounded corners */
-  text-align: center; /* Center text */
+/* Premium Toast Styles */
+.premium-toast {
+  @apply rounded-2xl px-6 py-2.5 flex items-center gap-3 backdrop-blur-md shadow-2xl border transition-all duration-300 !important;
+  @apply text-sm font-medium !important;
+  min-width: 250px;
+  max-width: 380px;
+}
+
+/* Light Mode Defaults */
+.premium-toast {
+  @apply bg-white/90 border-gray-100 text-gray-800;
+}
+
+/* Dark Mode Defaults */
+.dark .premium-toast {
+  @apply bg-[#1e293b]/90 border-[#334155] text-white;
+}
+
+.premium-toast-success {
+  @apply border-l-4 border-l-green !important;
+}
+
+.premium-toast-error {
+  @apply border-l-4 border-l-red !important;
+}
+
+.premium-toast-loading {
+  @apply border-l-4 border-l-yellow !important;
 }
 
 @layer base {

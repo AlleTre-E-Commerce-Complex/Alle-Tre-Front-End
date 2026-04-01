@@ -96,7 +96,15 @@ const ListProductDetails = () => {
   const { AllCitiesOptions, loadingCitiesOptions } =
     useGetAllCities(countriesId);
 
-  const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(categoryId);
+  // const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(categoryId);
+
+  // Auto-select UAE logic
+  useEffect(() => {
+    const uae = AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة");
+    if (uae && !countriesId) {
+      setCountriesId(uae.value);
+    }
+  }, [AllCountriesOptions, countriesId]);
 
   const [brandInput, setBrandInput] = useState("");
   const [brandSuggestions, setBrandSuggestions] = useState([]);
@@ -378,7 +386,7 @@ const ListProductDetails = () => {
     }
     if (!isPropertyCategory) {
       const propFields = ["totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
-      // emirate is allowed for both cars and properties, so we only delete it if it's neither
+      // emirate is allowed for both cars and properties, and countryId/cityId are global
       if (!isCarCategory) {
         delete cleanValues["emirate"];
       }
@@ -473,6 +481,8 @@ const ListProductDetails = () => {
         formData.append("product[numberOfRooms]", values.numberOfRooms);
       if (values.itemDescription)
         formData.append("product[description]", values.itemDescription);
+      if (values.countryId) formData.append("product[countryId]", values.countryId);
+      if (values.cityId) formData.append("product[cityId]", values.cityId);
       if (values.emirate) formData.append("product[emirate]", values.emirate);
       if (values.totalClosingFee) formData.append("product[totalClosingFee]", values.totalClosingFee);
       if (values.numberOfBathrooms) formData.append("product[numberOfBathrooms]", values.numberOfBathrooms);
@@ -524,7 +534,7 @@ const ListProductDetails = () => {
   const model = customFromData?.model?.key;
 
   const carMandatoryFields = [
-    "trim", "kilometers", "regionalSpecs", "carType", "color",
+    "carType", "color",
     "interiorColor", "releaseYear", "insuredInUae","warranty"
   ].reduce((acc, field) => {
     acc[field] = Yup.string().when("category", {
@@ -536,7 +546,7 @@ const ListProductDetails = () => {
   }, {});
 
   const propertyMandatoryFields = [
-    "emirate", "totalArea", "numberOfRooms", "zonedFor", "occupancyStatus", "isFurnished", "numberOfBathrooms"
+    "totalArea", "numberOfRooms", "zonedFor", "occupancyStatus", "isFurnished", "numberOfBathrooms"
   ].reduce((acc, field) => {
     acc[field] = Yup.string().when(["category", "subCategory"], {
       is: (cat, subCat) => {
@@ -551,7 +561,7 @@ const ListProductDetails = () => {
         const isMultipleUnits = subCatText.includes("multiple units") || subCatText.includes("وحدات متعددة");
         const isLand = subCatText.includes("land") || subCatText.includes("أرض");
 
-        if (field === "emirate" || field === "totalArea") return true;
+        if (field === "totalArea") return true;
         if (field === "numberOfRooms" || field === "numberOfBathrooms") return isResidential;
         if (field === "isFurnished") return isResidential || isCommercial;
         if (field === "occupancyStatus") return isResidential || isCommercial || isMultipleUnits;
@@ -575,6 +585,8 @@ const ListProductDetails = () => {
     category: Yup.string()
       .trim()
       .required(selectedContent[localizationKeys.required]),
+    countryId: Yup.string().required(selectedContent[localizationKeys.required]),
+    cityId: Yup.string().required(selectedContent[localizationKeys.required]),
     itemDescription: Yup.string()
       .trim()
       .notRequired(),
@@ -733,6 +745,8 @@ const ListProductDetails = () => {
                   : "",
                 landType: isEditing ? listedProductVal?.landType || "" : "",
                 carType: isEditing ? listedProductVal?.carType || "" : "",
+                countryId: isEditing ? listedProductVal?.countryId : (AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة")?.value || ""),
+                cityId: isEditing ? listedProductVal?.cityId || "" : "",
                 emirate: isEditing ? listedProductVal?.emirate || "" : "",
                 totalClosingFee: isEditing ? listedProductVal?.totalClosingFee || "" : "",
                 numberOfBathrooms: isEditing ? listedProductVal?.numberOfBathrooms || "" : "",
@@ -802,6 +816,33 @@ const ListProductDetails = () => {
                           />
                         </div>
 
+                    
+                        
+                        <div className="w-full">
+                          <FormikMultiDropdown
+                            name="countryId"
+                            label={selectedContent[localizationKeys.Country]}
+                            placeholder={selectedContent[localizationKeys.selectCountry]}
+                            options={AllCountriesOptions}
+                            loading={loadingAllCountries}
+                            onChange={(value) => {
+                              setCountriesId(value);
+                              formik.setFieldValue("cityId", "");
+                            }}
+                          />
+                        </div>
+
+                        <div className="w-full">
+                          <FormikMultiDropdown
+                            name="cityId"
+                            label={selectedContent[localizationKeys.City]}
+                            placeholder={selectedContent[localizationKeys.selectCity]}
+                            options={AllCitiesOptions}
+                            loading={loadingCitiesOptions}
+                            disabled={!formik.values.countryId}
+                          />
+                        </div>
+
                         <div className="w-full">
                           <FormikMultiDropdown
                             name="category"
@@ -865,7 +906,6 @@ const ListProductDetails = () => {
                             }}
                           />
                         </div>
-
                         {/* {formik.values.subCategory && (
                           <>
                             {[
@@ -1063,10 +1103,6 @@ const ListProductDetails = () => {
                         <div className="w-full">
                           <PropertySpecifications 
                               subCategoryText={SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.text || SubGatogryOptions?.find(opt => String(opt.value) === String(formik.values.subCategory))?.name}
-                            AllCountriesOptions={AllCountriesOptions}
-                            AllCitiesOptions={AllCitiesOptions}
-                            loadingAllCountries={loadingAllCountries}
-                            loadingCitiesOptions={loadingCitiesOptions}
                             descriptionNode={
                               <div className="w-full mt-2 text-gray-600 dark:text-gray-300">
                                 <FormikTextArea
