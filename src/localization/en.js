@@ -799,6 +799,9 @@ const en = {
   [localizationKeys.sortResults]: "Sort Results",
   [localizationKeys.areaHighestToLowest]: "Area Highest to Lowest",
   [localizationKeys.areaLowestToHighest]: "Area Lowest to Highest",
+  [localizationKeys.deleteProduct]: "Delete Product",
+  [localizationKeys.confirmDeleteProduct]: "Confirm Delete Product",
+  [localizationKeys.areYouSureYouWantToDeleteThisProduct]: "Are you sure you want to delete this product?",
 };
 
 export default en;

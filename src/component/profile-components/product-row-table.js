@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { truncateString } from "../../utils/truncate-string";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
 import { useHistory } from "react-router-dom";
@@ -13,6 +13,8 @@ import api from "api";
 import localizationKeys from "localization/localization-keys";
 import { useLanguage } from "context/language-context";
 import content from "../../localization/content";
+import { MdDeleteOutline } from "react-icons/md";
+import ConfirmationModal from "component/shared/delete-modal/delete-modal";
 
 const ProductRowTable = ({
   status,
@@ -29,6 +31,7 @@ const ProductRowTable = ({
   const { run, isLoading } = useAxios([]);
   const [lang] = useLanguage();
   const selectedContent = content[lang];
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const getDropdownOptions = () => {
     switch (status) {
       case "IN_PROGRESS":
@@ -59,6 +62,23 @@ const ProductRowTable = ({
         })
         .catch((error) => {
           toast.error("Failed to update status. Please try again.");
+        }),
+    );
+  };
+
+  const handleDelete = async () => {
+    run(
+      authAxios
+        .delete(api.app.productListing.deleteListedProduct(Product_id))
+        .then((res) => {
+          onReload();
+          toast.success(selectedContent[localizationKeys.successDelete]);
+        })
+        .catch((error) => {
+          toast.error(selectedContent[localizationKeys.oops]);
+        })
+        .finally(() => {
+          setIsDeleteModalOpen(false);
         }),
     );
   };
@@ -127,7 +147,7 @@ const ProductRowTable = ({
       </div>
 
       {/* Actions */}
-      <div className="flex flex-row items-center gap-2 md:gap-3 w-full md:w-auto mt-2 md:mt-0 justify-end md:justify-start overflow-x-auto whitespace-nowrap scrollbar-hide">
+      <div className="flex flex-row items-center gap-1.5 md:gap-2 lg:gap-3 w-full md:w-auto mt-2 md:mt-0 justify-end md:justify-start overflow-x-auto whitespace-nowrap scrollbar-hide">
         {status !== "SOLD_OUT" &&
           getDropdownOptions().map((opt, idx) => (
             <button
@@ -148,7 +168,7 @@ const ProductRowTable = ({
                 state: { productId: Product_id, isEditing: true },
               });
             }}
-            className={`flex-shrink-0 flex items-center justify-center gap-1.5 absolute top-3 md:top-auto ${lang === "ar" ? "left-3 md:left-auto" : "right-3 md:right-auto"} md:static w-8 h-8 md:w-auto md:h-auto md:px-4 md:py-2 bg-gray-100 hover:border-gray-400 dark:bg-[#323D4E] text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-[#404c5e] rounded-full md:rounded-lg text-sm font-medium transition-colors border border-transparent dark:border-[#323D4E] shadow-sm md:shadow-none z-10`}
+            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 xl:px-4 border border-gray-200 hover:border-gray-400 dark:border-[#323D4E] text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-[#404c5e] rounded-lg text-sm font-medium transition-colors"
           >
             <svg
               className="w-4 h-4"
@@ -163,13 +183,20 @@ const ProductRowTable = ({
                 d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
               />
             </svg>
-            <span className="hidden md:inline">{selectedContent[localizationKeys.edit]}</span>
+            <span className="hidden xl:inline">{selectedContent[localizationKeys.edit]}</span>
           </button>
         )}
-
+         <button
+          onClick={() => setIsDeleteModalOpen(true)}
+          className={`flex-shrink-0 flex items-center justify-center gap-1.5 absolute top-3 md:top-auto ${lang === "ar" ? "left-3 md:left-auto" : "right-3 md:right-auto"} md:static w-9 h-9 md:w-auto md:h-auto px-2 py-1 md:px-3 md:py-1.5 xl:px-4 xl:py-2 bg-red-50/80 dark:bg-red-500/20 backdrop-blur-sm hover:bg-red-100 dark:hover:bg-red-500/30 text-red-600 dark:text-red-400 rounded-full md:rounded-lg text-sm font-medium transition-all duration-300 border border-red-100 dark:border-red-500/30 shadow-sm hover:shadow-md md:shadow-none z-10 hover:scale-110 md:hover:scale-100 active:scale-95 md:active:scale-100`}
+          title={selectedContent[localizationKeys.deleteProduct]}
+        >
+          <MdDeleteOutline size={18} />
+          <span className="hidden lg:inline">{selectedContent[localizationKeys.delete]}</span>
+        </button>
         <button
           onClick={() => history.push(goToDetails)}
-          className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 border border-[#FDC02A]/50 text-yellow hover:bg-[#FDC02A]/30 rounded-lg text-sm font-medium transition-colors"
+          className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 xl:px-4 border border-[#FDC02A]/50 text-yellow hover:bg-[#FDC02A]/30 rounded-lg text-sm font-medium transition-colors"
         >
           <svg
             className="w-4 h-4"
@@ -190,9 +217,17 @@ const ProductRowTable = ({
               d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
             />
           </svg>
-          {selectedContent[localizationKeys.details]}
+         <span className="hidden xl:inline">{selectedContent[localizationKeys.details]}</span>
         </button>
       </div>
+
+      <ConfirmationModal
+        open={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        title={selectedContent[localizationKeys.confirmDeleteProduct]}
+        message={selectedContent[localizationKeys.areYouSureYouWantToDeleteThisProduct]}
+      />
     </div>
   );
 };

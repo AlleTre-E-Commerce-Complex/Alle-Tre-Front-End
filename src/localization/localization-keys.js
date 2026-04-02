@@ -718,6 +718,9 @@ const localizationKeys = {
   sortResults: "sortResults",
   areaHighestToLowest: "areaHighestToLowest",
   areaLowestToHighest: "areaLowestToHighest",
+  deleteProduct: "deleteProduct",
+  confirmDeleteProduct: "confirmDeleteProduct",
+  areYouSureYouWantToDeleteThisProduct: "areYouSureYouWantToDeleteThisProduct",
 };
 
 export default localizationKeys;
