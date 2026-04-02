@@ -10,8 +10,8 @@ import { FaWhatsapp, FaUser } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { MdPublishedWithChanges } from "react-icons/md";
-import { RiAuctionLine } from "react-icons/ri";
+import { MdPublishedWithChanges, MdDeleteOutline } from "react-icons/md";
+// import { RiAuctionLine } from "react-icons/ri";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import ImgSlider from "component/shared/img-slider/img-slider";
@@ -27,6 +27,7 @@ import { useDispatch } from "react-redux";
 import { Open } from "../../redux-store/auth-model-slice";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
+import ConfirmationModal from "component/shared/delete-modal/delete-modal";
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
@@ -46,6 +47,7 @@ const SummaryListedSection = () => {
   const { run, isLoading: isLoadingListedProduct } = useAxios([]);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const mapUrl = `https://maps.google.com/maps?q=${mainLocation?.lat},${mainLocation?.lng}&hl=es&z=14&output=embed`;
 
@@ -64,6 +66,22 @@ const SummaryListedSection = () => {
 
   const handleOnStatus = () => {
     history.push(routes.app.profile.myProducts.default);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const res = await authAxios.delete(
+        api.app.productListing.deleteListedProduct(productId),
+      );
+      if (res.data.success) {
+        toast.success(selectedContent[localizationKeys.successDelete]);
+        history.replace(routes.app.profile.myProducts.default);
+      }
+    } catch (error) {
+      toast.error(selectedContent[localizationKeys.oops]);
+    } finally {
+      setIsDeleteModalOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -270,10 +288,10 @@ const SummaryListedSection = () => {
               </div>
               
               {user?.id === listedProductsData?.userId ? (
-                <div className="grid pt-8 grid-cols-1 gap-4">
+                <div className="flex items-center gap-3 ">
                   <button
                     onClick={handleOnStatus}
-                    className="border-2 border-primary-light flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
+                    className="flex-1 border-2 border-primary-light flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
                   >
                     <MdPublishedWithChanges
                       size={20}
@@ -284,7 +302,17 @@ const SummaryListedSection = () => {
                     </span>
                   </button>
 
-                  {/* <button
+                  <div
+                    onClick={() => setIsDeleteModalOpen(true)}
+                    className="w-14 h-14 bg-red-500 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-red-600 transition-all duration-300 shadow-lg border-2 border-white dark:border-primary-dark group/delete shrink-0 hover:scale-105 active:scale-95"
+                    title={selectedContent[localizationKeys.deleteProduct]}
+                  >
+                    <MdDeleteOutline
+                      size={24}
+                      className="text-white group-hover/delete:rotate-12 transition-transform"
+                    />
+                  </div>
+                    {/* <button
                     onClick={() =>
                       history.push(routes.app.createAuction.productDetails, {
                         productId: productId,
@@ -472,7 +500,6 @@ const SummaryListedSection = () => {
           </div>
         </div>
 
-        {/* Similar Products */}
         <div className="mt-24"> 
           <SilmilarProductsSlider
             categoriesId={listedProductsData?.categoryId}
@@ -485,6 +512,14 @@ const SummaryListedSection = () => {
         openModal={isModalOpen}
         phoneNumber={listedProductsData?.user?.phone}
         setOpen={setIsModalOpen}
+      />
+
+      <ConfirmationModal
+        open={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleDelete}
+        title={selectedContent[localizationKeys.confirmDeleteProduct]}
+        message={selectedContent[localizationKeys.areYouSureYouWantToDeleteThisProduct]}
       />
     </div>
   );

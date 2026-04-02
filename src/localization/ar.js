@@ -794,6 +794,9 @@ const ar = {
   [localizationKeys.yearOldest]: "سنة الصنع (الأقدم)",
   [localizationKeys.kilometersLeast]: "الكيلومترات (الأقل)",
   [localizationKeys.kilometersMost]: "الكيلومترات (الأكثر)",
+  [localizationKeys.deleteProduct]: "حذف المنتج",
+  [localizationKeys.confirmDeleteProduct]: "تأكيد حذف المنتج",
+  [localizationKeys.areYouSureYouWantToDeleteThisProduct]: "هل أنت متأكد أنك تريد حذف هذا المنتج؟",
 };
 
 export default ar;

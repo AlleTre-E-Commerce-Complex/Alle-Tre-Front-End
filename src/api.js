@@ -106,6 +106,8 @@ const api = {
         `auctions/products/updateProductStatus?productId=${productId}`,
       updateListedProduct: (productId) => 
         `auctions/listedProducts/${productId}/update`,
+      deleteListedProduct: (productId) =>
+        `auctions/listedProducts/${productId}`,
     },
     customField: {
       ByCategoryId: (categoryId) =>
