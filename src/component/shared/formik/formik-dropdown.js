@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Field } from "formik";
 import { Form } from "semantic-ui-react";
 import { get } from "wild-wild-path";
@@ -13,18 +13,25 @@ function FormikMultiDropdown({
   multiple,
   ...props
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Field name={name}>
       {({ form, field }) => {
         const { setFieldValue, setFieldTouched, errors, touched } = form;
         return (
-          <div className="flex flex-col mt-1.5 relative Edit_FormikMultiDropdown">
+          <div 
+            className={`flex flex-col mt-1.5 relative Edit_FormikMultiDropdown ${className || ""}`}
+            onClick={() => {
+              if (!isOpen) setIsOpen(true);
+            }}
+          >
             <Form.Dropdown
               id={name}
               label={
                 label ? (
                   <div className="flex justify-between items-center w-full mb-1">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</span>
+                    <label htmlFor={name} className="text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer m-0">{label}</label>
                     {get(touched, name) && get(errors, name) && (
                       <div className="text-xs font-normal flex items-center text-red-700 m-0">
                         <BiErrorCircle className="ltr:mr-1 rtl:ml-1 w-3 h-3" />
@@ -36,7 +43,13 @@ function FormikMultiDropdown({
               }
               {...field}
               {...props}
-              error={Boolean(touched[name] && errors[name])}
+              open={isOpen}
+              onOpen={() => {
+                setIsOpen(true);
+                if (props.onOpen) props.onOpen();
+              }}
+              onClose={() => setIsOpen(false)}
+              error={Boolean(get(touched, name) && get(errors, name))}
               onBlur={() => setFieldTouched(name, true)}
               onChange={(e, { value }) => {
                 setFieldValue(name, value);

@@ -178,7 +178,7 @@ const Footer = () => {
                   // },
                   {
                     icon: FaInstagram,
-                    link: "https://www.instagram.com/3arbon.ae/",
+                    link: "https://www.instagram.com/3arboncom/",
                   },
                   // {
                   //   icon: FaYoutube,

@@ -31,6 +31,10 @@
   @apply text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#22283A] py-3 px-4 border-t border-gray-100 dark:border-white/5 !important;
 }
 
+.Edit_FormikMultiDropdown .ui.selection.dropdown .menu>.message {
+  @apply text-gray-700 dark:text-white py-3 px-4 !important;
+}
+
 .Edit_FormikMultiDropdown .ui.selection.dropdown .menu>.item:first-child{
   @apply border-t-0 !important;
 }

@@ -83,11 +83,6 @@ export const allCustomFileOptions = {
     { key: "Champagne", text: "Champagne | شامبانيا", value: "Champagne" },
     { key: "Titanium", text: "Titanium | تيتانيوم", value: "Titanium" },
     {
-      key: "Matte Black",
-      text: "Matte Black | أسود غير لامع",
-      value: "Matte Black",
-    },
-    {
       key: "Nardo Grey",
       text: "Nardo Grey | رمادي ناردو",
       value: "Nardo Grey",
