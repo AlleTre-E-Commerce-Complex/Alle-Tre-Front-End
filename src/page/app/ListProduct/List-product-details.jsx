@@ -6,7 +6,6 @@ import routes from "../../../routes";
 import { CheckboxRadioProductDetails } from "../../../component/create-auction-components/check-box-radio-group";
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
 // import AddImgMedia from "../../../component/create-auction-components/add-img-media";
-import { allCustomFileOptions } from "../../../utils/all-custom-fields-options";
 import Stepper from "../../../component/shared/stepper/stepper-app";
 import { Dimmer, Form } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
@@ -51,6 +50,7 @@ const ListProductDetails = () => {
   const selectedContent = content[lang];
   const { state } = useLocation();
 
+  const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [auctionState, setAuctionState] = useState();
   const [completeDraftVal, setCompleteDraftValue] = useState();
   const [loadingImg, setLoadingImg] = useState();
@@ -96,7 +96,7 @@ const ListProductDetails = () => {
   const { AllCitiesOptions, loadingCitiesOptions } =
     useGetAllCities(countriesId);
 
-  // const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(categoryId);
+  const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(categoryId);
 
   // Auto-select UAE logic
   useEffect(() => {
@@ -106,20 +106,51 @@ const ListProductDetails = () => {
     }
   }, [AllCountriesOptions, countriesId]);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [brandInput, setBrandInput] = useState("");
   const [brandSuggestions, setBrandSuggestions] = useState([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleBrandInputChange = (value) => {
     setBrandInput(value);
-    // const filteredBrands = NotAllBranOptions.filter((brand) =>
-    //   brand.text.toLowerCase().includes(value.toLowerCase())
-    // );
-    // setBrandSuggestions(filteredBrands);
+    const filteredBrands = NotAllBranOptions.filter((brand) =>
+      brand.text?.toLowerCase().includes(value.toLowerCase()),
+    );
+    setBrandSuggestions(filteredBrands);
   };
 
   useEffect(() => {
-    if (product_Id) {
+    if (state?.auctionId) {
+      run(
+        authAxios
+          .get(api.app.auctions.getAuctionsDetails(state.auctionId))
+          .then((res) => {
+            const draftData = res?.data?.data;
+            const productData = draftData?.product;
+            setListedProductVal(productData);
+            setAuctionState(draftData?.status);
+            setCompleteDraftValue(draftData);
+
+            if (productData?.images?.length > 0) {
+              const formattedImages = productData.images.map((img) => {
+                const isVideo =
+                  img.imagePath?.toLowerCase().includes("video") ||
+                  img.imageLink?.toLowerCase().includes("video");
+                return {
+                  id: img.id,
+                  imageLink: img.imageLink || img.imagePath,
+                  imagePath: img.imagePath,
+                  isVideo: isVideo,
+                  isCoverPhoto: img.isCoverPhoto || false,
+                };
+              });
+              setimgtest(formattedImages);
+            }
+
+            if (productData?.categoryId) setCategoryId(productData.categoryId);
+            if (productData?.subCategoryId) setSubCategoryId(productData.subCategoryId);
+          }),
+      );
+    } else if (product_Id) {
       run(
         authAxios
           .get(api.app.productListing.listedProduct(product_Id))
@@ -144,8 +175,6 @@ const ListProductDetails = () => {
               setimgtest(formattedImages);
             }
 
-
-
             // Set category and subcategory IDs for dropdown population
             if (productData?.categoryId) {
               setCategoryId(productData.categoryId);
@@ -156,7 +185,7 @@ const ListProductDetails = () => {
           }),
       );
     }
-  }, [run, forceReload, product_Id]);
+  }, [run, forceReload, product_Id, state?.auctionId]);
 
   const addImageWatermark = async (file) => {
     const loadImage = (src) => {
@@ -640,6 +669,90 @@ const ListProductDetails = () => {
     return null;
   };
 
+  const SaveProductAsDraft = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    const allImages = imgtest || [];
+    allImages.forEach((image) => {
+      if (image?.file) {
+        formData.append("images", image.file);
+      }
+    });
+
+    const fieldsToAppend = [
+      "categoryId", "subCategoryId", "brand", "color", "age",
+      "landType", "cameraType", "carType", "material", "memory", "model",
+      "processor", "ramSize", "releaseYear", "screenSize", "totalArea",
+      "operatingSystem", "trim", "regionalSpecs", "kilometers",
+      "insuredInUae", "interiorColor", "warranty", "fuelType", "doors",
+      "transmissionType", "seatingCapacity", "horsepower", "steeringSide",
+      "engineCapacity", "numberOfCylinders", "regionOfManufacture",
+      "numberOfFloors", "residentialType", "commercialType", "numberOfRooms",
+      "countryId", "cityId", "emirate", "totalClosingFee", "numberOfBathrooms",
+      "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId",
+      "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "zonedFor"
+    ];
+
+    if (draftValue) {
+      if (draftValue.itemName) formData.append("title", draftValue.itemName);
+      if (draftValue.itemDescription) formData.append("description", draftValue.itemDescription);
+      if (draftValue.category) formData.append("categoryId", draftValue.category);
+      if (draftValue.subCategory) formData.append("subCategoryId", draftValue.subCategory);
+      if (draftValue.usageStatus) formData.append("usageStatus", draftValue.usageStatus);
+      if (product_Id) formData.append("productId", product_Id);
+      if(draftValue.itemPrice) formData.append("itemPrice", draftValue.itemPrice);
+      if (state?.auctionId) formData.append("auctionId", state.auctionId);
+
+      formData.append("isListedProduct", "true");
+      formData.append("isAuction", "false");
+      formData.append("type", "LISTED_PRODUCT");
+      formData.append("product[type]", "LISTED_PRODUCT");
+      formData.append("product[isListedProduct]", "true");
+
+      const arrayFields = ["driverAssistance", "entertainment", "comfort", "exteriorFeatures", "amenities"];
+      arrayFields.forEach((f) => {
+        if (draftValue[f]?.length) formData.append(f, JSON.stringify(draftValue[f]));
+      });
+
+      fieldsToAppend.forEach((f) => {
+        if (draftValue[f]) formData.append(f, draftValue[f]);
+      });
+    }
+
+    setIsSavingDraft(true);
+    try {
+      const response = await authAxios.post(
+        api.app.auctions.setAssdraft,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      if (response.status === 200 || response.data?.success) {
+        try {
+          const draftId = response?.data?.data?.id || state?.auctionId;
+          if (draftId) {
+            const types = JSON.parse(localStorage.getItem('alletre_draft_types') || '{}');
+            types[draftId] = "LISTED_PRODUCT";
+            localStorage.setItem('alletre_draft_types', JSON.stringify(types));
+          }
+        } catch (e) {
+          console.warn("Could not save to localStorage");
+        }
+
+        toast.success(selectedContent[localizationKeys.draftSavedSuccessfully] || "Draft saved successfully");
+        history.push(routes.app.profile.myAuctions.drafts);
+      } else {
+        toast.error(selectedContent[localizationKeys.errorSavingDraft] || "Error saving draft");
+      }
+    } catch (error) {
+      console.error("Error saving draft:", error);
+      toast.error(error?.response?.data?.message || "Error while saving draft");
+    } finally {
+      setIsSavingDraft(false);
+    }
+  };
+
   const handelProductDetailsdata = (rawValues) => {
     const values = getCleanedValues(rawValues);
     if (imgtest.length >= 3) {
@@ -649,7 +762,7 @@ const ListProductDetails = () => {
           images: imgtest.map((img) => ({
             file: img.file,
             imageLink: img.imageLink,
-            imagePath: img.file.name,
+            imagePath: img.file ? img.file.name : (img.imagePath || img.imageLink),
           })),
           auctionState,
           auctionId: completeDraftVal?.id,
@@ -669,14 +782,6 @@ const ListProductDetails = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
 
-  const carField = [
-    ...(customFromData?.arrayCustomFields || []),
-    ...(customFromData?.regularCustomFields || []),
-  ];
-  const adjustedcarField = carField.filter(
-    (field) => field.subCategoryId !== null || field.categoryId === 4,
-  );
-
   const getOptionalLabel = (labelText) => (
     <div className="flex justify-between items-center w-full gap-2">
       <span>{labelText}</span>
@@ -686,11 +791,24 @@ const ListProductDetails = () => {
     </div>
   );
 
+  const safeParseArray = (val) => {
+    if (Array.isArray(val)) return val;
+    if (typeof val === "string" && val.startsWith("[")) {
+      try {
+        const parsed = JSON.parse(val);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    return val ? [val] : [];
+  };
+
   return (
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading || loadingSubGatogry || isUpdating}
+        active={isLoading || loadingSubGatogry || isUpdating || isSavingDraft}
         inverted
       >
         <LoadingTest3arbon />
@@ -708,82 +826,67 @@ const ListProductDetails = () => {
           <div>
             <Formik
               initialValues={{
-                itemName: isEditing ? listedProductVal?.title || "" : "",
-                itemPrice: isEditing
-                  ? listedProductVal?.ProductListingPrice || ""
-                  : "",
-                category: isEditing ? listedProductVal?.categoryId || "" : "",
-                subCategory: isEditing
-                  ? listedProductVal?.subCategory?.id || ""
-                  : "",
-                operatingSystem: isEditing
-                  ? listedProductVal?.operatingSystem || ""
-                  : "",
-                releaseYear: isEditing
-                  ? listedProductVal?.releaseYear || ""
-                  : "",
-                regionOfManufacture: isEditing
-                  ? listedProductVal?.regionOfManufacture || ""
-                  : "",
-                ramSize: isEditing ? listedProductVal?.ramSize || "" : "",
-                processor: isEditing ? listedProductVal?.processor || "" : "",
-                screenSize: isEditing ? listedProductVal?.screenSize || "" : "",
-                model: isEditing ? listedProductVal?.model || "" : "",
-                color: isEditing ? listedProductVal?.color || "" : "",
-                brand: isEditing ? listedProductVal?.brand || "" : "",
-                cameraType: isEditing ? listedProductVal?.cameraType || "" : "",
-                material: isEditing ? listedProductVal?.material || "" : "",
-                type: isEditing ? listedProductVal?.type || "" : "",
-                memory: isEditing ? listedProductVal?.memory || "" : "",
-                age: isEditing ? listedProductVal?.age || "" : "",
-                totalArea: isEditing ? listedProductVal?.totalArea || "" : "",
-                numberOfRooms: isEditing
-                  ? listedProductVal?.numberOfRooms || ""
-                  : "",
-                numberOfFloors: isEditing
-                  ? listedProductVal?.numberOfFloors || ""
-                  : "",
-                landType: isEditing ? listedProductVal?.landType || "" : "",
-                carType: isEditing ? listedProductVal?.carType || "" : "",
-                countryId: isEditing ? listedProductVal?.countryId : (AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة")?.value || ""),
-                cityId: isEditing ? listedProductVal?.cityId || "" : "",
-                emirate: isEditing ? listedProductVal?.emirate || "" : "",
-                totalClosingFee: isEditing ? listedProductVal?.totalClosingFee || "" : "",
-                numberOfBathrooms: isEditing ? listedProductVal?.numberOfBathrooms || "" : "",
-                developer: isEditing ? listedProductVal?.developer || "" : "",
-                readyBy: isEditing ? listedProductVal?.readyBy || "" : "",
-                annualCommunityFee: isEditing ? listedProductVal?.annualCommunityFee || "" : "",
-                isFurnished: isEditing ? listedProductVal?.isFurnished || "" : "",
-                propertyReferenceId: isEditing ? listedProductVal?.propertyReferenceId || "" : "",
-                buyerTransferFee: isEditing ? listedProductVal?.buyerTransferFee || "" : "",
-                sellerTransferFee: isEditing ? listedProductVal?.sellerTransferFee || "" : "",
-                maintenanceFee: isEditing ? listedProductVal?.maintenanceFee || "" : "",
-                occupancyStatus: isEditing ? listedProductVal?.occupancyStatus || "" : "",
-                zonedFor: isEditing ? listedProductVal?.zonedFor || "" : "",
-                amenities: isEditing ? listedProductVal?.amenities || [] : [],
-                residentialType: isEditing ? listedProductVal?.residentialType || "" : "",
-                commercialType: isEditing ? listedProductVal?.commercialType || "" : "",
-                itemDescription: isEditing
-                  ? listedProductVal?.description || ""
-                  : "",
-                trim: isEditing ? listedProductVal?.trim || "" : "",
-                regionalSpecs: isEditing ? listedProductVal?.regionalSpecs || "" : "",
-                kilometers: isEditing ? listedProductVal?.kilometers || "" : "",
-                insuredInUae: isEditing ? listedProductVal?.insuredInUae || "" : "",
-                interiorColor: isEditing ? listedProductVal?.interiorColor || "" : "",
-                warranty: isEditing ? listedProductVal?.warranty || "" : "",
-                fuelType: isEditing ? listedProductVal?.fuelType || "petrol" : "petrol",
-                doors: isEditing ? listedProductVal?.doors || "4" : "4",
-                transmissionType: isEditing ? listedProductVal?.transmissionType || "automatic" : "automatic",
-                seatingCapacity: isEditing ? listedProductVal?.seatingCapacity || "5" : "5",
-                horsepower: isEditing ? listedProductVal?.horsepower || "100-199" : "100-199",
-                steeringSide: isEditing ? listedProductVal?.steeringSide || "left" : "left",
-                engineCapacity: isEditing ? listedProductVal?.engineCapacity || "unknown" : "unknown",
-                numberOfCylinders: isEditing ? listedProductVal?.numberOfCylinders || "4" : "4",
-                driverAssistance: isEditing ? listedProductVal?.driverAssistance || [] : [],
-                entertainment: isEditing ? listedProductVal?.entertainment || [] : [],
-                comfort: isEditing ? listedProductVal?.comfort || [] : [],
-                exteriorFeatures: isEditing ? listedProductVal?.exteriorFeatures || [] : [],
+                itemName: listedProductVal?.title || "",
+                itemPrice: listedProductVal?.ProductListingPrice || "",
+                category: listedProductVal?.categoryId || "",
+                subCategory: listedProductVal?.subCategory?.id || "",
+                usageStatus: listedProductVal?.usageStatus || "",
+                operatingSystem: listedProductVal?.operatingSystem || "",
+                releaseYear: listedProductVal?.releaseYear || "",
+                regionOfManufacture: listedProductVal?.regionOfManufacture || "",
+                ramSize: listedProductVal?.ramSize || "",
+                processor: listedProductVal?.processor || "",
+                screenSize: listedProductVal?.screenSize || "",
+                model: listedProductVal?.model || "",
+                color: listedProductVal?.color || "",
+                brand: listedProductVal?.brand || "",
+                cameraType: listedProductVal?.cameraType || "",
+                material: listedProductVal?.material || "",
+                type: listedProductVal?.type || "",
+                memory: listedProductVal?.memory || "",
+                age: listedProductVal?.age || "",
+                totalArea: listedProductVal?.totalArea || "",
+                numberOfRooms: listedProductVal?.numberOfRooms || "",
+                numberOfFloors: listedProductVal?.numberOfFloors || "",
+                landType: listedProductVal?.landType || "",
+                carType: listedProductVal?.carType || "",
+                countryId: listedProductVal?.countryId || (AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة")?.value || ""),
+                cityId: listedProductVal?.cityId || "",
+                emirate: listedProductVal?.emirate || "",
+                totalClosingFee: listedProductVal?.totalClosingFee || "",
+                numberOfBathrooms: listedProductVal?.numberOfBathrooms || "",
+                developer: listedProductVal?.developer || "",
+                readyBy: listedProductVal?.readyBy || "",
+                annualCommunityFee: listedProductVal?.annualCommunityFee || "",
+                isFurnished: listedProductVal?.isFurnished || "",
+                propertyReferenceId: listedProductVal?.propertyReferenceId || "",
+                buyerTransferFee: listedProductVal?.buyerTransferFee || "",
+                sellerTransferFee: listedProductVal?.sellerTransferFee || "",
+                maintenanceFee: listedProductVal?.maintenanceFee || "",
+                occupancyStatus: listedProductVal?.occupancyStatus || "",
+                zonedFor: listedProductVal?.zonedFor || "",
+                amenities: safeParseArray(listedProductVal?.amenities),
+                residentialType: listedProductVal?.residentialType || "",
+                commercialType: listedProductVal?.commercialType || "",
+                itemDescription: listedProductVal?.description || "",
+                trim: listedProductVal?.trim || "",
+                regionalSpecs: listedProductVal?.regionalSpecs || "",
+                kilometers: listedProductVal?.kilometers || "",
+                insuredInUae: listedProductVal?.insuredInUae || "",
+                interiorColor: listedProductVal?.interiorColor || "",
+                warranty: listedProductVal?.warranty || "",
+                fuelType: listedProductVal?.fuelType || "petrol",
+                doors: listedProductVal?.doors || "4",
+                transmissionType: listedProductVal?.transmissionType || "automatic",
+                seatingCapacity: listedProductVal?.seatingCapacity || "5",
+                horsepower: listedProductVal?.horsepower || "100-199",
+                steeringSide: listedProductVal?.steeringSide || "left",
+                engineCapacity: listedProductVal?.engineCapacity || "unknown",
+                numberOfCylinders: listedProductVal?.numberOfCylinders || "4",
+                driverAssistance: safeParseArray(listedProductVal?.driverAssistance),
+                entertainment: safeParseArray(listedProductVal?.entertainment),
+                comfort: safeParseArray(listedProductVal?.comfort),
+                exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures),
               }}
               onSubmit={isEditing ? handleUpdate : handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}
@@ -1277,7 +1380,7 @@ const ListProductDetails = () => {
                           images={imgtest || []}
                           onReload={onReload}
                           setLoadingImg={setLoadingImg}
-                          isEditMode={isEditing}
+                          isEditMode={auctionState === "DRAFTED" ? true : isEditing}
                           isListing={true}
                         />
                       </div>
@@ -1291,6 +1394,15 @@ const ListProductDetails = () => {
                       >
                         {selectedContent[localizationKeys.cancel]}
                       </button>
+
+                      {!(auctionState === "DRAFTED") && !isEditing && (
+                        <div
+                          onClick={(e) => SaveProductAsDraft(e)}
+                          className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                        >
+                          {selectedContent[localizationKeys.saveAsDraft] || "Save as Draft"}
+                        </div>
+                      )}
 
                       {isEditing ? (
                         <button

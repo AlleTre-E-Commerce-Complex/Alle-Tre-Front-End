@@ -191,13 +191,16 @@ const ListingProductsLocationDetails = () => {
       if (productDetailsInt.comfort?.length) formData.append("product[comfort]", JSON.stringify(productDetailsInt.comfort));
       if (productDetailsInt.exteriorFeatures?.length) formData.append("product[exteriorFeatures]", JSON.stringify(productDetailsInt.exteriorFeatures));
       
-      // Handle images properly
       if (productDetailsInt.images && Array.isArray(productDetailsInt.images)) {
         productDetailsInt.images.forEach((image, index) => {
           if (image.file) {
             formData.append("images", image.file);
           }
         });
+      }
+
+      if (productDetailsInt.auctionId) {
+        formData.append("auctionId", productDetailsInt.auctionId);
       }
 
       runListNewProduct(

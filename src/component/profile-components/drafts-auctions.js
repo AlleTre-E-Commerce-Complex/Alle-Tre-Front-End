@@ -76,16 +76,27 @@ const DraftsAuctions = () => {
         </div>
       ) : (
         <div className="grid lg:grid-cols-7 md:grid-cols-4 grid-cols-2 animate-in">
-          {draftAuctionData?.map((e) => (
-            <DraftsItem
-              key={e?.id}
-              auctionId={e?.id}
-              img={e && e?.product?.images[0]?.imageLink}
-              itemName={e?.product?.title}
-              date={e?.createdAt}
-              onReload={onReload}
-            />
-          ))}
+          {draftAuctionData?.map((e) => {
+            let isListedProduct = e?.isListedProduct || e?.product?.isListedProduct || e?.type === "LISTED_PRODUCT" || e?.product?.type === "LISTED_PRODUCT" || e?.isAuction === false;
+            try {
+              const types = JSON.parse(localStorage.getItem('alletre_draft_types') || '{}');
+              if (types[e?.id] === "LISTED_PRODUCT") {
+                isListedProduct = true;
+              }
+            } catch (err) {}
+
+            return (
+              <DraftsItem
+                key={e?.id}
+                auctionId={e?.id}
+                img={e && e?.product?.images[0]?.imageLink}
+                itemName={e?.product?.title}
+                date={e?.createdAt}
+                isListedProduct={isListedProduct}
+                onReload={onReload}
+              />
+            );
+          })}
         </div>
       )}
       <div className="flex justify-end mt-7 ltr:mr-2 rtl:ml-2">
