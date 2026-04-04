@@ -64,11 +64,12 @@ const ImageMedia = ({
           imageLink: img.file ? URL.createObjectURL(img.file) : img.imageLink,
         }));
 
-      // If in edit mode and the image has an ID (existing image), delete from backend
-      if ((isEditMode && auctionId && imgId) || auctionState === "DRAFTED") {
+      // If in edit mode and the image has a numeric ID (existing image), delete from backend
+      const isNumericId = imgId && !isNaN(Number(imgId));
+      if (((isEditMode && auctionId && isNumericId) || auctionState === "DRAFTED") && isNumericId) {
         try {
           await runDelete(
-            authAxios.delete(api.app.Imagees.delete(auctionId, imgId))
+            authAxios.delete(api.app.Imagees.delete(auctionId, imgId, isListing))
           );
 
           // If delete succeeds and we have new files, update them
@@ -80,11 +81,14 @@ const ImageMedia = ({
                 const formData = new FormData();
                 formData.append("image", img.file);
                 await runUpload(
-                  authAxios.patch(api.app.Imagees.upload(auctionId), formData)
+                  authAxios.patch(api.app.Imagees.upload(auctionId, isListing), formData)
                 );
               }
             }
           }
+
+          // Update local state immediately after successful backend delete
+          setimgtest(newImages);
 
           toast.success(
             selectedContent[localizationKeys.imageDeletedSuccessfully]
@@ -148,7 +152,7 @@ const ImageMedia = ({
               const formData = new FormData();
               formData.append("image", img.file); // Use 'image' as the key
               await runUpload(
-                authAxios.patch(api.app.Imagees.upload(auctionId), formData)
+                authAxios.patch(api.app.Imagees.upload(auctionId, isListing), formData)
               );
             }
           }
@@ -289,19 +293,24 @@ const ImageMedia = ({
         // Handle backend update in edit mode
         if (isEditMode && auctionId) {
           try {
-            // Upload each image one at a time
-            for (const img of newImages) {
+            for (let i = 0; i < newImages.length; i++) {
+              const img = newImages[i];
               if (img?.file) {
                 const formData = new FormData();
-                formData.append("image", img.file); // Use 'image' as the key
-                await runUpload(
+                formData.append("image", img.file);
+                const response = await runUpload(
                   authAxios.patch(
                     api.app.Imagees.upload(auctionId, isListing),
                     formData
                   )
                 );
+                // Update the ID from the backend response
+                if (response?.data?.data?.id) {
+                  newImages[i].id = response.data.data.id;
+                }
               }
             }
+            setimgtest([...newImages]);
             if (typeof onReload === "function") {
               onReload();
             }
@@ -345,16 +354,24 @@ const ImageMedia = ({
         // Handle backend update in edit mode
         if (isEditMode && auctionId) {
           try {
-            // Upload each image one at a time
-            for (const img of newImages) {
+            for (let i = 0; i < newImages.length; i++) {
+              const img = newImages[i];
               if (img?.file) {
                 const formData = new FormData();
-                formData.append("image", img.file); // Use 'image' as the key
-                await runUpload(
-                  authAxios.patch(api.app.Imagees.upload(auctionId), formData)
+                formData.append("image", img.file);
+                const response = await runUpload(
+                  authAxios.patch(
+                    api.app.Imagees.upload(auctionId, isListing),
+                    formData
+                  )
                 );
+                // Update the ID from the backend response
+                if (response?.data?.data?.id) {
+                  newImages[i].id = response.data.data.id;
+                }
               }
             }
+            setimgtest([...newImages]);
             if (typeof onReload === "function") {
               onReload();
             }

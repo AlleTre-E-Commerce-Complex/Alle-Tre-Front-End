@@ -88,9 +88,9 @@ const api = {
       lockAuction:'/auctions/lock-auction',
     },
     Imagees: {
-      upload: (auctionsId,isListing) => `auctions/user/${auctionsId}/upload-image?isListing=${isListing}`,
-      delete: (auctionsId, imageId) =>
-        `/auctions/user/${auctionsId}/remove-image?imageId=${imageId}`,
+      upload: (auctionsId, isListing = false) => `auctions/user/${auctionsId}/upload-image?isListing=${isListing}`,
+      delete: (auctionsId, imageId, isListing = false) =>
+        `/auctions/user/${auctionsId}/remove-image?imageId=${imageId}&isListing=${isListing}`,
     },
     productListing: {
       listNewProduct: `auctions/product-listing`,
