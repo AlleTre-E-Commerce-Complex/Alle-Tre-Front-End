@@ -9,13 +9,34 @@ import localizationKeys from "../../localization/localization-keys";
 import InProgressProducts from "./in-progress-products";
 import OutOfStockProducts from "./out-of-stock-products";
 import SoldOutProducts from "./SoldOutProducts";
+import DraftProducts from "./DraftProducts";
 
 
-const MyProductsTab = ({ onReload, inProgressProducts, outOfStockProducts, soldOutProducts }) => {
+const MyProductsTab = ({ onReload, inProgressProducts, outOfStockProducts, soldOutProducts, draftProducts }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
   const panes = [
+    {
+      menuItem: (
+        <Menu.Item key="drafts" className="dark:text-white font-medium">
+          {selectedContent[localizationKeys.drafts]}
+          {draftProducts > 0 && (
+            <span className="ml-2 bg-[#FDC02A]/20 text-[#FDC02A] px-2 py-0.5 rounded-full text-xs font-semibold">
+              {draftProducts < 10 ? `0${draftProducts}` : draftProducts}
+            </span>
+          )}
+        </Menu.Item>
+      ),
+      route: routes.app.profile.myProducts.drafts,
+      render: () => (
+        <div>
+          <Tab.Pane className="border-none w-full h-full bg-white dark:bg-primary-dark animate-in">
+            <DraftProducts OnReload={onReload} />
+          </Tab.Pane>
+        </div>
+      ),
+    },
     {
       menuItem: (
         <Menu.Item key="inProgress" className="dark:text-white font-medium">

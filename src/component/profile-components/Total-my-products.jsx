@@ -9,6 +9,7 @@ const TotalMyProducts = ({
   inProgressProducts,
   outOfStockProducts,
   soldOutProducts,
+  draftProducts,
 }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
@@ -38,14 +39,61 @@ const TotalMyProducts = ({
       </div>
 
       {/* Cards Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {/* Drafts Card */}
+        <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-6 flex flex-col justify-between shadow-sm h-40">
+          <div className="flex justify-between items-start mb-4">
+            <span className="text-gray-600 dark:text-gray-300 font-medium">
+              {selectedContent[localizationKeys.drafts]}
+            </span>
+            <div className="text-gray-400">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div className="mt-auto">
+            <div className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {draftProducts || 0}
+            </div>
+            <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gray-400 dark:bg-gray-500 rounded-full"
+                style={{ width: draftProducts > 0 ? "33%" : "0%" }}
+              ></div>
+            </div>
+          </div>
+        </div>
+
         {/* In Progress Card */}
         <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-6 flex flex-col justify-between shadow-sm h-40">
           <div className="flex justify-between items-start mb-4">
-            <span className="text-gray-600 dark:text-gray-300 font-medium">{selectedContent[localizationKeys.inProgress]}</span>
+            <span className="text-gray-600 dark:text-gray-300 font-medium">
+              {selectedContent[localizationKeys.inProgress]}
+            </span>
             <div className="text-[#FDC02A]">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
               </svg>
             </div>
           </div>
@@ -65,10 +113,22 @@ const TotalMyProducts = ({
         {/* Out of Stock Card */}
         <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-6 flex flex-col justify-between shadow-sm h-40">
           <div className="flex justify-between items-start mb-4">
-            <span className="text-gray-600 dark:text-gray-300 font-medium">{selectedContent[localizationKeys.outOfStock]}</span>
+            <span className="text-gray-600 dark:text-gray-300 font-medium">
+              {selectedContent[localizationKeys.outOfStock]}
+            </span>
             <div className="text-gray-400">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
               </svg>
             </div>
           </div>
@@ -77,7 +137,10 @@ const TotalMyProducts = ({
               {outOfStockProducts || 0}
             </div>
             <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-              <div className="h-full bg-gray-300 dark:bg-gray-600 rounded-full" style={{ width: outOfStockProducts > 0 ? "33%" : "0%" }}></div>
+              <div
+                className="h-full bg-gray-300 dark:bg-gray-600 rounded-full"
+                style={{ width: outOfStockProducts > 0 ? "33%" : "0%" }}
+              ></div>
             </div>
           </div>
         </div>
@@ -85,10 +148,22 @@ const TotalMyProducts = ({
         {/* Sold Out Card */}
         <div className="bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-6 flex flex-col justify-between shadow-sm h-40">
           <div className="flex justify-between items-start mb-4">
-            <span className="text-gray-600 dark:text-gray-300 font-medium">{selectedContent[localizationKeys.soldOut]}</span>
+            <span className="text-gray-600 dark:text-gray-300 font-medium">
+              {selectedContent[localizationKeys.soldOut]}
+            </span>
             <div className="text-gray-400">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
               </svg>
             </div>
           </div>
@@ -97,7 +172,10 @@ const TotalMyProducts = ({
               {soldOutProducts || 0}
             </div>
             <div className="w-full h-1 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
-              <div className="h-full bg-gray-300 dark:bg-gray-600 rounded-full" style={{ width: soldOutProducts > 0 ? "33%" : "0%" }}></div>
+              <div
+                className="h-full bg-gray-300 dark:bg-gray-600 rounded-full"
+                style={{ width: soldOutProducts > 0 ? "33%" : "0%" }}
+              ></div>
             </div>
           </div>
         </div>
