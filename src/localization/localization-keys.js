@@ -703,6 +703,8 @@ const localizationKeys = {
   vehicleSpecifications:"vehicleSpecifications",
   applyFilters:"applyFilters",
   clear: "clear",
+  thereAreNoDraftProductsAtTheMoment: "thereAreNoDraftProductsAtTheMoment",
+  noPhotoAdded:"noPhotoAdded",
   sortBy: "sortBy",
   sort: "sort",
   popular: "popular",

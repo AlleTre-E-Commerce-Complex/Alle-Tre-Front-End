@@ -701,7 +701,7 @@ const ListProductDetails = () => {
       if (draftValue.subCategory) formData.append("subCategoryId", draftValue.subCategory);
       if (draftValue.usageStatus) formData.append("usageStatus", draftValue.usageStatus);
       if (product_Id) formData.append("productId", product_Id);
-      if(draftValue.itemPrice) formData.append("itemPrice", draftValue.itemPrice);
+      if(draftValue.itemPrice) formData.append("ProductListingPrice", draftValue.itemPrice);
       if (state?.auctionId) formData.append("auctionId", state.auctionId);
 
       formData.append("isListedProduct", "true");
@@ -741,13 +741,13 @@ const ListProductDetails = () => {
         }
 
         toast.success(selectedContent[localizationKeys.draftSavedSuccessfully] || "Draft saved successfully");
-        history.push(routes.app.profile.myAuctions.drafts);
+        history.push(`${routes.app.profile.myProducts.default}?page=1&perPage=10`);
       } else {
         toast.error(selectedContent[localizationKeys.errorSavingDraft] || "Error saving draft");
       }
     } catch (error) {
       console.error("Error saving draft:", error);
-      toast.error(error?.response?.data?.message || "Error while saving draft");
+      toast.error(error?.response?.data?.message );
     } finally {
       setIsSavingDraft(false);
     }
@@ -793,12 +793,18 @@ const ListProductDetails = () => {
 
   const safeParseArray = (val) => {
     if (Array.isArray(val)) return val;
-    if (typeof val === "string" && val.startsWith("[")) {
-      try {
-        const parsed = JSON.parse(val);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
+    if (typeof val === "string") {
+      const trimmed = val.trim();
+      if (trimmed.startsWith("[")) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          // Fall through to other checks if JSON parsing fails
+        }
+      }
+      if (trimmed.includes(",")) {
+        return trimmed.split(",").map((v) => v.trim()).filter((v) => v);
       }
     }
     return val ? [val] : [];
@@ -827,7 +833,7 @@ const ListProductDetails = () => {
             <Formik
               initialValues={{
                 itemName: listedProductVal?.title || "",
-                itemPrice: listedProductVal?.ProductListingPrice || "",
+                itemPrice: listedProductVal?.ProductListingPrice ?? "",
                 category: listedProductVal?.categoryId || "",
                 subCategory: listedProductVal?.subCategory?.id || "",
                 usageStatus: listedProductVal?.usageStatus || "",
@@ -1398,7 +1404,7 @@ const ListProductDetails = () => {
                       {!(auctionState === "DRAFTED") && !isEditing && (
                         <div
                           onClick={(e) => SaveProductAsDraft(e)}
-                          className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                          className="bg-white dark:bg-transparent border-primary-dark dark:border-yellow border-[1.5px] text-primary dark:text-yellow rounded-lg sm:w-[140px] w-full h-[48px] flex items-center justify-center text-center cursor-pointer font-semibold transition-all duration-300 hover:bg-gray-50 dark:hover:bg-yellow/10 active:scale-95 shadow-sm hover:shadow-md"
                         >
                           {selectedContent[localizationKeys.saveAsDraft] || "Save as Draft"}
                         </div>
@@ -1407,7 +1413,7 @@ const ListProductDetails = () => {
                       {isEditing ? (
                         <button
                           type="submit"
-                          className="bg-primary hover:bg-primary-dark sm:w-[220px] w-full h-[48px] rounded-lg text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
+                          className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
                         >
                           {selectedContent[localizationKeys.Submit]}
                         </button>

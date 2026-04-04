@@ -24,13 +24,21 @@ const MyProducts = () => {
   const { run: runAlyticsData, isLoading: isLoadingAnalyticsData } = useAxios(
     []
   );
+  const [draftCount, setDraftCount] = useState(0);
+  const { run: runDrafts, isLoading: isLoadingDrafts } = useAxios([]);
+
   useEffect(() => {
     runAlyticsData(
       authAxios.get(api.app.productListing.productAnalytics).then((res) => {
         setAnalyticsData(res?.data?.data);
       })
     );
-  }, [runAlyticsData, forceReload]);
+    runDrafts(
+      authAxios.get(`${api.app.auctions.getAlldraft}?page=1&perPage=1&status=DRAFTED&type=LISTED_PRODUCT`).then((res) => {
+        setDraftCount(res?.data?.pagination?.totalItems || 0);
+      })
+    );
+  }, [runAlyticsData, runDrafts, forceReload]);
 
   const analyticsDataObject = {};
   let totalCount = 0;
@@ -63,7 +71,7 @@ const MyProducts = () => {
       <div className="mx-4 sm:mx-0 sm:ltr:ml-4 sm:rtl:mr-4  animate-in  ">
         <Dimmer
           className="fixed w-full h-full top-0 bg-white"
-          active={isLoadingAnalyticsData}
+          active={isLoadingAnalyticsData || isLoadingDrafts}
           inverted
         >
           {/* <Loader active /> */}
@@ -99,6 +107,7 @@ const MyProducts = () => {
               inProgressProducts={analyticsDataObject?.IN_PROGRESS?.count}
               outOfStockProducts={analyticsDataObject?.OUT_OF_STOCK?.count}
               soldOutProducts={analyticsDataObject?.SOLD_OUT?.count}
+              draftProducts={draftCount}
             />
             <div className="mt-8">
               <MyProductsTab 
@@ -106,6 +115,7 @@ const MyProducts = () => {
                 inProgressProducts={analyticsDataObject?.IN_PROGRESS?.count || 0}
                 outOfStockProducts={analyticsDataObject?.OUT_OF_STOCK?.count || 0}
                 soldOutProducts={analyticsDataObject?.SOLD_OUT?.count || 0}
+                draftProducts={draftCount}
               />
             </div>
           </>

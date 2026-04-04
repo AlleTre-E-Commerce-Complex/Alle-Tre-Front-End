@@ -103,6 +103,7 @@ const routes = {
         inPogress: `/profile/my-products/in-pogress`,
         outOfStock: `/profile/my-products/out-of-stock`,
         soldOut: `/profile/my-products/sold-out`,
+        drafts: `/profile/my-products/drafts`,
       },
 
       watchlist: `/profile/watchlist`,

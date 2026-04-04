@@ -129,7 +129,7 @@ const CreateAuction = () => {
   );
 };
 
-export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
+export const DraftsItem = ({ img, itemName, date, auctionId, onReload, isListedProduct }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const history = useHistory();
@@ -164,11 +164,17 @@ export const DraftsItem = ({ img, itemName, date, auctionId, onReload }) => {
         <div className="group w-[154px] h-[139px] rounded-lg border-[1px] hover:bg-gradient-to-t hover:from-[#25252562] absolute bottom-0 z-10 ">
           <div className="group-hover:flex justify-center gap-x-9 hidden h-full ">
             <button
-              onClick={() =>
-                history.push(routes.app.createAuction.productDetails, {
-                  auctionId: auctionId,
-                })
-              }
+              onClick={() => {
+                if (isListedProduct) {
+                  history.push(routes.app.listProduct.default, {
+                    auctionId: auctionId,
+                  });
+                } else {
+                  history.push(routes.app.createAuction.productDetails, {
+                    auctionId: auctionId,
+                  });
+                }
+              }}
               className="w-9 h-9 rounded-full backdrop-blur-md bg-white/50 mt-auto mb-5"
             >
               <img className="p-2.5" src={PenIcon} alt="PenIcon" />
