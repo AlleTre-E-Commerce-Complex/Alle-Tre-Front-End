@@ -10,7 +10,7 @@ import { FaWhatsapp, FaUser } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { MdPublishedWithChanges, MdDeleteOutline } from "react-icons/md";
+import { MdPublishedWithChanges, MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 // import { RiAuctionLine } from "react-icons/ri";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
@@ -301,6 +301,22 @@ const SummaryListedSection = () => {
                       {selectedContent[localizationKeys.changeStatus]}
                     </span>
                   </button>
+
+                  <div
+                    onClick={() => {
+                      history.push(routes.app.listProduct.default, {
+                        productId: productId,
+                        isEditing: true,
+                      });
+                    }}
+                    className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-all duration-300 shadow-lg border-2 border-white dark:border-primary-dark group/edit shrink-0 hover:scale-105 active:scale-95"
+                    title={selectedContent[localizationKeys.edit]}
+                  >
+                    <MdOutlineEdit
+                      size={24}
+                      className="text-white group-hover/edit:rotate-12 transition-transform"
+                    />
+                  </div>
 
                   <div
                     onClick={() => setIsDeleteModalOpen(true)}
