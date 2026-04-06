@@ -436,7 +436,11 @@ const Header = ({
         "hasCompletedProfile",
       );
       if (JSON.parse(hasCompletedProfile)) {
-        history.push(routes.app.listProduct.default);
+        if (pathname === routes.app.listProduct.default) {
+          window.location.reload();
+        } else {
+          history.push(routes.app.listProduct.default);
+        }
         // dispatch(productDetails({}));
       } else {
         setIsListing(true);

@@ -5,7 +5,6 @@ import { authAxios } from '../config/axios-config'; // your auth axios instance
 import { useAuthState } from 'context/auth-context';
 
 export default function usePushNotifications() {
-    console.log('push notification');
     const { user } = useAuthState();
   const isAuthenticated = user ? true : false
   useEffect(() => {

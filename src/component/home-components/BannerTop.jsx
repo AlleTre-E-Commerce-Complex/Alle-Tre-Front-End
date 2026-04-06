@@ -101,9 +101,6 @@ const BannerTop = ({ auctions = [] }) => {
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
-  // const shareUrl = isListProduct
-  //     ? `${getDomain()}/alletre/my-product/${auctionId}/details`
-  //     : `${getDomain()}/alletre/home/${auctionId}/details`;
 
   const shareUrl = (auction) => {
     return `${getDomain()}/home/${auction?.id}/details`;

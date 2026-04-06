@@ -240,13 +240,6 @@ const Home = ({
               )
             : [];
 
-          // Log the filtered data
-          console.log("Filtered Data:", {
-            liveDataLength: liveData.length,
-            upcomingDataLength: upcomingData.length,
-            combinedLength: liveData.length + upcomingData.length,
-          });
-
           const combinedData = [...liveData, ...upcomingData].map((item) => ({
             ...item,
             product: item.product || {},

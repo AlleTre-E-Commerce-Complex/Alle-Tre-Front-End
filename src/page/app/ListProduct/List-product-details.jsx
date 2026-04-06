@@ -607,12 +607,14 @@ const ListProductDetails = () => {
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
+      .typeError(selectedContent[localizationKeys.required])
       .required(selectedContent[localizationKeys.required]),
     itemPrice: Yup.number().required(
       selectedContent[localizationKeys.required],
     ),
     category: Yup.string()
       .trim()
+      .typeError(selectedContent[localizationKeys.required])
       .required(selectedContent[localizationKeys.required]),
     countryId: Yup.string().required(selectedContent[localizationKeys.required]),
     cityId: Yup.string().required(selectedContent[localizationKeys.required]),
@@ -740,10 +742,10 @@ const ListProductDetails = () => {
           console.warn("Could not save to localStorage");
         }
 
-        toast.success(selectedContent[localizationKeys.draftSavedSuccessfully] || "Draft saved successfully");
+        toast.success(selectedContent[localizationKeys.draftSavedSuccessfully]);
         history.push(`${routes.app.profile.myProducts.default}?page=1&perPage=10`);
       } else {
-        toast.error(selectedContent[localizationKeys.errorSavingDraft] || "Error saving draft");
+        toast.error(selectedContent[localizationKeys.errorSavingDraft]);
       }
     } catch (error) {
       console.error("Error saving draft:", error);
@@ -814,7 +816,7 @@ const ListProductDetails = () => {
     <>
       <Dimmer
         className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading || loadingSubGatogry || isUpdating || isSavingDraft}
+        active={isLoading || loadingSubGatogry || isUpdating || isSavingDraft || loadingImg}
         inverted
       >
         <LoadingTest3arbon />
@@ -1404,16 +1406,16 @@ const ListProductDetails = () => {
                       {!(auctionState === "DRAFTED") && !isEditing && (
                         <div
                           onClick={(e) => SaveProductAsDraft(e)}
-                          className="bg-white dark:bg-transparent border-primary-dark dark:border-yellow border-[1.5px] text-primary dark:text-yellow rounded-lg sm:w-[140px] w-full h-[48px] flex items-center justify-center text-center cursor-pointer font-semibold transition-all duration-300 hover:bg-gray-50 dark:hover:bg-yellow/10 active:scale-95 shadow-sm hover:shadow-md"
+                          className="bg-transparent border-primary dark:border-yellow border-[1px] text-primary dark:text-yellow hover:bg-primary/5 dark:hover:bg-yellow/10 rounded-lg sm:w-[136px] w-full h-[48px] flex items-center justify-center cursor-pointer transition-all duration-300 font-medium"
                         >
-                          {selectedContent[localizationKeys.saveAsDraft] || "Save as Draft"}
+                          {selectedContent[localizationKeys.saveAsDraft]}
                         </div>
                       )}
 
                       {isEditing ? (
                         <button
                           type="submit"
-                          className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
+                          className="bg-primary hover:bg-primary-dark sm:w-[220px] w-full h-[48px] rounded-lg text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
                         >
                           {selectedContent[localizationKeys.Submit]}
                         </button>

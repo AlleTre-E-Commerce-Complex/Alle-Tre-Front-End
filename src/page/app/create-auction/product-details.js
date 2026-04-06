@@ -747,9 +747,11 @@ const ProductDetails = () => {
   const ProductDetailsSchema = Yup.object({
     itemName: Yup.string()
       .trim()
+      .typeError(selectedContent[localizationKeys.required])
       .required(selectedContent[localizationKeys.required]),
     category: Yup.string()
       .trim()
+      .typeError(selectedContent[localizationKeys.required])
       .required(selectedContent[localizationKeys.required]),
     itemDescription: Yup.string()
       .trim()
@@ -1087,7 +1089,8 @@ const ProductDetails = () => {
           loadingSubGatogry ||
           isLoadingAuctionById ||
           loadingAllBranOptions ||
-          isUpdating
+          isUpdating ||
+          loadingImg
         }
         inverted
       >
