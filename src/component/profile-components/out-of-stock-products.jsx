@@ -13,11 +13,14 @@ import localizationKeys from "../../localization/localization-keys";
 import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import ProductRowTable from "./product-row-table";
 
-const OutOfStockProducts = () => {
+const OutOfStockProducts = ({ OnReload }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  const onReload = React.useCallback(() => {
+    setForceReload((p) => !p);
+    if (OnReload) OnReload();
+  }, [OnReload]);
 
   const [activeProductData, setActiveProductData] = useState();
   const [totalPages, setTotalPages] = useState();
@@ -75,7 +78,7 @@ const OutOfStockProducts = () => {
               createdAt={e?.createdAt}
               onReload={onReload}
               productId={e?.id}
-
+              Product_id={e?.product?.id}
             />
           ))}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">

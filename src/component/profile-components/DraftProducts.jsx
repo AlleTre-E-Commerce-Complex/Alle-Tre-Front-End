@@ -13,11 +13,14 @@ import localizationKeys from "../../localization/localization-keys";
 import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import ProductRowTable from "./product-row-table";
 
-const DraftProducts = () => {
+const DraftProducts = ({ OnReload }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
+  const onReload = React.useCallback(() => {
+    setForceReload((p) => !p);
+    if (OnReload) OnReload();
+  }, [OnReload]);
 
   const [draftProductData, setDraftProductData] = useState();
   const [totalPages, setTotalPages] = useState();
