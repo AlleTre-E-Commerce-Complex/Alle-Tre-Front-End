@@ -11,8 +11,7 @@ import useAxios from "../../hooks/use-axios";
 import { authAxios } from "../../config/axios-config";
 import api from "../../api";
 import { toast } from "react-hot-toast";
-import { Dimmer } from "semantic-ui-react";
-import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
+
 import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
 // import { BiPlayCircle } from "react-icons/bi";
 
@@ -46,8 +45,8 @@ const ImageMedia = ({
   const { run: runUpload, isLoading: isloadingUpload } = useAxios([]);
 
   useEffect(() => {
-    setLoadingImg?.(isloadingUpload);
-  }, [isloadingUpload, setLoadingImg]);
+    setLoadingImg?.(isloadingUpload || isloadingDelete);
+  }, [isloadingUpload, isloadingDelete, setLoadingImg]);
 
   const handelDeleteImg = async (imgId, index, event) => {
     if (event) {
@@ -525,13 +524,7 @@ const ImageMedia = ({
 
   return (
     <>
-      <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
-        active={isloadingDelete || isloadingUpload}
-        inverted
-      >
-        <LoadingTest3arbon />
-      </Dimmer>
+
       <div className="image-upload-container">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-y-4 gap-x-4">
