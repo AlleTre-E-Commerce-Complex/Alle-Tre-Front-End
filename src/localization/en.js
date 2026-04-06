@@ -298,8 +298,8 @@ const en = {
   // create auctions
   [localizationKeys.drafts]: "Drafts",
   [localizationKeys.proceed]: "Proceed",
-  [localizationKeys.successDelete]:
-    "Your auction has been deleted for you from drafting successfully",
+  [localizationKeys.successDelete]: "Draft deleted successfully",
+  [localizationKeys.successProductDelete]: "Product deleted successfully",
   [localizationKeys.errorDelete]:
     "oops, sorry something with wrong please make sure everything is correct and try again",
   [localizationKeys.confirmDeletedraft]: "Confirm delete draft",

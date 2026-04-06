@@ -71,7 +71,11 @@ const ProductRowTable = ({
         .delete(status === "DRAFTED" ? api.app.auctions.delete(productId) : api.app.productListing.deleteListedProduct(Product_id))
         .then((res) => {
           onReload();
-          toast.success(selectedContent[localizationKeys.successDelete]);
+          toast.success(
+            status === "DRAFTED"
+              ? selectedContent[localizationKeys.successDelete]
+              : selectedContent[localizationKeys.successProductDelete]
+          );
         })
         .catch((error) => {
           toast.error(selectedContent[localizationKeys.oops]);
@@ -256,8 +260,16 @@ const ProductRowTable = ({
         open={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleDelete}
-        title={selectedContent[localizationKeys.confirmDeleteProduct]}
-        message={selectedContent[localizationKeys.areYouSureYouWantToDeleteThisProduct]}
+        title={
+          status === "DRAFTED"
+            ? selectedContent[localizationKeys.confirmDeletedraft]
+            : selectedContent[localizationKeys.confirmDeleteProduct]
+        }
+        message={
+          status === "DRAFTED"
+            ? selectedContent[localizationKeys.areYouSureYouWantToDeleteThisDraft]
+            : selectedContent[localizationKeys.areYouSureYouWantToDeleteThisProduct]
+        }
       />
     </div>
   );

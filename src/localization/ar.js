@@ -291,7 +291,8 @@ const ar = {
   // create auctions
   [localizationKeys.drafts]: "المسودات",
   [localizationKeys.proceed]: "متابعة",
-  [localizationKeys.successDelete]: "تم حذف مزادك من صياغتك بنجاح",
+  [localizationKeys.successDelete]: "تم حذف المسودة بنجاح",
+  [localizationKeys.successProductDelete]: "تم حذف المنتج بنجاح",
   [localizationKeys.errorDelete]:
     "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
   [localizationKeys.areYouSureYouWantToDeleteThisDraft]:

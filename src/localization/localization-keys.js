@@ -265,6 +265,7 @@ const localizationKeys = {
   drafts: "drafts",
   proceed: "proceed",
   successDelete: "successDelete",
+  successProductDelete: "successProductDelete",
   errorDelete: "errorDelete",
   confirmDeletedraft: "confirmDeletedraft",
   areYouSureYouWantToDeleteThisDraft: "areYouSureYouWantToDeleteThisDraft",
