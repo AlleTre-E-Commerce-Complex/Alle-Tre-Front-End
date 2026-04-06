@@ -43,7 +43,7 @@ const ar = {
   [localizationKeys.aVerificationMailHasBeenSent]:
     "تم إرسال بريد تحقق إلى بريدك ، يرجى التحقق منه ....",
   [localizationKeys.thePasswordHasBeenSuccessfullyChanged]:
-    "تم تغيير كلمة المرور بنجاح",
+    "تمت إعادة تعيين كلمة المرور بنجاح.",
   [localizationKeys.backToHome]: "العودة إلى الصفحة الرئيسية",
   [localizationKeys.resetPassword]: "إعادة تعيين كلمة المرور",
   [localizationKeys.newPassword]: "كلمة مرور جديدة",

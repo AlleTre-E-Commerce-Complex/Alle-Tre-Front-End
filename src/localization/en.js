@@ -46,7 +46,7 @@ const en = {
   [localizationKeys.aVerificationMailHasBeenSent]:
     "A verification mail has been sent to your mail please check it....",
   [localizationKeys.thePasswordHasBeenSuccessfullyChanged]:
-    "The password has been successfully changed.",
+    "Your password has been reset successfully.",
   [localizationKeys.backToHome]: "Back to Home",
   [localizationKeys.resetPassword]: "Reset Password",
   [localizationKeys.newPassword]: "New Password",

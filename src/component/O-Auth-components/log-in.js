@@ -55,7 +55,7 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
         dispatch(Close());
       })
       .catch((err) => {
-        if (err.message.en === "Verify your account") {
+        if (err?.message?.en === "Verify your account") {
           toast.error(
             <p className="text-gray-dark text-sm py-2">
               {
@@ -81,8 +81,8 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
                     .catch((err) => {
                       toast.error(
                         lang === "en"
-                          ? err.message.en || err.message
-                          : err.message.ar || err.message,
+                          ? err?.en || err?.message?.en || err?.message || err || "An error occurred"
+                          : err?.ar || err?.message?.ar || err?.message || err || "حدث خطأ ما",
                       );
                     })
                 }
@@ -94,14 +94,14 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
           );
         } else console.log("google auth error --->", err);
         // Check if the error is a 401 unauthorized
-        if (err?.message?.en === "You are not authorized") {
+        if (err?.en === "You are not authorized" || err?.message?.en === "You are not authorized") {
           // Dispatch the action to show the modal
           store.dispatch(setBlockedUser(true));
         } else
           toast.error(
             lang === "en"
-              ? err.message.en || err.message
-              : err.message.ar || err.message,
+              ? err?.en || err?.message?.en || err?.message || err || "An error occurred"
+              : err?.ar || err?.message?.ar || err?.message || err || "حدث خطأ ما",
           );
       });
   };

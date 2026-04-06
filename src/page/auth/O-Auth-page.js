@@ -26,10 +26,10 @@ const OAuthpage = () => {
         >
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => setLang("en")}>
-              {lang === "en" ? "English" : "الانجليزية"}
+              English
             </Dropdown.Item>
             <Dropdown.Item onClick={() => setLang("ar")}>
-              {lang === "en" ? "Arabic" : "العربية"}
+              العربية
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
