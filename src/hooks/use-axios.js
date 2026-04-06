@@ -54,23 +54,27 @@ function useAxios(initialState) {
         },
         (error) => {
           const responseData = error?.response?.data;
-          let errorMessage = responseData || error.message;
+          let errorMessage = responseData?.message || responseData || error.message;
 
-          if (typeof responseData === "object" && responseData !== null) {
-            const msg = responseData.en || responseData.message || responseData.error;
-            errorMessage =
-              typeof msg === "object" && msg !== null
-                ? msg.en || JSON.stringify(msg)
-                : msg || JSON.stringify(responseData);
+          // If the message is a localized object, we keep it as an object
+          // instead of flattening it to a string here.
+          if (typeof errorMessage === "string") {
+            // No action needed, it's already a string
+          } else if (typeof errorMessage === "object" && errorMessage !== null) {
+            // Keep it as an object if it has our expected keys
+            if (!errorMessage.en && !errorMessage.ar) {
+              errorMessage =
+                errorMessage.message ||
+                errorMessage.error ||
+                JSON.stringify(errorMessage);
+            }
           }
 
-          if (typeof errorMessage !== "string") {
-            errorMessage = JSON.stringify(errorMessage);
-          }
+          const finalError = { message: errorMessage };
 
-          if (config.throwOnError) throw new Error(errorMessage);
-          setError(errorMessage);
-          return Promise.reject(errorMessage);
+          if (config.throwOnError) throw new Error(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
+          setError(finalError);
+          return Promise.reject(finalError);
         }
       );
     },

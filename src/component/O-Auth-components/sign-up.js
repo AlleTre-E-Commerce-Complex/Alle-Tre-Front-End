@@ -33,13 +33,10 @@ const SignUp = ({ currentPAth, isAuthModel, onToggleView }) => {
         );
       })
       .catch((err) => {
-        let errorMsg = "";
-
-        if (typeof err.message === "object") {
-          errorMsg = lang === "en" ? err.message.en : err.message.ar;
-        } else {
-          errorMsg = err.message;
-        }
+        const errorMsg =
+          lang === "en"
+            ? err?.en || err?.message?.en || err?.message || err || "An error occurred"
+            : err?.ar || err?.message?.ar || err?.message || err || "حدث خطأ ما";
 
         toast.error(errorMsg);
       });
