@@ -107,14 +107,14 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
   };
 
   const logInSchema = Yup.object({
-    email: Yup.string().required("Required field"),
+    email: Yup.string().required(selectedContent[localizationKeys.required]),
     password: Yup.string()
       .min(8)
       .max(20)
-      .required("Required field")
+      .required(selectedContent[localizationKeys.required])
       .trim()
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character",
       ),
   });
@@ -137,7 +137,7 @@ const LogIn = ({ currentPAth, isAuthModel, onToggleView }) => {
   };
 
   const forgetPasswordSchema = Yup.object({
-    email: Yup.string().min(3).required("Required field"),
+    email: Yup.string().min(3).required(selectedContent[localizationKeys.required]),
   });
 
   return (

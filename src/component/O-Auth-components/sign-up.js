@@ -43,8 +43,8 @@ const SignUp = ({ currentPAth, isAuthModel, onToggleView }) => {
   };
 
   const signUpSchema = Yup.object({
-    userName: Yup.string().min(3).max(20).required("Required field"),
-    email: Yup.string().min(3).required("Required field"),
+    userName: Yup.string().min(3).max(20).required(selectedContent[localizationKeys.required]),
+    email: Yup.string().min(3).required(selectedContent[localizationKeys.required]),
     phone: Yup.string()
       .required(selectedContent[localizationKeys.required])
       .matches(
@@ -55,9 +55,9 @@ const SignUp = ({ currentPAth, isAuthModel, onToggleView }) => {
       .min(8)
       .max(20)
       .trim()
-      .required("Required field")
+      .required(selectedContent[localizationKeys.required])
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
         "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character",
       ),
   });

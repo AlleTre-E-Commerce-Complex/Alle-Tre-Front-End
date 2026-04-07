@@ -94,8 +94,7 @@ const EditPasswordModel = ({ onReload }) => {
           <button 
             type="button"
             onClick={(e) => { e.preventDefault(); setOpen(false); }}
-            className="text-gray-400 hover:text-red-500 transition-colors bg-gray-50 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-full"
-          >
+           className="text-gray-400 hover:text-gray-600 dark:hover:text-primary-veryLight transition-colors bg-gray-50 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-xl">
             <MdClose size={20} />
           </button>
         </div>
@@ -150,7 +149,7 @@ const EditPasswordModel = ({ onReload }) => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-[#34415C] dark:bg-primary hover:bg-[#2a3449] dark:hover:bg-primary-dark text-white text-base font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center"
+                    className="w-full bg-primary dark:bg-yellow hover:bg-primary-dark text-white dark:text-primary dark:hover:bg-yellow-dark text-base font-medium py-3.5 rounded-xl flex justify-center items-center"
                   >
                     {isLoading ? (
                       <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

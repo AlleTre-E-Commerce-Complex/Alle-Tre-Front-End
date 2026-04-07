@@ -709,17 +709,18 @@ const ar = {
     "تأكد من اختيار ثلاث صور على الأقل أو أكثر",
   [localizationKeys.oops]:
     "عفوًا ، آسف لحدوث خطأ ما ، يرجى التأكد من صحة كل شيء والمحاولة مرة أخرى",
+  [localizationKeys.invalidPhoneNumber]: "رقم الجوال غير صحيح",
   // sucsess
   [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
     "تمت إزالة المزاد من قائمة المراقبة بنجاح",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
     "تمت الإضافة إلى قائمة المراقبة الخاصة بك بنجاح",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
-    "تم تعديل كلمة المرور بنجاح",
+    "تم تحديث كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]: "تم جعله افتراضيًا بنجاح",
   [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]:
-    "تم تعديل رقم الهاتف بنجاح",
+    "تم تحديث رقم الهاتف بنجاح",
   [localizationKeys.imageUpdatedSuccessfully]: "تم تحديث الصورة بنجاح",
   [localizationKeys.nameHasBeenEditSuccessfully]: "تم تحرير الاسم بنجاح",
   [localizationKeys.yourAuctionSuccessfullySavedAsDraft]:

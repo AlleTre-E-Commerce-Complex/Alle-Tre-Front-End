@@ -706,18 +706,19 @@ const en = {
     "Make sure that you choose at least three or more photos",
   [localizationKeys.oops]:
     "oops, sorry something with wrong please make sure everything is correct and try again",
+  [localizationKeys.invalidPhoneNumber]: "Invalid phone number",
   // success
   [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
     "Auction removed from Watchlist successfully",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
-    "Added to your Watchlist successfull",
+    "Added to your Watchlist successfully",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
-    "he Password Has Been Edit Successfully",
+    "Password updated successfully",
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
   [localizationKeys.hasBeenMakeDefaultSuccessfully]:
     "has been Make Default successfully",
   [localizationKeys.thePhoneNumberHasBeenEditSuccessfully]:
-    "The phone number has been edited successfully",
+    "Phone number updated successfully",
   [localizationKeys.imageUpdatedSuccessfully]: "Image updated successfully",
   [localizationKeys.nameHasBeenEditSuccessfully]:
     "Name has been edit successfully",

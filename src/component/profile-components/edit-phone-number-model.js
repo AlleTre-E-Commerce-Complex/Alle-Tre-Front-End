@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Modal } from "semantic-ui-react";
 import { useLanguage } from "../../context/language-context";
 import { Formik } from "formik";
+import * as Yup from "yup";
 import useAxios from "../../hooks/use-axios";
 import api from "../../api";
 import { authAxios } from "../../config/axios-config";
@@ -13,7 +14,7 @@ import "react-phone-number-input/style.css";
 import { PiWarningCircle } from "react-icons/pi";
 import { MdClose } from "react-icons/md";
 
-const EditPhoneNumberModel = ({ onReload,oldPhoneNumber,isOpen,setShowMobileNumber }) => {
+const EditPhoneNumberModel = ({ onReload, oldPhoneNumber, isOpen, setShowMobileNumber }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
 
@@ -24,6 +25,13 @@ const EditPhoneNumberModel = ({ onReload,oldPhoneNumber,isOpen,setShowMobileNumb
   const [initialPhoneNumber, setInitialPhoneNumber] = useState(
     oldPhoneNumber || ""
   );
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    if (setShowMobileNumber) {
+      setShowMobileNumber(false);
+    }
+  };
 
   const handleSave = (values) => {
     const formData = new FormData();
@@ -38,7 +46,7 @@ const EditPhoneNumberModel = ({ onReload,oldPhoneNumber,isOpen,setShowMobileNumb
             ]
           );
           localStorage.setItem('userPhone', values.phoneNumber)
-          setOpen(false);
+          handleCloseModal();
           onReload();
         })
         .catch((err) => {
@@ -51,84 +59,80 @@ const EditPhoneNumberModel = ({ onReload,oldPhoneNumber,isOpen,setShowMobileNumb
     );
   };
   return (
-    <Modal
-      className="sm:w-[420px] w-[95%] h-auto bg-transparent scale-in shadow-none"
-      onClose={() => {
-        setOpen(false);
-        if(setShowMobileNumber){
-          setShowMobileNumber(false)
-        }
-      }}
-      onOpen={() => setOpen(true)}
-      open={open || isOpen}
-      trigger={
-        <button className="bg-primary dark:bg-[#2A3A54] text-white dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:bg-primary-dark dark:hover:bg-primary-light px-4 py-1.5 md:px-6 md:py-2 md:min-w-[120px] text-sm md:text-base font-medium rounded-lg transition-all">
-          {oldPhoneNumber
-            ? selectedContent[localizationKeys.edit]
-            : selectedContent[localizationKeys.add]}
-        </button>
-      }
-    >
-      <div className="w-full h-auto border border-gray-100 dark:border-gray-800/60 rounded-3xl bg-white dark:bg-primary-dark shadow-xl overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-50 dark:border-gray-800/50">
-          <h1 className="text-[#34415C] dark:text-white text-lg font-bold">
-            {selectedContent[localizationKeys.editPhoneNumber]}
-          </h1>
-          <button 
-            type="button"
-            onClick={(e) => { 
-              e.preventDefault(); 
-              setOpen(false);
-              if(setShowMobileNumber) setShowMobileNumber(false);
-            }}
-            className="text-gray-400 hover:text-red-500 transition-colors bg-gray-50 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-full"
-          >
-            <MdClose size={20} />
-          </button>
-        </div>
-        <div className="p-6">
-          <Formik
-            initialValues={{
-              phoneNumber: initialPhoneNumber || "",
-            }}
-            onSubmit={handleSave}
-            enableReinitialize
-          >
-            {({
-              values,
-              setFieldValue,
-              errors,
-              touched,
-              handleSubmit,
-              handleBlur,
-            }) => {
-              return (
-                <Form onSubmit={handleSubmit}>
-                  <div className="w-full">
-                    <div className="mx-auto">
-                      <div
-                        className="float-container"
-                        lang={lang}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          position: "relative"
-                        }}
-                      >
-                        <label
-                          htmlFor="phone"
-                          className="label_Input_Form phone-label dark:text-gray-400 dark:bg-primary-dark"
-                          style={{
-                            [isArabic ? "right" : "left"]: 58,
-                            textAlign: isArabic ? "right" : "left",
-                            zIndex: 10
-                          }}
-                        >
-                          {selectedContent[localizationKeys.phone]}
-                        </label>
+    <>
+      <button 
+        type="button"
+        onClick={() => setOpen(true)}
+        className="bg-primary dark:bg-primary text-white dark:text-white border border-transparent dark:border-white/5 hover:bg-primary-dark dark:hover:bg-primary-light px-4 py-1.5 md:px-6 md:py-2 md:min-w-[120px] text-sm md:text-base font-semibold rounded-xl transition-all shadow-sm active:scale-[0.98]"
+      >
+        {oldPhoneNumber
+          ? selectedContent[localizationKeys.edit]
+          : selectedContent[localizationKeys.add]}
+      </button>
 
-                        {/* Phone Input Field */}
+      <Modal
+        className="sm:w-[420px] w-[95%] h-auto bg-transparent scale-in shadow-none"
+        onClose={handleCloseModal}
+        open={Boolean(open || isOpen)}
+      >
+        <div className="w-full h-auto border border-gray-100 dark:border-white/10 rounded-xl bg-white dark:bg-[#1a2332] shadow-2xl overflow-hidden">
+          {/* Header */}
+          <div className="flex items-center justify-between px-8 py-6 border-b border-gray-50 dark:border-white/5">
+            <h1 className="text-primary dark:text-white text-xl font-bold tracking-tight">
+              {selectedContent[localizationKeys.editPhoneNumber]}
+            </h1>
+            <button 
+              type="button"
+              onClick={(e) => { 
+                e.preventDefault(); 
+                e.stopPropagation();
+                handleCloseModal();
+              }}
+               className="text-gray-400 hover:text-gray-600 dark:hover:text-primary-veryLight transition-colors bg-gray-50 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-xl"
+            >
+              <MdClose size={22} />
+            </button>
+          </div>
+          
+          <div className="p-8">
+            <Formik
+              initialValues={{
+                phoneNumber: initialPhoneNumber || "",
+              }}
+              onSubmit={handleSave}
+              validationSchema={Yup.object().shape({
+                phoneNumber: Yup.string()
+                  .required(selectedContent[localizationKeys.required])
+                  .matches(
+                    /^\+?[0-9]{8,15}$/,
+                    selectedContent[localizationKeys.invalidPhoneNumber]
+                  ),
+              })}
+              enableReinitialize
+            >
+              {({
+                values,
+                setFieldValue,
+                errors,
+                touched,
+                handleSubmit,
+                handleBlur,
+              }) => {
+                return (
+                  <Form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="w-full relative">
+                      <label
+                        htmlFor="phone"
+                        className="block text-sm font-bold text-gray-700 dark:text-gray-400 mb-3"
+                      >
+                        {selectedContent[localizationKeys.phone]}
+                      </label>
+
+                      <div className={`relative flex items-center w-full rounded-xl border-[1.5px] px-3 py-1 bg-gray-50/30 dark:bg-transparent transition-all duration-300 ${
+                        touched.phoneNumber && errors.phoneNumber 
+                        ? 'border-red/50' 
+                        : 'border-[#E5E7EB] dark:border-[#D0A243]/40 focus-within:border-primary dark:focus-within:border-[#D0A243] focus-within:ring-4 focus-within:ring-[#D0A243]/5'
+                      }`}>
                         <PhoneInput
                           id="phone"
                           name="phoneNumber"
@@ -139,74 +143,63 @@ const EditPhoneNumberModel = ({ onReload,oldPhoneNumber,isOpen,setShowMobileNumb
                             setFieldValue("phoneNumber", value)
                           }
                           onBlur={handleBlur}
-                          className={`input_Input_Form phone_Input_Form ${
-                            isArabic ? "rtl" : "ltr"
-                          } dark:bg-gray-800/50 dark:text-white dark:border-gray-700 w-full`}
-                          placeholder={
-                            selectedContent[localizationKeys.phoneNumber]
-                          }
+                          className={`w-full ${isArabic ? "rtl" : "ltr"} text-primary dark:text-white font-medium [&_input]:bg-transparent [&_input]:dark:text-white [&_input]:border-none [&_input]:outline-none [&_input]:h-full`}
+                          placeholder={selectedContent[localizationKeys.phoneNumber]}
                           style={{
                             border: "none",
                             boxShadow: "none",
                             outline: "none",
-                            flex: 1,
-                            paddingLeft: isArabic ? "10px" : "50px",
-                            paddingRight: isArabic ? "50px" : "10px",
-                            background: "transparent"
+                            padding: "10px 6px",
+                            fontSize: "16px"
                           }}
                         />
-
-                        {/* Error Message */}
-                        {touched.phoneNumber && errors.phoneNumber && (
-                          <div
-                            className="text-red-500 text-xs mt-1 absolute flex items-center bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-md"
-                            style={{
-                              position: "absolute",
-                              top: "100%",
-                              [isArabic ? "right" : "left"]: 8,
-                            }}
-                          >
-                            <PiWarningCircle className="mr-1" />
-                            {errors.phoneNumber}
-                          </div>
-                        )}
                       </div>
-                    </div>
-                  </div>
 
-                  <div className="flex justify-center gap-x-4 mt-8">
-                    <button
-                      type="button"
-                      className="w-full bg-white dark:bg-transparent border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-base font-medium py-3.5 rounded-xl transition-all"
-                      onClick={() => {
-                        setOpen(false);
-                        if(setShowMobileNumber){
-                          setShowMobileNumber(false)
-                        }
-                      }}
-                    >
-                      {selectedContent[localizationKeys.cancel]}
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="w-full bg-[#34415C] dark:bg-primary hover:bg-[#2a3449] dark:hover:bg-primary-dark text-white text-base font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center"
-                    >
-                      {isLoading ? (
-                        <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      ) : (
-                        selectedContent[localizationKeys.save]
+                      {/* Error Message */}
+                      {touched.phoneNumber && errors.phoneNumber && (
+                        <div className="flex items-center gap-1.5 mt-2 text-red-500 animate-fade-in">
+                          <PiWarningCircle size={16} />
+                          <span className="text-xs font-semibold">{errors.phoneNumber}</span>
+                        </div>
                       )}
-                    </button>
-                  </div>
-                </Form>
-              );
-            }}
-          </Formik>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        className="flex-1 bg-transparent border-[1.5px] border-[#34415C]/20 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 font-bold py-4 rounded-xl transition-all active:scale-[0.98]"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleCloseModal();
+                        }}
+                      >
+                        {selectedContent[localizationKeys.cancel]}
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="flex-1 bg-primary dark:bg-yellow hover:bg-primary-dark text-white dark:text-primary dark:hover:bg-yellow-dark font-bold py-4 rounded-xl transition-all shadow-lg active:scale-[0.98] flex justify-center items-center gap-2"
+                      >
+                        {isLoading ? (
+                          <div className="w-5 h-5 border-2 border-[#34415C]/30 border-t-[#34415C] rounded-xl animate-spin"></div>
+                        ) : (
+                          selectedContent[localizationKeys.save]
+                        )}
+                      </button>
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
+          </div>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+    </>
   );
+
+
 };
+
 
 export default EditPhoneNumberModel;
