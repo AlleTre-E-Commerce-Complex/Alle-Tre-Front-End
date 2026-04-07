@@ -628,6 +628,7 @@ const localizationKeys = {
   makeSureThatYouChooseAtLeastThreeOrMorePhotos:
     "makeSureThatYouChooseAtLeastThreeOrMorePhotos",
   oops: "oops",
+  invalidPhoneNumber: "invalidPhoneNumber",
   mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter:
     "mustOneUppercaseOneLowercaseOneNumberAndOneSpecialCaseCharacter",
   notMatch: "notMatch",
