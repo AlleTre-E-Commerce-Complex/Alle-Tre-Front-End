@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-import { MdMail, MdPhotoCamera } from "react-icons/md";
+import { MdMail, MdPhotoCamera, MdArrowForward } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { RiUser3Fill } from "react-icons/ri";
 import { HiLockClosed } from "react-icons/hi";
@@ -8,6 +7,7 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { BsFillTelephoneFill, BsThreeDots } from "react-icons/bs";
 
 import { FaApple, FaGoogle } from "react-icons/fa";
+import { HiSparkles } from "react-icons/hi";
 import userProfileicon from "../../../../src/assets/icons/user-Profile-icon.png";
 
 import UploadeImgModel from "../../../component/profile-components/uploade-img-model";
@@ -60,7 +60,7 @@ const ProfileSettings = () => {
         );
       }),
     );
-  }, [runPofile, forceReload]);
+  }, [runPofile, forceReload, dispatch]);
 
   const { run: runLocationData, isLoading: isLoadingLocationData } = useAxios(
     [],
@@ -104,26 +104,39 @@ const ProfileSettings = () => {
           className={`${
             locationData?.length > 0
               ? "hidden"
-              : "rounded-lg drop-shadow-complete-profile shadow"
+              : "relative overflow-hidden rounded-2xl mb-8 p-6 sm:p-8 bg-gradient-to-r from-primary/5 to-primary/10 dark:from-yellow/5 dark:to-yellow/10 shadow-sm animate-in fade-in slide-in-from-top-4 duration-500"
           }`}
         >
-          <h1 className="text-black text-base font-medium pt-12 ltr:pl-6 rtl:pr-6">
-            {
-              selectedContent[
-                localizationKeys.completeYourProfileToMakeYourActionsEasier
-              ]
-            }
-          </h1>
-          <p className="pt-4 text-gray-dark ltr:pl-6 rtl:pr-6  ltr:pr-14 rtl:pl-16">
-            "{selectedContent[localizationKeys.completeNowMasg]}"
-          </p>
-          <div className="flex justify-end ltr:pr-14 rtl:pl-14 pt-8 pb-8">
-            <button
-              onClick={() => handelCompleteProfle()}
-              className="bg-primary hover:bg-primary-dark text-white rounded-lg w-32 h-8 text-sm font-normal"
-            >
-              {selectedContent[localizationKeys.completeNow]}
-            </button>
+          {/* Background Decorative Elements */}
+          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary/5 dark:bg-yellow/5 rounded-full blur-2xl"></div>
+          <div className="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-primary/5 dark:bg-yellow/5 rounded-full blur-2xl"></div>
+
+          <div className="relative flex flex-col md:flex-row items-center gap-6">
+            {/* Icon Circle */}
+            <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-white dark:bg-primary-dark shadow-md border border-gray-100 dark:border-gray-800 flex items-center justify-center text-primary dark:text-yellow">
+              <HiSparkles size={32} />
+            </div>
+
+            {/* Text Content */}
+            <div className="flex-grow text-center md:text-start">
+              <h2 className="text-xl md:text-2xl font-bold text-[#34415C] dark:text-white capitalize">
+                {selectedContent[localizationKeys.completeYourProfileToMakeYourActionsEasier]}
+              </h2>
+              <p className="mt-2 text-gray-500 dark:text-gray-400 text-sm md:text-base max-w-2xl">
+                {selectedContent[localizationKeys.completeNowMasg]}
+              </p>
+            </div>
+
+            {/* Action Button */}
+            <div className="flex-shrink-0">
+              <button
+                onClick={() => handelCompleteProfle()}
+                className="group flex items-center gap-2 bg-primary dark:bg-yellow hover:bg-primary-dark dark:hover:bg-yellow-dark text-white dark:text-primary-dark font-bold px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-primary/20 dark:hover:shadow-yellow/20 active:scale-95"
+              >
+                <span>{selectedContent[localizationKeys.completeNow]}</span>
+                <MdArrowForward className="group-hover:translate-x-1 transition-transform rtl:rotate-180 rtl:group-hover:-translate-x-1" size={20} />
+              </button>
+            </div>
           </div>
         </div>
         <div className=" rounded-2xl md:px-2 px-0 pt-6">
@@ -390,7 +403,11 @@ const ProfileSettings = () => {
                       lang === "en" ? e?.country?.nameEn : e?.country.nameAr
                     }
                     City={lang === "en" ? e?.city?.nameEn : e?.city.nameAr}
+                    countryId={e?.country?.id}
+                    cityId={e?.city?.id}
                     phone={e?.phone ? e.phone : "No phone number"}
+                    lat={e?.lat}
+                    lng={e?.lng}
                     isMain={e?.isMain}
                     onReload={onReload}
                   />
@@ -463,8 +480,12 @@ export const LocationDetailsCard = ({
   Address,
   Country,
   City,
+  countryId,
+  cityId,
   // PostalCode,
   phone,
+  lat,
+  lng,
   Id,
   isMain,
   onReload,
@@ -543,7 +564,7 @@ export const LocationDetailsCard = ({
                   className="fixed inset-0 z-40"
                   onClick={() => setOpen(false)}
                 />
-                <div className="absolute top-full ltr:right-0 rtl:left-0 mt-2 min-w-[160px] bg-white dark:bg-[#1A1F2C] rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
+                <div className="absolute top-8 ltr:right-0 rtl:left-0 min-w-[160px] bg-white dark:bg-[#1A1F2C] rounded-xl border border-gray-200 dark:border-gray-700 shadow-xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
                   <div className="flex flex-col">
                     {!isMain && (
                       <button
@@ -601,8 +622,11 @@ export const LocationDetailsCard = ({
             addressId: Id,
             addressLabel: AddressLable,
             address: Address,
-            countryId: Country,
-            cityId: City,
+            country: countryId,
+            city: cityId,
+            phone: phone === "No phone number" ? "" : phone,
+            lat: lat,
+            lng: lng,
           }}
         />
 

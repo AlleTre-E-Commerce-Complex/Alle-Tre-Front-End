@@ -474,10 +474,9 @@ const ar = {
   [localizationKeys.online]: "متصل",
   [localizationKeys.logout]: "تسجيل الخروج",
   [localizationKeys.profileSettings]: "إعدادات الملف الشخصي",
-  [localizationKeys.completeYourProfileToMakeYourActionsEasier]:
-    "أكمل ملفك الشخصي لتسهيل إجراءاتك",
+  [localizationKeys.completeYourProfileToMakeYourActionsEasier]: "أكمل ملفك الشخصي",
   [localizationKeys.completeNowMasg]:
-    "يوفر حسابك حاليًا إمكانية الوصول إلى التحديثات والعناصر المحفوظة وتفاصيل البيع والميزات الأخرى. للمزايدة والشراء والبيع باستخدام Alle-tre ، يرجى قضاء بعض الوقت لملء معلومات ملفك الشخصي.",
+    "يرجى إضافة تفاصيل عنوانك لبدء المزايدة وإدراج العناصر على Alletre.",
   [localizationKeys.completeNow]: "أكمل الآن",
   [localizationKeys.editPhoto]: "تحرير الصورة",
   [localizationKeys.uploadPhoto]: "تحميل الصورة",

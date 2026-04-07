@@ -483,11 +483,10 @@ const en = {
   [localizationKeys.online]: "Online",
   [localizationKeys.logout]: "Logout",
   [localizationKeys.profileSettings]: "Profile Settings",
-  [localizationKeys.completeYourProfileToMakeYourActionsEasier]:
-    "Complete your profile to make your actions easier",
+  [localizationKeys.completeYourProfileToMakeYourActionsEasier]: "Complete Your Profile",
   [localizationKeys.completeNowMasg]:
-    "Your account currently offers access to updates, saved items, sale  details, and other features. To bid, buy and sell with Alle-tre,   kindly take a moment to fill out your profile information.",
-  [localizationKeys.completeNow]: " Complete Now",
+    "Please add your address details to listing items on 3arbon.",
+  [localizationKeys.completeNow]: "Complete Now",
   [localizationKeys.editPhoto]: "Edit Photo",
   [localizationKeys.uploadPhoto]: "Upload Photo",
   [localizationKeys.dropYourPhotoHereToInstantlyUploadIt]:
