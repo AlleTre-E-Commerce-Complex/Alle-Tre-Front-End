@@ -137,11 +137,24 @@ const Footer = () => {
               <h1 className="text-yellow font-bold text-base">
                 {selectedContent[localizationKeys.contactUs]}
               </h1>
-              <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.eMail]}: info3arbon@gmail.com
+              <p className="font-normal text-base text-gray-med py-0.5">
+                {selectedContent[localizationKeys.eMail]}:{" "}
+                <a
+                  href="mailto:info@3arbon.com"
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  info@3arbon.com
+                </a>
               </p>
-              <p className="cursor-pointer font-normal text-base text-gray-med py-0.5">
-                {selectedContent[localizationKeys.phoneNumber]}: +971 0501400414
+              <p className="font-normal text-base text-gray-med py-0.5">
+                {selectedContent[localizationKeys.phoneNumber]}:{" "}
+                <a
+                  href="tel:+971501400414"
+                  dir="ltr"
+                  className="hover:text-white transition-colors cursor-pointer inline-block"
+                >
+                  +971 501400414
+                </a>
               </p>
               <div className="mt-4">
                 <a
