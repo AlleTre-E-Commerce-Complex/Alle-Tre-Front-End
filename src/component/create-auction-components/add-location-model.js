@@ -37,6 +37,9 @@ const AddLocationModel = ({
   const history = useHistory();
   const [countriesId, setCountriesId] = useState();
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [mapCenter, setMapCenter] = useState({ lat: 25.185, lng: 55.2651 });
+  const [mapZoom, setMapZoom] = useState(10.5);
+
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
   const { AllCitiesOptions, loadingCitiesOptions } =
     useGetAllCities(countriesId);
@@ -44,6 +47,44 @@ const AddLocationModel = ({
   const isArabic = lang === "ar";
   const dispatch = useDispatch();
   const isMounted = useRef(true);
+
+  const updateMapFromLabel = (label, zoomLevel) => {
+    if (!window.google || !label) return;
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: label }, (results, status) => {
+      if (status === "OK" && results[0]) {
+        const { lat, lng } = results[0].geometry.location;
+        const newCenter = { lat: lat(), lng: lng() };
+        setMapCenter(newCenter);
+        setMapZoom(zoomLevel);
+        // We don't set selectedLocation here because we want the user to pin the exact spot
+      }
+    });
+  };
+
+  const handleCountryChange = (id) => {
+    setCountriesId(id);
+    const country = AllCountriesOptions.find((o) => o.value === id);
+    if (country) {
+      updateMapFromLabel(country.text, 5);
+    }
+  };
+
+  const handleCityChange = (id) => {
+    const city = AllCitiesOptions.find((o) => o.value === id);
+    if (city) {
+      updateMapFromLabel(city.text, 12);
+    }
+  };
+
+  useEffect(() => {
+    if (isEditing && editData?.lat && editData?.lng) {
+      const coords = { lat: Number(editData.lat), lng: Number(editData.lng) };
+      setMapCenter(coords);
+      setSelectedLocation(coords);
+      setMapZoom(14);
+    }
+  }, [isEditing, editData]);
 
   const AddLocationSchema = Yup.object({
     countryId: Yup.string().required(
@@ -90,6 +131,17 @@ const AddLocationModel = ({
       isMounted.current = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
 
   const initialValues = isEditing
     ? {
@@ -172,7 +224,7 @@ const AddLocationModel = ({
 
   return (
     <Modal
-      className="sm:w-[471px] w-full h-auto bg-transparent scale-in"
+      className="sm:w-[500px] w-full h-auto bg-transparent scale-in"
       onClose={() => {
         setOpen(false);
         if (setIsListing) {
@@ -181,7 +233,7 @@ const AddLocationModel = ({
       }}
       open={open}
     >
-      <div className="sm:w-[471px] w-full h-auto border-2 border-primary rounded-2xl bg-background p-6">
+      <div className="sm:w-[500px] w-full h-auto border-2 border-primary rounded-2xl bg-background p-6">
         <div className="flex justify-between items-center ltr:text-left rtl:text-right">
           <h1 className="text-base dark:text-white font-bold">
             {isEditing
@@ -198,7 +250,7 @@ const AddLocationModel = ({
             }}
             className={`absolute top-4 ${
               isArabic ? "left-4" : "right-4"
-            } w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-primary`}
+            } text-gray-400 hover:text-gray-600 dark:hover:text-primary-veryLight transition-colors bg-gray-50 dark:bg-gray-800 hover:bg-red-50 dark:hover:bg-red-900/20 px-4  py-2 rounded-xl`}
           >
             <span className="text-xl">&times;</span>
           </button>
@@ -234,30 +286,33 @@ const AddLocationModel = ({
             {({ values, setFieldValue, errors, touched, handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
                 {/* Form fields go here */}
-                <div className="w-full py-6">
-                  <FormikMultiDropdown
-                    name="countryId"
-                    label={selectedContent[localizationKeys.country]}
-                    placeholder={
-                      selectedContent[localizationKeys.selectCountry]
-                    }
-                    options={AllCountriesOptions}
-                    loading={loadingAllCountries}
-                    onChange={(e) => setCountriesId(e)}
-                  />
-                </div>
-                <div className="w-full py-6">
-                  <FormikMultiDropdown
-                    name="cityId"
-                    label={selectedContent[localizationKeys.city]}
-                    placeholder={selectedContent[localizationKeys.city]}
-                    options={AllCitiesOptions}
-                    loading={loadingCitiesOptions}
-                  />
+                <div className="flex gap-4 w-full py-4">
+                  <div className="w-full">
+                    <FormikMultiDropdown
+                      name="countryId"
+                      label={selectedContent[localizationKeys.country]}
+                      placeholder={
+                        selectedContent[localizationKeys.selectCountry]
+                      }
+                      options={AllCountriesOptions}
+                      loading={loadingAllCountries}
+                      onChange={handleCountryChange}
+                    />
+                  </div>
+                  <div className="w-full">
+                    <FormikMultiDropdown
+                      name="cityId"
+                      label={selectedContent[localizationKeys.city]}
+                      placeholder={selectedContent[localizationKeys.city]}
+                      options={AllCitiesOptions}
+                      loading={loadingCitiesOptions}
+                      onChange={handleCityChange}
+                    />
+                  </div>
                 </div>
 
                 {/* Other fields */}
-                <div className="w-full py-6">
+                <div className="w-full pt-4 pb-8">
                   <FormikInput
                     name="address"
                     type="text"
@@ -269,46 +324,38 @@ const AddLocationModel = ({
                 </div>
 
                 {/* Phone input */}
-                <div className="float-container" lang={lang}>
-                  <label
-                    htmlFor="phone"
-                    className="label_Input_Form phone-label"
-                    style={{
-                      [isArabic ? "right" : "left"]: 18,
-                      textAlign: isArabic ? "right" : "left",
-                    }}
-                  >
-                    {selectedContent[localizationKeys.phone]}
-                  </label>
-                  <PhoneInput
-                    id="phone"
-                    name="phone"
-                    international
-                    defaultCountry="AE"
-                    value={values.phone || ""}
-                    onChange={(value) => setFieldValue("phone", value)}
-                    className={`input_Input_Form phone_Input_Form ${
-                      isArabic ? "rtl" : "ltr"
-                    }`}
-                    placeholder={selectedContent[localizationKeys.phoneNumber]}
-                  />
-                  <div
-                    className={`${
-                      touched.phone && errors.phone ? "visible" : "invisible"
-                    } text-red-700 text-md mt-1 absolute flex items-center`}
-                    style={{
-                      position: "absolute",
-                      top: "100%",
-                      [isArabic ? "right" : "left"]: 8,
-                    }}
-                  >
-                    <PiWarningCircle className="mr-2" />
-                    {errors.phone}
+                <div className="w-full py-4 text-left rtl:text-right">
+                  <div className="flex justify-between items-center w-full mb-2">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {selectedContent[localizationKeys.phone]}
+                    </label>
+                  </div>
+                  <div className="relative">
+                    <PhoneInput
+                      id="phone"
+                      name="phone"
+                      international
+                      defaultCountry="AE"
+                      value={values.phone || ""}
+                      onChange={(value) => setFieldValue("phone", value)}
+                      className={`input_Input_Form phone_Input_Form ${
+                        isArabic ? "rtl" : "ltr"
+                      }`}
+                      placeholder={selectedContent[localizationKeys.phoneNumber]}
+                    />
+                    <div
+                      className={`${
+                        touched.phone && errors.phone ? "visible" : "invisible"
+                      } text-red-700 text-sm mt-1 flex items-center`}
+                    >
+                      <PiWarningCircle className="mr-2" />
+                      {errors.phone}
+                    </div>
                   </div>
                 </div>
 
                 {/* Address label */}
-                <div className="w-full py-11">
+                <div className="w-full py-4">
                   <FormikInput
                     name="addressLabel"
                     type="text"
@@ -318,14 +365,17 @@ const AddLocationModel = ({
                 </div>
 
                 {/* Google Map */}
-                <div className="w-full py-6">
+                <div className="w-full py-4">
                   {isLoaded ? (
                     <GoogleMap
                       mapContainerStyle={{ width: "100%", height: "200px" }}
-                      zoom={10.5}
-                      center={selectedLocation || { lat: 25.185, lng: 55.2651 }}
+                      mapContainerClassName="rounded-xl overflow-hidden"
+                      zoom={mapZoom}
+                      center={selectedLocation || mapCenter}
                       options={{
                         streetViewControl: false,
+                        mapTypeControl: false,
+                        fullscreenControl: false,
                       }}
                       onClick={(e) => {
                         const lat = e.latLng.lat();

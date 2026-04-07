@@ -63,6 +63,7 @@
   border-radius: 0.5rem; /* rounded-lg */
   direction: ltr; /* Default direction */
   transition: all 150ms ease-in-out; /* transition-colors */
+  position: relative;
 }
 
 .phone_Input_Form:focus-within {
@@ -77,7 +78,7 @@
 }
 
 .dark .phone_Input_Form {
-  background-color: #1A1F2C; /* dark:bg-primary-dark */
+  background-color: var(--color-primary-dark);
   border-color: rgba(212, 175, 55, 0.4); /* border-[#d4af37]/40 */
   color: #ffffff; /* dark:text-white */
 }
@@ -88,8 +89,25 @@
 }
 
 .dark .phone_Input_Form input {
-  background-color: transparent;
+  background-color: transparent !important;
+  background: transparent !important;
   color: #ffffff; /* dark:text-white */
+}
+
+/* Prevent browser autofill from changing the background color */
+.phone_Input_Form input:-webkit-autofill,
+.phone_Input_Form input:-webkit-autofill:hover, 
+.phone_Input_Form input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #374151;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.dark .phone_Input_Form input:-webkit-autofill,
+.dark .phone_Input_Form input:-webkit-autofill:hover, 
+.dark .phone_Input_Form input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0px 1000px var(--color-primary-dark) inset;
 }
 /* .phone_Input_Form .PhoneInputInput {
   padding-left: 30px;
@@ -111,6 +129,11 @@
   text-align: inherit; 
   direction: inherit; 
 }
+
+.phone_Input_Form:lang(ar) input {
+  padding-left: 10px;
+  padding-right: 44px;
+}
 /* .phone_Input_Form:lang(ar) input {
   padding-left: 14px; 
   padding-right: 44px; 
@@ -123,15 +146,41 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: 10px; /* Default for LTR */
-  right: auto;
+  left: 10px; /* Adjusted spacing */
+  display: flex;
+  align-items: center;
 }
 
 /* Adjust for Arabic PhoneInputCountry */
 .phone_Input_Form:lang(ar) .PhoneInputCountry {
-  left: auto; /* Disable left for Arabic */
-  right: 8px; /* Move to the right */
-  margin-right: -4px; 
+  left: auto;
+  right: 12px;
+  margin: 0;
+}
+
+.PhoneInputCountrySelect {
+  cursor: pointer;
+  background-color: white;
+  color: #374151;
+  font-size: 14px;
+  padding: 4px;
+}
+
+.dark .PhoneInputCountrySelect {
+  background-color: var(--color-primary-dark);
+  color: #ffffff;
+}
+
+.PhoneInputCountrySelect option {
+  background-color: white;
+  color: #374151;
+  font-size: 14px;
+  padding: 2px;
+}
+
+.dark .PhoneInputCountrySelect option {
+  background-color: var(--color-primary-dark);
+  color: #ffffff;
 }
 
 /* Style native calendar / time picker icons */

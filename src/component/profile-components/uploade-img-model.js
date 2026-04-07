@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Modal } from "semantic-ui-react";
 import Dropzone from "react-dropzone";
 import AvatarEditor from "react-avatar-editor";
@@ -9,7 +9,7 @@ import api from "../../api";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { MdCloudUpload, MdClose, MdPhotoCamera } from "react-icons/md";
+import { MdCloudUpload, MdClose, MdPhotoCamera, MdZoomIn } from "react-icons/md";
 
 const UploadeImgModel = ({
   onReload,
@@ -22,39 +22,61 @@ const UploadeImgModel = ({
   const selectedContent = content[lang];
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [editor, setEditor] = useState(null);
+  const [scale, setScale] = useState(1.2);
   const [dropzoneActive, setDropzoneActive] = useState(true);  
   
+  useEffect(() => {
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setImageUrl(null);
+    }
+  }, [file]);
+
   const handleDrop = (acceptedFiles) => {
     setFile(acceptedFiles[0]);
     setDropzoneActive(false);
+    setScale(1.2); // Reset scale for new photo
   };
 
   const { run, isLoading } = useAxios([]);
   const handleSave = () => {
     if (editor && file) {
-      const formData = new FormData();
-      formData.append("image", file);
-      run(
-        authAxios
-          .put(api.app.profile.editPersonalInfo, formData)
-          .then((res) => {
-            toast.success(
-              selectedContent[localizationKeys.imageUpdatedSuccessfully] || "Image updated successfully"
-            );
-            setDropzoneActive(true);
-            setOpen(false);
-            if(setImgModelOpen) setImgModelOpen(false);
-            setFile(null);
-            onReload();
-          })
-          .catch((err) => {
-            toast.error(
-              err?.response?.data?.message?.[lang] ||
-                selectedContent[localizationKeys.oops] || "Oops! Something went wrong."
-            );
-          })
-      );
+      // Get the cropped image as a canvas
+      const canvas = editor.getImageScaledToCanvas();
+      
+      // Convert canvas to Blob for uploading
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        
+        const formData = new FormData();
+        formData.append("image", blob, file.name);
+        
+        run(
+          authAxios
+            .put(api.app.profile.editPersonalInfo, formData)
+            .then((res) => {
+              toast.success(
+                selectedContent[localizationKeys.imageUpdatedSuccessfully] || "Image updated successfully"
+              );
+              setDropzoneActive(true);
+              setOpen(false);
+              if(setImgModelOpen) setImgModelOpen(false);
+              setFile(null);
+              onReload();
+            })
+            .catch((err) => {
+              toast.error(
+                err?.response?.data?.message?.[lang] ||
+                  selectedContent[localizationKeys.oops] || "Oops! Something went wrong."
+              );
+            })
+        );
+      }, file.type || "image/jpeg");
     }
   };
 
@@ -105,22 +127,23 @@ const UploadeImgModel = ({
             {({ getRootProps, getInputProps, open }) => (
               <div className="flex flex-col items-center">
                 <div
-                  className={`relative cursor-pointer w-full h-[240px] rounded-2xl border-2 border-dashed ${file ? 'border-transparent bg-gray-50 dark:bg-gray-800/50' : 'border-gray-300 dark:border-gray-600 hover:border-[#d6a536] dark:hover:border-[#d6a536] hover:bg-gray-50 dark:hover:bg-gray-800/50'} flex flex-col items-center justify-center transition-all overflow-hidden mx-auto`}
+                  className={`relative cursor-pointer w-full h-[280px] rounded-2xl border-2 border-dashed ${file ? 'border-transparent bg-gray-50 dark:bg-gray-900/50' : 'border-gray-300 dark:border-gray-600 hover:border-[#d6a536] dark:hover:border-[#d6a536] hover:bg-gray-50 dark:hover:bg-gray-800/50'} flex flex-col items-center justify-center transition-all overflow-hidden mx-auto`}
                   {...getRootProps()}
                 >
                   <input {...getInputProps()} />
-                  {file ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center pt-8">
+                  {file && imageUrl ? (
+                    <div className="w-full h-full flex flex-col items-center justify-center pt-4">
                       <AvatarEditor
                         className="rounded-full shadow-lg"
                         ref={setEditor}
-                        image={URL.createObjectURL(file)}
-                        width={160}
-                        height={160}
+                        image={imageUrl}
+                        width={180}
+                        height={180}
                         border={0}
                         borderRadius={100}
                         color={[0, 0, 0, 0.4]}
-                        scale={1}
+                        scale={scale}
+                        rotate={0}
                       />
                     </div>
                   ) : (
@@ -138,10 +161,33 @@ const UploadeImgModel = ({
                   )}
                 </div>
 
+                {file && (
+                   <div className="w-full mt-6 px-2">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-sm font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                        <MdZoomIn size={18} className="text-primary" />
+                        Zoom
+                      </span>
+                      <span className="text-xs font-medium text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-lg">
+                        {Math.round(scale * 100)}%
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min="1"
+                      max="3"
+                      step="0.01"
+                      value={scale}
+                      onChange={(e) => setScale(parseFloat(e.target.value))}
+                      className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary dark:accent-yellow hover:accent-primary-dark transition-all"
+                    />
+                  </div>
+                )}
+
                 <div className="w-full mt-6 space-y-3">
                   <button
                     disabled={isLoading}
-                    className="w-full bg-[#34415C] dark:bg-primary hover:bg-[#2a3449] dark:hover:bg-primary-dark text-white text-base font-medium py-3.5 rounded-xl transition-all shadow-sm flex justify-center items-center"
+                    className="w-full bg-primary dark:bg-yellow hover:bg-primary-dark text-white dark:text-primary dark:hover:bg-yellow-darktext-base font-bold py-4 rounded-xl transition-all shadow-lg active:scale-[0.98] flex justify-center items-center"
                     onClick={file ? (e) => { e.stopPropagation(); handleSave(); } : (e) => { e.stopPropagation(); open(); }}
                   >
                     {isLoading ? (
@@ -156,7 +202,7 @@ const UploadeImgModel = ({
                   {file && (
                     <button
                       disabled={isLoading}
-                      className="w-full bg-white dark:bg-transparent border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-base font-medium py-3.5 rounded-xl transition-all"
+                      className="w-full bg-transparent border-[1.5px] border-[#34415C]/20 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 font-bold py-4 rounded-xl transition-all active:scale-[0.98]"
                       onClick={(e) => {
                         e.stopPropagation();
                         setFile(null);
