@@ -27,6 +27,7 @@ const ProductCard = ({
   usageStatus,
   category,
   isSaved,
+  onReload,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -178,11 +179,13 @@ const ProductCard = ({
       if (isSavedState) {
         await authAxios.delete(api.app.WatchList.delete(id, true));
         setIsSavedState(false);
-        toast.success(selectedContent[localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]);
+        if (onReload) onReload();
+        toast.success(selectedContent[localizationKeys.thisProductRemovedFromFavouritesSuccessfully]);
       } else {
         await authAxios.post(api.app.WatchList.add, { productId: id });
         setIsSavedState(true);
-        toast.success(selectedContent[localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]);
+        if (onReload) onReload();
+        toast.success(selectedContent[localizationKeys.thisProductAddToFavouritesSuccessfully]);
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);

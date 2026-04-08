@@ -714,6 +714,8 @@ const ar = {
     "تمت إزالة المزاد من قائمة المراقبة بنجاح",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
     "تمت الإضافة إلى قائمة المراقبة الخاصة بك بنجاح",
+  [localizationKeys.thisProductAddToFavouritesSuccessfully]: "تمت الإضافة إلى المفضلة بنجاح",
+  [localizationKeys.thisProductRemovedFromFavouritesSuccessfully]: "تم الحذف من المفضلة بنجاح",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "تم تحديث كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",

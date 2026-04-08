@@ -710,7 +710,9 @@ const en = {
   [localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully]:
     "Auction removed from Watchlist successfully",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
-    "Added to your Watchlist successfully",
+    "Added to Watchlist successfully",
+  [localizationKeys.thisProductAddToFavouritesSuccessfully]: "Added to Favourites successfully",
+  [localizationKeys.thisProductRemovedFromFavouritesSuccessfully]: "Removed from Favourites successfully",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "Password updated successfully",
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",

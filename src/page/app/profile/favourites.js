@@ -108,9 +108,10 @@ const Favourites = () => {
                   usageStatus={e.product.usageStatus}
                   category={e.product.categoryId}
                   isSaved={true}
+                  onReload={onReload}
                   // These might need to be passed if available in the relation
-                  city={e.product.location?.city || ""}
-                  country={e.product.location?.country || ""}
+                  city={lang === "en" ? e.product.city?.nameEn : e.product.city?.nameAr}
+                  country={lang === "en" ? e.product.country?.nameEn : e.product.country?.nameAr}
                 />
               );
             }

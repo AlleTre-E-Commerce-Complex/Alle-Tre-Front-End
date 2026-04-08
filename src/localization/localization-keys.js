@@ -725,6 +725,8 @@ const localizationKeys = {
   deleteProduct: "deleteProduct",
   confirmDeleteProduct: "confirmDeleteProduct",
   areYouSureYouWantToDeleteThisProduct: "areYouSureYouWantToDeleteThisProduct",
+  thisProductAddToFavouritesSuccessfully: "thisProductAddToFavouritesSuccessfully",
+  thisProductRemovedFromFavouritesSuccessfully: "thisProductRemovedFromFavouritesSuccessfully",
 };
 
 export default localizationKeys;
