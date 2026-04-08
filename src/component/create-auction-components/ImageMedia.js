@@ -1,4 +1,5 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState } from "react";
+import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 import { FileUploader } from "react-drag-drop-files";
 import imageCompression from "browser-image-compression";
 import { MdOutlineImage } from "react-icons/md";
@@ -18,9 +19,8 @@ import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
 // Supported file types (images and videos)
 const fileTypes = ["JPG", "PNG", "JPEG", "HEIC", "MP4", "MOV"];
 
-const heic2any = require("heic2any");
 
-const MAX_VIDEO_SIZE_MB = 50;
+const heic2any = require("heic2any");
 
 const ImageMedia = ({
   auctionId,
@@ -32,6 +32,10 @@ const ImageMedia = ({
   isListing,
   auctionState,
 }) => {
+  const [isCompressing, setIsCompressing] = useState(false);
+  const [processingStatus, setProcessingStatus] = useState("");
+  const [processingProgress, setProcessingProgress] = useState(0);
+  const [ffmpeg, setFfmpeg] = useState(null);
   // Check if there's already a video in the images array
   const hasExistingVideo = images.some(
     (img) =>
@@ -244,17 +248,46 @@ const ImageMedia = ({
         }
 
         const videoFile = videoFiles[0];
-
-        // Check video size
-        if (videoFile.size > MAX_VIDEO_SIZE_MB * 1024 * 1024) {
+        
+        // Reject if video size exceeds 50MB
+        if (videoFile.size > 50 * 1024 * 1024) {
           toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded]);
           return;
         }
 
+        setProcessingStatus(selectedContent[localizationKeys.validatingVideoDuration]);
+        // Validate video duration (max 1 minute)
+        try {
+          const duration = await getVideoDuration(videoFile);
+          if (duration > 61) { // 61 to give a tiny buffer for exactly 60s videos
+            toast.error(selectedContent[localizationKeys.videoDurationCannotExceed1Minute]);
+            return;
+          }
+        } catch (durationErr) {
+          console.error("Duration check error:", durationErr);
+          // Only blocking if we are sure it's an error, otherwise proceed with compression
+        }
+
+        // Compress the video and extract thumbnail
+        const { compressedFile, thumbnailFile } = await compressVideo(videoFile);
+
+        // Watermark the extracted thumbnail if it exists
+        let posterUrl = URL.createObjectURL(compressedFile); // Fallback to video blob
+        if (thumbnailFile) {
+          try {
+            setProcessingStatus("Watermarking video cover...");
+            const watermarkedThumb = await addImageWatermark(thumbnailFile);
+            posterUrl = URL.createObjectURL(watermarkedThumb);
+          } catch (thumbError) {
+            console.error("Failed to watermark thumbnail:", thumbError);
+          }
+        }
+
+        setProcessingProgress(100);
         // Process the single video
         const processedVideo = {
-          file: videoFile,
-          imageLink: URL.createObjectURL(videoFile),
+          file: compressedFile,
+          imageLink: posterUrl,
           id: isEditMode ? `temp_${Date.now()}` : videoFile.name, // Use temp ID in edit mode
           isVideo: true,
         };
@@ -320,19 +353,53 @@ const ImageMedia = ({
           }
         }
       } else {
-        // Handle image uploads
-        const processedFiles = await Promise.all(
-          imageFiles.map(async (file) => {
-            const watermarkedFile = await addImageWatermark(file);
-            const compressedFile = await compressImage(watermarkedFile);
-            return {
-              file: compressedFile,
-              imageLink: URL.createObjectURL(compressedFile),
+        setIsCompressing(true);
+        setProcessingProgress(0);
+        const processedFiles = [];
+        
+        // Sequential processing for better stability and performance
+        for (let i = 0; i < imageFiles.length; i++) {
+          const file = imageFiles[i];
+          const progressStep = Math.round(((i) / imageFiles.length) * 100);
+          setProcessingProgress(progressStep);
+          setProcessingStatus(
+            selectedContent[localizationKeys.processingPhoto]
+              ?.replace("{current}", i + 1)
+              ?.replace("{total}", imageFiles.length)
+          );
+
+          try {
+            // STEP 1: Compress first - much faster to process smaller files
+            const compressedFile = await compressImage(file);
+            setProcessingStatus(
+              selectedContent[localizationKeys.watermarkingPhoto]
+                ?.replace("{current}", i + 1)
+                ?.replace("{total}", imageFiles.length)
+            );
+            // STEP 2: Watermark second - canvas operations are faster on compressed images
+            const watermarkedFile = await addImageWatermark(compressedFile);
+            
+            processedFiles.push({
+              file: watermarkedFile,
+              imageLink: URL.createObjectURL(watermarkedFile),
               id: file.name,
               isVideo: false,
-            };
-          })
-        );
+            });
+          } catch (err) {
+            console.error(`Error processing file ${file.name}:`, err);
+            // Fallback to original if processing fails
+            processedFiles.push({
+              file: file,
+              imageLink: URL.createObjectURL(file),
+              id: file.name,
+              isVideo: false,
+            });
+          }
+        }
+
+        setProcessingProgress(100);
+        setIsCompressing(false);
+        setProcessingStatus("");
 
         // Update state with images
         let newImages;
@@ -455,6 +522,100 @@ const ImageMedia = ({
     }
   };
 
+  const getVideoDuration = (file) => {
+    return new Promise((resolve, reject) => {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+      video.onloadedmetadata = () => {
+        window.URL.revokeObjectURL(video.src);
+        resolve(video.duration);
+      };
+      video.onerror = () => {
+        window.URL.revokeObjectURL(video.src);
+        reject("Failed to load video metadata");
+      };
+      video.src = URL.createObjectURL(file);
+    });
+  };
+
+  const loadFFmpeg = async () => {
+    if (ffmpeg) return ffmpeg;
+    const instance = createFFmpeg({
+      log: true,
+      corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+    });
+    
+    // Add progress listener
+    instance.setProgress(({ ratio }) => {
+      setProcessingProgress(Math.round(ratio * 100));
+    });
+
+    await instance.load();
+    setFfmpeg(instance);
+    return instance;
+  };
+
+  const compressVideo = async (file) => {
+    if (!window.crossOriginIsolated) {
+      toast.error("Cross-origin isolation is not enabled. Video compression is restricted by the browser.");
+      console.error("SharedArrayBuffer is not available. Ensure COOP/COEP headers are set.");
+      return file;
+    }
+
+    setIsCompressing(true);
+    setProcessingStatus(selectedContent[localizationKeys.compressingVideo]);
+    setProcessingProgress(0);
+    const toastId = toast.loading("Compressing video... This may take a moment.");
+    try {
+      const ffmpegInstance = await loadFFmpeg();
+      const { name } = file;
+      ffmpegInstance.FS("writeFile", name, await fetchFile(file));
+
+      // STEP 1: Compress the video
+      setProcessingStatus(selectedContent[localizationKeys.compressingVideo]);
+      // ultrafast preset for speed, crf 30 for quality/size balance, original dimensions preserved
+      await ffmpegInstance.run("-i", name, "-vcodec", "libx264", "-crf", "30", "-preset", "ultrafast", "output.mp4");
+
+      // STEP 2: Extract a thumbnail frame (at 0.5s)
+      setProcessingStatus("Extracting video cover...");
+      await ffmpegInstance.run("-i", "output.mp4", "-ss", "00:00:00.500", "-vframes", "1", "thumbnail.jpg");
+
+      // Read compressed video
+      const videoData = ffmpegInstance.FS("readFile", "output.mp4");
+      const compressedFile = new File([videoData.buffer], name, {
+        type: "video/mp4",
+      });
+
+      // Read thumbnail image
+      let thumbnailFile = null;
+      try {
+        const thumbData = ffmpegInstance.FS("readFile", "thumbnail.jpg");
+        thumbnailFile = new File([thumbData.buffer], "thumbnail.jpg", {
+          type: "image/jpeg",
+        });
+      } catch (thumbErr) {
+        console.error("Failed to extract thumbnail:", thumbErr);
+      }
+
+      // Cleanup
+      ffmpegInstance.FS("unlink", name);
+      ffmpegInstance.FS("unlink", "output.mp4");
+      try { ffmpegInstance.FS("unlink", "thumbnail.jpg"); } catch (e) {}
+
+      toast.success("Video processed successfully", { id: toastId });
+      return { compressedFile, thumbnailFile };
+    } catch (error) {
+      console.error("Video compression failed details:", error);
+      const errorMessage = error.message?.includes("SharedArrayBuffer") 
+        ? "Video compression failed: Security headers (COOP/COEP) are missing." 
+        : "Video compression failed, using original file";
+      toast.error(errorMessage, { id: toastId });
+      return { compressedFile: file, thumbnailFile: null };
+    } finally {
+      setIsCompressing(false);
+    }
+  };
+
   const compressImage = async (file) => {
     try {
       let processedFile = file;
@@ -468,7 +629,7 @@ const ImageMedia = ({
           const blob = await heic2any({
             blob: file,
             toType: "image/jpeg",
-            quality: 0.7, // Reduced from 0.8
+            quality: 0.7,
           });
           processedFile = new File(
             [blob],
@@ -484,31 +645,22 @@ const ImageMedia = ({
         }
       }
 
-      // Skip compression if already small enough
-      if (processedFile.size <= 500 * 1024) {
-        // Reduced from 800KB to 500KB
-        return processedFile;
-      }
-
       const options = {
-        maxSizeMB: 0.5, // Reduced from 0.8
-        maxWidthOrHeight: 1600, // Reduced from 1920
-        initialQuality: 0.6, // Reduced from 0.7
+        maxSizeMB: 0.3, // Target ~300KB
+        initialQuality: 0.5,
         useWebWorker: true,
         fileType: "image/jpeg",
         preserveExif: false,
-        alwaysKeepResolution: false, // Changed to false to allow downscaling
+        alwaysKeepResolution: true, // Keep original dimensions
         exifOrientation: true,
+        maxIteration: 5, // Limit iterations for speed
       };
 
       let compressedFile = await imageCompression(processedFile, options);
 
-      // If still too large, compress further
+      // Simple check to avoid redundant second pass if already close to target
       if (compressedFile.size > 500 * 1024) {
-        // Target 500KB max
-        options.maxSizeMB = 0.3;
-        options.initialQuality = 0.5;
-        options.maxWidthOrHeight = 1200;
+        options.initialQuality = 0.4;
         compressedFile = await imageCompression(processedFile, options);
       }
 
@@ -525,8 +677,36 @@ const ImageMedia = ({
   return (
     <>
 
-      <div className="image-upload-container">
-        <div className="flex flex-col gap-4">
+      <div className={`image-upload-container ${isCompressing ? 'opacity-60 pointer-events-none' : ''}`}>
+        <div className="flex flex-col gap-5">
+          {isCompressing && (
+            <div className="bg-white/50 dark:bg-[#1A1F2C]/50 backdrop-blur-sm border border-primary  rounded-2xl p-4 shadow-xl animate-in fade-in slide-in-from-top-4 duration-500">
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary dark:bg-yellow animate-pulse shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]" />
+                  <span className="text-gray-700 dark:text-gray-200 text-sm font-bold tracking-tight uppercase">
+                    {processingStatus}
+                  </span>
+                </div>
+                <span className="text-primary dark:text-yellow text-sm font-black tabular-nums">
+                  {processingProgress}%
+                </span>
+              </div>
+              
+              <div className="w-full h-2.5 bg-gray-200/50 dark:bg-gray-800/50 rounded-full overflow-hidden border border-gray-100 dark:border-gray-700/50">
+                <div 
+                  className="h-full bg-gradient-to-r from-primary to-primary-light dark:from-yellow dark:to-yellow-400 transition-all duration-500 ease-out relative shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]"
+                  style={{ width: `${processingProgress}%` }}
+                >
+                  <div className="absolute inset-0 bg-[length:20px_20px] bg-[linear-gradient(45deg,rgba(255,255,255,0.2)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.2)_50%,rgba(255,255,255,0.2)_75%,transparent_75%,transparent)] animate-[shimmer_1s_linear_infinite]" />
+                </div>
+              </div>
+              
+              <p className="mt-2 text-[10px] text-gray-400 dark:text-gray-500 font-medium uppercase tracking-[0.1em] text-center">
+                {selectedContent[localizationKeys.optimizationFinishedWarning]}
+              </p>
+            </div>
+          )}
           <div className="flex flex-wrap gap-y-4 gap-x-4">
             {[...images, ...Array(Math.max(3 - images.length, 1)).fill(null)]
               .slice(0, Math.min(12, Math.max(images.length + 1, 3)))
@@ -620,7 +800,7 @@ const ImageMedia = ({
                                 onError={(e) => {
                                   console.error(
                                     "Image failed to load:",
-                                    e.target.src
+                                     e.target.src
                                   );
                                   e.target.src = addImage;
                                 }}

@@ -828,6 +828,12 @@ const en = {
   [localizationKeys.premium]: "Premium",
   [localizationKeys.newArrival]: "New Arrival",
   [localizationKeys.sku]: "SKU",
+  [localizationKeys.videoDurationCannotExceed1Minute]: "Video duration cannot exceed 1 minute",
+  [localizationKeys.compressingVideo]: "Compressing video... This may take a moment.",
+  [localizationKeys.processingPhoto]: "Processing photo {current} of {total}...",
+  [localizationKeys.watermarkingPhoto]: "Watermarking photo {current} of {total}...",
+  [localizationKeys.validatingVideoDuration]: "Validating video duration...",
+  [localizationKeys.optimizationFinishedWarning]: "Please don't close this window until optimization is finished",
 };
 
 export default en;

@@ -824,6 +824,12 @@ const ar = {
   [localizationKeys.premium]: "مميز",
   [localizationKeys.newArrival]: "جديد",
   [localizationKeys.sku]: "رقم المنتج",
+  [localizationKeys.videoDurationCannotExceed1Minute]: "لا يمكن أن يتجاوز طول الفيديو دقيقة واحدة",
+  [localizationKeys.compressingVideo]: "جاري ضغط الفيديو... قد يستغرق ذلك لحظة.",
+  [localizationKeys.processingPhoto]: "جاري معالجة الصورة {current} من {total}...",
+  [localizationKeys.watermarkingPhoto]: "جاري إضافة العلامة المائية للصورة {current} من {total}...",
+  [localizationKeys.validatingVideoDuration]: "جاري التحقق من مدة الفيديو...",
+  [localizationKeys.optimizationFinishedWarning]: "يرجى عدم إغلاق هذه النافذة حتى تنتهي عملية التحسين",
 };
 
 export default ar;

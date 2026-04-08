@@ -748,6 +748,12 @@ const localizationKeys = {
   premium: "premium",
   newArrival: "newArrival",
   sku: "sku",
+  videoDurationCannotExceed1Minute: "videoDurationCannotExceed1Minute",
+  compressingVideo: "compressingVideo",
+  processingPhoto: "processingPhoto",
+  watermarkingPhoto: "watermarkingPhoto",
+  validatingVideoDuration: "validatingVideoDuration",
+  optimizationFinishedWarning: "optimizationFinishedWarning",
 };
 
 export default localizationKeys;
