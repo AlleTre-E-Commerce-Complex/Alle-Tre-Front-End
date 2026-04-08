@@ -1,11 +1,10 @@
 import React from "react";
-import { Link, useLocation, u } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Breadcrumb } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 import routes from "../../../routes";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import useFilter from "hooks/use-filter";
 import queryString from "query-string";
 import { DEFAULT_PAGE, getDefaultPerPage } from "constants/pagination";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";

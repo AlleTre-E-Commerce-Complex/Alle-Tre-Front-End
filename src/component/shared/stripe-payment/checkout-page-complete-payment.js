@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
 import { MyBidsBreadcrumb } from "../bread-crumb/Breadcrumb";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import useAxios from "../../../hooks/use-axios";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";

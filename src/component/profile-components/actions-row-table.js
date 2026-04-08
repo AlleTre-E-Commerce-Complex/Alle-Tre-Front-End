@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import React, {useState } from "react";
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";

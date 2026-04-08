@@ -9,7 +9,7 @@ import { authAxios } from "../../config/axios-config";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
 import ActionsRowTable from "./actions-row-table";
 
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { useLocation } from "react-router-dom/cjs/react-router-dom";
 import PaginationApp from "../shared/pagination/pagination-app";
 import { useLanguage } from "../../context/language-context";
@@ -18,14 +18,10 @@ import localizationKeys from "../../localization/localization-keys";
 import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 
 const ExpiredAuctions = () => {
-  const [lang] = useLanguage("");
-  const selectedContent = content[lang];
-  const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-
   const [expiredAuctionsData, setExpiredAuctionsData] = useState();
   const [totalPages, setTotalPages] = useState();
-
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
   const history = useHistory();
   const { search } = useLocation();
 
@@ -43,7 +39,7 @@ const ExpiredAuctions = () => {
           })
       );
     }
-  }, [run, forceReload, search]);
+  }, [run, search]);
 
   return (
     <div className=" ">
@@ -52,7 +48,6 @@ const ExpiredAuctions = () => {
         active={isLoading}
         inverted
       >
-        {/* <Loader active /> */}
         <LoadingTest3arbon />
       </Dimmer>
       <div>

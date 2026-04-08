@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { authAxios } from "../../config/axios-config";
 
 import ActionsRowTable from "./actions-row-table";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
 import PaginationApp from "../shared/pagination/pagination-app";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
@@ -18,8 +18,6 @@ import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 const CancelledAuctions = () => {
     const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const [cancelledAuctionData, setCancelledAuctionData] = useState();
 
   const [totalPages, setTotalPages] = useState();
@@ -83,7 +81,7 @@ const CancelledAuctions = () => {
           })
       );
     }
-  }, [run, forceReload, search]);
+  }, [run, search]);
   
 
 

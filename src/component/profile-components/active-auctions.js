@@ -22,9 +22,6 @@ import { Open } from "../../redux-store/auth-model-slice";
 const ActiveAuctions = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
-
   const [activeAuctionData, setActiveAuctionData] = useState();
   const [totalPages, setTotalPages] = useState();
 
@@ -50,7 +47,7 @@ const ActiveAuctions = () => {
             setTotalPages(res?.data?.pagination?.totalPages);
           })
       );
-  }, [run, forceReload, search]);
+  }, [run,search]);
 
   const mappedAuctionData = useMemo(
     () => activeAuctionData,

@@ -6,7 +6,7 @@ import useAxios from "../../hooks/use-axios";
 import { useHistory } from "react-router-dom";
 import { authAxios } from "../../config/axios-config";
 
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { DraftsItem } from "../../page/app/create-auction/create-auction";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Auction-Icon.svg";
 import { useLanguage } from "../../context/language-context";

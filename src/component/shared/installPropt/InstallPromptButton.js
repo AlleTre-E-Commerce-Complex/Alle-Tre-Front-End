@@ -15,7 +15,7 @@ const isInStandaloneMode = () =>
 const InstallPromptButton = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstall, setShowInstall] = useState(false);
-  const [isIOSDevice, setIsIOSDevice] = useState(false);
+  // const [isIOSDevice, setIsIOSDevice] = useState(false);
   const [showIOSModal, setShowIOSModal] = useState(false);
   const [isMobileScreen, setIsMobileScreen] = useState(window.innerWidth < 726);
 

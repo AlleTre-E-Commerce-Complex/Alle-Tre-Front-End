@@ -1,10 +1,9 @@
-import api from "api";
 import { authAxios } from "config/axios-config";
 import { useLanguage } from "context/language-context";
 import useAxios from "hooks/use-axios";
 import content from "localization/content";
 import localizationKeys from "localization/localization-keys";
-import React, { useState } from "react";
+import React from "react";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import routes from "routes";
@@ -21,7 +20,6 @@ const WalletPaymentBuyNow = ({
   const history = useHistory();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const [isWalletPaymentSuccess, setIsWalletPaymentSuccess] = useState(null);
   const { run, isLoading } = useAxios([]);
 
   const submitWalletPayment = () => {
@@ -33,7 +31,6 @@ const WalletPaymentBuyNow = ({
       authAxios
         .post(paymentAPI, body)
         .then((res) => {
-          setIsWalletPaymentSuccess(res?.data?.success);
           if (res?.data?.success) {
             toast.success("Payment successful", {
               position: "top-right", // Position of the toast
