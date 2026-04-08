@@ -446,7 +446,7 @@ const ar = {
     "لقد تم إلغاء هذا المزاد من قبل المسؤول.",
   [localizationKeys.auctionCancelled]: "لقد تم إلغاء هذا المزاد",
   // shiping details
-  [localizationKeys.locationDetails]: "تفاصيل الشحن",
+  [localizationKeys.locationDetails]: "تفاصيل الموقع",
   [localizationKeys.addAddress]: "إضافة عنوان",
   [localizationKeys.successUpdateLocation]: "تم تحديث الموقع بنجاح.",
   [localizationKeys.confirmDeleteAddress]:

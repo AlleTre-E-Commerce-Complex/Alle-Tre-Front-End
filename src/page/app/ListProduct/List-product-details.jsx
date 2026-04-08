@@ -26,7 +26,7 @@ import useGetSubGatogry from "../../../hooks/use-get-sub-category";
 
 import content from "../../../localization/content";
 import { useLanguage } from "../../../context/language-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 // import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
@@ -72,11 +72,31 @@ const ListProductDetails = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [product_Id] = useState(state?.productId || null);
 
+  const reduxValues = useSelector((state) => state.listingProductDetails.listingProductDetails);
+
   useEffect(() => {
     if (state?.isEditing) {
       setIsEditing(true);
     }
   }, [state]);
+
+  // Sync with Redux values if not editing and they exist
+  useEffect(() => {
+    if (!isEditing && reduxValues && Object.keys(reduxValues).length > 0) {
+      if (reduxValues.images && imgtest.length === 0) {
+        setimgtest(reduxValues.images);
+      }
+      if (reduxValues.category && !categoryId) {
+        setCategoryId(reduxValues.category);
+      }
+      if (reduxValues.subCategory && !subCategoryId) {
+        setSubCategoryId(reduxValues.subCategory);
+      }
+      if (reduxValues.countryId && !countriesId) {
+        setCountriesId(reduxValues.countryId);
+      }
+    }
+  }, [reduxValues, isEditing, imgtest.length, categoryId, subCategoryId, countriesId]);
 
   useEffect(() => {
     if (isEditing && listedProductVal) {
@@ -821,80 +841,83 @@ const ListProductDetails = () => {
       >
         <LoadingTest3arbon />
       </Dimmer>
-      <div className="mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
-        {/* <Loader active /> */}
-        <div className=" h-14 my-7 py-4 sm:block hidden">
-          <CreateAuctionBreadcrumb />
+      <div className="mt-32 sm:mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
+        <div className="max-w-[1366px] mx-auto mb-12">
+          {/* Breadcrumb - Clean top alignment */}
+          <div className="hidden sm:block mb-8">
+            <CreateAuctionBreadcrumb />
+          </div>
+          
+          {/* Stepper - Primary focus with better breathing room */}
+          {/* <div className="flex justify-center py-4 bg-gray-50/50 dark:bg-white/5 rounded-3xl backdrop-blur-sm border border-gray-100 dark:border-white/5 shadow-sm sm:shadow-none sm:border-none sm:bg-transparent">
+            <Stepper />
+          </div> */}
         </div>
-        {/* stepper */}
-        <div className="flex justify-center">
-          <Stepper />
-        </div>
-        <div className="w-full flex flex-col gap-6 mt-5">
+        <div className="w-full flex flex-col gap-6 ">
           <div>
             <Formik
               initialValues={{
-                itemName: listedProductVal?.title || "",
-                itemPrice: listedProductVal?.ProductListingPrice ?? "",
-                category: listedProductVal?.categoryId || "",
-                subCategory: listedProductVal?.subCategory?.id || "",
-                usageStatus: listedProductVal?.usageStatus || "",
-                operatingSystem: listedProductVal?.operatingSystem || "",
-                releaseYear: listedProductVal?.releaseYear || "",
-                regionOfManufacture: listedProductVal?.regionOfManufacture || "",
-                ramSize: listedProductVal?.ramSize || "",
-                processor: listedProductVal?.processor || "",
-                screenSize: listedProductVal?.screenSize || "",
-                model: listedProductVal?.model || "",
-                color: listedProductVal?.color || "",
-                brand: listedProductVal?.brand || "",
-                cameraType: listedProductVal?.cameraType || "",
-                material: listedProductVal?.material || "",
-                type: listedProductVal?.type || "",
-                memory: listedProductVal?.memory || "",
-                age: listedProductVal?.age || "",
-                totalArea: listedProductVal?.totalArea || "",
-                numberOfRooms: listedProductVal?.numberOfRooms || "",
-                numberOfFloors: listedProductVal?.numberOfFloors || "",
-                landType: listedProductVal?.landType || "",
-                carType: listedProductVal?.carType || "",
-                countryId: listedProductVal?.countryId || (AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة")?.value || ""),
-                cityId: listedProductVal?.cityId || "",
-                emirate: listedProductVal?.emirate || "",
-                totalClosingFee: listedProductVal?.totalClosingFee || "",
-                numberOfBathrooms: listedProductVal?.numberOfBathrooms || "",
-                developer: listedProductVal?.developer || "",
-                readyBy: listedProductVal?.readyBy || "",
-                annualCommunityFee: listedProductVal?.annualCommunityFee || "",
-                isFurnished: listedProductVal?.isFurnished || "",
-                propertyReferenceId: listedProductVal?.propertyReferenceId || "",
-                buyerTransferFee: listedProductVal?.buyerTransferFee || "",
-                sellerTransferFee: listedProductVal?.sellerTransferFee || "",
-                maintenanceFee: listedProductVal?.maintenanceFee || "",
-                occupancyStatus: listedProductVal?.occupancyStatus || "",
-                zonedFor: listedProductVal?.zonedFor || "",
-                amenities: safeParseArray(listedProductVal?.amenities),
-                residentialType: listedProductVal?.residentialType || "",
-                commercialType: listedProductVal?.commercialType || "",
-                itemDescription: listedProductVal?.description || "",
-                trim: listedProductVal?.trim || "",
-                regionalSpecs: listedProductVal?.regionalSpecs || "",
-                kilometers: listedProductVal?.kilometers || "",
-                insuredInUae: listedProductVal?.insuredInUae || "",
-                interiorColor: listedProductVal?.interiorColor || "",
-                warranty: listedProductVal?.warranty || "",
-                fuelType: listedProductVal?.fuelType || "petrol",
-                doors: listedProductVal?.doors || "4",
-                transmissionType: listedProductVal?.transmissionType || "automatic",
-                seatingCapacity: listedProductVal?.seatingCapacity || "5",
-                horsepower: listedProductVal?.horsepower || "100-199",
-                steeringSide: listedProductVal?.steeringSide || "left",
-                engineCapacity: listedProductVal?.engineCapacity || "unknown",
-                numberOfCylinders: listedProductVal?.numberOfCylinders || "4",
-                driverAssistance: safeParseArray(listedProductVal?.driverAssistance),
-                entertainment: safeParseArray(listedProductVal?.entertainment),
-                comfort: safeParseArray(listedProductVal?.comfort),
-                exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures),
+                itemName: listedProductVal?.title || reduxValues?.itemName || "",
+                itemPrice: listedProductVal?.ProductListingPrice ?? reduxValues?.itemPrice ?? "",
+                category: listedProductVal?.categoryId || reduxValues?.category || "",
+                subCategory: listedProductVal?.subCategory?.id || reduxValues?.subCategory || "",
+                usageStatus: listedProductVal?.usageStatus || reduxValues?.usageStatus || "",
+                operatingSystem: listedProductVal?.operatingSystem || reduxValues?.operatingSystem || "",
+                releaseYear: listedProductVal?.releaseYear || reduxValues?.releaseYear || "",
+                regionOfManufacture: listedProductVal?.regionOfManufacture || reduxValues?.regionOfManufacture || "",
+                ramSize: listedProductVal?.ramSize || reduxValues?.ramSize || "",
+                processor: listedProductVal?.processor || reduxValues?.processor || "",
+                screenSize: listedProductVal?.screenSize || reduxValues?.screenSize || "",
+                model: listedProductVal?.model || reduxValues?.model || "",
+                color: listedProductVal?.color || reduxValues?.color || "",
+                brand: listedProductVal?.brand || reduxValues?.brand || "",
+                cameraType: listedProductVal?.cameraType || reduxValues?.cameraType || "",
+                material: listedProductVal?.material || reduxValues?.material || "",
+                type: listedProductVal?.type || reduxValues?.type || "",
+                memory: listedProductVal?.memory || reduxValues?.memory || "",
+                age: listedProductVal?.age || reduxValues?.age || "",
+                totalArea: listedProductVal?.totalArea || reduxValues?.totalArea || "",
+                numberOfRooms: listedProductVal?.numberOfRooms || reduxValues?.numberOfRooms || "",
+                numberOfFloors: listedProductVal?.numberOfFloors || reduxValues?.numberOfFloors || "",
+                landType: listedProductVal?.landType || reduxValues?.landType || "",
+                carType: listedProductVal?.carType || reduxValues?.carType || "",
+                countryId: listedProductVal?.countryId || reduxValues?.countryId || (AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة")?.value || ""),
+                cityId: listedProductVal?.cityId || reduxValues?.cityId || "",
+                emirate: listedProductVal?.emirate || reduxValues?.emirate || "",
+                totalClosingFee: listedProductVal?.totalClosingFee || reduxValues?.totalClosingFee || "",
+                numberOfBathrooms: listedProductVal?.numberOfBathrooms || reduxValues?.numberOfBathrooms || "",
+                developer: listedProductVal?.developer || reduxValues?.developer || "",
+                readyBy: listedProductVal?.readyBy || reduxValues?.readyBy || "",
+                annualCommunityFee: listedProductVal?.annualCommunityFee || reduxValues?.annualCommunityFee || "",
+                isFurnished: listedProductVal?.isFurnished || reduxValues?.isFurnished || "",
+                propertyReferenceId: listedProductVal?.propertyReferenceId || reduxValues?.propertyReferenceId || "",
+                buyerTransferFee: listedProductVal?.buyerTransferFee || reduxValues?.buyerTransferFee || "",
+                sellerTransferFee: listedProductVal?.sellerTransferFee || reduxValues?.sellerTransferFee || "",
+                maintenanceFee: listedProductVal?.maintenanceFee || reduxValues?.maintenanceFee || "",
+                occupancyStatus: listedProductVal?.occupancyStatus || reduxValues?.occupancyStatus || "",
+                zonedFor: listedProductVal?.zonedFor || reduxValues?.zonedFor || "",
+                amenities: safeParseArray(listedProductVal?.amenities || reduxValues?.amenities),
+                residentialType: listedProductVal?.residentialType || reduxValues?.residentialType || "",
+                commercialType: listedProductVal?.commercialType || reduxValues?.commercialType || "",
+                itemDescription: listedProductVal?.description || reduxValues?.itemDescription || "",
+                trim: listedProductVal?.trim || reduxValues?.trim || "",
+                regionalSpecs: listedProductVal?.regionalSpecs || reduxValues?.regionalSpecs || "",
+                kilometers: listedProductVal?.kilometers || reduxValues?.kilometers || "",
+                insuredInUae: listedProductVal?.insuredInUae || reduxValues?.insuredInUae || "",
+                interiorColor: listedProductVal?.interiorColor || reduxValues?.interiorColor || "",
+                warranty: listedProductVal?.warranty || reduxValues?.warranty || "",
+                fuelType: listedProductVal?.fuelType || reduxValues?.fuelType || "petrol",
+                doors: listedProductVal?.doors || reduxValues?.doors || "4",
+                transmissionType: listedProductVal?.transmissionType || reduxValues?.transmissionType || "automatic",
+                seatingCapacity: listedProductVal?.seatingCapacity || reduxValues?.seatingCapacity || "5",
+                horsepower: listedProductVal?.horsepower || reduxValues?.horsepower || "100-199",
+                steeringSide: listedProductVal?.steeringSide || reduxValues?.steeringSide || "left",
+                engineCapacity: listedProductVal?.engineCapacity || reduxValues?.engineCapacity || "unknown",
+                numberOfCylinders: listedProductVal?.numberOfCylinders || reduxValues?.numberOfCylinders || "4",
+                driverAssistance: safeParseArray(listedProductVal?.driverAssistance || reduxValues?.driverAssistance),
+                entertainment: safeParseArray(listedProductVal?.entertainment || reduxValues?.entertainment),
+                comfort: safeParseArray(listedProductVal?.comfort || reduxValues?.comfort),
+                exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures || reduxValues?.exteriorFeatures),
               }}
               onSubmit={isEditing ? handleUpdate : handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}

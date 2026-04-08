@@ -25,4 +25,8 @@ export const store = configureStore({
     welcomeBonus:welcomeBonusSlice,
     blockedUser: blockedUserSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

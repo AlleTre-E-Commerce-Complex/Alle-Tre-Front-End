@@ -32,7 +32,7 @@ import ConfirmationModal from "component/shared/delete-modal/delete-modal";
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
   const [mainLocation, setMainLocation] = useState();
-  const [date, setDate] = useState();
+
   const [difference, setDifference] = useState({
     months: 0,
     weeks: 0,
@@ -90,7 +90,6 @@ const SummaryListedSection = () => {
         .get(`${api.app.productListing.listedProduct(productId)}`)
         .then((res) => {
           const createdAt = res?.data?.data?.createdAt;
-          setDate(createdAt);
           setListedProductsData({
             ...res?.data?.data?.product,
             isSaved: res?.data?.data?.isSaved,
