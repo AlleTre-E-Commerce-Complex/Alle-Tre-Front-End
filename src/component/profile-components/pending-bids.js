@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-  useHistory,
   useLocation,
 } from "react-router-dom/cjs/react-router-dom.min";
 import content from "../../localization/content";
 import { useLanguage } from "../../context/language-context";
-import { Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer } from "semantic-ui-react";
 import { ReactComponent as AuctionIcon } from "../../../src/assets/icons/Bids-icon.svg";
 import routes from "../../routes";
 import ActionsRowTable from "./actions-row-table";
@@ -14,27 +13,22 @@ import api from "../../api";
 import { authAxios } from "../../config/axios-config";
 import useAxios from "../../hooks/use-axios";
 import localizationKeys from "../../localization/localization-keys";
-import { useDispatch } from "react-redux";
-import { completePaymentData } from "../../redux-store/complete-payment-slice";
 import LoadingTest3arbon from "../shared/lotties-file/loading-test-3arbon";
 import useLocalStorage from "../../hooks/use-localstorage";
 import DeliverySelectingModal from "component/shared/DeliveryTypeModal/DeleverySelectingModal";
-// import MakeDefultLocations from "../shared/locations-models/make-defult-locations";
 
 const PendingBids = () => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
-  const [forceReload, setForceReload] = useState(false);
   const [openDeliverySelectingModal, setOpenDeliverySelectingModal] = useState(false)
   const [auctionId, setAuctionId] = useState()
   const [lastPrice, setLastPrice] = useState()
   const [sellerLocation,setSellerLocation] = useState()
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
 
   const [activeAuctionData, setActiveAuctionData] = useState();
   const [totalPages, setTotalPages] = useState();
 
-  const history = useHistory();
+
   const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);
@@ -53,9 +47,8 @@ const PendingBids = () => {
             console.log('PendingBids error',error)
           })
       );
-  }, [run, forceReload, search]);
+  }, [run, search]);
 
-  const dispatch = useDispatch();
 
   const [hasCompletedProfile, setHasCompletedProfile] = useLocalStorage(
     "hasCompletedProfile",

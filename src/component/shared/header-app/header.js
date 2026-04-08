@@ -25,7 +25,6 @@ import localizationKeys from "../../../localization/localization-keys";
 
 import { useSocket } from "../../../context/socket-context";
 import LogoutModal from "../logout-modal/logout-modal";
-import { productDetails } from "../../../redux-store/product-details-Slice";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import { MdOutlineNotifications, MdClose } from "react-icons/md";
 import { authAxios } from "../../../config/axios-config";

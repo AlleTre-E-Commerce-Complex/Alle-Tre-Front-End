@@ -25,7 +25,6 @@ const ExpiredBids = () => {
   const [activeAuctionData, setActiveAuctionData] = useState();
   const [totalPages, setTotalPages] = useState();
 
-  const history = useHistory();
   const { search } = useLocation();
 
   const { run, isLoading } = useAxios([]);

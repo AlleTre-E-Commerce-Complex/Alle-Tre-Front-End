@@ -22,9 +22,7 @@ const EditPhoneNumberModel = ({ onReload, oldPhoneNumber, isOpen, setShowMobileN
   const isArabic = lang === "ar";
   const { run, isLoading } = useAxios([]);
   // Track the old phone number to reset it when country changes
-  const [initialPhoneNumber, setInitialPhoneNumber] = useState(
-    oldPhoneNumber || ""
-  );
+const initialPhoneNumber = oldPhoneNumber || "";
 
   const handleCloseModal = () => {
     setOpen(false);

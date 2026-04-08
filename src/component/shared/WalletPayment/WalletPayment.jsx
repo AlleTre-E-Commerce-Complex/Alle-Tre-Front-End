@@ -5,8 +5,6 @@ import content from "localization/content";
 import localizationKeys from "localization/localization-keys";
 import React from "react";
 import toast from "react-hot-toast";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import routes from "routes";
 import { Button } from "semantic-ui-react";
 
 const WalletPayment = ({

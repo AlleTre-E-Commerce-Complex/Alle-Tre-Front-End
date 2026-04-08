@@ -25,7 +25,6 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   const { logout } = useAuthState();
 
   const [forceReload, setForceReload] = useState(false);
-  const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
 
   useEffect(() => {
