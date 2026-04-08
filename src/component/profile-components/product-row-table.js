@@ -35,17 +35,17 @@ const ProductRowTable = ({
     switch (status) {
       case "IN_PROGRESS":
         return [
-          { key: "OUT_OF_STOCK", text: "Out Stock", value: "OUT_OF_STOCK" },
-          { key: "SOLD_OUT", text: "Sold Out", value: "SOLD_OUT" },
+          { key: "OUT_OF_STOCK", text: selectedContent[localizationKeys.outStock], value: "OUT_OF_STOCK" },
+          { key: "SOLD_OUT", text: selectedContent[localizationKeys.soldOut], value: "SOLD_OUT" },
         ];
       case "OUT_OF_STOCK":
         return [
-          { key: "IN_PROGRESS", text: "In Stock", value: "IN_PROGRESS" },
-          { key: "SOLD_OUT", text: "Sold Out", value: "SOLD_OUT" },
+          { key: "IN_PROGRESS", text: selectedContent[localizationKeys.inStock], value: "IN_PROGRESS" },
+          { key: "SOLD_OUT", text: selectedContent[localizationKeys.soldOut], value: "SOLD_OUT" },
         ];
       case "SOLD_OUT":
       default:
-        return [{ key: "SOLD_OUT", text: "Sold Out", value: "SOLD_OUT" }];
+        return [{ key: "SOLD_OUT", text: selectedContent[localizationKeys.soldOut], value: "SOLD_OUT" }];
     }
   };
 
@@ -57,10 +57,10 @@ const ProductRowTable = ({
         })
         .then((res) => {
           onReload();
-          toast.success("Product status updated successfully!");
+          toast.success(selectedContent[localizationKeys.productStatusUpdatedSuccessfully]);
         })
         .catch((error) => {
-          toast.error("Failed to update status. Please try again.");
+          toast.error(selectedContent[localizationKeys.failedToUpdateStatus]);
         }),
     );
   };
@@ -127,7 +127,7 @@ const ProductRowTable = ({
               {formatCurrency(price)}
             </span>
             <span className="bg-gray-100 dark:bg-[#2A3142] text-gray-600 dark:text-gray-300 text-[9px] md:text-[10px] uppercase font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">
-              {price > 100 ? "PREMIUM" : "NEW ARRIVAL"}
+              {price > 100 ? selectedContent[localizationKeys.premium] : selectedContent[localizationKeys.newArrival]}
             </span>
           </div>
           <h1 className="text-sm md:text-xl font-bold text-gray-900 dark:text-white leading-tight line-clamp-2 md:line-clamp-none">
@@ -148,7 +148,7 @@ const ProductRowTable = ({
                   d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
                 />
               </svg>
-              <span>SKU: {productId?.toString().substring(0, 8) || "N/A"}</span>
+              <span>{selectedContent[localizationKeys.sku]}: {productId?.toString().substring(0, 8) || "N/A"}</span>
             </div>
             <div className="flex items-center gap-1 md:gap-1.5">
               <svg
