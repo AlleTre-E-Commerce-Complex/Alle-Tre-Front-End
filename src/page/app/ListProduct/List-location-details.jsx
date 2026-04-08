@@ -240,14 +240,14 @@ const ListingProductsLocationDetails = () => {
         {/* <Loader active /> */}
         <LoadingTest3arbon />
       </Dimmer>
-      <div className="mt-44 animate-in mx-5 ">
-        {/* <div className=" max-w-[1366px] mx-auto h-14 my-7 py-4 sm:block hidden ">
-          <CreateAuctionBreadcrumb />
+      <div className="mt-32 sm:mt-44 animate-in mx-5 ">
+        <div className="max-w-[1366px] mx-auto mb-12">
+          <div className="hidden sm:block mb-8">
+            <CreateAuctionBreadcrumb />
+          </div>
         </div>
-        <div className="flex justify-center">
-          <Stepper />
-        </div> */}
-        <div className=" max-w-[1366px] mx-auto ">
+
+        <div className="max-w-[1366px] mx-auto">
           <h1 className="font-bold text-base text-black dark:text-white pt-6">
             {selectedContent[localizationKeys.locationDetails]}
           </h1>
@@ -287,7 +287,7 @@ const ListingProductsLocationDetails = () => {
               className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors flex items-center justify-center gap-2"
               // onClick={creatAuction}
               onClick={listProduct}
-              loading={isLoadingListNewProduct}
+              disabled={isLoadingListNewProduct}
             >
               {selectedContent[localizationKeys.listItem]}
             </button>
@@ -305,7 +305,6 @@ const ListingProductsLocationDetails = () => {
 };
 
 export const LocationDetailsCard = ({
-  key,
   Id,
   AddressLable,
   Address,

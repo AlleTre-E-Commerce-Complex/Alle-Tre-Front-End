@@ -454,7 +454,7 @@ const en = {
     "This auction has been cancelled by the administrator. ",
   [localizationKeys.auctionCancelled]: "Auction Cancelled",
   // shiping details
-  List: "Location Details",
+  [localizationKeys.locationDetails]: "Location Details",
   [localizationKeys.addAddress]: "Add Address",
   [localizationKeys.successUpdateLocation]: "Location updated successfully",
   [localizationKeys.confirmDeleteAddress]:

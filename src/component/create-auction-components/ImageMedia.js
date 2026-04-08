@@ -541,7 +541,8 @@ const ImageMedia = ({
   const loadFFmpeg = async () => {
     if (ffmpeg) return ffmpeg;
     const instance = createFFmpeg({
-      log: true,
+      log: false,
+      logger: () => {}, // Absolute silence
       corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
     });
     
@@ -571,14 +572,28 @@ const ImageMedia = ({
       const { name } = file;
       ffmpegInstance.FS("writeFile", name, await fetchFile(file));
 
-      // STEP 1: Compress the video
-      setProcessingStatus(selectedContent[localizationKeys.compressingVideo]);
-      // ultrafast preset for speed, crf 30 for quality/size balance, original dimensions preserved
-      await ffmpegInstance.run("-i", name, "-vcodec", "libx264", "-crf", "30", "-preset", "ultrafast", "output.mp4");
+      // Failsafe: Temporarily silence console to catch anything the logger missed
+      const originalLog = console.log;
+      const originalError = console.error;
+      const originalWarn = console.warn;
+      console.log = () => {};
+      console.error = () => {};
+      console.warn = () => {};
 
-      // STEP 2: Extract a thumbnail frame (at 0.5s)
-      setProcessingStatus("Extracting video cover...");
-      await ffmpegInstance.run("-i", "output.mp4", "-ss", "00:00:00.500", "-vframes", "1", "thumbnail.jpg");
+      try {
+        // STEP 1: Compress the video
+        setProcessingStatus(selectedContent[localizationKeys.compressingVideo]);
+        await ffmpegInstance.run("-i", name, "-vcodec", "libx264", "-crf", "30", "-preset", "ultrafast", "output.mp4");
+
+        // STEP 2: Extract a thumbnail frame
+        setProcessingStatus("Extracting video cover...");
+        await ffmpegInstance.run("-i", "output.mp4", "-ss", "00:00:00.500", "-vframes", "1", "thumbnail.jpg");
+      } finally {
+        // Restore console immediately
+        console.log = originalLog;
+        console.error = originalError;
+        console.warn = originalWarn;
+      }
 
       // Read compressed video
       const videoData = ffmpegInstance.FS("readFile", "output.mp4");

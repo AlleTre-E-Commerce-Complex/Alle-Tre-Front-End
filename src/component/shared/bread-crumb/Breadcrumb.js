@@ -14,106 +14,101 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
 
-  const CreateAuctionSections = (pathname, edit) =>
-    [
+  const CreateAuctionSections = (pathname) => {
+    const isAuctionFlow = pathname.includes("create-auction");
+    const isListingFlow = pathname.includes("list-product") || pathname.includes("add-location");
+
+    return [
       {
         key: "Home",
         content: (
-          <Link
-            className="text-gray-med mx-2 text-base font-normal"
-            to={routes.app.home}
-          >
+          <Link className="text-gray-med mx-2 text-base font-normal" to={routes.app.home}>
             {selectedContent[localizationKeys.home]}
           </Link>
         ),
       },
-      ...[
-        pathname.startsWith(routes.app.createAuction.default) && {
+      // --- AUCTION FLOW SEGMENTS ---
+      ...(isAuctionFlow ? [
+        {
           key: "Create Auction",
           content: (
             <Link
-              className={`${
-                pathname.startsWith(routes.app.createAuction.productDetails)
-                  ? "text-gray-med"
-                  : "text-primary"
-              } mx-2 text-base font-normal `}
+              className={`${pathname.includes("product-details") ? "text-gray-med" : "text-primary dark:text-white"} mx-2 text-base font-normal`}
               to={routes.app.createAuction.default}
             >
               {selectedContent[localizationKeys.createAuction]}
             </Link>
           ),
         },
-      ],
-      ...[
-        pathname.startsWith(routes.app.createAuction.productDetails) && {
+        pathname.includes("product-details") && {
           key: "Product Details",
           content: (
-            <Link
-              className={`${
-                pathname.startsWith(routes.app.createAuction.auctionDetails)
-                  ? "text-gray-med"
-                  : "text-primary"
-              } mx-2 text-base font-normal `}
-              // to={routes.app.createAuction.productDetails}
+            <span
+              className={`${pathname.includes("auction-details") ? "text-gray-med" : "text-primary dark:text-white"} mx-2 text-base font-normal`}
             >
               {selectedContent[localizationKeys.productDetails]}
-            </Link>
+            </span>
           ),
         },
-      ],
-      ...[
-        pathname.startsWith(routes.app.createAuction.auctionDetails) && {
-          key: "Shipping Details",
+        pathname.includes("auction-details") && {
+          key: "Auction Details",
           content: (
-            <Link
-              className={`${
-                pathname.startsWith(routes.app.createAuction.shippingDetails)
-                  ? "text-gray-med"
-                  : "text-primary"
-              } mx-2 text-base font-normal `}
-              // to={routes.app.createAuction.auctionDetails}
+            <span
+              className={`${pathname.includes("shipping-details") ? "text-gray-med" : "text-primary dark:text-white"} mx-2 text-base font-normal`}
             >
               {selectedContent[localizationKeys.auctionDetails]}
-            </Link>
+            </span>
           ),
         },
-      ],
-      ...[
-        pathname.startsWith(routes.app.createAuction.shippingDetails) && {
+        pathname.includes("shipping-details") && {
           key: "Shipping Details",
           content: (
-            <Link
-              className={`${
-                pathname.startsWith(routes.app.createAuction.paymentDetails)
-                  ? "text-gray-med"
-                  : "text-primary"
-              } mx-2 text-base font-normal `}
-              // to={routes.app.createAuction.shippingDetails}
+            <span
+              className={`${pathname.includes("payment-details") ? "text-gray-med" : "text-primary dark:text-white"} mx-2 text-base font-normal`}
             >
               {selectedContent[localizationKeys.shippingDetails]}
-            </Link>
+            </span>
           ),
         },
-      ],
-      ...[
-        pathname.startsWith(routes.app.createAuction.paymentDetails) && {
+        pathname.includes("payment-details") && {
           key: "Payment Details",
           content: (
-            <Link
-              className="text-primary mx-2 text-base font-normal"
-              to={routes.app.createAuction.paymentDetails}
-            >
+            <span className="text-primary dark:text-white mx-2 text-base font-normal">
               {selectedContent[localizationKeys.paymentDetails]}
+            </span>
+          ),
+        },
+      ] : []),
+
+      // --- LISTING FLOW SEGMENTS ---
+      ...(isListingFlow ? [
+        {
+          key: "List Item",
+          content: (
+            <Link
+              className={`${pathname.includes("add-location") ? "text-gray-med" : "text-primary dark:text-white"} mx-2 text-base font-normal`}
+              to={routes.app.listProduct.default}
+            >
+              {selectedContent[localizationKeys.listItem]}
             </Link>
           ),
         },
-      ],
+        pathname.includes("add-location") && {
+          key: "Location Details",
+          content: (
+            <span className="text-primary dark:text-white mx-2 text-base font-normal">
+              {selectedContent[localizationKeys.locationDetails]}
+            </span>
+          ),
+        },
+      ] : []),
     ].filter(Boolean);
+  };
 
   return (
     <Breadcrumb
       className="Edit_Breadcrumb"
-      sections={CreateAuctionSections(pathname, edit)}
+      sections={CreateAuctionSections(pathname)}
     />
   );
 };
