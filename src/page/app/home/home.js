@@ -632,12 +632,12 @@ const Home = ({
                                 city={
                                   lang === "en"
                                     ? e?.location?.city?.nameEn
-                                    : e?.location?.city?.nameEn
+                                    : e?.location?.city?.nameAr
                                 }
                                 country={
                                   lang === "en"
                                     ? e?.location?.country?.nameEn
-                                    : e?.location?.country?.nameEn
+                                    : e?.location?.country?.nameAr
                                 }
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
@@ -687,12 +687,12 @@ const Home = ({
                                 city={
                                   lang === "en"
                                     ? e?.location?.city?.nameEn
-                                    : e?.location?.city?.nameEn
+                                    : e?.location?.city?.nameAr
                                 }
                                 country={
                                   lang === "en"
                                     ? e?.location?.country?.nameEn
-                                    : e?.location?.country?.nameEn
+                                    : e?.location?.country?.nameAr
                                 }
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
@@ -790,12 +790,12 @@ const Home = ({
                                 city={
                                   lang === "en"
                                     ? e?.location?.city?.nameEn
-                                    : e?.location?.city?.nameEn
+                                    : e?.location?.city?.nameAr
                                 }
                                 country={
                                   lang === "en"
                                     ? e?.location?.country?.nameEn
-                                    : e?.location?.country?.nameEn
+                                    : e?.location?.country?.nameAr
                                 }
                                 createdAt={e?.createdAt}
                                 usageStatus={e?.product?.usageStatus}
@@ -881,12 +881,12 @@ const Home = ({
                               city={
                                 lang === "en"
                                   ? e?.location?.city?.nameEn
-                                  : e?.location?.city?.nameEn
+                                  : e?.location?.city?.nameAr
                               }
                               country={
                                 lang === "en"
                                   ? e?.location?.country?.nameEn
-                                  : e?.location?.country?.nameEn
+                                  : e?.location?.country?.nameAr
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
