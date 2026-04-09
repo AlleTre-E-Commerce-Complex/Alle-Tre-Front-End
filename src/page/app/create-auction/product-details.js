@@ -70,7 +70,7 @@ const ProductDetails = () => {
   const [totalUploadingFiles, setTotalUploadingFiles] = useState(0);
   const [currentUploadingFile, setCurrentUploadingFile] = useState(0);
   const productDetailsint = useSelector(
-    (state) => state.productDetails.productDetails
+    (state) => state.productDetails.productDetails,
   );
   const dispatch = useDispatch();
 
@@ -79,21 +79,73 @@ const ProductDetails = () => {
   const { run: runAuctionById, isLoading: isLoadingAuctionById } = useAxios([]);
 
   function getCleanedValues(formValues) {
-    const isCarCategory = Number(formValues.category) === 4 || GatogryOptions?.find(o => String(o.value) === String(formValues.category))?.name?.toLowerCase() === "cars";
-    const isPropertyCategory = Number(formValues.category) === 7 || Number(formValues.category) === 19 || Number(formValues.category) === 23 || ["properties", "عقارات", "propertiess"].includes(GatogryOptions?.find(o => String(o.value) === String(formValues.category))?.name?.toLowerCase());
+    const isCarCategory =
+      Number(formValues.category) === 4 ||
+      GatogryOptions?.find(
+        (o) => String(o.value) === String(formValues.category),
+      )?.name?.toLowerCase() === "cars";
+    const isPropertyCategory =
+      Number(formValues.category) === 7 ||
+      Number(formValues.category) === 19 ||
+      Number(formValues.category) === 23 ||
+      ["properties", "عقارات", "propertiess"].includes(
+        GatogryOptions?.find(
+          (o) => String(o.value) === String(formValues.category),
+        )?.name?.toLowerCase(),
+      );
 
     const cleanValues = { ...formValues };
     if (!isCarCategory) {
-      const carFields = ["trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor", "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity", "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance", "entertainment", "comfort", "exteriorFeatures", "carType"];
-      carFields.forEach(f => delete cleanValues[f]);
+      const carFields = [
+        "trim",
+        "regionalSpecs",
+        "kilometers",
+        "insuredInUae",
+        "interiorColor",
+        "warranty",
+        "fuelType",
+        "doors",
+        "transmissionType",
+        "seatingCapacity",
+        "horsepower",
+        "steeringSide",
+        "engineCapacity",
+        "numberOfCylinders",
+        "driverAssistance",
+        "entertainment",
+        "comfort",
+        "exteriorFeatures",
+        "carType",
+      ];
+      carFields.forEach((f) => delete cleanValues[f]);
     }
     if (!isPropertyCategory) {
-      const propFields = ["totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType", "numberOfRooms", "totalArea"];
+      const propFields = [
+        "totalClosingFee",
+        "numberOfBathrooms",
+        "developer",
+        "readyBy",
+        "annualCommunityFee",
+        "isFurnished",
+        "propertyReferenceId",
+        "buyerTransferFee",
+        "sellerTransferFee",
+        "maintenanceFee",
+        "occupancyStatus",
+        "amenities",
+        "zonedFor",
+        "approvedBuildUpArea",
+        "freehold",
+        "residentialType",
+        "commercialType",
+        "numberOfRooms",
+        "totalArea",
+      ];
       // emirate is allowed for both cars and properties, so we only delete it if it's neither
       if (!isCarCategory) {
         delete cleanValues["emirate"];
       }
-      propFields.forEach(f => delete cleanValues[f]);
+      propFields.forEach((f) => delete cleanValues[f]);
     }
 
     return cleanValues;
@@ -101,39 +153,59 @@ const ProductDetails = () => {
 
   const handleUpdate = async (rawValues) => {
     const values = getCleanedValues(rawValues);
+
+    if ((imgtest?.length || 0) < 3) {
+      toast.error(
+        selectedContent[
+          localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
+        ],
+      );
+      return;
+    }
+
     setIsUpdating(true);
     setUploadProgress(0);
     setCurrentUploadingFile(0);
 
     try {
       const metadataOnlyFormData = new FormData();
-      
+
       // We handle images sequentially for real-time feedback
       const allImages = imgtest || [];
-      const filesToUpload = allImages.filter(img => img?.file);
+      const filesToUpload = allImages.filter((img) => img?.file);
       setTotalUploadingFiles(filesToUpload.length);
 
       // Append all fields to metadataOnlyFormData except images
       metadataOnlyFormData.append("product[title]", values.itemName);
       metadataOnlyFormData.append("product[categoryId]", values.category);
       if (values.subCategory)
-        metadataOnlyFormData.append("product[subCategoryId]", values.subCategory);
-      if (values.brand) metadataOnlyFormData.append("product[brand]", values.brand);
-      if (valueRadio) metadataOnlyFormData.append("product[usageStatus]", valueRadio);
-      if (values.color) metadataOnlyFormData.append("product[color]", values.color);
+        metadataOnlyFormData.append(
+          "product[subCategoryId]",
+          values.subCategory,
+        );
+      if (values.brand)
+        metadataOnlyFormData.append("product[brand]", values.brand);
+      if (valueRadio)
+        metadataOnlyFormData.append("product[usageStatus]", valueRadio);
+      if (values.color)
+        metadataOnlyFormData.append("product[color]", values.color);
       if (values.age) metadataOnlyFormData.append("product[age]", values.age);
       if (values.landType)
         metadataOnlyFormData.append("product[landType]", values.landType);
       if (values.cameraType)
         metadataOnlyFormData.append("product[cameraType]", values.cameraType);
-      if (values.carType) metadataOnlyFormData.append("product[carType]", values.carType);
+      if (values.carType)
+        metadataOnlyFormData.append("product[carType]", values.carType);
       if (values.material)
         metadataOnlyFormData.append("product[material]", values.material);
-      if (values.memory) metadataOnlyFormData.append("product[memory]", values.memory);
-      if (values.model) metadataOnlyFormData.append("product[model]", values.model);
+      if (values.memory)
+        metadataOnlyFormData.append("product[memory]", values.memory);
+      if (values.model)
+        metadataOnlyFormData.append("product[model]", values.model);
       if (values.processor)
         metadataOnlyFormData.append("product[processor]", values.processor);
-      if (values.ramSize) metadataOnlyFormData.append("product[ramSize]", values.ramSize);
+      if (values.ramSize)
+        metadataOnlyFormData.append("product[ramSize]", values.ramSize);
       if (values.releaseYear)
         metadataOnlyFormData.append("product[releaseYear]", values.releaseYear);
       if (values.screenSize)
@@ -141,41 +213,109 @@ const ProductDetails = () => {
       if (values.totalArea)
         metadataOnlyFormData.append("product[totalArea]", values.totalArea);
       if (values.operatingSystem)
-        metadataOnlyFormData.append("product[operatingSystem]", values.operatingSystem);
-      if (values.trim) metadataOnlyFormData.append("product[trim]", values.trim);
-      if (values.regionalSpecs) metadataOnlyFormData.append("product[regionalSpecs]", values.regionalSpecs);
-      if (values.kilometers) metadataOnlyFormData.append("product[kilometers]", values.kilometers);
-      if (values.insuredInUae) metadataOnlyFormData.append("product[insuredInUae]", values.insuredInUae);
-      if (values.interiorColor) metadataOnlyFormData.append("product[interiorColor]", values.interiorColor);
-      if (values.warranty) metadataOnlyFormData.append("product[warranty]", values.warranty);
-      if (values.fuelType) metadataOnlyFormData.append("product[fuelType]", values.fuelType);
-      if (values.doors) metadataOnlyFormData.append("product[doors]", values.doors);
-      if (values.transmissionType) metadataOnlyFormData.append("product[transmissionType]", values.transmissionType);
-      if (values.seatingCapacity) metadataOnlyFormData.append("product[seatingCapacity]", values.seatingCapacity);
-      if (values.horsepower) metadataOnlyFormData.append("product[horsepower]", values.horsepower);
-      if (values.steeringSide) metadataOnlyFormData.append("product[steeringSide]", values.steeringSide);
-      if (values.engineCapacity) metadataOnlyFormData.append("product[engineCapacity]", values.engineCapacity);
-      if (values.numberOfCylinders) metadataOnlyFormData.append("product[numberOfCylinders]", values.numberOfCylinders);
-      if (values.driverAssistance?.length) metadataOnlyFormData.append("product[driverAssistance]", JSON.stringify(values.driverAssistance));
-      if (values.entertainment?.length) metadataOnlyFormData.append("product[entertainment]", JSON.stringify(values.entertainment));
-      if (values.comfort?.length) metadataOnlyFormData.append("product[comfort]", JSON.stringify(values.comfort));
-      if (values.exteriorFeatures?.length) metadataOnlyFormData.append("product[exteriorFeatures]", JSON.stringify(values.exteriorFeatures));
-      if (values.emirate) metadataOnlyFormData.append("product[emirate]", values.emirate);
+        metadataOnlyFormData.append(
+          "product[operatingSystem]",
+          values.operatingSystem,
+        );
+      if (values.trim)
+        metadataOnlyFormData.append("product[trim]", values.trim);
+      if (values.regionalSpecs)
+        metadataOnlyFormData.append(
+          "product[regionalSpecs]",
+          values.regionalSpecs,
+        );
+      if (values.kilometers)
+        metadataOnlyFormData.append("product[kilometers]", values.kilometers);
+      if (values.insuredInUae)
+        metadataOnlyFormData.append(
+          "product[insuredInUae]",
+          values.insuredInUae,
+        );
+      if (values.interiorColor)
+        metadataOnlyFormData.append(
+          "product[interiorColor]",
+          values.interiorColor,
+        );
+      if (values.warranty)
+        metadataOnlyFormData.append("product[warranty]", values.warranty);
+      if (values.fuelType)
+        metadataOnlyFormData.append("product[fuelType]", values.fuelType);
+      if (values.doors)
+        metadataOnlyFormData.append("product[doors]", values.doors);
+      if (values.transmissionType)
+        metadataOnlyFormData.append(
+          "product[transmissionType]",
+          values.transmissionType,
+        );
+      if (values.seatingCapacity)
+        metadataOnlyFormData.append(
+          "product[seatingCapacity]",
+          values.seatingCapacity,
+        );
+      if (values.horsepower)
+        metadataOnlyFormData.append("product[horsepower]", values.horsepower);
+      if (values.steeringSide)
+        metadataOnlyFormData.append(
+          "product[steeringSide]",
+          values.steeringSide,
+        );
+      if (values.engineCapacity)
+        metadataOnlyFormData.append(
+          "product[engineCapacity]",
+          values.engineCapacity,
+        );
+      if (values.numberOfCylinders)
+        metadataOnlyFormData.append(
+          "product[numberOfCylinders]",
+          values.numberOfCylinders,
+        );
+      if (values.driverAssistance?.length)
+        metadataOnlyFormData.append(
+          "product[driverAssistance]",
+          JSON.stringify(values.driverAssistance),
+        );
+      if (values.entertainment?.length)
+        metadataOnlyFormData.append(
+          "product[entertainment]",
+          JSON.stringify(values.entertainment),
+        );
+      if (values.comfort?.length)
+        metadataOnlyFormData.append(
+          "product[comfort]",
+          JSON.stringify(values.comfort),
+        );
+      if (values.exteriorFeatures?.length)
+        metadataOnlyFormData.append(
+          "product[exteriorFeatures]",
+          JSON.stringify(values.exteriorFeatures),
+        );
+      if (values.emirate)
+        metadataOnlyFormData.append("product[emirate]", values.emirate);
 
       if (values.regionOfManufacture)
         metadataOnlyFormData.append(
           "product[regionOfManufacture]",
-          values.regionOfManufacture
+          values.regionOfManufacture,
         );
       if (values.numberOfFloors)
-        metadataOnlyFormData.append("product[numberOfFloors]", values.numberOfFloors);
+        metadataOnlyFormData.append(
+          "product[numberOfFloors]",
+          values.numberOfFloors,
+        );
       if (values.numberOfRooms)
-        metadataOnlyFormData.append("product[numberOfRooms]", values.numberOfRooms);
+        metadataOnlyFormData.append(
+          "product[numberOfRooms]",
+          values.numberOfRooms,
+        );
       if (values.itemDescription)
-        metadataOnlyFormData.append("product[description]", values.itemDescription);
+        metadataOnlyFormData.append(
+          "product[description]",
+          values.itemDescription,
+        );
       if (values.countryId)
         metadataOnlyFormData.append("product[countryId]", values.countryId);
-      if (values.cityId) metadataOnlyFormData.append("product[cityId]", values.cityId);
+      if (values.cityId)
+        metadataOnlyFormData.append("product[cityId]", values.cityId);
 
       if (relatedDocuments?.length > 0) {
         relatedDocuments.forEach((doc) => {
@@ -190,7 +330,7 @@ const ProductDetails = () => {
       // 1. Update/Create the auction with metadata first
       const response = await authAxios.put(
         api.app.auctions.updateAuction(auctionId),
-        metadataOnlyFormData
+        metadataOnlyFormData,
       );
 
       if (response.status === 200) {
@@ -203,18 +343,18 @@ const ProductDetails = () => {
 
             const imgFormData = new FormData();
             imgFormData.append("image", image.file);
-            
+
             await authAxios.patch(
-              api.app.Imagees.upload(auctionId, true), 
+              api.app.Imagees.upload(auctionId, true),
               imgFormData,
               {
                 onUploadProgress: (progressEvent) => {
                   const percentCompleted = Math.round(
-                    (progressEvent.loaded * 100) / progressEvent.total
+                    (progressEvent.loaded * 100) / progressEvent.total,
                   );
                   setUploadProgress(percentCompleted);
                 },
-              }
+              },
             );
           }
         }
@@ -224,14 +364,14 @@ const ProductDetails = () => {
         dispatch(productDetails({}));
       } else {
         toast.error(
-          selectedContent[localizationKeys.updateFailed] || "Update failed"
+          selectedContent[localizationKeys.updateFailed] || "Update failed",
         );
       }
     } catch (error) {
       toast.error(
         error?.response?.data?.message ||
           selectedContent[localizationKeys.updateFailed] ||
-          "An error occurred while updating."
+          "An error occurred while updating.",
       );
     } finally {
       setIsUpdating(false);
@@ -300,7 +440,7 @@ const ProductDetails = () => {
             }
           },
           "image/jpeg",
-          0.8
+          0.8,
         );
       });
     } catch (error) {
@@ -379,7 +519,7 @@ const ProductDetails = () => {
                   isVideo: isVideo,
                   isCoverPhoto: img.isCoverPhoto || false,
                 };
-              }
+              },
             );
             setimgtest(formattedImages);
           }
@@ -396,7 +536,7 @@ const ProductDetails = () => {
           if (completeDraftValue?.product?.subCategoryId) {
             setSubCategoryId(completeDraftValue.product.subCategoryId);
           }
-        })
+        }),
       );
     }
   }, [runAuctionById, forceReload, state?.auctionId, productDetailsint?.id]);
@@ -417,7 +557,7 @@ const ProductDetails = () => {
             if (formikRef.current) {
               formikRef.current.submitForm();
             }
-          })
+          }),
       );
     }
   }, [runAuctionById, forceReload, state?.productId, productDetailsint?.id]);
@@ -477,7 +617,7 @@ const ProductDetails = () => {
         entertainment: product?.entertainment,
         comfort: product?.comfort,
         exteriorFeatures: product?.exteriorFeatures,
-      })
+      }),
     );
     setRadioValue(product?.usageStatus);
   }
@@ -529,7 +669,7 @@ const ProductDetails = () => {
   const [valueRadio, setRadioValue] = useState(
     completeDraftVal?.product?.usageStatus ||
       productDetailsint.valueRadio ||
-      null
+      null,
   );
 
   const [countriesId, setCountriesId] = useState();
@@ -539,20 +679,20 @@ const ProductDetails = () => {
   const [hasUsageCondition, setHasUsageCondition] = useState(
     completeDraftVal?.product?.category?.hasUsageCondition ||
       productDetailsint.hasUsageCondition ||
-      true
+      true,
   );
   const [customFromData, setCustomFromData] = useState();
   const { GatogryOptions, loadingGatogry } = useGetGatogry();
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(
-    categoryId || productDetailsint.category
+    categoryId || productDetailsint.category,
   );
   const { AllCountriesOptions, loadingAllCountries } = useGetAllCountries();
   const { AllCitiesOptions, loadingCitiesOptions } = useGetAllCities(
-    countriesId || productDetailsint.countriesId
+    countriesId || productDetailsint.countriesId,
   );
 
   const { NotAllBranOptions, loadingAllBranOptions } = useGetBrand(
-    categoryId || productDetailsint.category
+    categoryId || productDetailsint.category,
   );
 
   // const handleReorderImages = (reorderedImages, reorderedFiles) => {
@@ -574,15 +714,15 @@ const ProductDetails = () => {
   const checkVideoValidation = (files, currentImages) => {
     // Check if there's already a video in the current images
     const hasExistingVideo = currentImages.some((img) =>
-      img.file.type.startsWith("video/")
+      img.file.type.startsWith("video/"),
     );
 
     // Check if any of the new files is a video
     const newVideos = Array.isArray(files)
       ? files.filter((file) => file.type.startsWith("video/"))
       : files.type.startsWith("video/")
-      ? [files]
-      : [];
+        ? [files]
+        : [];
 
     // If trying to upload a video as first item
     if (currentImages.length === 0 && newVideos.length > 0) {
@@ -608,7 +748,7 @@ const ProductDetails = () => {
     // Check if adding new files would exceed 50 images
     if (currentImages.length + files.length > 50) {
       toast.error(
-        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
+        selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages],
       );
       event.target.value = null;
       return;
@@ -617,7 +757,7 @@ const ProductDetails = () => {
     // Check video file size (50MB = 50 * 1024 * 1024 bytes)
     const MAX_VIDEO_SIZE = 50 * 1024 * 1024; // 50MB in bytes
     const oversizedVideos = files.filter(
-      (file) => file.type.startsWith("video/") && file.size > MAX_VIDEO_SIZE
+      (file) => file.type.startsWith("video/") && file.size > MAX_VIDEO_SIZE,
     );
     if (oversizedVideos.length > 0) {
       toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded]);
@@ -641,7 +781,7 @@ const ProductDetails = () => {
             file: watermarkedFile,
             imageLink: URL.createObjectURL(watermarkedFile),
           };
-        })
+        }),
       );
 
       // Update the images array
@@ -660,7 +800,7 @@ const ProductDetails = () => {
       // Check if adding new file would exceed 50 images
       if (currentImages.length >= 50) {
         toast.error(
-          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages]
+          selectedContent[localizationKeys.youCanOnlySelectUpToFiftyImages],
         );
         event.target.value = null;
         return;
@@ -707,24 +847,24 @@ const ProductDetails = () => {
           authAxios
             .get(
               api.app.customField.ByCategoryId(
-                categoryId || productDetailsint.category
-              )
+                categoryId || productDetailsint.category,
+              ),
             )
             .then((res) => {
               setCustomFromData(res?.data?.data);
-            })
+            }),
         );
       } else
         run(
           authAxios
             .get(
               api.app.customField.BySubCategoryId(
-                subCategoryId || productDetailsint.subCategory
-              )
+                subCategoryId || productDetailsint.subCategory,
+              ),
             )
             .then((res) => {
               setCustomFromData(res?.data?.data);
-            })
+            }),
         );
     }
   }, [
@@ -738,18 +878,34 @@ const ProductDetails = () => {
   ]);
 
   const optionalCarSpecs = [
-    "transmissionType", "steeringSide", "seatingCapacity", "horsepower",
-    "numberOfCylinders", "fuelType", "doors", "engineCapacity", "trim",
-    "kilometers", "regionalSpecs", "carType", "color", "interiorColor",
-    "releaseYear", "insuredInUae", "warranty", "driverAssistance",
-    "entertainment", "comfort", "exteriorFeatures"
+    "transmissionType",
+    "steeringSide",
+    "seatingCapacity",
+    "horsepower",
+    "numberOfCylinders",
+    "fuelType",
+    "doors",
+    "engineCapacity",
+    "trim",
+    "kilometers",
+    "regionalSpecs",
+    "carType",
+    "color",
+    "interiorColor",
+    "releaseYear",
+    "insuredInUae",
+    "warranty",
+    "driverAssistance",
+    "entertainment",
+    "comfort",
+    "exteriorFeatures",
   ];
 
   const arrayCustomFieldsvalidations =
     customFromData?.arrayCustomFields?.reduce((acc, curr) => {
       if (!optionalCarSpecs.includes(curr.key)) {
         acc[curr.key] = Yup.string().required(
-          selectedContent[localizationKeys.required]
+          selectedContent[localizationKeys.required],
         );
       }
       return acc;
@@ -760,11 +916,17 @@ const ProductDetails = () => {
   const [pdfFile, setPdfFile] = useState(null);
 
   const carMandatoryFields = [
-    "carType", "color",
-    "interiorColor", "releaseYear", "insuredInUae"
+    "carType",
+    "color",
+    "interiorColor",
+    "releaseYear",
+    "insuredInUae",
   ].reduce((acc, field) => {
     acc[field] = Yup.string().when("category", {
-      is: (cat) => String(cat) === "4" || GatogryOptions?.find(o => String(o.value) === String(cat))?.name === "Cars",
+      is: (cat) =>
+        String(cat) === "4" ||
+        GatogryOptions?.find((o) => String(o.value) === String(cat))?.name ===
+          "Cars",
       then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     });
@@ -780,44 +942,83 @@ const ProductDetails = () => {
       .trim()
       .typeError(selectedContent[localizationKeys.required])
       .required(selectedContent[localizationKeys.required]),
-    itemDescription: Yup.string()
-      .trim()
-      .notRequired(),
+    itemDescription: Yup.string().trim().notRequired(),
     pdfDocument: Yup.mixed().when("category", {
       is: (category) =>
-        ["Cars", "Jewellers", "Properties", "عقارات", "مجوهرات", "سيارات", "Propertiess"].includes(
-          GatogryOptions.find((opt) => String(opt.value) === String(category))?.name
+        [
+          "Cars",
+          "Jewellers",
+          "Properties",
+          "عقارات",
+          "مجوهرات",
+          "سيارات",
+          "Propertiess",
+        ].includes(
+          GatogryOptions.find((opt) => String(opt.value) === String(category))
+            ?.name,
         ),
       then: Yup.mixed().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.mixed().notRequired(),
     }),
     ...arrayCustomFieldsvalidations,
     ...carMandatoryFields,
-    ...(model ? {
-      [model]: Yup.string().required(selectedContent[localizationKeys.required])
-    } : {}),
+    ...(model
+      ? {
+          [model]: Yup.string().required(
+            selectedContent[localizationKeys.required],
+          ),
+        }
+      : {}),
     brand: Yup.string().when("category", {
       is: (cat) => {
-        const catName = GatogryOptions?.find((opt) => String(opt.value) === String(cat))?.name;
-        return String(cat) !== "3" && String(cat) !== "7" && !["Properties", "عقارات", "Propertiess"].includes(catName);
+        const catName = GatogryOptions?.find(
+          (opt) => String(opt.value) === String(cat),
+        )?.name;
+        return (
+          String(cat) !== "3" &&
+          String(cat) !== "7" &&
+          !["Properties", "عقارات", "Propertiess"].includes(catName)
+        );
       },
       then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
     residentialType: Yup.string().when("subCategory", {
       is: (subCat) => {
-        const subCatObj = SubGatogryOptions?.find((opt) => String(opt.value) === String(subCat));
-        const subCatName = subCatObj?.text?.toLowerCase() || subCatObj?.name?.toLowerCase() || "";
-        return subCatName.includes("residential") || subCatName.includes("سكني") || subCatName.includes("house") || subCatName.includes("villa") || subCatName.includes("townhouse");
+        const subCatObj = SubGatogryOptions?.find(
+          (opt) => String(opt.value) === String(subCat),
+        );
+        const subCatName =
+          subCatObj?.text?.toLowerCase() ||
+          subCatObj?.name?.toLowerCase() ||
+          "";
+        return (
+          subCatName.includes("residential") ||
+          subCatName.includes("سكني") ||
+          subCatName.includes("house") ||
+          subCatName.includes("villa") ||
+          subCatName.includes("townhouse")
+        );
       },
       then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
     }),
     commercialType: Yup.string().when("subCategory", {
       is: (subCat) => {
-        const subCatObj = SubGatogryOptions?.find((opt) => String(opt.value) === String(subCat));
-        const subCatName = subCatObj?.text?.toLowerCase() || subCatObj?.name?.toLowerCase() || "";
-        return subCatName.includes("commercial") || subCatName.includes("تجاري") || subCatName.includes("office") || subCatName.includes("retail") || subCatName.includes("warehouse");
+        const subCatObj = SubGatogryOptions?.find(
+          (opt) => String(opt.value) === String(subCat),
+        );
+        const subCatName =
+          subCatObj?.text?.toLowerCase() ||
+          subCatObj?.name?.toLowerCase() ||
+          "";
+        return (
+          subCatName.includes("commercial") ||
+          subCatName.includes("تجاري") ||
+          subCatName.includes("office") ||
+          subCatName.includes("retail") ||
+          subCatName.includes("warehouse")
+        );
       },
       then: Yup.string().required(selectedContent[localizationKeys.required]),
       otherwise: Yup.string().notRequired(),
@@ -826,7 +1027,7 @@ const ProductDetails = () => {
       is: () => SubGatogryOptions?.length === 0,
       then: Yup.string().notRequired(),
       otherwise: Yup.string().required(
-        selectedContent[localizationKeys.required]
+        selectedContent[localizationKeys.required],
       ),
     }),
   });
@@ -835,14 +1036,14 @@ const ProductDetails = () => {
     const values = getCleanedValues(rawValues);
     const allImages = imgtest || [];
     const filesCount = allImages.filter(
-      (file) => file !== null && file !== undefined
+      (file) => file !== null && file !== undefined,
     ).length;
 
     if (filesCount < 3) {
       toast.error(
         selectedContent[
           localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos
-        ]
+        ],
       );
       return;
     }
@@ -856,7 +1057,7 @@ const ProductDetails = () => {
         toast.error(
           selectedContent[
             localizationKeys.makeSureThatYouChooseItemConditionValue
-          ]
+          ],
         );
         return;
       }
@@ -873,7 +1074,7 @@ const ProductDetails = () => {
         auctionState,
         auctionId: completeDraftVal?.id,
         productId: product_Id,
-      })
+      }),
     );
 
     // Navigate to the next page
@@ -886,9 +1087,9 @@ const ProductDetails = () => {
 
     // Add all images to formData
     const allDraftImages = imgtest || [];
-    const filesToUploadAsDraft = allDraftImages.filter(img => img?.file);
+    const filesToUploadAsDraft = allDraftImages.filter((img) => img?.file);
     setTotalUploadingFiles(filesToUploadAsDraft.length);
-    
+
     allDraftImages.forEach((image, index) => {
       if (image?.file) {
         formData.append("images", image.file);
@@ -898,12 +1099,12 @@ const ProductDetails = () => {
     formData.append("title", draftValue.itemName || productDetailsint.itemName);
     formData.append(
       "categoryId",
-      draftValue.category || productDetailsint.category
+      draftValue.category || productDetailsint.category,
     );
     if (draftValue.subCategory || productDetailsint.subCategory) {
       formData.append(
         "subCategoryId",
-        draftValue.subCategory || productDetailsint.subCategory
+        draftValue.subCategory || productDetailsint.subCategory,
       );
     }
     if (draftValue.brand || productDetailsint.brand) {
@@ -912,7 +1113,7 @@ const ProductDetails = () => {
     if (valueRadio || productDetailsint.valueRadio) {
       formData.append(
         "usageStatus",
-        valueRadio || productDetailsint.valueRadio
+        valueRadio || productDetailsint.valueRadio,
       );
     }
     if (draftValue.color || productDetailsint.color) {
@@ -924,25 +1125,25 @@ const ProductDetails = () => {
     if (draftValue.landType || productDetailsint.landType) {
       formData.append(
         "landType",
-        draftValue.landType || productDetailsint.landType
+        draftValue.landType || productDetailsint.landType,
       );
     }
     if (draftValue.cameraType || productDetailsint.cameraType) {
       formData.append(
         "cameraType",
-        draftValue.cameraType || productDetailsint.cameraType
+        draftValue.cameraType || productDetailsint.cameraType,
       );
     }
     if (draftValue.carType || productDetailsint.carType) {
       formData.append(
         "carType",
-        draftValue.carType || productDetailsint.carType
+        draftValue.carType || productDetailsint.carType,
       );
     }
     if (draftValue.material || productDetailsint.material) {
       formData.append(
         "material",
-        draftValue.material || productDetailsint.material
+        draftValue.material || productDetailsint.material,
       );
     }
     if (draftValue.memory || productDetailsint.memory) {
@@ -954,40 +1155,51 @@ const ProductDetails = () => {
     if (draftValue.processor || productDetailsint.processor) {
       formData.append(
         "processor",
-        draftValue.processor || productDetailsint.processor
+        draftValue.processor || productDetailsint.processor,
       );
     }
     if (draftValue.ramSize || productDetailsint.ramSize) {
       formData.append(
         "ramSize",
-        draftValue.ramSize || productDetailsint.ramSize
+        draftValue.ramSize || productDetailsint.ramSize,
       );
     }
     if (draftValue.releaseYear || productDetailsint.releaseYear) {
       formData.append(
         "releaseYear",
-        draftValue.releaseYear || productDetailsint.releaseYear
+        draftValue.releaseYear || productDetailsint.releaseYear,
       );
     }
     if (draftValue.screenSize || productDetailsint.screenSize) {
       formData.append(
         "screenSize",
-        draftValue.screenSize || productDetailsint.screenSize
+        draftValue.screenSize || productDetailsint.screenSize,
       );
     }
     const draftCategory = draftValue.category || productDetailsint.category;
-    const isDraftPropCategory = Number(draftCategory) === 7 || Number(draftCategory) === 19 || Number(draftCategory) === 23 || ["properties", "عقارات", "propertiess"].includes(GatogryOptions?.find(o => String(o.value) === String(draftCategory))?.name?.toLowerCase());
+    const isDraftPropCategory =
+      Number(draftCategory) === 7 ||
+      Number(draftCategory) === 19 ||
+      Number(draftCategory) === 23 ||
+      ["properties", "عقارات", "propertiess"].includes(
+        GatogryOptions?.find(
+          (o) => String(o.value) === String(draftCategory),
+        )?.name?.toLowerCase(),
+      );
 
-    if (isDraftPropCategory && (draftValue.totalArea || productDetailsint.totalArea)) {
+    if (
+      isDraftPropCategory &&
+      (draftValue.totalArea || productDetailsint.totalArea)
+    ) {
       formData.append(
         "totalArea",
-        draftValue.totalArea || productDetailsint.totalArea
+        draftValue.totalArea || productDetailsint.totalArea,
       );
     }
     if (draftValue.operatingSystem || productDetailsint.operatingSystem) {
       formData.append(
         "operatingSystem",
-        draftValue.operatingSystem || productDetailsint.operatingSystem
+        draftValue.operatingSystem || productDetailsint.operatingSystem,
       );
     }
     const appendDraftField = (field) => {
@@ -996,48 +1208,72 @@ const ProductDetails = () => {
         formData.append(field, Array.isArray(val) ? JSON.stringify(val) : val);
       }
     };
-    const isDraftCarCategory = Number(draftCategory) === 4 || GatogryOptions?.find(o => String(o.value) === String(draftCategory))?.name?.toLowerCase() === "cars";
+    const isDraftCarCategory =
+      Number(draftCategory) === 4 ||
+      GatogryOptions?.find(
+        (o) => String(o.value) === String(draftCategory),
+      )?.name?.toLowerCase() === "cars";
     if (isDraftCarCategory) {
       [
-        "trim", "regionalSpecs", "kilometers", "insuredInUae", "interiorColor",
-        "warranty", "fuelType", "doors", "transmissionType", "seatingCapacity",
-        "horsepower", "steeringSide", "engineCapacity", "numberOfCylinders", "driverAssistance",
-        "entertainment", "comfort", "exteriorFeatures", "emirate"
+        "trim",
+        "regionalSpecs",
+        "kilometers",
+        "insuredInUae",
+        "interiorColor",
+        "warranty",
+        "fuelType",
+        "doors",
+        "transmissionType",
+        "seatingCapacity",
+        "horsepower",
+        "steeringSide",
+        "engineCapacity",
+        "numberOfCylinders",
+        "driverAssistance",
+        "entertainment",
+        "comfort",
+        "exteriorFeatures",
+        "emirate",
       ].forEach(appendDraftField);
-
     }
-    
+
     if (
       draftValue.regionOfManufacture ||
       productDetailsint.regionOfManufacture
     ) {
       formData.append(
         "regionOfManufacture",
-        draftValue.regionOfManufacture || productDetailsint.regionOfManufacture
+        draftValue.regionOfManufacture || productDetailsint.regionOfManufacture,
       );
     }
-    if (isDraftPropCategory && (draftValue.numberOfFloors || productDetailsint.numberOfFloors)) {
+    if (
+      isDraftPropCategory &&
+      (draftValue.numberOfFloors || productDetailsint.numberOfFloors)
+    ) {
       formData.append(
         "numberOfFloors",
-        draftValue.numberOfFloors || productDetailsint.numberOfFloors
+        draftValue.numberOfFloors || productDetailsint.numberOfFloors,
       );
     }
-    if (isDraftPropCategory && (draftValue.numberOfRooms || productDetailsint.numberOfRooms)) {
+    if (
+      isDraftPropCategory &&
+      (draftValue.numberOfRooms || productDetailsint.numberOfRooms)
+    ) {
       formData.append(
         "numberOfRooms",
-        draftValue.numberOfRooms || productDetailsint.numberOfRooms
+        draftValue.numberOfRooms || productDetailsint.numberOfRooms,
       );
     }
     if (draftValue.itemDescription || productDetailsint.itemDescription) {
       formData.append(
         "description",
-        draftValue.itemDescription || productDetailsint.itemDescription
+        draftValue.itemDescription || productDetailsint.itemDescription,
       );
     }
     if (draftValue.countryId || productDetailsint.countryId) {
       formData.append(
         "countryId",
-        draftValue.countryId || productDetailsint.countryId
+        draftValue.countryId || productDetailsint.countryId,
       );
     }
     if (draftValue.cityId || productDetailsint.cityId) {
@@ -1054,9 +1290,9 @@ const ProductDetails = () => {
     setIsSavingDraft(true);
     setUploadProgress(0);
     setCurrentUploadingFile(0);
-    
+
     const allImagesForDraft = imgtest || [];
-    const filesToUploadInDraft = allImagesForDraft.filter(img => img?.file);
+    const filesToUploadInDraft = allImagesForDraft.filter((img) => img?.file);
     setTotalUploadingFiles(filesToUploadInDraft.length);
 
     const draftMetadataOnlyFormData = new FormData();
@@ -1069,7 +1305,7 @@ const ProductDetails = () => {
     try {
       const response = await authAxios.post(
         api.app.auctions.setAssdraft,
-        draftMetadataOnlyFormData
+        draftMetadataOnlyFormData,
       );
 
       if (response.status === 200 || response.data?.success) {
@@ -1083,18 +1319,18 @@ const ProductDetails = () => {
 
             const imgFormData = new FormData();
             imgFormData.append("image", image.file);
-            
+
             await authAxios.patch(
-              api.app.Imagees.upload(draftId, true), 
+              api.app.Imagees.upload(draftId, true),
               imgFormData,
               {
                 onUploadProgress: (progressEvent) => {
                   const percentCompleted = Math.round(
-                    (progressEvent.loaded * 100) / progressEvent.total
+                    (progressEvent.loaded * 100) / progressEvent.total,
                   );
                   setUploadProgress(percentCompleted);
                 },
-              }
+              },
             );
           }
         }
@@ -1104,12 +1340,23 @@ const ProductDetails = () => {
       } else {
         toast.error(
           selectedContent[localizationKeys.errorSavingDraft] ||
-            "Error saving draft"
+            "Error saving draft",
         );
       }
     } catch (error) {
       console.error("Error saving draft:", error);
-      toast.error(error.response?.data?.message || "Error while saving draft");
+      const errorMessage = error.response?.data?.message;
+      let displayError = "Error while saving draft";
+      if (typeof errorMessage === "string") {
+        displayError = errorMessage;
+      } else if (typeof errorMessage === "object" && errorMessage !== null) {
+        displayError =
+          errorMessage[lang] ||
+          errorMessage.en ||
+          errorMessage.ar ||
+          displayError;
+      }
+      toast.error(displayError);
     } finally {
       setIsSavingDraft(false);
     }
@@ -1124,7 +1371,7 @@ const ProductDetails = () => {
     ...(customFromData?.regularCustomFields || []),
   ];
   const adjustedcarField = carField.filter(
-    (field) => field.subCategoryId !== null || field.categoryId === 4
+    (field) => field.subCategoryId !== null || field.categoryId === 4,
   );
 
   useEffect(() => {
@@ -1153,22 +1400,27 @@ const ProductDetails = () => {
           loadingSubGatogry ||
           isLoadingAuctionById ||
           loadingAllBranOptions ||
-          isUpdating 
+          isUpdating
         }
       >
-        <LoadingProgress 
+        <LoadingProgress
           status={
-            isSavingDraft || isUpdating 
-              ? currentUploadingFile > 0 
+            isSavingDraft || isUpdating
+              ? currentUploadingFile > 0
                 ? selectedContent[localizationKeys.uploadingPhoto]
                     ?.replace("{current}", currentUploadingFile)
                     ?.replace("{total}", totalUploadingFiles)
-                : selectedContent[localizationKeys.bulkUploading]?.replace("{count}", totalUploadingFiles)
+                : selectedContent[localizationKeys.bulkUploading]?.replace(
+                    "{count}",
+                    totalUploadingFiles,
+                  )
               : ""
-          } 
-          currentStep={currentUploadingFile > 0 ? currentUploadingFile : undefined}
+          }
+          currentStep={
+            currentUploadingFile > 0 ? currentUploadingFile : undefined
+          }
           totalSteps={totalUploadingFiles > 0 ? totalUploadingFiles : undefined}
-          progress={isSavingDraft || isUpdating ? uploadProgress : undefined} 
+          progress={isSavingDraft || isUpdating ? uploadProgress : undefined}
         />
       </Dimmer>
       <div className="mt-44 animate-in max-w-[1366px] md:mx-auto  px-4 ">
@@ -1224,7 +1476,8 @@ const ProductDetails = () => {
                 warranty: productDetailsint.warranty || "",
                 fuelType: productDetailsint.fuelType || "petrol",
                 doors: productDetailsint.doors || "4",
-                transmissionType: productDetailsint.transmissionType || "automatic",
+                transmissionType:
+                  productDetailsint.transmissionType || "automatic",
                 seatingCapacity: productDetailsint.seatingCapacity || "5",
                 horsepower: productDetailsint.horsepower || "100-199",
                 steeringSide: productDetailsint.steeringSide || "left",
@@ -1281,7 +1534,7 @@ const ProductDetails = () => {
                         onChange={(value) => {
                           setCategoryId(value);
                           const fieldOption = GatogryOptions.find(
-                            (go) => go.value === value
+                            (go) => go.value === value,
                           );
                           // onReload();
                           setMaxStartPrice(fieldOption.maxStartPrice);
@@ -1293,7 +1546,7 @@ const ProductDetails = () => {
                             productDetails({
                               category: value,
                               itemName: draftValue.itemName,
-                            })
+                            }),
                           );
                         }}
                       />
@@ -1326,7 +1579,7 @@ const ProductDetails = () => {
                           .map((e) => {
                             const isDropdown =
                               customFromData?.arrayCustomFields?.some(
-                                (field) => field.key === e.key
+                                (field) => field.key === e.key,
                               );
 
                             return (
@@ -1347,15 +1600,15 @@ const ProductDetails = () => {
                                       e?.key === "countryId"
                                         ? AllCountriesOptions
                                         : e?.key === "cityId"
-                                        ? AllCitiesOptions
-                                        : allCustomFileOptions[e?.key]?.map(
-                                            (option) => ({
-                                              ...option,
-                                              text: isArabic
-                                                ? option.text.split(" | ")[1]
-                                                : option.text.split(" | ")[0],
-                                            })
-                                          )
+                                          ? AllCitiesOptions
+                                          : allCustomFileOptions[e?.key]?.map(
+                                              (option) => ({
+                                                ...option,
+                                                text: isArabic
+                                                  ? option.text.split(" | ")[1]
+                                                  : option.text.split(" | ")[0],
+                                              }),
+                                            )
                                     }
                                     onChange={(selectedValue) =>
                                       setCountriesId(selectedValue)
@@ -1392,7 +1645,9 @@ const ProductDetails = () => {
                                 name="brand"
                                 type="text"
                                 label={selectedContent[localizationKeys.brand]}
-                                placeholder={selectedContent[localizationKeys.brand]}
+                                placeholder={
+                                  selectedContent[localizationKeys.brand]
+                                }
                                 value={formik.values.brand}
                                 onChange={(e) => {
                                   const value = e.target.value;
@@ -1402,35 +1657,44 @@ const ProductDetails = () => {
                                 onFocus={() => setIsDropdownOpen(true)}
                               />
                               <button
-                                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                                onClick={() =>
+                                  setIsDropdownOpen((prev) => !prev)
+                                }
                                 className="absolute right-4 top-4 sm:right-3 sm:top-4 text-black hover:text-gray-70"
                                 aria-label="Toggle Dropdown"
                                 type="button"
                               >
-                                {isDropdownOpen && brandSuggestions.length > 0 && (
-                                  <MdArrowDropDown className="w-5 h-5" />
-                                )}
+                                {isDropdownOpen &&
+                                  brandSuggestions.length > 0 && (
+                                    <MdArrowDropDown className="w-5 h-5" />
+                                  )}
                               </button>
-                              {isDropdownOpen && brandSuggestions.length > 0 && (
-                                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
-                                  <ul>
-                                    {brandSuggestions.map((suggestion, index) => (
-                                      <li
-                                        key={index}
-                                        onClick={() => {
-                                          formik.setFieldValue("brand", suggestion.text);
-                                          setBrandInput(suggestion.text);
-                                          setBrandSuggestions([]);
-                                          setIsDropdownOpen(false);
-                                        }}
-                                        className="cursor-pointer hover:bg-gray-200 px-4 py-2"
-                                      >
-                                        {suggestion.text}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
+                              {isDropdownOpen &&
+                                brandSuggestions.length > 0 && (
+                                  <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+                                    <ul>
+                                      {brandSuggestions.map(
+                                        (suggestion, index) => (
+                                          <li
+                                            key={index}
+                                            onClick={() => {
+                                              formik.setFieldValue(
+                                                "brand",
+                                                suggestion.text,
+                                              );
+                                              setBrandInput(suggestion.text);
+                                              setBrandSuggestions([]);
+                                              setIsDropdownOpen(false);
+                                            }}
+                                            className="cursor-pointer hover:bg-gray-200 px-4 py-2"
+                                          >
+                                            {suggestion.text}
+                                          </li>
+                                        ),
+                                      )}
+                                    </ul>
+                                  </div>
+                                )}
                             </div>
                           }
                           modelNode={
@@ -1439,8 +1703,16 @@ const ProductDetails = () => {
                                 <FormikInput
                                   min={0}
                                   name={`${customFromData?.model?.key}`}
-                                  label={lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}
-                                  placeholder={lang === "en" ? customFromData?.model?.labelEn : customFromData?.model?.labelAr}
+                                  label={
+                                    lang === "en"
+                                      ? customFromData?.model?.labelEn
+                                      : customFromData?.model?.labelAr
+                                  }
+                                  placeholder={
+                                    lang === "en"
+                                      ? customFromData?.model?.labelEn
+                                      : customFromData?.model?.labelAr
+                                  }
                                 />
                               </div>
                             ) : null
@@ -1450,8 +1722,16 @@ const ProductDetails = () => {
                               <FormikTextArea
                                 name="itemDescription"
                                 type={"text"}
-                                label={selectedContent[localizationKeys.itemDescription]}
-                                placeholder={selectedContent[localizationKeys.writeItemDescription]}
+                                label={
+                                  selectedContent[
+                                    localizationKeys.itemDescription
+                                  ]
+                                }
+                                placeholder={
+                                  selectedContent[
+                                    localizationKeys.writeItemDescription
+                                  ]
+                                }
                               />
                             </div>
                           }
@@ -1459,10 +1739,15 @@ const ProductDetails = () => {
                       </div>
                     )}
 
-                    {(formik.values.subCategory && categoryId !== 4) &&
+                    {formik.values.subCategory &&
+                      categoryId !== 4 &&
                       categoryId !== 3 &&
                       categoryId !== 7 &&
-                      !["Properties", "عقارات", "Propertiess"].includes(GatogryOptions?.find(opt => String(opt.value) === String(categoryId))?.name) && (
+                      !["Properties", "عقارات", "Propertiess"].includes(
+                        GatogryOptions?.find(
+                          (opt) => String(opt.value) === String(categoryId),
+                        )?.name,
+                      ) && (
                         <>
                           <div className="col-span-2 sm:col-span-1  md:col-span-2 relative">
                             <FormikInput
@@ -1499,7 +1784,7 @@ const ProductDetails = () => {
                                       onClick={() => {
                                         formik.setFieldValue(
                                           "brand",
-                                          suggestion.text
+                                          suggestion.text,
                                         );
                                         setBrandInput(suggestion.text);
                                         setBrandSuggestions([]);
@@ -1544,7 +1829,9 @@ const ProductDetails = () => {
                             selectedContent[localizationKeys.itemDescription]
                           }
                           placeholder={
-                            selectedContent[localizationKeys.writeItemDescription]
+                            selectedContent[
+                              localizationKeys.writeItemDescription
+                            ]
                           }
                         />
                       </div>
@@ -1635,11 +1922,12 @@ const ProductDetails = () => {
                     "عقارات",
                     "مجوهرات",
                     "سيارات",
-                    "Propertiess"
+                    "Propertiess",
                   ].includes(
                     GatogryOptions.find(
-                      (opt) => String(opt.value) === String(formik.values.category)
-                    )?.name
+                      (opt) =>
+                        String(opt.value) === String(formik.values.category),
+                    )?.name,
                   ) &&
                     !isEditing && (
                       <div className="mb-6">
@@ -1658,8 +1946,8 @@ const ProductDetails = () => {
                             formik.errors.pdfDocument
                               ? "border-primary text-primary bg-primary-veryLight"
                               : relatedDocuments.length > 0
-                              ? "border-primary-light bg-primary-veryLight"
-                              : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
+                                ? "border-primary-light bg-primary-veryLight"
+                                : "border-gray-med hover:border-primary bg-gray-light hover:bg-primary-veryLight"
                           }`}
                         >
                           <input
@@ -1679,14 +1967,14 @@ const ProductDetails = () => {
                                       selectedContent[
                                         localizationKeys
                                           .fileSizeShouldBeLessThan10MB
-                                      ]
+                                      ],
                                     );
                                   }
                                 } else {
                                   toast.error(
                                     selectedContent[
                                       localizationKeys.pleaseUploadPdfOnly
-                                    ]
+                                    ],
                                   );
                                 }
                               }
@@ -1749,7 +2037,7 @@ const ProductDetails = () => {
                                       formik.setFieldValue("pdfDocument", null);
                                       const input =
                                         document.querySelector(
-                                          'input[type="file"]'
+                                          'input[type="file"]',
                                         );
                                       if (input) {
                                         input.value = "";
@@ -1812,23 +2100,37 @@ const ProductDetails = () => {
                         productDetailsint?.auctionState === "DRAFTED"
                       ) &&
                         !isEditing && (
-                          <div
+                          <button
+                            type="button"
+                            disabled={loadingImg}
                             onClick={(e) => SaveAuctionAsDraft(e)}
-                            className="bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] pt-3.5 text-center cursor-pointer"
+                            className={`bg-white border-primary-dark border-[1px] text-primary rounded-lg sm:w-[136px] w-full h-[48px] flex items-center justify-center transition-all duration-300 ${loadingImg ? "opacity-50 cursor-not-allowed" : "hover:bg-primary/5 cursor-pointer"}`}
                           >
-                            {selectedContent[localizationKeys.saveAsDraft]}
-                          </div>
+                            {isSavingDraft ? (
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                                {selectedContent[localizationKeys.saving]}
+                              </div>
+                            ) : (
+                              selectedContent[localizationKeys.saveAsDraft]
+                            )}
+                          </button>
                         )}
                     </div>
                     {isEditing ? (
                       <button
                         type="submit"
-                        className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN"
+                        disabled={loadingImg}
+                        className={`bg-primary ${loadingImg ? "opacity-50 cursor-not-allowed" : "hover:bg-primary-dark shadow-lg"} sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN transition-all duration-300 transform active:scale-95`}
                       >
                         {selectedContent[localizationKeys.Submit]}
                       </button>
                     ) : (
-                      <button className="bg-primary hover:bg-primary-dark sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN">
+                      <button
+                        type="submit"
+                        disabled={loadingImg}
+                        className={`bg-primary ${loadingImg ? "opacity-50 cursor-not-allowed" : "hover:bg-primary-dark shadow-lg"} sm:w-[304px] w-full h-[48px] rounded-lg text-white mt-8 font-normal text-base rtl:font-serifAR ltr:font-serifEN transition-all duration-300 transform active:scale-95`}
+                      >
                         {selectedContent[localizationKeys.next]}
                       </button>
                     )}

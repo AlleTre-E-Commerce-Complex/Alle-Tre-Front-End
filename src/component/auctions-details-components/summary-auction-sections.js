@@ -35,6 +35,7 @@ const SummaryAuctionSections = ({
   setActiveIndexTab,
   status,
   relatedDocuments,
+  currency,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -196,7 +197,7 @@ const SummaryAuctionSections = ({
               {selectedContent[localizationKeys.startingPrice]}
             </p>
             <p className="text-gray-verydark cursor-default text-2xl font-semibold">
-              {formatCurrency(startingPrice)}
+              {formatCurrency(startingPrice, currency)}
             </p>
           </div>
           <div className="space-y-2">
@@ -210,8 +211,8 @@ const SummaryAuctionSections = ({
               </p>
             )}
             <p className="text-gray-verydark cursor-default text-2xl font-semibold">
-              {formatCurrency(lastestBid?.bidAmount) ||
-                formatCurrency(endingPrice) ||
+              {formatCurrency(lastestBid?.bidAmount, currency) ||
+                formatCurrency(endingPrice, currency) ||
                 "--"}
             </p>
           </div>
