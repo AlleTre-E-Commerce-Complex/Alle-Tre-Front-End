@@ -79,6 +79,7 @@ const DraftProducts = ({ OnReload }) => {
               onReload={onReload}
               productId={e?.id} // This is the auctionId for drafts
               Product_id={e?.product?.id} // This is the actual product ID
+              currency={e?.product?.location?.country?.currency}
             />
           ))}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">

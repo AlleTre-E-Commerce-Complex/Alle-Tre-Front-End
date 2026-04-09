@@ -529,11 +529,12 @@ const Home = ({
                                 StartDate={e?.startDate}
                                 isBuyNowAllowed={e?.isBuyNowAllowed}
                                 isMyAuction={e?.isMyAuction}
-                                latestBidAmount={e?.bids[0]?.amount}
+                                latestBidAmount={e?.bids?.[0]?.amount}
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
+                                currency={e?.location?.country?.currency}
                               />
                             ))}
                           </div>
@@ -581,11 +582,12 @@ const Home = ({
                                 StartDate={e?.startDate}
                                 isBuyNowAllowed={e?.isBuyNowAllowed}
                                 isMyAuction={e?.isMyAuction}
-                                latestBidAmount={e?.bids[0]?.amount}
+                                latestBidAmount={e?.bids?.[0]?.amount}
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
+                                currency={e?.location?.country?.currency}
                               />
                             ))}
                           </div>
@@ -643,6 +645,7 @@ const Home = ({
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
+                                currency={e?.location?.country?.currency}
                               />
                             ))}
                           </div>
@@ -698,6 +701,7 @@ const Home = ({
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
+                                currency={e?.location?.country?.currency}
                               />
                             ))}
                           </div>
@@ -742,12 +746,13 @@ const Home = ({
                                 StartDate={e?.startDate}
                                 isBuyNowAllowed={e?.isBuyNowAllowed}
                                 isMyAuction={e?.isMyAuction}
-                                latestBidAmount={e?.bids[0]?.amount}
+                                latestBidAmount={e?.bids?.[0]?.amount}
                                 CurrentBid={e?.currentBid?.bidAmount}
                                 startBidAmount={e?.startBidAmount}
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
+                                currency={e?.location?.country?.currency}
                               />
                             ))}
                           </div>
@@ -801,6 +806,7 @@ const Home = ({
                                 usageStatus={e?.product?.usageStatus}
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
+                                currency={e?.location?.country?.currency}
                               />
                             ))}
                           </div>
@@ -840,10 +846,11 @@ const Home = ({
                               StartDate={e?.startDate}
                               isBuyNowAllowed={e?.isBuyNowAllowed}
                               isMyAuction={e?.isMyAuction}
-                              latestBidAmount={e?.bids[0]?.amount}
+                              latestBidAmount={e?.bids?.[0]?.amount}
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
                               usageStatus={e?.product?.usageStatus}
+                                 currency={e?.product?.location?.country?.currency}
                               category={e?.product?.categoryId}
                             />
                           ))}
@@ -890,6 +897,7 @@ const Home = ({
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
+                                 currency={e?.product?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                             />

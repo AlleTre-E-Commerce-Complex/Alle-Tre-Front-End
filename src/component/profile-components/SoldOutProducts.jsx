@@ -77,6 +77,7 @@ const SoldOutProducts = ({ OnReload }) => {
               onReload={onReload}
               productId={e?.id}
               Product_id={e?.product?.id}
+              currency={e?.location?.country?.currency}
             />
           ))}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">

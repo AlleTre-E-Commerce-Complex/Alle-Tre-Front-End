@@ -28,6 +28,7 @@ const ProductCard = ({
   category,
   isSaved,
   onReload,
+  currency,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -408,7 +409,7 @@ const ProductCard = ({
               {selectedContent[localizationKeys.price]}
             </p>
             <p className="text-xs sm:text-sm text-gray-800 dark:text-white font-bold leading-none tracking-tight truncate">
-              {formatCurrency(price)}
+              {formatCurrency(price, currency)}
             </p>
           </div>
           <div className="shrink-0">

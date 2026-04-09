@@ -565,6 +565,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                             />
                           ))}
@@ -608,6 +609,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                             />
                           ))}
@@ -653,6 +655,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                             />
@@ -696,6 +699,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                             />
@@ -738,6 +742,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                             />
                           ))}
@@ -778,6 +783,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                             />
@@ -819,6 +825,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               CurrentBid={e?.currentBid?.bidAmount}
                               startBidAmount={e?.startBidAmount}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                             />
                           ))}
@@ -859,6 +866,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
+                               currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                             />

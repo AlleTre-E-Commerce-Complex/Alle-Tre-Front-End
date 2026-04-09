@@ -25,6 +25,7 @@ const ProductRowTable = ({
   productId,
   onReload,
   Product_id,
+  currency,
 }) => {
   const history = useHistory();
   const { run, isLoading } = useAxios([]);
@@ -124,7 +125,7 @@ const ProductRowTable = ({
         <div className="flex-grow flex flex-col gap-1 md:gap-2">
           <div className="flex flex-wrap items-center gap-2 md:gap-3">
             <span className="text-[#FDC02A] font-bold text-base md:text-lg">
-              {formatCurrency(price)}
+              {formatCurrency(price, currency)}
             </span>
             <span className="bg-gray-100 dark:bg-[#2A3142] text-gray-600 dark:text-gray-300 text-[9px] md:text-[10px] uppercase font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">
               {price > 100 ? selectedContent[localizationKeys.premium] : selectedContent[localizationKeys.newArrival]}
