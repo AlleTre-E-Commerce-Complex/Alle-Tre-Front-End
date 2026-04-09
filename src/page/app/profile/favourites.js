@@ -82,6 +82,7 @@ const Favourites = () => {
                   auctionId={e?.auction?.id}
                   price={e?.auction?.acceptedAmount || e?.auction?.startBidAmount}
                   title={e?.auction?.product?.title}
+                  currency={e?.auction?.product?.location?.country?.currency}
                   status={e?.auction?.status}
                   adsImg={e?.auction?.product?.images}
                   totalBods={e?.auction?._count?.bids}
@@ -104,6 +105,7 @@ const Favourites = () => {
                   id={e.product.id}
                   adsImg={e.product.images}
                   title={e.product.title}
+                  currency={e.product.country?.currency}
                   price={e.product.ProductListingPrice}
                   usageStatus={e.product.usageStatus}
                   category={e.product.categoryId}
