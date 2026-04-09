@@ -451,6 +451,12 @@ const ListProductDetails = () => {
 
   const handleUpdate = async (rawValues) => {
     const values = getCleanedValues(rawValues);
+    
+    if ((imgtest?.length || 0) < 3) {
+      toast.error(selectedContent[localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos]);
+      return;
+    }
+
     setIsUpdating(true);
     try {
       const formData = new FormData();
@@ -573,12 +579,19 @@ const ListProductDetails = () => {
       }
     } catch (error) {
       console.error("Error updating product:", error);
-      toast.error(
-        error?.response?.data?.message ||
-          selectedContent[
-            localizationKeys.somethingWentWrongPleaseTryAgainLater
-          ],
-      );
+      const errorMessage = error?.response?.data?.message;
+      
+      let displayError = selectedContent[localizationKeys.somethingWentWrongPleaseTryAgainLater];
+      
+      if (typeof errorMessage === "string") {
+        displayError = errorMessage;
+      } else if (typeof errorMessage === "object" && errorMessage !== null) {
+        displayError = errorMessage[lang] || errorMessage.en || errorMessage.ar || displayError;
+      } else if (error?.message) {
+        displayError = error.message;
+      }
+
+      toast.error(displayError);
     } finally {
       setIsUpdating(false);
     }
@@ -773,7 +786,14 @@ const ListProductDetails = () => {
       }
     } catch (error) {
       console.error("Error saving draft:", error);
-      toast.error(error?.response?.data?.message );
+      const errorMessage = error?.response?.data?.message;
+      let displayError = selectedContent[localizationKeys.errorSavingDraft];
+      if (typeof errorMessage === "string") {
+        displayError = errorMessage;
+      } else if (typeof errorMessage === "object" && errorMessage !== null) {
+        displayError = errorMessage[lang] || errorMessage.en || errorMessage.ar || displayError;
+      }
+      toast.error(displayError);
     } finally {
       setIsSavingDraft(false);
     }
@@ -1443,25 +1463,36 @@ const ListProductDetails = () => {
                       </button>
 
                       {!(auctionState === "DRAFTED") && !isEditing && (
-                        <div
+                        <button
+                          type="button"
+                          disabled={loadingImg}
                           onClick={(e) => SaveProductAsDraft(e)}
-                          className="bg-transparent border-primary dark:border-yellow border-[1px] text-primary dark:text-yellow hover:bg-primary/5 dark:hover:bg-yellow/10 rounded-lg sm:w-[136px] w-full h-[48px] flex items-center justify-center cursor-pointer transition-all duration-300 font-medium"
+                          className={`bg-transparent border-primary dark:border-yellow border-[1px] text-primary dark:text-yellow ${loadingImg ? "opacity-50 cursor-not-allowed" : "hover:bg-primary/5 dark:hover:bg-yellow/10 hover:shadow-md"} rounded-lg sm:w-[136px] w-full h-[48px] flex items-center justify-center transition-all duration-300 font-medium`}
                         >
-                          {selectedContent[localizationKeys.saveAsDraft]}
-                        </div>
+                          {isSavingDraft ? (
+                            <div className="flex items-center gap-2">
+                              <div className="w-4 h-4 border-2 border-primary dark:border-yellow border-t-transparent rounded-full animate-spin"></div>
+                              {selectedContent[localizationKeys.saving]}
+                            </div>
+                          ) : (
+                            selectedContent[localizationKeys.saveAsDraft]
+                          )}
+                        </button>
                       )}
 
                       {isEditing ? (
                         <button
                           type="submit"
-                          className="bg-primary hover:bg-primary-dark sm:w-[220px] w-full h-[48px] rounded-lg text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors"
+                          disabled={loadingImg}
+                          className={`bg-primary ${loadingImg ? "opacity-50 cursor-not-allowed" : "hover:bg-primary-dark shadow-lg hover:shadow-xl"} sm:w-[220px] w-full h-[48px] rounded-lg text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-all duration-300 transform active:scale-95`}
                         >
                           {selectedContent[localizationKeys.Submit]}
                         </button>
                       ) : (
                         <button
                           type="submit"
-                          className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors flex items-center justify-center gap-2"
+                          disabled={loadingImg}
+                          className={`bg-primary dark:bg-yellow ${loadingImg ? "opacity-50 cursor-not-allowed" : "hover:bg-primary-dark dark:hover:bg-yellow-dark shadow-lg hover:shadow-xl"} sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-all duration-300 flex items-center justify-center gap-2 transform active:scale-95`}
                         >
                           {selectedContent[localizationKeys.next]}
                           <span className="rtl:rotate-180">➤</span>

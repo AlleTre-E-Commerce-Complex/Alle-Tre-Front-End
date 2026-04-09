@@ -229,6 +229,7 @@ const ImageMedia = ({
                 .videoCannotBeTheFirstUploadPleaseUploadAnImageFirstAsItWillBeUsedAsTheCover
             ]
           );
+          if (typeof setLoadingImg === 'function') setLoadingImg(false);
           return;
         }
 
@@ -237,6 +238,7 @@ const ImageMedia = ({
           toast.error(
             selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]
           );
+          if (typeof setLoadingImg === 'function') setLoadingImg(false);
           return;
         }
 
@@ -245,6 +247,7 @@ const ImageMedia = ({
           toast.error(
             selectedContent[localizationKeys.onlyOneVideoFileIsAllowed]
           );
+          if (typeof setLoadingImg === 'function') setLoadingImg(false);
           return;
         }
 
@@ -253,6 +256,7 @@ const ImageMedia = ({
         // Reject if video size exceeds 50MB
         if (videoFile.size > 50 * 1024 * 1024) {
           toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded]);
+          if (typeof setLoadingImg === 'function') setLoadingImg(false);
           return;
         }
 
@@ -262,6 +266,7 @@ const ImageMedia = ({
           const duration = await getVideoDuration(videoFile);
           if (duration > 61) { // 61 to give a tiny buffer for exactly 60s videos
             toast.error(selectedContent[localizationKeys.videoDurationCannotExceed1Minute]);
+            if (typeof setLoadingImg === 'function') setLoadingImg(false);
             return;
           }
         } catch (durationErr) {
@@ -579,6 +584,43 @@ const ImageMedia = ({
     });
   };
 
+  const generateVideoThumbnailFallback = (file) => {
+    return new Promise((resolve) => {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+      video.src = URL.createObjectURL(file);
+      video.onloadedmetadata = () => {
+        // Seek to 0.5 seconds to get a valid frame
+        video.currentTime = 0.5;
+      };
+      video.onseeked = () => {
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob((blob) => {
+            if (blob) {
+              resolve(new File([blob], "thumbnail.jpg", { type: "image/jpeg" }));
+            } else {
+              resolve(null);
+            }
+            window.URL.revokeObjectURL(video.src);
+          }, "image/jpeg", 0.7);
+        } catch (err) {
+          console.error("Canvas thumbnail generation failed:", err);
+          window.URL.revokeObjectURL(video.src);
+          resolve(null);
+        }
+      };
+      video.onerror = () => {
+        window.URL.revokeObjectURL(video.src);
+        resolve(null);
+      };
+    });
+  };
+
   const loadFFmpeg = async () => {
     if (ffmpeg) return ffmpeg;
     const instance = createFFmpeg({
@@ -599,9 +641,13 @@ const ImageMedia = ({
 
   const compressVideo = async (file) => {
     if (!window.crossOriginIsolated) {
-      toast.error("Cross-origin isolation is not enabled. Video compression is restricted by the browser.");
-      console.error("SharedArrayBuffer is not available. Ensure COOP/COEP headers are set.");
-      return file;
+      console.warn("SharedArrayBuffer is not available. Ensure COOP/COEP headers are set for compression.");
+      
+      // Attempt Canvas fallback for thumbnail even if compression is skipped
+      setProcessingStatus("Generating video cover...");
+      const thumbnailFile = await generateVideoThumbnailFallback(file);
+      
+      return { compressedFile: file, thumbnailFile };
     }
 
     setIsCompressing(true);
