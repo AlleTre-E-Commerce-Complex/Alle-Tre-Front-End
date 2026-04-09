@@ -829,6 +829,9 @@ const ar = {
   [localizationKeys.processingPhoto]: "جاري معالجة الصورة {current} من {total}...",
   [localizationKeys.watermarkingPhoto]: "جاري إضافة العلامة المائية للصورة {current} من {total}...",
   [localizationKeys.validatingVideoDuration]: "جاري التحقق من مدة الفيديو...",
+  [localizationKeys.uploadingPhoto]: "جاري رفع الصورة {current} من {total}...",
+  [localizationKeys.uploadingVideo]: "جاري رفع الفيديو...",
+  [localizationKeys.bulkUploading]: "جاري رفع {count} ملفات...",
   [localizationKeys.optimizationFinishedWarning]: "يرجى عدم إغلاق هذه النافذة حتى تنتهي عملية التحسين",
 };
 

@@ -833,6 +833,9 @@ const en = {
   [localizationKeys.processingPhoto]: "Processing photo {current} of {total}...",
   [localizationKeys.watermarkingPhoto]: "Watermarking photo {current} of {total}...",
   [localizationKeys.validatingVideoDuration]: "Validating video duration...",
+  [localizationKeys.uploadingPhoto]: "Uploading photo {current} of {total}...",
+  [localizationKeys.uploadingVideo]: "Uploading video...",
+  [localizationKeys.bulkUploading]: "Uploading {count} files...",
   [localizationKeys.optimizationFinishedWarning]: "Please don't close this window until optimization is finished",
 };
 

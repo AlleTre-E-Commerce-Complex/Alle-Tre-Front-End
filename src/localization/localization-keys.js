@@ -753,6 +753,9 @@ const localizationKeys = {
   processingPhoto: "processingPhoto",
   watermarkingPhoto: "watermarkingPhoto",
   validatingVideoDuration: "validatingVideoDuration",
+  uploadingPhoto: "uploadingPhoto",
+  uploadingVideo: "uploadingVideo",
+  bulkUploading: "bulkUploading",
   optimizationFinishedWarning: "optimizationFinishedWarning",
 };
 
