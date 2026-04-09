@@ -33,8 +33,8 @@ import { useDispatch, useSelector } from "react-redux";
 import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 // import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
+import LoadingProgress from "../../../component/shared/lotties-file/LoadingProgress";
 import localizationKeys from "../../../localization/localization-keys";
-import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdArrowDropDown, MdDelete, MdLock } from "react-icons/md";
 import ImageMedia from "component/create-auction-components/ImageMedia";
@@ -66,6 +66,9 @@ const ProductDetails = () => {
   const [maxStartPrice, setMaxStartPrice] = useState(null);
   const onReload = React.useCallback(() => setForceReload((p) => !p), []);
   const formikRef = useRef(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [totalUploadingFiles, setTotalUploadingFiles] = useState(0);
+  const [currentUploadingFile, setCurrentUploadingFile] = useState(0);
   const productDetailsint = useSelector(
     (state) => state.productDetails.productDetails
   );
@@ -99,99 +102,123 @@ const ProductDetails = () => {
   const handleUpdate = async (rawValues) => {
     const values = getCleanedValues(rawValues);
     setIsUpdating(true);
+    setUploadProgress(0);
+    setCurrentUploadingFile(0);
+
     try {
-      const formData = new FormData();
-      // Append all images to formData
+      const metadataOnlyFormData = new FormData();
+      
+      // We handle images sequentially for real-time feedback
       const allImages = imgtest || [];
-      allImages.forEach((image) => {
-        if (image?.file) {
-          formData.append("images", image.file);
-        }
-      });
-      // Append all other fields from values
-      formData.append("product[title]", values.itemName);
-      formData.append("product[categoryId]", values.category);
+      const filesToUpload = allImages.filter(img => img?.file);
+      setTotalUploadingFiles(filesToUpload.length);
+
+      // Append all fields to metadataOnlyFormData except images
+      metadataOnlyFormData.append("product[title]", values.itemName);
+      metadataOnlyFormData.append("product[categoryId]", values.category);
       if (values.subCategory)
-        formData.append("product[subCategoryId]", values.subCategory);
-      if (values.brand) formData.append("product[brand]", values.brand);
-      if (valueRadio) formData.append("product[usageStatus]", valueRadio);
-      if (values.color) formData.append("product[color]", values.color);
-      if (values.age) formData.append("product[age]", values.age);
+        metadataOnlyFormData.append("product[subCategoryId]", values.subCategory);
+      if (values.brand) metadataOnlyFormData.append("product[brand]", values.brand);
+      if (valueRadio) metadataOnlyFormData.append("product[usageStatus]", valueRadio);
+      if (values.color) metadataOnlyFormData.append("product[color]", values.color);
+      if (values.age) metadataOnlyFormData.append("product[age]", values.age);
       if (values.landType)
-        formData.append("product[landType]", values.landType);
+        metadataOnlyFormData.append("product[landType]", values.landType);
       if (values.cameraType)
-        formData.append("product[cameraType]", values.cameraType);
-      if (values.carType) formData.append("product[carType]", values.carType);
+        metadataOnlyFormData.append("product[cameraType]", values.cameraType);
+      if (values.carType) metadataOnlyFormData.append("product[carType]", values.carType);
       if (values.material)
-        formData.append("product[material]", values.material);
-      if (values.memory) formData.append("product[memory]", values.memory);
-      if (values.model) formData.append("product[model]", values.model);
+        metadataOnlyFormData.append("product[material]", values.material);
+      if (values.memory) metadataOnlyFormData.append("product[memory]", values.memory);
+      if (values.model) metadataOnlyFormData.append("product[model]", values.model);
       if (values.processor)
-        formData.append("product[processor]", values.processor);
-      if (values.ramSize) formData.append("product[ramSize]", values.ramSize);
+        metadataOnlyFormData.append("product[processor]", values.processor);
+      if (values.ramSize) metadataOnlyFormData.append("product[ramSize]", values.ramSize);
       if (values.releaseYear)
-        formData.append("product[releaseYear]", values.releaseYear);
+        metadataOnlyFormData.append("product[releaseYear]", values.releaseYear);
       if (values.screenSize)
-        formData.append("product[screenSize]", values.screenSize);
+        metadataOnlyFormData.append("product[screenSize]", values.screenSize);
       if (values.totalArea)
-        formData.append("product[totalArea]", values.totalArea);
+        metadataOnlyFormData.append("product[totalArea]", values.totalArea);
       if (values.operatingSystem)
-        formData.append("product[operatingSystem]", values.operatingSystem);
-      if (values.trim) formData.append("product[trim]", values.trim);
-      if (values.regionalSpecs) formData.append("product[regionalSpecs]", values.regionalSpecs);
-      if (values.kilometers) formData.append("product[kilometers]", values.kilometers);
-      if (values.insuredInUae) formData.append("product[insuredInUae]", values.insuredInUae);
-      if (values.interiorColor) formData.append("product[interiorColor]", values.interiorColor);
-      if (values.warranty) formData.append("product[warranty]", values.warranty);
-      if (values.fuelType) formData.append("product[fuelType]", values.fuelType);
-      if (values.doors) formData.append("product[doors]", values.doors);
-      if (values.transmissionType) formData.append("product[transmissionType]", values.transmissionType);
-      if (values.seatingCapacity) formData.append("product[seatingCapacity]", values.seatingCapacity);
-      if (values.horsepower) formData.append("product[horsepower]", values.horsepower);
-      if (values.steeringSide) formData.append("product[steeringSide]", values.steeringSide);
-      if (values.engineCapacity) formData.append("product[engineCapacity]", values.engineCapacity);
-      if (values.numberOfCylinders) formData.append("product[numberOfCylinders]", values.numberOfCylinders);
-      if (values.driverAssistance?.length) formData.append("product[driverAssistance]", JSON.stringify(values.driverAssistance));
-      if (values.entertainment?.length) formData.append("product[entertainment]", JSON.stringify(values.entertainment));
-      if (values.comfort?.length) formData.append("product[comfort]", JSON.stringify(values.comfort));
-      if (values.exteriorFeatures?.length) formData.append("product[exteriorFeatures]", JSON.stringify(values.exteriorFeatures));
-      if (values.emirate) formData.append("product[emirate]", values.emirate);
+        metadataOnlyFormData.append("product[operatingSystem]", values.operatingSystem);
+      if (values.trim) metadataOnlyFormData.append("product[trim]", values.trim);
+      if (values.regionalSpecs) metadataOnlyFormData.append("product[regionalSpecs]", values.regionalSpecs);
+      if (values.kilometers) metadataOnlyFormData.append("product[kilometers]", values.kilometers);
+      if (values.insuredInUae) metadataOnlyFormData.append("product[insuredInUae]", values.insuredInUae);
+      if (values.interiorColor) metadataOnlyFormData.append("product[interiorColor]", values.interiorColor);
+      if (values.warranty) metadataOnlyFormData.append("product[warranty]", values.warranty);
+      if (values.fuelType) metadataOnlyFormData.append("product[fuelType]", values.fuelType);
+      if (values.doors) metadataOnlyFormData.append("product[doors]", values.doors);
+      if (values.transmissionType) metadataOnlyFormData.append("product[transmissionType]", values.transmissionType);
+      if (values.seatingCapacity) metadataOnlyFormData.append("product[seatingCapacity]", values.seatingCapacity);
+      if (values.horsepower) metadataOnlyFormData.append("product[horsepower]", values.horsepower);
+      if (values.steeringSide) metadataOnlyFormData.append("product[steeringSide]", values.steeringSide);
+      if (values.engineCapacity) metadataOnlyFormData.append("product[engineCapacity]", values.engineCapacity);
+      if (values.numberOfCylinders) metadataOnlyFormData.append("product[numberOfCylinders]", values.numberOfCylinders);
+      if (values.driverAssistance?.length) metadataOnlyFormData.append("product[driverAssistance]", JSON.stringify(values.driverAssistance));
+      if (values.entertainment?.length) metadataOnlyFormData.append("product[entertainment]", JSON.stringify(values.entertainment));
+      if (values.comfort?.length) metadataOnlyFormData.append("product[comfort]", JSON.stringify(values.comfort));
+      if (values.exteriorFeatures?.length) metadataOnlyFormData.append("product[exteriorFeatures]", JSON.stringify(values.exteriorFeatures));
+      if (values.emirate) metadataOnlyFormData.append("product[emirate]", values.emirate);
 
       if (values.regionOfManufacture)
-        formData.append(
+        metadataOnlyFormData.append(
           "product[regionOfManufacture]",
           values.regionOfManufacture
         );
       if (values.numberOfFloors)
-        formData.append("product[numberOfFloors]", values.numberOfFloors);
+        metadataOnlyFormData.append("product[numberOfFloors]", values.numberOfFloors);
       if (values.numberOfRooms)
-        formData.append("product[numberOfRooms]", values.numberOfRooms);
+        metadataOnlyFormData.append("product[numberOfRooms]", values.numberOfRooms);
       if (values.itemDescription)
-        formData.append("product[description]", values.itemDescription);
+        metadataOnlyFormData.append("product[description]", values.itemDescription);
       if (values.countryId)
-        formData.append("product[countryId]", values.countryId);
-      if (values.cityId) formData.append("product[cityId]", values.cityId);
+        metadataOnlyFormData.append("product[countryId]", values.countryId);
+      if (values.cityId) metadataOnlyFormData.append("product[cityId]", values.cityId);
 
-      // Handle related documents if any
       if (relatedDocuments?.length > 0) {
         relatedDocuments.forEach((doc) => {
-          formData.append("relatedDocuments", doc);
+          metadataOnlyFormData.append("relatedDocuments", doc);
         });
       }
 
-      // Add auctionId if needed for the update API
       if (auctionId) {
-        formData.append("auctionId", auctionId);
+        metadataOnlyFormData.append("auctionId", auctionId);
       }
 
-      // Send the update request
+      // 1. Update/Create the auction with metadata first
       const response = await authAxios.put(
         api.app.auctions.updateAuction(auctionId),
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        metadataOnlyFormData
       );
 
       if (response.status === 200) {
+        // 2. Upload images sequentially
+        if (filesToUpload.length > 0) {
+          for (let i = 0; i < filesToUpload.length; i++) {
+            const image = filesToUpload[i];
+            setCurrentUploadingFile(i + 1);
+            setUploadProgress(0);
+
+            const imgFormData = new FormData();
+            imgFormData.append("image", image.file);
+            
+            await authAxios.patch(
+              api.app.Imagees.upload(auctionId, true), 
+              imgFormData,
+              {
+                onUploadProgress: (progressEvent) => {
+                  const percentCompleted = Math.round(
+                    (progressEvent.loaded * 100) / progressEvent.total
+                  );
+                  setUploadProgress(percentCompleted);
+                },
+              }
+            );
+          }
+        }
+
         toast.success(selectedContent[localizationKeys.updatedSuccessfully]);
         history.push(routes.app.profile.myAuctions.default);
         dispatch(productDetails({}));
@@ -858,8 +885,11 @@ const ProductDetails = () => {
     const formData = new FormData();
 
     // Add all images to formData
-    const allImages = imgtest || [];
-    allImages.forEach((image, index) => {
+    const allDraftImages = imgtest || [];
+    const filesToUploadAsDraft = allDraftImages.filter(img => img?.file);
+    setTotalUploadingFiles(filesToUploadAsDraft.length);
+    
+    allDraftImages.forEach((image, index) => {
       if (image?.file) {
         formData.append("images", image.file);
       }
@@ -1022,18 +1052,52 @@ const ProductDetails = () => {
     }
 
     setIsSavingDraft(true);
+    setUploadProgress(0);
+    setCurrentUploadingFile(0);
+    
+    const allImagesForDraft = imgtest || [];
+    const filesToUploadInDraft = allImagesForDraft.filter(img => img?.file);
+    setTotalUploadingFiles(filesToUploadInDraft.length);
+
+    const draftMetadataOnlyFormData = new FormData();
+    for (let [key, value] of formData.entries()) {
+      if (key !== "images") {
+        draftMetadataOnlyFormData.append(key, value);
+      }
+    }
+
     try {
       const response = await authAxios.post(
         api.app.auctions.setAssdraft,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        draftMetadataOnlyFormData
       );
 
       if (response.status === 200 || response.data?.success) {
+        const draftId = response.data?.data?.id || completeDraftVal?.id;
+
+        if (draftId && filesToUploadInDraft.length > 0) {
+          for (let i = 0; i < filesToUploadInDraft.length; i++) {
+            const image = filesToUploadInDraft[i];
+            setCurrentUploadingFile(i + 1);
+            setUploadProgress(0);
+
+            const imgFormData = new FormData();
+            imgFormData.append("image", image.file);
+            
+            await authAxios.patch(
+              api.app.Imagees.upload(draftId, true), 
+              imgFormData,
+              {
+                onUploadProgress: (progressEvent) => {
+                  const percentCompleted = Math.round(
+                    (progressEvent.loaded * 100) / progressEvent.total
+                  );
+                  setUploadProgress(percentCompleted);
+                },
+              }
+            );
+          }
+        }
         toast.success(selectedContent[localizationKeys.draftSavedSuccessfully]);
         history.push(routes.app.profile.myAuctions.drafts);
         dispatch(productDetails({}));
@@ -1082,19 +1146,30 @@ const ProductDetails = () => {
   return (
     <>
       <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
+        className="fixed w-full h-full top-0 bg-white/50 dark:bg-[#09090b]/40 backdrop-blur-xl z-[9999]"
         active={
           isSavingDraft ||
           isLoading ||
           loadingSubGatogry ||
           isLoadingAuctionById ||
           loadingAllBranOptions ||
-          isUpdating ||
-          loadingImg
+          isUpdating 
         }
-        inverted
       >
-        <LoadingTest3arbon />
+        <LoadingProgress 
+          status={
+            isSavingDraft || isUpdating 
+              ? currentUploadingFile > 0 
+                ? selectedContent[localizationKeys.uploadingPhoto]
+                    ?.replace("{current}", currentUploadingFile)
+                    ?.replace("{total}", totalUploadingFiles)
+                : selectedContent[localizationKeys.bulkUploading]?.replace("{count}", totalUploadingFiles)
+              : ""
+          } 
+          currentStep={currentUploadingFile > 0 ? currentUploadingFile : undefined}
+          totalSteps={totalUploadingFiles > 0 ? totalUploadingFiles : undefined}
+          progress={isSavingDraft || isUpdating ? uploadProgress : undefined} 
+        />
       </Dimmer>
       <div className="mt-44 animate-in max-w-[1366px] md:mx-auto  px-4 ">
         {/* <Loader active /> */}

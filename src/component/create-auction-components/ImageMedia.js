@@ -197,6 +197,7 @@ const ImageMedia = ({
     if (!files) return;
 
     try {
+      if (typeof setLoadingImg === 'function') setLoadingImg(true);
       const filesArray = Array.from(files);
 
       // First, check if we're trying to upload a video
@@ -325,9 +326,27 @@ const ImageMedia = ({
         // Handle backend update in edit mode
         if (isEditMode && auctionId) {
           try {
+            setIsCompressing(true);
+            const filesToUpload = newImages.filter(img => img?.file);
+            let currentUploadCount = 0;
+
             for (let i = 0; i < newImages.length; i++) {
               const img = newImages[i];
               if (img?.file) {
+                currentUploadCount++;
+                setProcessingStatus(
+                  selectedContent[
+                    img.isVideo
+                      ? localizationKeys.uploadingVideo
+                      : localizationKeys.uploadingPhoto
+                  ]
+                    ?.replace("{current}", currentUploadCount)
+                    ?.replace("{total}", filesToUpload.length)
+                );
+                setProcessingProgress(
+                  Math.round((currentUploadCount / filesToUpload.length) * 100)
+                );
+
                 const formData = new FormData();
                 formData.append("image", img.file);
                 const response = await runUpload(
@@ -350,56 +369,50 @@ const ImageMedia = ({
             console.error("Upload error:", uploadError);
             toast.error(selectedContent[localizationKeys.failedToUploadImage]);
             setimgtest(images); // Revert on error
+          } finally {
+            setIsCompressing(false);
+            setProcessingStatus("");
           }
         }
       } else {
         setIsCompressing(true);
+        setProcessingStatus(selectedContent[localizationKeys.processingPhoto]?.replace("{current}", 1)?.replace("{total}", imageFiles.length));
         setProcessingProgress(0);
-        const processedFiles = [];
-        
-        // Sequential processing for better stability and performance
-        for (let i = 0; i < imageFiles.length; i++) {
-          const file = imageFiles[i];
-          const progressStep = Math.round(((i) / imageFiles.length) * 100);
-          setProcessingProgress(progressStep);
-          setProcessingStatus(
-            selectedContent[localizationKeys.processingPhoto]
-              ?.replace("{current}", i + 1)
-              ?.replace("{total}", imageFiles.length)
-          );
 
-          try {
-            // STEP 1: Compress first - much faster to process smaller files
-            const compressedFile = await compressImage(file);
-            setProcessingStatus(
-              selectedContent[localizationKeys.watermarkingPhoto]
-                ?.replace("{current}", i + 1)
-                ?.replace("{total}", imageFiles.length)
-            );
-            // STEP 2: Watermark second - canvas operations are faster on compressed images
-            const watermarkedFile = await addImageWatermark(compressedFile);
-            
-            processedFiles.push({
-              file: watermarkedFile,
-              imageLink: URL.createObjectURL(watermarkedFile),
-              id: file.name,
-              isVideo: false,
-            });
-          } catch (err) {
-            console.error(`Error processing file ${file.name}:`, err);
-            // Fallback to original if processing fails
-            processedFiles.push({
-              file: file,
-              imageLink: URL.createObjectURL(file),
-              id: file.name,
-              isVideo: false,
-            });
-          }
-        }
+        // Pre-load watermark once to save time
+        const preloadedWatermark = await loadImage(watermarkImage);
+
+        const processedFiles = await Promise.all(
+          imageFiles.map(async (file, i) => {
+            try {
+              // STEP 1: Compress first - web worker based, safe for parallel
+              const compressedFile = await compressImage(file);
+              // STEP 2: Watermark second - using pre-loaded watermark image
+              const watermarkedFile = await addImageWatermark(
+                compressedFile,
+                preloadedWatermark,
+              );
+
+              return {
+                file: watermarkedFile,
+                imageLink: URL.createObjectURL(watermarkedFile),
+                id: file.name,
+                isVideo: false,
+              };
+            } catch (err) {
+              console.error(`Error processing file ${file.name}:`, err);
+              // Fallback to original if processing fails
+              return {
+                file: file,
+                imageLink: URL.createObjectURL(file),
+                id: file.name,
+                isVideo: false,
+              };
+            }
+          }),
+        );
 
         setProcessingProgress(100);
-        setIsCompressing(false);
-        setProcessingStatus("");
 
         // Update state with images
         let newImages;
@@ -420,9 +433,27 @@ const ImageMedia = ({
         // Handle backend update in edit mode
         if (isEditMode && auctionId) {
           try {
+            setIsCompressing(true);
+            const filesToUpload = newImages.filter(img => img?.file);
+            let currentUploadCount = 0;
+
             for (let i = 0; i < newImages.length; i++) {
               const img = newImages[i];
               if (img?.file) {
+                currentUploadCount++;
+                setProcessingStatus(
+                  selectedContent[
+                    img.isVideo
+                      ? localizationKeys.uploadingVideo
+                      : localizationKeys.uploadingPhoto
+                  ]
+                    ?.replace("{current}", currentUploadCount)
+                    ?.replace("{total}", filesToUpload.length)
+                );
+                setProcessingProgress(
+                  Math.round((currentUploadCount / filesToUpload.length) * 100)
+                );
+
                 const formData = new FormData();
                 formData.append("image", img.file);
                 const response = await runUpload(
@@ -445,6 +476,9 @@ const ImageMedia = ({
             console.error("Upload error:", uploadError);
             toast.error(selectedContent[localizationKeys.failedToUploadImage]);
             setimgtest(images); // Revert on error
+          } finally {
+            setIsCompressing(false);
+            setProcessingStatus("");
           }
         }
       }
@@ -452,28 +486,35 @@ const ImageMedia = ({
       console.error("Error handling files:", error);
       toast.error("Failed to process files");
       setimgtest(images);
+    } finally {
+      setIsCompressing(false);
+      setProcessingStatus("");
+      setProcessingProgress(0);
+      if (typeof setLoadingImg === "function") {
+        setLoadingImg(false);
+      }
     }
   };
 
-  const addImageWatermark = async (file) => {
+  const loadImage = (src) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  };
+
+  const addImageWatermark = async (file, preloadedWatermark = null) => {
     if (file.type.startsWith("video/")) {
       return file;
     }
 
-    const loadImage = (src) => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = () => resolve(img);
-        img.onerror = reject;
-        img.src = src;
-      });
-    };
-
     try {
       const [img, watermarkImg] = await Promise.all([
         loadImage(URL.createObjectURL(file)),
-        loadImage(watermarkImage),
+        preloadedWatermark ? Promise.resolve(preloadedWatermark) : loadImage(watermarkImage),
       ]);
 
       const canvas = document.createElement("canvas");

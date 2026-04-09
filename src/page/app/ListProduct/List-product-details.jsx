@@ -31,7 +31,8 @@ import useGetAllCountries from "../../../hooks/use-get-all-countries";
 import useGetAllCities from "../../../hooks/use-get-all-cities";
 // import EditImgeMedia from "../../../component/create-auction-components/edit-imge-media";
 import localizationKeys from "../../../localization/localization-keys";
-import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
+// import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
+import LoadingProgress from "../../../component/shared/lotties-file/LoadingProgress";
 import {
   IoCameraOutline,
   IoImageOutline,
@@ -71,6 +72,9 @@ const ListProductDetails = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [product_Id] = useState(state?.productId || null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [totalUploadingFiles, setTotalUploadingFiles] = useState(0);
+  const [currentUploadingFile, setCurrentUploadingFile] = useState(0);
 
   const reduxValues = useSelector((state) => state.listingProductDetails.listingProductDetails);
 
@@ -835,11 +839,23 @@ const ListProductDetails = () => {
   return (
     <>
       <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading || loadingSubGatogry || isUpdating || isSavingDraft || loadingImg}
-        inverted
+        className="fixed w-full h-full top-0 bg-white/20"
+        active={isLoading || loadingSubGatogry || isUpdating || isSavingDraft }
       >
-        <LoadingTest3arbon />
+        <LoadingProgress 
+          status={
+            isUpdating || isSavingDraft
+              ? currentUploadingFile > 0 
+                ? selectedContent[localizationKeys.uploadingPhoto]
+                    ?.replace("{current}", currentUploadingFile)
+                    ?.replace("{total}", totalUploadingFiles)
+                : selectedContent[localizationKeys.bulkUploading]?.replace("{count}", totalUploadingFiles)
+              : ""
+          } 
+          currentStep={currentUploadingFile > 0 ? currentUploadingFile : undefined}
+          totalSteps={totalUploadingFiles > 0 ? totalUploadingFiles : undefined}
+          progress={(isUpdating || isSavingDraft) ? uploadProgress : undefined} 
+        />
       </Dimmer>
       <div className="mt-32 sm:mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
         <div className="max-w-[1366px] mx-auto mb-12">
