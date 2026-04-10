@@ -955,7 +955,7 @@ const ListProductDetails = () => {
                 comfort: safeParseArray(listedProductVal?.comfort || reduxValues?.comfort),
                 exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures || reduxValues?.exteriorFeatures),
               }}
-              onSubmit={isEditing ? handleUpdate : handelProductDetailsdata}
+              onSubmit={(isEditing && auctionState !== "DRAFTED") ? handleUpdate : handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}
               enableReinitialize
             >
@@ -1480,7 +1480,7 @@ const ListProductDetails = () => {
                         </button>
                       )}
 
-                      {isEditing ? (
+                      {isEditing && auctionState !== "DRAFTED" ? (
                         <button
                           type="submit"
                           disabled={loadingImg}

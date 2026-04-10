@@ -34,8 +34,9 @@ const ProductCard = ({
   const selectedContent = content[lang];
   const history = useHistory();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
+  const [dragStart, setDragStart] = useState(null);
+  const [dragEnd, setDragEnd] = useState(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
   const [preloadedVideos, setPreloadedVideos] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const [showShareFallback, setShowShareFallback] = useState(false);
@@ -54,24 +55,53 @@ const ProductCard = ({
   };
   const shareUrl = `${getDomain()}/my-product/${id}/details`;
 
-  const handleTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.touches[0].clientX);
+  const handleSwipeStart = (clientX) => {
+    setDragEnd(null);
+    setDragStart(clientX);
   };
 
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.touches[0].clientX);
+  const handleSwipeMove = (clientX) => {
+    setDragEnd(clientX);
   };
 
-  const handleTouchEnd = (e) => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (distance > 50) {
+  const handleSwipeEnd = (e) => {
+    if (dragStart === null || dragEnd === null) return;
+    const distance = dragStart - dragEnd;
+    if (Math.abs(distance) > 50) {
       e.stopPropagation();
-      handleNext();
-    } else if (distance < -50) {
-      e.stopPropagation();
-      handlePrevious();
+      if (distance > 0) {
+        handleNext();
+      } else {
+        handlePrevious();
+      }
+    }
+    setDragStart(null);
+    setDragEnd(null);
+  };
+
+  const onMouseDown = (e) => {
+    setIsMouseDown(true);
+    handleSwipeStart(e.clientX);
+  };
+
+  const onMouseMove = (e) => {
+    if (isMouseDown) {
+      handleSwipeMove(e.clientX);
+    }
+  };
+
+  const onMouseUp = (e) => {
+    if (isMouseDown) {
+      handleSwipeEnd(e);
+      setIsMouseDown(false);
+    }
+  };
+
+  const onMouseLeave = (e) => {
+    if (isMouseDown) {
+      setIsMouseDown(false);
+      setDragStart(null);
+      setDragEnd(null);
     }
   };
 
@@ -235,7 +265,7 @@ const ProductCard = ({
               }}
               className="transition-transform duration-200 cursor-pointer active:scale-95 drop-shadow-md"
             >
-              <RiShareForwardFill className="text-white text-xl drop-shadow-lg hover:text-gray-200" />
+              <RiShareForwardFill className="text-primary text-xl drop-shadow-lg hover:text-gray-200" />
             </div>
             <div
               onClick={handleToggleFavorite}
@@ -244,7 +274,7 @@ const ProductCard = ({
               {isSavedState ? (
                 <AiFillHeart className="text-red-500 text-xl drop-shadow-lg" />
               ) : (
-                <AiOutlineHeart className="text-white text-xl drop-shadow-lg hover:text-gray-200" />
+                <AiOutlineHeart className="text-primary text-xl drop-shadow-lg hover:text-gray-200" />
               )}
             </div>
             {showShareFallback && (
@@ -260,11 +290,14 @@ const ProductCard = ({
 
         {/* Image Slider */}
         <div
-          className="relative w-full h-full group touch-pan-y cursor-pointer"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onClick={() => handelGoDetails(id)}
+          className="relative w-full h-full group touch-pan-y"
+          onTouchStart={(e) => handleSwipeStart(e.touches[0].clientX)}
+          onTouchMove={(e) => handleSwipeMove(e.touches[0].clientX)}
+          onTouchEnd={handleSwipeEnd}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseLeave}
         >
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
@@ -282,8 +315,7 @@ const ProductCard = ({
                 <div className="relative w-full h-full group/video">
                   <video
                     key={adsImg[currentImageIndex].imageLink}
-                    onClick={() => handelGoDetails(id)}
-                    className="w-full h-full object-cover cursor-pointer"
+                    className="w-full h-full object-cover"
                     preload="metadata"
                     playsInline
                     muted
@@ -295,14 +327,13 @@ const ProductCard = ({
                       type="video/mp4"
                     />
                   </video>
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all duration-300 cursor-pointer z-[5]">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover/video:bg-black/50 transition-all duration-300 z-[5]">
                     <BsPlayCircleFill className="text-white text-3xl opacity-70 group-hover/video:opacity-100 transition-opacity duration-300" />
                   </div>
                 </div>
               ) : (
                 <img
-                  onClick={() => handelGoDetails(id)}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   src={adsImg[currentImageIndex].imageLink}
                   alt={`Product ${currentImageIndex + 1}`}
                   onError={(e) => {

@@ -640,6 +640,15 @@ const ImageMedia = ({
   };
 
   const compressVideo = async (file) => {
+    const isSmallMp4 = file.size < 30 * 1024 * 1024 && file.type === "video/mp4";
+    
+    // SMART BYPASS: If file is already small and in mp4 format, skip heavy compression
+    if (isSmallMp4) {
+      setProcessingStatus("Generating video cover...");
+      const thumbnailFile = await generateVideoThumbnailFallback(file);
+      return { compressedFile: file, thumbnailFile };
+    }
+
     if (!window.crossOriginIsolated) {
       console.warn("SharedArrayBuffer is not available. Ensure COOP/COEP headers are set for compression.");
       

@@ -136,7 +136,9 @@ const ImgSlider = ({
           authAxios.post(api.app.WatchList.add, body).then((res) => {
             toast.success(
               selectedContent[
-                localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
+                isListProduct
+                  ? localizationKeys.thisProductAddToFavouritesSuccessfully
+                  : localizationKeys.thisAuctionAddToWatchListBeenSuccessfully
               ],
             );
             setWatshlist(true);
@@ -155,7 +157,9 @@ const ImgSlider = ({
           authAxios.delete(api.app.WatchList.delete(auctionId, isListProduct)).then((res) => {
             toast.success(
               selectedContent[
-                localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully
+                isListProduct
+                  ? localizationKeys.thisProductRemovedFromFavouritesSuccessfully
+                  : localizationKeys.thisAuctionDeleteFromWatchListBeenSuccessfully
               ],
             );
             setWatshlist(false);
@@ -266,7 +270,7 @@ const ImgSlider = ({
               </Swiper>
 
               {/* PREMIUM LISTING Badge */}
-              <div className="absolute top-4 left-4 z-30 pointer-events-none">
+              <div className={`absolute top-4 ${isArabic ? "right-4" : "left-4"} z-30 pointer-events-none`}>
                 <div className="bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-yellow-500/30 flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
                   <span className="text-[10px] md:text-xs font-bold text-yellow-500 uppercase tracking-wider">
@@ -277,7 +281,9 @@ const ImgSlider = ({
 
               {/* Action Buttons */}
               <div
-                className={`absolute top-4 z-20 flex items-center ${isArabic ? "left-4 space-x-reverse" : "right-4"} space-x-3`}
+                className={`absolute top-4 z-40 flex items-center gap-3 transition-all duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 ${
+                  isArabic ? "left-4 flex-row-reverse" : "right-4"
+                }`}
               >
                 {!isMyAuction && (
                   <button
@@ -305,7 +311,7 @@ const ImgSlider = ({
                     <RiShareForwardFill className="text-white text-lg md:text-xl" />
                   </button>
                   {showShareFallback && (
-                    <div className="absolute right-0 top-full mt-2 p-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl z-[100] min-w-[200px]">
+                    <div className={`absolute ${isArabic ? "left-0 text-right" : "right-0 text-left"} top-full mt-2 p-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl z-[100] min-w-[200px]`}>
                       <ShareFallBack shareUrl={shareUrl} title={title} />
                     </div>
                   )}

@@ -11,6 +11,9 @@ import { MdOutlineVerifiedUser } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { MdPublishedWithChanges, MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { RiShareForwardFill } from "react-icons/ri";
+import { ShareFallBack } from "../shared/react-share/ShareFallback";
 // import { RiAuctionLine } from "react-icons/ri";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
@@ -48,6 +51,7 @@ const SummaryListedSection = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [showShareFallback, setShowShareFallback] = useState(false);
 
   const mapUrl = `https://maps.google.com/maps?q=${mainLocation?.lat},${mainLocation?.lng}&hl=es&z=14&output=embed`;
 
@@ -129,6 +133,61 @@ const SummaryListedSection = () => {
     }
   };
 
+  const handleToggleFavorite = async () => {
+    if (!user) {
+      dispatch(Open());
+      return;
+    }
+
+    try {
+      if (listedProductsData.isSaved) {
+        await authAxios.delete(api.app.WatchList.delete(productId, true));
+        setListedProductsData((prev) => ({ ...prev, isSaved: false }));
+        toast.success(
+          selectedContent[
+            localizationKeys.thisProductRemovedFromFavouritesSuccessfully
+          ],
+        );
+      } else {
+        await authAxios.post(api.app.WatchList.add, { productId: productId });
+        setListedProductsData((prev) => ({ ...prev, isSaved: true }));
+        toast.success(
+          selectedContent[
+            localizationKeys.thisProductAddToFavouritesSuccessfully
+          ],
+        );
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+      toast.error(selectedContent[localizationKeys.oops]);
+    }
+  };
+
+  const getDomain = () => {
+    const { protocol, hostname, port } = window.location;
+    return port
+      ? `${protocol}//${hostname}:${port}`
+      : `${protocol}//${hostname}`;
+  };
+
+  const handleShare = async () => {
+    const shareUrl = `${getDomain()}/my-product/${productId}/details`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: listedProductsData?.title || "Check out this product!",
+          text: "Check out this product on 3arbon",
+          url: shareUrl,
+        });
+      } catch (error) {
+        console.error("Error sharing post:", error);
+        setShowShareFallback(true);
+      }
+    } else {
+      setShowShareFallback(!showShareFallback);
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-primary min-h-screen pt-32 pb-20 transition-colors duration-300">
       <Dimmer
@@ -198,28 +257,63 @@ const SummaryListedSection = () => {
             <div className="bg-white dark:bg-primary-dark border border-gray-100 dark:border-slate-800 rounded-3xl p-8 shadow-xl">
               {/* Title & Location Section (Integrated from Overlay) */}
               <div className="mb-8 text-primary dark:text-white ">
-                <div className="">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-primary dark:text-white leading-tight mb-2">
-                    {listedProductsData?.title}
-                  </h1>
-                  <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-xs sm:text-sm font-medium">
-                    <IoLocationSharp
-                      className="text-primary dark:text-primary-light"
-                      size={16}
-                    />
-                    <span className="dark:text-gray-300 transition-colors duration-300">
-                      {
-                        mainLocation?.city?.[
-                          lang === "ar" ? "nameAr" : "nameEn"
-                        ]
-                      }
-                      ,{" "}
-                      {
-                        mainLocation?.country?.[
-                          lang === "ar" ? "nameAr" : "nameEn"
-                        ]
-                      }
-                    </span>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-primary dark:text-white leading-tight mb-2">
+                      {listedProductsData?.title}
+                    </h1>
+                    <div className="flex items-center gap-2 text-gray-500 dark:text-white/60 text-xs sm:text-sm font-medium">
+                      <IoLocationSharp
+                        className="text-primary dark:text-primary-light"
+                        size={16}
+                      />
+                      <span className="dark:text-gray-300 transition-colors duration-300">
+                        {
+                          mainLocation?.city?.[
+                            lang === "ar" ? "nameAr" : "nameEn"
+                          ]
+                        }
+                        ,{" "}
+                        {
+                          mainLocation?.country?.[
+                            lang === "ar" ? "nameAr" : "nameEn"
+                          ]
+                        }
+                      </span>
+                    </div>
+                  </div>
+                  <div className="hidden md:flex flex-col items-center gap-2 pt-1 relative">
+                    <div className="relative">
+                      <button
+                        onClick={handleShare}
+                        className="shrink-0 p-3 bg-white dark:bg-slate-800/50 backdrop-blur-md rounded-2xl hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-300 border border-gray-100 dark:border-white/10 shadow-lg shadow-black/5 active:scale-95 group/share"
+                        title={selectedContent[localizationKeys.share]}
+                      >
+                        <RiShareForwardFill className="text-gray-600 dark:text-white/80 group-hover/share:text-primary dark:group-hover/share:text-yellow transition-colors text-2xl" />
+                      </button>
+                      {showShareFallback && (
+                        <div className="absolute right-0 top-full mt-3 p-3 bg-white dark:bg-slate-900 border border-gray-100 dark:border-white/10 rounded-2xl shadow-2xl z-[100] min-w-[200px] animate-in">
+                          <ShareFallBack
+                            shareUrl={`${getDomain()}/my-product/${productId}/details`}
+                            title={listedProductsData?.title}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {user?.id !== listedProductsData?.userId && (
+                      <button
+                        onClick={handleToggleFavorite}
+                        className="shrink-0 group/fav p-3 bg-white dark:bg-slate-800/50 backdrop-blur-md rounded-2xl hover:bg-gray-50 dark:hover:bg-slate-700 transition-all duration-300 border border-gray-100 dark:border-white/10 shadow-lg shadow-black/5 active:scale-95"
+                        title={selectedContent[localizationKeys.watchlist]}
+                      >
+                        {listedProductsData?.isSaved ? (
+                          <AiFillHeart className="text-red-500 text-2xl animate-in zoom-in-50 duration-300" />
+                        ) : (
+                          <AiOutlineHeart className="text-gray-600 dark:text-white/80 group-hover/fav:text-red-500 transition-colors text-2xl" />
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
