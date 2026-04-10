@@ -29,8 +29,9 @@ const ProductCardList = ({
   isSaved,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
+  const [dragStart, setDragStart] = useState(null);
+  const [dragEnd, setDragEnd] = useState(null);
+  const [isMouseDown, setIsMouseDown] = useState(false);
   const [preloadedVideos, setPreloadedVideos] = useState(new Set());
   const [isLoading, setIsLoading] = useState(true);
   const [lang] = useLanguage("");
@@ -65,20 +66,53 @@ const ProductCardList = ({
     }
   };
 
-  const handleTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.touches[0].clientX);
+  const handleSwipeStart = (clientX) => {
+    setDragEnd(null);
+    setDragStart(clientX);
   };
-  const handleTouchMove = (e) => setTouchEnd(e.touches[0].clientX);
-  const handleTouchEnd = (e) => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (distance > 50) {
+
+  const handleSwipeMove = (clientX) => {
+    setDragEnd(clientX);
+  };
+
+  const handleSwipeEnd = (e) => {
+    if (dragStart === null || dragEnd === null) return;
+    const distance = dragStart - dragEnd;
+    if (Math.abs(distance) > 50) {
       e.stopPropagation();
-      handleNext();
-    } else if (distance < -50) {
-      e.stopPropagation();
-      handlePrevious();
+      if (distance > 0) {
+        handleNext();
+      } else {
+        handlePrevious();
+      }
+    }
+    setDragStart(null);
+    setDragEnd(null);
+  };
+
+  const onMouseDown = (e) => {
+    setIsMouseDown(true);
+    handleSwipeStart(e.clientX);
+  };
+
+  const onMouseMove = (e) => {
+    if (isMouseDown) {
+      handleSwipeMove(e.clientX);
+    }
+  };
+
+  const onMouseUp = (e) => {
+    if (isMouseDown) {
+      handleSwipeEnd(e);
+      setIsMouseDown(false);
+    }
+  };
+
+  const onMouseLeave = (e) => {
+    if (isMouseDown) {
+      setIsMouseDown(false);
+      setDragStart(null);
+      setDragEnd(null);
     }
   };
 
@@ -158,7 +192,14 @@ const ProductCardList = ({
           onClick={() => handelGoDetails(id)}
         >
           {/* --- Image Panel --- */}
-          <div className="relative w-[120px] h-[120px] sm:w-[200px] sm:h-[150px] min-w-[120px] sm:min-w-[200px] shrink-0 bg-gray-light overflow-hidden">
+          <div 
+            className="relative w-[120px] h-[120px] sm:w-[200px] sm:h-[150px] min-w-[120px] sm:min-w-[200px] shrink-0 bg-gray-light overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseLeave}
+          >
             {/* Badge */}
             <div className="absolute top-2.5 left-2.5 z-10">
               <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
@@ -183,7 +224,7 @@ const ProductCardList = ({
                   onClick={handleShare}
                   className="transition-transform active:scale-95"
                 >
-                  <RiShareForwardFill className="text-white text-xl drop-shadow-lg hover:text-gray-200" />
+                  <RiShareForwardFill className="text-primary text-xl drop-shadow-lg hover:text-gray-200" />
                 </button>
                 <div
                   onClick={handleToggleFavorite}
@@ -192,7 +233,7 @@ const ProductCardList = ({
                   {isSavedState ? (
                     <AiFillHeart className="text-red-500 text-xl drop-shadow-lg" />
                   ) : (
-                    <AiOutlineHeart className="text-white text-xl drop-shadow-lg hover:text-gray-200" />
+                    <AiOutlineHeart className="text-primary text-xl drop-shadow-lg hover:text-gray-200" />
                   )}
                 </div>
                 {showShareFallback && (
@@ -209,9 +250,9 @@ const ProductCardList = ({
             {/* Image slider */}
             <div
               className="relative w-full h-full group/img"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              onTouchStart={(e) => handleSwipeStart(e.touches[0].clientX)}
+              onTouchMove={(e) => handleSwipeMove(e.touches[0].clientX)}
+              onTouchEnd={handleSwipeEnd}
             >
               {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
