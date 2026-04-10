@@ -658,6 +658,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
+                              status={e?.status}
                             />
                           ))}
                         </div>
@@ -702,6 +703,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
+                              status={e?.status}
                             />
                           ))}
                         </div>
@@ -786,6 +788,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
+                              status={e?.status}
                             />
                           ))}
                         </div>
@@ -869,6 +872,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                                currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
+                              status={e?.status}
                             />
                           ))}
                         </div>

@@ -27,6 +27,7 @@ const ProductCardList = ({
   userId,
   category,
   isSaved,
+  status,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [dragStart, setDragStart] = useState(null);
@@ -203,14 +204,10 @@ const ProductCardList = ({
             {/* Badge */}
             <div className="absolute top-2.5 left-2.5 z-10">
               <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
-                  {category === 3 || category === 7
-                ? usageStatus === "NEW"
-                  ? selectedContent[localizationKeys.sell]
-                  : category === 7 ? selectedContent[localizationKeys.adoption
-                    
-                  ] : selectedContent[localizationKeys.rent]
-                : usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
+               {status === "OUT_OF_STOCK" 
+                  ? selectedContent[localizationKeys.outOfStock]
+                  : usageStatus?.charAt(0).toUpperCase() +
+                    usageStatus?.slice(1).toLowerCase()}
               </div>
             </div>
 

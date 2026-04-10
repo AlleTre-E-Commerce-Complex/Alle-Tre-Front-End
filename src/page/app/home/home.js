@@ -646,6 +646,7 @@ const Home = ({
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
                                 currency={e?.location?.country?.currency}
+                                status={e?.status}
                               />
                             ))}
                           </div>
@@ -702,6 +703,7 @@ const Home = ({
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
                                 currency={e?.location?.country?.currency}
+                                status={e?.status}
                               />
                             ))}
                           </div>
@@ -753,6 +755,7 @@ const Home = ({
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
                                 currency={e?.location?.country?.currency}
+                                status={e?.status}
                               />
                             ))}
                           </div>
@@ -807,6 +810,7 @@ const Home = ({
                                 category={e?.product?.categoryId}
                                 isSaved={e?.isSaved}
                                 currency={e?.location?.country?.currency}
+                                status={e?.status}
                               />
                             ))}
                           </div>
@@ -900,6 +904,7 @@ const Home = ({
                                  currency={e?.product?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
+                              status={e?.status}
                             />
                           ))}
                         </div>
