@@ -106,6 +106,7 @@ const SearchResults = ({ auctions, products, isLoading, searchQuery }) => {
                 usageStatus={e?.product?.usageStatus}
                 category={e?.product?.categoryId}
                 isSaved={e?.isSaved}
+                status={e?.status}
               />
             ))}
           </div>

@@ -29,6 +29,7 @@ const ProductCard = ({
   isSaved,
   onReload,
   currency,
+  status,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -250,8 +251,10 @@ const ProductCard = ({
                   ] : selectedContent[localizationKeys.rent]
                 : usageStatus?.charAt(0).toUpperCase() +
                   usageStatus?.slice(1).toLowerCase()} */}
-                  {usageStatus?.charAt(0).toUpperCase() +
-                  usageStatus?.slice(1).toLowerCase()}
+                {status === "OUT_OF_STOCK" 
+                  ? selectedContent[localizationKeys.outOfStock]
+                  : usageStatus?.charAt(0).toUpperCase() +
+                    usageStatus?.slice(1).toLowerCase()}
           </div>
         </div>
 

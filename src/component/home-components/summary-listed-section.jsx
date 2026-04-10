@@ -10,7 +10,7 @@ import { FaWhatsapp, FaUser } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { MdPublishedWithChanges, MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import { MdPublishedWithChanges, MdDeleteOutline, MdOutlineEdit, MdInfoOutline } from "react-icons/md";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiShareForwardFill } from "react-icons/ri";
 import { ShareFallBack } from "../shared/react-share/ShareFallback";
@@ -97,6 +97,7 @@ const SummaryListedSection = () => {
           setListedProductsData({
             ...res?.data?.data?.product,
             isSaved: res?.data?.data?.isSaved,
+            status: res?.data?.data?.status,
           });
           setMainLocation(res?.data?.data?.location);
 
@@ -438,32 +439,39 @@ const SummaryListedSection = () => {
                     </span>
                   </button> */}
                 </div>
-              ) : user ? (
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleWhatsApp}
-                    className="flex-1 bg-yellow hover:bg-yellow-dark text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
-                  >
-                    <FaWhatsapp className="text-2xl" />
-                    <span>{selectedContent[localizationKeys.chat]}</span>
-                  </button>
-                  <button
-                    onClick={handleCall}
-                    className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg border border-white/10"
-                  >
-                    <IoCall className="text-2xl text-yellow" />
-                  </button>
-                </div>
-              ) : (
-                <div className="pt-2">
-                  <button
-                    onClick={handleOnContact}
-                    className="w-full bg-primary hover:bg-primary-dark text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 uppercase tracking-widest text-sm"
-                  >
-                    {selectedContent[localizationKeys.viewContactDetails]}
-                  </button>
-                </div>
-              )}
+                ) : listedProductsData?.status === "OUT_OF_STOCK" ? (
+                  <div className="bg-red-900/20 border border-red-100 dark:border-red-800/50 h-16 rounded-2xl flex items-center justify-center gap-3 w-full transition-all group overflow-hidden relative">
+                    <MdInfoOutline className="text-red-500 dark:text-red-400 text-xl animate-pulse" />
+                    <span className="text-red-600 dark:text-red-400 font-bold uppercase tracking-[0.2em] text-xs">
+                      {selectedContent[localizationKeys.outOfStock]}
+                    </span>
+                  </div>
+                ) : user ? (
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleWhatsApp}
+                      className="flex-1 bg-yellow hover:bg-yellow-dark text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
+                    >
+                      <FaWhatsapp className="text-2xl" />
+                      <span>{selectedContent[localizationKeys.chat]}</span>
+                    </button>
+                    <button
+                      onClick={handleCall}
+                      className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg border border-white/10"
+                    >
+                      <IoCall className="text-2xl text-yellow" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="pt-2">
+                    <button
+                      onClick={handleOnContact}
+                      className="w-full bg-primary hover:bg-primary-dark text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 uppercase tracking-widest text-sm"
+                    >
+                      {selectedContent[localizationKeys.viewContactDetails]}
+                    </button>
+                  </div>
+                )}
             </div>
             {/* Tabs for mobile (hidden on desktop) */}
             <div className="mt-8 lg:hidden block">
