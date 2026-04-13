@@ -234,6 +234,7 @@ const SummaryListedSection = () => {
                   isMyAuction={listedProductsData?.userId === user?.id}
                   isListProduct={true}
                   title={listedProductsData?.title}
+                  status={listedProductsData?.status}
                 />
               </div>
             </div>

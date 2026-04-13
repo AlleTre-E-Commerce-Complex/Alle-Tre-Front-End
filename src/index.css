@@ -306,8 +306,8 @@ a {
 
 /* Autofill fixes for dark mode */
 .dark input:-webkit-autofill,
-.dark input:-webkit-autofill:hover, 
-.dark input:-webkit-autofill:focus, 
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
 .dark input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px var(--color-primary-dark) inset !important;
   -webkit-text-fill-color: var(--color-secondary) !important;
@@ -315,7 +315,8 @@ a {
 }
 /* Custom Premium Loader Animation */
 @keyframes floatAndGlow {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) scale(1);
     filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.2));
   }
@@ -335,12 +336,55 @@ a {
 }
 
 .animate-premium-loader {
-  animation: floatAndGlow 3s ease-in-out infinite, spin3D 10s linear infinite;
+  animation:
+    floatAndGlow 3s ease-in-out infinite,
+    spin3D 10s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.skeleton-loader {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.1) 37%,
+    rgba(255, 255, 255, 0.04) 63%
+  );
+  background-size: 200% 100%;
+  animation: 
+    shimmer 3s infinite linear,
+    skeleton-pulse 2s ease-in-out infinite;
+}
+
+.dark .skeleton-loader {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.02) 25%,
+    rgba(255, 255, 255, 0.06) 37%,
+    rgba(255, 255, 255, 0.02) 63%
+  );
+  background-size: 200% 100%;
+  animation: 
+    shimmer 3s infinite linear,
+    skeleton-pulse 2s ease-in-out infinite;
 }
 
 /* Custom Elegant Pulse for Loader B */
 @keyframes loaderBElegantPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.95);
     filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
   }
@@ -365,7 +409,8 @@ a {
 }
 
 @keyframes bounce-subtle {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(-5%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
