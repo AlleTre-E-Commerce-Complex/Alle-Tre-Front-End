@@ -36,6 +36,7 @@ const ImgSlider = ({
   isMyAuction,
   title,
   isListProduct,
+  status,
 }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
   const [showShareFallback, setShowShareFallback] = useState(false);
@@ -237,7 +238,7 @@ const ImgSlider = ({
                         <div className="relative w-full h-full bg-black">
                           <video
                             key={image?.imageLink}
-                            className="w-full h-full object-contain"
+                            className={`w-full h-full object-contain ${isListProduct && status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                             controls
                             controlsList="nodownload nofullscreen"
                             autoPlay
@@ -251,7 +252,7 @@ const ImgSlider = ({
                         </div>
                       ) : (
                         <img
-                          className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                          className={`w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105 ${isListProduct && status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                           src={image?.imageLink}
                           alt={image?.description || "Product image"}
                         />

@@ -303,9 +303,7 @@ const ProductCard = ({
           onMouseLeave={onMouseLeave}
         >
           {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10">
-              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-            </div>
+            <div className="absolute inset-0 z-10 skeleton-loader bg-[#f3f3f3] dark:bg-[#1a2234]"></div>
           )}
 
           {Array.isArray(adsImg) &&
@@ -318,7 +316,7 @@ const ProductCard = ({
                 <div className="relative w-full h-full group/video">
                   <video
                     key={adsImg[currentImageIndex].imageLink}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover ${status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                     preload="metadata"
                     playsInline
                     muted
@@ -336,7 +334,7 @@ const ProductCard = ({
                 </div>
               ) : (
                 <img
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                   src={adsImg[currentImageIndex].imageLink}
                   alt={`Product ${currentImageIndex + 1}`}
                   onError={(e) => {

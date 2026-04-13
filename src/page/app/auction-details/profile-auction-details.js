@@ -86,6 +86,7 @@ const ProfileAuctionDetails = ({ isMyAuction }) => {
                   WatshlistState={auctionsDetailsData?.isSaved}
                   isMyAuction={true}
                   isListProduct={false}
+                  status={auctionsDetailsData?.status}
                 />
               </div>
               <div className="ltr:sm:ml-12 rtl:sm:mr-12 ltr:ml-4 rtl:mr-4 mt-10 md:mt-0">
