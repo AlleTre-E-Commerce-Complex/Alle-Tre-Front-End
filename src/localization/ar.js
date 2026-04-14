@@ -361,7 +361,7 @@ const ar = {
     "لا يُمكن تحميل الفيديو أولاً. يُرجى تحميل صورة أولاً لاستخدامها كغلاف.",
   [localizationKeys.onlyOneVideoFileIsAllowed]: "يُسمح بملف فيديو واحد فقط",
   [localizationKeys.uploadOneImageAndOneVideo]:
-    "* يمكنك تحميل ما يصل إلى ١٢ صورة وفيديو واحد (بحد أقصى ٥٠ ميجابايت). يجب تحميل الفيديوهات بشكل منفصل عن الصور.",
+    "* يمكنك تحميل ما يصل إلى ١٢ صورة وفيديو واحد (بحد أقصى ١٠٠ ميجابايت). يجب تحميل الفيديوهات بشكل منفصل عن الصور.",
   [localizationKeys.fileSizeShouldBeLessThan10MB]:
     "يجب أن يكون حجم الملف أقل من 10 ميجا بايت",
   [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:
@@ -375,7 +375,7 @@ const ar = {
   [localizationKeys.cannotMixVideoAndImages]:
     "يرجى تحميل الفيديو أو الصور، وليس كليهما في وقت واحد.",
   [localizationKeys.videoSizeLimitExceeded]:
-    "يجب أن يكون حجم الفيديو أقل من 50 ميجابايت",
+    "يجب أن يكون حجم الفيديو أقل من 100 ميجابايت",
   [localizationKeys.errorInWatermarkProcess]: "خطأ في عملية العلامة المائية",
   [localizationKeys.fileConversionFailed]: "فشل تحويل الملف",
   [localizationKeys.setAsCover]: "تعيين كصورة غلاف",

@@ -4,7 +4,6 @@ import routes from "../../../routes";
 import { useHistory } from "react-router-dom";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
-import Stepper from "../../../component/shared/stepper/stepper-app";
 import { GoPlus } from "react-icons/go";
 import { Dimmer } from "semantic-ui-react";
 import api from "../../../api";
@@ -20,7 +19,6 @@ import localizationKeys from "../../../localization/localization-keys";
 import LoadingProgress from "../../../component/shared/lotties-file/LoadingProgress";
 import { BsThreeDots } from "react-icons/bs";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
-import { getDefaultPerPage } from "constants/pagination";
 
 const ListingProductsLocationDetails = () => {
   const [lang] = useLanguage("");
@@ -32,7 +30,7 @@ const ListingProductsLocationDetails = () => {
     (state) => state.listingProductDetails.listingProductDetails
   );
 
-  const [locationId, setLocationId] = useFilter("locationId", "");
+  const [locationId] = useFilter("locationId", "");
 
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -255,8 +253,7 @@ const ListingProductsLocationDetails = () => {
             toast.success(
               selectedContent[localizationKeys.ProductListedSuccessfully]
             );
-            const perPage = getDefaultPerPage()
-            history.push(`${routes.app.home}?page=1&perPage=${perPage}`);
+            history.push(routes.app.listProduct.details(productId));
             dispatch(listingProductDetails({}));
           })
           .catch((err) => {

@@ -12,6 +12,7 @@ import localizationKeys from "../../../localization/localization-keys";
 import TotalMyProducts from "component/profile-components/Total-my-products";
 import MyProductsTab from "component/profile-components/my-produts-tab";
 import { IoBagHandleOutline } from "react-icons/io5";
+import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 
 const MyProducts = () => {
   const [lang] = useLanguage();
@@ -26,6 +27,26 @@ const MyProducts = () => {
   );
   const [draftCount, setDraftCount] = useState(0);
   const { run: runDrafts, isLoading: isLoadingDrafts } = useAxios([]);
+
+  const [locations, setLocations] = useState([]);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const { run: runLocations } = useAxios([]);
+
+  useEffect(() => {
+    runLocations(
+      authAxios.get(api.app.location.get).then((res) => {
+        setLocations(res?.data?.data || []);
+      })
+    );
+  }, [runLocations, forceReload]);
+
+  const handleStartListing = () => {
+    if (locations.length === 0) {
+      setIsLocationModalOpen(true);
+    } else {
+      history.push(routes.app.listProduct.default);
+    }
+  };
 
   useEffect(() => {
     runAlyticsData(
@@ -93,7 +114,7 @@ const MyProducts = () => {
             </p>
 
             <button
-              onClick={() => history.push(routes.app.listProduct.default)}
+              onClick={handleStartListing}
               className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded-xl transition-colors"
             >
               {selectedContent[localizationKeys.startLisitng]}
@@ -108,6 +129,7 @@ const MyProducts = () => {
               outOfStockProducts={analyticsDataObject?.OUT_OF_STOCK?.count}
               soldOutProducts={analyticsDataObject?.SOLD_OUT?.count}
               draftProducts={draftCount}
+              handleStartListing={handleStartListing}
             />
             <div className="mt-8">
               <MyProductsTab 
@@ -121,6 +143,13 @@ const MyProducts = () => {
           </>
         )}
       </div>
+      <AddLocationModel
+        open={isLocationModalOpen}
+        setOpen={setIsLocationModalOpen}
+        TextButton={selectedContent[localizationKeys.proceed]}
+        onReload={onReload}
+        isListing={true}
+      />
     </>
   );
 };
