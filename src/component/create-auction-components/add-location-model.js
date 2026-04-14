@@ -242,6 +242,7 @@ const AddLocationModel = ({
             <span className="text-red-500">*</span>
           </h1>
           <button
+            type="button"
             onClick={() => {
               setOpen(false);
               if (setIsListing) {
@@ -405,6 +406,7 @@ const AddLocationModel = ({
 
                 <div className="flex justify-end">
                   <Button
+                    type="submit"
                     loading={isLoading}
                     className="bg-primary dark:bg-yellow dark:hover:bg-yellow-dark font-bold dark:text-black text-white w-[163px] h-[48px] rounded-lg text-white mb-2 e rtl:font-serifAR ltr:font-serifEN opacity-100"
                   >

@@ -195,7 +195,6 @@ const ProductCardList = ({
           {/* --- Image Panel --- */}
           <div 
             className="relative w-[120px] h-[120px] sm:w-[200px] sm:h-[150px] min-w-[120px] sm:min-w-[200px] shrink-0 bg-gray-light overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}
@@ -301,18 +300,18 @@ const ProductCardList = ({
                           e.stopPropagation();
                           handlePrevious();
                         }}
-                        className="absolute z-[5] left-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all h-8 w-6 flex items-center justify-center"
+                        className="absolute z-[5] left-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all h-8 w-6 sm:h-10 sm:w-8 flex items-center justify-center"
                       >
-                        <MdNavigateBefore className="text-white text-xl" />
+                        <MdNavigateBefore className="text-white text-xl sm:text-2xl" />
                       </button>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           handleNext();
                         }}
-                        className="absolute z-[5] right-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all h-8 w-6 flex items-center justify-center"
+                        className="absolute z-[5] right-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover/img:opacity-100 transition-all h-8 w-6 sm:h-10 sm:w-8 flex items-center justify-center"
                       >
-                        <MdNavigateNext className="text-white text-xl" />
+                        <MdNavigateNext className="text-white text-xl sm:text-2xl" />
                       </button>
                       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-[5]">
                         {adsImg.map((_, index) => (

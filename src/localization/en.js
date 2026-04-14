@@ -368,7 +368,7 @@ const en = {
   [localizationKeys.onlyOneVideoFileIsAllowed]:
     "Only one video file is allowed",
   [localizationKeys.uploadOneImageAndOneVideo]:
-    "* You can upload up to 12 images and 1 video (max 50MB). Videos must be uploaded separately from images.",
+    "* You can upload up to 12 images and 1 video (max 100MB). Videos must be uploaded separately from images.",
   [localizationKeys.fileSizeShouldBeLessThan10MB]:
     "File size should be less than 10MB",
   [localizationKeys.thisAuctionAddedToWatchListSuccessfully]:
@@ -383,7 +383,7 @@ const en = {
   [localizationKeys.cannotMixVideoAndImages]:
     "Please upload either video or images, not both at once.",
   [localizationKeys.videoSizeLimitExceeded]:
-    "Video size must be less than 50 MB",
+    "Video size must be less than 100 MB",
   [localizationKeys.errorInWatermarkProcess]: "Error in watermark process",
   [localizationKeys.fileConversionFailed]: "File conversion failed",
   [localizationKeys.setAsCover]: "Set as cover",

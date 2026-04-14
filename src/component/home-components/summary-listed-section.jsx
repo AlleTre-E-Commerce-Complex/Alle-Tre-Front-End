@@ -69,7 +69,7 @@ const SummaryListedSection = () => {
   };
 
   const handleOnStatus = () => {
-    history.push(routes.app.profile.myProducts.default);
+    history.push(routes.app.profile.myProducts.inPogress);
   };
 
   const handleDelete = async () => {
@@ -121,7 +121,7 @@ const SummaryListedSection = () => {
   const handleWhatsApp = () => {
     if (handleOnContact()) {
       const message = encodeURIComponent(
-        "Hello, I would like to inquire about your product listed on 3arbon.",
+        `Hello, I'm interested in "${listedProductsData?.title}" (Ref: ${productId}) listed on 3arbon.\n\n${window.location.href}`,
       );
       const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
       window.open(whatsappUrl, "_blank");

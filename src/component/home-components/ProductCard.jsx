@@ -293,7 +293,8 @@ const ProductCard = ({
 
         {/* Image Slider */}
         <div
-          className="relative w-full h-full group touch-pan-y"
+          className="relative w-full h-full group touch-pan-y cursor-pointer"
+          onClick={() => handelGoDetails(id)}
           onTouchStart={(e) => handleSwipeStart(e.touches[0].clientX)}
           onTouchMove={(e) => handleSwipeMove(e.touches[0].clientX)}
           onTouchEnd={handleSwipeEnd}
@@ -354,18 +355,18 @@ const ProductCard = ({
                         e.stopPropagation();
                         handlePrevious();
                       }}
-                      className="absolute z-[5] left-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 h-8 w-6 flex items-center justify-center"
+                      className="absolute z-[5] left-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 h-8 w-6 sm:h-10 sm:w-8 flex items-center justify-center"
                     >
-                      <MdNavigateBefore className="text-white text-xl" />
+                      <MdNavigateBefore className="text-white text-xl sm:text-2xl" />
                     </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleNext();
                       }}
-                      className="absolute z-[5] right-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 h-8 w-6 flex items-center justify-center"
+                      className="absolute z-[5] right-0 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-300 h-8 w-6 sm:h-10 sm:w-8 flex items-center justify-center"
                     >
-                      <MdNavigateNext className="text-white text-xl" />
+                      <MdNavigateNext className="text-white text-xl sm:text-2xl" />
                     </button>
                   </div>
                   {/* Slider Dots */}

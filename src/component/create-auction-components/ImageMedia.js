@@ -253,8 +253,8 @@ const ImageMedia = ({
 
         const videoFile = videoFiles[0];
         
-        // Reject if video size exceeds 50MB
-        if (videoFile.size > 50 * 1024 * 1024) {
+        // Reject if video size exceeds 100MB
+        if (videoFile.size > 100 * 1024 * 1024) {
           toast.error(selectedContent[localizationKeys.videoSizeLimitExceeded]);
           if (typeof setLoadingImg === 'function') setLoadingImg(false);
           return;

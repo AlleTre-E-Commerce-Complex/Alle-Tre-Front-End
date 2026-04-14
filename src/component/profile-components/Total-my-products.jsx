@@ -2,18 +2,17 @@ import React from "react";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { useHistory } from "react-router-dom";
-import routes from "../../routes";
 
 const TotalMyProducts = ({
   inProgressProducts,
   outOfStockProducts,
   soldOutProducts,
   draftProducts,
+  handleStartListing,
 }) => {
   const [lang] = useLanguage();
   const selectedContent = content[lang];
-  const history = useHistory();
+
 
   return (
     <div className="flex flex-col gap-6 w-full pb-4 p-4">
@@ -28,7 +27,7 @@ const TotalMyProducts = ({
           </p>
         </div>
         <button
-          onClick={() => history.push(routes.app.listProduct.default)}
+          onClick={handleStartListing}
           className="flex items-center gap-2 bg-[#FDC02A] hover:bg-[#FDC02A]/90 text-gray-900 px-6 py-2.5 rounded-lg font-medium transition-colors whitespace-nowrap"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
