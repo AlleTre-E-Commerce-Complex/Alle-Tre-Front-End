@@ -496,6 +496,12 @@ const Header = ({
     } else dispatch(Open());
   };
 
+  const handelSupport = () => {
+    if (user) {
+      history.push(routes.app.support);
+    } else dispatch(Open());
+  };
+
   const handleLogout = async () => {
     setLogoutModalOpen(false);
 
@@ -670,6 +676,11 @@ const Header = ({
                 key: localizationKeys.faqs,
                 path: routes.app.faqs,
                 handler: handelFaqs,
+              },
+              {
+                key: localizationKeys.support,
+                path: routes.app.support,
+                handler: handelSupport,
               },
             ].map(({ key, path, handler }) => (
               <NavLinkHeader

@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import BlockedModal from "component/shared/UserBlockedModal/BlockedModal";
 import { HelmetProvider } from "react-helmet-async";
 import { initGA, logPageView } from "./utils/analytics";
-import InstallPromptButton from "component/shared/installPropt/InstallPromptButton";
+// import InstallPromptButton from "component/shared/installPropt/InstallPromptButton";
 import usePushNotifications from "hooks/usePushNotifications";
 
 

@@ -274,7 +274,7 @@ const Sidebar = ({ SetSid, sid }) => {
                 }}
               />
 
-              {/* <NavLink
+              <NavLink
                 title={selectedContent[localizationKeys.support]}
                 isActive={
                   pathname.startsWith(routes.app.support)
@@ -283,7 +283,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   history.push(routes.app.support);
                   SetSid(false);
                 }}
-              /> */}
+              />
               {/* Only show logout button if user is logged in */}
               {user && (
                 <>

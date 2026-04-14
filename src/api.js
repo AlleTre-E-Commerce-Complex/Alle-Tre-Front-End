@@ -161,6 +161,12 @@ const api = {
       subscribe: "/notifications/subscribe",
       markAsRead: "/notifications/mark-as-read",
     },
+    bugReport: {
+      create: "/bug-report/create",
+      myReports: "/bug-report/my-reports",
+      details: (id) => `/bug-report/${id}`,
+      addMessage: (id) => `/bug-report/${id}/message`,
+    },
     whatsApp:{
       sendInspectionDetails: (auctionid) => `/whatsapp/Send-Inspection-Details?auctionId=${auctionid}`
     },
