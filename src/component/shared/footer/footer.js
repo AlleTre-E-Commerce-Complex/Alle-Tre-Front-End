@@ -15,7 +15,7 @@ import {
   FaTelegramPlane,
   FaFileAlt,
 } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
@@ -230,6 +230,13 @@ const Footer = () => {
           <TermsAndConditions isFooter={true} />
           <span className=" mt-6">|</span>
           <PrivacyPolicy isFooter={true} />
+          <span className=" mt-6">|</span>
+          <Link
+            to={routes.app.support}
+            className="hover:text-white mt-6 transition-colors duration-300"
+          >
+            {selectedContent[localizationKeys.support]}
+          </Link>
         </div>
       </div>
     </div>
