@@ -866,6 +866,32 @@ const ar = {
   [localizationKeys.messages]: "الرسائل",
   [localizationKeys.ref]: "مرجع",
   [localizationKeys.newLabel]: "جديد",
+  // chat
+  [localizationKeys.chats]: "الدردشات",
+  [localizationKeys.buying]: "شراء",
+  [localizationKeys.selling]: "بيع",
+  [localizationKeys.read]: "مقروء",
+  [localizationKeys.unread]: "غير مقروء",
+  [localizationKeys.isStillAvailable]: "هل لا يزال متوفراً؟",
+  [localizationKeys.staySafeOnAlletre]: "ابق آمناً على 3arbon!",
+  [localizationKeys.dontOpenSuspiciousLinks]:
+    "لا تفتح روابط مشبوهة أو تشارك تفاصيل بطاقتك الائتمانية / البنكية مع أي شخص.",
+  [localizationKeys.learnMore]: "اعرف المزيد",
+  [localizationKeys.sendQuickResponse]: "إرسال رد سريع",
+  [localizationKeys.hiJustCheckingIn]:
+    "مرحباً، أردت فقط التأكد مما إذا كان هذا لا يزال معروضاً للبيع؟",
+  [localizationKeys.chatWithSeller]: "دردشة مع البائع",
+  [localizationKeys.lastSeen]: "آخر ظهور",
+  [localizationKeys.yesterday]: "أمس",
+  [localizationKeys.today]: "اليوم",
+  [localizationKeys.isItStillAvailable]: "هل هذا لا يزال متاحاً؟",
+  [localizationKeys.whatsYourFinalPrice]: "ما هو سعرك النهائي؟",
+  [localizationKeys.staySafeMessage]:"ابق آمناً على 3arbon! حافظ على المحادثات في التطبيق. تذكر، لا تشارك تفاصيلك الشخصية.",
+  [localizationKeys.canISeeIt]: "هل يمكنني رؤيته؟",
+  [localizationKeys.noConversationsYet]: "لا توجد محادثات بعد",
+  [localizationKeys.yourConversations]: "محادثاتك",
+  [localizationKeys.selectConversationFromSidebar]: "اختر محادثة من الشريط الجانبي لبدء الدردشة مع المشترين أو البائعين.",
+  [localizationKeys.noMessagesYet]: "لا توجد رسائل بعد",
 };
 
 export default ar;

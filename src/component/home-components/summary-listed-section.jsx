@@ -6,7 +6,7 @@ import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
 import { IoStar, IoLocationSharp, IoCall } from "react-icons/io5";
-import { FaWhatsapp, FaUser } from "react-icons/fa";
+import { FaUser, FaWhatsapp } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
 import { HiOutlineExternalLink } from "react-icons/hi";
@@ -20,7 +20,8 @@ import { authAxios } from "config/axios-config";
 import ImgSlider from "component/shared/img-slider/img-slider";
 import PhoneNumberModal from "component/shared/phone-number-modal/phone-number-modal";
 import SilmilarProductsSlider from "component/auctions-details-components/silmilar-products-slider";
-import { Dimmer } from "semantic-ui-react";
+import { Dimmer, Icon } from "semantic-ui-react";
+import { useChat } from "context/chat-context";
 import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import routes from "../../routes";
 import { ListProductsBreadcrumb } from "../../component/shared/bread-crumb/Breadcrumb";
@@ -54,6 +55,30 @@ const SummaryListedSection = () => {
   const [showShareFallback, setShowShareFallback] = useState(false);
 
   const mapUrl = `https://maps.google.com/maps?q=${mainLocation?.lat},${mainLocation?.lng}&hl=es&z=14&output=embed`;
+  const { startConversation, toggleWidget } = useChat();
+
+  const handleChatClick = async () => {
+    if (!user) {
+      dispatch(Open());
+      return;
+    }
+    
+     // Prevent chatting with yourself
+    const sellerId = listedProductsData?.user?.id || listedProductsData?.userId;
+    
+    if (Number(user.id) === Number(sellerId)) {
+      toast.error(selectedContent[localizationKeys.youCannotChatWithYourself]);
+      return;
+    }
+
+    try {
+      toggleWidget(true);
+      await startConversation(Number(sellerId), productId);
+    } catch (error) {
+      console.error("Failed to start conversation:", error);
+      toast.error(selectedContent[localizationKeys.oops]);
+    }
+  };
 
   const handleOnContact = () => {
     try {
@@ -117,6 +142,7 @@ const SummaryListedSection = () => {
         }),
     );
   }, [run, productId]);
+
 
   const handleWhatsApp = () => {
     if (handleOnContact()) {
@@ -448,19 +474,29 @@ const SummaryListedSection = () => {
                     </span>
                   </div>
                 ) : user ? (
-                  <div className="flex gap-3">
+                  <div className="space-y-3">
+                    <div className="flex gap-3">
+                      <button
+                        onClick={handleWhatsApp}
+                        className="flex-1 bg-green-500 hover:bg-green-600 text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
+                      >
+                        <FaWhatsapp className="text-2xl" />
+                        <span>{selectedContent[localizationKeys.chat]}</span>
+                      </button>
+                      <button
+                        onClick={handleCall}
+                        className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg border border-white/10"
+                      >
+                        <IoCall className="text-2xl text-yellow" />
+                      </button>
+                    </div>
+                    
                     <button
-                      onClick={handleWhatsApp}
-                      className="flex-1 bg-yellow hover:bg-yellow-dark text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
+                      onClick={handleChatClick}
+                      className="w-full bg-yellow hover:bg-yellow-dark text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
                     >
-                      <FaWhatsapp className="text-2xl" />
-                      <span>{selectedContent[localizationKeys.chat]}</span>
-                    </button>
-                    <button
-                      onClick={handleCall}
-                      className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg border border-white/10"
-                    >
-                      <IoCall className="text-2xl text-yellow" />
+                      <Icon name="chat" size="large" />
+                      <span>{selectedContent[localizationKeys.chatWithSeller]}</span>
                     </button>
                   </div>
                 ) : (

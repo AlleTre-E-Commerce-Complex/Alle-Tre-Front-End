@@ -788,6 +788,28 @@ const localizationKeys = {
   messages: "messages",
   ref: "ref",
   newLabel: "newLabel",
+  // chat
+  chats: "chats",
+  buying: "buying",
+  selling: "selling",
+  read: "read",
+  unread: "unread",
+  isStillAvailable: "isStillAvailable",
+  staySafeOnAlletre: "staySafeOnAlletre",
+  dontOpenSuspiciousLinks: "dontOpenSuspiciousLinks",
+  learnMore: "learnMore",
+  chatWithSeller: "chatWithSeller",
+  isItStillAvailable: "isItStillAvailable",
+  whatsYourFinalPrice: "whatsYourFinalPrice",
+  staySafeMessage: "staySafeMessage",
+  lastSeen: "lastSeen",
+  yesterday: "yesterday",
+  today: "today",
+  canISeeIt: "canISeeIt",
+  noConversationsYet: "noConversationsYet",
+  yourConversations: "yourConversations",
+  selectConversationFromSidebar: "selectConversationFromSidebar",
+  noMessagesYet: "noMessagesYet",
 };
 
 export default localizationKeys;

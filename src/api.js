@@ -167,6 +167,11 @@ const api = {
       details: (id) => `/bug-report/${id}`,
       addMessage: (id) => `/bug-report/${id}/message`,
     },
+    chat: {
+      conversations: "/chat/conversations",
+      messages: (id) => `/chat/conversations/${id}/messages`,
+      getOrCreate: "/chat/conversations/get-or-create",
+    },
     whatsApp:{
       sendInspectionDetails: (auctionid) => `/whatsapp/Send-Inspection-Details?auctionId=${auctionid}`
     },
