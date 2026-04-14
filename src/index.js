@@ -10,6 +10,7 @@ import App from "./App";
 
 import { LanguageProvider } from "./context/language-context";
 import { AuthProvider } from "./context/auth-context";
+import { ChatProvider } from "./context/chat-context";
 // import { SocketProvider } from "context/socket-context";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -23,7 +24,9 @@ ReactDOM.render(
       <Provider store={store}>
         <AuthProvider>
           <LanguageProvider>  
-            <App />
+            <ChatProvider>
+              <App />
+            </ChatProvider>
           </LanguageProvider>
         </AuthProvider>
       </Provider>

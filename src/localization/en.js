@@ -870,6 +870,32 @@ const en = {
   [localizationKeys.messages]: "MESSAGES",
   [localizationKeys.ref]: "REF",
   [localizationKeys.newLabel]: "NEW",
+  // chat
+  [localizationKeys.chats]: "CHATS",
+  [localizationKeys.buying]: "Buying",
+  [localizationKeys.selling]: "Selling",
+  [localizationKeys.read]: "Read",
+  [localizationKeys.unread]: "Unread",
+  [localizationKeys.isStillAvailable]: "Is it still available?",
+  [localizationKeys.staySafeOnAlletre]: "Stay safe on 3arbon!",
+  [localizationKeys.dontOpenSuspiciousLinks]:
+    "Don't open suspicious links or share your credit card/bank details with anyone.",
+  [localizationKeys.learnMore]: "Learn More",
+  [localizationKeys.sendQuickResponse]: "Send Quick Response",
+  [localizationKeys.hiJustCheckingIn]:
+    "Hi, just checking in if this is still for sale?",
+  [localizationKeys.chatWithSeller]: "Chat With Seller",
+  [localizationKeys.lastSeen]: "Last Seen",
+  [localizationKeys.yesterday]: "Yesterday",
+  [localizationKeys.today]: "Today",
+  [localizationKeys.isItStillAvailable]: "Is it still available?",
+  [localizationKeys.whatsYourFinalPrice]: "What's your final price?",
+  [localizationKeys.staySafeMessage]: "Stay safe on 3arbon! Keep chats on the app. Remember, Don't share your personal details.",
+  [localizationKeys.canISeeIt]: "Can I see it?",
+  [localizationKeys.noConversationsYet]: "No conversations yet",
+  [localizationKeys.yourConversations]: "Your conversations",
+  [localizationKeys.selectConversationFromSidebar]: "Select a conversation from the sidebar to start chatting with buyers or sellers.",
+  [localizationKeys.noMessagesYet]: "No messages yet",
 };
 
 export default en;

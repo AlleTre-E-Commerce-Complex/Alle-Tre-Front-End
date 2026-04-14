@@ -30,6 +30,7 @@ const routes = {
     faqs: `/FAQs`,
     support: `/support`,
     privacyPolicy: `/privacy-policy`,
+    chat: `/chat`,
 
     createAuction: {
       default: `/home/create-auction`,

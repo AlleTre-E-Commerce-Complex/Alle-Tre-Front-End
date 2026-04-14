@@ -942,7 +942,7 @@ export const ListProductsBreadcrumb = ({ details, category, categoryId }) => {
       },
       ...[
         pathname.startsWith(routes.app.listProduct.details(details)) && {
-          key: "category",
+          key: "product-details",
           content: (
             <Link
               className={`${

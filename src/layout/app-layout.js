@@ -12,6 +12,7 @@ import CreateAuction from "../page/app/create-auction/create-auction";
 import PaymentDetails from "../page/app/create-auction/payment-details";
 import ProductDetails from "../page/app/create-auction/product-details";
 import ShippingDetails from "../page/app/create-auction/shipping-details";
+import Chat from "../page/app/chat/chat";
 
 import Sidebar from "../component/shared/side-bare/sibe-bare";
 import AuthModel from "../component/shared/auth-model/auth-model";
@@ -39,6 +40,7 @@ import UserDetailsPage from "component/profile-components/user-details-page";
 import ListingProductsLocationDetails from "page/app/ListProduct/List-location-details";
 import PrivacyPolicy from "../component/shared/privacy-policy/privacy-policy";
 import MobileBottomNav from "../component/shared/mobile-bottom-nav/mobile-bottom-nav";
+import ChatWidget from "../component/chat-components/ChatWidget";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState("");
@@ -261,6 +263,7 @@ const AppLayouts = () => {
                 path={routes.app.privacyPolicy}
                 component={PrivacyPolicy}
               />
+              <Route path={routes.app.chat} component={Chat} />
             </Switch>
           </div>
           <Footer />
@@ -279,6 +282,7 @@ const AppLayouts = () => {
           </div>
         </div>
         <Win />
+        <ChatWidget />
         <AuthModel currentPAth={currentPath} />
         <PaymentSucsessModel
           open={

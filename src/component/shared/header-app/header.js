@@ -24,6 +24,7 @@ import localizationKeys from "../../../localization/localization-keys";
 // import { MdLogout } from "react-icons/md";
 
 import { useSocket } from "../../../context/socket-context";
+import { useChat } from "../../../context/chat-context";
 import LogoutModal from "../logout-modal/logout-modal";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import { MdOutlineNotifications, MdClose } from "react-icons/md";
@@ -56,6 +57,7 @@ const Header = ({
   // const socketauctionId = useSelector((state) => state.socket.auct);
   const [notificationCount, setNotificationCount] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { unreadCount } = useChat();
   const [searchShow, setSearchShow] = useState(true);
 
 
@@ -682,10 +684,35 @@ const Header = ({
                 path: routes.app.support,
                 handler: handelSupport,
               },
-            ].map(({ key, path, handler }) => (
+              {
+                key: localizationKeys.chats,
+                path: routes.app.chat,
+                handler: () => {
+                  if (user) {
+                    history.push(routes.app.chat);
+                  } else {
+                    dispatch(Open());
+                  }
+                },
+                isChat: true,
+              },
+            ].map(({ key, path, handler, isChat }) => (
               <NavLinkHeader
                 key={key}
-                title={selectedContent[key]}
+                title={
+                  isChat ? (
+                    <div className="flex items-center relative">
+                      {selectedContent[key]}
+                      {unreadCount > 0 && (
+                        <span className="absolute -top-2 -right-3 font-bold bg-primary text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
+                          {unreadCount > 99 ? "99+" : unreadCount}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    selectedContent[key]
+                  )
+                }
                 isActive={pathname.startsWith(path)}
                 onClick={handler || (() => history.push(path))}
               />
