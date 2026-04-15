@@ -2,10 +2,15 @@ import React from "react";
 import { Icon, Button } from "semantic-ui-react";
 import { useChat } from "../../context/chat-context";
 import { useAuthState } from "../../context/auth-context";
+import { useLanguage } from "../../context/language-context";
+import localizationKeys from "../../localization/localization-keys";
+import content from "../../localization/content";
 
 const ChatHeader = ({ isWidget = false, onClose, onMinimize, isMinimized }) => {
   const { activeConversation, selectConversation, toggleWidget } = useChat();
   const { user } = useAuthState();
+  const [lang] = useLanguage();
+  const selectedContent = content[lang];
 
   if (!activeConversation) return null;
 
@@ -43,7 +48,9 @@ const ChatHeader = ({ isWidget = false, onClose, onMinimize, isMinimized }) => {
           </h2>
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="flex w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-            <span className="text-[10px] text-green-600 font-bold uppercase tracking-wider">Online</span>
+            <span className="text-[10px] text-green-600 font-bold uppercase tracking-wider">
+              {selectedContent[localizationKeys.online]}
+            </span>
           </div>
         </div>
       </div>
@@ -73,7 +80,9 @@ const ChatHeader = ({ isWidget = false, onClose, onMinimize, isMinimized }) => {
         ) : (
           <div className="flex items-center gap-2">
              <div className="hidden lg:flex flex-col items-end mr-3">
-                <span className="text-[9px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest leading-none mb-1">Referring to</span>
+                <span className="text-[9px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-widest leading-none mb-1">
+                  {selectedContent[localizationKeys.referringTo]}
+                </span>
                 <span className="text-xs font-bold text-primary dark:text-yellow-500 truncate max-w-[180px]">
                   {activeConversation.product?.title}
                 </span>

@@ -171,6 +171,7 @@ const api = {
       conversations: "/chat/conversations",
       messages: (id) => `/chat/conversations/${id}/messages`,
       getOrCreate: "/chat/conversations/get-or-create",
+      upload: "/chat/conversations/upload",
     },
     whatsApp:{
       sendInspectionDetails: (auctionid) => `/whatsapp/Send-Inspection-Details?auctionId=${auctionid}`

@@ -68,7 +68,7 @@ export const ChatProvider = ({ children }) => {
         });
 
         socket.on("new_message", (message) => {
-          console.log("Socket: Received new_message", message);
+          console.log("DEBUG: Socket received new_message:", message);
           const currentActive = activeConversationRef.current;
 
           // Update messages if it belongs to the active conversation
@@ -214,8 +214,35 @@ export const ChatProvider = ({ children }) => {
     }
   };
 
-  const sendMessage = async (content) => {
-    if (!activeConversation || !content.trim() || !user) return;
+  const uploadChatFile = async (files) => {
+    try {
+      const formData = new FormData();
+      if (Array.isArray(files)) {
+        files.forEach((file) => formData.append("files", file));
+      } else {
+        formData.append("files", files);
+      }
+
+      const response = await authAxios.post(`${api.app.chat.upload}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return response.data.data;
+    } catch (error) {
+      console.error("Error uploading chat file:", error);
+      toast.error("Failed to upload file");
+      throw error;
+    }
+  };
+
+  const sendMessage = async (messageData) => {
+    if (!activeConversation || !user) return;
+
+    // Support both simple string and complex object
+    const payload = typeof messageData === "string" 
+      ? { content: messageData, type: "TEXT" } 
+      : { ...messageData };
+
+    if (!payload.content && !payload.attachmentUrl && !payload.lat) return;
 
     // 1. Optimistic Update
     const tempId = Date.now();
@@ -223,10 +250,14 @@ export const ChatProvider = ({ children }) => {
       id: tempId,
       conversationId: activeConversation.id,
       senderId: user.id,
-      content: content.trim(),
+      content: payload.content || "",
+      type: payload.type || "TEXT",
+      attachmentUrl: payload.attachmentUrl,
+      lat: payload.lat,
+      lng: payload.lng,
       createdAt: new Date().toISOString(),
       isRead: false,
-      isOptimistic: true, // Tag it as optimistic
+      isOptimistic: true,
     };
 
     setMessages((prev) => [...prev, optimisticMessage]);
@@ -234,7 +265,7 @@ export const ChatProvider = ({ children }) => {
     try {
       const response = await authAxios.post(
         `${api.app.chat.messages(activeConversation.id)}`,
-        { content }
+        payload
       );
 
       // 2. Replace optimistic message with real message from server
@@ -318,6 +349,7 @@ export const ChatProvider = ({ children }) => {
         setIsChatPageActive,
         selectConversation,
         sendMessage,
+        uploadChatFile,
         startConversation,
         fetchConversations,
         toggleWidget,
