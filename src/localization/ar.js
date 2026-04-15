@@ -479,6 +479,8 @@ const ar = {
   [localizationKeys.view]: "عرض",
   // profile
   [localizationKeys.online]: "متصل",
+  [localizationKeys.offline]: "غير متصل",
+  [localizationKeys.expand]: "توسيع",
   [localizationKeys.logout]: "تسجيل الخروج",
   [localizationKeys.profileSettings]: "إعدادات الملف الشخصي",
   [localizationKeys.completeYourProfileToMakeYourActionsEasier]: "أكمل ملفك الشخصي",
@@ -893,6 +895,10 @@ const ar = {
   [localizationKeys.yourConversations]: "محادثاتك",
   [localizationKeys.selectConversationFromSidebar]: "اختر محادثة من الشريط الجانبي لبدء الدردشة مع المشترين أو البائعين.",
   [localizationKeys.noMessagesYet]: "لا توجد رسائل بعد",
+  [localizationKeys.download]: "تحميل",
+  [localizationKeys.sharedLocation]: "موقع مشترك",
+  [localizationKeys.clickToOpenGoogleMaps]: "اضغط لفتح خرائط جوجل",
+  [localizationKeys.startingNewChat]: "بدء محادثة جديدة",
 };
 
 export default ar;

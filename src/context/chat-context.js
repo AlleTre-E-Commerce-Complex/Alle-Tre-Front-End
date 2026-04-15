@@ -22,11 +22,18 @@ export const ChatProvider = ({ children }) => {
   const [isChatPageActive, setIsChatPageActive] = useState(false);
   const isChatPageActiveRef = React.useRef(false);
   const isWidgetOpenRef = React.useRef(false);
+  const [onlineUsers, setOnlineUsers] = useState({}); // { userId: boolean }
 
   // Sync ref with state
   useEffect(() => {
     activeConversationRef.current = activeConversation;
   }, [activeConversation]);
+
+  // Derived global unread count from conversations list
+  useEffect(() => {
+    const total = conversations.reduce((acc, conv) => acc + (conv.unreadCount > 0 ? 1 : 0), 0);
+    setUnreadCount(total);
+  }, [conversations]);
 
   useEffect(() => {
     isChatPageActiveRef.current = isChatPageActive;
@@ -39,12 +46,31 @@ export const ChatProvider = ({ children }) => {
       if (!user) return;
       const response = await authAxios.get(`${api.app.chat.conversations}`);
       const conversationList = response.data.data || [];
-      setConversations(conversationList);
-      const totalUnread = conversationList.reduce((acc, conv) => {
-        const lastMsg = conv.messages?.[0];
-        return acc + (lastMsg && !lastMsg.isRead && lastMsg.senderId !== user.id ? 1 : 0);
-      }, 0);
-      setUnreadCount(totalUnread);
+      setConversations((prev) => {
+        return conversationList.map((newConv) => {
+          const existing = prev.find((p) => p.id === newConv.id);
+          const lastMsg = newConv.messages?.[0];
+          const isUnread = lastMsg && !lastMsg.isRead && lastMsg.senderId !== user.id;
+
+          // Preserve local count if it exists, otherwise initialize from last message
+          let count = existing?.unreadCount ?? (isUnread ? 1 : 0);
+          
+          // Reset if this is the active conversation
+          if (Number(activeConversationRef.current?.id) === Number(newConv.id)) {
+            count = 0;
+          }
+          
+          const otherUser = newConv.sellerId === user.id ? newConv.buyer : newConv.seller;
+          
+          // Harvest status from API data if present
+          if (otherUser) {
+            const isUserOnline = otherUser.isOnline || otherUser.online || otherUser.status === 'online' || otherUser.isActive;
+            setOnlineUsers(prev => ({ ...prev, [String(otherUser.id)]: !!isUserOnline }));
+          }
+
+          return { ...newConv, unreadCount: count };
+        });
+      });
     } catch (error) {
       console.error("Error fetching conversations:", error);
     }
@@ -70,22 +96,22 @@ export const ChatProvider = ({ children }) => {
         socket.on("new_message", (message) => {
           console.log("DEBUG: Socket received new_message:", message);
           const currentActive = activeConversationRef.current;
+          const isCurrentlyViewing = (isWidgetOpenRef.current || isChatPageActiveRef.current) && 
+                                    Number(currentActive?.id) === Number(message.conversationId);
+          const isFromOther = Number(message.senderId) !== Number(user?.id);
 
           // Update messages if it belongs to the active conversation
           setMessages((prev) => {
-            // 1. If we already have this exact database ID, ignore
             if (prev.some((m) => m.id === message.id)) return prev;
 
-            if (currentActive && message.conversationId === currentActive.id) {
-              // 2. If it's from ME, check if we have a matching optimistic message to replace
-              if (Number(message.senderId) === Number(user?.id)) {
+            if (isCurrentlyViewing) {
+              if (!isFromOther) {
                 const optimisticIndex = prev.findIndex(
                   (m) => m.isOptimistic && m.content === message.content
                 );
                 if (optimisticIndex !== -1) {
                   const nextMessages = [...prev];
                   const existingMsg = nextMessages[optimisticIndex];
-                  // Preserve isRead if it was already marked by a socket event
                   nextMessages[optimisticIndex] = {
                     ...message,
                     isRead: existingMsg.isRead || message.isRead,
@@ -93,54 +119,77 @@ export const ChatProvider = ({ children }) => {
                   return nextMessages;
                 }
               }
-              // 3. Otherwise (received or no optimistic match), append it
               return [...prev, message];
             }
             return prev;
           });
 
-          // Update conversation list last message
+          // Update conversation list last message and unread count
           setConversations((prev) =>
-            prev.map((conv) =>
-              conv.id === message.conversationId
-                ? { ...conv, messages: [message] }
-                : conv
-            )
+            prev.map((conv) => {
+              if (conv.id === message.conversationId) {
+                return { 
+                  ...conv, 
+                  messages: [message],
+                  unreadCount: (!isCurrentlyViewing && isFromOther) 
+                    ? (conv.unreadCount || 0) + 1 
+                    : 0
+                };
+              }
+              return conv;
+            })
           );
 
-          // Update unread count if not in active conversation OR UI is hidden
-          const isCurrentlyViewing = (isWidgetOpenRef.current || isChatPageActiveRef.current) && Number(currentActive?.id) === Number(message.conversationId);
+          // If we ARE in the active conversation AND viewing it, mark it as read
+          if (isCurrentlyViewing && isFromOther) {
+            markAsRead(message.conversationId);
+            setMessages((prev) => 
+              prev.map(m => m.id === message.id ? { ...m, isRead: true } : m)
+            );
+          }
 
-          if (!isCurrentlyViewing) {
-            if (Number(message.senderId) !== Number(user?.id)) {
-              setUnreadCount((prev) => prev + 1);
-            }
-          } else {
-            // If we ARE in the active conversation AND viewing it, mark it as read if visible
-            if (Number(message.senderId) !== Number(user?.id)) {
-              // 1. Mark as read on the server
-              markAsRead(message.conversationId);
-              
-              // 2. ALSO mark as read locally right now so it turns blue instantly
-              setMessages((prev) => 
-                prev.map(m => m.id === message.id ? { ...m, isRead: true } : m)
-              );
-            }
+          // Implicit Presence: Sender is active
+          if (isFromOther) {
+            setOnlineUsers((prev) => ({ ...prev, [String(message.senderId)]: true }));
           }
         });
 
         socket.on("messages_read", ({ conversationId, readerId }) => {
-          console.log("Socket: Received messages_read", { conversationId, readerId });
-          const currentActive = activeConversationRef.current;
-          
-          if (currentActive && Number(conversationId) === Number(currentActive.id)) {
-            setMessages((prev) =>
-              prev.map((m) =>
-                Number(m.senderId) !== Number(readerId) ? { ...m, isRead: true } : m
-              )
-            );
-          }
-        });
+            console.log("Socket: Received messages_read", { conversationId, readerId });
+            const currentActive = activeConversationRef.current;
+            
+            if (currentActive && Number(conversationId) === Number(currentActive.id)) {
+              setMessages((prev) =>
+                prev.map((m) =>
+                  Number(m.senderId) !== Number(readerId) ? { ...m, isRead: true } : m
+                )
+              );
+            }
+
+            // Implicit Presence: Reader is active
+            if (Number(readerId) !== Number(user?.id)) {
+              setOnlineUsers((prev) => ({ ...prev, [String(readerId)]: true }));
+            }
+          });
+
+          // Status handlers (Resilient to different event names and ID types)
+          const updateStatus = (userId, status) => {
+            if (!userId) return;
+            setOnlineUsers((prev) => ({ ...prev, [String(userId)]: status }));
+          };
+
+          socket.on("user_online", (userId) => updateStatus(userId, true));
+          socket.on("user_offline", (userId) => updateStatus(userId, false));
+          socket.on("user_status", ({ userId, status }) => updateStatus(userId, status === "online" || status === true));
+          socket.on("status_update", ({ userId, isOnline }) => updateStatus(userId, isOnline));
+
+          // Initial list from server
+          socket.on("online_users", (usersArray) => {
+            if (!Array.isArray(usersArray)) return;
+            const statusMap = {};
+            usersArray.forEach(id => statusMap[String(id)] = true);
+            setOnlineUsers(statusMap);
+          });
 
         setChatSocket(socket);
         chatSocketRef.current = socket;
@@ -195,6 +244,10 @@ export const ChatProvider = ({ children }) => {
     }
 
     setActiveConversation(conversation);
+    setMinimized(false);
+    // Reset unread count for this conversation in the list
+    setConversations(prev => prev.map(c => c.id === conversation.id ? { ...c, unreadCount: 0 } : c));
+    
     try {
       const response = await authAxios.get(
         `${api.app.chat.messages(conversation.id)}`
@@ -307,6 +360,7 @@ export const ChatProvider = ({ children }) => {
       
       await fetchConversations();
       await selectConversation(newConversation);
+      setMinimized(false);
       return newConversation;
     } catch (error) {
       console.error("Error starting conversation Details:", {
@@ -336,6 +390,18 @@ export const ChatProvider = ({ children }) => {
     setIsMinimized(minimized);
   };
 
+  // Background Status Poller (every 45s) to sync offline states
+  useEffect(() => {
+    if (!user) return;
+    
+    const interval = setInterval(() => {
+      fetchConversations();
+    }, 45000);
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
   return (
     <ChatContext.Provider
       value={{
@@ -354,6 +420,7 @@ export const ChatProvider = ({ children }) => {
         fetchConversations,
         toggleWidget,
         setMinimized,
+        onlineUsers,
       }}
     >
       {children}

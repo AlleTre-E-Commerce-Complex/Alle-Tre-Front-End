@@ -17,10 +17,12 @@ import { toast } from "react-hot-toast";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { useSocket } from "context/socket-context";
+import { useChat } from "../../../context/chat-context";
 import { MdLogout } from "react-icons/md";
 import LogoutModal from "../logout-modal/logout-modal";
 
 const Sidebar = ({ SetSid, sid }) => {
+  const { unreadCount } = useChat();
   const history = useHistory();
   const { pathname } = useLocation();
   const [lang] = useLanguage();
@@ -217,9 +219,9 @@ const Sidebar = ({ SetSid, sid }) => {
               /> */}
               <NavLink
                 title={selectedContent[localizationKeys.myProducts]}
-                isActive={
-                  pathname.startsWith(routes.app.profile.myProducts.default)
-                }
+                isActive={pathname.startsWith(
+                  routes.app.profile.myProducts.default,
+                )}
                 onClick={() => {
                   handleMyProducts();
                   SetSid(false);
@@ -237,9 +239,7 @@ const Sidebar = ({ SetSid, sid }) => {
               /> */}
               <NavLink
                 title={selectedContent[localizationKeys.favourites]}
-                isActive={
-                  pathname.startsWith(routes.app.profile.watchlist)
-                }
+                isActive={pathname.startsWith(routes.app.profile.watchlist)}
                 onClick={() => {
                   handelWatchlist();
                   SetSid(false);
@@ -247,9 +247,7 @@ const Sidebar = ({ SetSid, sid }) => {
               />
               <NavLink
                 title={selectedContent[localizationKeys.Purchased]}
-                isActive={
-                  pathname.startsWith(routes.app.profile.purchased)
-                }
+                isActive={pathname.startsWith(routes.app.profile.purchased)}
                 onClick={() => {
                   handelPurchased();
                   SetSid(false);
@@ -273,12 +271,30 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-
+              <NavLink
+                title={
+                  <div className="flex items-center relative">
+                    {selectedContent[localizationKeys.chats]}
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-2 -right-4 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
+                        {unreadCount > 99 ? "99+" : unreadCount}
+                      </span>
+                    )}
+                  </div>
+                }
+                isActive={pathname.startsWith(routes.app.chat)}
+                onClick={() => {
+                  if (user) {
+                    history.push(routes.app.chat);
+                  } else {
+                    dispatch(Open());
+                  }
+                  SetSid(false);
+                }}
+              />
               <NavLink
                 title={selectedContent[localizationKeys.support]}
-                isActive={
-                  pathname.startsWith(routes.app.support)
-                }
+                isActive={pathname.startsWith(routes.app.support)}
                 onClick={() => {
                   history.push(routes.app.support);
                   SetSid(false);

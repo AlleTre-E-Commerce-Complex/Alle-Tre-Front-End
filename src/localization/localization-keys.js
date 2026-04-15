@@ -429,7 +429,9 @@ const localizationKeys = {
   viewProducts: "viewProducts",
   view: "view",
   // profile
-  online: "online",
+   online: "online",
+   offline: "offline",
+   expand: "expand",
   profileSettings: "profileSettings",
   logout: "logout",
   completeYourProfileToMakeYourActionsEasier:
@@ -811,6 +813,10 @@ const localizationKeys = {
   yourConversations: "yourConversations",
   selectConversationFromSidebar: "selectConversationFromSidebar",
   noMessagesYet: "noMessagesYet",
+  download: "download",
+  sharedLocation: "sharedLocation",
+  clickToOpenGoogleMaps: "clickToOpenGoogleMaps",
+  startingNewChat: "startingNewChat",
 };
 
 export default localizationKeys;
