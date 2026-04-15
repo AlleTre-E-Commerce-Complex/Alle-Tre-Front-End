@@ -876,7 +876,8 @@ const ar = {
   [localizationKeys.staySafeOnAlletre]: "ابق آمناً على 3arbon!",
   [localizationKeys.dontOpenSuspiciousLinks]:
     "لا تفتح روابط مشبوهة أو تشارك تفاصيل بطاقتك الائتمانية / البنكية مع أي شخص.",
-  [localizationKeys.learnMore]: "اعرف المزيد",
+  [localizationKeys.learnMore]: "تعرف على المزيد",
+  [localizationKeys.referringTo]: "بخصوص",
   [localizationKeys.sendQuickResponse]: "إرسال رد سريع",
   [localizationKeys.hiJustCheckingIn]:
     "مرحباً، أردت فقط التأكد مما إذا كان هذا لا يزال معروضاً للبيع؟",

@@ -798,6 +798,7 @@ const localizationKeys = {
   staySafeOnAlletre: "staySafeOnAlletre",
   dontOpenSuspiciousLinks: "dontOpenSuspiciousLinks",
   learnMore: "learnMore",
+  referringTo: "referringTo",
   chatWithSeller: "chatWithSeller",
   isItStillAvailable: "isItStillAvailable",
   whatsYourFinalPrice: "whatsYourFinalPrice",

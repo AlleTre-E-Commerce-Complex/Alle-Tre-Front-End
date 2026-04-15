@@ -881,6 +881,7 @@ const en = {
   [localizationKeys.dontOpenSuspiciousLinks]:
     "Don't open suspicious links or share your credit card/bank details with anyone.",
   [localizationKeys.learnMore]: "Learn More",
+  [localizationKeys.referringTo]: "Referring to",
   [localizationKeys.sendQuickResponse]: "Send Quick Response",
   [localizationKeys.hiJustCheckingIn]:
     "Hi, just checking in if this is still for sale?",

@@ -34,33 +34,33 @@ const Chat = () => {
   }, [lang]);
 
   return (
-    <div className="chat-page-container mt-32 md:mt-40 mb-0 md:mb-10 px-0 md:px-4 w-full max-w-7xl mx-auto flex flex-col md:flex-row h-[calc(100dvh-12rem)] md:h-[75vh] bg-white dark:bg-gray-900 rounded-none md:rounded-2xl shadow-none md:shadow-2xl overflow-hidden border-0 md:border border-gray-100 dark:border-gray-800 transition-colors duration-300">
+    <div className="chat-page-container mt-32 md:mt-40 mb-0 md:mb-12 px-0 md:px-6 w-full max-w-[1600px] mx-auto flex flex-col md:flex-row h-[calc(100dvh-12rem)] md:h-[80vh] bg-white dark:bg-gray-900 rounded-none md:rounded-3xl shadow-none md:shadow-2xl overflow-hidden border-0 md:border border-gray-100 dark:border-gray-800 transition-all duration-300">
       {/* Sidebar: Conversations List */}
-      <div className={`w-full md:w-80 lg:w-96 flex-1 md:flex-none border-r border-gray-100 dark:border-gray-800 flex flex-col min-h-0 overflow-hidden ${activeConversation ? 'hidden md:flex' : 'flex'}`}>
-        <div className="p-6 border-b border-gray-50 dark:border-gray-800/50 bg-gray-50/30 dark:bg-gray-800/20">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white flex items-center justify-between">
+      <div className={`w-full md:w-96 lg:w-[450px] flex-1 md:flex-none border-r border-gray-100 dark:border-gray-800 flex flex-col min-h-0 overflow-hidden ${activeConversation ? 'hidden md:flex' : 'flex'}`}>
+        <div className="p-8 border-b border-gray-50 dark:border-gray-800/50 bg-gray-50/30 dark:bg-gray-800/20">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white flex items-center justify-between">
             {selectedContent[localizationKeys.chats]}
             {unreadCount > 0 && (
-              <span className="bg-primary text-white text-xs px-2.5 py-1 rounded-full shadow-lg animate-pulse">
+              <span className="bg-primary text-white text-sm px-3 py-1.5 rounded-full shadow-lg animate-pulse">
                 {unreadCount}
               </span>
             )}
           </h1>
-          <div className="mt-4 relative">
-            <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <div className="mt-6 relative">
+            <Icon name="search" className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
             <input 
               type="text" 
               placeholder={selectedContent[localizationKeys.search]} 
-              className="w-full pl-10 pr-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary dark:text-white transition-all text-sm outline-none placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full pl-12 pr-6 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl focus:ring-2 focus:ring-primary/20 focus:border-primary dark:text-white transition-all text-sm outline-none placeholder-gray-400 dark:placeholder-gray-500 shadow-sm"
             />
           </div>
         </div>
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar">
           {conversations.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-10 text-center opacity-60">
-              <Icon name="chat" size="huge" className="mb-4 text-gray-300 dark:text-gray-600" />
-              <p className="text-gray-500 dark:text-gray-400 font-medium">
+            <div className="flex flex-col items-center justify-center p-12 text-center opacity-60">
+              <Icon name="chat" size="huge" className="mb-6 text-gray-300 dark:text-gray-600" />
+              <p className="text-gray-500 dark:text-gray-400 font-medium text-lg">
                 {selectedContent[localizationKeys.noConversationsYet]}
               </p>
             </div>
@@ -75,7 +75,7 @@ const Chat = () => {
                 <div
                   key={conv.id}
                   onClick={() => selectConversation(conv)}
-                  className={`p-4 flex items-center gap-4 cursor-pointer transition-all duration-300 border-l-4 ${
+                  className={`p-6 flex items-center gap-5 cursor-pointer transition-all duration-300 border-l-[6px] ${
                     isSelected 
                       ? "bg-primary/5 dark:bg-primary/10 border-primary shadow-inner" 
                       : "hover:bg-gray-50 dark:hover:bg-gray-800 border-transparent"
@@ -85,31 +85,31 @@ const Chat = () => {
                     <img
                       src={otherUser?.imageLink || "/logo512.png"}
                       alt={otherUser?.userName}
-                      className="w-14 h-14 rounded-2xl object-cover shadow-sm ring-2 ring-white dark:ring-gray-800"
+                      className="w-16 h-16 rounded-3xl object-cover shadow-sm ring-4 ring-white dark:ring-gray-800"
                       onError={(e) => { e.target.src = "/logo512.png" }}
                     />
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full shadow-sm"></div>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-4 border-white dark:border-gray-800 rounded-full shadow-sm"></div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-start mb-1">
-                      <h3 className={`font-bold truncate ${unread ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300 font-semibold'}`}>
+                    <div className="flex justify-between items-start mb-1.5">
+                      <h3 className={`text-lg truncate ${unread ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300 font-semibold'}`}>
                         {otherUser?.userName}
                       </h3>
-                      <span className="text-[10px] text-gray-400 shrink-0 font-medium uppercase">
+                      <span className="text-[11px] text-gray-400 shrink-0 font-bold uppercase tracking-wider">
                         {lastMsg ? moment(lastMsg.createdAt).format("HH:mm") : ""}
                       </span>
                     </div>
-                    <p className={`text-sm truncate flex items-center gap-1 ${unread ? "text-gray-900 dark:text-gray-200 font-bold" : "text-gray-500 dark:text-gray-400"}`}>
+                    <p className={`text-[15px] truncate flex items-center gap-2 ${unread ? "text-gray-900 dark:text-gray-200 font-bold" : "text-gray-500 dark:text-gray-400"}`}>
                       {lastMsg?.senderId === user.id && <Icon name="reply" size="small" className="mr-0.5 opacity-50" />}
                       {lastMsg?.content || selectedContent[localizationKeys.noMessagesYet]}
                     </p>
-                    <div className="flex items-center gap-2 mt-1.5">
-                      <span className="text-[10px] bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 px-2 py-0.5 rounded-md font-bold truncate max-w-[120px]">
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-[11px] bg-gray-100 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400 px-3 py-1 rounded-lg font-bold truncate max-w-[180px] shadow-sm">
                         {conv.product?.title}
                       </span>
                     </div>
                   </div>
-                  {unread && <div className="w-2.5 h-2.5 bg-primary rounded-full shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.5)]"></div>}
+                  {unread && <div className="w-3.5 h-3.5 bg-primary rounded-full shadow-[0_0_12px_rgba(var(--color-primary-rgb),0.6)]"></div>}
                 </div>
               );
             })

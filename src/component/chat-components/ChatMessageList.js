@@ -61,7 +61,70 @@ const ChatMessageList = ({ isWidget = false }) => {
                       : "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-tl-none border border-gray-100 dark:border-gray-700"
                   } ${isWidget ? "text-xs" : "text-sm"}`}
                 >
-                  {msg.content}
+                  {msg.type === "IMAGE" && (
+                    <div className="mb-1">
+                      <img 
+                        src={msg.attachmentUrl} 
+                        alt="attachment" 
+                        className="rounded-xl w-full max-w-[300px] md:max-w-[420px] max-h-[480px] object-contain cursor-pointer hover:opacity-90 transition-opacity"
+                        onClick={() => window.open(msg.attachmentUrl, '_blank')}
+                      />
+                    </div>
+                  )}
+                  {msg.type === "VIDEO" && (
+                    <div className="mb-1">
+                      <video 
+                        src={msg.attachmentUrl} 
+                        controls 
+                        className="rounded-xl w-full max-w-[300px] md:max-w-[420px] max-h-[480px] object-contain"
+                      />
+                    </div>
+                  )}
+                  {msg.type === "DOCUMENT" && (
+                    <div className={`flex items-center gap-3 mb-1 p-2 rounded-lg border ${
+                      isMe 
+                        ? "bg-white/10 border-white/10" 
+                        : "bg-gray-50 dark:bg-gray-900 border-gray-100 dark:border-gray-700"
+                    }`}>
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                        isMe ? "bg-white/20" : "bg-primary/10 text-primary"
+                      }`}>
+                        <Icon name="file alternate outline" className="!m-0 text-lg" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-xs font-bold truncate ${isMe ? "text-white" : "text-gray-800 dark:text-white"}`}>
+                          {msg.content}
+                        </p>
+                        <a 
+                          href={msg.attachmentUrl} 
+                          target="_blank" 
+                          rel="noreferrer"
+                          className={`text-[10px] underline ${isMe ? "text-white/70 hover:text-white" : "text-primary hover:text-primary-dark"}`}
+                        >
+                          Download
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                  {msg.type === "LOCATION" && (
+                    <div 
+                      className={`mb-1 p-1 rounded-lg border cursor-pointer transition-colors ${
+                        isMe 
+                          ? "bg-white/10 border-white/10 hover:bg-white/20" 
+                          : "bg-gray-50 dark:bg-gray-900 border-gray-100 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      }`}
+                      onClick={() => window.open(`https://www.google.com/maps?q=${msg.lat},${msg.lng}`, '_blank')}
+                    >
+                      <div className="flex items-center gap-2 p-2">
+                        <Icon name="map marker alternate" className={`text-xl ${isMe ? "text-white" : "text-primary"}`} />
+                        <div>
+                          <p className={`text-xs font-bold ${isMe ? "text-white" : "text-gray-800 dark:text-white"}`}>Shared Location</p>
+                          <p className={`text-[10px] ${isMe ? "text-white/70" : "text-gray-500 dark:text-gray-400"}`}>Click to open Google Maps</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {(msg.type === "TEXT" || !msg.type) && msg.content}
                 </div>
                 <div className={`flex items-center gap-1.5 mt-1 px-1 ${isMe ? "justify-end" : "justify-start"}`}>
                   <span className="text-[9px] text-gray-400 dark:text-gray-500 font-bold opacity-60">
