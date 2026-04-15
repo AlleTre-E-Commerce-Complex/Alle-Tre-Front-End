@@ -115,28 +115,28 @@ const ChatInput = ({ isWidget = false }) => {
             {/* Location */}
             <div className="flex flex-col items-center gap-2 cursor-pointer group" onClick={handleLocationShare}>
               <div className={`rounded-full bg-green-50 dark:bg-green-900/40 flex items-center justify-center transition-all shadow-sm border border-green-100 dark:border-green-800 group-hover:scale-105 active:scale-95 ${isWidget ? "w-10 h-10" : "w-14 h-14 md:w-16 md:h-16"}`}>
-                <Icon name="map marker alternate" className={`!m-0 text-green-600 dark:text-green-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
+                <Icon name="map marker alternate" className={`!m-0 flex items-center justify-center text-green-600 dark:text-green-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
               </div>
               <span className={`font-bold text-gray-700 dark:text-gray-200 text-center ${isWidget ? "text-[10px]" : "text-xs md:text-sm"}`}>{lang === 'ar' ? 'الموقع' : 'Location'}</span>
             </div>
             {/* Gallery */}
             <div className="flex flex-col items-center gap-2 cursor-pointer group" onClick={() => galleryRef.current.click()}>
               <div className={`rounded-full bg-orange-50 dark:bg-orange-900/40 flex items-center justify-center transition-all shadow-sm border border-orange-100 dark:border-orange-800 group-hover:scale-105 active:scale-95 ${isWidget ? "w-10 h-10" : "w-14 h-14 md:w-16 md:h-16"}`}>
-                <Icon name="image" className={`!m-0 text-orange-600 dark:text-orange-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
+                <Icon name="image" className={`!m-0 flex items-center justify-center text-orange-600 dark:text-orange-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
               </div>
               <span className={`font-bold text-gray-700 dark:text-gray-200 text-center ${isWidget ? "text-[10px]" : "text-xs md:text-sm"}`}>{lang === 'ar' ? 'المعرض' : 'Gallery'}</span>
             </div>
             {/* Camera */}
             <div className="flex flex-col items-center gap-2 cursor-pointer group" onClick={() => cameraRef.current.click()}>
               <div className={`rounded-full bg-blue-50 dark:bg-blue-900/40 flex items-center justify-center transition-all shadow-sm border border-blue-100 dark:border-blue-800 group-hover:scale-105 active:scale-95 ${isWidget ? "w-10 h-10" : "w-14 h-14 md:w-16 md:h-16"}`}>
-                <Icon name="camera" className={`!m-0 text-blue-600 dark:text-blue-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
+                <Icon name="camera" className={`!m-0 flex items-center justify-center text-blue-600 dark:text-blue-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
               </div>
               <span className={`font-bold text-gray-700 dark:text-gray-200 text-center ${isWidget ? "text-[10px]" : "text-xs md:text-sm"}`}>{lang === 'ar' ? 'الكاميرا' : 'Camera'}</span>
             </div>
             {/* Document */}
             <div className="flex flex-col items-center gap-2 cursor-pointer group" onClick={() => docRef.current.click()}>
               <div className={`rounded-full bg-pink-50 dark:bg-pink-900/40 flex items-center justify-center transition-all shadow-sm border border-pink-100 dark:border-pink-800 group-hover:scale-105 active:scale-95 ${isWidget ? "w-10 h-10" : "w-14 h-14 md:w-16 md:h-16"}`}>
-                <Icon name="file alternate" className={`!m-0 text-pink-600 dark:text-pink-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
+                <Icon name="file alternate" className={`!m-0 flex items-center justify-center text-pink-600 dark:text-pink-400 ${isWidget ? "text-lg" : "text-xl md:text-2xl"}`} />
               </div>
               <span className={`font-bold text-gray-700 dark:text-gray-200 text-center ${isWidget ? "text-[10px]" : "text-xs md:text-sm"}`}>{lang === 'ar' ? 'مستند' : 'Document'}</span>
             </div>
@@ -162,38 +162,38 @@ const ChatInput = ({ isWidget = false }) => {
         ))}
       </div>
 
-      <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+      <form onSubmit={handleSendMessage} className="flex items-end gap-2">
         <Button 
-          basic 
-          icon 
           type="button" 
           onClick={() => setShowOptions(!showOptions)}
-          className={`!m-0 ${isWidget ? "h-[44px] w-[44px] rounded-2xl" : "h-[50px] w-[50px] rounded-2xl"} transition-all duration-300 ${showOptions ? '!bg-primary !text-white shadow-sm' : 'text-gray-500 dark:text-white'}`}
+          className={`!m-0 flex items-center justify-center transition-all duration-300 shadow-lg ${isWidget ? "h-[44px] w-[44px] rounded-2xl" : "h-[50px] w-[50px] rounded-2xl"} !bg-primary text-white dark:!bg-gray-800 dark:text-gray-400 hover:opacity-90 dark:hover:!bg-gray-700`}
         >
-          <Icon name="add" className={`text-primary !m-0 transition-transform duration-300 ${showOptions ? 'rotate-45' : ''}`} />
+          <Icon name="add" className={`!m-0 flex items-center justify-center transition-transform duration-300 ${isWidget ? 'text-lg' : 'text-xl'} ${showOptions ? 'rotate-45' : ''} text-white dark:text-yellow-400`} />
         </Button>
-        <div className="flex-1 relative">
+
+        <div className="flex-1 relative flex items-center">
           <textarea
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={handleKeyPress}
             placeholder={selectedContent[localizationKeys.typeAMessage]}
             rows={1}
-            className={`w-full ${isWidget ? "py-2 px-4 min-h-[44px]" : "py-3 px-6 min-h-[50px]"} pr-12 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:ring-4 focus:ring-primary/10 focus:border-primary dark:text-white transition-all outline-none resize-none overflow-hidden max-h-32 ${isWidget ? "text-xs" : "text-base"}`}
+            className={`w-full ${isWidget ? "py-2.5 px-4 min-h-[44px]" : "py-3.5 px-6 min-h-[50px]"} pr-12 bg-gray-50 dark:bg-gray-800/50 border border-gray-100/50 dark:border-gray-700/50 rounded-2xl focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-primary/20 focus:border-primary dark:text-white transition-all outline-none resize-none overflow-hidden max-h-32 ${isWidget ? "text-xs" : "text-base"}`}
             onInput={(e) => {
               e.target.style.height = "auto";
               e.target.style.height = e.target.scrollHeight + "px";
             }}
           />
         </div>
+
         <Button 
            primary 
            icon 
            type="submit"
            disabled={!newMessage.trim()}
-           className={`!m-0 shadow-lg transition-transform hover:scale-105 active:scale-95 flex items-center justify-center ${isWidget ? "h-[44px] w-[44px] rounded-2xl" : "h-[50px] w-[50px] rounded-2xl"} ${!newMessage.trim() ? 'opacity-50' : 'opacity-100'}`}
+           className={`!m-0 shadow-lg transition-all hover:scale-105 active:scale-95 flex items-center justify-center ${isWidget ? "h-[44px] w-[44px] rounded-2xl" : "h-[50px] w-[50px] rounded-2xl"} ${!newMessage.trim() ? 'opacity-50 grayscale' : 'opacity-100'} !bg-primary dark:!bg-yellow-500 dark:!text-gray-900`}
         >
-          <Icon name={lang === 'ar' ? "send" : "send"} className={`!m-0 ${lang === 'ar' ? "rotate-180" : ""}`} />
+          <Icon name="send" className={`!m-0 flex items-center justify-center ${isWidget ? 'text-lg' : 'text-xl'} ${lang === 'ar' ? "rotate-180" : ""} text-white dark:text-gray-900`} />
         </Button>
       </form>
 

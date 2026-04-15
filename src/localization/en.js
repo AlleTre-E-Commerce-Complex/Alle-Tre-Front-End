@@ -488,6 +488,8 @@ const en = {
   [localizationKeys.view]: "View",
   // profile
   [localizationKeys.online]: "Online",
+  [localizationKeys.offline]: "Offline",
+  [localizationKeys.expand]: "Expand",
   [localizationKeys.logout]: "Logout",
   [localizationKeys.profileSettings]: "Profile Settings",
   [localizationKeys.completeYourProfileToMakeYourActionsEasier]: "Complete Your Profile",
@@ -897,6 +899,10 @@ const en = {
   [localizationKeys.yourConversations]: "Your conversations",
   [localizationKeys.selectConversationFromSidebar]: "Select a conversation from the sidebar to start chatting with buyers or sellers.",
   [localizationKeys.noMessagesYet]: "No messages yet",
+  [localizationKeys.download]: "Download",
+  [localizationKeys.sharedLocation]: "Shared Location",
+  [localizationKeys.clickToOpenGoogleMaps]: "Click to open Google Maps",
+  [localizationKeys.startingNewChat]: "Starting a new conversation",
 };
 
 export default en;

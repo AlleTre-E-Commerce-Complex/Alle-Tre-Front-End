@@ -474,28 +474,28 @@ const SummaryListedSection = () => {
                     </span>
                   </div>
                 ) : user ? (
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <div className="flex gap-3">
                       <button
                         onClick={handleWhatsApp}
-                        className="flex-1 bg-green-500 hover:bg-green-600 text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
+                        className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-green-500/20 active:scale-[0.98] group uppercase tracking-widest text-sm"
                       >
                         <FaWhatsapp className="text-2xl" />
                         <span>{selectedContent[localizationKeys.chat]}</span>
                       </button>
                       <button
                         onClick={handleCall}
-                        className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all active:scale-95 shrink-0 shadow-lg border border-white/10"
+                        className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all duration-300 active:scale-[0.98] shrink-0 shadow-lg border border-white/5 group"
                       >
-                        <IoCall className="text-2xl text-yellow" />
+                        <IoCall className="text-2xl text-yellow group-hover:scale-110 transition-transform" />
                       </button>
                     </div>
                     
                     <button
                       onClick={handleChatClick}
-                      className="w-full bg-yellow hover:bg-yellow-dark text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 group uppercase tracking-widest text-sm"
+                      className="w-full bg-gradient-to-r from-yellow to-yellow-dark hover:from-yellow-dark hover:to-[#b8860b] text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-yellow/20 active:scale-[0.98] group uppercase tracking-widest text-sm border-b-4 border-[#8b6508]/30"
                     >
-                      <Icon name="chat" size="large" />
+                      <Icon name="chat" size="large" className="group-hover:translate-x-1 transition-transform" />
                       <span>{selectedContent[localizationKeys.chatWithSeller]}</span>
                     </button>
                   </div>

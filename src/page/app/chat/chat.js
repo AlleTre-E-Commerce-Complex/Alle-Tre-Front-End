@@ -19,6 +19,7 @@ const Chat = () => {
     selectConversation,
     unreadCount,
     setIsChatPageActive,
+    onlineUsers,
   } = useChat();
   const { user } = useAuthState();
   const [lang] = useLanguage();
@@ -41,7 +42,7 @@ const Chat = () => {
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white flex items-center justify-between">
             {selectedContent[localizationKeys.chats]}
             {unreadCount > 0 && (
-              <span className="bg-primary text-white text-sm px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+              <span className="bg-red-600 text-white text-sm px-3 py-1.5 rounded-full shadow-lg animate-pulse">
                 {unreadCount}
               </span>
             )}
@@ -71,6 +72,8 @@ const Chat = () => {
               const otherUser = conv.sellerId === user.id ? conv.buyer : conv.seller;
               const unread = lastMsg && !lastMsg.isRead && lastMsg.senderId !== user.id;
 
+              const isUserOnline = onlineUsers[String(otherUser?.id)] ?? otherUser?.isOnline;
+
               return (
                 <div
                   key={conv.id}
@@ -88,7 +91,7 @@ const Chat = () => {
                       className="w-16 h-16 rounded-3xl object-cover shadow-sm ring-4 ring-white dark:ring-gray-800"
                       onError={(e) => { e.target.src = "/logo512.png" }}
                     />
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-4 border-white dark:border-gray-800 rounded-full shadow-sm"></div>
+                    <div className={`absolute -bottom-1 -right-1 w-5 h-5 border-4 border-white dark:border-gray-800 rounded-full shadow-sm transition-all duration-500 ${isUserOnline ? 'bg-green-500 scale-100' : 'bg-gray-300 dark:bg-gray-600 scale-90'}`}></div>
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start mb-1.5">
@@ -109,7 +112,11 @@ const Chat = () => {
                       </span>
                     </div>
                   </div>
-                  {unread && <div className="w-3.5 h-3.5 bg-primary rounded-full shadow-[0_0_12px_rgba(var(--color-primary-rgb),0.6)]"></div>}
+                  {unread && (
+                    <div className="flex items-center justify-center min-w-[24px] h-6 px-1.5 bg-red-600 text-white text-[11px] font-bold rounded-full shadow-[0_0_12px_rgba(220,38,38,0.4)] animate-in zoom-in duration-300">
+                      {conv.unreadCount > 99 ? "99+" : conv.unreadCount || 1}
+                    </div>
+                  )}
                 </div>
               );
             })

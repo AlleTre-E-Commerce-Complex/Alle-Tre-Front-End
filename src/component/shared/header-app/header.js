@@ -704,7 +704,7 @@ const Header = ({
                     <div className="flex items-center relative">
                       {selectedContent[key]}
                       {unreadCount > 0 && (
-                        <span className="absolute -top-2 -right-3 font-bold bg-primary text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
+                        <span className="absolute -top-2 -right-3 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
                           {unreadCount > 99 ? "99+" : unreadCount}
                         </span>
                       )}
