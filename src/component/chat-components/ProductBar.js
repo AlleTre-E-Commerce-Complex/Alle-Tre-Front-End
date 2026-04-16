@@ -10,7 +10,7 @@ const ProductBar = ({ isWidget = false }) => {
   const product = activeConversation.product;
 
   return (
-    <div className={`flex items-center gap-3 p-3 bg-gray-50/80 border-b border-gray-100 backdrop-blur-sm sticky top-[73px] z-10 transition-all duration-300 ${isWidget ? "px-4" : "px-6"}`}>
+    <div className={`flex items-center gap-3 p-3 bg-gray-50/80 dark:bg-[#0b1120]/90 border-b border-gray-100 dark:border-blue-900/30 backdrop-blur-sm sticky top-[73px] z-10 transition-all duration-300 ${isWidget ? "px-4" : "px-6"}`}>
       <div className="shrink-0">
         <img
           src={product.images?.[0]?.imageLink || "/logo512.png"}

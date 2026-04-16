@@ -575,7 +575,7 @@ const ListProductDetails = () => {
         toast.success(
           selectedContent[localizationKeys.productUpdatedSuccessfully],
         );
-        history.push(routes.app.profile.myProducts.default);
+        history.push(routes.app.profile.myProducts.inPogress);
       }
     } catch (error) {
       console.error("Error updating product:", error);
