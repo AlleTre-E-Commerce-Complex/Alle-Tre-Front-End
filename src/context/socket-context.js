@@ -15,6 +15,12 @@ const getSocketURL = () => {
   } catch (e) {
     console.error("Socket URL Derivation Error:", e);
   }
+
+  // FINAL FALLBACK: If we are on 3arbon.com production and env-vars are missing
+  if (typeof window !== 'undefined' && window.location.hostname.includes('3arbon.com')) {
+    return "https://api.3arbon.com";
+  }
+
   return typeof window !== 'undefined' ? window.location.origin : "";
 };
 
