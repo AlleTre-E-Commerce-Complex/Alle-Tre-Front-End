@@ -3,15 +3,19 @@ import io from "socket.io-client";
 import auth from "../utils/auth";
 
 const getSocketURL = () => {
-  if (process.env.REACT_APP_WEB_SOCKET_URL) return process.env.REACT_APP_WEB_SOCKET_URL;
-  const apiUrl = process.env.REACT_APP_SERVER_URL || "";
   try {
-    const fullUrl = new URL(apiUrl, window.location.origin);
-    return `${fullUrl.protocol}//${fullUrl.host}`;
+    if (process.env.REACT_APP_WEB_SOCKET_URL) return process.env.REACT_APP_WEB_SOCKET_URL;
+    
+    const apiUrl = process.env.REACT_APP_SERVER_URL || "";
+    if (apiUrl) {
+      const base = typeof window !== 'undefined' ? window.location.origin : 'http://localhost';
+      const full = new URL(apiUrl, base);
+      return `${full.protocol}//${full.host}`;
+    }
   } catch (e) {
     console.error("Socket URL Derivation Error:", e);
-    return window.location.origin;
   }
+  return typeof window !== 'undefined' ? window.location.origin : "";
 };
 
 const URL = getSocketURL();

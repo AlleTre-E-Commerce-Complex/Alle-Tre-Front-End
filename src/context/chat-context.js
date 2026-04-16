@@ -40,16 +40,20 @@ export const ChatProvider = ({ children }) => {
   }, [isChatPageActive]);
 
   const getSocketURL = () => {
-    if (process.env.REACT_APP_WEB_SOCKET_URL) return process.env.REACT_APP_WEB_SOCKET_URL;
-    const apiUrl = process.env.REACT_APP_SERVER_URL || "";
     try {
-      // This handles both absolute (https://...) and relative (/api) paths correctly
-      const fullUrl = new URL(apiUrl, window.location.origin);
-      return `${fullUrl.protocol}//${fullUrl.host}`;
+      if (process.env.REACT_APP_WEB_SOCKET_URL) return process.env.REACT_APP_WEB_SOCKET_URL;
+      
+      const apiUrl = process.env.REACT_APP_SERVER_URL || "";
+      if (apiUrl) {
+        // Use a safe base for URL constructor
+        const base = typeof window !== 'undefined' ? window.location.origin : 'http://localhost';
+        const full = new URL(apiUrl, base);
+        return `${full.protocol}//${full.host}`;
+      }
     } catch (e) {
       console.error("Socket URL Derivation Error:", e);
-      return window.location.origin;
     }
+    return typeof window !== 'undefined' ? window.location.origin : "";
   };
 
   const URL = getSocketURL();
@@ -59,31 +63,30 @@ export const ChatProvider = ({ children }) => {
       if (!user) return;
       const response = await authAxios.get(`${api.app.chat.conversations}`);
       const conversationList = response.data.data || [];
-      setConversations((prev) => {
-        return conversationList.map((newConv) => {
-          const existing = prev.find((p) => p.id === newConv.id);
-          const lastMsg = newConv.messages?.[0];
-          const isUnread = lastMsg && !lastMsg.isRead && lastMsg.senderId !== user.id;
+      
+      const presenceMap = {};
+      const updatedConversations = conversationList.map((newConv) => {
+        const existing = conversations.find((p) => p.id === newConv.id);
+        const lastMsg = newConv.messages?.[0];
+        const isFromOther = lastMsg && lastMsg.senderId !== user.id;
+        const isUnread = lastMsg && !lastMsg.isRead && isFromOther;
 
-          // Preserve local count if it exists, otherwise initialize from last message
-          let count = existing?.unreadCount ?? (isUnread ? 1 : 0);
-          
-          // Reset if this is the active conversation
-          if (Number(activeConversationRef.current?.id) === Number(newConv.id)) {
-            count = 0;
-          }
-          
-          const otherUser = newConv.sellerId === user.id ? newConv.buyer : newConv.seller;
-          
-          // Harvest status from API data if present
-          if (otherUser) {
-            const isUserOnline = otherUser.isOnline || otherUser.online || otherUser.status === 'online' || otherUser.isActive;
-            setOnlineUsers(prev => ({ ...prev, [String(otherUser.id)]: !!isUserOnline }));
-          }
+        let count = existing?.unreadCount ?? (isUnread ? 1 : 0);
+        if (Number(activeConversationRef.current?.id) === Number(newConv.id)) {
+          count = 0;
+        }
+        
+        const otherUser = newConv.sellerId === user.id ? newConv.buyer : newConv.seller;
+        if (otherUser) {
+          // A non-null socketId in DB means they are currently connected to SOME instance
+          presenceMap[String(otherUser.id)] = !!otherUser.socketId;
+        }
 
-          return { ...newConv, unreadCount: count };
-        });
+        return { ...newConv, unreadCount: count };
       });
+
+      setOnlineUsers(prev => ({ ...prev, ...presenceMap }));
+      setConversations(updatedConversations);
     } catch (error) {
       console.error("Error fetching conversations:", error);
     }
