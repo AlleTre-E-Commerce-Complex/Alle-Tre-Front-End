@@ -47,7 +47,7 @@ export const ChatProvider = ({ children }) => {
       if (apiUrl) {
         // Use a safe base for URL constructor
         const base = typeof window !== 'undefined' ? window.location.origin : 'http://localhost';
-        const full = new URL(apiUrl, base);
+        const full = new window.URL(apiUrl, base);
         return `${full.protocol}//${full.host}`;
       }
     } catch (e) {
@@ -56,7 +56,7 @@ export const ChatProvider = ({ children }) => {
     return typeof window !== 'undefined' ? window.location.origin : "";
   };
 
-  const URL = getSocketURL();
+  const SOCKET_URL = getSocketURL();
 
   const fetchConversations = async () => {
     try {
@@ -100,7 +100,7 @@ export const ChatProvider = ({ children }) => {
         const headers = {
           Authorization: accessToken ? `Bearer ${accessToken}` : null,
         };
-        socket = io(`${URL}/chat`, {
+        socket = io(`${SOCKET_URL}/chat`, {
           auth: {
             token: accessToken,
           },
@@ -111,11 +111,11 @@ export const ChatProvider = ({ children }) => {
         });
 
         socket.on("connect", () => {
-          console.log(`[ChatSocket] Connected successfully to ${URL}/chat`);
+          console.log(`[ChatSocket] Connected successfully to ${SOCKET_URL}/chat`);
         });
 
         socket.on("connect_error", (err) => {
-          console.error(`[ChatSocket] Connection Error: ${err.message} (Target: ${URL})`);
+          console.error(`[ChatSocket] Connection Error: ${err.message} (Target: ${SOCKET_URL})`);
         });
 
         socket.on("new_message", (message) => {
