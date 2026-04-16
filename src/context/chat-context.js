@@ -94,21 +94,25 @@ export const ChatProvider = ({ children }) => {
     if (user) {
       // Connect to the chat namespace
       auth.getToken().then((accessToken) => {
+        const headers = {
+          Authorization: accessToken ? `Bearer ${accessToken}` : null,
+        };
         socket = io(`${URL}/chat`, {
-          extraHeaders: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : null,
+          auth: {
+            token: accessToken,
           },
+          extraHeaders: headers,
           query: { userId: String(user.id) },
           path: "/socket.io",
           transports: ["polling", "websocket"],
         });
 
         socket.on("connect", () => {
-          console.log("Connected to chat socket");
+          console.log(`[ChatSocket] Connected successfully to ${URL}/chat`);
         });
 
         socket.on("connect_error", (err) => {
-          console.error("Chat Socket Connection Error:", err.message);
+          console.error(`[ChatSocket] Connection Error: ${err.message} (Target: ${URL})`);
         });
 
         socket.on("new_message", (message) => {
