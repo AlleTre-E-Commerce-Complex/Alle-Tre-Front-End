@@ -137,14 +137,14 @@ const Footer = () => {
               <h1 className="text-yellow font-bold text-base">
                 {selectedContent[localizationKeys.contactUs]}
               </h1>
-              <p className="font-normal text-base text-gray-med py-0.5">
+              {/* <p className="font-normal text-base text-gray-med py-0.5">
                 {selectedContent[localizationKeys.eMail]}:{" "}
                 <a
                   href="mailto:info@3arbon.com"
                   className="hover:text-white transition-colors cursor-pointer"
                 >
                   info@3arbon.com
-                </a>
+                </a> */}
               </p>
               <p className="font-normal text-base text-gray-med py-0.5">
                 {selectedContent[localizationKeys.phoneNumber]}:{" "}
