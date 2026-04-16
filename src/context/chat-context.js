@@ -39,7 +39,20 @@ export const ChatProvider = ({ children }) => {
     isChatPageActiveRef.current = isChatPageActive;
   }, [isChatPageActive]);
 
-  const URL = process.env.REACT_APP_WEB_SOCKET_URL || process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+  const getSocketURL = () => {
+    if (process.env.REACT_APP_WEB_SOCKET_URL) return process.env.REACT_APP_WEB_SOCKET_URL;
+    const apiUrl = process.env.REACT_APP_SERVER_URL || "";
+    try {
+      // This handles both absolute (https://...) and relative (/api) paths correctly
+      const fullUrl = new URL(apiUrl, window.location.origin);
+      return `${fullUrl.protocol}//${fullUrl.host}`;
+    } catch (e) {
+      console.error("Socket URL Derivation Error:", e);
+      return window.location.origin;
+    }
+  };
+
+  const URL = getSocketURL();
 
   const fetchConversations = async () => {
     try {
@@ -92,6 +105,10 @@ export const ChatProvider = ({ children }) => {
 
         socket.on("connect", () => {
           console.log("Connected to chat socket");
+        });
+
+        socket.on("connect_error", (err) => {
+          console.error("Chat Socket Connection Error:", err.message);
         });
 
         socket.on("new_message", (message) => {
