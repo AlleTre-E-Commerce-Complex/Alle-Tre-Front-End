@@ -178,6 +178,16 @@ const api = {
     },
     updateUserBlockStatus :(currentStatus) => 
       `users/updateUserBlockStatus?currentStatus=${currentStatus}`,
+    comments: {
+      get: (productId) => `comments/${productId}`,
+      add: "comments",
+      edit: (commentId) => `comments/${commentId}`,
+      delete: (commentId) => `comments/${commentId}`,
+      like: (commentId) => `comments/${commentId}/like`,
+    },
+    admin: {
+      searchProducts: (query) => `/admin/products/search?query=${query}`,
+    },
   },
 };
 

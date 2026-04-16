@@ -115,6 +115,9 @@ const routes = {
       wallet: `/profile/wallet`,
       notifications: `/profile/notifications`,
     },
+    admin: {
+      comments: `/admin/comments`,
+    },
   },
 };
 

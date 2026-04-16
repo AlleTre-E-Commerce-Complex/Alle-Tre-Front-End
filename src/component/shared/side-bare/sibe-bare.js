@@ -300,6 +300,16 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
+              {/* {user?.role === "ADMIN" && (
+                <NavLink
+                  title={selectedContent[localizationKeys.adminPanel]}
+                  isActive={pathname.startsWith(routes.app.admin.comments)}
+                  onClick={() => {
+                    history.push(routes.app.admin.comments);
+                    SetSid(false);
+                  }}
+                />
+              )} */}
               {/* Only show logout button if user is logged in */}
               {user && (
                 <>

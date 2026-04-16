@@ -20,7 +20,7 @@ import { authAxios } from "config/axios-config";
 import ImgSlider from "component/shared/img-slider/img-slider";
 import PhoneNumberModal from "component/shared/phone-number-modal/phone-number-modal";
 import SilmilarProductsSlider from "component/auctions-details-components/silmilar-products-slider";
-import { Dimmer, Icon } from "semantic-ui-react";
+import { Dimmer, Icon, Modal } from "semantic-ui-react";
 import { useChat } from "context/chat-context";
 import LoadingTest3arbon from "component/shared/lotties-file/loading-test-3arbon";
 import routes from "../../routes";
@@ -32,6 +32,7 @@ import { Open } from "../../redux-store/auth-model-slice";
 import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import ConfirmationModal from "component/shared/delete-modal/delete-modal";
+import CommentSection from "./comments/CommentSection";
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
@@ -112,6 +113,19 @@ const SummaryListedSection = () => {
       setIsDeleteModalOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (productId) {
+      authAxios
+        .get(api.app.comments.get(productId))
+        .then((res) => {
+          if (res.data.success) {
+            setCommentCount(res.data.data.length);
+          }
+        })
+        .catch((err) => console.error("Error fetching initial comment count:", err));
+    }
+  }, [productId]);
 
   useEffect(() => {
     run(
@@ -215,6 +229,9 @@ const SummaryListedSection = () => {
     }
   };
 
+  const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false);
+  const [commentCount, setCommentCount] = useState(0);
+
   return (
     <div className="bg-white dark:bg-primary min-h-screen pt-32 pb-20 transition-colors duration-300">
       <Dimmer
@@ -275,8 +292,6 @@ const SummaryListedSection = () => {
                 isListProduct
               />
             </div>
-
-            {/* Owner Controls */}
           </div>
 
           {/* Sidebar Area (Right) */}
@@ -409,10 +424,10 @@ const SummaryListedSection = () => {
               </div>
               
               {user?.id === listedProductsData?.userId ? (
-                <div className="flex items-center gap-3 ">
+                <div className="space-y-4">
                   <button
                     onClick={handleOnStatus}
-                    className="flex-1 border-2 border-primary-light flex items-center justify-center gap-3 bg-primary hover:bg-primary-dark text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/20 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
+                    className="w-full bg-primary hover:bg-primary-dark text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-xl shadow-primary/20 active:scale-[0.98] group uppercase tracking-widest text-xs border-b-4 border-black/40 dark:border-white/10"
                   >
                     <MdPublishedWithChanges
                       size={20}
@@ -423,48 +438,42 @@ const SummaryListedSection = () => {
                     </span>
                   </button>
 
-                  <div
-                    onClick={() => {
-                      history.push(routes.app.listProduct.default, {
-                        productId: productId,
-                        isEditing: true,
-                      });
-                    }}
-                    className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-all duration-300 shadow-lg border-2 border-white dark:border-primary-dark group/edit shrink-0 hover:scale-105 active:scale-95"
-                    title={selectedContent[localizationKeys.edit]}
+                  <button
+                    onClick={() => setIsCommentsModalOpen(true)}
+                    className="w-full bg-primary dark:bg-slate-700/50 text-white border border-primary/20 dark:border-white/10 font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg hover:bg-primary/90 dark:hover:bg-slate-700 active:scale-[0.98] group uppercase tracking-widest text-[10px]"
                   >
-                    <MdOutlineEdit
-                      size={24}
-                      className="text-white group-hover/edit:rotate-12 transition-transform"
-                    />
-                  </div>
+                    <Icon name="comments" className="group-hover:scale-110 transition-transform text-white dark:text-[#d4af37]" />
+                    <span>{selectedContent[localizationKeys.comments]} ({commentCount})</span>
+                  </button>
 
-                  <div
-                    onClick={() => setIsDeleteModalOpen(true)}
-                    className="w-14 h-14 bg-red-500 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-red-600 transition-all duration-300 shadow-lg border-2 border-white dark:border-primary-dark group/delete shrink-0 hover:scale-105 active:scale-95"
-                    title={selectedContent[localizationKeys.deleteProduct]}
-                  >
-                    <MdDeleteOutline
-                      size={24}
-                      className="text-white group-hover/delete:rotate-12 transition-transform"
-                    />
+                  <div className="flex items-center gap-3">
+                    <div
+                      onClick={() => {
+                        history.push(routes.app.listProduct.default, {
+                          productId: productId,
+                          isEditing: true,
+                        });
+                      }}
+                      className="flex-1 h-14 bg-gray-50 dark:bg-slate-800 text-gray-600 dark:text-gray-300 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white dark:hover:bg-primary transition-all duration-300 shadow-sm border border-gray-100 dark:border-white/5 group/edit active:scale-95"
+                      title={selectedContent[localizationKeys.edit]}
+                    >
+                      <MdOutlineEdit
+                        size={22}
+                        className="group-hover/edit:rotate-12 transition-transform"
+                      />
+                    </div>
+
+                    <div
+                      onClick={() => setIsDeleteModalOpen(true)}
+                      className="flex-1 h-14 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 shadow-sm border border-red-100 dark:border-red-900/30 group/delete active:scale-95"
+                      title={selectedContent[localizationKeys.deleteProduct]}
+                    >
+                      <MdDeleteOutline
+                        size={22}
+                        className="group-hover/delete:rotate-12 transition-transform"
+                      />
+                    </div>
                   </div>
-                    {/* <button
-                    onClick={() =>
-                      history.push(routes.app.createAuction.productDetails, {
-                        productId: productId,
-                      })
-                    }
-                    className="flex items-center justify-center gap-3 bg-white dark:bg-slate-800 dark:hover:bg-slate-700 border-2 border-primary text-primary hover:bg-primary hover:text-white dark:text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-primary/5 transition-all duration-300 active:scale-[0.98] group/btn whitespace-nowrap"
-                  >
-                    <RiAuctionLine
-                      size={20}
-                      className="group-hover:scale-110 transition-transform"
-                    />
-                    <span>
-                      {selectedContent[localizationKeys.convertToAuction]}
-                    </span>
-                  </button> */}
                 </div>
                 ) : listedProductsData?.status === "OUT_OF_STOCK" ? (
                   <div className="bg-red-900/20 border border-red-100 dark:border-red-800/50 h-16 rounded-2xl flex items-center justify-center gap-3 w-full transition-all group overflow-hidden relative">
@@ -491,13 +500,26 @@ const SummaryListedSection = () => {
                       </button>
                     </div>
                     
-                    <button
-                      onClick={handleChatClick}
-                      className="w-full bg-gradient-to-r from-yellow to-yellow-dark hover:from-yellow-dark hover:to-[#b8860b] text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-yellow/20 active:scale-[0.98] group uppercase tracking-widest text-sm border-b-4 border-[#8b6508]/30"
-                    >
-                      <Icon name="chat" size="large" className="group-hover:translate-x-1 transition-transform" />
-                      <span>{selectedContent[localizationKeys.chatWithSeller]}</span>
-                    </button>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={handleChatClick}
+                        className="flex-1 bg-gradient-to-r from-yellow to-yellow-dark hover:from-yellow-dark hover:to-[#b8860b] text-primary-dark font-black h-16 rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg shadow-yellow/20 active:scale-[0.98] group uppercase tracking-widest text-[10px] border-b-4 border-[#8b6508]/30 px-2 leading-tight"
+                      >
+                        <Icon name="chat" className="group-hover:translate-x-1 transition-transform" />
+                        <span>{selectedContent[localizationKeys.chatWithSeller]}</span>
+                      </button>
+                      
+                      <button
+                        onClick={() => setIsCommentsModalOpen(true)}
+                        className="flex-1 bg-primary dark:bg-slate-800/80 text-white border border-primary/10 dark:border-white/10 font-black h-16 rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:bg-primary/90 dark:hover:bg-slate-700 active:scale-[0.98] group uppercase tracking-widest text-[10px] px-2 leading-tight"
+                      >
+                        <Icon name="comments" className="group-hover:scale-110 transition-transform text-white dark:text-[#d4af37]" />
+                        <span>
+                          {selectedContent[localizationKeys.comments]}
+                          <span className="ml-1 opacity-70">({commentCount})</span>
+                        </span>
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div className="pt-2">
@@ -675,6 +697,42 @@ const SummaryListedSection = () => {
         title={selectedContent[localizationKeys.confirmDeleteProduct]}
         message={selectedContent[localizationKeys.areYouSureYouWantToDeleteThisProduct]}
       />
+
+      {/* Comments Modal */}
+      <Modal
+        open={isCommentsModalOpen}
+        onClose={() => setIsCommentsModalOpen(false)}
+        className="!bg-white dark:!bg-primary !rounded-[2rem] overflow-hidden"
+        size="large"
+      >
+        {/* Fixed Header */}
+        <div className="flex items-center justify-between p-6 sm:p-8 border-b border-gray-100 dark:border-white/5 bg-white dark:bg-primary transition-colors duration-300">
+          <div className="flex items-center gap-4">
+            <div className="w-1.5 h-8 bg-primary dark:bg-[#d4af37] rounded-full" />
+            <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tight flex items-center gap-3">
+              {selectedContent[localizationKeys.comments]}
+              <span className="text-gray-400 dark:text-gray-500 font-bold text-lg">
+                ({commentCount})
+              </span>
+            </h2>
+          </div>
+          <button 
+            onClick={() => setIsCommentsModalOpen(false)}
+            className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-slate-800 flex items-center justify-center text-gray-400 hover:text-primary dark:hover:text-[#d4af37] transition-all duration-300 hover:scale-110 active:scale-90 group"
+          >
+            <Icon name="close" className="!m-0 duration-300" />
+          </button>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="max-h-[70vh] overflow-y-auto hide-scrollbar p-4 sm:p-8 transition-colors duration-300 dark:bg-primary-dark">
+          <CommentSection 
+             productId={productId} 
+             onCountChange={setCommentCount} 
+             sellerId={listedProductsData?.user?.id || listedProductsData?.userId}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };
