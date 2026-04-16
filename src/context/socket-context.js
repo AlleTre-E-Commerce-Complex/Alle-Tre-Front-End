@@ -3,13 +3,13 @@ import io from "socket.io-client";
 import auth from "../utils/auth";
 
 const getSocketURL = () => {
-  const LOG_VERSION = "2.0.2";
+  const LOG_VERSION = "2.0.3";
   let apiUrl = process.env.REACT_APP_SERVER_URL;
 
-  // HEAVY-HANDED PRODUCTION GUARD
+  // SAFE PRODUCTION FALLBACK
   if (typeof window !== 'undefined' && window.location.hostname.includes('3arbon.com')) {
-    console.log(`[AuctionSocket] [v${LOG_VERSION}] Production Domain Detected. Forcing API domain.`);
-    return "https://api.3arbon.com";
+    console.log(`[AuctionSocket] [v${LOG_VERSION}] Production Domain Detected. Using origin fallback.`);
+    return process.env.REACT_APP_SERVER_URL ? new window.URL(process.env.REACT_APP_SERVER_URL).origin : window.location.origin;
   }
 
   try {
@@ -23,7 +23,7 @@ const getSocketURL = () => {
   }
 
   const fallback = typeof window !== 'undefined' ? window.location.origin : "";
-  console.log(`[AuctionSocket] [v${LOG_VERSION}] No valid API URL found. Falling back to:`, fallback);
+  console.log(`[AuctionSocket] [v${LOG_VERSION}] Falling back to:`, fallback);
   return fallback;
 };
 
@@ -42,7 +42,6 @@ export function SocketProvider({ auctionId, children, userId }) {
         navigator.serviceWorker.register('/firebase-messaging-sw.js')
           .then(reg => {
             console.log('SW registered', reg);
-            // then request token using this registration (see next snippet)
           }).catch(err => console.error('SW register failed :- ', err));
       }
 
@@ -50,9 +49,15 @@ export function SocketProvider({ auctionId, children, userId }) {
       const headers = {
         Authorization: accessToken ? "Bearer " + accessToken : null,
       };
+
+      // Ensure auctionId is a string, not an object
+      const safeAuctionId = (typeof auctionId === 'object' && auctionId !== null) 
+        ? (auctionId.id || "") 
+        : (auctionId || "");
+
       const newSocket = io(SOCKET_URL, {
         extraHeaders: headers,
-        query: { auctionId: auctionId, userId: String(userId) },
+        query: { auctionId: String(safeAuctionId), userId: String(userId) },
         path: "/socket.io",
         transports: ["polling", "websocket"],
       });

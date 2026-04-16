@@ -40,13 +40,14 @@ export const ChatProvider = ({ children }) => {
   }, [isChatPageActive]);
 
   const getSocketURL = () => {
-    const LOG_VERSION = "2.0.2";
+    const LOG_VERSION = "2.0.3";
     let apiUrl = process.env.REACT_APP_SERVER_URL;
     
-    // HEAVY-HANDED PRODUCTION GUARD
+    // SAFE PRODUCTION FALLBACK
     if (typeof window !== 'undefined' && window.location.hostname.includes('3arbon.com')) {
-      console.log(`[ChatSocket] [v${LOG_VERSION}] Production Domain Detected. Forcing API domain.`);
-      return "https://api.3arbon.com";
+      console.log(`[ChatSocket] [v${LOG_VERSION}] Production Domain Detected. Using origin fallback.`);
+      // Default to the current origin if no env var is present
+      return process.env.REACT_APP_SERVER_URL ? new window.URL(process.env.REACT_APP_SERVER_URL).origin : window.location.origin;
     }
 
     try {
@@ -60,7 +61,7 @@ export const ChatProvider = ({ children }) => {
     }
 
     const fallback = typeof window !== 'undefined' ? window.location.origin : "";
-    console.log(`[ChatSocket] [v${LOG_VERSION}] No valid API URL found. Falling back to:`, fallback);
+    console.log(`[ChatSocket] [v${LOG_VERSION}] Falling back to:`, fallback);
     return fallback;
   };
 
