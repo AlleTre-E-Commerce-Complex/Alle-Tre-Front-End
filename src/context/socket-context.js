@@ -2,7 +2,19 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import auth from "../utils/auth";
 
-const URL = process.env.REACT_APP_WEB_SOCKET_URL || process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+const getSocketURL = () => {
+  if (process.env.REACT_APP_WEB_SOCKET_URL) return process.env.REACT_APP_WEB_SOCKET_URL;
+  const apiUrl = process.env.REACT_APP_SERVER_URL || "";
+  try {
+    const fullUrl = new URL(apiUrl, window.location.origin);
+    return `${fullUrl.protocol}//${fullUrl.host}`;
+  } catch (e) {
+    console.error("Socket URL Derivation Error:", e);
+    return window.location.origin;
+  }
+};
+
+const URL = getSocketURL();
 const SocketContext = React.createContext();
 export function useSocket() {
   return React.useContext(SocketContext);
@@ -31,6 +43,11 @@ export function SocketProvider({ auctionId, children, userId }) {
         path: "/socket.io",
         transports: ["polling", "websocket"],
       });
+
+      newSocket.on("connect_error", (err) => {
+        console.error("Auction Socket Connection Error:", err.message);
+      });
+
       setSocket(newSocket);
     });
   }, [auctionId,userId]);
