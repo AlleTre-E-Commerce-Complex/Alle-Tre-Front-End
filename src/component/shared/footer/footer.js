@@ -144,8 +144,8 @@ const Footer = () => {
                   className="hover:text-white transition-colors cursor-pointer"
                 >
                   info@3arbon.com
-                </a> */}
-              </p>
+                </a>
+              </p> */}
               <p className="font-normal text-base text-gray-med py-0.5">
                 {selectedContent[localizationKeys.phoneNumber]}:{" "}
                 <a
