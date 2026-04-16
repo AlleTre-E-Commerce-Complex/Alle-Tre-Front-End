@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { ReactComponent as CloseIcon } from "../../../../src/assets/icons/x_icon.svg";
 import { ReactComponent as AllatreLogo } from "../../../../src/assets/logo/3arbon-main.svg";
 
-import { ReactComponent as Allatre } from "../../../../src/assets/logo/allatre-logo-color.svg";
+// import { ReactComponent as Allatre } from "../../../../src/assets/logo/allatre-logo-color.svg";
 // import DropdownLang from "../header-app/dropdown-lang";
 import { useHistory, useLocation } from "react-router-dom";
 import { useAuthState } from "../../../context/auth-context";
@@ -82,14 +82,14 @@ const Sidebar = ({ SetSid, sid }) => {
 
   const { user } = useAuthState();
   const dispatch = useDispatch();
-  const handelOnSell = () => {
-    if (user) {
-      history.push(routes.app.createAuction.productDetails);
-    } else {
-      dispatch(Open());
-      toast.error("You must log in first to add new auction");
-    }
-  };
+  // const handelOnSell = () => {
+  //   if (user) {
+  //     history.push(routes.app.createAuction.productDetails);
+  //   } else {
+  //     dispatch(Open());
+  //     toast.error("You must log in first to add new auction");
+  //   }
+  // };
 
   const handelMyPfofile = () => {
     if (user) {
@@ -104,11 +104,11 @@ const Sidebar = ({ SetSid, sid }) => {
       history.push(routes.app.profile.purchased);
     } else dispatch(Open());
   };
-  const handelWallet = () => {
-    if (user) {
-      history.push(routes.app.profile.wallet);
-    } else dispatch(Open());
-  };
+  // const handelWallet = () => {
+  //   if (user) {
+  //     history.push(routes.app.profile.wallet);
+  //   } else dispatch(Open());
+  // };
   const handelFaq = () => {
     if (user) {
       history.push(routes.app.faqs);
@@ -127,17 +127,17 @@ const Sidebar = ({ SetSid, sid }) => {
     await logout();
     SetSid(false);
   };
-  const handelmyAuctions = () => {
-    if (user) {
-      history.push(routes.app.profile.myAuctions.default);
-    } else dispatch(Open());
-  };
+  // const handelmyAuctions = () => {
+  //   if (user) {
+  //     history.push(routes.app.profile.myAuctions.default);
+  //   } else dispatch(Open());
+  // };
 
-  const handelmyBids = () => {
-    if (user) {
-      history.push(routes.app.profile.myBids.default);
-    } else dispatch(Open());
-  };
+  // const handelmyBids = () => {
+  //   if (user) {
+  //     history.push(routes.app.profile.myBids.default);
+  //   } else dispatch(Open());
+  // };
   const handleMyProducts = () => {
     if (user) {
       history.push(routes.app.profile.myProducts.default);

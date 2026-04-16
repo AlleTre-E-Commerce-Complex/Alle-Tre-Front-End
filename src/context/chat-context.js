@@ -39,7 +39,7 @@ export const ChatProvider = ({ children }) => {
     isChatPageActiveRef.current = isChatPageActive;
   }, [isChatPageActive]);
 
-  const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+  const URL = process.env.REACT_APP_WEB_SOCKET_URL || process.env.REACT_APP_DEV_WEB_SOCKET_URL;
 
   const fetchConversations = async () => {
     try {
@@ -85,8 +85,9 @@ export const ChatProvider = ({ children }) => {
           extraHeaders: {
             Authorization: accessToken ? `Bearer ${accessToken}` : null,
           },
-          query: { userId: user.id },
+          query: { userId: String(user.id) },
           path: "/socket.io",
+          transports: ["polling", "websocket"],
         });
 
         socket.on("connect", () => {
