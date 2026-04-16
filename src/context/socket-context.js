@@ -9,7 +9,7 @@ const getSocketURL = () => {
     const apiUrl = process.env.REACT_APP_SERVER_URL || "";
     if (apiUrl) {
       const base = typeof window !== 'undefined' ? window.location.origin : 'http://localhost';
-      const full = new URL(apiUrl, base);
+      const full = new window.URL(apiUrl, base);
       return `${full.protocol}//${full.host}`;
     }
   } catch (e) {
@@ -18,7 +18,7 @@ const getSocketURL = () => {
   return typeof window !== 'undefined' ? window.location.origin : "";
 };
 
-const URL = getSocketURL();
+const SOCKET_URL = getSocketURL();
 const SocketContext = React.createContext();
 export function useSocket() {
   return React.useContext(SocketContext);
@@ -41,7 +41,7 @@ export function SocketProvider({ auctionId, children, userId }) {
       const headers = {
         Authorization: accessToken ? "Bearer " + accessToken : null,
       };
-      const newSocket = io(URL, {
+      const newSocket = io(SOCKET_URL, {
         extraHeaders: headers,
         query: { auctionId: auctionId, userId: String(userId) },
         path: "/socket.io",
