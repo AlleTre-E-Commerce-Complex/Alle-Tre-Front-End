@@ -40,20 +40,28 @@ export const ChatProvider = ({ children }) => {
   }, [isChatPageActive]);
 
   const getSocketURL = () => {
-    const LOG_VERSION = "2.0.3";
+    const LOG_VERSION = "2.0.4";
     let apiUrl = process.env.REACT_APP_SERVER_URL;
     
     // SAFE PRODUCTION FALLBACK
     if (typeof window !== 'undefined' && window.location.hostname.includes('3arbon.com')) {
       console.log(`[ChatSocket] [v${LOG_VERSION}] Production Domain Detected. Using origin fallback.`);
-      // Default to the current origin if no env var is present
-      return process.env.REACT_APP_SERVER_URL ? new window.URL(process.env.REACT_APP_SERVER_URL).origin : window.location.origin;
+      const base = window.location.origin;
+      try {
+        if (apiUrl) {
+          return new window.URL(apiUrl, base).origin;
+        }
+      } catch (e) {
+        console.warn(`[ChatSocket] [v${LOG_VERSION}] Failed to parse apiUrl with base:`, e);
+      }
+      return base;
     }
 
     try {
       if (apiUrl && apiUrl.trim() !== "") {
         console.log(`[ChatSocket] [v${LOG_VERSION}] Using Environment Variable:`, apiUrl);
-        const SOCKET_URL = new window.URL(apiUrl);
+        const base = typeof window !== 'undefined' ? window.location.origin : "http://localhost";
+        const SOCKET_URL = new window.URL(apiUrl, base);
         return SOCKET_URL.origin;
       }
     } catch (e) {
