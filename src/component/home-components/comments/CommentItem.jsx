@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-import { FaUser, FaHeart, FaRegHeart, FaEdit, FaTrash, FaCommentAlt } from "react-icons/fa";
+import { FaUser, FaHeart, FaRegHeart, FaEdit, FaTrash } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import CommentInput from "./CommentInput";
 

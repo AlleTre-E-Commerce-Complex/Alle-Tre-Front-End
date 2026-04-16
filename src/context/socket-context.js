@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import auth from "../utils/auth";
 
-const URL = process.env.REACT_APP_DEV_WEB_SOCKET_URL;
+const URL = process.env.REACT_APP_WEB_SOCKET_URL || process.env.REACT_APP_DEV_WEB_SOCKET_URL;
 const SocketContext = React.createContext();
 export function useSocket() {
   return React.useContext(SocketContext);
@@ -27,8 +27,9 @@ export function SocketProvider({ auctionId, children, userId }) {
       };
       const newSocket = io(URL, {
         extraHeaders: headers,
-        query: { auctionId: auctionId, userId:userId },
+        query: { auctionId: auctionId, userId: String(userId) },
         path: "/socket.io",
+        transports: ["polling", "websocket"],
       });
       setSocket(newSocket);
     });
