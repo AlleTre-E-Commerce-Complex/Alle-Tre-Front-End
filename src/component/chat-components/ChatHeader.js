@@ -35,7 +35,7 @@ const ChatHeader = ({ isWidget = false, onClose, onMinimize, isMinimized }) => {
   };
 
   return (
-    <div className={`flex items-center justify-between p-4 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-20 transition-colors duration-300 ${isWidget ? "rounded-t-2xl shadow-sm md:rounded-t-2xl rounded-none" : ""}`}>
+    <div className={`flex items-center justify-between p-4 bg-white dark:bg-[#0b1120] border-b border-gray-100 dark:border-blue-900/30 sticky top-0 z-20 transition-colors duration-300 ${isWidget ? "rounded-t-2xl shadow-sm md:rounded-t-2xl rounded-none" : ""}`}>
       <div className="flex-1 min-w-0 flex items-center gap-3">
         <button 
           onClick={handleBack} 

@@ -107,7 +107,7 @@ const ChatInput = ({ isWidget = false }) => {
   if (!activeConversation) return null;
 
   return (
-    <div className={`p-4 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 sticky bottom-0 z-20 transition-colors duration-300 ${isWidget ? "rounded-b-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.03)]" : "md:p-6"}`}>
+    <div className={`p-4 bg-white dark:bg-[#0b1120] border-t border-gray-100 dark:border-blue-900/30 sticky bottom-0 z-20 transition-colors duration-300 ${isWidget ? "rounded-b-2xl shadow-[0_-4px_12px_rgba(0,0,0,0.03)]" : "md:p-6"}`}>
       {/* 1. Expandable Options Drawer (Moved on top) */}
       <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showOptions ? 'max-h-[350px] mb-8 opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className={`mx-auto transition-all duration-500 ${isWidget ? "max-w-full" : "max-w-xl md:max-w-2xl px-4"}`}>

@@ -167,20 +167,29 @@ export const ChatProvider = ({ children }) => {
           });
 
           // Update conversation list last message and unread count
-          setConversations((prev) =>
-            prev.map((conv) => {
+          setConversations((prev) => {
+            const exists = prev.some((conv) => conv.id === message.conversationId);
+            if (!exists) {
+              // If it's a new conversation (like the first message sent by a buyer),
+              // we need to fetch the full details for the sidebar.
+              setTimeout(() => fetchConversations(), 0);
+              return prev;
+            }
+
+            return prev.map((conv) => {
               if (conv.id === message.conversationId) {
-                return { 
-                  ...conv, 
+                return {
+                  ...conv,
                   messages: [message],
-                  unreadCount: (!isCurrentlyViewing && isFromOther) 
-                    ? (conv.unreadCount || 0) + 1 
-                    : 0
+                  unreadCount:
+                    !isCurrentlyViewing && isFromOther
+                      ? (conv.unreadCount || 0) + 1
+                      : 0,
                 };
               }
               return conv;
-            })
-          );
+            });
+          });
 
           // If we ARE in the active conversation AND viewing it, mark it as read
           if (isCurrentlyViewing && isFromOther) {

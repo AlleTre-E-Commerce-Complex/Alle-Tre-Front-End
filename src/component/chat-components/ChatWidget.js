@@ -13,7 +13,7 @@ const ChatWidget = () => {
 
   return (
     <div 
-      className={`fixed z-[99999] transition-all duration-500 ease-in-out bg-white shadow-2xl flex flex-col border border-gray-100/50 backdrop-blur-xl pointer-events-auto ${
+      className={`fixed z-[99999] transition-all duration-500 ease-in-out bg-white dark:bg-[#0b1120] shadow-2xl flex flex-col border border-gray-100/50 dark:border-blue-900/30 backdrop-blur-xl pointer-events-auto ${
         isMinimized 
           ? "h-[64px] w-[300px] bottom-4 ltr:right-4 rtl:left-4 rounded-xl" 
           : "top-0 md:top-auto bottom-0 md:bottom-6 ltr:right-0 md:ltr:right-6 rtl:left-0 md:rtl:left-6 w-full md:w-[400px] h-full md:h-[600px] rounded-none md:rounded-2xl"

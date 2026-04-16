@@ -140,7 +140,7 @@ const Sidebar = ({ SetSid, sid }) => {
   // };
   const handleMyProducts = () => {
     if (user) {
-      history.push(routes.app.profile.myProducts.default);
+      history.push(routes.app.profile.myProducts.inPogress);
     } else dispatch(Open());
   };
   const handelWatchlist = () => {

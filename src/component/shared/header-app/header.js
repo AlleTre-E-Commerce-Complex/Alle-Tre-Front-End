@@ -460,19 +460,19 @@ const Header = ({
   const handelHome = () => {
     history.push(routes.app.home);
   };
-  const handelmyAuctions = () => {
-    if (user) {
-      history.push(routes.app.profile.myAuctions.default);
-    } else dispatch(Open());
-  };
-  const handelmyBids = () => {
-    if (user) {
-      history.push(routes.app.profile.myBids.default);
-    } else dispatch(Open());
-  };
+  // const handelmyAuctions = () => {
+  //   if (user) {
+  //     history.push(routes.app.profile.myAuctions.default);
+  //   } else dispatch(Open());
+  // };
+  // const handelmyBids = () => {
+  //   if (user) {
+  //     history.push(routes.app.profile.myBids.default);
+  //   } else dispatch(Open());
+  // };
   const handelmyProducts = () => {
     if (user) {
-      history.push(routes.app.profile.myProducts.default);
+      history.push(routes.app.profile.myProducts.inPogress);
     } else dispatch(Open());
   };
   const handelWatchlist = () => {

@@ -46,7 +46,7 @@ const ChatMessageList = ({ isWidget = false }) => {
 
       {messages.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full opacity-30 dark:opacity-40 py-20 text-gray-500 dark:text-gray-400">
-           <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+           <div className="w-20 h-20 bg-gray-100 dark:bg-[#0f172a] rounded-full flex items-center justify-center mb-4">
              <Icon name="comments" size="big" className="!m-0" />
            </div>
            <p className="mt-2 font-bold uppercase tracking-widest text-[10px] md:text-xs text-center px-6">
@@ -70,7 +70,7 @@ const ChatMessageList = ({ isWidget = false }) => {
                   className={`p-2.5 px-4 rounded-xl shadow-sm relative group transition-colors duration-300 ${
                     isMe
                       ? "bg-primary text-white rounded-tr-none"
-                      : "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-tl-none border border-gray-100 dark:border-gray-700"
+                      : "bg-white dark:bg-[#0f172a] text-gray-800 dark:text-gray-100 rounded-tl-none border border-gray-100 dark:border-blue-900/30"
                   } ${isWidget ? "text-xs" : "text-sm"}`}
                 >
                   {msg.type === "IMAGE" && (
