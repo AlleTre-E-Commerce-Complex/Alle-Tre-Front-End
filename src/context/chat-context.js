@@ -40,26 +40,28 @@ export const ChatProvider = ({ children }) => {
   }, [isChatPageActive]);
 
   const getSocketURL = () => {
-    try {
-      if (process.env.REACT_APP_WEB_SOCKET_URL) return process.env.REACT_APP_WEB_SOCKET_URL;
-      
-      const apiUrl = process.env.REACT_APP_SERVER_URL || "";
-      if (apiUrl) {
-        // Use a safe base for URL constructor
-        const base = typeof window !== 'undefined' ? window.location.origin : 'http://localhost';
-        const full = new window.URL(apiUrl, base);
-        return `${full.protocol}//${full.host}`;
-      }
-    } catch (e) {
-      console.error("Socket URL Derivation Error:", e);
-    }
-
-    // FINAL FALLBACK: If we are on 3arbon.com production and env-vars are missing
+    const LOG_VERSION = "2.0.2";
+    let apiUrl = process.env.REACT_APP_SERVER_URL;
+    
+    // HEAVY-HANDED PRODUCTION GUARD
     if (typeof window !== 'undefined' && window.location.hostname.includes('3arbon.com')) {
+      console.log(`[ChatSocket] [v${LOG_VERSION}] Production Domain Detected. Forcing API domain.`);
       return "https://api.3arbon.com";
     }
 
-    return typeof window !== 'undefined' ? window.location.origin : "";
+    try {
+      if (apiUrl && apiUrl.trim() !== "") {
+        console.log(`[ChatSocket] [v${LOG_VERSION}] Using Environment Variable:`, apiUrl);
+        const SOCKET_URL = new window.URL(apiUrl);
+        return SOCKET_URL.origin;
+      }
+    } catch (e) {
+      console.error(`[ChatSocket] [v${LOG_VERSION}] Socket URL Derivation Error:`, e);
+    }
+
+    const fallback = typeof window !== 'undefined' ? window.location.origin : "";
+    console.log(`[ChatSocket] [v${LOG_VERSION}] No valid API URL found. Falling back to:`, fallback);
+    return fallback;
   };
 
   const SOCKET_URL = getSocketURL();
