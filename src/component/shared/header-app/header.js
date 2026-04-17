@@ -6,13 +6,15 @@ import { ReactComponent as AllatreLogoFull } from "../../../../src/assets/logo/3
 import routes from "../../../routes";
 import DropdownLang from "./dropdown-lang";
 import NavLinkHeader from "./nav-link-header";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { PofileData } from "../../../redux-store/pofile-data-slice";
+import api from "../../../api";
 import { Open } from "../../../redux-store/auth-model-slice";
 import { useAuthState } from "../../../context/auth-context";
 import { BiMenu } from "react-icons/bi";
 // import { RiArrowDownSFill, RiHome2Line } from "react-icons/ri";
 // import { TbLayoutGrid } from "react-icons/tb";
-import { FaRegUser, FaSearch } from "react-icons/fa";
+import { FaRegUser, FaSearch, FaUserCircle } from "react-icons/fa";
 // import PopupCategoriesModel from "./popup-categories-model";
 import { Input } from "semantic-ui-react";
 import useFilter from "../../../hooks/use-filter";
@@ -20,7 +22,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
-// import { CgProfile } from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 // import { MdLogout } from "react-icons/md";
 
 import { useSocket } from "../../../context/socket-context";
@@ -59,11 +61,27 @@ const Header = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { unreadCount } = useChat();
   const [searchShow, setSearchShow] = useState(true);
-
+  const profileData = useSelector((state) => state?.profileData?.PofileData);
 
   const [isListing, setIsListing] = useState(false);
   const [open, setOpen] = useState(false);
   const { run } = useAxios();
+
+  useEffect(() => {
+    if (user && !profileData?.img) {
+      run(
+        authAxios.get(api.app.profile.default).then((res) => {
+          dispatch(
+            PofileData({
+              name: res?.data?.data?.userName,
+              img: res?.data?.data?.imageLink,
+              email: res?.data?.data?.email,
+            }),
+          );
+        }),
+      );
+    }
+  }, [user, profileData?.img, run, dispatch]);
   const [, setTitle] = useFilter("title", "");
   const [searchValue, setSearchValue] = useState("");
   const [selectedOption, setSelectedOption] = useState(
@@ -389,13 +407,13 @@ const Header = ({
     });
   }, 500);
 
-  // const handelMyPfofile = () => {
-  //   if (user) {
-  //     history.push(routes.app.profile.profileSettings);
-  //   } else {
-  //     dispatch(Open());
-  //   }
-  // };
+  const handelMyPfofile = () => {
+    if (user) {
+      history.push(routes.app.profile.profileSettings);
+    } else {
+      dispatch(Open());
+    }
+  };
   // const handleOnSell = () => {
   //   setIsDropdownOpen(false);
   //   localStorage.removeItem("auctionId");
@@ -895,13 +913,28 @@ const Header = ({
               isActive={pathname.startsWith(routes.app.profile.notifications)}
               onClick={handleNotificationClick}
             />
-            {/* <CgProfile
-              className="text-[#eae2e6] cursor-pointer"
-              size={25}
-              onClick={() => {
-                handelMyPfofile();
-              }}
-            /> */}
+            {user ? (
+              profileData?.img ? (
+                <img
+                  src={profileData.img}
+                  alt="profile"
+                  className="w-8 h-8 rounded-full border border-yellow object-cover cursor-pointer"
+                  onClick={handelMyPfofile}
+                />
+              ) : (
+                <FaUserCircle
+                  className="text-[#eae2e6] cursor-pointer"
+                  size={28}
+                  onClick={handelMyPfofile}
+                />
+              )
+            ) : (
+              <CgProfile
+                className="text-[#eae2e6] cursor-pointer"
+                size={25}
+                onClick={handelMyPfofile}
+              />
+            )}
           </div>
         </div>
       </div>

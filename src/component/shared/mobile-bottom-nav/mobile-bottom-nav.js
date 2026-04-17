@@ -12,7 +12,7 @@ import { FiList } from "react-icons/fi";
 import { FaPlus, FaGavel, FaArrowRight } from "react-icons/fa";
 import { BsPersonFill } from "react-icons/bs";
 import { TbTag } from "react-icons/tb";
-import { HiOutlineShoppingBag } from "react-icons/hi2";
+import { HiOutlineChatBubbleOvalLeftEllipsis, HiOutlineHeart } from "react-icons/hi2";
 
 const MobileBottomNav = ({
   isExpanded,
@@ -30,9 +30,9 @@ const MobileBottomNav = ({
   const location = useLocation();
   const { pathname } = location;
 
-  const handleProfileClick = () => {
+  const handleFavourites = () => {
     if (user) {
-      history.push(routes.app.profile.profileSettings);
+      history.push(routes.app.profile.watchlist);
     } else {
       dispatch(Open());
     }
@@ -46,9 +46,9 @@ const MobileBottomNav = ({
     }
   };
 
-  const handlePurchased = () => {
+  const handleChat = () => {
     if (user) {
-      history.push(routes.app.profile.purchased);
+      history.push(routes.app.chat);
     } else {
       dispatch(Open());
     }
@@ -121,45 +121,49 @@ const MobileBottomNav = ({
 
           {/* 4. Purchased */}
           <button
-            onClick={handlePurchased}
+            onClick={handleChat}
             className="flex-1 flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-yellow active:scale-95 transition-all"
           >
-            <HiOutlineShoppingBag
+            <HiOutlineChatBubbleOvalLeftEllipsis
               size={22}
               className={
-                pathname.startsWith(routes.app.profile.purchased)
+                pathname.startsWith(routes.app.chat)
                   ? "text-yellow"
                   : "text-primary-veryLight"
               }
             />
             <span
               className={`text-[10px] sm:text-xs font-medium ${
-                pathname.startsWith(routes.app.profile.purchased)
+                pathname.startsWith(routes.app.chat)
                   ? "text-yellow"
                   : ""
               }`}
             >
-              {selectedContent[localizationKeys.Purchased]}
+              {selectedContent[localizationKeys.chats]}
             </span>
           </button>
 
           {/* 5. Profile */}
           <button
-            onClick={handleProfileClick}
+            onClick={handleFavourites}
             className="flex-1 flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-yellow active:scale-95 transition-all"
           >
-            <BsPersonFill
+            <HiOutlineHeart
               size={24}
               className={
-                window.location.pathname.includes("/profile")
+                pathname.startsWith(routes.app.profile.watchlist)
                   ? "text-yellow"
                   : "text-primary-veryLight"
               }
             />
             <span
-              className={`text-[10px] sm:text-xs font-medium ${window.location.pathname.includes("/profile") ? "text-yellow" : ""}`}
+              className={`text-[10px] sm:text-xs font-medium ${
+                pathname.startsWith(routes.app.profile.watchlist)
+                  ? "text-yellow"
+                  : ""
+              }`}
             >
-              {selectedContent[localizationKeys.profile]}
+              {selectedContent[localizationKeys.favourites]}
             </span>
           </button>
         </div>

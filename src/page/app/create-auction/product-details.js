@@ -444,8 +444,8 @@ const ProductDetails = () => {
         );
       });
     } catch (error) {
-      toast.error(selectedContent[localizationKeys.errorInWatermarkProcess]);
-      throw error;
+      console.warn("Watermark process failed, skipping:", error);
+      return file;
     }
   };
 

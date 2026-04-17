@@ -354,7 +354,13 @@ const ListingProductsLocationDetails = () => {
           go to paymentDetails
         </button> */}
           {/* buttons */}
-          <div className=" flex justify-end  mt-28">
+          <div className="flex justify-end items-center gap-4 mt-28">
+            <button
+              className="px-8 h-[48px] rounded-lg border border-primary-light dark:border-white/10 text-gray-500 dark:text-gray-400 font-semibold text-base hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+              onClick={() => history.push(routes.app.listProduct.default)}
+            >
+              {selectedContent[localizationKeys.back]}
+            </button>
             <button
               className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors flex items-center justify-center gap-2"
               // onClick={creatAuction}

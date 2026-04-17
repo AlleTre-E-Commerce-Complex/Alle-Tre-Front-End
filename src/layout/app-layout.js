@@ -268,7 +268,11 @@ const AppLayouts = () => {
           </div>
           <Footer />
           <div className="relative z-max">
-            {currentPath === routes.app.home && (
+            {![
+              routes.app.profile.profileSettings,
+              routes.app.listProduct.default,
+              routes.app.listProduct.listProductLocationDetails,
+            ].includes(currentPath) && (
               <MobileBottomNav
                 isExpanded={isExpanded}
                 toggleExpand={toggleExpand}

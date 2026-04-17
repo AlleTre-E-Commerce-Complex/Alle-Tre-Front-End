@@ -836,6 +836,7 @@ const localizationKeys = {
   noProductsFound: "noProductsFound",
   reply: "reply",
   writeAReply: "writeAReply",
+  back: "back",
 };
 
 export default localizationKeys;

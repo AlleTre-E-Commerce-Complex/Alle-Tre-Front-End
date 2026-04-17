@@ -210,19 +210,20 @@ const SummaryListedSection = () => {
       ? `${protocol}//${hostname}:${port}`
       : `${protocol}//${hostname}`;
   };
+ const shareUrl = `${getDomain()}/my-product/${productId}/details`
+    
 
-  const handleShare = async () => {
-    const shareUrl = `${getDomain()}/my-product/${productId}/details`;
+    const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: listedProductsData?.title || "Check out this product!",
-          text: "Check out this product on 3arbon",
+          title: listedProductsData?.title,
+          text: "Check out this auction!",
           url: shareUrl,
         });
       } catch (error) {
         console.error("Error sharing post:", error);
-        setShowShareFallback(true);
+        setShowShareFallback(true); // Show fallback if native share fails
       }
     } else {
       setShowShareFallback(!showShareFallback);
@@ -337,7 +338,7 @@ const SummaryListedSection = () => {
                       {showShareFallback && (
                         <div className="absolute right-0 top-full mt-3 p-3 bg-white dark:bg-slate-900 border border-gray-100 dark:border-white/10 rounded-2xl shadow-2xl z-[100] min-w-[200px] animate-in">
                           <ShareFallBack
-                            shareUrl={`${getDomain()}/my-product/${productId}/details`}
+                            shareUrl={shareUrl}
                             title={listedProductsData?.title}
                           />
                         </div>
@@ -425,18 +426,49 @@ const SummaryListedSection = () => {
               
               {user?.id === listedProductsData?.userId ? (
                 <div className="space-y-4">
-                  <button
-                    onClick={handleOnStatus}
-                    className="w-full bg-primary hover:bg-primary-dark text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-xl shadow-primary/20 active:scale-[0.98] group uppercase tracking-widest text-xs border-b-4 border-black/40 dark:border-white/10"
-                  >
-                    <MdPublishedWithChanges
-                      size={20}
-                      className="group-hover:rotate-180 transition-transform duration-500"
-                    />
-                    <span>
-                      {selectedContent[localizationKeys.changeStatus]}
-                    </span>
-                  </button>
+                  {listedProductsData?.status !== "SOLD_OUT" && (
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={handleOnStatus}
+                        className="flex-[3] bg-primary hover:bg-primary-dark text-white font-black h-16 rounded-2xl flex items-center justify-center gap-2 transition-all duration-300 shadow-xl shadow-primary/20 active:scale-[0.98] group uppercase tracking-widest text-[10px] border-b-4 border-black/40 dark:border-white/10"
+                      >
+                        <MdPublishedWithChanges
+                          size={18}
+                          className="group-hover:rotate-180 transition-transform duration-500"
+                        />
+                        <span className="truncate">
+                          {selectedContent[localizationKeys.changeStatus]}
+                        </span>
+                      </button>
+
+                      <div
+                        onClick={() => {
+                          history.push(routes.app.listProduct.default, {
+                            productId: productId,
+                            isEditing: true,
+                          });
+                        }}
+                        className="flex-1 h-16 bg-gray-50 dark:bg-slate-800 text-gray-600 dark:text-gray-300 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white dark:hover:bg-primary transition-all duration-300 shadow-sm border border-gray-100 dark:border-white/5 group/edit active:scale-95"
+                        title={selectedContent[localizationKeys.edit]}
+                      >
+                        <MdOutlineEdit
+                          size={22}
+                          className="group-hover/edit:rotate-12 transition-transform"
+                        />
+                      </div>
+
+                      <div
+                        onClick={() => setIsDeleteModalOpen(true)}
+                        className="flex-1 h-16 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 shadow-sm border border-red-100 dark:border-red-900/30 group/delete active:scale-95"
+                        title={selectedContent[localizationKeys.deleteProduct]}
+                      >
+                        <MdDeleteOutline
+                          size={22}
+                          className="group-hover/delete:rotate-12 transition-transform"
+                        />
+                      </div>
+                    </div>
+                  )}
 
                   <button
                     onClick={() => setIsCommentsModalOpen(true)}
@@ -445,35 +477,6 @@ const SummaryListedSection = () => {
                     <Icon name="comments" className="group-hover:scale-110 transition-transform text-white dark:text-[#d4af37]" />
                     <span>{selectedContent[localizationKeys.comments]} ({commentCount})</span>
                   </button>
-
-                  <div className="flex items-center gap-3">
-                    <div
-                      onClick={() => {
-                        history.push(routes.app.listProduct.default, {
-                          productId: productId,
-                          isEditing: true,
-                        });
-                      }}
-                      className="flex-1 h-14 bg-gray-50 dark:bg-slate-800 text-gray-600 dark:text-gray-300 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white dark:hover:bg-primary transition-all duration-300 shadow-sm border border-gray-100 dark:border-white/5 group/edit active:scale-95"
-                      title={selectedContent[localizationKeys.edit]}
-                    >
-                      <MdOutlineEdit
-                        size={22}
-                        className="group-hover/edit:rotate-12 transition-transform"
-                      />
-                    </div>
-
-                    <div
-                      onClick={() => setIsDeleteModalOpen(true)}
-                      className="flex-1 h-14 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-2xl flex items-center justify-center cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 shadow-sm border border-red-100 dark:border-red-900/30 group/delete active:scale-95"
-                      title={selectedContent[localizationKeys.deleteProduct]}
-                    >
-                      <MdDeleteOutline
-                        size={22}
-                        className="group-hover/delete:rotate-12 transition-transform"
-                      />
-                    </div>
-                  </div>
                 </div>
                 ) : listedProductsData?.status === "OUT_OF_STOCK" ? (
                   <div className="bg-red-900/20 border border-red-100 dark:border-red-800/50 h-16 rounded-2xl flex items-center justify-center gap-3 w-full transition-all group overflow-hidden relative">

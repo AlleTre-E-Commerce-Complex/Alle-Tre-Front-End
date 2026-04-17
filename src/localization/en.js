@@ -88,7 +88,7 @@ const en = {
   [localizationKeys.listings]: "Listings",
   [localizationKeys.auctions]: "Auctions",
   [localizationKeys.SearchForLuxuryItemsWatchesRealEstate]:
-    "Search for luxury items, watches, real estate...",
+    "Search for products...",
   [localizationKeys.changeStatus]: "Change status",
   [localizationKeys.convertToAuction]: "Convert to auction",
   [localizationKeys.viewContactDetails]: " View contact details",
@@ -922,6 +922,7 @@ const en = {
   [localizationKeys.noProductsFound]: "No products found",
   [localizationKeys.reply]: "Reply",
   [localizationKeys.writeAReply]: "Write a reply...",
+  [localizationKeys.back]: "Back",
 };
 
 export default en;

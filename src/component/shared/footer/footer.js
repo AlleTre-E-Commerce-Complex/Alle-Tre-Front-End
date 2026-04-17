@@ -137,7 +137,7 @@ const Footer = () => {
               <h1 className="text-yellow font-bold text-base">
                 {selectedContent[localizationKeys.contactUs]}
               </h1>
-              {/* <p className="font-normal text-base text-gray-med py-0.5">
+              <p className="font-normal text-base text-gray-med py-0.5">
                 {selectedContent[localizationKeys.eMail]}:{" "}
                 <a
                   href="mailto:info@3arbon.com"
@@ -145,7 +145,7 @@ const Footer = () => {
                 >
                   info@3arbon.com
                 </a>
-              </p> */}
+              </p>
               <p className="font-normal text-base text-gray-med py-0.5">
                 {selectedContent[localizationKeys.phoneNumber]}:{" "}
                 <a
@@ -158,7 +158,7 @@ const Footer = () => {
               </p>
               <div className="mt-4">
                 <a
-                  href="https://firebasestorage.googleapis.com/v0/b/alletre-auctions.firebasestorage.app/o/3arbonCompany%20Profile.pdf?alt=media&token=3e2498ac-0a8c-4360-909a-78cee34ac4a2"
+                  href="https://firebasestorage.googleapis.com/v0/b/alletre-auctions.firebasestorage.app/o/3arbonCompany%20Profile.pdf?alt=media&token=3b0ec525-bc80-461c-9849-50b93b19190a"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/30  text-white px-3 py-1.5 rounded transition-all duration-300 group"

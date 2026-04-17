@@ -177,16 +177,44 @@ const ImgSlider = ({
   };
 
   const handleShare = async () => {
+    const shareData = {
+      title: title,
+      text: `${title}\n\nCheck out this ${isListProduct ? "product" : "auction"} on 3arbon!`,
+      url: shareUrl,
+    };
+
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: title,
-          text: "Check out this auction!",
-          url: shareUrl,
-        });
+        // Find the first non-video image to share
+        const firstShareableImage = images?.find(img => !isVideo(img) && img.imageLink);
+
+        if (firstShareableImage) {
+          try {
+            const response = await fetch(firstShareableImage.imageLink);
+            if (response.ok) {
+              const blob = await response.blob();
+              const file = new File([blob], "product.jpg", { type: blob.type });
+
+              if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                  ...shareData,
+                  files: [file],
+                });
+                return;
+              }
+            }
+          } catch (imageError) {
+            console.warn("Failed to attach image to share:", imageError);
+          }
+        }
+
+        // Standard share if image fails, is not supported, or fetch wasn't successful
+        await navigator.share(shareData);
       } catch (error) {
-        console.error("Error sharing post:", error);
-        setShowShareFallback(true); // Show fallback if native share fails
+        if (error.name !== "AbortError") {
+          console.error("Error sharing post:", error);
+          setShowShareFallback(true);
+        }
       }
     } else {
       setShowShareFallback(!showShareFallback);
