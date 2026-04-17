@@ -98,7 +98,7 @@ const MyProducts = () => {
           {/* <Loader active /> */}
           <LoadingTest3arbon />
         </Dimmer>
-        {analyticsData?.length === 0 ? (
+        {analyticsData?.length === 0 && draftCount === 0 ? (
           <div className="flex flex-col items-center justify-center min-h-[400px] bg-white dark:bg-[#1A1F2C] border border-gray-200 dark:border-[#2C3241] rounded-2xl p-8 mt-10 shadow-sm mx-auto max-w-3xl">
             <div className="bg-primary/10 dark:bg-primary/20 p-6 rounded-full mb-6">
               <IoBagHandleOutline className="w-16 h-16 text-primary" />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { Breadcrumb } from "semantic-ui-react";
 import { useLanguage } from "../../../context/language-context";
 import routes from "../../../routes";
@@ -7,9 +7,10 @@ import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import queryString from "query-string";
 import { DEFAULT_PAGE, getDefaultPerPage } from "constants/pagination";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { IoArrowBack } from "react-icons/io5";
 
 export const CreateAuctionBreadcrumb = ({ edit }) => {
+  const history = useHistory();
   const { pathname } = useLocation();
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -105,11 +106,32 @@ export const CreateAuctionBreadcrumb = ({ edit }) => {
     ].filter(Boolean);
   };
 
+  const getPreviousStep = () => {
+    if (pathname.includes("add-location")) return routes.app.listProduct.default;
+    if (pathname.includes("shipping-details")) return routes.app.createAuction.auctionDetails;
+    if (pathname.includes("payment-details")) return routes.app.createAuction.shippingDetails;
+    return routes.app.home;
+  };
+
+  const previousStep = getPreviousStep();
+
   return (
-    <Breadcrumb
-      className="Edit_Breadcrumb"
-      sections={CreateAuctionSections(pathname)}
-    />
+    <div className="flex items-center gap-2 group mb-4 sm:mb-0">
+      {pathname.includes("add-location") && (
+        <button
+          onClick={() => history.push(previousStep)}
+          className="w-10 h-10 flex items-center justify-center rounded-xl bg-white dark:bg-[#1A2131] border border-gray-100 dark:border-white/10 text-gray-400 dark:text-gray-500 hover:text-primary dark:hover:text-[#d4af37] hover:border-primary/30 dark:hover:border-[#d4af37]/30 hover:shadow-lg transition-all active:scale-95"
+          title="Go Back"
+        >
+          <IoArrowBack className="w-5 h-5" />
+        </button>
+      )}
+
+      <Breadcrumb
+        className="Edit_Breadcrumb !m-0 !flex items-center"
+        sections={CreateAuctionSections(pathname)}
+      />
+    </div>
   );
 };
 

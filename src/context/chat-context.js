@@ -45,7 +45,6 @@ export const ChatProvider = ({ children }) => {
     
     // SAFE PRODUCTION FALLBACK
     if (typeof window !== 'undefined' && window.location.hostname.includes('3arbon.com')) {
-      console.log(`[ChatSocket] [v${LOG_VERSION}] Production Domain Detected. Using origin fallback.`);
       const base = window.location.origin;
       try {
         if (apiUrl) {
@@ -59,7 +58,6 @@ export const ChatProvider = ({ children }) => {
 
     try {
       if (apiUrl && apiUrl.trim() !== "") {
-        console.log(`[ChatSocket] [v${LOG_VERSION}] Using Environment Variable:`, apiUrl);
         const base = typeof window !== 'undefined' ? window.location.origin : "http://localhost";
         const SOCKET_URL = new window.URL(apiUrl, base);
         return SOCKET_URL.origin;
@@ -69,7 +67,7 @@ export const ChatProvider = ({ children }) => {
     }
 
     const fallback = typeof window !== 'undefined' ? window.location.origin : "";
-    console.log(`[ChatSocket] [v${LOG_VERSION}] Falling back to:`, fallback);
+    // console.log(`[ChatSocket] [v${LOG_VERSION}] Falling back to:`, fallback);
     return fallback;
   };
 
@@ -127,16 +125,16 @@ export const ChatProvider = ({ children }) => {
           transports: ["polling", "websocket"],
         });
 
-        socket.on("connect", () => {
-          console.log(`[ChatSocket] Connected successfully to ${SOCKET_URL}/chat`);
-        });
+        // socket.on("connect", () => {
+        //   console.log(`[ChatSocket] Connected successfully to ${SOCKET_URL}/chat`);
+        // });
 
-        socket.on("connect_error", (err) => {
-          console.error(`[ChatSocket] Connection Error: ${err.message} (Target: ${SOCKET_URL})`);
-        });
+        // socket.on("connect_error", (err) => {
+        //   console.error(`[ChatSocket] Connection Error: ${err.message} (Target: ${SOCKET_URL})`);
+        // });
 
         socket.on("new_message", (message) => {
-          console.log("DEBUG: Socket received new_message:", message);
+          // console.log("DEBUG: Socket received new_message:", message);
           const currentActive = activeConversationRef.current;
           const isCurrentlyViewing = (isWidgetOpenRef.current || isChatPageActiveRef.current) && 
                                     Number(currentActive?.id) === Number(message.conversationId);

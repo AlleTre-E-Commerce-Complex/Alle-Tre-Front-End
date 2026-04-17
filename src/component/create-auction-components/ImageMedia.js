@@ -17,7 +17,7 @@ import watermarkImage from "../../../src/assets/logo/WaterMarkFinal.png";
 // import { BiPlayCircle } from "react-icons/bi";
 
 // Supported file types (images and videos)
-const fileTypes = ["JPG", "PNG", "JPEG", "HEIC", "MP4", "MOV"];
+const fileTypes = ["JPG", "PNG", "JPEG", "HEIC", "HEIF", "MP4", "MOV"];
 
 
 const heic2any = require("heic2any");
@@ -97,10 +97,6 @@ const ImageMedia = ({
             selectedContent[localizationKeys.imageDeletedSuccessfully]
           );
 
-          // Call onReload after successful backend operations
-          if (typeof onReload === "function") {
-            onReload();
-          }
         } catch (backendError) {
           console.error("Backend operation failed:", backendError);
           throw backendError; // Re-throw to be caught by outer try-catch
@@ -172,10 +168,10 @@ const ImageMedia = ({
         }
       }
 
-      // Call onReload after all operations are complete
-      if (typeof onReload === "function") {
-        onReload();
-      }
+      // Skip onReload for local stability
+      // if (typeof onReload === "function") {
+      //   onReload();
+      // }
     } catch (error) {
       console.error("Set cover error:", error);
       toast.error(selectedContent[localizationKeys.failedToUpdateCoverPhoto]);
@@ -367,9 +363,10 @@ const ImageMedia = ({
               }
             }
             setimgtest([...newImages]);
-            if (typeof onReload === "function") {
-              onReload();
-            }
+            // Skip onReload to prevent parent re-fetch
+            // if (typeof onReload === "function") {
+            //   onReload();
+            // }
           } catch (uploadError) {
             console.error("Upload error:", uploadError);
             toast.error(selectedContent[localizationKeys.failedToUploadImage]);
@@ -474,9 +471,10 @@ const ImageMedia = ({
               }
             }
             setimgtest([...newImages]);
-            if (typeof onReload === "function") {
-              onReload();
-            }
+            // Skip onReload to prevent parent re-fetch
+            // if (typeof onReload === "function") {
+            //   onReload();
+            // }
           } catch (uploadError) {
             console.error("Upload error:", uploadError);
             toast.error(selectedContent[localizationKeys.failedToUploadImage]);
@@ -563,8 +561,8 @@ const ImageMedia = ({
         );
       });
     } catch (error) {
-      toast.error(selectedContent[localizationKeys.errorInWatermarkProcess]);
-      throw error;
+      console.warn("Watermark process failed, skipping:", error);
+      return file;
     }
   };
 

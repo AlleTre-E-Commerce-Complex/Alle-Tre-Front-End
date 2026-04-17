@@ -90,7 +90,23 @@ const ProductRowTable = ({
   return (
     <div className="relative bg-white dark:bg-[#151A23] border border-gray-100 dark:border-gray-800 rounded-xl p-3 md:p-4 mb-4 flex flex-col md:flex-row gap-3 md:gap-6 items-start md:items-center shadow-sm">
       {/* Wrapper for Image and Content side-by-side on mobile */}
-      <div className="flex flex-row gap-3 md:gap-6 w-full md:w-auto flex-grow items-start">
+      <div
+        onClick={() => {
+          if (status === "DRAFTED") {
+            history.replace({
+              pathname: routes.app.listProduct.default,
+              state: {
+                productId: Product_id,
+                auctionId: productId,
+                isEditing: true,
+              },
+            });
+          } else {
+            history.push(goToDetails);
+          }
+        }}
+        className="flex flex-row gap-3 md:gap-6 w-full md:w-auto flex-grow items-start cursor-pointer"
+      >
         {/* Image */}
         <div className="w-24 h-24 md:w-48 md:h-32 flex-shrink-0 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700/50 flex items-center justify-center group">
           {img ? (

@@ -209,7 +209,7 @@ const ListProductDetails = () => {
           }),
       );
     }
-  }, [run, forceReload, product_Id, state?.auctionId]);
+  }, [run, product_Id, state?.auctionId]);
 
   const addImageWatermark = async (file) => {
     const loadImage = (src) => {
@@ -273,8 +273,8 @@ const ListProductDetails = () => {
         );
       });
     } catch (error) {
-      toast.error(selectedContent[localizationKeys.errorInWatermarkProcess]);
-      throw error;
+      console.warn("Watermark process failed, skipping:", error);
+      return file;
     }
   };
 
@@ -575,7 +575,7 @@ const ListProductDetails = () => {
         toast.success(
           selectedContent[localizationKeys.productUpdatedSuccessfully],
         );
-        history.push(routes.app.profile.myProducts.inPogress);
+        history.push(routes.app.listProduct.details(product_Id));
       }
     } catch (error) {
       console.error("Error updating product:", error);
@@ -862,107 +862,107 @@ const ListProductDetails = () => {
         className="fixed w-full h-full top-0 bg-white/20"
         active={isLoading || loadingSubGatogry || isUpdating || isSavingDraft }
       >
-        <LoadingProgress 
-          status={
-            isUpdating || isSavingDraft
-              ? currentUploadingFile > 0 
-                ? selectedContent[localizationKeys.uploadingPhoto]
-                    ?.replace("{current}", currentUploadingFile)
-                    ?.replace("{total}", totalUploadingFiles)
-                : selectedContent[localizationKeys.bulkUploading]?.replace("{count}", totalUploadingFiles)
-              : ""
-          } 
-          currentStep={currentUploadingFile > 0 ? currentUploadingFile : undefined}
-          totalSteps={totalUploadingFiles > 0 ? totalUploadingFiles : undefined}
-          progress={(isUpdating || isSavingDraft) ? uploadProgress : undefined} 
-        />
-      </Dimmer>
-      <div className="mt-32 sm:mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
-        <div className="max-w-[1366px] mx-auto mb-12">
-          {/* Breadcrumb - Clean top alignment */}
-          <div className="hidden sm:block mb-8">
-            <CreateAuctionBreadcrumb />
+          <LoadingProgress 
+            status={
+              isUpdating || isSavingDraft
+                ? currentUploadingFile > 0 
+                  ? selectedContent[localizationKeys.uploadingPhoto]
+                      ?.replace("{current}", currentUploadingFile)
+                      ?.replace("{total}", totalUploadingFiles)
+                  : selectedContent[localizationKeys.bulkUploading]?.replace("{count}", totalUploadingFiles)
+                : ""
+            } 
+            currentStep={currentUploadingFile > 0 ? currentUploadingFile : undefined}
+            totalSteps={totalUploadingFiles > 0 ? totalUploadingFiles : undefined}
+            progress={(isUpdating || isSavingDraft) ? uploadProgress : undefined} 
+          />
+        </Dimmer>
+        <div className="mt-32 sm:mt-44 animate-in max-w-[1366px] md:mx-auto mx-5 ">
+          <div className="max-w-[1366px] mx-auto mb-12">
+            {/* Breadcrumb - Clean top alignment */}
+            <div className="hidden sm:block mb-8">
+              <CreateAuctionBreadcrumb />
+            </div>
+            
+            {/* Stepper - Primary focus with better breathing room */}
+            {/* <div className="flex justify-center py-4 bg-gray-50/50 dark:bg-white/5 rounded-3xl backdrop-blur-sm border border-gray-100 dark:border-white/5 shadow-sm sm:shadow-none sm:border-none sm:bg-transparent">
+              <Stepper />
+            </div> */}
           </div>
-          
-          {/* Stepper - Primary focus with better breathing room */}
-          {/* <div className="flex justify-center py-4 bg-gray-50/50 dark:bg-white/5 rounded-3xl backdrop-blur-sm border border-gray-100 dark:border-white/5 shadow-sm sm:shadow-none sm:border-none sm:bg-transparent">
-            <Stepper />
-          </div> */}
-        </div>
-        <div className="w-full flex flex-col gap-6 ">
-          <div>
-            <Formik
-              initialValues={{
-                itemName: listedProductVal?.title || reduxValues?.itemName || "",
-                itemPrice: listedProductVal?.ProductListingPrice ?? reduxValues?.itemPrice ?? "",
-                category: listedProductVal?.categoryId || reduxValues?.category || "",
-                subCategory: listedProductVal?.subCategory?.id || reduxValues?.subCategory || "",
-                usageStatus: listedProductVal?.usageStatus || reduxValues?.usageStatus || "",
-                operatingSystem: listedProductVal?.operatingSystem || reduxValues?.operatingSystem || "",
-                releaseYear: listedProductVal?.releaseYear || reduxValues?.releaseYear || "",
-                regionOfManufacture: listedProductVal?.regionOfManufacture || reduxValues?.regionOfManufacture || "",
-                ramSize: listedProductVal?.ramSize || reduxValues?.ramSize || "",
-                processor: listedProductVal?.processor || reduxValues?.processor || "",
-                screenSize: listedProductVal?.screenSize || reduxValues?.screenSize || "",
-                model: listedProductVal?.model || reduxValues?.model || "",
-                color: listedProductVal?.color || reduxValues?.color || "",
-                brand: listedProductVal?.brand || reduxValues?.brand || "",
-                cameraType: listedProductVal?.cameraType || reduxValues?.cameraType || "",
-                material: listedProductVal?.material || reduxValues?.material || "",
-                type: listedProductVal?.type || reduxValues?.type || "",
-                memory: listedProductVal?.memory || reduxValues?.memory || "",
-                age: listedProductVal?.age || reduxValues?.age || "",
-                totalArea: listedProductVal?.totalArea || reduxValues?.totalArea || "",
-                numberOfRooms: listedProductVal?.numberOfRooms || reduxValues?.numberOfRooms || "",
-                numberOfFloors: listedProductVal?.numberOfFloors || reduxValues?.numberOfFloors || "",
-                landType: listedProductVal?.landType || reduxValues?.landType || "",
-                carType: listedProductVal?.carType || reduxValues?.carType || "",
-                countryId: listedProductVal?.countryId || reduxValues?.countryId || (AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة")?.value || ""),
-                cityId: listedProductVal?.cityId || reduxValues?.cityId || "",
-                emirate: listedProductVal?.emirate || reduxValues?.emirate || "",
-                totalClosingFee: listedProductVal?.totalClosingFee || reduxValues?.totalClosingFee || "",
-                numberOfBathrooms: listedProductVal?.numberOfBathrooms || reduxValues?.numberOfBathrooms || "",
-                developer: listedProductVal?.developer || reduxValues?.developer || "",
-                readyBy: listedProductVal?.readyBy || reduxValues?.readyBy || "",
-                annualCommunityFee: listedProductVal?.annualCommunityFee || reduxValues?.annualCommunityFee || "",
-                isFurnished: listedProductVal?.isFurnished || reduxValues?.isFurnished || "",
-                propertyReferenceId: listedProductVal?.propertyReferenceId || reduxValues?.propertyReferenceId || "",
-                buyerTransferFee: listedProductVal?.buyerTransferFee || reduxValues?.buyerTransferFee || "",
-                sellerTransferFee: listedProductVal?.sellerTransferFee || reduxValues?.sellerTransferFee || "",
-                maintenanceFee: listedProductVal?.maintenanceFee || reduxValues?.maintenanceFee || "",
-                occupancyStatus: listedProductVal?.occupancyStatus || reduxValues?.occupancyStatus || "",
-                zonedFor: listedProductVal?.zonedFor || reduxValues?.zonedFor || "",
-                amenities: safeParseArray(listedProductVal?.amenities || reduxValues?.amenities),
-                residentialType: listedProductVal?.residentialType || reduxValues?.residentialType || "",
-                commercialType: listedProductVal?.commercialType || reduxValues?.commercialType || "",
-                itemDescription: listedProductVal?.description || reduxValues?.itemDescription || "",
-                trim: listedProductVal?.trim || reduxValues?.trim || "",
-                regionalSpecs: listedProductVal?.regionalSpecs || reduxValues?.regionalSpecs || "",
-                kilometers: listedProductVal?.kilometers || reduxValues?.kilometers || "",
-                insuredInUae: listedProductVal?.insuredInUae || reduxValues?.insuredInUae || "",
-                interiorColor: listedProductVal?.interiorColor || reduxValues?.interiorColor || "",
-                warranty: listedProductVal?.warranty || reduxValues?.warranty || "",
-                fuelType: listedProductVal?.fuelType || reduxValues?.fuelType || "petrol",
-                doors: listedProductVal?.doors || reduxValues?.doors || "4",
-                transmissionType: listedProductVal?.transmissionType || reduxValues?.transmissionType || "automatic",
-                seatingCapacity: listedProductVal?.seatingCapacity || reduxValues?.seatingCapacity || "5",
-                horsepower: listedProductVal?.horsepower || reduxValues?.horsepower || "100-199",
-                steeringSide: listedProductVal?.steeringSide || reduxValues?.steeringSide || "left",
-                engineCapacity: listedProductVal?.engineCapacity || reduxValues?.engineCapacity || "unknown",
-                numberOfCylinders: listedProductVal?.numberOfCylinders || reduxValues?.numberOfCylinders || "4",
-                driverAssistance: safeParseArray(listedProductVal?.driverAssistance || reduxValues?.driverAssistance),
-                entertainment: safeParseArray(listedProductVal?.entertainment || reduxValues?.entertainment),
-                comfort: safeParseArray(listedProductVal?.comfort || reduxValues?.comfort),
-                exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures || reduxValues?.exteriorFeatures),
-              }}
-              onSubmit={(isEditing && auctionState !== "DRAFTED") ? handleUpdate : handelProductDetailsdata}
-              validationSchema={ProductDetailsSchema}
-              enableReinitialize
-            >
-              {(formik) => (
-                <Form onSubmit={formik.handleSubmit} noValidate>
-                  <ScrollToFieldError />
-                  <DraftSaver values={formik.values} setDraftValue={setDraftValue} />
+          <div className="w-full flex flex-col gap-6 ">
+            <div>
+              <Formik
+                initialValues={{
+                  itemName: listedProductVal?.title || reduxValues?.itemName || "",
+                  itemPrice: listedProductVal?.ProductListingPrice ?? reduxValues?.itemPrice ?? "",
+                  category: listedProductVal?.categoryId || reduxValues?.category || "",
+                  subCategory: listedProductVal?.subCategory?.id || reduxValues?.subCategory || "",
+                  usageStatus: listedProductVal?.usageStatus || reduxValues?.usageStatus || "",
+                  operatingSystem: listedProductVal?.operatingSystem || reduxValues?.operatingSystem || "",
+                  releaseYear: listedProductVal?.releaseYear || reduxValues?.releaseYear || "",
+                  regionOfManufacture: listedProductVal?.regionOfManufacture || reduxValues?.regionOfManufacture || "",
+                  ramSize: listedProductVal?.ramSize || reduxValues?.ramSize || "",
+                  processor: listedProductVal?.processor || reduxValues?.processor || "",
+                  screenSize: listedProductVal?.screenSize || reduxValues?.screenSize || "",
+                  model: listedProductVal?.model || reduxValues?.model || "",
+                  color: listedProductVal?.color || reduxValues?.color || "",
+                  brand: listedProductVal?.brand || reduxValues?.brand || "",
+                  cameraType: listedProductVal?.cameraType || reduxValues?.cameraType || "",
+                  material: listedProductVal?.material || reduxValues?.material || "",
+                  type: listedProductVal?.type || reduxValues?.type || "",
+                  memory: listedProductVal?.memory || reduxValues?.memory || "",
+                  age: listedProductVal?.age || reduxValues?.age || "",
+                  totalArea: listedProductVal?.totalArea || reduxValues?.totalArea || "",
+                  numberOfRooms: listedProductVal?.numberOfRooms || reduxValues?.numberOfRooms || "",
+                  numberOfFloors: listedProductVal?.numberOfFloors || reduxValues?.numberOfFloors || "",
+                  landType: listedProductVal?.landType || reduxValues?.landType || "",
+                  carType: listedProductVal?.carType || reduxValues?.carType || "",
+                  countryId: listedProductVal?.countryId || reduxValues?.countryId || (AllCountriesOptions?.find((opt) => opt.text === "United Arab Emirates" || opt.text === "الإمارات العربية المتحدة")?.value || ""),
+                  cityId: listedProductVal?.cityId || reduxValues?.cityId || "",
+                  emirate: listedProductVal?.emirate || reduxValues?.emirate || "",
+                  totalClosingFee: listedProductVal?.totalClosingFee || reduxValues?.totalClosingFee || "",
+                  numberOfBathrooms: listedProductVal?.numberOfBathrooms || reduxValues?.numberOfBathrooms || "",
+                  developer: listedProductVal?.developer || reduxValues?.developer || "",
+                  readyBy: listedProductVal?.readyBy || reduxValues?.readyBy || "",
+                  annualCommunityFee: listedProductVal?.annualCommunityFee || reduxValues?.annualCommunityFee || "",
+                  isFurnished: listedProductVal?.isFurnished || reduxValues?.isFurnished || "",
+                  propertyReferenceId: listedProductVal?.propertyReferenceId || reduxValues?.propertyReferenceId || "",
+                  buyerTransferFee: listedProductVal?.buyerTransferFee || reduxValues?.buyerTransferFee || "",
+                  sellerTransferFee: listedProductVal?.sellerTransferFee || reduxValues?.sellerTransferFee || "",
+                  maintenanceFee: listedProductVal?.maintenanceFee || reduxValues?.maintenanceFee || "",
+                  occupancyStatus: listedProductVal?.occupancyStatus || reduxValues?.occupancyStatus || "",
+                  zonedFor: listedProductVal?.zonedFor || reduxValues?.zonedFor || "",
+                  amenities: safeParseArray(listedProductVal?.amenities || reduxValues?.amenities),
+                  residentialType: listedProductVal?.residentialType || reduxValues?.residentialType || "",
+                  commercialType: listedProductVal?.commercialType || reduxValues?.commercialType || "",
+                  itemDescription: listedProductVal?.description || reduxValues?.itemDescription || "",
+                  trim: listedProductVal?.trim || reduxValues?.trim || "",
+                  regionalSpecs: listedProductVal?.regionalSpecs || reduxValues?.regionalSpecs || "",
+                  kilometers: listedProductVal?.kilometers || reduxValues?.kilometers || "",
+                  insuredInUae: listedProductVal?.insuredInUae || reduxValues?.insuredInUae || "",
+                  interiorColor: listedProductVal?.interiorColor || reduxValues?.interiorColor || "",
+                  warranty: listedProductVal?.warranty || reduxValues?.warranty || "",
+                  fuelType: listedProductVal?.fuelType || reduxValues?.fuelType || "petrol",
+                  doors: listedProductVal?.doors || reduxValues?.doors || "4",
+                  transmissionType: listedProductVal?.transmissionType || reduxValues?.transmissionType || "automatic",
+                  seatingCapacity: listedProductVal?.seatingCapacity || reduxValues?.seatingCapacity || "5",
+                  horsepower: listedProductVal?.horsepower || reduxValues?.horsepower || "100-199",
+                  steeringSide: listedProductVal?.steeringSide || reduxValues?.steeringSide || "left",
+                  engineCapacity: listedProductVal?.engineCapacity || reduxValues?.engineCapacity || "unknown",
+                  numberOfCylinders: listedProductVal?.numberOfCylinders || reduxValues?.numberOfCylinders || "4",
+                  driverAssistance: safeParseArray(listedProductVal?.driverAssistance || reduxValues?.driverAssistance),
+                  entertainment: safeParseArray(listedProductVal?.entertainment || reduxValues?.entertainment),
+                  comfort: safeParseArray(listedProductVal?.comfort || reduxValues?.comfort),
+                  exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures || reduxValues?.exteriorFeatures),
+                }}
+                onSubmit={(isEditing && auctionState !== "DRAFTED") ? handleUpdate : handelProductDetailsdata}
+                validationSchema={ProductDetailsSchema}
+                enableReinitialize
+              >
+                {(formik) => (
+                  <Form onSubmit={formik.handleSubmit} noValidate>
+                    <ScrollToFieldError />
+                    <DraftSaver values={formik.values} setDraftValue={setDraftValue} />
 
                   <div className="w-full flex flex-col gap-6  mx-auto">
                     {/* General Information Card */}
@@ -1424,7 +1424,7 @@ const ListProductDetails = () => {
                       {/* Hidden Upload Inputs */}
                       <input
                         type="file"
-                        accept="image/*,video/*"
+                        accept=".jpg, .jpeg, .png, .heic, .heif, .mp4, .mov, image/*, video/*"
                         multiple
                         onChange={handleFileChange}
                         id="media-upload"
@@ -1434,7 +1434,7 @@ const ListProductDetails = () => {
                         id="camera-input-file"
                         name="camera-input-file"
                         type="file"
-                        accept="image/*,video/*"
+                        accept=".jpg, .jpeg, .png, .heic, .heif, .mp4, .mov, image/*, video/*"
                         onChange={handleCameraChange}
                         capture="environment"
                         className="hidden"
@@ -1500,9 +1500,9 @@ const ListProductDetails = () => {
                       )}
                     </div>
                   </div>
-                </Form>
-              )}
-            </Formik>
+                  </Form>
+                )}
+              </Formik>
           </div>
         </div>
       </div>

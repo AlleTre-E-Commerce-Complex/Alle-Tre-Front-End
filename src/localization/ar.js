@@ -86,7 +86,7 @@ const ar = {
   [localizationKeys.listings]: "القوائم",
   [localizationKeys.auctions]: "المزادات",
   [localizationKeys.SearchForLuxuryItemsWatchesRealEstate]:
-    "ابحث عن السلع الفاخرة، الساعات، العقارات...",
+    "ابحث عن المنتجات...",
   [localizationKeys.changeStatus]: "تغيير الحالة",
   [localizationKeys.convertToAuction]: "تحويل إلى المزاد",
   [localizationKeys.viewContactDetails]: " عرض تفاصيل الاتصال",
@@ -918,6 +918,7 @@ const ar = {
   [localizationKeys.noProductsFound]: "لم يتم العثور على منتجات",
   [localizationKeys.reply]: "رد",
   [localizationKeys.writeAReply]: "اكتب رداً...",
+   [localizationKeys.back]: "Back",
 };
 
 export default ar;
