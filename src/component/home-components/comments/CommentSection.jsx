@@ -3,6 +3,8 @@ import { useLanguage } from "../../../context/language-context";
 import content from "../../../localization/content";
 import localizationKeys from "../../../localization/localization-keys";
 import { useAuthState } from "../../../context/auth-context";
+import { useDispatch } from "react-redux";
+import { Open } from "../../../redux-store/auth-model-slice";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
 import useAxios from "../../../hooks/use-axios";
@@ -15,6 +17,7 @@ const CommentSection = ({ productId, isAdmin = false, onCountChange, sellerId })
   const [lang] = useLanguage();
   const selectedContent = content[lang];
   const { user } = useAuthState();
+  const dispatch = useDispatch();
   const [comments, setComments] = useState([]);
   const { run, isLoading } = useAxios([]);
   const [isPosting, setIsPosting] = useState(false);
@@ -36,7 +39,7 @@ const CommentSection = ({ productId, isAdmin = false, onCountChange, sellerId })
 
   const handlePostComment = async (text, parentId = null) => {
     if (!user) {
-      toast.error(selectedContent[localizationKeys.loginToComment]);
+      dispatch(Open());
       return;
     }
 
@@ -58,7 +61,7 @@ const CommentSection = ({ productId, isAdmin = false, onCountChange, sellerId })
 
   const handleLike = async (commentId) => {
     if (!user) {
-      toast.error(selectedContent[localizationKeys.loginToLike]);
+      dispatch(Open());
       return;
     }
 

@@ -63,6 +63,9 @@ const ar = {
   [localizationKeys.confirmDeletion]: "تأكيد الحذف",
   [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
     "هل أنت متأكد من رغبتك في حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء وستفقد جميع بياناتك.",
+  [localizationKeys.dangerZone]: "منطقة الخطر",
+  [localizationKeys.deleteAccountMasg]:
+    "بمجرد حذف حسابك، لا يمكنك التراجع عن ذلك. يرجى التأكد.",
   [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
     "للمزايدة فوق 5000، مطلوب وديعة تأمين",
   [localizationKeys.noResultsFound]: "لم يتم العثور على نتائج",
@@ -918,7 +921,15 @@ const ar = {
   [localizationKeys.noProductsFound]: "لم يتم العثور على منتجات",
   [localizationKeys.reply]: "رد",
   [localizationKeys.writeAReply]: "اكتب رداً...",
-   [localizationKeys.back]: "Back",
+  [localizationKeys.back]: "رجوع",
+  [localizationKeys.watermarkingVideoCover]: "جاري إضافة العلامة المائية لغلاف الفيديو...",
+  [localizationKeys.generatingVideoCover]: "جاري إنشاء غلاف الفيديو...",
+  [localizationKeys.extractingVideoCover]: "جاري استخراج غلاف الفيديو...",
+  [localizationKeys.videoProcessedSuccessfully]: "تمت معالجة الفيديو بنجاح",
+  [localizationKeys.videoCompressionFailedSecurity]: "فشل ضغط الفيديو: رؤوس الأمان (COOP/COEP) مفقودة.",
+  [localizationKeys.videoCompressionFailedFallback]: "فشل ضغط الفيديو، جاري استخدام الملف الأصلي",
+  [localizationKeys.failedToProcessFiles]: "فشل في معالجة الملفات",
+  [localizationKeys.failedToUploadImage]: "فشل في رفع الصورة",
 };
 
 export default ar;

@@ -41,6 +41,38 @@ const ProductCardList = ({
   const [showShareFallback, setShowShareFallback] = useState(false);
   const { user } = useAuthState();
   const [isSavedState, setIsSavedState] = useState(isSaved);
+  const [preparedShareFile, setPreparedShareFile] = useState(null);
+
+  const isVideo = (media) => {
+    return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
+  };
+
+  // Pre-load the first shareable image's blob in the background to make sharing instantaneous
+  useEffect(() => {
+    const prepareFile = async () => {
+      if (!adsImg || adsImg.length === 0) return;
+      
+      const firstShareableImage = adsImg.find(img => !isVideo(img) && img.imageLink);
+      if (!firstShareableImage) {
+        setPreparedShareFile(null);
+        return;
+      }
+
+      try {
+        const response = await fetch(firstShareableImage.imageLink, { cache: 'force-cache' });
+        if (response.ok) {
+          const blob = await response.blob();
+          const file = new File([blob], "product.jpg", { type: blob.type || 'image/jpeg' });
+          setPreparedShareFile(file);
+        }
+      } catch (err) {
+        console.warn("Background share file preparation failed:", err);
+        setPreparedShareFile(null);
+      }
+    };
+
+    prepareFile();
+  }, [adsImg]);
 
   useEffect(() => {
     setIsSavedState(isSaved);
@@ -56,11 +88,47 @@ const ProductCardList = ({
 
   const handleShare = async (e) => {
     e.stopPropagation();
+    const captionText = `${title}\n\nCheck out this product on 3arbon!\n${shareUrl}`;
+
     if (navigator.share) {
       try {
-        await navigator.share({ title, text: title, url: shareUrl });
+        // Find the first non-video image to share
+        const firstShareableImage = adsImg?.find(img => !isVideo(img) && img.imageLink);
+        
+        if (firstShareableImage) {
+          try {
+            // Use prepared file if available for instant sharing, otherwise fallback to fetch
+            let file = preparedShareFile;
+            if (!file) {
+              const response = await fetch(firstShareableImage.imageLink);
+              if (response.ok) {
+                const blob = await response.blob();
+                file = new File([blob], "product.jpg", { type: blob.type || 'image/jpeg' });
+              }
+            }
+
+            if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                files: [file],
+                text: captionText,
+              });
+              return;
+            }
+          } catch (imageError) {
+            console.error("Failed to fetch image for sharing:", imageError);
+          }
+        }
+
+        // Standard share if image fails or is not supported
+        await navigator.share({
+          title: title,
+          text: captionText,
+        });
       } catch (error) {
-        setShowShareFallback(true);
+        if (error.name !== "AbortError") {
+          console.error("Error sharing post:", error);
+          setShowShareFallback(true);
+        }
       }
     } else {
       setShowShareFallback(!showShareFallback);
@@ -355,7 +423,7 @@ const ProductCardList = ({
             </h2>
 
             {/* Location */}
-            <div className="hidden sm:flex items-center gap-1 text-gray-400 dark:text-gray-500 text-[9px] sm:text-[10px] font-medium uppercase tracking-wide mb-3">
+            <div className="flex items-center gap-1 text-gray-400 dark:text-gray-500 text-[9px] sm:text-[10px] font-medium uppercase tracking-wide mb-2 sm:mb-3">
               <svg
                 width="9"
                 height="9"

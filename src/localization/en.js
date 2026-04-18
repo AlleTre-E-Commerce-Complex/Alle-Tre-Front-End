@@ -66,6 +66,9 @@ const en = {
   [localizationKeys.confirmDeletion]: "Confirm Deletion",
   [localizationKeys.areYouSureYouWantToDeleteYourAccountThisActionCannotBeUndoneAndYouWillLoseAllYourData]:
     "Are you sure you want to delete your account? This action cannot be undone and you will lose all your data",
+  [localizationKeys.dangerZone]: "Danger Zone",
+  [localizationKeys.deleteAccountMasg]:
+    "Once you delete your account, there is no going back. Please be certain.",
   [localizationKeys.above5000YouHaveToPayASecurityDepositToContinueBidding]:
     "For bidding above 5000, security deposit is required",
   [localizationKeys.noResultsFound]: "No results found",
@@ -923,6 +926,14 @@ const en = {
   [localizationKeys.reply]: "Reply",
   [localizationKeys.writeAReply]: "Write a reply...",
   [localizationKeys.back]: "Back",
+  [localizationKeys.watermarkingVideoCover]: "Watermarking video cover...",
+  [localizationKeys.generatingVideoCover]: "Generating video cover...",
+  [localizationKeys.extractingVideoCover]: "Extracting video cover...",
+  [localizationKeys.videoProcessedSuccessfully]: "Video processed successfully",
+  [localizationKeys.videoCompressionFailedSecurity]: "Video compression failed: Security headers (COOP/COEP) are missing.",
+  [localizationKeys.videoCompressionFailedFallback]: "Video compression failed, using original file",
+  [localizationKeys.failedToProcessFiles]: "Failed to process files",
+  [localizationKeys.failedToUploadImage]: "Failed to upload image",
 };
 
 export default en;

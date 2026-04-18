@@ -54,6 +54,48 @@ const SummaryListedSection = () => {
   const history = useHistory();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [showShareFallback, setShowShareFallback] = useState(false);
+  const [preparedShareFile, setPreparedShareFile] = useState(null);
+
+  const isVideo = (media) => {
+    return (
+      media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i) ||
+      media?.imageLink?.match(/\.(mp4|mov|webm|avi)$/i)
+    );
+  };
+
+  // Pre-load the first shareable image's blob in the background to make sharing instantaneous
+  useEffect(() => {
+    const prepareFile = async () => {
+      const images = listedProductsData?.images;
+      if (!images || images.length === 0) return;
+
+      const firstShareableImage = images.find(
+        (img) => !isVideo(img) && img.imageLink,
+      );
+      if (!firstShareableImage) {
+        setPreparedShareFile(null);
+        return;
+      }
+
+      try {
+        const response = await fetch(firstShareableImage.imageLink, {
+          cache: "force-cache",
+        });
+        if (response.ok) {
+          const blob = await response.blob();
+          const file = new File([blob], "product.jpg", {
+            type: blob.type || "image/jpeg",
+          });
+          setPreparedShareFile(file);
+        }
+      } catch (err) {
+        console.warn("Background share file preparation failed:", err);
+        setPreparedShareFile(null);
+      }
+    };
+
+    prepareFile();
+  }, [listedProductsData?.images]);
 
   const mapUrl = `https://maps.google.com/maps?q=${mainLocation?.lat},${mainLocation?.lng}&hl=es&z=14&output=embed`;
   const { startConversation, toggleWidget } = useChat();
@@ -213,17 +255,55 @@ const SummaryListedSection = () => {
  const shareUrl = `${getDomain()}/my-product/${productId}/details`
     
 
-    const handleShare = async () => {
+  const handleShare = async () => {
+    const captionText = `${listedProductsData?.title}\n\nCheck out this product on 3arbon!\n${shareUrl}`;
+
     if (navigator.share) {
       try {
+        const images = listedProductsData?.images;
+        const firstShareableImage = images?.find(
+          (img) => !isVideo(img) && img.imageLink,
+        );
+
+        if (firstShareableImage) {
+          try {
+            // Use prepared file if available for instant sharing, otherwise fallback to fetch
+            let file = preparedShareFile;
+            if (!file) {
+              const response = await fetch(firstShareableImage.imageLink);
+              if (response.ok) {
+                const blob = await response.blob();
+                file = new File([blob], "product.jpg", {
+                  type: blob.type || "image/jpeg",
+                });
+              }
+            }
+
+            if (
+              file &&
+              navigator.canShare &&
+              navigator.canShare({ files: [file] })
+            ) {
+              await navigator.share({
+                files: [file],
+                text: captionText,
+              });
+              return;
+            }
+          } catch (imageError) {
+            console.error("Failed to fetch image for sharing:", imageError);
+          }
+        }
+
         await navigator.share({
           title: listedProductsData?.title,
-          text: "Check out this auction!",
-          url: shareUrl,
+          text: captionText,
         });
       } catch (error) {
-        console.error("Error sharing post:", error);
-        setShowShareFallback(true); // Show fallback if native share fails
+        if (error.name !== "AbortError") {
+          console.error("Error sharing post:", error);
+          setShowShareFallback(true);
+        }
       }
     } else {
       setShowShareFallback(!showShareFallback);
@@ -485,7 +565,7 @@ const SummaryListedSection = () => {
                       {selectedContent[localizationKeys.outOfStock]}
                     </span>
                   </div>
-                ) : user ? (
+                ) : (
                   <div className="space-y-4">
                     <div className="flex gap-3">
                       <button
@@ -523,15 +603,6 @@ const SummaryListedSection = () => {
                         </span>
                       </button>
                     </div>
-                  </div>
-                ) : (
-                  <div className="pt-2">
-                    <button
-                      onClick={handleOnContact}
-                      className="w-full bg-primary hover:bg-primary-dark text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 uppercase tracking-widest text-sm"
-                    >
-                      {selectedContent[localizationKeys.viewContactDetails]}
-                    </button>
                   </div>
                 )}
             </div>
