@@ -837,6 +837,16 @@ const localizationKeys = {
   reply: "reply",
   writeAReply: "writeAReply",
   back: "back",
+  dangerZone: "dangerZone",
+  deleteAccountMasg: "deleteAccountMasg",
+  watermarkingVideoCover: "watermarkingVideoCover",
+  generatingVideoCover: "generatingVideoCover",
+  extractingVideoCover: "extractingVideoCover",
+  videoProcessedSuccessfully: "videoProcessedSuccessfully",
+  videoCompressionFailedSecurity: "videoCompressionFailedSecurity",
+  videoCompressionFailedFallback: "videoCompressionFailedFallback",
+  failedToProcessFiles: "failedToProcessFiles",
+  failedToUploadImage: "failedToUploadImage",
 };
 
 export default localizationKeys;

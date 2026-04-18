@@ -39,6 +39,39 @@ const ImgSlider = ({
   status,
 }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
+  const [preparedShareFile, setPreparedShareFile] = useState(null);
+
+  const isVideo = (media) => {
+    return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
+  };
+
+  // Pre-load the first shareable image's blob in the background to make sharing instantaneous
+  useEffect(() => {
+    const prepareFile = async () => {
+      if (!images || images.length === 0) return;
+      
+      const firstShareableImage = images.find(img => !isVideo(img) && img.imageLink);
+      if (!firstShareableImage) {
+        setPreparedShareFile(null);
+        return;
+      }
+
+      try {
+        const response = await fetch(firstShareableImage.imageLink, { cache: 'force-cache' });
+        if (response.ok) {
+          const blob = await response.blob();
+          const file = new File([blob], "product.jpg", { type: blob.type || 'image/jpeg' });
+          setPreparedShareFile(file);
+        }
+      } catch (err) {
+        console.warn("Background share file preparation failed:", err);
+        setPreparedShareFile(null);
+      }
+    };
+
+    prepareFile();
+  }, [images]);
+
   const [showShareFallback, setShowShareFallback] = useState(false);
   const getDomain = () => {
     const { protocol, hostname, port } = window.location;
@@ -177,39 +210,47 @@ const ImgSlider = ({
   };
 
   const handleShare = async () => {
-    const shareData = {
-      title: title,
-      text: `${title}\n\nCheck out this ${isListProduct ? "product" : "auction"} on 3arbon!`,
-      url: shareUrl,
-    };
+    // We define this separately to ensure the URL is included in the caption string
+    const captionText = `${title}\n\nCheck out this ${isListProduct ? "product" : "auction"} on 3arbon!\n${shareUrl}`;
 
     if (navigator.share) {
       try {
         // Find the first non-video image to share
         const firstShareableImage = images?.find(img => !isVideo(img) && img.imageLink);
-
+        
         if (firstShareableImage) {
           try {
-            const response = await fetch(firstShareableImage.imageLink);
-            if (response.ok) {
-              const blob = await response.blob();
-              const file = new File([blob], "product.jpg", { type: blob.type });
-
-              if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                  ...shareData,
-                  files: [file],
-                });
-                return;
+            // Use prepared file if available for instant sharing, otherwise fallback to fetch
+            let file = preparedShareFile;
+            if (!file) {
+              const response = await fetch(firstShareableImage.imageLink);
+              if (response.ok) {
+                const blob = await response.blob();
+                file = new File([blob], "product.jpg", { type: blob.type || 'image/jpeg' });
               }
             }
+
+            if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+              // To get the image on top and text as a caption:
+              // 1. We put files first in the object
+              // 2. We combine text and url into one string (captionText)
+              // 3. We OMIT the separate 'url' property to prevent splitting
+              await navigator.share({
+                files: [file],
+                text: captionText,
+              });
+              return;
+            }
           } catch (imageError) {
-            console.warn("Failed to attach image to share:", imageError);
+            console.error("Failed to fetch image for sharing:", imageError);
           }
         }
 
         // Standard share if image fails, is not supported, or fetch wasn't successful
-        await navigator.share(shareData);
+        await navigator.share({
+          title: title,
+          text: captionText,
+        });
       } catch (error) {
         if (error.name !== "AbortError") {
           console.error("Error sharing post:", error);
@@ -219,9 +260,6 @@ const ImgSlider = ({
     } else {
       setShowShareFallback(!showShareFallback);
     }
-  };
-  const isVideo = (media) => {
-    return media?.imagePath?.match(/\.(mp4|mov|webm|avi)$/i);
   };
   return (
     <>
@@ -266,17 +304,17 @@ const ImgSlider = ({
                         <div className="relative w-full h-full bg-black">
                           <video
                             key={image?.imageLink}
+                            // Move src directly to video tag for better React reliability
+                            src={image?.imageLink}
                             className={`w-full h-full object-contain ${isListProduct && status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                             controls
                             controlsList="nodownload nofullscreen"
                             autoPlay
-                            muted
+                            muted // Must be muted for visual autoplay to work consistently
                             playsInline
                             loop
                             preload="auto"
-                          >
-                            <source src={image?.imageLink} type="video/mp4" />
-                          </video>
+                          />
                         </div>
                       ) : (
                         <img
