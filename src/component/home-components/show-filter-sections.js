@@ -1,9 +1,10 @@
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation,useEffect } from "react-router-dom";
 import { ReactComponent as ClearFilterIcon } from "../../../src/assets/icons/clear-filter-icon.svg";
 import { useLanguage } from "../../context/language-context";
 import useFilter from "../../hooks/use-filter";
 import useGetALLBrand from "../../hooks/use-get-all-brands";
 import useGetAllCountries from "../../hooks/use-get-all-countries";
+import useGetAllCities from "../../hooks/use-get-all-cities";
 import useGetGatogry from "../../hooks/use-get-category";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
@@ -20,6 +21,11 @@ const ShowFilterSections = ({ category }) => {
   const { AllBranOptions } = useGetALLBrand();
   const { AllCountriesOptions } = useGetAllCountries();
 
+  const [countries, setcountries] = useFilter("countryId", []);
+  const [cities, setcities] = useFilter("cityId", []);
+
+  const { AllCitiesOptions } = useGetAllCities(countries[0]); // Resolving names for cities of the first selected country
+
   const usageStatusOptinal = [
     { name: selectedContent[localizationKeys.new], value: "NEW" },
     { name: selectedContent[localizationKeys.used], value: "USED" },
@@ -27,7 +33,6 @@ const ShowFilterSections = ({ category }) => {
 
   const [categories, setcategories] = useFilter("categories", []);
   const [brands, setbrands] = useFilter("brands", []);
-  const [countries, setcountries] = useFilter("countries", []);
   const [usageStatus, setusageStatus] = useFilter("usageStatus", []);
   const [sellingType, setsellingType] = useFilter("sellingType", "");
   const [auctionStatus, setauctionStatus] = useFilter("auctionStatus", "");
@@ -38,8 +43,11 @@ const ShowFilterSections = ({ category }) => {
   const brandsFind = brands.map((brand) =>
     AllBranOptions?.find((option) => option.value === parseInt(brand))
   );
-  const countriesFind = countries.map((countries) =>
-    AllCountriesOptions?.find((option) => option.value === parseInt(countries))
+  const countriesFind = countries.map((cId) =>
+    AllCountriesOptions?.find((option) => option.value === parseInt(cId))
+  );
+  const citiesFind = cities.map((cId) =>
+    AllCitiesOptions?.find((option) => option.value === parseInt(cId))
   );
   const usageStatusFind = usageStatus.map((usageStatus) =>
     usageStatusOptinal?.find((option) => option.value === usageStatus)
@@ -65,11 +73,20 @@ const ShowFilterSections = ({ category }) => {
             .filter(Boolean)}
         />
         <ArrayButtonFilter
-          name="countries"
+          name="countryId"
           values={countriesFind
-            ?.map((countriesFind) => ({
-              name: countriesFind?.text,
-              value: `${countriesFind?.value}`,
+            ?.map((c) => ({
+              name: c?.text,
+              value: `${c?.value}`,
+            }))
+            .filter(Boolean)}
+        />
+        <ArrayButtonFilter
+          name="cityId"
+          values={citiesFind
+            ?.map((c) => ({
+              name: c?.text,
+              value: `${c?.value}`,
             }))
             .filter(Boolean)}
         />
@@ -98,7 +115,9 @@ const ShowFilterSections = ({ category }) => {
 
       {search.includes("categories") ||
       search.includes("brands") ||
-      search.includes("countries") ||
+      search.includes("brands") ||
+      search.includes("countryId") ||
+      search.includes("cityId") ||
       search.includes("sellingType") ||
       search.includes("auctionStatus") ||
       search.includes("usageStatus") ? (
