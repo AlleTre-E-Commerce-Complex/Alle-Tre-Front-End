@@ -14,14 +14,20 @@ const CarsFilterSections = ({ lang, myRef }) => {
   // Clear model when brand changes if current model is not found in the new models list
   React.useEffect(() => {
     if (selectedModel && models.length > 0) {
-      const modelArray = Array.isArray(selectedModel) ? selectedModel : [selectedModel];
-      const validModels = modelArray.filter(sm => models.some(m => m.value === sm));
-      
+      const modelArray = Array.isArray(selectedModel)
+        ? selectedModel
+        : [selectedModel];
+      const validModels = modelArray.filter((sm) =>
+        models.some((m) => String(m.value) === String(sm)),
+      );
+
       if (validModels.length !== modelArray.length) {
-        setSelectedModel(Array.isArray(selectedModel) ? validModels : (validModels[0] || ""));
+        setSelectedModel(
+          Array.isArray(selectedModel) ? validModels : validModels[0] || "",
+        );
       }
     }
-  }, [models, setSelectedModel, selectedModel]); // Added selectedModel back, models change when brand changes
+  }, [models, setSelectedModel, selectedModel]);
 
   const getFilterOptions = (key) => {
     return allCustomFileOptions[key]?.map(opt => {
@@ -33,7 +39,6 @@ const CarsFilterSections = ({ lang, myRef }) => {
   const carConfigs = [
     { id: "brand", label: lang === "ar" ? "الماركة" : "Brand", options: makes.map(m => ({ name: m.text, value: m.value })) },
     { id: "model", label: lang === "ar" ? "الموديل" : "Model", options: models.map(m => ({ name: m.text, value: m.value })) },
-    { id: "emirate", label: lang === "ar" ? "الإمارة" : "Emirate", options: getFilterOptions("emirate") },
     { id: "regionalSpecs", label: lang === "ar" ? "المواصفات الإقليمية" : "Regional Specs", options: getFilterOptions("regionalSpecs") },
     { id: "bodyType", label: lang === "ar" ? "نوع الكابينة" : "Body Type", options: getFilterOptions("carType") },
     { id: "seatingCapacity", label: lang === "ar" ? "المقاعد" : "Seats", options: getFilterOptions("seatingCapacity") },
@@ -71,7 +76,13 @@ const CarsFilterSections = ({ lang, myRef }) => {
       
       {carConfigs.slice(2).map(c => (
          <FilterBlock key={c.id} title={c.label}>
-            <MultiButtonFilter name={c.id} values={c.options} isMultiSelect={true} myRef={myRef} variant="button" />
+            <MultiButtonFilter 
+              name={c.id} 
+              values={c.options} 
+              isMultiSelect={true} 
+              myRef={myRef} 
+              variant="button" 
+            />
          </FilterBlock>
       ))}
     </>

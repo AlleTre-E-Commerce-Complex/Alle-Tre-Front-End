@@ -123,6 +123,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
       sortBy: parsed.sortBy || undefined,
       sortOrder: parsed.sortOrder || undefined,
+      countryId: parsed.countryId ? parsed.countryId.map(Number) : undefined,
+      cityId: parsed.cityId ? parsed.cityId.map(Number) : undefined,
       isHome: false,
     };
 
@@ -189,6 +191,8 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
       priceTo: parsed.priceTo ? Number(parsed.priceTo) : undefined,
       sortBy: parsed.sortBy || undefined,
       sortOrder: parsed.sortOrder || undefined,
+      countryId: parsed.countryId ? parsed.countryId.map(Number) : undefined,
+      cityId: parsed.cityId ? parsed.cityId.map(Number) : undefined,
       isHome: false,
     };
 

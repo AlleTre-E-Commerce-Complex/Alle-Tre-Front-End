@@ -277,7 +277,7 @@ const ImageMedia = ({
         let posterUrl = URL.createObjectURL(compressedFile); // Fallback to video blob
         if (thumbnailFile) {
           try {
-            setProcessingStatus("Watermarking video cover...");
+            setProcessingStatus(selectedContent[localizationKeys.watermarkingVideoCover]);
             const watermarkedThumb = await addImageWatermark(thumbnailFile);
             posterUrl = URL.createObjectURL(watermarkedThumb);
           } catch (thumbError) {
@@ -487,7 +487,7 @@ const ImageMedia = ({
       }
     } catch (error) {
       console.error("Error handling files:", error);
-      toast.error("Failed to process files");
+      toast.error(selectedContent[localizationKeys.failedToProcessFiles]);
       setimgtest(images);
     } finally {
       setIsCompressing(false);
@@ -642,7 +642,7 @@ const ImageMedia = ({
     
     // SMART BYPASS: If file is already small and in mp4 format, skip heavy compression
     if (isSmallMp4) {
-      setProcessingStatus("Generating video cover...");
+      setProcessingStatus(selectedContent[localizationKeys.generatingVideoCover]);
       const thumbnailFile = await generateVideoThumbnailFallback(file);
       return { compressedFile: file, thumbnailFile };
     }
@@ -651,7 +651,7 @@ const ImageMedia = ({
       console.warn("SharedArrayBuffer is not available. Ensure COOP/COEP headers are set for compression.");
       
       // Attempt Canvas fallback for thumbnail even if compression is skipped
-      setProcessingStatus("Generating video cover...");
+      setProcessingStatus(selectedContent[localizationKeys.generatingVideoCover]);
       const thumbnailFile = await generateVideoThumbnailFallback(file);
       
       return { compressedFile: file, thumbnailFile };
@@ -660,7 +660,7 @@ const ImageMedia = ({
     setIsCompressing(true);
     setProcessingStatus(selectedContent[localizationKeys.compressingVideo]);
     setProcessingProgress(0);
-    const toastId = toast.loading("Compressing video... This may take a moment.");
+    const toastId = toast.loading(selectedContent[localizationKeys.compressingVideo]);
     try {
       const ffmpegInstance = await loadFFmpeg();
       const { name } = file;
@@ -677,10 +677,12 @@ const ImageMedia = ({
       try {
         // STEP 1: Compress the video
         setProcessingStatus(selectedContent[localizationKeys.compressingVideo]);
-        await ffmpegInstance.run("-i", name, "-vcodec", "libx264", "-crf", "30", "-preset", "ultrafast", "output.mp4");
+        // Added -pix_fmt yuv420p for maximum browser compatibility (fixes black screen issues)
+        // Added -movflags +faststart for better web streaming performance
+        await ffmpegInstance.run("-i", name, "-vcodec", "libx264", "-crf", "30", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "output.mp4");
 
         // STEP 2: Extract a thumbnail frame
-        setProcessingStatus("Extracting video cover...");
+        setProcessingStatus(selectedContent[localizationKeys.extractingVideoCover]);
         await ffmpegInstance.run("-i", "output.mp4", "-ss", "00:00:00.500", "-vframes", "1", "thumbnail.jpg");
       } finally {
         // Restore console immediately
@@ -711,13 +713,13 @@ const ImageMedia = ({
       ffmpegInstance.FS("unlink", "output.mp4");
       try { ffmpegInstance.FS("unlink", "thumbnail.jpg"); } catch (e) {}
 
-      toast.success("Video processed successfully", { id: toastId });
+      toast.success(selectedContent[localizationKeys.videoProcessedSuccessfully], { id: toastId });
       return { compressedFile, thumbnailFile };
     } catch (error) {
       console.error("Video compression failed details:", error);
       const errorMessage = error.message?.includes("SharedArrayBuffer") 
-        ? "Video compression failed: Security headers (COOP/COEP) are missing." 
-        : "Video compression failed, using original file";
+        ? selectedContent[localizationKeys.videoCompressionFailedSecurity]
+        : selectedContent[localizationKeys.videoCompressionFailedFallback];
       toast.error(errorMessage, { id: toastId });
       return { compressedFile: file, thumbnailFile: null };
     } finally {

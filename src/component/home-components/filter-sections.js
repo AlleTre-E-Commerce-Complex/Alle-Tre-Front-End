@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import useGetGatogry from "../../hooks/use-get-category";
 import RangeInput from "./range-input";
 
@@ -11,6 +10,9 @@ import { motion } from "framer-motion";
 
 import { useLocation, useHistory } from "react-router-dom";
 import queryString from "query-string";
+import useFilter from "../../hooks/use-filter";
+import useGetAllCountries from "../../hooks/use-get-all-countries";
+import useGetAllCities from "../../hooks/use-get-all-cities";
 
 import { IoClose } from "react-icons/io5";
 
@@ -38,6 +40,35 @@ const FilterSections = ({
   const category_Id =
     categories.length >= 1 ? categories[categories.length - 1] : null;
   const activeCategoryId = categoryId || category_Id;
+
+  const [selectedCountry] = useFilter("countryId", "");
+  const [selectedCity, setSelectedCity] = useFilter("cityId", "");
+  const { AllCountriesOptions } = useGetAllCountries();
+  const { AllCitiesOptions } = useGetAllCities(selectedCountry);
+
+  // Clear city when country changes if current city is not found in the new cities list
+  useEffect(() => {
+    if (selectedCity && AllCitiesOptions.length > 0) {
+      const cityArray = Array.isArray(selectedCity)
+        ? selectedCity
+        : [selectedCity];
+      const validCities = cityArray.filter((sc) =>
+        AllCitiesOptions.some((c) => String(c.value) === String(sc)),
+      );
+
+      if (validCities.length !== cityArray.length) {
+        setSelectedCity(
+          Array.isArray(selectedCity) ? validCities : validCities[0] || "",
+        );
+      }
+    } else if (
+      selectedCity &&
+      AllCitiesOptions.length === 0 &&
+      !selectedCountry
+    ) {
+      setSelectedCity(Array.isArray(selectedCity) ? [] : "");
+    }
+  }, [AllCitiesOptions, setSelectedCity, selectedCity, selectedCountry]);
   
 
   // Identify Active Top-Level Category Type
@@ -152,6 +183,40 @@ const FilterSections = ({
           >
             <RangeInput className="" myRef={myRef} isFullPage={isFullPage} />
           </div>
+        </FilterBlock>
+
+        {/* Global Location Filters */}
+        <FilterBlock
+          title={lang === "ar" ? "البلد" : "Country"}
+          defaultExpanded={true}
+        >
+          <MultiButtonFilter
+            name="countryId"
+            values={AllCountriesOptions.map(c => ({ name: c.text, value: c.value }))}
+            isMultiSelect={true}
+            myRef={myRef}
+            variant="button"
+            maxHeight="250px"
+          />
+        </FilterBlock>
+
+        <FilterBlock
+          title={lang === "ar" ? "المدينة" : "City"}
+          defaultExpanded={true}
+        >
+          <MultiButtonFilter
+            name="cityId"
+            values={AllCitiesOptions.map(c => ({ name: c.text, value: c.value }))}
+            isMultiSelect={true}
+            myRef={myRef}
+            variant="button"
+            maxHeight="250px"
+          />
+          {AllCitiesOptions.length === 0 && (
+            <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-2 italic px-1 text-center">
+              {lang === "ar" ? "اختر بلداً لعرض المدن" : "Select a country to show cities"}
+            </p>
+          )}
         </FilterBlock>
 
         {/* Dynamic Category Specific Filters */}
