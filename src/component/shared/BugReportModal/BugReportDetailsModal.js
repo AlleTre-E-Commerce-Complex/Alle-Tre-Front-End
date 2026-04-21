@@ -10,9 +10,11 @@ import api from "../../../api";
 import { format } from "date-fns";
 import { FaPaperPlane, FaTimes } from "react-icons/fa";
 import { useSocket } from "../../../context/socket-context";
+import { useSupport } from "../../../context/support-context";
 
 const BugReportDetailsModal = ({ open, setOpen, reportId, onNewMessage }) => {
   const [lang] = useLanguage("");
+  const { refreshSupportCount } = useSupport();
   const socket = useSocket();
   const [report, setReport] = useState(null);
   const [newMessage, setNewMessage] = useState("");
@@ -38,6 +40,7 @@ const BugReportDetailsModal = ({ open, setOpen, reportId, onNewMessage }) => {
           };
         });
         if (onNewMessage) onNewMessage();
+        refreshSupportCount();
       }
     };
 
@@ -59,6 +62,7 @@ const BugReportDetailsModal = ({ open, setOpen, reportId, onNewMessage }) => {
     runFetchDetails(
       authAxios.get(api.app.bugReport.details(reportId)).then((res) => {
         setReport(res.data.data);
+        refreshSupportCount();
       })
     ).catch((err) => {
       const msg = err?.message;

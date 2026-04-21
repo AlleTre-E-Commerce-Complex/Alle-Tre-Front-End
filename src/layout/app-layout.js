@@ -27,6 +27,7 @@ import ProfileAuctionDetails from "../page/app/auction-details/profile-auction-d
 import ProfileLayouts from "../page/app/profile/profile-layouts";
 import { useSelector, useDispatch } from "react-redux";
 import { SocketProvider } from "context/socket-context";
+import { SupportProvider } from "../context/support-context";
 
 
 
@@ -114,14 +115,15 @@ const AppLayouts = () => {
   return (
     <div className=" p-0 m-0 border-none border-0 scrollbar-hide  ">
       <SocketProvider auctionId={socketauctionId} userId={user?.id}>
-        <Header
-          SetSid={SetSid}
-          setSelectedType={setSelectedType}
-          onFilterClick={() => setIsFilterOpen(true)}
-          isOpen={isDropdownOpen}
-          onDropdownChange={setIsDropdownOpen}
-        />
-        <Sidebar SetSid={SetSid} sid={sid} />
+        <SupportProvider>
+          <Header
+            SetSid={SetSid}
+            setSelectedType={setSelectedType}
+            onFilterClick={() => setIsFilterOpen(true)}
+            isOpen={isDropdownOpen}
+            onDropdownChange={setIsDropdownOpen}
+          />
+          <Sidebar SetSid={SetSid} sid={sid} />
         {/* {showRewardModal && (
           <RewardModal
             open={showRewardModal}
@@ -297,6 +299,7 @@ const AppLayouts = () => {
               : false
           }
         />
+        </SupportProvider>
       </SocketProvider>
     </div>
   );

@@ -18,11 +18,13 @@ import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 import { useSocket } from "context/socket-context";
 import { useChat } from "../../../context/chat-context";
+import { useSupport } from "../../../context/support-context";
 import { MdLogout } from "react-icons/md";
 import LogoutModal from "../logout-modal/logout-modal";
 
 const Sidebar = ({ SetSid, sid }) => {
   const { unreadCount } = useChat();
+  const { supportUnreadCount } = useSupport();
   const history = useHistory();
   const { pathname } = useLocation();
   const [lang] = useLanguage();
@@ -293,7 +295,16 @@ const Sidebar = ({ SetSid, sid }) => {
                 }}
               />
               <NavLink
-                title={selectedContent[localizationKeys.support]}
+                title={
+                  <div className="flex items-center relative">
+                    {selectedContent[localizationKeys.support]}
+                    {supportUnreadCount > 0 && (
+                      <span className="absolute -top-2 -right-4 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
+                        {supportUnreadCount > 99 ? "99+" : supportUnreadCount}
+                      </span>
+                    )}
+                  </div>
+                }
                 isActive={pathname.startsWith(routes.app.support)}
                 onClick={() => {
                   history.push(routes.app.support);

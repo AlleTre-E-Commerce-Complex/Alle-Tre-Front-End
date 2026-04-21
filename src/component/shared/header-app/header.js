@@ -27,6 +27,7 @@ import { CgProfile } from "react-icons/cg";
 
 import { useSocket } from "../../../context/socket-context";
 import { useChat } from "../../../context/chat-context";
+import { useSupport } from "../../../context/support-context";
 import LogoutModal from "../logout-modal/logout-modal";
 import AddLocationModel from "../../../component/create-auction-components/add-location-model";
 import { MdOutlineNotifications, MdClose } from "react-icons/md";
@@ -60,6 +61,7 @@ const Header = ({
   const [notificationCount, setNotificationCount] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { unreadCount } = useChat();
+  const { supportUnreadCount } = useSupport();
   const [searchShow, setSearchShow] = useState(true);
   const profileData = useSelector((state) => state?.profileData?.PofileData);
 
@@ -718,7 +720,16 @@ const Header = ({
               <NavLinkHeader
                 key={key}
                 title={
-                  isChat ? (
+                  key === localizationKeys.support ? (
+                    <div className="flex items-center relative">
+                      {selectedContent[key]}
+                      {supportUnreadCount > 0 && (
+                        <span className="absolute -top-2 -right-3 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
+                          {supportUnreadCount > 99 ? "99+" : supportUnreadCount}
+                        </span>
+                      )}
+                    </div>
+                  ) : isChat ? (
                     <div className="flex items-center relative">
                       {selectedContent[key]}
                       {unreadCount > 0 && (
