@@ -847,6 +847,7 @@ const localizationKeys = {
   videoCompressionFailedFallback: "videoCompressionFailedFallback",
   failedToProcessFiles: "failedToProcessFiles",
   failedToUploadImage: "failedToUploadImage",
+  bugReportUpdate: "bugReportUpdate",
 };
 
 export default localizationKeys;

@@ -110,6 +110,16 @@ const getNotificationMeta = (title, message, selectedContent) => {
     };
   }
   
+  if (text.includes("bug") || text.includes("report") || text.includes("support")) {
+    return {
+      title: title || selectedContent[localizationKeys.bugReportUpdate],
+      icon: <FiShield size={20} />,
+      iconBg: "bg-blue-100 dark:bg-blue-500/10",
+      iconColor: "text-blue-600 dark:text-blue-400",
+      actionText: selectedContent[localizationKeys.details],
+    };
+  }
+  
   return {
     title: title || selectedContent[localizationKeys.notification],
     icon: <FaGavel size={20} />,
@@ -235,19 +245,22 @@ const Notifications = () => {
                       </span>
                     </div>
 
-                    {/* Actions block (Image + Button) */}
-                    <div className="flex items-center gap-16 mr-auto md:mr-0 shrink-0 mt-2 md:mt-0">
-                      {data.imageLink ? (
-                        <img
-                          src={data.imageLink}
-                          alt="Product"
-                          className="w-20 h-20 object-cover rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm group-hover:rotate-2 transition-all duration-300"
-                        />
-                      ) : (
-                        <div className="w-20 h-20 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-gray-800 border border-dashed border-gray-300 dark:border-gray-700 shadow-sm">
-                          <MdImageNotSupported className="text-gray-300 dark:text-gray-600 w-8 h-8" />
-                        </div>
-                      )}
+                      {/* Actions block (Image + Button) */}
+                      <div className="flex items-center gap-16 mr-auto md:mr-0 shrink-0 mt-2 md:mt-0">
+                        {/* Only show image area if it's NOT a bug report/support notification */}
+                        {!meta.title?.toLowerCase().includes("bug") && !meta.title?.toLowerCase().includes("support") && (
+                          (data.imageLink || data.product?.images?.[0]?.imageLink) ? (
+                            <img
+                              src={data.imageLink || data.product?.images?.[0]?.imageLink}
+                              alt="Product"
+                              className="w-20 h-20 object-cover rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm group-hover:rotate-2 transition-all duration-300"
+                            />
+                          ) : (data.productId || data.auctionId) ? (
+                            <div className="w-20 h-20 flex items-center justify-center rounded-xl bg-gray-50 dark:bg-gray-800 border border-dashed border-gray-300 dark:border-gray-700 shadow-sm">
+                              <MdImageNotSupported className="text-gray-300 dark:text-gray-600 w-8 h-8" />
+                            </div>
+                          ) : null
+                        )}
 
                       <button
                         onClick={() => handleViewDetails(data.auctionId, data.productId)}
