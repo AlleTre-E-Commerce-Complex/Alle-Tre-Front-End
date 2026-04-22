@@ -934,6 +934,7 @@ const en = {
   [localizationKeys.videoCompressionFailedFallback]: "Video compression failed, using original file",
   [localizationKeys.failedToProcessFiles]: "Failed to process files",
   [localizationKeys.failedToUploadImage]: "Failed to upload image",
+  [localizationKeys.bugReportUpdate]: "Bug Report Update",
 };
 
 export default en;

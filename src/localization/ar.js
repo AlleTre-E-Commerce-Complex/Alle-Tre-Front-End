@@ -929,7 +929,8 @@ const ar = {
   [localizationKeys.videoCompressionFailedSecurity]: "فشل ضغط الفيديو: رؤوس الأمان (COOP/COEP) مفقودة.",
   [localizationKeys.videoCompressionFailedFallback]: "فشل ضغط الفيديو، جاري استخدام الملف الأصلي",
   [localizationKeys.failedToProcessFiles]: "فشل في معالجة الملفات",
-  [localizationKeys.failedToUploadImage]: "فشل في رفع الصورة",
+  [localizationKeys.failedToUploadImage]: "فشل في تحميل الصورة",
+  [localizationKeys.bugReportUpdate]: "تحديث تقرير المشكلة",
 };
 
 export default ar;
