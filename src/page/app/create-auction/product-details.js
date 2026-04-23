@@ -177,6 +177,7 @@ const ProductDetails = () => {
 
       // Append all fields to metadataOnlyFormData except images
       metadataOnlyFormData.append("product[title]", values.itemName);
+      metadataOnlyFormData.append("product[priceType]", values.priceType);
       metadataOnlyFormData.append("product[categoryId]", values.category);
       if (values.subCategory)
         metadataOnlyFormData.append(
@@ -1066,6 +1067,7 @@ const ProductDetails = () => {
     dispatch(
       productDetails({
         ...values,
+        priceType: values.priceType,
         hasUsageCondition,
         maxStartPrice,
         valueRadio,
@@ -1097,6 +1099,7 @@ const ProductDetails = () => {
     });
 
     formData.append("title", draftValue.itemName || productDetailsint.itemName);
+    formData.append("priceType", draftValue.priceType || productDetailsint.priceType);
     formData.append(
       "categoryId",
       draftValue.category || productDetailsint.category,
@@ -1487,6 +1490,7 @@ const ProductDetails = () => {
                 entertainment: productDetailsint.entertainment || [],
                 comfort: productDetailsint.comfort || [],
                 exteriorFeatures: productDetailsint.exteriorFeatures || [],
+                priceType: productDetailsint.priceType || "FIXED",
               }}
               onSubmit={isEditing ? handleUpdate : handelProductDetailsdata}
               validationSchema={ProductDetailsSchema}
@@ -2059,6 +2063,37 @@ const ProductDetails = () => {
                           )}
                       </div>
                     )}
+                  <div className="w-full mt-6">
+                    <h1 className="font-bold text-base text-black pb-4">
+                      {lang === "en" ? "Pricing Type" : "نوع السعر"}
+                    </h1>
+                    <div className="flex bg-gray-100 dark:bg-primary-veryDark p-1 rounded-xl gap-1 mt-2 border border-gray-200 dark:border-white/5 max-w-md">
+                      <button
+                        type="button"
+                        onClick={() => formik.setFieldValue("priceType", "FIXED")}
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
+                          formik.values.priceType === "FIXED"
+                            ? "bg-yellow text-primary-dark shadow-md scale-[1.02]"
+                            : "text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5"
+                        }`}
+                      >
+                        <div className={`w-2 h-2 rounded-full ${formik.values.priceType === "FIXED" ? "bg-primary-dark animate-pulse" : "bg-gray-400"}`} />
+                        {selectedContent[localizationKeys.fixed]}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => formik.setFieldValue("priceType", "NEGOTIABLE")}
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 ${
+                          formik.values.priceType === "NEGOTIABLE"
+                            ? "bg-yellow text-primary-dark shadow-md scale-[1.02]"
+                            : "text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5"
+                        }`}
+                      >
+                        <div className={`w-2 h-2 rounded-full ${formik.values.priceType === "NEGOTIABLE" ? "bg-primary-dark animate-pulse" : "bg-gray-400"}`} />
+                        {selectedContent[localizationKeys.negotiable]}
+                      </button>
+                    </div>
+                  </div>
                   <div
                     className={
                       hasUsageCondition ||

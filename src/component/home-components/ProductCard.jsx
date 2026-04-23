@@ -30,6 +30,7 @@ const ProductCard = ({
   onReload,
   currency,
   status,
+  priceType,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -438,9 +439,26 @@ const ProductCard = ({
         {/* Pricing & Button */}
         <div className="mt-auto flex justify-between items-end gap-1 pt-1.5 border-t border-gray-100 dark:border-gray-800">
           <div className="flex flex-col pb-0.5 min-w-0">
-            <p className="text-[7px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">
-              {selectedContent[localizationKeys.price]}
-            </p>
+            <div className="flex items-center gap-2 mb-2 sm:mb-1.5">
+              <div className="flex items-center gap-2 bg-gray-200 dark:bg-white/10 py-1 px-2 rounded-md transition-all duration-300">
+                <p className="text-[8px] text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest leading-none">
+                  {selectedContent[localizationKeys.price]}
+                </p>
+                <div className="w-[1px] h-2.5 bg-gray-300 dark:bg-gray-700"></div>
+                {priceType === "NEGOTIABLE" && (
+                  <span className="text-[8px] text-green-600 dark:text-green-400 font-bold uppercase tracking-wide leading-none flex items-center gap-1">
+                    <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse"></span>
+                    {selectedContent[localizationKeys.negotiable]}
+                  </span>
+                )}
+                {priceType === "FIXED" && (
+                  <span className="text-[8px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wide leading-none flex items-center gap-1">
+                    <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
+                    {selectedContent[localizationKeys.fixed]}
+                  </span>
+                )}
+              </div>
+            </div>
             <p className="text-xs sm:text-sm text-gray-800 dark:text-white font-bold leading-none tracking-tight truncate">
               {formatCurrency(price, currency)}
             </p>

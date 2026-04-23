@@ -464,9 +464,28 @@ const SummaryListedSection = () => {
               </div>
 
               <div className="space-y-1 mb-8">
-                <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
-                  {selectedContent[localizationKeys.sellingPrice]}
-                </p>
+                <div className="flex items-center gap-3">
+                  <p className="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.2em]">
+                    {selectedContent[localizationKeys.sellingPrice]}
+                  </p>
+                  {listedProductsData?.priceType && (
+                    <div className="flex items-center gap-2 bg-gray-50 dark:bg-white/10 py-1 px-2.5 rounded-full border border-gray-100 dark:border-white/5 transition-all duration-300 shadow-sm">
+                      <div className="w-[1px] h-2 bg-gray-200 dark:bg-gray-700 mx-0.5"></div>
+                      {listedProductsData?.priceType === "NEGOTIABLE" && (
+                        <span className="text-[9px] text-green-600 dark:text-green-400 font-bold uppercase tracking-wide leading-none flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.4)]"></span>
+                          {selectedContent[localizationKeys.negotiable]}
+                        </span>
+                      )}
+                      {listedProductsData?.priceType === "FIXED" && (
+                        <span className="text-[9px] text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wide leading-none flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.4)]"></span>
+                          {selectedContent[localizationKeys.fixed]}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
                 <div className="flex items-baseline gap-2 pt-1">
                   <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-primary dark:text-white tracking-tight sm:tracking-tighter transition-all duration-300">
                     {formatCurrency(listedProductsData?.ProductListingPrice)}

@@ -72,6 +72,7 @@ const SearchResults = ({ auctions, products, isLoading, searchQuery }) => {
                 startBidAmount={e?.startBidAmount}
                 usageStatus={e?.product?.usageStatus}
                 category={e?.product?.categoryId}
+                priceType={e?.product?.priceType}
               />
             ))}
           </div>
@@ -107,6 +108,7 @@ const SearchResults = ({ auctions, products, isLoading, searchQuery }) => {
                 category={e?.product?.categoryId}
                 isSaved={e?.isSaved}
                 status={e?.status}
+                priceType={e?.product?.priceType}
               />
             ))}
           </div>
