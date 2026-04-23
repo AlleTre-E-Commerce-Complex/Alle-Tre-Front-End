@@ -85,113 +85,87 @@ const ListingProductsLocationDetails = () => {
           productDetailsInt.subCategory
         );
       }
-      if (productDetailsInt.brand) {
-        formData.append("product[brand]", productDetailsInt.brand);
-      }
-      if (productDetailsInt.usageStatus) {
-        formData.append("product[usageStatus]", productDetailsInt.usageStatus);
-      }
-      if (productDetailsInt.color) {
-        formData.append("product[color]", productDetailsInt.color);
-      }
-      if (productDetailsInt.age) {
-        formData.append("product[age]", productDetailsInt.age);
-      }
-      if (productDetailsInt.landType) {
-        formData.append("product[landType]", productDetailsInt.landType);
-      }
-      if (productDetailsInt.cameraType) {
-        formData.append("product[cameraType]", productDetailsInt.cameraType);
-      }
-      if (productDetailsInt.carType) {
-        formData.append("product[carType]", productDetailsInt.carType);
-      }
-      if (productDetailsInt.material) {
-        formData.append("product[material]", productDetailsInt.material);
-      }
-      if (productDetailsInt.memory) {
-        formData.append("product[memory]", productDetailsInt.memory);
-      }
-      if (productDetailsInt.model) {
-        formData.append("product[model]", productDetailsInt.model);
-      }
-      if (productDetailsInt.processor) {
-        formData.append("product[processor]", productDetailsInt.processor);
-      }
-      if (productDetailsInt.ramSize) {
-        formData.append("product[ramSize]", productDetailsInt.ramSize);
-      }
-      if (productDetailsInt.releaseYear) {
-        formData.append("product[releaseYear]", productDetailsInt.releaseYear);
-      }
-      if (productDetailsInt.screenSize) {
-        formData.append("product[screenSize]", productDetailsInt.screenSize);
-      }
-      if (productDetailsInt.totalArea) {
-        formData.append("product[totalArea]", productDetailsInt.totalArea);
-      }
-      if (productDetailsInt.operatingSystem) {
-        formData.append(
-          "product[operatingSystem]",
-          productDetailsInt.operatingSystem
-        );
-      }
-      if (productDetailsInt.regionOfManufacture) {
-        formData.append(
-          "product[regionOfManufacture]",
-          productDetailsInt.regionOfManufacture
-        );
-      }
-      if (productDetailsInt.numberOfFloors) {
-        formData.append(
-          "product[numberOfFloors]",
-          productDetailsInt.numberOfFloors
-        );
-      }
-      if (productDetailsInt.numberOfRooms) {
-        formData.append(
-          "product[numberOfRooms]",
-          productDetailsInt.numberOfRooms
-        );
-      }
+      const additionalFields = [
+        "priceType",
+        "brand",
+        "usageStatus",
+        "color",
+        "age",
+        "landType",
+        "cameraType",
+        "carType",
+        "material",
+        "memory",
+        "model",
+        "processor",
+        "ramSize",
+        "releaseYear",
+        "screenSize",
+        "totalArea",
+        "operatingSystem",
+        "regionOfManufacture",
+        "numberOfFloors",
+        "numberOfRooms",
+        "countryId",
+        "cityId",
+        "emirate",
+        "totalClosingFee",
+        "numberOfBathrooms",
+        "developer",
+        "readyBy",
+        "annualCommunityFee",
+        "isFurnished",
+        "propertyReferenceId",
+        "buyerTransferFee",
+        "sellerTransferFee",
+        "maintenanceFee",
+        "occupancyStatus",
+        "amenities",
+        "zonedFor",
+        "approvedBuildUpArea",
+        "freehold",
+        "residentialType",
+        "commercialType",
+        "trim",
+        "regionalSpecs",
+        "kilometers",
+        "insuredInUae",
+        "interiorColor",
+        "warranty",
+        "fuelType",
+        "doors",
+        "transmissionType",
+        "seatingCapacity",
+        "horsepower",
+        "steeringSide",
+        "engineCapacity",
+        "numberOfCylinders",
+        "driverAssistance",
+        "entertainment",
+        "comfort",
+        "exteriorFeatures",
+      ];
       if (productDetailsInt.itemDescription) {
         formData.append(
           "product[description]",
           productDetailsInt.itemDescription
         );
       }
-      if (productDetailsInt.countryId) {
-        formData.append("product[countryId]", productDetailsInt.countryId);
-      }
-      if (productDetailsInt.cityId) {
-        formData.append("product[cityId]", productDetailsInt.cityId);
-      }
 
-      const propertyFields = ["emirate", "totalClosingFee", "numberOfBathrooms", "developer", "readyBy", "annualCommunityFee", "isFurnished", "propertyReferenceId", "buyerTransferFee", "sellerTransferFee", "maintenanceFee", "occupancyStatus", "amenities", "zonedFor", "approvedBuildUpArea", "freehold", "residentialType", "commercialType"];
-      propertyFields.forEach(field => {
-        if (productDetailsInt[field] !== undefined && productDetailsInt[field] !== null && productDetailsInt[field] !== "") {
-          formData.append(`product[${field}]`, Array.isArray(productDetailsInt[field]) ? JSON.stringify(productDetailsInt[field]) : productDetailsInt[field]);
+      additionalFields.forEach((field) => {
+        if (
+          productDetailsInt[field] !== undefined &&
+          productDetailsInt[field] !== null &&
+          productDetailsInt[field] !== ""
+        ) {
+          formData.append(
+            `product[${field}]`,
+            Array.isArray(productDetailsInt[field])
+              ? JSON.stringify(productDetailsInt[field])
+              : productDetailsInt[field]
+          );
         }
       });
-
-      if (productDetailsInt.trim) formData.append("product[trim]", productDetailsInt.trim);
-      if (productDetailsInt.regionalSpecs) formData.append("product[regionalSpecs]", productDetailsInt.regionalSpecs);
-      if (productDetailsInt.kilometers) formData.append("product[kilometers]", productDetailsInt.kilometers);
-      if (productDetailsInt.insuredInUae) formData.append("product[insuredInUae]", productDetailsInt.insuredInUae);
-      if (productDetailsInt.interiorColor) formData.append("product[interiorColor]", productDetailsInt.interiorColor);
-      if (productDetailsInt.warranty) formData.append("product[warranty]", productDetailsInt.warranty);
-      if (productDetailsInt.fuelType) formData.append("product[fuelType]", productDetailsInt.fuelType);
-      if (productDetailsInt.doors) formData.append("product[doors]", productDetailsInt.doors);
-      if (productDetailsInt.transmissionType) formData.append("product[transmissionType]", productDetailsInt.transmissionType);
-      if (productDetailsInt.seatingCapacity) formData.append("product[seatingCapacity]", productDetailsInt.seatingCapacity);
-      if (productDetailsInt.horsepower) formData.append("product[horsepower]", productDetailsInt.horsepower);
-      if (productDetailsInt.steeringSide) formData.append("product[steeringSide]", productDetailsInt.steeringSide);
-      if (productDetailsInt.engineCapacity) formData.append("product[engineCapacity]", productDetailsInt.engineCapacity);
-      if (productDetailsInt.numberOfCylinders) formData.append("product[numberOfCylinders]", productDetailsInt.numberOfCylinders);
-      if (productDetailsInt.driverAssistance?.length) formData.append("product[driverAssistance]", JSON.stringify(productDetailsInt.driverAssistance));
-      if (productDetailsInt.entertainment?.length) formData.append("product[entertainment]", JSON.stringify(productDetailsInt.entertainment));
-      if (productDetailsInt.comfort?.length) formData.append("product[comfort]", JSON.stringify(productDetailsInt.comfort));
-      if (productDetailsInt.exteriorFeatures?.length) formData.append("product[exteriorFeatures]", JSON.stringify(productDetailsInt.exteriorFeatures));
       
       if (productDetailsInt.images && Array.isArray(productDetailsInt.images)) {
         productDetailsInt.images.forEach((image, index) => {

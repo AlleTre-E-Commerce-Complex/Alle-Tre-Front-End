@@ -663,6 +663,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
+                              priceType={e?.product?.priceType}
                             />
                           ))}
                         </div>
@@ -708,6 +709,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
+                              priceType={e?.product?.priceType}
                             />
                           ))}
                         </div>
@@ -793,6 +795,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
+                              priceType={e?.product?.priceType}
                             />
                           ))}
                         </div>
@@ -877,6 +880,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
+                              priceType={e?.product?.priceType}
                             />
                           ))}
                         </div>

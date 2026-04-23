@@ -28,6 +28,7 @@ const ProductCardList = ({
   category,
   isSaved,
   status,
+  priceType,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [dragStart, setDragStart] = useState(null);
@@ -444,9 +445,23 @@ const ProductCardList = ({
             <div className="border-t border-gray-100 dark:border-gray-800 mt-auto pt-3">
               <div className="flex flex-wrap items-end justify-between gap-3">
                 <div>
-                  <p className="text-[7px] sm:text-[8px] text-gray-400 font-bold uppercase tracking-widest mb-0.5">
-                    {selectedContent[localizationKeys.price]}
-                  </p>
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <p className="text-[7px] sm:text-[8px] text-gray-400 font-bold uppercase tracking-widest leading-none">
+                      {selectedContent[localizationKeys.price]}
+                    </p>
+                    {priceType === "NEGOTIABLE" && (
+                      <span className="text-[7px] sm:text-[8px] text-green-600 dark:text-green-400 font-extrabold uppercase tracking-widest leading-none flex items-center gap-0.5">
+                        <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse"></span>
+                        {selectedContent[localizationKeys.negotiable]}
+                      </span>
+                    )}
+                    {priceType === "FIXED" && (
+                      <span className="text-[7px] sm:text-[8px] text-blue-600 dark:text-blue-400 font-extrabold uppercase tracking-widest leading-none flex items-center gap-0.5">
+                        <span className="w-1 h-1 bg-blue-500 rounded-full"></span>
+                        {selectedContent[localizationKeys.fixed]}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm sm:text-lg font-bold text-yellow leading-none">
                     {formatCurrency(price)}
                   </p>

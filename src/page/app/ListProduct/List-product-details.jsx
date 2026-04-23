@@ -478,6 +478,7 @@ const ListProductDetails = () => {
         values.subCategory,
       );
       formData.append("product[ProductListingPrice]", values.itemPrice);
+      formData.append("product[priceType]", values.priceType);
       if (values.brand) formData.append("product[brand]", values.brand);
       if (values.usageStatus) {
         formData.append("product[usageStatus]", values.usageStatus);
@@ -741,6 +742,7 @@ const ListProductDetails = () => {
       if (draftValue.usageStatus) formData.append("usageStatus", draftValue.usageStatus);
       if (product_Id) formData.append("productId", product_Id);
       if(draftValue.itemPrice) formData.append("ProductListingPrice", draftValue.itemPrice);
+      if(draftValue.priceType) formData.append("priceType", draftValue.priceType);
       if (state?.auctionId) formData.append("auctionId", state.auctionId);
 
       formData.append("isListedProduct", "true");
@@ -805,6 +807,7 @@ const ListProductDetails = () => {
       dispatch(
         listingProductDetails({
           ...values,
+          priceType: values.priceType,
           images: imgtest.map((img) => ({
             file: img.file,
             imageLink: img.imageLink,
@@ -954,6 +957,7 @@ const ListProductDetails = () => {
                   entertainment: safeParseArray(listedProductVal?.entertainment || reduxValues?.entertainment),
                   comfort: safeParseArray(listedProductVal?.comfort || reduxValues?.comfort),
                   exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures || reduxValues?.exteriorFeatures),
+                  priceType: listedProductVal?.priceType || reduxValues?.priceType || "FIXED",
                 }}
                 onSubmit={(isEditing && auctionState !== "DRAFTED") ? handleUpdate : handelProductDetailsdata}
                 validationSchema={ProductDetailsSchema}
@@ -1297,15 +1301,44 @@ const ListProductDetails = () => {
                             {selectedContent[localizationKeys.Price]}
                           </h2>
                         </div>
-                        <div className="w-full">
+                        <div className="w-full space-y-2">
+                          <div className="flex items-center justify-between w-full mb-1">
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                              {selectedContent[localizationKeys.price]} {lang === "en" ? "(AED)" : ""}
+                            </label>
+                            <div className="w-[180px] sm:w-[220px]">
+                              <div className="flex  bg-gray-100 dark:bg-[#1A1F2C] p-0.5 rounded-lg gap-0.5 border border-gray-200 dark:border-white/5 h-[32px]">
+                                <button
+                                  type="button"
+                                  onClick={() => formik.setFieldValue("priceType", "FIXED")}
+                                  className={`flex-1 px-2  rounded-md text-[10px] sm:text-xs font-bold transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                                    formik.values.priceType === "FIXED"
+                                      ? "bg-yellow text-primary-dark shadow-sm"
+                                      : "text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5"
+                                  }`}
+                                >
+                                  <div className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full ${formik.values.priceType === "FIXED" ? "bg-primary-dark animate-pulse" : "bg-gray-400"}`} />
+                                  {selectedContent[localizationKeys.fixed]}
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => formik.setFieldValue("priceType", "NEGOTIABLE")}
+                                  className={`flex-1 px-2 rounded-md text-[10px] sm:text-xs font-bold transition-all duration-300 flex items-center justify-center gap-1.5 ${
+                                    formik.values.priceType === "NEGOTIABLE"
+                                      ? "bg-yellow text-primary-dark shadow-sm"
+                                      : "text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5"
+                                  }`}
+                                >
+                                  <div className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full ${formik.values.priceType === "NEGOTIABLE" ? "bg-primary-dark animate-pulse" : "bg-gray-400"}`} />
+                                  {selectedContent[localizationKeys.negotiable]}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                           <FormikInput
                             min={0}
                             type="number"
                             name="itemPrice"
-                            label={
-                              selectedContent[localizationKeys.price] +
-                              (lang === "en" ? " (AED)" : "")
-                            }
                             placeholder="AED 000"
                             onWheel={(e) => e.target.blur()}
                           />

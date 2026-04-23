@@ -195,7 +195,7 @@ const BugReportModal = ({ open, setOpen, onSuccess }) => {
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 <span>{selectedContent[localizationKeys.processing]}</span>
               </div>
-            ) : selectedContent[localizationKeys.dispatchReport]}
+            ) : selectedContent[localizationKeys.Report]}
           </button>
 
           <button
@@ -203,7 +203,7 @@ const BugReportModal = ({ open, setOpen, onSuccess }) => {
             onClick={onCancelHandler}
             disabled={isLoading}
           >
-            {selectedContent[localizationKeys.retreat]}
+            {selectedContent[localizationKeys.cancel]}
           </button>
         </div>
       </div>

@@ -96,6 +96,7 @@ const Favourites = () => {
                   startBidAmount={e?.auction?.startBidAmount}
                   latestBidAmount={e?.auction?.bids?.[0]?.amount}
                   category={e?.auction?.product?.categoryId}
+                  priceType={e?.auction?.product?.priceType}
                 />
               );
             } else if (e?.product) {
@@ -114,6 +115,7 @@ const Favourites = () => {
                   // These might need to be passed if available in the relation
                   city={lang === "en" ? e.product.city?.nameEn : e.product.city?.nameAr}
                   country={lang === "en" ? e.product.country?.nameEn : e.product.country?.nameAr}
+                  priceType={e.product.product?.priceType || e.product.priceType}
                 />
               );
             }
