@@ -446,7 +446,7 @@ const TermAndConditionData = [
             <li className="mt-2 text-sm sm:text-base">
               <span className="font-bold">التعهد بعدم القرصنة:</span>
               يجب عدم استخدام أي برامج اختراق أو قرصنة للدخول إلى الموقع أو
-              التطبيق، والالتزام بالقوانين المتعلقة بتقنية المعلومات، بما في ذلك
+              التطبيق، والالتزام بالقوانين المتعلقة بتنقية المعلومات، بما في ذلك
               المرسوم بقانون اتحادي رقم 5 لسنة 2012 وتعديلاته .
             </li>
             <li className="mt-3 sm:mt-4">
@@ -1114,7 +1114,7 @@ const TermAndConditionData = [
               are subject to the provisions of Federal Decree-Law No. (8) of
               2017 regarding Value Added Tax and its executive regulations, if
               the tax registration conditions apply to the seller.
-              <h3 class="text-md mt-2 font-bold">
+              <h3 className="text-md mt-2 font-bold">
                 Seller's Responsibility for Value Added Tax
               </h3>
               <ul className="mt-2 list-disc list-inside">
@@ -1202,7 +1202,7 @@ const TermAndConditionData = [
               المعاملات التي تتم عبر المنصة تخضع لأحكام مرسوم بقانون اتحادي رقم
               (8) لسنة 2017 بشأن ضريبة القيمة المضافة ولائحته التنفيذية، إذا
               انطبقت شروط التسجيل الضريبي على البائع.
-              <h3 class="text-md mt-2 font-bold">
+              <h3 className="text-md mt-2 font-bold">
                 مسؤولية البائع بشأن ضريبة القيمة المضافة
               </h3>
               <ul className="mt-2 list-disc list-inside">
@@ -1424,10 +1424,73 @@ const TermAndConditionData = [
   },
 ];
 
-const TermsAndConditions = (isFooter) => {
+const TermsAndConditions = ({ isFooter, isPage }) => {
+  const [lang] = useLanguage("");
+  const selectedContent = content[lang];
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
+
+  if (isPage) {
+    return (
+      <div className={`relative min-h-screen bg-gradient-to-b from-white via-gray-50 to-white dark:from-[#0f172a] dark:via-[#1e293b] dark:to-[#0f172a] transition-colors duration-300 pb-20`}>
+        {/* Dynamic Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50">
+          <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-yellow/5 blur-[120px] rounded-full" />
+          <div className="absolute top-[20%] -right-[5%] w-[30%] h-[30%] bg-blue-500/5 blur-[100px] rounded-full" />
+        </div>
+
+        <div className="relative lg:pt-[145px] md:pt-[139px] pt-[125px] mx-auto px-4 max-w-5xl">
+          {/* Header Section */}
+          <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <h1 className="text-4xl md:text-5xl font-bold text-primary-dark dark:text-white mb-4 ltr:font-serifEN rtl:font-serifAR tracking-tight">
+              {selectedContent[localizationKeys.termsAndCondition]}
+            </h1>
+            <div className="h-1.5 w-24 bg-yellow mx-auto rounded-full mb-6" />
+            <p className="text-gray-med dark:text-gray-400 text-sm md:text-base max-w-2xl mx-auto uppercase tracking-widest font-medium ltr:font-serifEN rtl:font-serifAR">
+              {lang === "en" ? "Official Agreement" : "الاتفاقية الرسمية"}
+            </p>
+          </div>
+
+          {/* Content Card with Glassmorphism */}
+          <div className="bg-white/95 dark:bg-[#111827]/90 backdrop-blur-xl border border-gray-100 dark:border-slate-800 rounded-[32px] md:rounded-[48px] p-6 md:p-12 shadow-2xl shadow-black/10 animate-in fade-in zoom-in-95 duration-1000">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
+              <div className="space-y-12 text-primary-dark dark:text-slate-200 leading-relaxed ltr:font-serifEN rtl:font-serifAR">
+                {TermAndConditionData.map((e, index) => (
+                  <div key={index} className="transition-all duration-300 border-b border-gray-100 dark:border-slate-800/50 pb-10 last:border-0 last:pb-0">
+                    {e?.title[lang] && (
+                      <h2 className="text-2xl md:text-3xl font-bold text-primary-dark dark:text-yellow mb-6 ltr:font-serifEN rtl:font-serifAR">
+                        {e?.title[lang]}
+                      </h2>
+                    )}
+                    <div className="text-gray-dark dark:text-slate-300 text-lg md:text-xl font-normal leading-relaxed">
+                      {e?.parag[lang]}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Accept Button/Footer in the page */}
+            <div className="mt-16 pt-12 text-center border-t border-gray-100 dark:border-slate-800/50">
+              <p className="text-gray-med dark:text-gray-500 mb-8 italic">
+                {lang === "en" 
+                  ? "Thank you for using our platform." 
+                  : "نشكركم على استخدام منصتنا."}
+              </p>
+              <button 
+                onClick={() => window.history.back()}
+                className="bg-yellow hover:bg-[#c29f2f] text-primary-dark font-bold py-4 px-12 rounded-full transition-all duration-300 shadow-lg hover:shadow-yellow/20 hover:-translate-y-1 active:scale-95 uppercase tracking-widest text-sm"
+              >
+                {lang === "en" ? "I Understand" : "أنا أفهم"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 pr-0">
@@ -1439,8 +1502,9 @@ const TermsAndConditions = (isFooter) => {
   );
 };
 
+
 const TermsAndConditionsModal = ({ data, isFooter }) => {
-  const Footer = isFooter.isFooter;
+  const Footer = typeof isFooter === 'object' ? isFooter.isFooter : isFooter;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const [lang] = useLanguage("");
@@ -1479,10 +1543,10 @@ const TermsAndConditionsModal = ({ data, isFooter }) => {
     <div className={`mt-4 mx-1 flex justify-start ${isArabic} `}>
       <div className="mt-2 ">
         {Footer ? (
-          <div>
+          <div className="text-gray-med">
             {selectedContent[localizationKeys.allRightsReserved]}
             <span
-              className="text-blue-500 underline cursor-pointer "
+              className="text-blue-500 underline cursor-pointer ml-1 rtl:mr-1"
               onClick={openModal}
             >
               {selectedContent[localizationKeys.termsAndCondition]}

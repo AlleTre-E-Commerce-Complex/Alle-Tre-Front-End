@@ -42,6 +42,7 @@ import ListingProductsLocationDetails from "page/app/ListProduct/List-location-d
 import PrivacyPolicy from "../component/shared/privacy-policy/privacy-policy";
 import MobileBottomNav from "../component/shared/mobile-bottom-nav/mobile-bottom-nav";
 import ChatWidget from "../component/chat-components/ChatWidget";
+import TermsAndConditions from "../component/shared/terms-and-condition/TermsAndCondition";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState("");
@@ -140,6 +141,11 @@ const AppLayouts = () => {
         <div className="min-h-screen flex flex-col pb-16 md:pb-0">
           <div className="flex-grow dark:bg-background">
             <Switch>
+               <Route
+                exact
+                path={routes.app.terms}
+                render={(props) => <TermsAndConditions {...props} isPage={true} />}
+              />
               <Route
                 exact
                 path={routes.app.home}
