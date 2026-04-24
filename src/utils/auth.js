@@ -140,7 +140,9 @@ class Auth {
         !window.location.pathname.includes("details") &&
         !window.location.pathname.includes("/categories/") &&
         !window.location.pathname.includes(routes.app.home) &&
-        !window.location.pathname.includes("/privacy-policy")) {
+        !window.location.pathname.includes("/privacy-policy") &&
+        !window.location.pathname.includes("/terms-and-conditions"))
+         {
         await this.logout();
       }
       return null;
