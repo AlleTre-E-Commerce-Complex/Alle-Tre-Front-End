@@ -275,7 +275,7 @@ const AppLayouts = () => {
             </Switch>
           </div>
           <Footer />
-          <div className="relative z-max">
+          <div className="relative z-[50]">
             {![
               routes.app.profile.profileSettings,
               routes.app.listProduct.default,

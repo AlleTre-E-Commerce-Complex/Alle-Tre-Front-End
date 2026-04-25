@@ -18,7 +18,7 @@ const MobileFilterModal = ({ isOpen, onClose, onClear, title, children }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 z-[100] md:hidden"
+            className="fixed inset-0 bg-black/50 z-[1000] md:hidden"
           />
           
           {/* Bottom Sheet */}
@@ -27,7 +27,7 @@ const MobileFilterModal = ({ isOpen, onClose, onClear, title, children }) => {
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl z-[101] md:hidden max-h-[90vh] flex flex-col shadow-2xl"
+            className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 rounded-t-3xl z-[1001] md:hidden max-h-[90vh] flex flex-col shadow-2xl"
           >
             {/* Modal Header */}
             <div className="p-6 pb-2 flex items-center justify-between">
@@ -50,7 +50,7 @@ const MobileFilterModal = ({ isOpen, onClose, onClear, title, children }) => {
             </div>
 
             {/* Fixed Footer at the bottom */}
-            <div className="p-6 pt-3 pb-8 border-t border-gray-100 dark:border-gray-800 flex gap-4 bg-white dark:bg-gray-900">
+            <div className="p-6 pt-3 pb-24 border-t border-gray-100 dark:border-gray-800 flex gap-4 bg-white dark:bg-gray-900 px-6">
               <button 
                 onClick={() => {
                   onClear?.();
