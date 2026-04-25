@@ -37,7 +37,7 @@ const ProfileLayouts = () => {
       <div className="md:ltr:ml-[250px] md:rtl:mr-[250px] rtl:mr-0 ltr:ml-0 md:px-6">
         <div className="bg-white dark:bg-primary-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800/60 min-h-[calc(100vh-14rem)] mb-8 ">
           {useLocation().pathname === routes.app.profile.profileSettings && (
-            <div className="flex justify-end md:hidden mb-6">
+            <div className="flex justify-end md:hidden pt-4 px-4 pb-0">
               <button
                 onClick={() => setLogoutModalOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-500 border border-red-200 dark:border-red-900/50 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition duration-300"

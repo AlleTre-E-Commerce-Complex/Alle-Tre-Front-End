@@ -205,7 +205,7 @@ const SummaryListedSection = () => {
       const message = encodeURIComponent(
         `Hello, I'm interested in "${listedProductsData?.title}" (Ref: ${productId}) listed on 3arbon.\n\n${window.location.href}`,
       );
-      const whatsappUrl = `https://wa.me/${listedProductsData?.user?.phone}?text=${message}`;
+      const whatsappUrl = `https://wa.me/${mainLocation?.phone || listedProductsData?.user?.phone}?text=${message}`;
       window.open(whatsappUrl, "_blank");
     }
   };
@@ -779,7 +779,7 @@ const SummaryListedSection = () => {
 
       <PhoneNumberModal
         openModal={isModalOpen}
-        phoneNumber={listedProductsData?.user?.phone}
+        phoneNumber={mainLocation?.phone || listedProductsData?.user?.phone}
         setOpen={setIsModalOpen}
       />
 

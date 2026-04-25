@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useEffect, useRef } from "react";
 import SubCategory from "./SubCategory";
 import Swiper from "swiper";
@@ -13,18 +17,18 @@ const SubCategorySlider = ({ SubGatogryOptions }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
   const swiperOptions = {
-    slidesPerView: 3,
-    spaceBetween: 10,
+    slidesPerView: 4.5,
+    spaceBetween: 8,
     navigation: {
       nextEl: ".swiper-custom-next",
       prevEl: ".swiper-custom-prev",
     },
     breakpoints: {
-      480: { slidesPerView: 4, spaceBetween: 15 },
-      640: { slidesPerView: 5, spaceBetween: 20 },
-      768: { slidesPerView: 6, spaceBetween: 30 },
-      1024: { slidesPerView: 7, spaceBetween: 40 },
-      1280: { slidesPerView: 8, spaceBetween: 50 },
+      480: { slidesPerView: 5, spaceBetween: 12 },
+      640: { slidesPerView: 6, spaceBetween: 15 },
+      768: { slidesPerView: 7, spaceBetween: 20 },
+      1024: { slidesPerView: 8, spaceBetween: 30 },
+      1280: { slidesPerView: 9, spaceBetween: 40 },
     },
   };
 

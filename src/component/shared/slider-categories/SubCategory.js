@@ -32,15 +32,15 @@ const SubCategory = ({ img, title, id, view, className = "" }) => {
   return (
     <div
       onClick={handleClick}
-      className={`group flex flex-col items-center justify-start gap-2 md:gap-3 h-full cursor-pointer w-full px-2 sm:px-4 ${className}`}
+      className={`group flex flex-col items-center justify-start gap-1.5 md:gap-3 cursor-pointer w-full px-1 md:px-4 ${className}`}
     >
-      <div className="w-full aspect-square flex items-center justify-center p-2 sm:p-3">
+      <div className="w-full max-w-[70px] sm:max-w-[85px] md:max-w-none aspect-square flex items-center justify-center p-1 md:p-3">
         <div
           className={`relative flex items-center justify-center rounded-full transition-all duration-300 w-full h-full
             ${
               isActive
-                ? "bg-[#1b2331] dark:bg-[#1b2331] ring-2 md:ring-[3px] ring-yellow ring-offset-[#ffffff] dark:ring-offset-[#0b101a] ring-offset-[3px] md:ring-offset-[4px] shadow-sm"
-                : "bg-primary dark:bg-[#1b2331] hover:bg-[#2a3648] dark:hover:bg-[#2a3648] ring-2 ring-[#d4af37]/40"
+                ? "bg-[#1b2331] dark:bg-[#1b2331] ring-2 md:ring-[3px] ring-yellow ring-offset-[#ffffff] dark:ring-offset-[#0b101a] ring-offset-[2px] md:ring-offset-[4px] shadow-sm"
+                : "bg-primary dark:bg-[#1b2331] hover:bg-[#2a3648] dark:hover:bg-[#2a3648] ring-1 md:ring-2 ring-[#d4af37]/40"
             }
           `}
         >
@@ -48,8 +48,8 @@ const SubCategory = ({ img, title, id, view, className = "" }) => {
             className={`object-contain transition-transform duration-300
               ${
                 isActive
-                  ? "w-[40%] h-[40%] scale-110 opacity-100"
-                  : "w-[35%] h-[35%] scale-100 opacity-60 dark:opacity-70 group-hover:scale-110 group-hover:opacity-80 dark:group-hover:opacity-100"
+                  ? "w-[45%] h-[45%] scale-110 opacity-100"
+                  : "w-[40%] h-[40%] scale-100 opacity-60 dark:opacity-70 group-hover:scale-110 group-hover:opacity-80 dark:group-hover:opacity-100"
               }
             `}
             src={img || addImage}
@@ -64,11 +64,11 @@ const SubCategory = ({ img, title, id, view, className = "" }) => {
         </div>
       </div>
       <p
-        className={`text-center font-bold tracking-[0.15em] uppercase transition-colors duration-300 leading-tight mt-1
+        className={`text-center font-bold tracking-[0.05em] md:tracking-[0.15em] uppercase transition-colors duration-300 leading-tight mt-0.5 md:mt-1
           ${
             isActive
-              ? "text-[#1e2738] dark:text-primary-light text-[10px] md:text-xs"
-              : "text-[#6b7280] dark:text-primary-veryLight text-[10px] md:text-xs"
+              ? "text-[#1e2738] dark:text-primary-light text-[9px] md:text-xs"
+              : "text-[#6b7280] dark:text-primary-veryLight text-[9px] md:text-xs"
           }
         `}
       >
