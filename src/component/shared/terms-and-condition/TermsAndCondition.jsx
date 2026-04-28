@@ -4,7 +4,7 @@ import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
 
-const TermAndConditionData = [
+export const TermAndConditionData = [
   {
     title: { en: "Terms and Conditions:", ar: "الشروط و الأحكام :" },
     parag: {

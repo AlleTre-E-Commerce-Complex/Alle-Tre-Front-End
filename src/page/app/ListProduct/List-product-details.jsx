@@ -7,7 +7,7 @@ import { CheckboxRadioProductDetails } from "../../../component/create-auction-c
 import { CreateAuctionBreadcrumb } from "../../../component/shared/bread-crumb/Breadcrumb";
 // import AddImgMedia from "../../../component/create-auction-components/add-img-media";
 import Stepper from "../../../component/shared/stepper/stepper-app";
-import { Dimmer, Form } from "semantic-ui-react";
+import { Dimmer, Form, Popup } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 
 import { ScrollToFieldError } from "../../../component/shared/formik/formik-scroll-to-field-error";
@@ -479,6 +479,10 @@ const ListProductDetails = () => {
       );
       formData.append("product[ProductListingPrice]", values.itemPrice);
       formData.append("product[priceType]", values.priceType);
+      formData.append("product[isArbon]", values.isArbon);
+      if (values.isArbon && values.arbonAmount) {
+        formData.append("product[arbonAmount]", values.arbonAmount);
+      }
       if (values.brand) formData.append("product[brand]", values.brand);
       if (values.usageStatus) {
         formData.append("product[usageStatus]", values.usageStatus);
@@ -700,6 +704,12 @@ const ListProductDetails = () => {
       ),
     }),
     usageStatus: Yup.string().required(selectedContent[localizationKeys.required]),
+    isArbon: Yup.boolean(),
+    arbonAmount: Yup.number().when("isArbon", {
+      is: true,
+      then: Yup.number().required(selectedContent[localizationKeys.required]).min(1, selectedContent[localizationKeys.AmountMustBeMoreThan1AED]),
+      otherwise: Yup.number().notRequired(),
+    }),
   });
 
   const DraftSaver = ({ values, setDraftValue }) => {
@@ -743,6 +753,8 @@ const ListProductDetails = () => {
       if (product_Id) formData.append("productId", product_Id);
       if(draftValue.itemPrice) formData.append("ProductListingPrice", draftValue.itemPrice);
       if(draftValue.priceType) formData.append("priceType", draftValue.priceType);
+      formData.append("isArbon", draftValue.isArbon ? "true" : "false");
+      if (draftValue.isArbon && draftValue.arbonAmount) formData.append("arbonAmount", draftValue.arbonAmount);
       if (state?.auctionId) formData.append("auctionId", state.auctionId);
 
       formData.append("isListedProduct", "true");
@@ -958,6 +970,8 @@ const ListProductDetails = () => {
                   comfort: safeParseArray(listedProductVal?.comfort || reduxValues?.comfort),
                   exteriorFeatures: safeParseArray(listedProductVal?.exteriorFeatures || reduxValues?.exteriorFeatures),
                   priceType: listedProductVal?.priceType || reduxValues?.priceType || "FIXED",
+                  isArbon: listedProductVal?.isArbon || reduxValues?.isArbon || false,
+                  arbonAmount: listedProductVal?.arbonAmount || reduxValues?.arbonAmount || "",
                 }}
                 onSubmit={(isEditing && auctionState !== "DRAFTED") ? handleUpdate : handelProductDetailsdata}
                 validationSchema={ProductDetailsSchema}
@@ -1342,6 +1356,71 @@ const ListProductDetails = () => {
                             placeholder="AED 000"
                             onWheel={(e) => e.target.blur()}
                           />
+                          
+                          {/* Arbon Section */}
+                          <div className="pt-4 border-t border-gray-100 dark:border-white/5 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-1.5">
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                  {selectedContent[localizationKeys.setArbon]}
+                                </label>
+                                <Popup
+                                  trigger={
+                                    <div className="cursor-help text-gray-400 hover:text-yellow transition-colors">
+                                      <IoInformationCircleOutline className="w-4 h-4" />
+                                    </div>
+                                  }
+                                  content={selectedContent[localizationKeys.arbonDescription]}
+                                  position="top left"
+                                  flowing
+                                  wide
+                                  inverted
+                                  size="tiny"
+                                />
+                              </div>
+                              <div className="w-[120px]">
+                                <div className="flex bg-gray-100 dark:bg-[#1A1F2C] p-0.5 rounded-lg gap-0.5 border border-gray-200 dark:border-white/5 h-[28px]">
+                                  <button
+                                    type="button"
+                                    onClick={() => formik.setFieldValue("isArbon", true)}
+                                    className={`flex-1 rounded-md text-[10px] font-bold transition-all duration-300 flex items-center justify-center ${
+                                      formik.values.isArbon
+                                        ? "bg-yellow text-primary-dark shadow-sm"
+                                        : "text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5"
+                                    }`}
+                                  >
+                                    {selectedContent[localizationKeys.yes]}
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      formik.setFieldValue("isArbon", false);
+                                      formik.setFieldValue("arbonAmount", "");
+                                    }}
+                                    className={`flex-1 rounded-md text-[10px] font-bold transition-all duration-300 flex items-center justify-center ${
+                                      !formik.values.isArbon
+                                        ? "bg-yellow text-primary-dark shadow-sm"
+                                        : "text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/5"
+                                    }`}
+                                  >
+                                    {selectedContent[localizationKeys.no]}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            {formik.values.isArbon && (
+                              <div className="animate-in fade-in slide-in-from-top-1 duration-300">
+                                <FormikInput
+                                  min={0}
+                                  type="number"
+                                  name="arbonAmount"
+                                  placeholder={selectedContent[localizationKeys.arbonAmount]}
+                                  onWheel={(e) => e.target.blur()}
+                                />
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
 
