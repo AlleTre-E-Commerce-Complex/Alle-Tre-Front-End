@@ -14,10 +14,8 @@ import { initGA, logPageView } from "./utils/analytics";
 // import InstallPromptButton from "component/shared/installPropt/InstallPromptButton";
 import usePushNotifications from "hooks/usePushNotifications";
 
-
-
 function App() {
-  usePushNotifications()
+  usePushNotifications();
   const location = useLocation();
 
   useEffect(() => {
@@ -26,23 +24,20 @@ function App() {
       logPageView();
     }
   }, []);
-  
+
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
       logPageView();
     }
   }, [location.pathname]);
-  
+
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/firebase-messaging-sw.js')
-        .then(() => {
-          import('./config/firebase-messaging');
-        });
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/firebase-messaging-sw.js").then(() => {
+        import("./config/firebase-messaging");
+      });
     }
   }, []);
-  
 
   //   useEffect(() => {
   //     const searchParams = new URLSearchParams(location.search);
@@ -59,8 +54,16 @@ function App() {
     <HelmetProvider>
       <div className="App">
         <Switch>
-          <Route exact path={routes.auth.forgetpass.restpass} component={CredentialsuUpdateLayout} />
-          <Route exact path={routes.auth.forgetpass.default} component={CredentialsuUpdateLayout} />
+          <Route
+            exact
+            path={routes.auth.forgetpass.restpass}
+            component={CredentialsuUpdateLayout}
+          />
+          <Route
+            exact
+            path={routes.auth.forgetpass.default}
+            component={CredentialsuUpdateLayout}
+          />
           <Route path={routes.auth.default} component={AuthLayouts} />
           <Redirect exact from="/" to={routes.app.home} />
           <Route path={routes.app.default} component={AppLayouts} />

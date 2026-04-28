@@ -19,6 +19,7 @@ import localizationKeys from "../../../localization/localization-keys";
 import LoadingProgress from "../../../component/shared/lotties-file/LoadingProgress";
 import { BsThreeDots } from "react-icons/bs";
 import ConfirmationModal from "../../../component/shared/delete-modal/delete-modal";
+import TermsAndConditionsModal from "../../../component/shared/terms-and-condition/TermsAndConditionsModal";
 
 const ListingProductsLocationDetails = () => {
   const [lang] = useLanguage("");
@@ -39,6 +40,7 @@ const ListingProductsLocationDetails = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [totalUploadingFiles, setTotalUploadingFiles] = useState(0);
   const [currentUploadingFile, setCurrentUploadingFile] = useState(0);
+  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -64,12 +66,9 @@ const ListingProductsLocationDetails = () => {
   const {
     run: runListNewProduct,
     isLoading: isLoadingListNewProduct,
-    // error: errorCreatAuction,
-    // error: errorCreatAuction,
-    // isError: isErrorCreatAuction,
   } = useAxios([]);
 
-  const listProduct = () => {
+  const listProduct = (isDraft = false) => {
     if (locationId) {
       const formData = new FormData();
       formData.append("product[title]", productDetailsInt.itemName);
@@ -144,6 +143,8 @@ const ListingProductsLocationDetails = () => {
         "entertainment",
         "comfort",
         "exteriorFeatures",
+        "isArbon",
+        "arbonAmount",
       ];
       if (productDetailsInt.itemDescription) {
         formData.append(
@@ -196,7 +197,7 @@ const ListingProductsLocationDetails = () => {
 
       runListNewProduct(
         authAxios
-          .post(api.app.productListing.listNewProduct, metadataOnlyFormData)
+          .post(isDraft ? api.app.auctions.setAssdraft : api.app.productListing.listNewProduct, metadataOnlyFormData)
           .then(async (res) => {
             const productId = res?.data?.data?.productId || res?.data?.data?.id;
             
@@ -225,10 +226,19 @@ const ListingProductsLocationDetails = () => {
             }
 
             toast.success(
-              selectedContent[localizationKeys.ProductListedSuccessfully]
+              isDraft 
+                ? selectedContent[localizationKeys.draftSavedSuccessfully]
+                : selectedContent[localizationKeys.ProductListedSuccessfully]
             );
-            history.push(routes.app.listProduct.details(productId));
+            
+            if (isDraft) {
+               history.push(routes.app.profile.myProducts.drafts);
+            } else {
+               history.push(routes.app.listProduct.details(productId));
+            }
+            
             dispatch(listingProductDetails({}));
+            setIsTermsModalOpen(false);
           })
           .catch((err) => {
             console.error("Listing error:", err);
@@ -337,8 +347,7 @@ const ListingProductsLocationDetails = () => {
             </button>
             <button
               className="bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark sm:w-[220px] w-full h-[48px] rounded-lg dark:text-black text-white font-semibold text-base rtl:font-serifAR ltr:font-serifEN transition-colors flex items-center justify-center gap-2"
-              // onClick={creatAuction}
-              onClick={listProduct}
+              onClick={() => setIsTermsModalOpen(true)}
               disabled={isLoadingListNewProduct}
             >
               {selectedContent[localizationKeys.listItem]}
@@ -350,6 +359,13 @@ const ListingProductsLocationDetails = () => {
           setOpen={setOpen}
           TextButton={selectedContent[localizationKeys.add]}
           onReload={onReload}
+        />
+        <TermsAndConditionsModal 
+          open={isTermsModalOpen}
+          setOpen={setIsTermsModalOpen}
+          onList={() => listProduct(false)}
+          onDraft={() => listProduct(true)}
+          isLoading={isLoadingListNewProduct}
         />
       </div>
     </>
