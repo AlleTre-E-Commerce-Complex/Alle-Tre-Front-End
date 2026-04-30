@@ -17,14 +17,19 @@ const useGetSubGatogry = (categoryId) => {
           const SubGatogryOptions = data.data;
           const options = [];
 
-          SubGatogryOptions.forEach((d) =>
+          SubGatogryOptions.forEach((d) => {
+            let text = lang === "en" ? d?.nameEn : d?.nameAr;
+            if (lang === "en") {
+              if (text === "For Sale") text = "Sale";
+              if (text === "For Rent") text = "Rent";
+            }
             options.push({
-              text: lang === "en" ? d?.nameEn : d?.nameAr,
+              text: text,
               key: d?.id,
               value: d?.id,
               imageLink: d?.imageLink,
-            })
-          );
+            });
+          });
           setSubGatogryOptions(options);
         }
       );

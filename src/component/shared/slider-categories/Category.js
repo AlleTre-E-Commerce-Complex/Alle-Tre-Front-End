@@ -10,6 +10,8 @@ const Category = ({
   img,
   title,
   id,
+  subCategoryId,
+  usageStatus,
   view,
   className,
   isSubCategory,
@@ -23,8 +25,10 @@ const Category = ({
 
   const handleClick = () => {
     const queryParams = new URLSearchParams(search);
+    const subCatQuery = subCategoryId ? `&subCategory[]=${subCategoryId}` : "";
+    const usageStatusQuery = usageStatus ? `&usageStatus=${usageStatus}` : "";
     history.push(
-      `${routes.app.categories(title, id)}?categories[]=${id}&${queryParams}`,
+      `${routes.app.categories(title, id)}?categories[]=${id}${subCatQuery}${usageStatusQuery}&${queryParams}`,
     );
   };
 
