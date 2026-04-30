@@ -164,8 +164,18 @@ const FilterSections = ({
           <MultiButtonFilter
             name="usageStatus"
             values={[
-              { name: selectedContent[localizationKeys.new], value: "NEW" },
-              { name: selectedContent[localizationKeys.used], value: "USED" },
+              {
+                name: isProperties
+                  ? selectedContent[localizationKeys.sell]
+                  : selectedContent[localizationKeys.new],
+                value: "NEW",
+              },
+              {
+                name: isProperties
+                  ? selectedContent[localizationKeys.rent]
+                  : selectedContent[localizationKeys.used],
+                value: "USED",
+              },
             ]}
             isMultiSelect={false}
             myRef={myRef}
