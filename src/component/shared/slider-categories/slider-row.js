@@ -8,7 +8,7 @@ import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 // import localizationKeys from "../../../localization/localization-keys";
 
 const SliderRow = ({ categoryCounts = {} }) => {
-  const { GatogryOptions, loadingGatogry } = useGetGatogry();
+  const { GatogryOptions, loadingGatogry } = useGetGatogry(true);
   // const [lang] = useLanguage();
   // const selectedContent = content[lang]
   return (
@@ -36,9 +36,11 @@ const SliderRow = ({ categoryCounts = {} }) => {
                   img={e?.sliderLink}
                   title={e?.text}
                   id={e?.value}
+                  subCategoryId={e?.subCategoryId}
+                  usageStatus={e?.usageStatus}
                   className=""
-                  auctionCount={categoryCounts[e?.value]?.auctions || 0}
-                  listingCount={categoryCounts[e?.value]?.listings || 0}
+                  auctionCount={categoryCounts[e?.key]?.auctions || 0}
+                  listingCount={categoryCounts[e?.key]?.listings || 0}
                 />
               </div>
             ))}

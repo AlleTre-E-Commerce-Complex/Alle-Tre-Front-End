@@ -64,21 +64,30 @@ const Home = ({
   const getCategoryCounts = () => {
     const counts = {};
 
-    (mainAuctions || []).forEach((auction) => {
-      const categoryId = auction?.product?.categoryId;
-      if (categoryId) {
-        counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
-        counts[categoryId].auctions++;
-      }
-    });
+    const processItem = (item, type) => {
+      const categoryId = item?.product?.categoryId;
+      if (!categoryId) return;
 
-    (listedProducts || []).forEach((listing) => {
-      const categoryId = listing?.product?.categoryId;
-      if (categoryId) {
-        counts[categoryId] = counts[categoryId] || { auctions: 0, listings: 0 };
-        counts[categoryId].listings++;
+      let key = categoryId;
+      // Split logic for Cars (4) and Properties (3)
+      if (categoryId === 4) {
+        const subId = item?.product?.subCategoryId;
+        if (subId === 14) key = "4-sale";
+        else if (subId === 15) key = "4-rent";
+      } else if (categoryId === 3) {
+        const usage = item?.product?.usageStatus;
+        if (usage === "NEW") key = "3-sale";
+        else if (usage === "USED") key = "3-rent";
       }
-    });
+
+      counts[key] = counts[key] || { auctions: 0, listings: 0 };
+      counts[key][type]++;
+    };
+
+    (mainAuctions || []).forEach((auction) => processItem(auction, "auctions"));
+    (listedProducts || []).forEach((listing) =>
+      processItem(listing, "listings")
+    );
 
     return counts;
   };

@@ -69,7 +69,7 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   }, [selectedType]);
 
   const [open, setOpen] = useState(false);
-  const { GatogryOptions, loadingGatogry } = useGetGatogry();
+  const { GatogryOptions, loadingGatogry } = useGetGatogry(true);
   const { SubGatogryOptions, loadingSubGatogry } = useGetSubGatogry(categoryId);
 
   const [mainAuctions, setMainAuctions] = useState();
@@ -232,12 +232,30 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
   const [selectedCategor, SetselectedCategor] = useState([]);
   useEffect(() => {
     if (categoryId) {
-      const selectedCategory = GatogryOptions.find(
-        (category) => category.value === parseInt(categoryId),
+      const parsed = queryString.parse(search, { arrayFormat: "bracket" });
+      const activeSubId = Array.isArray(parsed.subCategory) 
+        ? parsed.subCategory[0] 
+        : parsed.subCategory;
+        
+      const activeUsageStatus = parsed.usageStatus;
+
+      let selectedCategoryEntry = GatogryOptions.find(
+        (category) => 
+          category.value === parseInt(categoryId) && 
+          (!activeSubId || category.subCategoryId === parseInt(activeSubId)) &&
+          (!activeUsageStatus || !category.usageStatus || category.usageStatus === activeUsageStatus)
       );
-      if (selectedCategory) SetselectedCategor(selectedCategory);
+
+      if (selectedCategoryEntry) {
+        SetselectedCategor(selectedCategoryEntry);
+      } else {
+        const fallbackCategory = GatogryOptions.find(
+          (category) => category.value === parseInt(categoryId)
+        );
+        if (fallbackCategory) SetselectedCategor(fallbackCategory);
+      }
     }
-  }, [GatogryOptions, categoryId]);
+  }, [GatogryOptions, categoryId, search, lang]);
 
   useEffect(() => {
     // window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
