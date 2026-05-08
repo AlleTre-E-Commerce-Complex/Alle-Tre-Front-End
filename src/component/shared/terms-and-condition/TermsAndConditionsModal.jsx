@@ -32,7 +32,7 @@ const TermsAndConditionsModal = ({ open, setOpen, onList, onDraft, isLoading }) 
           </h1>
           <button 
             onClick={handleClose}
-            className="p-2 hover:bg-white/10 rounded-full transition-colors"
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
           >
             <IoClose size={24} />
           </button>
@@ -70,39 +70,40 @@ const TermsAndConditionsModal = ({ open, setOpen, onList, onDraft, isLoading }) 
           </div>
         </div>
 
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-4 px-8 pb-10 pt-4">
+        <div className="flex flex-col sm:flex-row gap-5 px-8 pb-14 pt-4">
           <button
-            className={`flex-1 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-primary dark:text-white border-2 border-gray-100 dark:border-white/10 h-14 rounded-2xl font-black uppercase tracking-widest transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 ${isLoading ? 'opacity-40 cursor-not-allowed' : ''}`}
+            className={`flex-1 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-primary dark:text-white border-2 border-gray-100 dark:border-white/10 h-[90px] rounded-lg font-black uppercase tracking-[0.3em] text-[14px] transition-all duration-300 active:scale-95 flex items-center justify-center gap-4 ${isLoading ? 'opacity-40 cursor-not-allowed' : ''}`}
             onClick={onDraft}
             disabled={isLoading}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-8 h-8 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
             </svg>
-            {selectedContent[localizationKeys.saveAsDraft]}
+            <span>{selectedContent[localizationKeys.saveAsDraft]}</span>
           </button>
+          
           <button
-            className={`flex-[2] bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark text-white dark:text-black h-14 rounded-2xl font-black uppercase tracking-widest transition-all duration-300 shadow-xl shadow-primary/20 dark:shadow-yellow/10 active:scale-95 flex items-center justify-center gap-3 ${(!agreed || isLoading) ? 'opacity-40 cursor-not-allowed' : ''}`}
+            className={`flex-1 bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark text-white dark:text-black h-[90px] rounded-lg font-black uppercase tracking-[0.3em] text-[14px] transition-all duration-300 shadow-2xl shadow-primary/50 dark:shadow-yellow/30 active:scale-95 flex items-center justify-center gap-5 relative overflow-hidden group ${(!agreed || isLoading) ? 'opacity-40 cursor-not-allowed' : ''}`}
             onClick={onList}
             disabled={!agreed || isLoading}
           >
+            {/* Mega Premium Shine Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+            
             {isLoading ? (
-              <div className="flex items-center gap-2">
-                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                <span>{selectedContent[localizationKeys.processing]}</span>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 border-4 border-current border-t-transparent rounded-lg animate-spin" />
+                <span className="text-xl font-bold">{selectedContent[localizationKeys.processing]}</span>
               </div>
             ) : (
               <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                 </svg>
-                {selectedContent[localizationKeys.listItem]}
+                <span>{selectedContent[localizationKeys.listItem]}</span>
               </>
             )}
           </button>
-
-          
         </div>
       </div>
 

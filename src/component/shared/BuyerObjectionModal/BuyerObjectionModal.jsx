@@ -130,6 +130,16 @@ const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
               ))}
             </div>
           </div>
+          <div className="px-3">
+             <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex gap-3">
+              <svg className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <p className="text-[10px] text-amber-800 leading-relaxed font-medium">
+                {selectedContent[localizationKeys.objectionWarning]}
+              </p>
+            </div>
+          </div>
           <div className="gap-3 flex justify-center">
             <button
               className="bg-primary hover:bg-primary-light border border-primary-light text-white py-2 px-3 rounded-md my-2"

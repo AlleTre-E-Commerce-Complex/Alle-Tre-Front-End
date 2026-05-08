@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
 import localizationKeys from "../../localization/localization-keys";
-import { IoStar, IoLocationSharp, IoCall } from "react-icons/io5";
+import { IoStar, IoLocationSharp, IoCall, IoShieldCheckmarkOutline, IoCheckmarkSharp } from "react-icons/io5";
 import { FaUser, FaWhatsapp } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
@@ -33,6 +33,12 @@ import { toast } from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 import ConfirmationModal from "component/shared/delete-modal/delete-modal";
 import CommentSection from "./comments/CommentSection";
+import threeArbonLogo from "../../assets/logo/3arbon-main.svg";
+import { loadStripe } from "@stripe/stripe-js";
+import ArbonContractModal from "component/shared/modals/ArbonContractModal";
+
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 const SummaryListedSection = () => {
   const [listedProductsData, setListedProductsData] = useState({});
@@ -157,23 +163,31 @@ const SummaryListedSection = () => {
   };
 
   useEffect(() => {
+    let isMounted = true;
     if (productId) {
       authAxios
         .get(api.app.comments.get(productId))
         .then((res) => {
-          if (res.data.success) {
+          if (isMounted && res.data.success) {
             setCommentCount(res.data.data.length);
           }
         })
-        .catch((err) => console.error("Error fetching initial comment count:", err));
+        .catch((err) => {
+          if (isMounted) console.error("Error fetching initial comment count:", err);
+        });
     }
+    return () => {
+      isMounted = false;
+    };
   }, [productId]);
 
   useEffect(() => {
+    let isMounted = true;
     run(
       authAxios
         .get(`${api.app.productListing.listedProduct(productId)}`)
         .then((res) => {
+          if (!isMounted) return;
           const createdAt = res?.data?.data?.createdAt;
           setListedProductsData({
             ...res?.data?.data?.product,
@@ -194,9 +208,12 @@ const SummaryListedSection = () => {
           }
         })
         .catch((error) => {
-          console.log("summery listed section error:", error);
+          if (isMounted) console.log("summery listed section error:", error);
         }),
     );
+    return () => {
+      isMounted = false;
+    };
   }, [run, productId]);
 
 
@@ -312,6 +329,85 @@ const SummaryListedSection = () => {
 
   const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
+  const [isArbonModalOpen, setIsArbonModalOpen] = useState(false);
+
+  const handleArbonPayment = async () => {
+    if (!user) {
+      dispatch(Open());
+      return;
+    }
+
+    try {
+      if (!listedProductsData?.arbonAmount) {
+        toast.error("Invalid Arbon amount");
+        return;
+      }
+
+      const response = await authAxios.post(api.app.payments.payArbon, {
+        productId: Number(productId),
+        amount: Number(listedProductsData?.arbonAmount),
+        currency: "AED"
+      });
+
+      if (response.data.success && response.data.data.clientSecret) {
+        setIsArbonModalOpen(false);
+        history.push(routes.app.listProduct.payArbon(productId), {
+          clientSecret: response.data.data.clientSecret,
+          productId: productId,
+          amount: listedProductsData?.arbonAmount,
+          isArbon: true
+        });
+      } else {
+        setIsArbonModalOpen(false);
+        toast.error("Failed to initiate payment session");
+      }
+    } catch (error) {
+      console.error("Arbon payment error:", error);
+      const responseData = error?.response?.data;
+      let errorMessage = responseData?.message || error?.message || "Failed to initiate payment";
+      
+      if (typeof errorMessage === 'object' && errorMessage !== null) {
+        errorMessage = errorMessage[lang] || errorMessage.en || errorMessage.message || JSON.stringify(errorMessage);
+      }
+      
+      toast.error(String(errorMessage));
+      setIsArbonModalOpen(false);
+    }
+  };
+
+  const handleReleaseArbon = async () => {
+    try {
+      const response = await authAxios.post(api.app.payments.releaseArbon, {
+        productId: Number(productId)
+      });
+      if (response.data.success) {
+        toast.success("Deposit released successfully");
+        // Reload data
+        run(authAxios.get(`${api.app.productListing.listedProduct(productId)}`)).then((res) => {
+          setListedProductsData({
+            ...res?.data?.data?.product,
+            isSaved: res?.data?.data?.isSaved,
+            status: res?.data?.data?.status,
+          });
+        });
+      }
+    } catch (error) {
+      console.error("Release arbon error:", error);
+      toast.error(error.response?.data?.message?.[lang] || "Failed to release deposit");
+    }
+  };
+
+  const isArbonPaid = listedProductsData?.arbonStatus === "PAID";
+  const isBuyer = Number(user?.id) === Number(listedProductsData?.arbonBuyerId);
+  const isSeller = Number(user?.id) === Number(listedProductsData?.userId);
+
+  console.log('ARBON DEBUG:', {
+    currentUserId: user?.id,
+    productUserId: listedProductsData?.userId,
+    isSeller,
+    isArbonPaid,
+    arbonStatus: listedProductsData?.arbonStatus
+  });
 
   return (
     <div className="bg-white dark:bg-primary min-h-screen pt-32 pb-20 transition-colors duration-300">
@@ -359,6 +455,7 @@ const SummaryListedSection = () => {
                   isListProduct={true}
                   title={listedProductsData?.title}
                   status={listedProductsData?.status}
+                  isArbonPaid={isArbonPaid}
                 />
               </div>
             </div>
@@ -576,6 +673,16 @@ const SummaryListedSection = () => {
                     <Icon name="comments" className="group-hover:scale-110 transition-transform text-white dark:text-[#d4af37]" />
                     <span>{selectedContent[localizationKeys.comments]} ({commentCount})</span>
                   </button>
+
+                  {isArbonPaid && isSeller && (
+                    <button
+                      onClick={handleReleaseArbon}
+                      className="w-full bg-green-600 hover:bg-green-700 text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg active:scale-[0.98] group uppercase tracking-widest text-[10px]"
+                    >
+                      <MdPublishedWithChanges size={18} />
+                      <span>{lang === 'ar' ? 'إرجاع العربون' : 'RELEASE DEPOSIT'}</span>
+                    </button>
+                  )}
                 </div>
                 ) : listedProductsData?.status === "OUT_OF_STOCK" ? (
                   <div className="bg-red-900/20 border border-red-100 dark:border-red-800/50 h-16 rounded-2xl flex items-center justify-center gap-3 w-full transition-all group overflow-hidden relative">
@@ -586,14 +693,54 @@ const SummaryListedSection = () => {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="flex gap-3">
+                    <div className="flex gap-2">
+                      {listedProductsData?.isArbon && (
+                        <button
+                          disabled={isArbonPaid}
+                          onClick={() => {
+                            if (isArbonPaid) return;
+                            setIsArbonModalOpen(true);
+                          }}
+                          className={`flex-[2] h-16 rounded-2xl flex flex-col lg:flex-row items-center justify-center gap-1 lg:gap-0 transition-all duration-500 shadow-xl border border-white/10 active:scale-[0.98] group overflow-hidden px-4 relative ${
+                            isArbonPaid 
+                            ? "bg-red-900/20 border-red-500/30 cursor-default" 
+                            : "bg-[#1e2738] hover:bg-[#263146]"
+                          }`}
+                        >
+                          {/* Premium Shine Effect */}
+                          {!isArbonPaid && <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>}
+                          
+                          <div className="flex items-center gap-3">
+                            {isArbonPaid && (
+                              <div className="w-6 h-6 rounded-full bg-red-500/20 flex items-center justify-center">
+                                <IoCheckmarkSharp className="text-red-500 text-sm" />
+                              </div>
+                            )}
+                            <span className={`font-black text-xs lg:text-sm uppercase tracking-[0.15em] relative top-[1px] lg:top-0 ${isArbonPaid ? "text-red-500" : "text-white"}`}>
+                              {isArbonPaid ? (lang === 'ar' ? 'تم الدفع' : 'ARBON PAID') : selectedContent[localizationKeys.pay]}
+                            </span>
+                            {!isArbonPaid && <img src={threeArbonLogo} alt="3arbon" className="h-5 lg:h-7 w-auto transition-transform group-hover:scale-105" />}
+                          </div>  
+
+                          {!isArbonPaid && (
+                            <>
+                              <div className="hidden lg:block w-px h-6 bg-white/10 mx-4"></div>
+                              <span className="text-white font-black text-xs lg:text-lg tracking-tight">
+                                {formatCurrency(listedProductsData?.arbonAmount)}
+                              </span>
+                            </>
+                          )}
+                        </button>
+                      )}
+                      
                       <button
                         onClick={handleWhatsApp}
-                        className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-green-500/20 active:scale-[0.98] group uppercase tracking-widest text-sm"
+                        className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-black h-16 rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300 shadow-lg shadow-green-500/20 active:scale-[0.98] group uppercase tracking-widest text-[10px]"
                       >
-                        <FaWhatsapp className="text-2xl" />
+                        <FaWhatsapp className="text-xl" />
                         <span>{selectedContent[localizationKeys.chat]}</span>
                       </button>
+
                       <button
                         onClick={handleCall}
                         className="w-16 h-16 bg-[#1e2738] hover:bg-[#2d3a52] text-white font-black rounded-2xl flex items-center justify-center transition-all duration-300 active:scale-[0.98] shrink-0 shadow-lg border border-white/5 group"
@@ -826,6 +973,16 @@ const SummaryListedSection = () => {
           />
         </div>
       </Modal>
+
+      <ArbonContractModal
+        open={isArbonModalOpen}
+        onClose={() => setIsArbonModalOpen(false)}
+        onConfirm={handleArbonPayment}
+        buyer={user}
+        seller={listedProductsData?.user}
+        product={listedProductsData}
+        arbonAmount={listedProductsData?.arbonAmount}
+      />
     </div>
   );
 };

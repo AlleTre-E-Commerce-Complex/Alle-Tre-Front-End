@@ -47,6 +47,8 @@ const routes = {
       details: (productId = ":productId") =>
         `/my-product/${productId}/details`,
       listProductLocationDetails: `/my-products/add-location`,
+      payArbon: (productId = ":productId") =>
+        `/my-product/${productId}/details/pay-arbon`,
       userDetails: `/user/user-details`,
     },
     profile: {
@@ -114,10 +116,12 @@ const routes = {
 
       purchased: `/profile/purchased`,
       wallet: `/profile/wallet`,
+      depositDetails: `/profile/deposit-details`,
       notifications: `/profile/notifications`,
     },
     admin: {
       comments: `/admin/comments`,
+      objections: `/profile/admin-objections`,
     },
   },
 };

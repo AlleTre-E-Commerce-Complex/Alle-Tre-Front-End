@@ -689,15 +689,26 @@ const Header = ({
               //   path: routes.app.profile.purchased,
               //   handler: handelPurchased,
               // },
-              // {
-              //   key: localizationKeys.Wallet,
-              //   path: routes.app.profile.wallet,
-              //   handler: handelWallet,
-              // },
+              {
+                key: localizationKeys.Wallet,
+                path: routes.app.profile.wallet,
+                handler: handelWallet,
+              },
               {
                 key: localizationKeys.faqs,
                 path: routes.app.faqs,
                 handler: handelFaqs,
+              },
+              {
+                key: localizationKeys.depositDetails,
+                path: routes.app.profile.depositDetails,
+                handler: () => {
+                  if (user) {
+                    history.push(routes.app.profile.depositDetails);
+                  } else {
+                    dispatch(Open());
+                  }
+                },
               },
               {
                 key: localizationKeys.support,
@@ -721,23 +732,23 @@ const Header = ({
                 key={key}
                 title={
                   key === localizationKeys.support ? (
-                    <div className="flex items-center relative">
+                    <span className="flex items-center relative">
                       {selectedContent[key]}
                       {supportUnreadCount > 0 && (
                         <span className="absolute -top-2 -right-3 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
                           {supportUnreadCount > 99 ? "99+" : supportUnreadCount}
                         </span>
                       )}
-                    </div>
+                    </span>
                   ) : isChat ? (
-                    <div className="flex items-center relative">
+                    <span className="flex items-center relative">
                       {selectedContent[key]}
                       {unreadCount > 0 && (
                         <span className="absolute -top-2 -right-3 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
                           {unreadCount > 99 ? "99+" : unreadCount}
                         </span>
                       )}
-                    </div>
+                    </span>
                   ) : (
                     selectedContent[key]
                   )
@@ -749,14 +760,14 @@ const Header = ({
             <div className="relative">
               <NavLinkHeader
                 title={
-                  <div className="flex items-center relative">
+                  <span className="flex items-center relative">
                     {selectedContent[localizationKeys.notifications]}
                     {notificationCount > 0 && (
                       <span className="absolute -top-2 -right-3 font-bold bg-red-600 text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-bounce">
                         {notificationCount > 99 ? "99+" : notificationCount}
                       </span>
                     )}
-                  </div>
+                  </span>
                 }
                 isActive={
                   pathname.startsWith(routes.app.profile.notifications)

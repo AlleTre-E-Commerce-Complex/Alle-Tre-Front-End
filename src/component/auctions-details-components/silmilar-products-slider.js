@@ -68,7 +68,8 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
       );
     }
   }, [
-    // categoriesId,
+    categoriesId,
+    productId,
     page,
     runAuctions,
     user,
@@ -94,7 +95,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
       <Dimmer className=" bg-white/50" active={isLoadingAuctions} inverted>
         <LoadingTest3arbon />
       </Dimmer>
-      {auctions?.length === 0 ? null : (
+      {!Array.isArray(auctions) || auctions.length === 0 ? null : (
         <div
           className={
             auctions?.length === 0
@@ -136,8 +137,9 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                   1024: { spaceBetween: 32 },
                 }}
               >
-                {auctions?.map((e, index) => (
+                {Array.isArray(auctions) && auctions.map((e, index) => (
                   <SwiperSlide
+                    key={e?.id || index}
                     className="swiper-slide !w-[45%] sm:!w-[30%] md:!w-[20%] lg:!w-[15%] xl:!w-[13%] transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 rounded-2xl"
                     onClick={() =>
                       window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
@@ -178,7 +180,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                         StartDate={e?.startDate}
                         isBuyNowAllowed={e?.isBuyNowAllowed}
                         isMyAuction={e?.isMyAuction}
-                        latestBidAmount={e?.bids[0]?.amount || 0}
+                        latestBidAmount={e?.bids?.[0]?.amount || 0}
                         usageStatus={e?.product?.usageStatus}
                         category={e?.product?.categoryId}
                         priceType={e?.product?.priceType}

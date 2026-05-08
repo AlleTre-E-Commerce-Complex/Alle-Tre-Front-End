@@ -11,6 +11,7 @@ import Purchased from "./purchased";
 import Wallet from "./Wallet";
 import Notifications from "./Notifications";
 import MyProducts from "./MyProducts";
+import DepositDetails from "./DepositDetails";
 import { MdLogout } from "react-icons/md";
 import LogoutModal from "../../../component/shared/logout-modal/logout-modal";
 import { useAuthState } from "../../../context/auth-context";
@@ -76,6 +77,10 @@ const ProfileLayouts = () => {
             <Route
               path={routes.app.profile.notifications}
               component={Notifications}
+            />
+            <Route
+              path={routes.app.profile.depositDetails}
+              component={DepositDetails}
             />
           </Switch>
         </div>

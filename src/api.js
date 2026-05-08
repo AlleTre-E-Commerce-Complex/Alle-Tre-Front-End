@@ -188,6 +188,14 @@ const api = {
     admin: {
       searchProducts: (query) => `/admin/products/search?query=${query}`,
     },
+    payments: {
+      payArbon: "payments-v2/pay-arbon",
+      releaseArbon: "payments-v2/release-arbon",
+      depositDetails: "payments-v2/deposit-details",
+      objection: "payments-v2/objection",
+      adminObjections: "admin/objections",
+      webhook: "payments-v2/webhook-listener",
+    },
   },
 };
 

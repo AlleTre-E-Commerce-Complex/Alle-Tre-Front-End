@@ -11,7 +11,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useLanguage } from "../../../context/language-context";
 import localizationKeys from "../../../localization/localization-keys";
 import content from "../../../localization/content";
-import { IoChevronUpOutline } from "react-icons/io5";
+import { IoChevronUpOutline, IoShieldCheckmarkOutline } from "react-icons/io5";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { Dimmer } from "semantic-ui-react";
 import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
@@ -37,6 +37,7 @@ const ImgSlider = ({
   title,
   isListProduct,
   status,
+  isArbonPaid,
 }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(0);
   const [preparedShareFile, setPreparedShareFile] = useState(null);
@@ -304,9 +305,8 @@ const ImgSlider = ({
                         <div className="relative w-full h-full bg-black">
                           <video
                             key={image?.imageLink}
-                            // Move src directly to video tag for better React reliability
                             src={image?.imageLink}
-                            className={`w-full h-full object-contain ${isListProduct && status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
+                            className={`w-full h-full object-contain transition-all duration-700 ${(isListProduct && status === "OUT_OF_STOCK") || isArbonPaid ? "blur-[4px] grayscale-[0.6]" : ""}`}
                             controls
                             controlsList="nodownload nofullscreen"
                             autoPlay
@@ -318,7 +318,7 @@ const ImgSlider = ({
                         </div>
                       ) : (
                         <img
-                          className={`w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105 ${isListProduct && status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
+                          className={`w-full h-full object-cover transition-all duration-700 ease-in-out group-hover:scale-105 ${(isListProduct && status === "OUT_OF_STOCK") || isArbonPaid ? "blur-[4px] grayscale-[0.6]" : ""}`}
                           src={image?.imageLink}
                           alt={image?.description || "Product image"}
                         />
@@ -396,6 +396,31 @@ const ImgSlider = ({
                   <HiChevronRight className="text-primary dark:text-yellow text-xl md:text-2xl transition-transform group-hover/navnext:scale-125" />
                 </button>
               </div>
+
+              {/* Arbon Paid Overlay (Centered on Main Image) */}
+              {isArbonPaid && (
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[45] pointer-events-none w-full flex justify-center p-4">
+                  <div className="bg-black/60 backdrop-blur-lg px-4 py-3 md:px-10 md:py-6 rounded-2xl md:rounded-[3rem] border border-red-500/30 shadow-[0_0_40px_rgba(220,38,38,0.15)] animate-in zoom-in duration-500 overflow-hidden relative group max-w-[80%] md:max-w-md">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-red-500/5 via-transparent to-red-500/5 opacity-50"></div>
+                    <div className="flex flex-col items-center gap-1.5 md:gap-3 relative z-10">
+                      <div className="w-8 h-8 md:w-16 md:h-16 rounded-full bg-red-500/10 flex items-center justify-center border border-red-500/20 mb-0.5 md:mb-1">
+                        <IoShieldCheckmarkOutline className="text-red-500 text-lg md:text-3xl" />
+                      </div>
+                      <p className="text-white font-black text-xs md:text-2xl uppercase tracking-[0.2em] text-center drop-shadow-lg leading-tight">
+                        {lang === 'ar' ? 'تم دفع العربون' : 'ARBON PAID'}
+                      </p>
+                      <div className="flex items-center gap-1.5 md:gap-2 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-red-500/10 rounded-full border border-red-500/20">
+                        <span className="w-1 h-1 md:w-2 md:h-2 bg-red-500 rounded-full animate-pulse"></span>
+                        <p className="text-[7px] md:text-[10px] text-red-200 font-bold uppercase tracking-widest whitespace-nowrap">
+                          {lang === 'ar' ? 'المنتج محجوز لمدة 7 أيام' : 'Reserved for 7 Days'}
+                        </p>
+                      </div>
+                    </div>
+                    {/* Shimmer Effect */}
+                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-red-500/5 to-transparent group-hover:translate-x-full transition-transform duration-1000"></div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { truncateString } from "../../utils/truncate-string";
 import AuctionsStatus from "../shared/status/auctions-status";
 import emtyPhotosIcon from "../../../src/assets/icons/emty-photos-icon.svg";
@@ -69,9 +69,7 @@ const ActionsRowTable = ({
     ending_Time.minutes
   } ${selectedContent[localizationKeys.min]} : ${
     ending_Time.seconds
-  } ${selectedContent[localizationKeys.sec]}` 
-  ;
-
+  } ${selectedContent[localizationKeys.sec]}`;
   const handleContactDetailsModal = (userType) => {
     setUserType(userType);
     setContactDetailsModal(true);
@@ -226,7 +224,7 @@ const ActionsRowTable = ({
               ""
             )}
             {status === "CANCELLED_AFTER_EXP_DATE" ||
-              status === "CANCELLED_BEFORE_EXP_DATE" ? (
+            status === "CANCELLED_BEFORE_EXP_DATE" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div>
                   <h1 className="text-gray-veryLight text-[10px] font-normal">
@@ -293,9 +291,9 @@ const ActionsRowTable = ({
             )}
 
             {status === "PENDING_PAYMENT" ||
-              status === "WAITING_FOR_DELIVERY" ||
-              status === "PAYMENT_EXPIRED" ||
-              status === "COMPLETED" ? (
+            status === "WAITING_FOR_DELIVERY" ||
+            status === "PAYMENT_EXPIRED" ||
+            status === "COMPLETED" ? (
               <div className="pt-2 flex sm:flex-row flex-col sm:gap-x-10 gap-y-5">
                 <div
                   className={
@@ -398,10 +396,11 @@ const ActionsRowTable = ({
             {!isBankStatementUploaded && (
               <button
                 onClick={buttonActions}
-                className={`${textButton === "Delivery by company"
+                className={`${
+                  textButton === "Delivery by company"
                     ? "border-secondery border text-primary font-bold cursor-auto"
                     : "border-primary border text-primary font-normal cursor-pointer"
-                  } text-sm  w-full sm:w-[158px] py-2 rounded-lg`}
+                } text-sm  w-full sm:w-[158px] py-2 rounded-lg`}
               >
                 {textButton}
               </button>
@@ -424,20 +423,24 @@ const ActionsRowTable = ({
                 {selectedContent[localizationKeys.AnyObjection]}
               </button>
             )}
-            {(status === "ACTIVE" || status === "PENDING_OWNER_DEPOIST" || status === "IN_SCHEDULED") && (
+            {(status === "ACTIVE" ||
+              status === "PENDING_OWNER_DEPOIST" ||
+              status === "IN_SCHEDULED") && (
               <button
                 onClick={() => {
                   setCancelAuctionModal(true);
                   Number(totalBids) > 0
                     ? setCancelWarningMessage(
                         selectedContent[
-                          localizationKeys.CancellAuctionWarningMessageWithBidders
-                        ]
+                          localizationKeys
+                            .CancellAuctionWarningMessageWithBidders
+                        ],
                       )
                     : setCancelWarningMessage(
                         selectedContent[
-                          localizationKeys.CancellAuctionWarningMessageWithZeroBidders
-                        ]
+                          localizationKeys
+                            .CancellAuctionWarningMessageWithZeroBidders
+                        ],
                       );
                 }}
                 className="border-primary border text-primary text-sm font-normal w-full sm:w-[145px] py-2 rounded-lg"
@@ -445,17 +448,17 @@ const ActionsRowTable = ({
                 {selectedContent[localizationKeys.cancelTheAuction]}
               </button>
             )}
-            {(status === 'ACTIVE' || status === 'IN_SCHEDULED') && (
+            {(status === "ACTIVE" || status === "IN_SCHEDULED") && (
               <button
                 className="bg-primary text-white text-sm font-normal px-8 py-2 rounded-lg transition hover:bg-primary-dark"
                 onClick={() => {
                   const navigationState = {
                     auctionId: auctionsId,
-                    isEditing: true
+                    isEditing: true,
                   };
                   history.replace({
                     pathname: routes.app.createAuction.productDetails,
-                    state: navigationState
+                    state: navigationState,
                   });
                 }}
               >
@@ -475,7 +478,7 @@ const ActionsRowTable = ({
                   setCancelWarningMessage(
                     selectedContent[
                       localizationKeys.CancellAuctionWarningMessageWithBidders
-                    ]
+                    ],
                   );
                 }}
                 className="border-primary border text-primary text-sm font-normal px-4 py-2 rounded-lg transition hover:bg-primary hover:text-white "

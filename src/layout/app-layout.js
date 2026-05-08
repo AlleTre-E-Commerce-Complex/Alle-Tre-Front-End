@@ -37,6 +37,8 @@ import { Open } from "../redux-store/auth-model-slice";
 import UnSubscribeModal from "component/shared/UnsubscribeModal/UnSubscribeModal";
 import ListProductDetails from "page/app/ListProduct/List-product-details";
 import SummaryListedSection from "component/home-components/summary-listed-section";
+// import ArbonPaymentPage from "../component/home-components/ArbonPaymentPage";
+import ProductArbonCheckout from "../page/app/arbon/ProductArbonCheckout";
 import UserDetailsPage from "component/profile-components/user-details-page";
 import ListingProductsLocationDetails from "page/app/ListProduct/List-location-details";
 import PrivacyPolicy from "../component/shared/privacy-policy/privacy-policy";
@@ -235,6 +237,7 @@ const AppLayouts = () => {
                 component={ListingProductsLocationDetails}
               />
               <Route
+                exact
                 path={routes.app.listProduct.details()}
                 component={SummaryListedSection}
               />
@@ -246,6 +249,7 @@ const AppLayouts = () => {
 
               <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />
               <Route path={routes.app.payDeposite()} component={PayDeposite} />
+              <Route path={routes.app.listProduct.payArbon()} component={ProductArbonCheckout} />
 
               <Route
                 path={routes.app.homeDetails()}

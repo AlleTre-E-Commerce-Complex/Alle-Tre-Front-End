@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { stripePromise } from "../../../config/stripe-config";
 import { Elements } from "@stripe/react-stripe-js";
 import StepperApp from "../stepper/stepper-app";
 import { CreateAuctionBreadcrumb } from "../bread-crumb/Breadcrumb";
@@ -30,7 +30,7 @@ import { Open } from "redux-store/auth-model-slice";
 import { FaCheckCircle } from 'react-icons/fa';
 import { ImCross } from "react-icons/im";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
+
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
