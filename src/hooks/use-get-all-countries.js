@@ -37,13 +37,15 @@ const useGetAllCountries = () => {
         const AllCountriesOptions = data.data;
         const options = [];
   
-        AllCountriesOptions.forEach((d) =>
-          options.push({
-            text: lang === "en" ? d?.nameEn : d?.nameAr,
-            key: d?.id,
-            value: d.id,
-          })
-        );
+        if (Array.isArray(AllCountriesOptions)) {
+          AllCountriesOptions.forEach((d) =>
+            options.push({
+              text: lang === "en" ? d?.nameEn : d?.nameAr,
+              key: d?.id,
+              value: d.id,
+            })
+          );
+        }
   
         setAllCountriesOptions(options);
       })

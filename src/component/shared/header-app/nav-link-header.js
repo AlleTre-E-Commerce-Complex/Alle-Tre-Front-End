@@ -4,16 +4,16 @@ import "./nav-link-header.css";
 const NavLinkHeader = ({ title, onClick, isActive, className }) => {
   return (
     <div>
-      <p
+      <span
         onClick={onClick}
         className={`${
           isActive
             ? "active-underline-animation text-yellow font-bold"
             : "hover-underline-animation text-primary-veryLight hover:text-white"
-        } lg:text-base text-xs font-bold  transition-colors duration-200 ${className} `}
+        } lg:text-base text-xs font-bold transition-colors duration-200 ${className} block`}
       >
         {title}
-      </p>
+      </span>
     </div>
   );
 };

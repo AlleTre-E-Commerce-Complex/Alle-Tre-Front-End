@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { stripePromise } from "../../../config/stripe-config";
 import { Elements } from "@stripe/react-stripe-js";
 
 import { AuctionHomeDetailsBreadcrumb } from "../bread-crumb/Breadcrumb";
@@ -28,8 +28,6 @@ import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 import routes from "../../../routes";
 import PaymentSelection from "../PaymentSelection/PaymentSelection";
 import WalletPaymentForBiddingDeoposit from "../WalletPayment/WalletPaymentForBiddingDeoposit";
-
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 export default function CheckoutPagePayDeposite() {
   //pay deposite of bidder
@@ -74,7 +72,10 @@ export default function CheckoutPagePayDeposite() {
           const auctionData = res?.data?.data;
           // const amountToPay =
           //   auctionData.product.category.bidderDepositFixedAmount;
-          const amountToPay = calculateSecurityDeposit(auctionData, auctionData?.product?.category)
+          const amountToPay = calculateSecurityDeposit(
+            auctionData,
+            auctionData?.product?.category,
+          );
           if (auctionData) {
             // const pendingPeymentData = await authAxios.get(
             //   `${api.app.auctions.isPendingPayment(
@@ -92,13 +93,13 @@ export default function CheckoutPagePayDeposite() {
                 } else {
                   stripePaymentApiCall();
                 }
-              })
+              }),
             );
             // } else {
             //   stripePaymentApiCall();
             // }
           }
-        })
+        }),
     );
   }, [
     auctionId,
@@ -138,7 +139,7 @@ export default function CheckoutPagePayDeposite() {
       };
       const response = await authAxios.post(
         api.app.auctions.PayDepositByBidder(auctionId),
-        body
+        body,
       );
       if (response?.data?.data?.clientSecret) {
         setClientSecret(response.data.data.clientSecret);
@@ -164,30 +165,46 @@ export default function CheckoutPagePayDeposite() {
     }
   }, [error]);
 
-  const calculateSecurityDeposit = (auction,auctionCategory)=>{
-    const categoryName = auctionCategory?.nameEn
+  const calculateSecurityDeposit = (auction, auctionCategory) => {
+    const categoryName = auctionCategory?.nameEn;
     //calculate the seller security deposite
-    const startBidAmount = auction?.startBidAmount
-    let amount = Number(auctionCategory?.bidderDepositFixedAmount)
+    const startBidAmount = auction?.startBidAmount;
+    let amount = Number(auctionCategory?.bidderDepositFixedAmount);
     //checking whether the auction is luxuary or not
 
-    if(auctionCategory?.luxuaryAmount && Number(startBidAmount) > Number(auctionCategory?.luxuaryAmount)){
-      let total
-      //calculating the security deposite 
-       total = Number((( Number(startBidAmount) ) * Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
+    if (
+      auctionCategory?.luxuaryAmount &&
+      Number(startBidAmount) > Number(auctionCategory?.luxuaryAmount)
+    ) {
+      let total;
+      //calculating the security deposite
+      total = Number(
+        (Number(startBidAmount) *
+          Number(auctionCategory?.percentageOfLuxuarySD_forBidder)) /
+          100,
+      );
 
-      if(categoryName === 'Cars' || categoryName === 'Properties'){
-       total = Number(((pendingAuctionData?.latestBidAmount? pendingAuctionData?.latestBidAmount: Number(startBidAmount) ) * Number(auctionCategory?.percentageOfLuxuarySD_forBidder) ) / 100)
+      if (categoryName === "Cars" || categoryName === "Properties") {
+        total = Number(
+          ((pendingAuctionData?.latestBidAmount
+            ? pendingAuctionData?.latestBidAmount
+            : Number(startBidAmount)) *
+            Number(auctionCategory?.percentageOfLuxuarySD_forBidder)) /
+            100,
+        );
       }
-      //checking the total is less than minimum security deposite 
-      if(auctionCategory?.minimumLuxuarySD_forBidder && total < Number(auctionCategory?.minimumLuxuarySD_forBidder)){
-        amount = Number(auctionCategory?.minimumLuxuarySD_forBidder)
-      }else{
-        amount = total
+      //checking the total is less than minimum security deposite
+      if (
+        auctionCategory?.minimumLuxuarySD_forBidder &&
+        total < Number(auctionCategory?.minimumLuxuarySD_forBidder)
+      ) {
+        amount = Number(auctionCategory?.minimumLuxuarySD_forBidder);
+      } else {
+        amount = total;
       }
     }
-    return amount
-  }
+    return amount;
+  };
   return (
     <>
       <Dimmer
@@ -273,7 +290,12 @@ export default function CheckoutPagePayDeposite() {
                       pendingAuctionData?.product?.category
                         ?.bidderDepositFixedAmount
                     )} */}
-                  {formatCurrency(calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category))}
+                    {formatCurrency(
+                      calculateSecurityDeposit(
+                        pendingAuctionData,
+                        pendingAuctionData?.product?.category,
+                      ),
+                    )}
                   </p>
                 </p>
                 <p className="flex justify-between px-4 py-1.5">
@@ -300,7 +322,7 @@ export default function CheckoutPagePayDeposite() {
                   </h1>
                   <p className="text-gray-med font-normal text-base">
                     {moment(pendingAuctionData?.expiryDate).format(
-                      "DD/MM/YYYY"
+                      "DD/MM/YYYY",
                     )}
                   </p>
                 </p>
@@ -349,7 +371,10 @@ export default function CheckoutPagePayDeposite() {
                   //   pendingAuctionData?.product?.category
                   //     ?.bidderDepositFixedAmount
                   // }
-                  payPrice={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
+                  payPrice={calculateSecurityDeposit(
+                    pendingAuctionData,
+                    pendingAuctionData?.product?.category,
+                  )}
                   onError={(msg) => setError(msg)}
                   bidAmount={bidAmountValue}
                 />
@@ -369,7 +394,10 @@ export default function CheckoutPagePayDeposite() {
                   //   pendingAuctionData?.product?.category
                   //     ?.bidderDepositFixedAmount
                   // }
-                  payPrice={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
+                  payPrice={calculateSecurityDeposit(
+                    pendingAuctionData,
+                    pendingAuctionData?.product?.category,
+                  )}
                   onError={(msg) => setError(msg)}
                   bidAmount={bidAmountValue}
                 />
@@ -382,7 +410,10 @@ export default function CheckoutPagePayDeposite() {
                 //   pendingAuctionData?.product?.category
                 //     ?.bidderDepositFixedAmount
                 // }
-                amount={calculateSecurityDeposit(pendingAuctionData, pendingAuctionData?.product?.category)}
+                amount={calculateSecurityDeposit(
+                  pendingAuctionData,
+                  pendingAuctionData?.product?.category,
+                )}
                 walletBalance={walletBalance}
                 paymentAPI={api.app.auctions.walletPayDepositByBidder}
                 bidAmount={bidAmountValue}

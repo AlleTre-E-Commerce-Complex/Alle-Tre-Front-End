@@ -126,6 +126,7 @@ const ar = {
   [localizationKeys.yourFavourites]: "قائمة المفضلة",
   [localizationKeys.thereAreNoFavouritesYet]: "لا توجد مفضلات حتى الآن.",
   [localizationKeys.viewDetails]: "تفاصيل",
+  [localizationKeys.depositDetails]: "تفاصيل العربون",
   [localizationKeys.exploreCategories]: "استكشف الفئات",
   [localizationKeys.bidNow]: "المزايدة الآن",
   [localizationKeys.popularCategories]: "الفئات الشائعة",
@@ -133,8 +134,8 @@ const ar = {
   [localizationKeys.seeAll]: "عرض الكل",
   [localizationKeys.seeLess]: "عرض أقل",
   [localizationKeys.brand]: "العلامة التجارية",
-    [localizationKeys.Brands]: "العلامة التجارية",
-    [localizationKeys.model]:"الموديل",
+  [localizationKeys.Brands]: "العلامة التجارية",
+  [localizationKeys.model]: "الموديل",
   [localizationKeys.sellingType]: "نوع البيع",
   [localizationKeys.auction]: "مزاد",
   [localizationKeys.products]: "منتجات",
@@ -171,12 +172,17 @@ const ar = {
   [localizationKeys.fixed]: "ثابت",
   [localizationKeys.negotiable]: "قابل للتفاوض",
   [localizationKeys.setArbon]: "تحديد عربون",
-  [localizationKeys.arbonDescription]: "العربون هو مبلغ مقدم لضمان جدية الشراء وتأمين المنتج.",
+  [localizationKeys.arbonDescription]:
+    "العربون هو مبلغ مقدم لضمان جدية الشراء وتأمين المنتج.",
   [localizationKeys.yes]: "نعم",
   [localizationKeys.no]: "لا",
   [localizationKeys.arbonAmount]: "مبلغ العربون",
   [localizationKeys.payArbonAmount]: "دفع العربون",
   [localizationKeys.pay]: "دفع",
+  [localizationKeys.releaseDeposit]: "تحرير العربون",
+  [localizationKeys.objection]: "تقديم اعتراض",
+  [localizationKeys.reason]: "السبب",
+  [localizationKeys.objectionDescription]: "الوصف",
   [localizationKeys.myAccount]: "حسابي",
   [localizationKeys.changeProductStatus]: "تغيير حالة المنتج هنا",
   [localizationKeys.iamBiddingOn]: "أنا أقوم بالمزايدة على",
@@ -495,7 +501,8 @@ const ar = {
   [localizationKeys.expand]: "توسيع",
   [localizationKeys.logout]: "تسجيل الخروج",
   [localizationKeys.profileSettings]: "إعدادات الملف الشخصي",
-  [localizationKeys.completeYourProfileToMakeYourActionsEasier]: "أكمل ملفك الشخصي",
+  [localizationKeys.completeYourProfileToMakeYourActionsEasier]:
+    "أكمل ملفك الشخصي",
   [localizationKeys.completeNowMasg]:
     "يرجى إضافة تفاصيل عنوانك لبدء المزايدة وإدراج العناصر على Alletre.",
   [localizationKeys.completeNow]: "أكمل الآن",
@@ -565,7 +572,8 @@ const ar = {
   [localizationKeys.opsScheduled]: "عفوًا ، لا توجد مزادات مجدولة بعد",
   [localizationKeys.totalDraft]: "إجمالي مزادات المسودة ..",
   [localizationKeys.opsDraft]: "عفوًا ، لا توجد مزادات مسودة بعد.",
-  [localizationKeys.thereAreNoDraftProductsAtTheMoment]: "لا توجد منتجات مسودة في الوقت الحالي",
+  [localizationKeys.thereAreNoDraftProductsAtTheMoment]:
+    "لا توجد منتجات مسودة في الوقت الحالي",
   [localizationKeys.noPhotoAdded]: "لا توجد صورة مضافة",
   [localizationKeys.totalSold]: "إجمالي المزادات المباعة ..",
   [localizationKeys.opsSold]: "عفوًا ، لا توجد مزادات مباعة بعد.",
@@ -652,8 +660,10 @@ const ar = {
   [localizationKeys.priceLowestToHighest]: "السعر: من الأقل إلى الأعلى",
   [localizationKeys.yearHighestToLowest]: "سنة الصنع: من الأحدث إلى الأقدم",
   [localizationKeys.yearLowestToHighest]: "سنة الصنع: من الأقدم إلى الأحدث",
-  [localizationKeys.kilometersHighestToLowest]: "الكيلومترات: من الأعلى إلى الأقل",
-  [localizationKeys.kilometersLowestToHighest]: "الكيلومترات: من الأقل إلى الأعلى",
+  [localizationKeys.kilometersHighestToLowest]:
+    "الكيلومترات: من الأعلى إلى الأقل",
+  [localizationKeys.kilometersLowestToHighest]:
+    "الكيلومترات: من الأقل إلى الأعلى",
   [localizationKeys.saved]: "المحفوظة",
   [localizationKeys.sortResults]: "ترتيب حسب",
   [localizationKeys.areaHighestToLowest]: "المساحة: من الأعلى إلى الأقل",
@@ -736,8 +746,10 @@ const ar = {
     "تمت إزالة المزاد من قائمة المراقبة بنجاح",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
     "تمت الإضافة إلى قائمة المراقبة الخاصة بك بنجاح",
-  [localizationKeys.thisProductAddToFavouritesSuccessfully]: "تمت الإضافة إلى المفضلة بنجاح",
-  [localizationKeys.thisProductRemovedFromFavouritesSuccessfully]: "تم الحذف من المفضلة بنجاح",
+  [localizationKeys.thisProductAddToFavouritesSuccessfully]:
+    "تمت الإضافة إلى المفضلة بنجاح",
+  [localizationKeys.thisProductRemovedFromFavouritesSuccessfully]:
+    "تم الحذف من المفضلة بنجاح",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "تم تحديث كلمة المرور بنجاح",
   [localizationKeys.hasBeenDeleteSuccessfully]: "تم حذفه بنجاح",
@@ -799,20 +811,27 @@ const ar = {
     "لا توجد منتجات خارج المخزون في الوقت الحالي",
   [localizationKeys.thereAreNoSoldOutProductsAtTheMoment]:
     "لا توجد منتجات مباعة في الوقت الحالي",
-    [localizationKeys.productMedia]:"وسائط المنتج",
-    [localizationKeys.addMore]:"أضف المزيد",
-    [localizationKeys.clickToUploadImagesAndVideos]:"انقر لتحميل الصور ومقاطع الفيديو",
-    [localizationKeys.uploadUpTo12Items]:"قم بتحميل ما يصل إلى 12 عنصرًا",
-    [localizationKeys.premiumRealEstateAvailableForExclusiveOwnership]:"عقارات فاخرة متاحة للتملك الحصري",
-    [localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters]:"عقارات استثنائية منتقاة للمستأجرين المميزين",
-    [localizationKeys.discoverExceptionalBreedsAndLovingCompanions]:"اكتشف السلالات الاستثنائية والرفاق المحبين",
-    [localizationKeys.provideAForeverHomeToARemarkableRescue]:"وفر منزلاً دائمًا لإنقاذ رائع",
-    [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:"حالة ممتازة، لم تمس مع العلامات الأصلية أو العبوة",
-    [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"حالة ممتازة مستعملة، تظهر عليها علامات استخدام طفيفة إلى خفيفة",
-    [localizationKeys.manageYourActivityAndAlerts]:"إدارة نشاطك وتنبيهاتك",
-    [localizationKeys.vehicleSpecifications]:"مواصفات المركبة",
-    [localizationKeys.applyFilters]:"تطبيق الفلاتر",
-    [localizationKeys.clear]: "مسح",
+  [localizationKeys.productMedia]: "وسائط المنتج",
+  [localizationKeys.addMore]: "أضف المزيد",
+  [localizationKeys.clickToUploadImagesAndVideos]:
+    "انقر لتحميل الصور ومقاطع الفيديو",
+  [localizationKeys.uploadUpTo12Items]: "قم بتحميل ما يصل إلى 12 عنصرًا",
+  [localizationKeys.premiumRealEstateAvailableForExclusiveOwnership]:
+    "عقارات فاخرة متاحة للتملك الحصري",
+  [localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters]:
+    "عقارات استثنائية منتقاة للمستأجرين المميزين",
+  [localizationKeys.discoverExceptionalBreedsAndLovingCompanions]:
+    "اكتشف السلالات الاستثنائية والرفاق المحبين",
+  [localizationKeys.provideAForeverHomeToARemarkableRescue]:
+    "وفر منزلاً دائمًا لإنقاذ رائع",
+  [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:
+    "حالة ممتازة، لم تمس مع العلامات الأصلية أو العبوة",
+  [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:
+    "حالة ممتازة مستعملة، تظهر عليها علامات استخدام طفيفة إلى خفيفة",
+  [localizationKeys.manageYourActivityAndAlerts]: "إدارة نشاطك وتنبيهاتك",
+  [localizationKeys.vehicleSpecifications]: "مواصفات المركبة",
+  [localizationKeys.applyFilters]: "تطبيق الفلاتر",
+  [localizationKeys.clear]: "مسح",
   [localizationKeys.sortBy]: "رتب حسب",
   [localizationKeys.newest]: "الأحدث",
   [localizationKeys.priceLowToHigh]: "السعر (من الأقل إلى الأعلى)",
@@ -823,7 +842,8 @@ const ar = {
   [localizationKeys.kilometersMost]: "الكيلومترات (الأكثر)",
   [localizationKeys.deleteProduct]: "حذف المنتج",
   [localizationKeys.confirmDeleteProduct]: "تأكيد حذف المنتج",
-  [localizationKeys.areYouSureYouWantToDeleteThisProduct]: "هل أنت متأكد أنك تريد حذف هذا المنتج؟",
+  [localizationKeys.areYouSureYouWantToDeleteThisProduct]:
+    "هل أنت متأكد أنك تريد حذف هذا المنتج؟",
   [localizationKeys.newBidReceived]: "تم استلام مزايدة جديدة",
   [localizationKeys.auctionEndingSoon]: "المزاد سينتهي قريباً",
   [localizationKeys.productUpdate]: "تحديث المنتج",
@@ -835,26 +855,36 @@ const ar = {
   [localizationKeys.goToAuction]: "الذهاب للمزاد",
   [localizationKeys.notification]: "إشعار",
   [localizationKeys.productSavedAsDraft]: 'تم حفظ منتجك "{title}" كمسودة.',
-  [localizationKeys.productSuccessfullyUpdated]: 'تم تحديث منتجك "{title}" بنجاح.',
-  [localizationKeys.productSuccessfullyListed]: 'تم إدراج منتجك "{title}" بنجاح.',
-  [localizationKeys.statusChangedTo]: 'تم تغيير حالة منتجك "{title}" إلى {status}.',
+  [localizationKeys.productSuccessfullyUpdated]:
+    'تم تحديث منتجك "{title}" بنجاح.',
+  [localizationKeys.productSuccessfullyListed]:
+    'تم إدراج منتجك "{title}" بنجاح.',
+  [localizationKeys.statusChangedTo]:
+    'تم تغيير حالة منتجك "{title}" إلى {status}.',
   [localizationKeys.inStock]: "متوفر",
   [localizationKeys.outStock]: "غير متوفر",
   [localizationKeys.soldOut]: "مباع بالكامل",
-  [localizationKeys.productStatusUpdatedSuccessfully]: "تم تحديث حالة المنتج بنجاح!",
-  [localizationKeys.failedToUpdateStatus]: "فشل تحديث الحالة. يرجى المحاولة مرة أخرى.",
+  [localizationKeys.productStatusUpdatedSuccessfully]:
+    "تم تحديث حالة المنتج بنجاح!",
+  [localizationKeys.failedToUpdateStatus]:
+    "فشل تحديث الحالة. يرجى المحاولة مرة أخرى.",
   [localizationKeys.premium]: "مميز",
   [localizationKeys.newArrival]: "جديد",
   [localizationKeys.sku]: "رقم المنتج",
-  [localizationKeys.videoDurationCannotExceed1Minute]: "لا يمكن أن يتجاوز طول الفيديو دقيقة واحدة",
-  [localizationKeys.compressingVideo]: "جاري ضغط الفيديو... قد يستغرق ذلك لحظة.",
-  [localizationKeys.processingPhoto]: "جاري معالجة الصورة {current} من {total}...",
-  [localizationKeys.watermarkingPhoto]: "جاري إضافة العلامة المائية للصورة {current} من {total}...",
+  [localizationKeys.videoDurationCannotExceed1Minute]:
+    "لا يمكن أن يتجاوز طول الفيديو دقيقة واحدة",
+  [localizationKeys.compressingVideo]:
+    "جاري ضغط الفيديو... قد يستغرق ذلك لحظة.",
+  [localizationKeys.processingPhoto]:
+    "جاري معالجة الصورة {current} من {total}...",
+  [localizationKeys.watermarkingPhoto]:
+    "جاري إضافة العلامة المائية للصورة {current} من {total}...",
   [localizationKeys.validatingVideoDuration]: "جاري التحقق من مدة الفيديو...",
   [localizationKeys.uploadingPhoto]: "جاري رفع الصورة {current} من {total}...",
   [localizationKeys.uploadingVideo]: "جاري رفع الفيديو...",
   [localizationKeys.bulkUploading]: "جاري رفع {count} ملفات...",
-  [localizationKeys.optimizationFinishedWarning]: "يرجى عدم إغلاق هذه النافذة حتى تنتهي عملية التحسين",
+  [localizationKeys.optimizationFinishedWarning]:
+    "يرجى عدم إغلاق هذه النافذة حتى تنتهي عملية التحسين",
   [localizationKeys.max5Images]: "الحد الأقصى 5 صور",
   [localizationKeys.myBugReports]: "تقاريري عن الأعطال",
   [localizationKeys.noBugReportsFound]: "لم يتم العثور على تقارير أعطال",
@@ -901,11 +931,13 @@ const ar = {
   [localizationKeys.today]: "اليوم",
   [localizationKeys.isItStillAvailable]: "هل هذا لا يزال متاحاً؟",
   [localizationKeys.whatsYourFinalPrice]: "ما هو سعرك النهائي؟",
-  [localizationKeys.staySafeMessage]:"ابق آمناً على 3arbon! حافظ على المحادثات في التطبيق. تذكر، لا تشارك تفاصيلك الشخصية.",
+  [localizationKeys.staySafeMessage]:
+    "ابق آمناً على 3arbon! حافظ على المحادثات في التطبيق. تذكر، لا تشارك تفاصيلك الشخصية.",
   [localizationKeys.canISeeIt]: "هل يمكنني رؤيته؟",
   [localizationKeys.noConversationsYet]: "لا توجد محادثات بعد",
   [localizationKeys.yourConversations]: "محادثاتك",
-  [localizationKeys.selectConversationFromSidebar]: "اختر محادثة من الشريط الجانبي لبدء الدردشة مع المشترين أو البائعين.",
+  [localizationKeys.selectConversationFromSidebar]:
+    "اختر محادثة من الشريط الجانبي لبدء الدردشة مع المشترين أو البائعين.",
   [localizationKeys.noMessagesYet]: "لا توجد رسائل بعد",
   [localizationKeys.download]: "تحميل",
   [localizationKeys.sharedLocation]: "موقع مشترك",
@@ -921,25 +953,50 @@ const ar = {
   [localizationKeys.commentUpdatedSuccessfully]: "تم تحديث التعليق بنجاح!",
   [localizationKeys.commentDeletedSuccessfully]: "تم حذف التعليق بنجاح!",
   [localizationKeys.adminPanel]: "لوحة التحكم",
-  [localizationKeys.manageProductCommentsSubtitle]: "البحث عن المنتجات وإدارة تعليقات المستخدمين.",
+  [localizationKeys.adminObjections]: "إدارة الاعتراضات",
+  [localizationKeys.manageProductCommentsSubtitle]:
+    "البحث عن المنتجات وإدارة تعليقات المستخدمين.",
   [localizationKeys.searchProducts]: "البحث عن المنتجات",
-  [localizationKeys.searchToManageComments]: "البحث عن المنتجات لإدارة التعليقات",
+  [localizationKeys.searchToManageComments]:
+    "البحث عن المنتجات لإدارة التعليقات",
   [localizationKeys.noProductSelected]: "لم يتم اختيار منتج",
-  [localizationKeys.selectProductFromResults]: "اختر منتجاً من نتائج البحث لعرض وإدارة تعليقاته.",
+  [localizationKeys.selectProductFromResults]:
+    "اختر منتجاً من نتائج البحث لعرض وإدارة تعليقاته.",
   [localizationKeys.saveChanges]: "حفظ التغييرات",
   [localizationKeys.noProductsFound]: "لم يتم العثور على منتجات",
   [localizationKeys.reply]: "رد",
   [localizationKeys.writeAReply]: "اكتب رداً...",
   [localizationKeys.back]: "رجوع",
-  [localizationKeys.watermarkingVideoCover]: "جاري إضافة العلامة المائية لغلاف الفيديو...",
+  [localizationKeys.watermarkingVideoCover]:
+    "جاري إضافة العلامة المائية لغلاف الفيديو...",
   [localizationKeys.generatingVideoCover]: "جاري إنشاء غلاف الفيديو...",
   [localizationKeys.extractingVideoCover]: "جاري استخراج غلاف الفيديو...",
   [localizationKeys.videoProcessedSuccessfully]: "تمت معالجة الفيديو بنجاح",
-  [localizationKeys.videoCompressionFailedSecurity]: "فشل ضغط الفيديو: رؤوس الأمان (COOP/COEP) مفقودة.",
-  [localizationKeys.videoCompressionFailedFallback]: "فشل ضغط الفيديو، جاري استخدام الملف الأصلي",
+  [localizationKeys.videoCompressionFailedSecurity]:
+    "فشل ضغط الفيديو: رؤوس الأمان (COOP/COEP) مفقودة.",
+  [localizationKeys.videoCompressionFailedFallback]:
+    "فشل ضغط الفيديو، جاري استخدام الملف الأصلي",
   [localizationKeys.failedToProcessFiles]: "فشل في معالجة الملفات",
   [localizationKeys.failedToUploadImage]: "فشل في تحميل الصورة",
   [localizationKeys.bugReportUpdate]: "تحديث تقرير المشكلة",
+  [localizationKeys.objectionWarning]:
+    "سيتم تطبيق رسوم الشركة لحل المشكلة وإتمام عملية استرداد العربون",
+  [localizationKeys.arbonSummary]: "ملخص العربون",
+  [localizationKeys.secureReservation]: "حجز آمن",
+  [localizationKeys.reservationGuarantee]: "ضمان الحجز",
+  [localizationKeys.theItemWillBeReservedExclusivelyForYou]: "سيتم حجز المنتج لك حصرياً",
+  [localizationKeys.holdDuration]: "مدة الحجز",
+  [localizationKeys.sevenDaysToCompleteTheTransaction]: "7 أيام لإتمام المعاملة",
+  [localizationKeys.arbonNotice]: "بمجرد دفع العربون، سيتم حجز المنتج لمدة 7 أيام. في حال التراجع عن الشراء، لن يتم استرداد مبلغ العربون.",
+  [localizationKeys.checkout]: "طريقة الدفع",
+  [localizationKeys.selectPreferredMethod]: "اختر وسيلة الدفع المفضلة لديك",
+  [localizationKeys.creditDebitCard]: "بطاقة ائتمان / خصم",
+  [localizationKeys.secureStripeGateway]: "بوابة دفع Stripe الآمنة",
+  [localizationKeys.continueToPayment]: "المتابعة للدفع",
+  [localizationKeys.backToSelection]: "العودة للاختيار",
+  [localizationKeys.failedToLoadProductDetails]: "فشل تحميل تفاصيل المنتج.",
+  [localizationKeys.stripeSystemOffline]: "نظام Stripe غير متصل بالإنترنت حالياً. يرجى المحاولة مرة أخرى.",
+  [localizationKeys.pleaseSelectAPaymentMethod]: "يرجى اختيار وسيلة دفع",
 };
 
 export default ar;

@@ -1,60 +1,50 @@
 import React, { useEffect, useState } from "react";
-import {
-  PaymentElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
-import { Button, Dimmer } from "semantic-ui-react";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { toast } from "react-hot-toast";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import routes from "../../../routes";
+import api from "../../../api";
+import useAxios from "../../../hooks/use-axios";
 import { formatCurrency } from "../../../utils/format-currency";
-import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
-import { authAxios } from "../../../config/axios-config";
-import useAxios from "hooks/use-axios";
-import api from "api";
-import { useLanguage } from "context/language-context";
 
-export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError,bidAmount }) {
-  const history = useHistory();
+const CheckoutFormPayDeposite = ({
+  clientSecret,
+  productId,
+  auctionId,
+  bidAmount,
+  isArbon = false,
+  payPrice,
+  onSuccess,
+  onError,
+  lang = "en",
+}) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { run, isLoading: isLoadingRun } = useAxios([]);
   const [message, setMessage] = useState(null);
-  const [isStripeLoading, setIsStripeLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [lang] = useLanguage("");
+  const [isStripeLoading, setIsStripeLoading] = useState(true);
+  const authAxios = useAxios();
 
   useEffect(() => {
-    if (!stripe) {
-      return;
-    }
+    if (!stripe) return;
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
+    const secret = new URLSearchParams(window.location.search).get(
+      "payment_intent_client_secret",
     );
 
-    if (!clientSecret) {
-      return;
-    }
+    if (!secret) return;
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+    stripe.retrievePaymentIntent(secret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-          toast.success("Payment succeeded!");
           break;
         case "processing":
           setMessage("Your payment is processing.");
-          toast.loading("Your payment is processing.");
           break;
         case "requires_payment_method":
           setMessage("Your payment was not successful, please try again.");
-          toast.error("Your payment was not successful, please try again.");
           break;
         default:
           setMessage("Something went wrong.");
-          toast.error("Something went wrong.");
           break;
       }
     });
@@ -63,112 +53,150 @@ export default function CheckoutFormPayDeposite({ payPrice, auctionId, onError,b
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!stripe || !elements) {
-      console.error("Stripe.js hasn't loaded yet");
-      return;
-    }
+    if (!stripe || !elements) return;
+
     setIsLoading(true);
     setMessage(null);
-    
+
     try {
-      // locking auction to prevent multiple bid at same time
-     await authAxios.post(api.app.auctions.lockAuction,{auctionId, bidAmount}).then(async (res)=>{
-      console.log('lockauctionCalled')
-        console.log('res',res)
-        if(res.data.success){
-          const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-              return_url: `${process.env.REACT_APP_STRIPE_RETURN_URL}${routes.app.home}/payDeposite?auctionId=${auctionId}`,
-            },
-          });
-    
-          if (error) {
-            const errorMessage = error.message || "An unexpected error occurred.";
-            setMessage(errorMessage);
-            toast.error(errorMessage);
-            if (onError) {
-              onError(errorMessage);
-            }
-          }
-        }else {
-  
-          toast.error("Failed to lock the auction. Please try again.");
+      const cardElement = elements.getElement(CardElement);
+
+      if (isArbon) {
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          clientSecret,
+          {
+            payment_method: { card: cardElement },
+          },
+        );
+
+        if (error) {
+          const errMsg = error.message || "Payment failed.";
+          setMessage(errMsg);
+          toast.error(errMsg);
+          if (onError) onError(errMsg);
+        } else if (
+          paymentIntent.status === "succeeded" ||
+          paymentIntent.status === "requires_capture"
+        ) {
+          toast.success("Deposit authorized successfully!");
+          if (onSuccess) onSuccess(paymentIntent);
+          setTimeout(() => {
+            window.location.href = `/my-product/${productId}/details`;
+          }, 1500);
         }
-      }) 
-      .catch((error)=>{
-        console.log('lock auction error:', error)
-      })
-    
-   
-     
-    } catch (err) {
-      console.error("Payment confirmation error:", err);
-      const errorMessage =err.response.data.message[lang] || "Failed to process payment. Please try again.";
-      setMessage(errorMessage);
-      toast.error(errorMessage);
-      if (onError) {
-        onError(errorMessage);
+      } else {
+        const res = await authAxios.post(api.app.auctions.lockAuction, {
+          auctionId,
+          bidAmount,
+        });
+
+        if (res.data.success) {
+          const { error, paymentIntent } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+              payment_method: { card: cardElement },
+            },
+          );
+
+          if (error) {
+            const errMsg = error.message || "Payment failed.";
+            setMessage(errMsg);
+            toast.error(errMsg);
+            if (onError) onError(errMsg);
+          } else if (
+            paymentIntent.status === "succeeded" ||
+            paymentIntent.status === "requires_capture"
+          ) {
+            toast.success("Bid placed successfully!");
+            if (onSuccess) onSuccess(paymentIntent);
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
+          }
+        } else {
+          toast.error("Could not lock auction.");
+        }
       }
+    } catch (err) {
+      console.error("Payment error:", err);
+      const errMsg =
+        err?.response?.data?.message?.[lang] || "An error occurred.";
+      setMessage(errMsg);
+      toast.error(errMsg);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const paymentElementOptions = {
-    layout: "tabs",
-    loader: "always",
-  };
-
   if (!stripe || !elements) {
     return (
-      <div className="text-center p-4">
-        <LoadingTest3arbon />
-        <p className="mt-2">Loading payment system...</p>
+      <div className="text-center p-8 bg-zinc-900/50 rounded-2xl border border-white/5">
+        <p className="text-zinc-500 text-sm italic font-medium">
+          Initializing Stripe...
+        </p>
       </div>
     );
   }
 
   return (
     <div className="relative">
-      <Dimmer
-        className="fixed w-full h-full top-0 bg-white/50"
-        active={isLoading || isStripeLoading}
-        inverted
-      >
-        <LoadingTest3arbon />
-      </Dimmer>
-
-      <form className="w-full mx-auto" id="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement 
-          id="payment-element" 
-          options={paymentElementOptions} 
-          onReady={() => setIsStripeLoading(false)}
-          onChange={(event) => {
-            if (event.error) {
-              setMessage(event.error.message);
-              if (onError) {
-                onError(event.error.message);
-              }
-            }
-          }}
-        />
+      <form className="w-full mx-auto" onSubmit={handleSubmit}>
+        <div className="p-5 bg-zinc-800 border border-white/20 rounded-2xl mb-6">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-3">
+            Card Details
+          </p>
+          <div className="w-full min-h-[45px]">
+            <CardElement
+              onReady={() => setIsStripeLoading(false)}
+              options={{
+                style: {
+                  base: {
+                    color: "#ffffff",
+                    fontFamily: '"Roboto", sans-serif',
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": { color: "#a1a1aa" },
+                  },
+                  invalid: { color: "#ef4444", iconColor: "#ef4444" },
+                },
+              }}
+            />
+          </div>
+        </div>
 
         {message && (
-          <div className="text-red-500 mt-4 text-center">
+          <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-xl text-red-500 text-sm text-center">
             {message}
           </div>
         )}
 
-        <Button
-          className="bg-primary hover:bg-primary-dark opacity-100 font-normal text-base ltr:font-serifEN rtl:font-serifAR text-white w-full h-[48px] rounded-lg mt-6"
-          loading={isLoading}
-          disabled={isLoading || !stripe || !elements || isStripeLoading}
-          id="submit"
+        <button
+          disabled={isLoading || isStripeLoading || !stripe || !elements}
+          className="w-full py-4 bg-zinc-100 hover:bg-white disabled:bg-zinc-700 disabled:opacity-50 text-zinc-900 font-bold rounded-2xl transition-all duration-300 shadow-lg shadow-black/20 flex items-center justify-center gap-2 group"
         >
-          {isLoading ? "Processing..." : `Pay ${formatCurrency(payPrice)}`}
-        </Button>
+          {isLoading ? (
+            <div className="w-5 h-5 border-2 border-zinc-900/30 border-t-zinc-900 rounded-full animate-spin" />
+          ) : (
+            <>
+              <span>Pay {formatCurrency(payPrice)}</span>
+              <i className="fi fi-rr-arrow-right mt-1 group-hover:translate-x-1 transition-transform" />
+            </>
+          )}
+        </button>
+
+        <div className="mt-8 text-center">
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="text-zinc-500 hover:text-zinc-300 text-xs font-medium transition-colors uppercase tracking-widest flex items-center justify-center gap-2 mx-auto"
+          >
+            <i className="fi fi-rr-arrow-left mt-0.5" />
+            Back to selection
+          </button>
+        </div>
       </form>
     </div>
   );
-}
+};
+
+export default CheckoutFormPayDeposite;

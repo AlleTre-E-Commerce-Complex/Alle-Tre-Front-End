@@ -130,6 +130,7 @@ const en = {
   [localizationKeys.yourFavourites]: "Your Favourites",
   [localizationKeys.thereAreNoFavouritesYet]: "There are no favourites yet.",
   [localizationKeys.viewDetails]: "Details",
+  [localizationKeys.depositDetails]: "Deposit Details",
   [localizationKeys.exploreCategories]: "Explore Categories",
   [localizationKeys.bidNow]: "Bid Now",
   [localizationKeys.popularCategories]: "Popular Categories",
@@ -138,7 +139,7 @@ const en = {
   [localizationKeys.seeLess]: "see Less",
   [localizationKeys.brand]: "Brand",
   [localizationKeys.Brands]: "BRAND",
-  [localizationKeys.model]:"MODEL",
+  [localizationKeys.model]: "MODEL",
   [localizationKeys.sellingType]: "Selling Type",
   [localizationKeys.auction]: "Auctions",
   [localizationKeys.products]: "Products",
@@ -179,12 +180,17 @@ const en = {
   [localizationKeys.fixed]: "Fixed",
   [localizationKeys.negotiable]: "Negotiable",
   [localizationKeys.setArbon]: "Set 3arbon",
-  [localizationKeys.arbonDescription]: "3arbon is a deposit and advance payment for the product to secure your purchase.",
+  [localizationKeys.arbonDescription]:
+    "3arbon is a deposit and advance payment for the product to secure your purchase.",
   [localizationKeys.yes]: "Yes",
   [localizationKeys.no]: "No",
   [localizationKeys.arbonAmount]: "3arbon Amount",
   [localizationKeys.payArbonAmount]: "Pay",
   [localizationKeys.pay]: "Pay",
+  [localizationKeys.releaseDeposit]: "Release Deposit",
+  [localizationKeys.objection]: "Raise Objection",
+  [localizationKeys.reason]: "Reason",
+  [localizationKeys.objectionDescription]: "Description",
   [localizationKeys.changeProductStatus]: "Change Product Status Here",
   [localizationKeys.myAccount]: "My Account",
   [localizationKeys.iamBiddingOn]: "I'm Bidding On",
@@ -341,9 +347,9 @@ const en = {
     "your location. you can manage them later .",
   [localizationKeys.manageYouAddresses]: "Manage you addresses",
   [localizationKeys.country]: "Country",
-  [localizationKeys.Country]:"COUNTRY",
+  [localizationKeys.Country]: "COUNTRY",
   [localizationKeys.city]: "City",
-  [localizationKeys.City]:"CITY",
+  [localizationKeys.City]: "CITY",
   [localizationKeys.address]: "Address",
   [localizationKeys.addressLabel]: "Address Label",
   [localizationKeys.zipCode]: "Postal code",
@@ -504,7 +510,8 @@ const en = {
   [localizationKeys.expand]: "Expand",
   [localizationKeys.logout]: "Logout",
   [localizationKeys.profileSettings]: "Profile Settings",
-  [localizationKeys.completeYourProfileToMakeYourActionsEasier]: "Complete Your Profile",
+  [localizationKeys.completeYourProfileToMakeYourActionsEasier]:
+    "Complete Your Profile",
   [localizationKeys.completeNowMasg]:
     "Please add your address details to listing items on 3arbon.",
   [localizationKeys.completeNow]: "Complete Now",
@@ -573,7 +580,8 @@ const en = {
   [localizationKeys.opsScheduled]: "Ops, there are no Scheduled auctions yet.",
   [localizationKeys.totalDraft]: "Total Draft Auctions..",
   [localizationKeys.opsDraft]: "Ops, there are no draft auctions yet.",
-  [localizationKeys.thereAreNoDraftProductsAtTheMoment]: "There are no draft products at the moment",
+  [localizationKeys.thereAreNoDraftProductsAtTheMoment]:
+    "There are no draft products at the moment",
   [localizationKeys.noPhotoAdded]: "No Photo Added",
   [localizationKeys.totalSold]: "Total Sold Auctions..",
   [localizationKeys.opsSold]: "Ops, there are no sold auctions yet.",
@@ -733,8 +741,10 @@ const en = {
     "Auction removed from Watchlist successfully",
   [localizationKeys.thisAuctionAddToWatchListBeenSuccessfully]:
     "Added to Watchlist successfully",
-  [localizationKeys.thisProductAddToFavouritesSuccessfully]: "Added to Favourites successfully",
-  [localizationKeys.thisProductRemovedFromFavouritesSuccessfully]: "Removed from Favourites successfully",
+  [localizationKeys.thisProductAddToFavouritesSuccessfully]:
+    "Added to Favourites successfully",
+  [localizationKeys.thisProductRemovedFromFavouritesSuccessfully]:
+    "Removed from Favourites successfully",
   [localizationKeys.thePasswordHasBeenEditSuccessfully]:
     "Password updated successfully",
   [localizationKeys.hasBeenDeleteSuccessfully]: "has been delete successfully",
@@ -749,8 +759,7 @@ const en = {
     "Your auction successfully saved as draft",
   [localizationKeys.yourAuctionIsCreatedSuccess]:
     "Your auction has been created successfully",
-  [localizationKeys.ProductListedSuccessfully]:
-    "Product listed successfully",
+  [localizationKeys.ProductListedSuccessfully]: "Product listed successfully",
   [localizationKeys.makeSureThatYouChooseTheLocationOrCreateAnotherOne]:
     "Select or add a location",
   //wallet
@@ -784,31 +793,43 @@ const en = {
   [localizationKeys.WithDrawalSuccessMessage]:
     "Success! Your withdrawal request has been processed successfully. Your funds are on their way, and you’ll receive them shortly. Thank you for using our service!",
   [localizationKeys.addAccount]: "Add account",
-  [localizationKeys.inclusiveOfAllTaxes]:"Inclusive of all taxes",
-  [localizationKeys.getDirections]:"Get Directions",
-  [localizationKeys.premiumListing]:"Premium Listing",
-  [localizationKeys.scrollToViewMore]:"Scroll to view more",
-  [localizationKeys.pictures]:"pictures",
-  [localizationKeys.showing]:"Showing",
-  [localizationKeys.of]:"of",
-  [localizationKeys.details]:"Details",
-  [localizationKeys.AllMyProductsDescription]:"Manage and track your product inventory with real-time analytics and stock status monitoring.",
-  [localizationKeys.thereAreNoInProgressProductsAtTheMoment]:"There are no in-progress products at the moment",
-  [localizationKeys.thereAreNoOutOfStockProductsAtTheMoment]:"There are no out of stock products at the moment",
-  [localizationKeys.thereAreNoSoldOutProductsAtTheMoment]:"There are no sold out products at the moment",
-  [localizationKeys.productMedia]:"Product Media",
-  [localizationKeys.addMore]:"Add More",
-  [localizationKeys.clickToUploadImagesAndVideos]:"Click to upload images and videos",
-  [localizationKeys.uploadUpTo12Items]:"Upload up to 12 items",
-  [localizationKeys.premiumRealEstateAvailableForExclusiveOwnership]:"Premium real estate available for exclusive ownership",
-  [localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters]:"Exceptional properties curated for discerning renters",
-  [localizationKeys.discoverExceptionalBreedsAndLovingCompanions]:"Discover exceptional breeds and loving companions",
-  [localizationKeys.provideAForeverHomeToARemarkableRescue]:"Provide a forever home to a remarkable rescue",
-  [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:"Pristine condition, untouched with original tags or packaging",
-  [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:"Pre-owned excellence, showing only minor to light signs of wear",
-  [localizationKeys.manageYourActivityAndAlerts]:"Manage Your Activity and Alerts",
-  [localizationKeys.vehicleSpecifications]:"Vehicle Specifications",
-  [localizationKeys.applyFilters]:"Apply Filters",
+  [localizationKeys.inclusiveOfAllTaxes]: "Inclusive of all taxes",
+  [localizationKeys.getDirections]: "Get Directions",
+  [localizationKeys.premiumListing]: "Premium Listing",
+  [localizationKeys.scrollToViewMore]: "Scroll to view more",
+  [localizationKeys.pictures]: "pictures",
+  [localizationKeys.showing]: "Showing",
+  [localizationKeys.of]: "of",
+  [localizationKeys.details]: "Details",
+  [localizationKeys.AllMyProductsDescription]:
+    "Manage and track your product inventory with real-time analytics and stock status monitoring.",
+  [localizationKeys.thereAreNoInProgressProductsAtTheMoment]:
+    "There are no in-progress products at the moment",
+  [localizationKeys.thereAreNoOutOfStockProductsAtTheMoment]:
+    "There are no out of stock products at the moment",
+  [localizationKeys.thereAreNoSoldOutProductsAtTheMoment]:
+    "There are no sold out products at the moment",
+  [localizationKeys.productMedia]: "Product Media",
+  [localizationKeys.addMore]: "Add More",
+  [localizationKeys.clickToUploadImagesAndVideos]:
+    "Click to upload images and videos",
+  [localizationKeys.uploadUpTo12Items]: "Upload up to 12 items",
+  [localizationKeys.premiumRealEstateAvailableForExclusiveOwnership]:
+    "Premium real estate available for exclusive ownership",
+  [localizationKeys.exceptionalPropertiesCuratedForDiscerningRenters]:
+    "Exceptional properties curated for discerning renters",
+  [localizationKeys.discoverExceptionalBreedsAndLovingCompanions]:
+    "Discover exceptional breeds and loving companions",
+  [localizationKeys.provideAForeverHomeToARemarkableRescue]:
+    "Provide a forever home to a remarkable rescue",
+  [localizationKeys.pristineConditionUntouchedWithOriginalTagsOrPackaging]:
+    "Pristine condition, untouched with original tags or packaging",
+  [localizationKeys.preOwnedExcellenceShowingOnlyMinorToLightSignsOfWear]:
+    "Pre-owned excellence, showing only minor to light signs of wear",
+  [localizationKeys.manageYourActivityAndAlerts]:
+    "Manage Your Activity and Alerts",
+  [localizationKeys.vehicleSpecifications]: "Vehicle Specifications",
+  [localizationKeys.applyFilters]: "Apply Filters",
   [localizationKeys.clear]: "Clear",
   [localizationKeys.sortBy]: "Sort By",
   [localizationKeys.sort]: "Sort",
@@ -827,7 +848,8 @@ const en = {
   [localizationKeys.areaLowestToHighest]: "Area Lowest to Highest",
   [localizationKeys.deleteProduct]: "Delete Product",
   [localizationKeys.confirmDeleteProduct]: "Confirm Delete Product",
-  [localizationKeys.areYouSureYouWantToDeleteThisProduct]: "Are you sure you want to delete this product?",
+  [localizationKeys.areYouSureYouWantToDeleteThisProduct]:
+    "Are you sure you want to delete this product?",
   [localizationKeys.newBidReceived]: "New Bid Received",
   [localizationKeys.auctionEndingSoon]: "Auction Ending Soon",
   [localizationKeys.productUpdate]: "Product Update",
@@ -838,27 +860,38 @@ const en = {
   [localizationKeys.viewReport]: "View Report",
   [localizationKeys.goToAuction]: "Go to Auction",
   [localizationKeys.notification]: "Notification",
-  [localizationKeys.productSavedAsDraft]: 'Your product "{title}" has been saved as a draft.',
-  [localizationKeys.productSuccessfullyUpdated]: 'Your product "{title}" has been successfully updated.',
-  [localizationKeys.productSuccessfullyListed]: 'Your product "{title}" has been successfully listed.',
-  [localizationKeys.statusChangedTo]: 'The status of your product "{title}" has been changed to {status}.',
+  [localizationKeys.productSavedAsDraft]:
+    'Your product "{title}" has been saved as a draft.',
+  [localizationKeys.productSuccessfullyUpdated]:
+    'Your product "{title}" has been successfully updated.',
+  [localizationKeys.productSuccessfullyListed]:
+    'Your product "{title}" has been successfully listed.',
+  [localizationKeys.statusChangedTo]:
+    'The status of your product "{title}" has been changed to {status}.',
   [localizationKeys.inStock]: "In Stock",
   [localizationKeys.outStock]: "Out Stock",
   [localizationKeys.soldOut]: "Sold Out",
-  [localizationKeys.productStatusUpdatedSuccessfully]: "Product status updated successfully!",
-  [localizationKeys.failedToUpdateStatus]: "Failed to update status. Please try again.",
+  [localizationKeys.productStatusUpdatedSuccessfully]:
+    "Product status updated successfully!",
+  [localizationKeys.failedToUpdateStatus]:
+    "Failed to update status. Please try again.",
   [localizationKeys.premium]: "Premium",
   [localizationKeys.newArrival]: "New Arrival",
   [localizationKeys.sku]: "SKU",
-  [localizationKeys.videoDurationCannotExceed1Minute]: "Video duration cannot exceed 1 minute",
-  [localizationKeys.compressingVideo]: "Compressing video... This may take a moment.",
-  [localizationKeys.processingPhoto]: "Processing photo {current} of {total}...",
-  [localizationKeys.watermarkingPhoto]: "Watermarking photo {current} of {total}...",
+  [localizationKeys.videoDurationCannotExceed1Minute]:
+    "Video duration cannot exceed 1 minute",
+  [localizationKeys.compressingVideo]:
+    "Compressing video... This may take a moment.",
+  [localizationKeys.processingPhoto]:
+    "Processing photo {current} of {total}...",
+  [localizationKeys.watermarkingPhoto]:
+    "Watermarking photo {current} of {total}...",
   [localizationKeys.validatingVideoDuration]: "Validating video duration...",
   [localizationKeys.uploadingPhoto]: "Uploading photo {current} of {total}...",
   [localizationKeys.uploadingVideo]: "Uploading video...",
   [localizationKeys.bulkUploading]: "Uploading {count} files...",
-  [localizationKeys.optimizationFinishedWarning]: "Please don't close this window until optimization is finished",
+  [localizationKeys.optimizationFinishedWarning]:
+    "Please don't close this window until optimization is finished",
   [localizationKeys.max5Images]: "Maximum 5 images",
   [localizationKeys.myBugReports]: "My Bug Reports",
   [localizationKeys.noBugReportsFound]: "No bug reports found",
@@ -905,11 +938,13 @@ const en = {
   [localizationKeys.today]: "Today",
   [localizationKeys.isItStillAvailable]: "Is it still available?",
   [localizationKeys.whatsYourFinalPrice]: "What's your final price?",
-  [localizationKeys.staySafeMessage]: "Stay safe on 3arbon! Keep chats on the app. Remember, Don't share your personal details.",
+  [localizationKeys.staySafeMessage]:
+    "Stay safe on 3arbon! Keep chats on the app. Remember, Don't share your personal details.",
   [localizationKeys.canISeeIt]: "Can I see it?",
   [localizationKeys.noConversationsYet]: "No conversations yet",
   [localizationKeys.yourConversations]: "Your conversations",
-  [localizationKeys.selectConversationFromSidebar]: "Select a conversation from the sidebar to start chatting with buyers or sellers.",
+  [localizationKeys.selectConversationFromSidebar]:
+    "Select a conversation from the sidebar to start chatting with buyers or sellers.",
   [localizationKeys.noMessagesYet]: "No messages yet",
   [localizationKeys.download]: "Download",
   [localizationKeys.sharedLocation]: "Shared Location",
@@ -922,14 +957,20 @@ const en = {
   [localizationKeys.loginToComment]: "Please login to comment",
   [localizationKeys.loginToLike]: "Please login to like",
   [localizationKeys.commentPostedSuccessfully]: "Comment posted successfully!",
-  [localizationKeys.commentUpdatedSuccessfully]: "Comment updated successfully!",
-  [localizationKeys.commentDeletedSuccessfully]: "Comment deleted successfully!",
+  [localizationKeys.commentUpdatedSuccessfully]:
+    "Comment updated successfully!",
+  [localizationKeys.commentDeletedSuccessfully]:
+    "Comment deleted successfully!",
   [localizationKeys.adminPanel]: "Admin Panel",
-  [localizationKeys.manageProductCommentsSubtitle]: "Search for products and manage user comments globally.",
+  [localizationKeys.adminObjections]: "Objections Management",
+  [localizationKeys.manageProductCommentsSubtitle]:
+    "Search for products and manage user comments globally.",
   [localizationKeys.searchProducts]: "Search Products",
-  [localizationKeys.searchToManageComments]: "Search for products to manage comments",
+  [localizationKeys.searchToManageComments]:
+    "Search for products to manage comments",
   [localizationKeys.noProductSelected]: "No Product Selected",
-  [localizationKeys.selectProductFromResults]: "Select a product from the search results to view and manage its comments.",
+  [localizationKeys.selectProductFromResults]:
+    "Select a product from the search results to view and manage its comments.",
   [localizationKeys.saveChanges]: "Save Changes",
   [localizationKeys.noProductsFound]: "No products found",
   [localizationKeys.reply]: "Reply",
@@ -939,11 +980,31 @@ const en = {
   [localizationKeys.generatingVideoCover]: "Generating video cover...",
   [localizationKeys.extractingVideoCover]: "Extracting video cover...",
   [localizationKeys.videoProcessedSuccessfully]: "Video processed successfully",
-  [localizationKeys.videoCompressionFailedSecurity]: "Video compression failed: Security headers (COOP/COEP) are missing.",
-  [localizationKeys.videoCompressionFailedFallback]: "Video compression failed, using original file",
+  [localizationKeys.videoCompressionFailedSecurity]:
+    "Video compression failed: Security headers (COOP/COEP) are missing.",
+  [localizationKeys.videoCompressionFailedFallback]:
+    "Video compression failed, using original file",
   [localizationKeys.failedToProcessFiles]: "Failed to process files",
   [localizationKeys.failedToUploadImage]: "Failed to upload image",
   [localizationKeys.bugReportUpdate]: "Bug Report Update",
+  [localizationKeys.objectionWarning]:
+    "Company charges will be applicable for solving the issue and finalizing the deposit release",
+  [localizationKeys.arbonSummary]: "Arbon Summary",
+  [localizationKeys.secureReservation]: "Secure Reservation",
+  [localizationKeys.reservationGuarantee]: "Reservation Guarantee",
+  [localizationKeys.theItemWillBeReservedExclusivelyForYou]: "The item will be reserved exclusively for you",
+  [localizationKeys.holdDuration]: "Hold Duration",
+  [localizationKeys.sevenDaysToCompleteTheTransaction]: "7 days to complete the transaction",
+  [localizationKeys.arbonNotice]: "Once Arbon is paid, the item is held for 7 days. If you withdraw, the Arbon is non-refundable.",
+  [localizationKeys.checkout]: "Checkout",
+  [localizationKeys.selectPreferredMethod]: "Select your preferred method",
+  [localizationKeys.creditDebitCard]: "Credit / Debit Card",
+  [localizationKeys.secureStripeGateway]: "Secure Stripe Gateway",
+  [localizationKeys.continueToPayment]: "Continue to Payment",
+  [localizationKeys.backToSelection]: "Back to Selection",
+  [localizationKeys.failedToLoadProductDetails]: "Failed to load product details.",
+  [localizationKeys.stripeSystemOffline]: "Stripe system offline. Please try again.",
+  [localizationKeys.pleaseSelectAPaymentMethod]: "Please select a payment method",
 };
 
 export default en;

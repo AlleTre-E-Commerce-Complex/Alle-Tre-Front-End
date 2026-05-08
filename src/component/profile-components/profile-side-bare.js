@@ -22,7 +22,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   const { pathname } = useLocation();
   const [pofileData, setPofileData] = useState();
 
-  const { logout } = useAuthState();
+  const { logout, user } = useAuthState();
 
   const [forceReload, setForceReload] = useState(false);
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
@@ -151,6 +151,11 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             isActive={pathname.startsWith(routes.app.profile.notifications)}
             onClick={() => history.push(routes.app.profile.notifications)}
           />
+          <NavLink
+            title={selectedContent[localizationKeys.depositDetails]}
+            isActive={pathname.startsWith(routes.app.profile.depositDetails)}
+            onClick={() => history.push(routes.app.profile.depositDetails)}
+          />
         </div>
 
         {/* Fixed Footer */}
@@ -257,6 +262,14 @@ const ProfileSideBare = ({ SetSid, sid }) => {
               isActive={pathname.startsWith(routes.app.profile.wallet)}
               onClick={() => {
                 history.push(routes.app.profile.wallet);
+                SetSid(false);
+              }}
+            />
+            <NavLink
+              title={selectedContent[localizationKeys.depositDetails]}
+              isActive={pathname.startsWith(routes.app.profile.depositDetails)}
+              onClick={() => {
+                history.push(routes.app.profile.depositDetails);
                 SetSid(false);
               }}
             />
