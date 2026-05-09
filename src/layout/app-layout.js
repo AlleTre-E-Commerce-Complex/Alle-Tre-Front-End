@@ -45,6 +45,7 @@ import PrivacyPolicy from "../component/shared/privacy-policy/privacy-policy";
 import MobileBottomNav from "../component/shared/mobile-bottom-nav/mobile-bottom-nav";
 import ChatWidget from "../component/chat-components/ChatWidget";
 import TermsAndConditions from "../component/shared/terms-and-condition/TermsAndCondition";
+import ObjectionReply from "../page/app/ObjectionReply/ObjectionReply";
 
 const AppLayouts = () => {
   const [sid, SetSid] = useState("");
@@ -250,6 +251,7 @@ const AppLayouts = () => {
               <Route path={routes.app.buyNow()} component={BuyNowPaymentPage} />
               <Route path={routes.app.payDeposite()} component={PayDeposite} />
               <Route path={routes.app.listProduct.payArbon()} component={ProductArbonCheckout} />
+              <Route path={routes.app.objectionDetails()} component={ObjectionReply} />
 
               <Route
                 path={routes.app.homeDetails()}

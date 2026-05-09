@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import userProfileicon from "../../../src/assets/icons/user-Profile-icon.png";
 import { MdLogout } from "react-icons/md";
@@ -14,6 +14,7 @@ import localizationKeys from "../../localization/localization-keys";
 import { useAuthState } from "context/auth-context";
 import { useSocket } from "context/socket-context";
 import LogoutModal from "../shared/logout-modal/logout-modal";
+import { Open } from "../../redux-store/auth-model-slice";
 
 const ProfileSideBare = ({ SetSid, sid }) => {
   const [lang] = useLanguage("");
@@ -23,6 +24,7 @@ const ProfileSideBare = ({ SetSid, sid }) => {
   const [pofileData, setPofileData] = useState();
 
   const { logout, user } = useAuthState();
+  const dispatch = useDispatch();
 
   const [forceReload, setForceReload] = useState(false);
   const { run: runPofile, isLoading: isLoadingPofile } = useAxios([]);
@@ -154,7 +156,13 @@ const ProfileSideBare = ({ SetSid, sid }) => {
           <NavLink
             title={selectedContent[localizationKeys.depositDetails]}
             isActive={pathname.startsWith(routes.app.profile.depositDetails)}
-            onClick={() => history.push(routes.app.profile.depositDetails)}
+            onClick={() => {
+              if (user) {
+                history.push(routes.app.profile.depositDetails);
+              } else {
+                dispatch(Open());
+              }
+            }}
           />
         </div>
 
@@ -257,19 +265,23 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                 SetSid(false);
               }}
             />
-            <NavLink
+            {/* <NavLink
               title={selectedContent[localizationKeys.Wallet]}
               isActive={pathname.startsWith(routes.app.profile.wallet)}
               onClick={() => {
                 history.push(routes.app.profile.wallet);
                 SetSid(false);
               }}
-            />
+            /> */}
             <NavLink
               title={selectedContent[localizationKeys.depositDetails]}
               isActive={pathname.startsWith(routes.app.profile.depositDetails)}
               onClick={() => {
-                history.push(routes.app.profile.depositDetails);
+                if (user) {
+                  history.push(routes.app.profile.depositDetails);
+                } else {
+                  dispatch(Open());
+                }
                 SetSid(false);
               }}
             />

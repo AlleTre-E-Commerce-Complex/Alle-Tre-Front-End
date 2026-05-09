@@ -70,20 +70,20 @@ const TermsAndConditionsModal = ({ open, setOpen, onList, onDraft, isLoading }) 
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-5 px-8 pb-14 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 px-5 sm:px-8 pb-6 sm:pb-10 pt-4">
           <button
-            className={`flex-1 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-primary dark:text-white border-2 border-gray-100 dark:border-white/10 h-[90px] rounded-lg font-black uppercase tracking-[0.3em] text-[14px] transition-all duration-300 active:scale-95 flex items-center justify-center gap-4 ${isLoading ? 'opacity-40 cursor-not-allowed' : ''}`}
+            className={`w-full sm:flex-1 shrink-0 bg-white dark:bg-white/5 hover:bg-gray-50 dark:hover:bg-white/10 text-primary dark:text-white border-2 border-gray-100 dark:border-white/10 h-[48px] rounded-lg font-black uppercase tracking-[0.2em] text-[13px] transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 ${isLoading ? 'opacity-40 cursor-not-allowed' : ''}`}
             onClick={onDraft}
             disabled={isLoading}
           >
-            <svg className="w-8 h-8 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
             </svg>
             <span>{selectedContent[localizationKeys.saveAsDraft]}</span>
           </button>
           
           <button
-            className={`flex-1 bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark text-white dark:text-black h-[90px] rounded-lg font-black uppercase tracking-[0.3em] text-[14px] transition-all duration-300 shadow-2xl shadow-primary/50 dark:shadow-yellow/30 active:scale-95 flex items-center justify-center gap-5 relative overflow-hidden group ${(!agreed || isLoading) ? 'opacity-40 cursor-not-allowed' : ''}`}
+            className={`w-full sm:flex-1 shrink-0 bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark text-white dark:text-black h-[48px] rounded-lg font-black uppercase tracking-[0.2em] text-[13px] transition-all duration-300 shadow-xl shadow-primary/30 dark:shadow-yellow/20 active:scale-95 flex items-center justify-center gap-2 relative overflow-hidden group ${(!agreed || isLoading) ? 'opacity-40 cursor-not-allowed' : ''}`}
             onClick={onList}
             disabled={!agreed || isLoading}
           >
@@ -92,12 +92,12 @@ const TermsAndConditionsModal = ({ open, setOpen, onList, onDraft, isLoading }) 
             
             {isLoading ? (
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 border-4 border-current border-t-transparent rounded-lg animate-spin" />
+                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-lg animate-spin" />
                 <span className="text-xl font-bold">{selectedContent[localizationKeys.processing]}</span>
               </div>
             ) : (
               <>
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                 </svg>
                 <span>{selectedContent[localizationKeys.listItem]}</span>

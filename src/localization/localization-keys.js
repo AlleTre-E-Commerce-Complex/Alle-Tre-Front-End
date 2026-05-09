@@ -890,6 +890,20 @@ const localizationKeys = {
   failedToLoadProductDetails: "failedToLoadProductDetails",
   stripeSystemOffline: "stripeSystemOffline",
   pleaseSelectAPaymentMethod: "pleaseSelectAPaymentMethod",
+  AmountMustBeLessThan: "AmountMustBeLessThan",
+  makeSureThatYouChooseAtLeastThreeOrMorePhotos: "makeSureThatYouChooseAtLeastThreeOrMorePhotos",
+  hiJustCheckingIn: "hiJustCheckingIn",
+  uploadImagesOrDocuments: "uploadImagesOrDocuments",
+  objectionReply: "objectionReply",
+  replyToObjection: "replyToObjection",
+  reasonForReply: "reasonForReply",
+  replyDescription: "replyDescription",
+  objectionExpired: "objectionExpired",
+  objectionExpiredDesc: "objectionExpiredDesc",
+  objectionDetails: "objectionDetails",
+  raisedBy: "raisedBy",
+  repliedSuccessfully: "repliedSuccessfully",
+  viewObjection:"viewObjection",
 };
 
 export default localizationKeys;

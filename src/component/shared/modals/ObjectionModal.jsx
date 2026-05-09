@@ -58,10 +58,10 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
     <Modal
       open={open}
       onClose={() => setOpen(false)}
-      className="max-w-[500px] w-full rounded-2xl overflow-hidden"
+      className="max-w-[500px] w-[95%] rounded-2xl overflow-hidden bg-transparent !border-none !shadow-none"
     >
-      <div className="bg-white dark:bg-[#1A1F2C]">
-        <div className="bg-primary p-4 text-center">
+      <div className="bg-white dark:bg-[#0F172A] border border-gray-100 dark:border-white/10 shadow-2xl">
+        <div className="bg-primary/95 dark:bg-[#1E293B]/90 backdrop-blur-md p-5 text-center border-b border-gray-100 dark:border-white/10">
           <h2 className="text-white text-xl font-bold">
             {selectedContent[localizationKeys.objection]}
           </h2>
@@ -75,7 +75,7 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
             </label>
             <input
               type="text"
-              className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 focus:ring-2 focus:ring-primary outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 dark:bg-[#1E293B] dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-yellow outline-none transition-all"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g. Item not as described"
@@ -88,7 +88,7 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
               {selectedContent[localizationKeys.objectionDescription]}
             </label>
             <textarea
-              className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 dark:bg-gray-800 focus:ring-2 focus:ring-primary outline-none transition-all min-h-[120px] resize-none"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 dark:bg-[#1E293B] dark:text-white focus:ring-2 focus:ring-primary dark:focus:ring-yellow outline-none transition-all min-h-[120px] resize-none"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Provide more details about your objection..."
@@ -98,7 +98,7 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
           {/* File Upload */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-bold text-gray-700 dark:text-gray-300">
-              {selectedContent[localizationKeys.uploadImages]}
+              {selectedContent[localizationKeys.uploadImagesOrDocuments]}
             </label>
             <div className="relative">
               <input
@@ -110,10 +110,10 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
               />
               <label
                 htmlFor="objection-files"
-                className="flex flex-col items-center justify-center w-full p-6 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl cursor-pointer hover:border-primary transition-colors bg-gray-50 dark:bg-gray-800/50"
+                className="flex flex-col items-center justify-center w-full p-6 border-2 border-dashed border-gray-300 dark:border-white/10 rounded-xl cursor-pointer hover:border-primary dark:hover:border-yellow transition-colors bg-gray-50 dark:bg-white/5"
               >
-                <FaCloudUploadAlt className="text-3xl text-gray-400 mb-2" />
-                <span className="text-sm text-gray-500">
+                <FaCloudUploadAlt className="text-3xl text-gray-400 dark:text-gray-500 mb-2" />
+                <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">
                   {selectedContent[localizationKeys.clickToBrowse]}
                 </span>
               </label>
@@ -151,11 +151,11 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
           )}
 
           {/* Warning Message */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-500/30 rounded-xl p-4 flex gap-3">
             <svg className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <p className="text-xs text-amber-800 leading-relaxed font-medium">
+            <p className="text-xs text-amber-800 dark:text-amber-200/90 leading-relaxed font-medium">
               {selectedContent[localizationKeys.objectionWarning]}
             </p>
           </div>
@@ -164,13 +164,13 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
             <button
               onClick={handleSubmit}
               disabled={isLoading}
-              className="flex-grow py-3 bg-primary hover:bg-primary-dark text-white font-bold rounded-xl transition-all disabled:opacity-50"
+              className="flex-1 py-3.5 bg-primary dark:bg-yellow hover:bg-primary-dark dark:hover:bg-yellow-dark text-white dark:text-black font-black uppercase tracking-wider text-sm rounded-xl transition-all shadow-lg shadow-primary/30 dark:shadow-yellow/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Submitting..." : selectedContent[localizationKeys.Submit]}
             </button>
             <button
               onClick={() => setOpen(false)}
-              className="px-6 py-3 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
+              className="px-8 py-3.5 border-2 border-gray-200 dark:border-white/10 text-gray-600 dark:text-white font-black uppercase tracking-wider text-sm rounded-xl hover:bg-gray-50 dark:hover:bg-white/5 transition-all active:scale-95"
             >
               {selectedContent[localizationKeys.cancel]}
             </button>

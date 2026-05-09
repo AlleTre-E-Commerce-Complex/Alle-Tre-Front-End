@@ -124,14 +124,19 @@ const DepositDetails = () => {
                   >
                     {item.title}
                   </h3>
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-xs text-gray-500">
-                    <span>{moment(item.createdAt).format("MMM DD, YYYY")}</span>
-                    <span>
-                      {item.userId === user?.id 
-                        ? `Buyer: ${item.arbonBuyer?.userName || "N/A"}` 
-                        : `Seller: ${item.user?.userName || "N/A"}`
-                      }
-                    </span>
+                  <div className="flex flex-col gap-1 mt-1">
+                    <p className="text-xs text-gray-500">{moment(item.arbonPaidAt || item.createdAt).format("MMM DD, HH:mm")} • Buyer: {item.arbonBuyer?.userName || "N/A"}</p>
+                  
+                  {item.arbonStatus === "DISPUTED" && item.objections?.[0] && (() => {
+                    const objection = item.objections[0];
+                    const isLate = objection.repliedAt && moment(objection.repliedAt).isAfter(moment(objection.createdAt).add(2, "days"));
+                    const isExpiredNoReply = !objection.repliedAt && moment().isAfter(moment(objection.createdAt).add(2, "days"));
+                    
+                    if (isLate) return <span className="mt-1 px-2 py-0.5 bg-red-100 text-red-700 text-[10px] font-black uppercase rounded w-fit">Late Reply</span>;
+                    if (isExpiredNoReply) return <span className="mt-1 px-2 py-0.5 bg-red-100 text-red-700 text-[10px] font-black uppercase rounded w-fit">Expired</span>;
+                    if (objection.repliedAt) return <span className="mt-1 px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-black uppercase rounded w-fit">Replied</span>;
+                    return null;
+                  })()}
                   </div>
                 </div>
 
@@ -148,7 +153,7 @@ const DepositDetails = () => {
                       {selectedContent[localizationKeys.releaseDeposit]}
                     </button>
                   )}
-                  {item.userId === user?.id && item.arbonStatus === "PAID" && (
+                  {item.userId === user?.id && item.arbonStatus === "PAID" && !item.objections?.[0] && (
                     <button
                       onClick={() => handleObjectionClick(item)}
                       className="flex-grow md:flex-grow-0 px-4 py-2 border border-red-200 text-red-600 hover:bg-red-50 text-sm font-bold rounded-lg transition-colors"
@@ -156,6 +161,26 @@ const DepositDetails = () => {
                       {selectedContent[localizationKeys.objection]}
                     </button>
                   )}
+                  {(item.arbonStatus === "DISPUTED" || item.objections?.[0]) && item.objections?.[0] && (() => {
+                    const objection = item.objections[0];
+                    const isExpired = moment().isAfter(moment(objection.createdAt).add(2, "days"));
+                    const hasReplied = !!objection.repliedAt;
+                    const isSender = objection.userId === user?.id;
+
+                    // If it's expired and no reply was made, and it's not the sender, we might want to still show "Details" instead of hiding
+                    // Or if you strictly want to hide the "Reply" action:
+                    return (
+                      <button
+                        onClick={() => history.push(`/objection/${objection.id}`)}
+                        className="flex-grow md:flex-grow-0 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold rounded-lg transition-colors"
+                      >
+                        {hasReplied || isSender || isExpired
+                          ? selectedContent[localizationKeys.viewObjection]
+                          : selectedContent[localizationKeys.replyToObjection]
+                        }
+                      </button>
+                    );
+                  })()}
                   <button
                     onClick={() => history.push(routes.app.listProduct.details(item.id))}
                     className="flex-grow md:flex-grow-0 px-4 py-2 border border-gray-200 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-bold rounded-lg transition-colors"
