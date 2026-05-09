@@ -119,6 +119,7 @@ const routes = {
       depositDetails: `/profile/deposit-details`,
       notifications: `/profile/notifications`,
     },
+    objectionDetails: (objectionId = ":objectionId") => `/objection/${objectionId}`,
     admin: {
       comments: `/admin/comments`,
       objections: `/profile/admin-objections`,

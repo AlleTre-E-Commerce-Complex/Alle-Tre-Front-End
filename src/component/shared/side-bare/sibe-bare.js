@@ -117,6 +117,14 @@ const Sidebar = ({ SetSid, sid }) => {
     } else dispatch(Open());
   };
 
+  const handleDepositDetails = () => {
+    if (user) {
+      history.push(routes.app.profile.depositDetails);
+    } else {
+      dispatch(Open());
+    }
+  };
+
   const { logout } = useAuthState();
 
   const socket = useSocket();
@@ -252,6 +260,14 @@ const Sidebar = ({ SetSid, sid }) => {
                 isActive={pathname.startsWith(routes.app.profile.purchased)}
                 onClick={() => {
                   handelPurchased();
+                  SetSid(false);
+                }}
+              />
+              <NavLink
+                title={selectedContent[localizationKeys.depositDetails]}
+                isActive={pathname.startsWith(routes.app.profile.depositDetails)}
+                onClick={() => {
+                  handleDepositDetails();
                   SetSid(false);
                 }}
               />

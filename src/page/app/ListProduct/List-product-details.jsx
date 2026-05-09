@@ -707,7 +707,10 @@ const ListProductDetails = () => {
     isArbon: Yup.boolean(),
     arbonAmount: Yup.number().when("isArbon", {
       is: true,
-      then: Yup.number().required(selectedContent[localizationKeys.required]).min(1, selectedContent[localizationKeys.AmountMustBeMoreThan1AED]),
+      then: Yup.number()
+        .required(selectedContent[localizationKeys.required])
+        .min(1, selectedContent[localizationKeys.AmountMustBeMoreThan1AED])
+        .max(500, selectedContent[localizationKeys.AmountMustBeLessThan] ? selectedContent[localizationKeys.AmountMustBeLessThan].replace("{amount}", "500") : "Amount must be less than or equal to 500"),
       otherwise: Yup.number().notRequired(),
     }),
   });
@@ -1413,6 +1416,7 @@ const ListProductDetails = () => {
                               <div className="animate-in fade-in slide-in-from-top-1 duration-300">
                                 <FormikInput
                                   min={0}
+                                  max={500}
                                   type="number"
                                   name="arbonAmount"
                                   placeholder={selectedContent[localizationKeys.arbonAmount]}

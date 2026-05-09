@@ -126,7 +126,7 @@ const ar = {
   [localizationKeys.yourFavourites]: "قائمة المفضلة",
   [localizationKeys.thereAreNoFavouritesYet]: "لا توجد مفضلات حتى الآن.",
   [localizationKeys.viewDetails]: "تفاصيل",
-  [localizationKeys.depositDetails]: "تفاصيل العربون",
+  [localizationKeys.depositDetails]: "تفاصيل الوديعة",
   [localizationKeys.exploreCategories]: "استكشف الفئات",
   [localizationKeys.bidNow]: "المزايدة الآن",
   [localizationKeys.popularCategories]: "الفئات الشائعة",
@@ -173,7 +173,7 @@ const ar = {
   [localizationKeys.negotiable]: "قابل للتفاوض",
   [localizationKeys.setArbon]: "تحديد عربون",
   [localizationKeys.arbonDescription]:
-    "العربون هو مبلغ مقدم لضمان جدية الشراء وتأمين المنتج.",
+    "العربون هو مبلغ مقدم لضمان جدية الشراء وتأمين المنتج. الحد الأقصى المسموح به هو 500 درهم.",
   [localizationKeys.yes]: "نعم",
   [localizationKeys.no]: "لا",
   [localizationKeys.arbonAmount]: "مبلغ العربون",
@@ -997,6 +997,19 @@ const ar = {
   [localizationKeys.failedToLoadProductDetails]: "فشل تحميل تفاصيل المنتج.",
   [localizationKeys.stripeSystemOffline]: "نظام Stripe غير متصل بالإنترنت حالياً. يرجى المحاولة مرة أخرى.",
   [localizationKeys.pleaseSelectAPaymentMethod]: "يرجى اختيار وسيلة دفع",
+  [localizationKeys.AmountMustBeLessThan]: "يجب أن يكون مبلغ العربون أقل من أو يساوي {amount}",
+  [localizationKeys.makeSureThatYouChooseAtLeastThreeOrMorePhotos]: "تأكد من اختيار 3 صور على الأقل",
+  [localizationKeys.uploadImagesOrDocuments]: "تحميل صور أو مستندات",
+  [localizationKeys.objectionReply]: "الرد على الاعتراض",
+  [localizationKeys.replyToObjection]: "الرد على الاعتراض",
+  [localizationKeys.reasonForReply]: "سبب الرد",
+  [localizationKeys.replyDescription]: "وصف الرد",
+  [localizationKeys.objectionExpired]: "انتهت فترة الاعتراض",
+  [localizationKeys.objectionExpiredDesc]: "لقد انتهت فترة اليومين للرد على هذا الاعتراض.",
+  [localizationKeys.objectionDetails]: "تفاصيل الاعتراض",
+  [localizationKeys.raisedBy]: "تم رفعه بواسطة",
+  [localizationKeys.repliedSuccessfully]: "تم إرسال ردك بنجاح.",
+  [localizationKeys.viewObjection]: "عرض الاعتراض",
 };
 
 export default ar;
