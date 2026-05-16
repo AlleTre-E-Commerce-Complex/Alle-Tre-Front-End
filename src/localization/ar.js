@@ -1062,6 +1062,11 @@ const ar = {
   [localizationKeys.officialResolution]: "القرار الرسمي",
   [localizationKeys.evidence]: "الدليل",
   [localizationKeys.viewDecision]: "عرض القرار",
+  [localizationKeys.refunded]: "تم الاسترداد",
+  [localizationKeys.paid]: "تم الدفع",
+  [localizationKeys.disputed]: "قيد النزاع",
+  [localizationKeys.released]: "تم الإطلاق",
+  [localizationKeys.available]: "متاح",
 };
 
 export default ar;

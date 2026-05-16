@@ -164,9 +164,13 @@ const DepositDetails = () => {
                         ? "bg-green-50 text-green-600 border-green-100 dark:bg-green-500/10 dark:border-green-500/20" 
                         : item.arbonStatus === "DISPUTED"
                         ? "bg-red-50 text-red-600 border-red-100 dark:bg-red-500/10 dark:border-red-500/20"
+                        : item.arbonStatus === "RELEASED"
+                        ? "bg-blue-50 text-blue-600 border-blue-100 dark:bg-blue-500/10 dark:border-blue-500/20"
+                        : item.arbonStatus === "REFUNDED"
+                        ? "bg-amber-50 text-amber-600 border-amber-100 dark:bg-amber-500/10 dark:border-amber-500/20"
                         : "bg-gray-50 text-gray-600 border-gray-100 dark:bg-white/5 dark:border-white/10"
                     }`}>
-                      {item.arbonStatus}
+                      {selectedContent[localizationKeys[item.arbonStatus?.toLowerCase()]] || item.arbonStatus}
                     </div>
                   </div>
 
