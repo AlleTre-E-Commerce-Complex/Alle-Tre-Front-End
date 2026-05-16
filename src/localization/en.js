@@ -1070,6 +1070,11 @@ const en = {
   [localizationKeys.officialResolution]: "Official Resolution",
   [localizationKeys.evidence]: "Evidence",
   [localizationKeys.viewDecision]: "View Decision",
+  [localizationKeys.refunded]: "Refunded",
+  [localizationKeys.paid]: "Paid",
+  [localizationKeys.disputed]: "Disputed",
+  [localizationKeys.released]: "Released",
+  [localizationKeys.available]: "Available",
 };
 
 export default en;

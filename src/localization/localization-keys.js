@@ -954,6 +954,11 @@ const localizationKeys = {
   officialResolution: "officialResolution",
   evidence: "evidence",
   viewDecision: "viewDecision",
+  refunded: "refunded",
+  paid: "paid",
+  disputed: "disputed",
+  released: "released",
+  available: "available",
 };
 
 export default localizationKeys;
