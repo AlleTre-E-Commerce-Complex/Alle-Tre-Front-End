@@ -401,14 +401,6 @@ const SummaryListedSection = () => {
   const isBuyer = Number(user?.id) === Number(listedProductsData?.arbonBuyerId);
   const isSeller = Number(user?.id) === Number(listedProductsData?.userId);
 
-  console.log('ARBON DEBUG:', {
-    currentUserId: user?.id,
-    productUserId: listedProductsData?.userId,
-    isSeller,
-    isArbonPaid,
-    arbonStatus: listedProductsData?.arbonStatus
-  });
-
   return (
     <div className="bg-white dark:bg-primary min-h-screen pt-32 pb-20 transition-colors duration-300">
       <Dimmer

@@ -204,7 +204,7 @@ export const ChatProvider = ({ children }) => {
         });
 
         socket.on("messages_read", ({ conversationId, readerId }) => {
-            console.log("Socket: Received messages_read", { conversationId, readerId });
+            // console.log("Socket: Received messages_read", { conversationId, readerId });
             const currentActive = activeConversationRef.current;
             
             if (currentActive && Number(conversationId) === Number(currentActive.id)) {
