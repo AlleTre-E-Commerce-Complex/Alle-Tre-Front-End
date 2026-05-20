@@ -44,6 +44,7 @@ const ProductArbonCheckout = () => {
 
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -56,8 +57,8 @@ const ProductArbonCheckout = () => {
         const balanceRes = await authAxios.get(api.app.Wallet.getBalance);
         setWalletBalance(balanceRes.data);
 
-        // Force Stripe for testing
-        setIsWalletPayment(false);
+        // Do not force Stripe, let the user choose
+        setIsWalletPayment(null);
       } catch (err) {
         console.error("PRODUCT ARBON CHECKOUT ERROR:", err);
         const errorMessage = err?.response?.data?.message || err?.message || selectedContent[localizationKeys.failedToLoadProductDetails];
@@ -125,25 +126,18 @@ const ProductArbonCheckout = () => {
   const isRTL = lang === "ar";
 
   return (
-    <div className="min-h-screen bg-white dark:bg-primary pt-24 md:pt-32 pb-20 px-4 md:px-8 relative overflow-hidden flex flex-col items-center justify-center">
-      {/* Dynamic Background Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,var(--color-primary-dark),transparent_70%)] opacity-40"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,var(--color-primary),transparent_50%)] opacity-10"></div>
-      
-      {/* Decorative Background Elements */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] -z-10 animate-pulse duration-[10s]"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[150px] -z-10 animate-pulse duration-[15s]"></div>
+    <div className="min-h-screen bg-zinc-50 dark:bg-primary pt-36 md:pt-32 pb-20 px-4 md:px-8 relative flex flex-col justify-start md:justify-center">
 
       <Dimmer active={isLoading} inverted className="fixed w-full h-full top-0 z-[100] bg-black/60 backdrop-blur-md">
         <LoadingTest3arbon />
       </Dimmer>
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto w-full mt-8 md:mt-0">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10 items-start">
           
           {/* Left Column: Summary Card */}
           <div className="lg:col-span-5 space-y-6 order-2 lg:order-1">
-            <div className="bg-white dark:bg-primary-dark backdrop-blur-sm rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-white/5 relative overflow-hidden group">
+            <div className="bg-white dark:bg-primary-dark backdrop-blur-sm rounded-[2.5rem] p-6 md:p-8 border border-zinc-100 dark:border-white/5 relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white dark:bg-primary-dark rounded-full -mr-20 -mt-20 blur-3xl group-hover:bg-primary/20 transition-colors duration-700"></div>
               
               <div className="flex items-center gap-4 mb-8">
@@ -151,7 +145,7 @@ const ProductArbonCheckout = () => {
                   <IoDocumentTextOutline size={28} />
                 </div>
                 <div>
-                  <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight leading-none">
+                  <h2 className="text-xl md:text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight leading-none">
                     {selectedContent[localizationKeys.arbonSummary]}
                   </h2>
                   <p className="text-zinc-500 text-[10px] md:text-xs mt-1 uppercase tracking-widest font-bold">{selectedContent[localizationKeys.secureReservation]}</p>
@@ -159,17 +153,17 @@ const ProductArbonCheckout = () => {
               </div>
 
               {/* Product Info Section */}
-              <div className="bg-white dark:bg-primary-dark rounded-3xl p-5 md:p-6 border border-white/5 mb-8 hover:border-white/10 transition-colors">
+              <div className="bg-zinc-50 dark:bg-primary-dark/40 rounded-3xl p-5 md:p-6 border border-zinc-150 dark:border-white/5 mb-8 hover:border-zinc-200 dark:hover:border-white/10 transition-colors">
                 <div className="flex gap-4 md:gap-5">
                   <div className="relative shrink-0">
                     <img 
                       src={productData?.images?.[0]?.imageLink} 
                       alt={productData?.title} 
-                      className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-2xl shadow-lg border border-white/10"
+                      className="w-24 h-24 md:w-28 md:h-28 object-cover rounded-2xl shadow-lg border border-zinc-200 dark:border-white/10"
                     />
                   </div>
                   <div className="flex flex-col justify-center">
-                    <h3 className="text-base md:text-lg font-bold text-white line-clamp-2 leading-tight">
+                    <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-white line-clamp-2 leading-tight">
                       {productData?.title}
                     </h3>
                     <div className="mt-3">
@@ -184,12 +178,12 @@ const ProductArbonCheckout = () => {
 
               {/* Trust Badges */}
               <div className="grid grid-cols-1 gap-3 md:gap-4">
-                <div className="flex items-start gap-4 p-4 md:p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                <div className="flex items-start gap-4 p-4 md:p-5 rounded-2xl bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500 shrink-0">
                     <IoShieldCheckmarkOutline size={22} />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-white">
+                    <p className="text-sm font-bold text-zinc-900 dark:text-white">
                       {selectedContent[localizationKeys.reservationGuarantee]}
                     </p>
                     <p className="text-xs text-zinc-500 leading-relaxed mt-0.5">
@@ -198,12 +192,12 @@ const ProductArbonCheckout = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 md:p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                <div className="flex items-start gap-4 p-4 md:p-5 rounded-2xl bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/5 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0">
                     <IoTimeOutline size={22} />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-white">
+                    <p className="text-sm font-bold text-zinc-900 dark:text-white">
                       {selectedContent[localizationKeys.holdDuration]}
                     </p>
                     <p className="text-xs text-zinc-500 leading-relaxed mt-0.5">
@@ -214,10 +208,10 @@ const ProductArbonCheckout = () => {
               </div>
 
               {/* Warning Notice */}
-              <div className="mt-8 p-5 md:p-6 bg-red-500/5 rounded-3xl border border-red-500/10">
+              <div className="mt-8 p-5 md:p-6 bg-red-50 dark:bg-red-500/5 rounded-3xl border border-red-100 dark:border-red-500/10">
                 <div className="flex gap-3">
                   <IoInformationCircleOutline className="text-red-500 shrink-0 mt-0.5" size={16} />
-                  <p className="text-[10px] md:text-[11px] leading-relaxed text-zinc-400 font-medium italic">
+                  <p className="text-[10px] md:text-[11px] leading-relaxed text-red-700/85 dark:text-zinc-400 font-medium italic">
                     {selectedContent[localizationKeys.arbonNotice]}
                   </p>
                 </div>
@@ -227,10 +221,10 @@ const ProductArbonCheckout = () => {
 
           {/* Right Column: Payment Gateway */}
           <div className="lg:col-span-7 order-1 lg:order-2">
-            <div className="bg-white dark:bg-primary-dark rounded-[2.5rem] p-6 md:p-10 border border-white/5 min-h-[500px] md:min-h-[600px] flex flex-col transition-all duration-500">
+            <div className="bg-white dark:bg-primary-dark rounded-[2.5rem] p-6 md:p-10 border border-zinc-100 dark:border-white/5 flex flex-col transition-all duration-500">
               
               <div className="mb-10 md:mb-12">
-                <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter leading-none">
+                <h2 className="text-2xl md:text-3xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter leading-none">
                   {selectedContent[localizationKeys.checkout]}
                 </h2>
                 <p className="text-zinc-500 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">{selectedContent[localizationKeys.selectPreferredMethod]}</p>
@@ -240,53 +234,51 @@ const ProductArbonCheckout = () => {
               {!showStripePayment && !showWalletPayment && (
                 <div className="flex-grow flex flex-col justify-between animate-in fade-in slide-in-from-bottom-4 duration-700">
                   <div className="space-y-4 md:space-y-6">
-                    {/* Wallet Option Card - HIDDEN FOR NOW */}
-                    {/* 
+                    {/* Wallet Option Card */}
                     <div 
                       onClick={() => setIsWalletPayment(true)}
-                      className={`p-6 rounded-[2rem] border-2 transition-all cursor-pointer flex items-center justify-between group ${
-                        isWalletPayment === true ? 'border-primary bg-primary/5' : 'border-white/5 bg-white/5 hover:border-white/20'
+                      className={`p-5 md:p-6 rounded-[2rem] border-2 transition-all cursor-pointer flex items-center justify-between group ${
+                        isWalletPayment === true ? 'border-primary bg-primary/5' : 'border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/5 hover:border-zinc-300 dark:hover:border-white/20'
                       }`}
                     >
-                      <div className="flex items-center gap-5">
-                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${
-                          isWalletPayment === true ? 'bg-primary text-black' : 'bg-zinc-800 text-zinc-400'
+                      <div className="flex items-center gap-4 md:gap-5">
+                        <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all ${
+                          isWalletPayment === true ? 'bg-primary text-white scale-105' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700'
                         }`}>
-                          <IoWalletOutline size={30} />
+                          <IoWalletOutline size={28} />
                         </div>
                         <div>
-                          <p className="text-white font-bold text-lg">My Wallet</p>
-                          <p className="text-zinc-500 text-sm">Balance: {formatCurrency(walletBalance)}</p>
+                          <p className="text-zinc-900 dark:text-white font-bold text-base md:text-lg tracking-tight">My Wallet</p>
+                          <p className="text-zinc-500 text-[10px] md:text-sm font-medium">Balance: {formatCurrency(walletBalance)}</p>
                         </div>
                       </div>
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                        isWalletPayment === true ? 'border-primary' : 'border-zinc-700'
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
+                        isWalletPayment === true ? 'border-primary' : 'border-zinc-300 dark:border-zinc-700'
                       }`}>
                         {isWalletPayment === true && <div className="w-3 h-3 bg-primary rounded-full animate-in zoom-in"></div>}
                       </div>
                     </div>
-                    */}
 
                     {/* Stripe/Card Option Card */}
                     <div 
                       onClick={() => setIsWalletPayment(false)}
                       className={`p-5 md:p-6 rounded-[2rem] border-2 transition-all cursor-pointer flex items-center justify-between group ${
-                        isWalletPayment === false ? 'border-primary bg-primary/5' : 'border-white/5 bg-white/5 hover:border-white/20'
+                        isWalletPayment === false ? 'border-primary bg-primary/5' : 'border-zinc-200 dark:border-white/5 bg-zinc-50 dark:bg-white/5 hover:border-zinc-300 dark:hover:border-white/20'
                       }`}
                     >
                       <div className="flex items-center gap-4 md:gap-5">
                         <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center transition-all ${
-                          isWalletPayment === false ? 'bg-primary text-black scale-105' : 'bg-zinc-800 text-zinc-400 group-hover:bg-zinc-700'
+                          isWalletPayment === false ? 'bg-primary text-white scale-105' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 group-hover:bg-zinc-200 dark:group-hover:bg-zinc-700'
                         }`}>
                           <IoCardOutline size={28} />
                         </div>
                         <div>
-                          <p className="text-white font-bold text-base md:text-lg tracking-tight">{selectedContent[localizationKeys.creditDebitCard]}</p>
+                          <p className="text-zinc-900 dark:text-white font-bold text-base md:text-lg tracking-tight">{selectedContent[localizationKeys.creditDebitCard]}</p>
                           <p className="text-zinc-500 text-[10px] md:text-sm font-medium">{selectedContent[localizationKeys.secureStripeGateway]}</p>
                         </div>
                       </div>
                       <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
-                        isWalletPayment === false ? 'border-primary' : 'border-zinc-700'
+                        isWalletPayment === false ? 'border-primary' : 'border-zinc-300 dark:border-zinc-700'
                       }`}>
                         {isWalletPayment === false && <div className="w-3 h-3 bg-primary rounded-full animate-in zoom-in"></div>}
                       </div>
@@ -296,9 +288,64 @@ const ProductArbonCheckout = () => {
                   <button 
                     onClick={handlePaymentSubmit}
                     disabled={isWalletPayment === null}
-                    className="w-full bg-primary hover:bg-primary/90 text-black font-black py-4 md:py-5 rounded-2xl mt-10 transition-all disabled:opacity-30 disabled:cursor-not-allowed uppercase tracking-[0.2em] text-xs md:text-sm shadow-xl shadow-primary/10 hover:shadow-primary/20 active:scale-[0.98]"
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-black py-4 md:py-5 rounded-2xl mt-10 transition-all disabled:opacity-30 disabled:cursor-not-allowed uppercase tracking-[0.2em] text-xs md:text-sm active:scale-[0.98]"
                   >
                     {selectedContent[localizationKeys.continueToPayment]}
+                  </button>
+                </div>
+              )}
+
+              {/* Active Wallet Interface */}
+              {showWalletPayment && (
+                <div className="animate-in fade-in slide-in-from-right-8 duration-500 flex-grow">
+                  <div className="bg-zinc-50 dark:bg-white/5 rounded-[2rem] p-4 md:p-8 border border-zinc-150 dark:border-white/5 mb-8">
+                    <div className="text-center py-10 md:py-16">
+                      <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                        <IoWalletOutline size={48} className="text-primary" />
+                      </div>
+                      <h3 className="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight mb-2">Wallet Payment</h3>
+                      <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-8 font-medium">Your current balance: <span className="text-zinc-900 dark:text-white font-bold">{formatCurrency(walletBalance)}</span></p>
+                      
+                      {Number(walletBalance) >= Number(productData?.arbonAmount) ? (
+                        <button 
+                          onClick={async () => {
+                            try {
+                              setIsLoading(true);
+                              const response = await authAxios.post(api.app.payments.payArbon, {
+                                productId: Number(productId),
+                                amount: Number(productData.arbonAmount),
+                                currency: "WALLET",
+                                isWalletPayment: true
+                              });
+                              if (response.data.success) {
+                                toast.success(lang === "ar" ? "تم دفع العربون بنجاح" : "Arbon deposit paid successfully");
+                                history.push("/"); // Or to product page
+                              }
+                            } catch (err) {
+                              const errorMsg = err?.response?.data?.message?.en || err?.response?.data?.message || "Wallet payment failed";
+                              toast.error(errorMsg);
+                            } finally {
+                              setIsLoading(false);
+                            }
+                          }}
+                          className="w-full md:w-auto px-10 bg-primary hover:bg-primary/90 text-white font-black py-4 md:py-5 rounded-2xl transition-all active:scale-[0.98] uppercase tracking-[0.2em] text-xs md:text-sm"
+                        >
+                          CONFIRM PAYMENT OF {formatCurrency(productData?.arbonAmount)}
+                        </button>
+                      ) : (
+                        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 max-w-md mx-auto text-red-400 text-sm font-medium">
+                          <IoInformationCircleOutline size={24} className="mx-auto mb-2 text-red-500" />
+                          Insufficient wallet balance. Please add funds to your wallet or use a card.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => { setShowWalletPayment(false); setIsWalletPayment(null); }}
+                    className="mt-4 md:mt-6 text-zinc-500 hover:text-primary text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 transition-colors mx-auto group"
+                  >
+                    <span className="group-hover:-translate-x-1 transition-transform inline-block">{lang === "ar" ? "→" : "←"}</span>
+                    <span>{selectedContent[localizationKeys.backToSelection]}</span>
                   </button>
                 </div>
               )}
@@ -306,7 +353,7 @@ const ProductArbonCheckout = () => {
               {/* Active Stripe Interface */}
               {showStripePayment && clientSecret && (
                 <div className="animate-in fade-in slide-in-from-right-8 duration-500 flex-grow">
-                  <div className="bg-white/5 rounded-[2rem] p-4 md:p-8 border border-white/5 mb-8">
+                  <div className="bg-zinc-50 dark:bg-white/5 rounded-[2rem] p-4 md:p-8 border border-zinc-150 dark:border-white/5 mb-8">
                     <div style={{ minHeight: "300px" }}>
                       <Elements 
                         key={clientSecret} 

@@ -506,11 +506,11 @@ const Header = ({
     } else dispatch(Open());
   };
 
-  // const handelWallet = () => {
-  //   if (user) {
-  //     history.push(routes.app.profile.wallet);
-  //   } else dispatch(Open());
-  // };
+  const handelWallet = () => {
+    if (user) {
+      history.push(routes.app.profile.wallet);
+    } else dispatch(Open());
+  };
 
   const handelFaqs = () => {
     if (user) {
@@ -689,11 +689,11 @@ const Header = ({
               //   path: routes.app.profile.purchased,
               //   handler: handelPurchased,
               // },
-              // {
-              //   key: localizationKeys.Wallet,
-              //   path: routes.app.profile.wallet,
-              //   handler: handelWallet,
-              // },
+              {
+                key: localizationKeys.Wallet,
+                path: routes.app.profile.wallet,
+                handler: handelWallet,
+              },
               {
                 key: localizationKeys.faqs,
                 path: routes.app.faqs,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal } from "semantic-ui-react";
+import { Modal, Dimmer } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 import { FaTrash, FaCloudUploadAlt } from "react-icons/fa";
 import content from "../../../localization/content";
@@ -8,6 +8,7 @@ import localizationKeys from "../../../localization/localization-keys";
 import useAxios from "../../../hooks/use-axios";
 import { authAxios } from "../../../config/axios-config";
 import api from "../../../api";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
 
 const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
   const [lang] = useLanguage("");
@@ -60,6 +61,9 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
       onClose={() => setOpen(false)}
       className="max-w-[500px] w-[95%] rounded-2xl overflow-hidden bg-transparent !border-none !shadow-none"
     >
+      <Dimmer active={isLoading} inverted className="fixed w-full h-full top-0 bg-white/50 z-[100]">
+        <LoadingTest3arbon />
+      </Dimmer>
       <div className="bg-white dark:bg-[#0F172A] border border-gray-100 dark:border-white/10 shadow-2xl">
         <div className="bg-primary/95 dark:bg-[#1E293B]/90 backdrop-blur-md p-5 text-center border-b border-gray-100 dark:border-white/10">
           <h2 className="text-white text-xl font-bold">
@@ -133,6 +137,13 @@ const ObjectionModal = ({ open, setOpen, product, onSuccess }) => {
                       src={URL.createObjectURL(file)}
                       alt="preview"
                       className="w-full h-full object-cover"
+                    />
+                  ) : file.type.startsWith("video/") ? (
+                    <video
+                      src={URL.createObjectURL(file)}
+                      className="w-full h-full object-cover"
+                      muted
+                      playsInline
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gray-100 text-[10px] text-gray-500 p-1 text-center truncate">

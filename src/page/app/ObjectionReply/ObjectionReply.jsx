@@ -7,7 +7,7 @@ import { authAxios } from "../../../config/axios-config";
 import { toast } from "react-hot-toast";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { FaCloudUploadAlt, FaTimes, FaFileAlt, FaCheckCircle, FaHistory, FaExclamationTriangle } from "react-icons/fa";
+import { FaCloudUploadAlt, FaTimes, FaFileAlt, FaCheckCircle, FaHistory, FaExclamationTriangle, FaPlay } from "react-icons/fa";
 import moment from "moment";
 import LoadingTest3arbon from "../../../component/shared/lotties-file/loading-test-3arbon";
 import { Dimmer } from "semantic-ui-react";
@@ -260,6 +260,7 @@ const ObjectionReply = () => {
                         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                           {objection.documents.map((doc, idx) => {
                             const isPdf = doc.imageLink?.toLowerCase().endsWith(".pdf") || doc.imagePath?.toLowerCase().endsWith(".pdf");
+                            const isVideo = doc.imageLink?.toLowerCase().match(/\.(mp4|webm|ogg|mov|m4v)$/) || doc.imagePath?.toLowerCase().match(/\.(mp4|webm|ogg|mov|m4v)$/);
                             return (
                               <div
                                 key={idx}
@@ -270,6 +271,13 @@ const ObjectionReply = () => {
                                   <div className="w-full h-full bg-red-50 dark:bg-red-500/10 flex flex-col items-center justify-center group-hover/thumb:bg-red-100 transition-colors">
                                     <FaFileAlt className="w-6 h-6 text-red-500 mb-1" />
                                     <span className="text-[10px] font-black text-red-600">PDF</span>
+                                  </div>
+                                ) : isVideo ? (
+                                  <div className="w-full h-full relative">
+                                    <video src={doc.imageLink} className="w-full h-full object-cover" muted playsInline />
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/25">
+                                      <FaPlay className="text-white text-lg drop-shadow-md" />
+                                    </div>
                                   </div>
                                 ) : (
                                   <img src={doc.imageLink} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-110" />
@@ -328,6 +336,7 @@ const ObjectionReply = () => {
                           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                             {objection.replyDocuments.map((doc, idx) => {
                               const isPdf = doc.imageLink?.toLowerCase().endsWith(".pdf") || doc.imagePath?.toLowerCase().endsWith(".pdf");
+                              const isVideo = doc.imageLink?.toLowerCase().match(/\.(mp4|webm|ogg|mov|m4v)$/) || doc.imagePath?.toLowerCase().match(/\.(mp4|webm|ogg|mov|m4v)$/);
                               return (
                                 <div
                                   key={idx}
@@ -338,6 +347,13 @@ const ObjectionReply = () => {
                                     <div className="w-full h-full bg-blue-50 dark:bg-blue-500/10 flex flex-col items-center justify-center group-hover/thumb:bg-blue-100 transition-colors">
                                       <FaFileAlt className="w-6 h-6 text-blue-500 mb-1" />
                                       <span className="text-[10px] font-black text-blue-600">PDF</span>
+                                    </div>
+                                  ) : isVideo ? (
+                                    <div className="w-full h-full relative">
+                                      <video src={doc.imageLink} className="w-full h-full object-cover" muted playsInline />
+                                      <div className="absolute inset-0 flex items-center justify-center bg-black/25">
+                                        <FaPlay className="text-white text-lg drop-shadow-md" />
+                                      </div>
                                     </div>
                                   ) : (
                                     <img src={doc.imageLink} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-110" />
@@ -400,6 +416,7 @@ const ObjectionReply = () => {
                           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                             {objection.finalDecisionDocuments.map((doc, idx) => {
                               const isPdf = doc.imageLink?.toLowerCase().endsWith(".pdf") || doc.imagePath?.toLowerCase().endsWith(".pdf");
+                              const isVideo = doc.imageLink?.toLowerCase().match(/\.(mp4|webm|ogg|mov|m4v)$/) || doc.imagePath?.toLowerCase().match(/\.(mp4|webm|ogg|mov|m4v)$/);
                               return (
                                 <div
                                   key={idx}
@@ -410,6 +427,13 @@ const ObjectionReply = () => {
                                     <div className="w-full h-full bg-amber-50 dark:bg-yellow-500/10 flex flex-col items-center justify-center group-hover/thumb:bg-amber-100 transition-colors">
                                       <FaFileAlt className="w-6 h-6 text-amber-600 mb-1" />
                                       <span className="text-[10px] font-black text-amber-700">PDF</span>
+                                    </div>
+                                  ) : isVideo ? (
+                                    <div className="w-full h-full relative">
+                                      <video src={doc.imageLink} className="w-full h-full object-cover" muted playsInline />
+                                      <div className="absolute inset-0 flex items-center justify-center bg-black/25">
+                                        <FaPlay className="text-white text-lg drop-shadow-md" />
+                                      </div>
                                     </div>
                                   ) : (
                                     <img src={doc.imageLink} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-110" />
@@ -461,6 +485,9 @@ const ObjectionReply = () => {
                 >
                   {({ isSubmitting }) => (
                     <Form className="space-y-8">
+                      <Dimmer active={isSubmitting} inverted className="fixed w-full h-full top-0 bg-white/50 z-[100]">
+                        <LoadingTest3arbon />
+                      </Dimmer>
                       <div className="grid grid-cols-1 gap-8">
                         <div>
                           <label className="block text-[10px] font-black text-gray-400 uppercase mb-3 tracking-[0.2em]">

@@ -250,6 +250,7 @@ const DepositDetails = () => {
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto mt-2 md:mt-0 relative z-10">
                   {item.userId === user?.id && 
                     item.arbonStatus === "PAID" && 
+                    !item.objections?.[0] &&
                     item.arbonPaidAt && 
                     moment().diff(moment(item.arbonPaidAt), 'days') <= 7 && (
                     <button

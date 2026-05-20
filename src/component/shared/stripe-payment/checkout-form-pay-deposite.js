@@ -184,16 +184,6 @@ const CheckoutFormPayDeposite = ({
           )}
         </button>
 
-        <div className="mt-8 text-center">
-          <button
-            type="button"
-            onClick={() => window.history.back()}
-            className="text-zinc-500 hover:text-zinc-300 text-xs font-medium transition-colors uppercase tracking-widest flex items-center justify-center gap-2 mx-auto"
-          >
-            <i className="fi fi-rr-arrow-left mt-0.5" />
-            Back to selection
-          </button>
-        </div>
       </form>
     </div>
   );
