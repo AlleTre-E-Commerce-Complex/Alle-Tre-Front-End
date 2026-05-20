@@ -10,6 +10,7 @@ import api from "api";
 import SuccessModal from "../successModal/SuccessModal";
 import toast from "react-hot-toast";
 import routes from "routes";
+import { BsBank2 } from "react-icons/bs";
 
 const AddNewBankModal = ({ open, setOpen }) => {
   const [lang] = useLanguage("");
@@ -91,9 +92,32 @@ const AddNewBankModal = ({ open, setOpen }) => {
               toast.error(response.data.message);
             }
           })
+          .catch((error) => {
+            const errorMsg = error.response?.data?.message;
+            if (errorMsg) {
+              let messages = [];
+              if (Array.isArray(errorMsg)) {
+                messages = errorMsg;
+              } else {
+                try {
+                  const parsed = JSON.parse(errorMsg);
+                  if (Array.isArray(parsed)) {
+                    messages = parsed;
+                  } else {
+                    messages = [errorMsg];
+                  }
+                } catch (e) {
+                  messages = [errorMsg];
+                }
+              }
+              messages.forEach((msg) => toast.error(msg));
+            } else {
+              toast.error("Failed to add bank account");
+            }
+          })
       );
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to process withdrawal");
+      toast.error(error.response?.data?.message || "Failed to process withdrawal");
     }
   };
 
@@ -101,108 +125,152 @@ const AddNewBankModal = ({ open, setOpen }) => {
 
   return (
     <Modal
-      className="sm:w-[506px] w-full h-auto bg-transparent scale-in"
+      className="w-full h-auto bg-transparent scale-in max-w-2xl mx-auto"
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
     >
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[60] p-4">
         <Dimmer
-          className="fixed w-full h-full top-0 bg-white/50"
+          className="fixed w-full h-full top-0 z-[70]"
           active={isLoading}
           inverted
         >
           <LoadingTest3arbon />
         </Dimmer>
-        <div className="bg-white h-auto  border-2 border-primary rounded-2xl shadow-md w-full">
-          <h1 className="text-black font-semibold text-lg text-center my-6">
-            {selectedContent[localizationKeys.AddNewBankAccount]}
-          </h1>
-          <form id="withdrawal-form" className="p-6" onSubmit={handleSubmit}>
-            <div className="mb-5 leading-7">
-              <label htmlFor="accountHolderName">
-                {selectedContent[localizationKeys.accountHolderName]}
-              </label>
-              <input
-                type="text"
-                id="accountHolderName"
-                name="accountHolderName"
-                value={accountHolderName}
-                onChange={(e) => setAccountName(e.target.value)}
-                className="outline-none border rounded w-full  p-2"
-              />
-              {errors.accountHolderName && (
-                <span className="text-red-500">{errors.accountHolderName}</span>
-              )}
+        
+        <div className="bg-white dark:bg-[#1a1c23] border border-gray-100 dark:border-gray-700 rounded-3xl shadow-2xl w-full overflow-hidden transform transition-all duration-300 max-h-[90vh] flex flex-col relative animate-fade-in-up">
+          
+          {/* Header section */}
+          <div className="px-8 py-6 border-b border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-[#1f222d] flex items-center gap-5 sticky top-0 z-10">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#eac566] to-[#d4af37] flex items-center justify-center shadow-lg shadow-[#d4af37]/30 transform -rotate-3">
+              <BsBank2 className="text-2xl text-gray-900" />
+            </div>
+            <div>
+              <h1 className="text-gray-900 dark:text-white font-bold text-2xl m-0 tracking-tight">
+                {selectedContent[localizationKeys.AddNewBankAccount]}
+              </h1>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                Enter your bank details carefully to ensure smooth withdrawals
+              </p>
+            </div>
+          </div>
+
+          <form id="withdrawal-form" className="flex flex-col flex-1 overflow-hidden" onSubmit={handleSubmit}>
+            <div className="p-8 overflow-y-auto custom-scrollbar space-y-6">
+              
+              <div className="flex flex-col gap-2">
+                <label htmlFor="accountHolderName" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  {selectedContent[localizationKeys.accountHolderName]}
+                </label>
+                <input
+                  type="text"
+                  id="accountHolderName"
+                  name="accountHolderName"
+                  value={accountHolderName}
+                  onChange={(e) => setAccountName(e.target.value)}
+                  className={`
+                    w-full bg-gray-50 dark:bg-[#1f222d] border border-gray-200 dark:border-gray-600 rounded-xl py-3 px-4 
+                    text-base font-medium text-gray-900 dark:text-white
+                    focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent transition-all shadow-inner
+                    ${errors.accountHolderName ? 'border-red-500 focus:ring-red-500' : ''}
+                  `}
+                  placeholder="e.g. John Doe"
+                />
+                {errors.accountHolderName && (
+                  <span className="text-red-500 text-xs font-medium mt-1">{errors.accountHolderName}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="bankName" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  {selectedContent[localizationKeys.bankName]}
+                </label>
+                <input
+                  type="text"
+                  id="bankName"
+                  name="bankName"
+                  value={bankName}
+                  onChange={(e) => setBankName(e.target.value)}
+                  className={`
+                    w-full bg-gray-50 dark:bg-[#1f222d] border border-gray-200 dark:border-gray-600 rounded-xl py-3 px-4 
+                    text-base font-medium text-gray-900 dark:text-white
+                    focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent transition-all shadow-inner
+                    ${errors.bankName ? 'border-red-500 focus:ring-red-500' : ''}
+                  `}
+                  placeholder="e.g. Emirates NBD"
+                />
+                {errors.bankName && (
+                  <span className="text-red-500 text-xs font-medium mt-1">{errors.bankName}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="accountNumber" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  {selectedContent[localizationKeys.bankAccountNumber]}
+                </label>
+                <input
+                  type="text"
+                  id="accountNumber"
+                  name="accountNumber"
+                  value={accountNumber}
+                  onChange={(e) => setAccountNumber(e.target.value)}
+                  className={`
+                    w-full bg-gray-50 dark:bg-[#1f222d] border border-gray-200 dark:border-gray-600 rounded-xl py-3 px-4 
+                    text-base font-medium text-gray-900 dark:text-white font-mono tracking-widest
+                    focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent transition-all shadow-inner
+                    ${errors.accountNumber ? 'border-red-500 focus:ring-red-500' : ''}
+                  `}
+                  placeholder="0000000000000000"
+                />
+                {errors.accountNumber && (
+                  <span className="text-red-500 text-xs font-medium mt-1">{errors.accountNumber}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label htmlFor="routingNumber" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                  {selectedContent[localizationKeys.IBANnumber]}
+                </label>
+                <input
+                  type="text"
+                  id="routingNumber"
+                  name="routingNumber"
+                  value={routingNumber}
+                  onChange={(e) => setRoutingNumber(e.target.value)}
+                  className={`
+                    w-full bg-gray-50 dark:bg-[#1f222d] border border-gray-200 dark:border-gray-600 rounded-xl py-3 px-4 
+                    text-base font-medium text-gray-900 dark:text-white font-mono tracking-widest uppercase
+                    focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:border-transparent transition-all shadow-inner
+                    ${errors.routingNumber ? 'border-red-500 focus:ring-red-500' : ''}
+                  `}
+                  placeholder="AE0000000000000000000"
+                />
+                {errors.routingNumber && (
+                  <span className="text-red-500 text-xs font-medium mt-1">{errors.routingNumber}</span>
+                )}
+              </div>
             </div>
 
-            <div className="mb-5 leading-7">
-              <label htmlFor="bankName">
-                {selectedContent[localizationKeys.bankName]}
-              </label>
-              <input
-                type="text"
-                id="bankName"
-                name="bankName"
-                value={bankName}
-                onChange={(e) => setBankName(e.target.value)}
-                className="outline-none border rounded w-full  p-2"
-              />
-              {errors.bankName && (
-                <span className="text-red-500">{errors.bankName}</span>
-              )}
-            </div>
-
-            <div className="mb-5 leading-7">
-              <label htmlFor="accountNumber">
-                {selectedContent[localizationKeys.bankAccountNumber]}
-              </label>
-              <input
-                type="text"
-                id="accountNumber"
-                name="accountNumber"
-                value={accountNumber}
-                onChange={(e) => setAccountNumber(e.target.value)}
-                className="outline-none border rounded w-full  p-2"
-              />
-              {errors.accountNumber && (
-                <span className="text-red-500">{errors.accountNumber}</span>
-              )}
-            </div>
-
-            <div className="mb-5 leading-7">
-              <label htmlFor="routingNumber">
-                {selectedContent[localizationKeys.IBANnumber]}
-              </label>
-              <input
-                type="text"
-                id="routingNumber"
-                name="routingNumber"
-                value={routingNumber}
-                onChange={(e) => setRoutingNumber(e.target.value)}
-                className="outline-none border rounded w-full  p-2"
-              />
-              {errors.routingNumber && (
-                <span className="text-red-500">{errors.routingNumber}</span>
-              )}
-            </div>
-
-            <div className="flex justify-end gap-x-6 rounded-lg mt-10">
+            {/* Footer Section */}
+            <div className="px-8 py-5 border-t border-gray-100 dark:border-gray-700 bg-gray-50/80 dark:bg-[#1f222d]/80 flex justify-end gap-4 rounded-b-3xl">
               <button
+                type="button"
                 onClick={() => setOpen(false)}
-                className="border-gray-400 text-gray-700 border-[1px] w-[120px] h-[40px] rounded-lg text-base font-normal transition-all duration-300 hover:border-primary hover:text-primary"
+                className="px-6 py-3 rounded-xl border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-bold text-base bg-white dark:bg-[#1a1c23] hover:bg-gray-50 dark:hover:bg-gray-700 transition-all shadow-sm"
               >
                 {selectedContent[localizationKeys.cancel]}
               </button>
               <button
                 type="submit"
-                className="w-[120px] h-[40px] hover:bg-primary-dark  bg-primary rounded-md text-white px-3 py-2 "
+                className="px-8 py-3 rounded-xl font-bold text-gray-900 text-base shadow-lg transition-all duration-300 bg-gradient-to-r from-[#eac566] to-[#d4af37] hover:shadow-xl hover:shadow-[#d4af37]/40 transform hover:-translate-y-0.5"
               >
                 {selectedContent[localizationKeys.AddAccount]}
               </button>
             </div>
           </form>
         </div>
+        
         {successModal && (
           <SuccessModal
             open={successModal}

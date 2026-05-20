@@ -1,5 +1,5 @@
 import React, {  useState } from "react";
-import { Modal } from "semantic-ui-react";
+import { Modal, Dimmer } from "semantic-ui-react";
 import { toast } from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 import content from "../../../localization/content";
@@ -8,6 +8,8 @@ import localizationKeys from "../../../localization/localization-keys";
 import useAxios from "hooks/use-axios";
 import { authAxios } from "config/axios-config";
 import api from "api";
+import LoadingTest3arbon from "../lotties-file/loading-test-3arbon";
+
 const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
     const [lang] = useLanguage(""); 
     const [issue, setIssue] = useState("");
@@ -15,7 +17,7 @@ const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
     const selectedContent = content[lang];
     const {
       run: runDeleveryIssue,
-      // isLoading: isLoadingDeleveryIssueAuction,
+      isLoading: isLoadingDeleveryIssueAuction,
       // error: errorDeleveryIssueAuction,
       // isError: isErrorDeleveryIssueAuction,
     } = useAxios([]);
@@ -79,6 +81,9 @@ const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
         onOpen={() => setOpen(true)}
         open={open}
       >
+        <Dimmer active={isLoadingDeleveryIssueAuction} inverted className="fixed w-full h-full top-0 bg-white/50 z-[100]">
+          <LoadingTest3arbon />
+        </Dimmer>
         <div className=" sm:w-[500px] h-auto rounded-2xl bg-white border-2 border-primary">
           <div className="bg-primary text-white text-center font-semibold py-2">
             <h1>{selectedContent[localizationKeys.tellUsYourProblem]}</h1>
@@ -118,11 +123,20 @@ const BuyerObjectionModal = ({open, setOpen,auctionId}) => {
             <div className="showImages flex flex-wrap  mt-4">
               {images.map((file, index) => (
                 <div key={index} className="relative group w-auto h-auto max-w-[150px] max-h-[150px]">
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt='sorry'
-                    className="w-full h-full"
-                  />
+                  {file.type.startsWith("video/") ? (
+                    <video
+                      src={URL.createObjectURL(file)}
+                      className="w-full h-full object-cover rounded-md"
+                      muted
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={URL.createObjectURL(file)}
+                      alt='sorry'
+                      className="w-full h-full object-cover rounded-md"
+                    />
+                  )}
                   <button onClick={() => handleDeleteImage(index)} className="absolute top-1/2 right-1/3 text-lg bg-gray-200 text-red p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <FaTrash />
                   </button>

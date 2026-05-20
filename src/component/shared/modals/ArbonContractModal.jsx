@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'semantic-ui-react';
 import { useLanguage } from '../../../context/language-context';
 import content from '../../../localization/content';
@@ -16,6 +16,7 @@ const ArbonContractModal = ({
   arbonAmount 
 }) => {
   const [lang, setLang] = useLanguage();
+  const [isAccepted, setIsAccepted] = useState(false);
   const selectedContent = content[lang];
 
   const contractLabels = {
@@ -32,6 +33,7 @@ const ArbonContractModal = ({
       deposit: "Deposit Amount (Arbon)",
       penalties: "Penalties & Disputes",
       penaltiesText: "If the transaction is not completed within 7 days, the deposit may be forfeited or returned based on the agreement between parties. Disputes shall be settled through Alletre platform mediation.",
+      terms: "I have read and agree to the Arbon Deposit terms and conditions.",
       confirm: "Confirm & Proceed to Payment",
     },
     ar: {
@@ -47,6 +49,7 @@ const ArbonContractModal = ({
       deposit: "مبلغ العربون",
       penalties: "العقوبات والنزاعات",
       penaltiesText: "إذا لم يتم إكمال المعاملة في غضون 7 أيام، فقد يتم مصادرة العربون أو إعادته بناءً على الاتفاق بين الطرفين. يتم تسوية النزاعات من خلال وساطة منصة أليتري.",
+      terms: "لقد قرأت وأوافق على شروط وأحكام وديعة العربون.",
       confirm: "تأكيد ومتابعة الدفع",
     }
   };
@@ -58,10 +61,15 @@ const ArbonContractModal = ({
     setLang(lang === 'en' ? 'ar' : 'en');
   };
 
+  const handleClose = () => {
+    setIsAccepted(false);
+    onClose();
+  };
+
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       className="!bg-transparent !border-none !shadow-none !max-w-[750px] w-[95%]"
     >
       <div className={`w-full bg-white dark:bg-[#0F172A] rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.4)] flex flex-col ${isRtl ? 'text-right' : 'text-left'}`} dir={isRtl ? 'rtl' : 'ltr'}>
@@ -85,7 +93,7 @@ const ArbonContractModal = ({
             </button>
 
             <button 
-              onClick={onClose} 
+              onClick={handleClose} 
               className="p-2 hover:bg-white/10 rounded-full transition-colors"
             >
               <IoClose size={24} className="sm:w-7 sm:h-7" />
@@ -164,19 +172,44 @@ const ArbonContractModal = ({
           </div>
         </div>
 
-        {/* Action Button */}
-        <div className="px-6 sm:px-10 pb-8 sm:pb-12 pt-4 sm:pt-6">
+        {/* Terms and Action */}
+        <div className="px-6 sm:px-10 pb-8 sm:pb-12 pt-4 sm:pt-6 bg-gray-50 dark:bg-[#1E293B]/30 border-t border-gray-100 dark:border-white/5">
+          {/* Terms Checkbox */}
+          <div className="flex items-start gap-3 mb-6">
+            <div className="flex items-center h-5 mt-1 sm:mt-0.5">
+              <input
+                id="terms-checkbox"
+                type="checkbox"
+                checked={isAccepted}
+                onChange={(e) => setIsAccepted(e.target.checked)}
+                className="w-5 h-5 sm:w-4 sm:h-4 rounded border-gray-300 text-primary dark:text-yellow focus:ring-primary dark:focus:ring-yellow dark:border-gray-600 dark:bg-gray-700 bg-white cursor-pointer transition-colors"
+              />
+            </div>
+            <label 
+              htmlFor="terms-checkbox" 
+              className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 cursor-pointer select-none"
+            >
+              {l.terms}
+            </label>
+          </div>
+
           <button
             onClick={onConfirm}
-            className="w-full bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark text-white dark:text-black h-[60px] sm:h-[80px] rounded-full font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-[11px] sm:text-[13px] transition-all duration-300 shadow-2xl shadow-primary/30 dark:shadow-yellow/20 active:scale-95 flex items-center justify-center gap-3 sm:gap-4 relative overflow-hidden group"
+            disabled={!isAccepted}
+            className={`w-full h-[50px] sm:h-[70px] rounded-full font-black uppercase tracking-[0.15em] sm:tracking-[0.3em] text-[10px] sm:text-[13px] transition-all duration-300 flex items-center justify-center gap-2 sm:gap-4 relative overflow-hidden group ${
+              isAccepted 
+                ? "bg-primary hover:bg-primary-dark dark:bg-yellow dark:hover:bg-yellow-dark text-white dark:text-black shadow-2xl shadow-primary/30 dark:shadow-yellow/20 active:scale-95 cursor-pointer" 
+                : "bg-gray-200 dark:bg-[#1E293B] text-gray-400 dark:text-gray-500 cursor-not-allowed border border-gray-300 dark:border-gray-700"
+            }`}
           >
-            {/* Premium Shine Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+            {isAccepted && (
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+            )}
             
-            <svg className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 group-hover:translate-x-2 ${isRtl ? 'rotate-180 group-hover:-translate-x-2' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span>{l.confirm}</span>
+            <svg className={`w-4 h-4 sm:w-6 sm:h-6 transition-transform duration-300 ${isAccepted ? 'group-hover:translate-x-2' : ''} ${isRtl && isAccepted ? 'rotate-180 group-hover:-translate-x-2' : isRtl ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
-            <span>{l.confirm}</span>
           </button>
         </div>
       </div>

@@ -143,11 +143,11 @@ const ProfileSideBare = ({ SetSid, sid }) => {
             isActive={pathname.startsWith(routes.app.profile.purchased)}
             onClick={() => history.push(routes.app.profile.purchased)}
           /> */}
-          {/* <NavLink
+          <NavLink
             title={selectedContent[localizationKeys.Wallet]}
             isActive={pathname.startsWith(routes.app.profile.wallet)}
             onClick={() => history.push(routes.app.profile.wallet)}
-          /> */}
+          />
           <NavLink
             title={selectedContent[localizationKeys.notifications]}
             isActive={pathname.startsWith(routes.app.profile.notifications)}
@@ -265,14 +265,14 @@ const ProfileSideBare = ({ SetSid, sid }) => {
                 SetSid(false);
               }}
             />
-            {/* <NavLink
+            <NavLink
               title={selectedContent[localizationKeys.Wallet]}
               isActive={pathname.startsWith(routes.app.profile.wallet)}
               onClick={() => {
                 history.push(routes.app.profile.wallet);
                 SetSid(false);
               }}
-            /> */}
+            />
             <NavLink
               title={selectedContent[localizationKeys.depositDetails]}
               isActive={pathname.startsWith(routes.app.profile.depositDetails)}
