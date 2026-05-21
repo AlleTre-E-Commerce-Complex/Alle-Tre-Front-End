@@ -106,11 +106,11 @@ const Sidebar = ({ SetSid, sid }) => {
       history.push(routes.app.profile.purchased);
     } else dispatch(Open());
   };
-  // const handelWallet = () => {
-  //   if (user) {
-  //     history.push(routes.app.profile.wallet);
-  //   } else dispatch(Open());
-  // };
+  const handelWallet = () => {
+    if (user) {
+      history.push(routes.app.profile.wallet);
+    } else dispatch(Open());
+  };
   const handelFaq = () => {
     if (user) {
       history.push(routes.app.faqs);
@@ -271,7 +271,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   SetSid(false);
                 }}
               />
-              {/* <NavLink
+              <NavLink
                 title={selectedContent[localizationKeys.Wallet]}
                 isActive={
                   pathname.startsWith(routes.app.profile.wallet)
@@ -280,7 +280,7 @@ const Sidebar = ({ SetSid, sid }) => {
                   handelWallet();
                   SetSid(false);
                 }}
-              /> */}
+              />
               <NavLink
                 title={selectedContent[localizationKeys.faqs]}
                 isActive={pathname.startsWith(routes.app.faqs)}
