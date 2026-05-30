@@ -252,7 +252,7 @@ const DepositDetails = () => {
                     item.arbonStatus === "PAID" && 
                     !item.objections?.[0] &&
                     item.arbonPaidAt && 
-                    moment().diff(moment(item.arbonPaidAt), 'days') <= 7 && (
+                    moment().diff(moment(item.arbonPaidAt), 'days') < 7 && (
                     <button
                       onClick={() => handleRelease(item.id)}
                       className="group relative h-12 px-8 bg-green-600 hover:bg-green-700 text-white text-sm font-black uppercase tracking-widest rounded-2xl transition-all duration-300 shadow-lg shadow-green-500/20 flex items-center justify-center gap-3 overflow-hidden"

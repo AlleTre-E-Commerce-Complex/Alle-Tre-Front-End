@@ -31,6 +31,7 @@ const ProductCard = ({
   currency,
   status,
   priceType,
+  arbonStatus,
 }) => {
   const [lang] = useLanguage("");
   const selectedContent = content[lang];
@@ -243,7 +244,7 @@ const ProductCard = ({
       <div className="relative w-full aspect-[4/3] bg-gray-light overflow-hidden shrink-0">
         {/* Badge - Top Left */}
         <div className="absolute top-2 left-2 z-10 flex gap-1.5">
-          <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
+          <div className={`${arbonStatus === "PAID" ? "bg-red-500" : "bg-[#1e2738]"} text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider`}>
                {/* {category === 3 || category === 7
                 ? usageStatus === "NEW"
                   ? selectedContent[localizationKeys.sell]
@@ -254,6 +255,8 @@ const ProductCard = ({
                   usageStatus?.slice(1).toLowerCase()} */}
                 {status === "OUT_OF_STOCK" 
                   ? selectedContent[localizationKeys.outOfStock]
+                  : arbonStatus === "PAID"
+                  ? (lang === "ar" ? "عربون مدفوع" : "ARBON PAID")
                   : usageStatus?.charAt(0).toUpperCase() +
                     usageStatus?.slice(1).toLowerCase()}
           </div>
@@ -318,7 +321,7 @@ const ProductCard = ({
                 <div className="relative w-full h-full group/video">
                   <video
                     key={adsImg[currentImageIndex].imageLink}
-                    className={`w-full h-full object-cover ${status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
+                    className={`w-full h-full object-cover ${status === "OUT_OF_STOCK" || arbonStatus === "PAID" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                     preload="metadata"
                     playsInline
                     muted
@@ -336,7 +339,7 @@ const ProductCard = ({
                 </div>
               ) : (
                 <img
-                  className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
+                  className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${status === "OUT_OF_STOCK" || arbonStatus === "PAID" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                   src={adsImg[currentImageIndex].imageLink}
                   alt={`Product ${currentImageIndex + 1}`}
                   onError={(e) => {

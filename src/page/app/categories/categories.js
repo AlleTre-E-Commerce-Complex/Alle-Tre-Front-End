@@ -677,11 +677,12 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
-                               currency={e?.location?.country?.currency}
+                              currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
                               priceType={e?.product?.priceType}
+                              arbonStatus={e?.product?.arbonStatus}
                             />
                           ))}
                         </div>
@@ -723,11 +724,12 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
-                               currency={e?.location?.country?.currency}
+                              currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
                               priceType={e?.product?.priceType}
+                              arbonStatus={e?.product?.arbonStatus}
                             />
                           ))}
                         </div>
@@ -809,11 +811,12 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
-                               currency={e?.location?.country?.currency}
+                              currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
                               priceType={e?.product?.priceType}
+                              arbonStatus={e?.product?.arbonStatus}
                             />
                           ))}
                         </div>
@@ -894,11 +897,12 @@ const Categories = ({ selectedType, isFilterOpen, setIsFilterOpen }) => {
                               }
                               createdAt={e?.createdAt}
                               usageStatus={e?.product?.usageStatus}
-                               currency={e?.location?.country?.currency}
+                              currency={e?.location?.country?.currency}
                               category={e?.product?.categoryId}
                               isSaved={e?.isSaved}
                               status={e?.status}
                               priceType={e?.product?.priceType}
+                              arbonStatus={e?.product?.arbonStatus}
                             />
                           ))}
                         </div>

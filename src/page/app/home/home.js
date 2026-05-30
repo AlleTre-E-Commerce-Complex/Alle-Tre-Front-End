@@ -641,6 +641,7 @@ const Home = ({
                                 price={e?.ProductListingPrice}
                                 title={e?.product?.title}
                                 userId={e?.userId}
+                                adsImg={e?.product?.images}
                                 id={e?.product?.id}
                                 city={
                                   lang === "en"
@@ -659,6 +660,7 @@ const Home = ({
                                 currency={e?.location?.country?.currency}
                                 status={e?.status}
                                 priceType={e?.product?.priceType}
+                                arbonStatus={e?.product?.arbonStatus}
                               />
                             ))}
                           </div>
@@ -717,6 +719,7 @@ const Home = ({
                                 currency={e?.location?.country?.currency}
                                 status={e?.status}
                                 priceType={e?.product?.priceType}
+                                arbonStatus={e?.product?.arbonStatus}
                               />
                             ))}
                           </div>
@@ -826,6 +829,7 @@ const Home = ({
                                 currency={e?.location?.country?.currency}
                                 status={e?.status}
                                 priceType={e?.product?.priceType}
+                                arbonStatus={e?.product?.arbonStatus}
                               />
                             ))}
                           </div>
@@ -922,6 +926,7 @@ const Home = ({
                               isSaved={e?.isSaved}
                               status={e?.status}
                               priceType={e?.product?.priceType}
+                              arbonStatus={e?.product?.arbonStatus}
                             />
                           ))}
                         </div>
