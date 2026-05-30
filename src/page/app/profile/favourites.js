@@ -116,6 +116,7 @@ const Favourites = () => {
                   city={lang === "en" ? e.product.city?.nameEn : e.product.city?.nameAr}
                   country={lang === "en" ? e.product.country?.nameEn : e.product.country?.nameAr}
                   priceType={e.product.product?.priceType || e.product.priceType}
+                  arbonStatus={e.product.arbonStatus}
                 />
               );
             }

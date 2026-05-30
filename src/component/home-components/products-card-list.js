@@ -29,6 +29,7 @@ const ProductCardList = ({
   isSaved,
   status,
   priceType,
+  arbonStatus,
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [dragStart, setDragStart] = useState(null);
@@ -271,9 +272,11 @@ const ProductCardList = ({
           >
             {/* Badge */}
             <div className="absolute top-2.5 left-2.5 z-10">
-              <div className="bg-[#1e2738] text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider">
+              <div className={`${arbonStatus === "PAID" ? "bg-red-500" : "bg-[#1e2738]"} text-white text-[8px] font-bold px-1.5 py-0.5 uppercase tracking-wider`}>
                {status === "OUT_OF_STOCK" 
                   ? selectedContent[localizationKeys.outOfStock]
+                  : arbonStatus === "PAID"
+                  ? (lang === "ar" ? "عربون مدفوع" : "ARBON PAID")
                   : usageStatus?.charAt(0).toUpperCase() +
                     usageStatus?.slice(1).toLowerCase()}
               </div>
@@ -333,7 +336,7 @@ const ProductCardList = ({
                     <div className="relative w-full h-full group/video">
                       <video
                         key={adsImg[currentImageIndex].imageLink}
-                        className={`w-full h-full object-cover ${status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
+                        className={`w-full h-full object-cover ${status === "OUT_OF_STOCK" || arbonStatus === "PAID" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                         preload="metadata"
                         playsInline
                         muted
@@ -351,7 +354,7 @@ const ProductCardList = ({
                     </div>
                   ) : (
                     <img
-                      className={`w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105 ${status === "OUT_OF_STOCK" ? "blur-[2px] grayscale-[0.5]" : ""}`}
+                      className={`w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105 ${status === "OUT_OF_STOCK" || arbonStatus === "PAID" ? "blur-[2px] grayscale-[0.5]" : ""}`}
                       src={adsImg[currentImageIndex].imageLink}
                       alt={`Product ${currentImageIndex + 1}`}
                       onError={(e) => {

@@ -364,6 +364,7 @@ const UserDetailsPage = () => {
                             usageStatus={e?.product?.usageStatus}
                             category={e?.product?.categoryId}
                             priceType={e?.product?.priceType}
+                            arbonStatus={e?.product?.arbonStatus}
                           />
                         ))}
                       </div>

@@ -166,6 +166,7 @@ const SilmilarProductsSlider = ({ categoriesId, isListProduct }) => {
                         usageStatus={e?.product?.usageStatus}
                         category={e?.product?.categoryId}
                         priceType={e?.product?.priceType}
+                        arbonStatus={e?.product?.arbonStatus}
                       />
                     ) : (
                       <AuctionCard

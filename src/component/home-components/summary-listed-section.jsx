@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { formatCurrency } from "../../utils/format-currency";
 import api from "api";
+import moment from "moment";
 import { useParams } from "react-router-dom";
 import { useLanguage } from "../../context/language-context";
 import content from "../../localization/content";
@@ -666,7 +667,7 @@ const SummaryListedSection = () => {
                     <span>{selectedContent[localizationKeys.comments]} ({commentCount})</span>
                   </button>
 
-                  {isArbonPaid && isSeller && (
+                  {isArbonPaid && isSeller && listedProductsData?.arbonPaidAt && moment().diff(moment(listedProductsData?.arbonPaidAt), 'days') < 7 && !listedProductsData?.objections?.[0] && (
                     <button
                       onClick={handleReleaseArbon}
                       className="w-full bg-green-600 hover:bg-green-700 text-white font-black h-16 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg active:scale-[0.98] group uppercase tracking-widest text-[10px]"
