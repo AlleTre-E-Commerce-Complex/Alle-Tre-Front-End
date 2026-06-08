@@ -55,7 +55,7 @@ const ChatMessageList = ({ isWidget = false }) => {
         </div>
       ) : (
         messages.map((msg, index) => {
-          const isMe = Number(msg.senderId) === Number(user?.id);
+          const isMe = msg.senderId === user?.id;
           const prevMsg = index > 0 ? messages[index - 1] : null;
           const isGroupHeader = !prevMsg || prevMsg.senderId !== msg.senderId;
 

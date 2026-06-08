@@ -116,14 +116,14 @@ const SummaryListedSection = () => {
      // Prevent chatting with yourself
     const sellerId = listedProductsData?.user?.id || listedProductsData?.userId;
     
-    if (Number(user.id) === Number(sellerId)) {
+    if (user.id === sellerId) {
       toast.error(selectedContent[localizationKeys.youCannotChatWithYourself]);
       return;
     }
 
     try {
       toggleWidget(true);
-      await startConversation(Number(sellerId), productId);
+      await startConversation(sellerId, productId);
     } catch (error) {
       console.error("Failed to start conversation:", error);
       toast.error(selectedContent[localizationKeys.oops]);
@@ -399,8 +399,8 @@ const SummaryListedSection = () => {
   };
 
   const isArbonPaid = listedProductsData?.arbonStatus === "PAID";
-  const isBuyer = Number(user?.id) === Number(listedProductsData?.arbonBuyerId);
-  const isSeller = Number(user?.id) === Number(listedProductsData?.userId);
+  const isBuyer = user?.id === listedProductsData?.arbonBuyerId;
+  const isSeller = user?.id === listedProductsData?.userId;
 
   return (
     <div className="bg-white dark:bg-primary min-h-screen pt-32 pb-20 transition-colors duration-300">
