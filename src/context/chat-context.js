@@ -138,7 +138,7 @@ export const ChatProvider = ({ children }) => {
           const currentActive = activeConversationRef.current;
           const isCurrentlyViewing = (isWidgetOpenRef.current || isChatPageActiveRef.current) && 
                                     Number(currentActive?.id) === Number(message.conversationId);
-          const isFromOther = Number(message.senderId) !== Number(user?.id);
+          const isFromOther = message.senderId !== user?.id;
 
           // Update messages if it belongs to the active conversation
           setMessages((prev) => {
@@ -210,13 +210,13 @@ export const ChatProvider = ({ children }) => {
             if (currentActive && Number(conversationId) === Number(currentActive.id)) {
               setMessages((prev) =>
                 prev.map((m) =>
-                  Number(m.senderId) !== Number(readerId) ? { ...m, isRead: true } : m
+                  m.senderId !== readerId ? { ...m, isRead: true } : m
                 )
               );
             }
 
             // Implicit Presence: Reader is active
-            if (Number(readerId) !== Number(user?.id)) {
+            if (readerId !== user?.id) {
               setOnlineUsers((prev) => ({ ...prev, [String(readerId)]: true }));
             }
           });
